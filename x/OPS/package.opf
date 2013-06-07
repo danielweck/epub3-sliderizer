@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<package prefix="cc: http://creativecommons.org/ns# rendition: http://www.idpf.org/vocab/rendition/# ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/" unique-identifier="UID" version="3.0" xml:lang="en-US" xmlns="http://www.idpf.org/2007/opf">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/">
+    <meta content="cover" name="cover"/>
+    <meta property="dcterms:modified">2013-06-07T09:42:11Z</meta>
+    <dc:identifier id="UID">DEFAULT-UID</dc:identifier>
+    <dc:language>en-US</dc:language>
+    <dc:title>EPUB3 Sliderizer</dc:title>
+    <dc:subject>DEFAULT SUBJECT</dc:subject>
+    <dc:description>DEFAULT DESCRIPTION</dc:description>
+    <dc:creator>Daniel Weck</dc:creator>
+    <dc:publisher>DEFAULT PUBLISHER</dc:publisher>
+    <dc:rights>Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)</dc:rights>
+    <link href="http://creativecommons.org/licenses/by-sa/3.0/" rel="cc:license"/>
+    <meta property="rendition:layout">pre-paginated</meta>
+    <meta property="rendition:orientation">auto</meta>
+    <meta property="rendition:spread">auto</meta>
+    <meta property="media:active-class">-epub-media-overlay-active</meta>
+    <meta property="media:narrator">Daniel Weck</meta>
+    <meta property="ibooks:binding">false</meta>
+  </metadata>
+  <manifest>
+    <item href="./nav.xhtml" id="nav" media-type="application/xhtml+xml" properties="nav scripted"/>
+    <item href="./nav.ncx" id="ncx" media-type="application/x-dtbncx+xml"/>
+    <item href="img/600px.png" id="px600" media-type="image/png"/>
+    <item href="img/back.png" id="background" media-type="image/png"/>
+    <item href="img/assets/EPUB.png" id="cover" media-type="image/png" properties="cover-image"/>
+    <item href="img/favicon.ico" id="ico" media-type="image/vnd.microsoft.icon"/>
+    <item href="js/default.js" id="js-default" media-type="text/javascript"/>
+    <item href="css/default.css" id="css-default" media-type="text/css"/>
+    <item href="css/animate.css" id="css-animate" media-type="text/css"/>
+    <item href="html/slide_01.xhtml" id="page_01" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_02.xhtml" id="page_02" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_03.xhtml" id="page_03" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_04.xhtml" id="page_04" media-type="application/xhtml+xml" properties="scripted"/>
+  </manifest>
+  <spine page-progression-direction="ltr" toc="ncx">
+    <itemref idref="nav" properties="page-spread-right"/>
+    <itemref idref="page_01" properties="page-spread-left"/>
+    <itemref idref="page_02" properties="page-spread-right"/>
+    <itemref idref="page_03" properties="page-spread-left"/>
+    <itemref idref="page_04" properties="page-spread-right"/>
+  </spine>
+</package>
