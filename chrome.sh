@@ -7,7 +7,7 @@ root=$(pwd)
 OUTPUT_FOLDER_NAME="_OUTPUT"
 
 
-NAV="file://"${root}"/"${OUTPUT_FOLDER_NAME}"/content/EPUB3/OPS/nav.xhtml"
+NAV="file://"${root}"/"${OUTPUT_FOLDER_NAME}"/content/EPUB3/epub/nav.xhtml"
 NAV=$(echo ${NAV} | sed 's/ /%20/g')
 echo ${NAV}
 

@@ -2,28 +2,18 @@
 
 @namespace epub 'http://www.idpf.org/2007/ops'
 
-::-webkit-selection{
+{
     background:#666666;
     color:#fff;
     text-shadow:none;
 }
 
-::-moz-selection{
-    background:#666666;
-    color:#fff;
-    text-shadow:none;
-}
-::-ms-selection{
-    background:#666666;
-    color:#fff;
-    text-shadow:none;
-}
-::-o-selection{
-    background:#666666;
-    color:#fff;
-    text-shadow:none;
-}
-::selection{
+::-webkit-selection,
+::-moz-selection,
+::-ms-selection,
+::-o-selection,
+::selection
+{
     background:#666666;
     color:#fff;
     text-shadow:none;
@@ -32,6 +22,10 @@
 .animateStart
 {
     -webkit-animation-iteration-count:1 !important;
+    -moz-animation-iteration-count:1 !important;
+    -ms-animation-iteration-count:1 !important;
+    -o-animation-iteration-count:1 !important;
+	animation-iteration-count:1 !important;
 }
 
 *[hidden]{
@@ -87,6 +81,19 @@ html
     -webkit-background-clip:border-box;
     -webkit-background-origin:padding-box;
     -webkit-background-size:auto;
+
+    -moz-background-clip:border-box;
+    -moz-background-origin:padding-box;
+    -moz-background-size:auto;
+	
+    -ms-background-clip:border-box;
+    -ms-background-origin:padding-box;
+    -ms-background-size:auto;
+
+    -o-background-clip:border-box;
+    -o-background-origin:padding-box;
+    -o-background-size:auto;
+	
     background-attachment:scroll;
     background-clip:border-box;
     background-image:url(../img/back.png);
@@ -460,9 +467,10 @@ html#nav ol li:before
     content:counter(item);
 }
 
-a.previous,
-a.next,
-a.toc
+a#prevLink,
+a#nextLink,
+a#tocLink,
+a#epubReadingSystemLink
 {
     -webkit-user-select:none;
     -moz-user-select:none;
@@ -743,7 +751,10 @@ p.mo
 	-webkit-border-top-right-radius:180px 140px;
 	-webkit-border-bottom-right-radius:180px 140px;
 	-webkit-border-bottom-left-radius:180px 140px;
+	
 	-moz-border-radius:180px / 140px;
+	-ms-border-radius:180px / 140px;
+	-o-border-radius:180px / 140px;
 	border-radius:110px / 110px;
 	
 	border: 7px solid black;

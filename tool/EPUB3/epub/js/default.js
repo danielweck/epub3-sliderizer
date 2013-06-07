@@ -710,10 +710,13 @@ Daniel.init = function() {
 if (this.epubReadingSystem != null)
 {
 	    var a = document.createElement('a');
+				a.id="epubReadingSystemLink";
+				
 	    a.href = "javascript:window.alert(window.Daniel.epubReadingSystem.name + '_' + window.Daniel.epubReadingSystem.version)";
 //	    a.href = "javascript:window.parent.alert('daniel')";
-	    a.className = 'previous';
+//	    a.className = 'previous';
 	    a.innerHTML = Daniel.epubReadingSystem.name + '_' + Daniel.epubReadingSystem.version;
+
 	    document.body.insertBefore(a, document.body.children[0]);
 }
 else
@@ -747,8 +750,9 @@ for (var i = 0; i < links.length; i++)
 if (this.next != "")
 {
     var a = document.createElement('a');
+			a.id="nextLink";
     a.href = this.next;
-    a.className = 'next';
+//    a.className = 'next';
     a.innerHTML = "&#9658;";
 	
     document.body.insertBefore(a, document.body.children[0]);
@@ -757,8 +761,9 @@ if (this.next != "")
 if (this.prev != "")
 {
     var a = document.createElement('a');
+			a.id="prevLink";
     a.href = this.prev;
-    a.className = 'previous';
+//    a.className = 'previous';
     a.innerHTML = "&#9668;";
 	
     document.body.insertBefore(a, document.body.children[0]);
@@ -766,8 +771,9 @@ if (this.prev != "")
 
 
 	var aa = document.createElement('a');
+	aa.id="tocLink";
 	aa.href = this.toc;
-	aa.className = 'toc';
+//	aa.className = 'toc';
 	aa.innerHTML = "&#9733;";
 
 	document.body.insertBefore(aa, document.body.children[0]);

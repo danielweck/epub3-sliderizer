@@ -30,7 +30,7 @@ fi
 DATA_file="${root}/_INPUT/data.txt"
 DATA_url="file://${DATA_file}"
 
-EPUB_FOLDER="${root}/_OUTPUT/content/EPUB3/OPS"
+EPUB_FOLDER="${root}/_OUTPUT/content/EPUB3/epub"
 
 echo "EPUB3-Sliderization in progress..."
 echo ${DATA_file}
