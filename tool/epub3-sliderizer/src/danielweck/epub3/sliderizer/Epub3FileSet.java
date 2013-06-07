@@ -118,11 +118,12 @@ public final class Epub3FileSet {
 			}
 			return;
 		}
-		fileDst.getParentFile().mkdirs();
 
 		InputStream inStream = null;
 		OutputStream outStream = null;
 		try {
+			fileDst.getParentFile().mkdirs();
+			
 			inStream = new FileInputStream(fileSrc);
 			outStream = new FileOutputStream(fileDst);
 

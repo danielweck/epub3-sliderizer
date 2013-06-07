@@ -1,5 +1,6 @@
 package danielweck.xml;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.StringReader;
 
@@ -80,8 +81,12 @@ public final class XmlDocument {
 		Transformer transformer = getTransformer();
 
 		DOMSource domSource = new DOMSource(document);
+
 		FileOutputStream fileOutputStream = null;
 		try {
+			File fileDst = new File(filePath);
+			fileDst.getParentFile().mkdirs();
+
 			fileOutputStream = new FileOutputStream(filePath);
 			StreamResult streamResult = new StreamResult(fileOutputStream);
 
