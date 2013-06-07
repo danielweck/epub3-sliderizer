@@ -2,7 +2,7 @@
 <package prefix="cc: http://creativecommons.org/ns# rendition: http://www.idpf.org/vocab/rendition/# ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/" unique-identifier="UID" version="3.0" xml:lang="en-US" xmlns="http://www.idpf.org/2007/opf">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/">
     <meta content="cover" name="cover"/>
-    <meta property="dcterms:modified">2013-06-07T09:42:11Z</meta>
+    <meta property="dcterms:modified">2013-06-07T19:06:29Z</meta>
     <dc:identifier id="UID">DEFAULT-UID</dc:identifier>
     <dc:language>en-US</dc:language>
     <dc:title>EPUB3 Sliderizer</dc:title>
