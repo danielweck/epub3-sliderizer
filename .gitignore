@@ -6,4 +6,4 @@
 *.ear
 
 ./_OUTPUT/
-./private/Eclipse/EPUB3-Sliderizer/bin/
+./tool/epub3-sliderizer/bin/
