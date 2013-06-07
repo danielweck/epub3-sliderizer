@@ -142,12 +142,18 @@ public final class XHTML {
 
 		String title = slide == null ? slideShow.TITLE : slide.TITLE;
 		String subtitle = slide == null ? slideShow.SUBTITLE : slide.SUBTITLE;
-		if (title != null) {
-			Element elementTitle = document.createElement("title");
-			elementHead.appendChild(elementTitle);
-			elementTitle.appendChild(document.createTextNode(title
-					+ (subtitle != null ? " -- " + subtitle : "")));
-		}
+
+		String htmlTitle = (slideShow.TITLE != null ? slideShow.TITLE : "")
+				+ (slideShow.SUBTITLE != null ? " - " + slideShow.SUBTITLE : "")
+				+ (slide == null ? ""
+						: " / "
+								+ (slide.TITLE != null ? slide.TITLE : "")
+								+ (slide.SUBTITLE != null ? " - "
+										+ slide.SUBTITLE : ""));
+
+		Element elementTitle = document.createElement("title");
+		elementHead.appendChild(elementTitle);
+		elementTitle.appendChild(document.createTextNode(htmlTitle));
 
 		create_HeadLinks(slideShow.FAVICON, document, elementHead,
 				"shortcut icon", null, PATH_PREFIX
@@ -297,9 +303,9 @@ public final class XHTML {
 		return elementSection;
 	}
 
-	static void create_Content(Element elementSection,
-			Document document, String content, SlideShow slideShow,
-			String pathEpubFolder, int verbosity) throws Exception {
+	static void create_Content(Element elementSection, Document document,
+			String content, SlideShow slideShow, String pathEpubFolder,
+			int verbosity) throws Exception {
 
 		if (content == null) {
 			return;
