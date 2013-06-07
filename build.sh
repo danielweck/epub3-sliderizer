@@ -2,14 +2,12 @@
 
 root=$(pwd)
 
-OUTPUT_FOLDER_NAME="_OUTPUT"
-
-rm -r ./${OUTPUT_FOLDER_NAME}
-mkdir ./${OUTPUT_FOLDER_NAME}
-cp -r ./tool/readium ./${OUTPUT_FOLDER_NAME}/
-mkdir ./${OUTPUT_FOLDER_NAME}/content
-cp -r ./tool/EPUB3 ./${OUTPUT_FOLDER_NAME}/content/
-mv ./${OUTPUT_FOLDER_NAME}/readium/index.html ./${OUTPUT_FOLDER_NAME}/content/
+rm -r ./_OUTPUT
+mkdir ./_OUTPUT
+cp -r ./tool/readium ./_OUTPUT/
+mkdir ./_OUTPUT/content
+cp -r ./tool/EPUB3 ./_OUTPUT/content/
+mv ./_OUTPUT/readium/index.html ./_OUTPUT/content/
 
 cd ./tool/epub3-sliderizer/
 
@@ -24,21 +22,17 @@ echo "Class found: ${class}"
 else
 
 echo "Compiling: ${class}"
-javac -classpath ".:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" ./src/Main.java -d ./bin/ -sourcepath "${root}/tool/epub3-sliderizer/src" #-verbose
+
+javac -classpath ".:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" "${root}/tool/epub3-sliderizer/src/Main.java" -d "${root}/tool/epub3-sliderizer/bin/" -sourcepath "${root}/tool/epub3-sliderizer/src" #-verbose
 
 fi
 
-#exit
-
-
-DATA="_INPUT/data.txt"
-DATA_file="${root}/${DATA}"
+DATA_file="${root}/_INPUT/data.txt"
 DATA_url="file://${DATA_file}"
 
-EPUB_FOLDER="${root}/${OUTPUT_FOLDER_NAME}/content/EPUB3/OPS"
-#epub="${epub_folder}/EPUB3.epub"
+EPUB_FOLDER="${root}/_OUTPUT/content/EPUB3/OPS"
 
-echo "EPUB3-Slider in progress..."
+echo "EPUB3-Sliderization in progress..."
 echo ${DATA_file}
 echo ${EPUB_FOLDER}
 
@@ -50,10 +44,9 @@ java -classpath "${root}/tool/epub3-sliderizer/bin/:${root}/tool/epub3-sliderize
 #exit
 
 
-
 cd ${root}
 
-EPUB_FOLDER="${root}/${OUTPUT_FOLDER_NAME}/content/EPUB3/"
+EPUB_FOLDER="${root}/_OUTPUT/content/EPUB3/"
 
 find "${EPUB_FOLDER}" -name ".DS_Store" -depth -exec rm {} \;
 
@@ -62,6 +55,6 @@ find "${EPUB_FOLDER}" -name ".DS_Store" -depth -exec rm {} \;
 #     rm -f $x
 #   done
 
-java -jar ./tool/epubcheck/epubcheck.jar "${EPUB_FOLDER}" -mode exp -save
+java -jar "${root}/tool/epubcheck/epubcheck.jar" "${EPUB_FOLDER}" -mode exp -save
 
-open "${root}/${OUTPUT_FOLDER_NAME}/content/"
+open "${root}/_OUTPUT/content/"
