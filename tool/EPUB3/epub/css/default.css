@@ -509,29 +509,33 @@ a#epubReadingSystemLink
 }
 
 
-a.previous:link,
-a.next:link,
-a.previous:visited,
-a.next:visited,
-a.previous:active,
-a.next:active,
-a.toc:active,
-a.toc:link,
-a.toc:visited
+a#prevLink:link,
+a#nextLink:link,
+a#epubReadingSystemLink:link,
+a#prevLink:visited,
+a#nextLink:visited,
+a#epubReadingSystemLink:visited,
+a#prevLink:active,
+a#nextLink:active,
+a#epubReadingSystemLink:active,
+a#tocLink:active,
+a#tocLink:link,
+a#tocLink:visited
 {
     color:#3D6AA2;
 }
 
-a.previous:hover,
-a.next:hover,
-a.toc:hover
+a#prevLink:hover,
+a#nextLink:hover,
+a#tocLink:hover,
+a#epubReadingSystemLink:hover
 {
     background-color:#003399;
     color:white;
     text-decoration:none;
 }
 
-a.toc
+a#tocLink
 {
     padding:10px;
     padding-bottom:2px;
@@ -544,12 +548,13 @@ a.toc
 }
 
 
-a.previous
+a#prevLink,
+a#epubReadingSystemLink
 {
     left:15px;
 }
 
-a.next
+a#nextLink
 {
     right:15px;
 }
