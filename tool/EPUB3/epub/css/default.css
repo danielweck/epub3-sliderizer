@@ -203,11 +203,69 @@ html.resized > body:not(.epubReadingSystem)
 
 h1
 {
+    background-colorx:#3D6AA2;
+    background-colorx:rgba(10, 60, 150, 0.7);
+    background-color:#efefef;
+
+
+
+	background: rgb(238,238,238); /* Old browsers */
+
+	background: -moz-linear-gradient(top,  rgba(238,238,238,1) 0%, rgba(204,204,204,1) 100%); /* FF3.6+ */
+
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(204,204,204,1))); /* Chrome,Safari4+ */
+
+	background: -webkit-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* Chrome10+,Safari5.1+ */
+
+	background: -o-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* Opera 11.10+ */
+
+	background: -ms-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* IE10+ */
+
+	background: linear-gradient(to bottom,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* W3C */
+
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+
+
+
+
+
+
+
+    border-bottom: 8px solid #aaaaaa;
+    /*box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);	 */
+
+    colorx:rgb(61, 106, 162);
+
+    colorx:rgba(10, 60, 150, 0.5);
+
+    color:rgba(0, 0, 0, 0.5);
+
+    text-shadow:2px 2px 4px rgba(255, 255, 255, 1), 0 0 0 rgba(0, 0, 0, 0.5); /* 2px 2px 4px white; */
+	
+	
+
+    font-size:110%;
+
+    /*	font-family: georgia, palatino, "times new roman", serif;
+	'PT Sans Narrow', 
+	Calibri, 
+	'Myriad Pro', 
+	*/
+    font-family:Tahoma, "arial black", verdana, arial, sans-serif;
+
+    line-height:1em;
+    letter-spacing:0.03em;
+	
+
     margin:0;
-    margin-right:270px;
+/*    margin-right:270px; */
     padding:0.4em;
     padding-top:0.3em;
+	
+}
 
+.h1x
+{
     colorx:rgb(61, 106, 162);
     colorx:rgba(10, 60, 150, 0.7);
     colorx:rgba(0, 0, 0, 0.1);
@@ -237,17 +295,6 @@ h1
 
 	text-shadow: 3px 3px 0 rgba(0,0,0,0.35);
 
-    font-size:110%;
-
-    /*	font-family: georgia, palatino, "times new roman", serif;
-	'PT Sans Narrow', 
-	Calibri, 
-	'Myriad Pro', 
-	*/
-    font-family:Tahoma, "arial black", verdana, arial, sans-serif;
-
-    line-height:1em;
-    letter-spacing:0.03em;
 }
 
 div.portrait
@@ -454,14 +501,14 @@ html#nav ol li:before
 	margin-right: 0.3em;
 	
 	color: #efefef;
-    background-color: #333333;
+    background-color: #555555;
     background-colorx: #efefef;
 	
-	border-radius: 0.5em;
+	border-radius: 0.9em;
 	
-	padding: 0.2em;
-	padding-right: 0.4em;
-	padding-left: 0.4em;
+	padding: 0.3em;
+	padding-right: 0.6em;
+	padding-left: 0.6em;
     
 	counter-increment:item;
     content:counter(item);

@@ -1,28 +1,119 @@
 _TITLE
 EPUB3 Sliderizer
 
-_SUBTITLE
-web + e-books slide decks
-
 _CREATOR
 Daniel Weck
 
 _LOGO
-assets/EPUB.png
+assets/EPUB3-Sliderizer.png
 
 _COVER
 assets/EPUB.png
 
 _CSS_STYLE
-#logo
+
+html#nav #logo
 {
-	width: 140px;
-	height: 140px;
+top: auto !important;
+bottom: 50px !important;
+
+right: 30px !important;
+
+    -webkit-transform:rotate(-16deg); 
+       -moz-transform:rotate(-16deg);     
+        -ms-transform:rotate(-16deg);     
+         -o-transform:rotate(-16deg); 
+            transform:rotate(-16deg);
 }
 
-_NOTES
-Overall slide deck notes.
-(Not very interesting)
+html:not(#nav) #logo
+{
+top: 15px !important;
+right: 25px !important;
+
+	width: 200px;
+	height: 83px;
+}
+
+// ----------------------
+-SLIDE
+
+_CSS_STYLE
+
+@-webkit-keyframes pulse {
+from { border: 4px solid white; -webkit-box-shadow: 0 0 15px white; }
+/* 50% { } */
+to { border: 4px solid red; -webkit-box-shadow: 0 0 15px red; }
+}
+
+body:not(.epubReadingSystem) a#prevLink,
+body:not(.epubReadingSystem) a#nextLink,
+body:not(.epubReadingSystem) a#tocLink,
+body.epubReadingSystem a#epubReadingSystemLink
+{
+/*
+-webkit-transition: border 0.1s linear, box-shadow 0.1s linear;
+*/			
+
+border: 4px solid red;
+
+-webkit-box-shadow: 0 0 15px red;
+-moz-box-shadow: 0 0 15px red;
+-ms-box-shadow: 0 0 15px red;
+-o-box-shadow: 0 0 15px red;
+box-shadow: 0 0 15px red;
+
+-webkit-animation-name: pulse;
+-webkit-animation-timing-function: linear;
+-webkit-animation-duration: 1s;
+-webkit-animation-iteration-count: infinite;
+}
+
+_TITLE
+Why?
+
+_CONTENT
+
+<p>
+Because I can.
+
+// ----------------------
+-SLIDE
+
+_TITLE
+Seriously, why?
+
+_CONTENT
+
+<ol>
+<li>Started as a technical exercise
+<li>Slideshow = list of "pages"
+
+
+// ----------------------
+-SLIDE
+
+_TITLE
+How does it work?
+
+_CONTENT
+
+<ol>
+<li>Started as a technical exercise
+<li>Slideshow = list of "pages"
+
+
+
+// ----------------------
+-SLIDE
+
+_TITLE
+EPUB3 is ZIP
+
+_CONTENT
+
+<ol>
+<li>Started as a technical exercise
 
 // ----------------------
 -SLIDE
@@ -32,70 +123,142 @@ Why?
 
 _CONTENT
 
-<ol>
-<li>Bullet 1
-<ol>
-<li>Bullet 1.1
-<li>Bullet 1.2
-</ol>
-<li>Bullet 2
-<ol>
-<li>Bullet 2.1
-<li>Bullet 2.2
-<li>Bullet 3.2
-</ol>
-<li>Bullet 3
+<p>
+Because I can.
 
-_NOTES
-<p style="color: red;">
-Hi!
-My name is Daniel
-</p>
 // ----------------------
 -SLIDE
 
 _TITLE
-How?
+Seriously, why?
 
 _CONTENT
 
-<P>Javascript + CSS magic :)
 <ol>
-<LI>Bullet 1
-<ol>
-<lI>Bullet 1.1
-<li>Bullet 1.2
-</ol>
-<li>Bullet 2
-<ol>
-<li>Bullet 2.1
-<li>Bullet 2.2
-<li>Bullet 3.2
-</ol>
-<li>Bullet 3
-<ol>
-<li>Bullet 1
-<ol>
-<li>Bullet 1.1
-<li>Bullet 1.2
-</ol>
-<li>Bullet 2
-<ol>
-<li>Bullet 2.1
-<li>Bullet 2.2
-<li>Bullet 3.2
-</ol>
-<li>Bullet 3
-
-// ----------------------
--SLIDE
-
-_TITLE
-Another slide
+<li>Started as a technical exercise
+<li>Slideshow = list of "pages"
 
 
 // ----------------------
 -SLIDE
 
 _TITLE
-Yet other slide
+How does it work?
+
+_CONTENT
+
+<ol>
+<li>Started as a technical exercise
+<li>Slideshow = list of "pages"
+
+
+
+// ----------------------
+-SLIDE
+
+_TITLE
+EPUB3 is ZIP
+
+_CONTENT
+
+<ol>
+<li>Started as a technical exercise
+
+
+// ----------------------
+-SLIDE
+
+_TITLE
+Why?
+
+_CONTENT
+
+<p>
+Because I can.
+
+// ----------------------
+-SLIDE
+
+_TITLE
+Seriously, why?
+
+_CONTENT
+
+<ol>
+<li>Started as a technical exercise
+<li>Slideshow = list of "pages"
+
+
+// ----------------------
+-SLIDE
+
+_TITLE
+How does it work?
+
+_CONTENT
+
+<ol>
+<li>Started as a technical exercise
+<li>Slideshow = list of "pages"
+
+
+
+// ----------------------
+-SLIDE
+
+_TITLE
+EPUB3 is ZIP
+
+_CONTENT
+
+<ol>
+<li>Started as a technical exercise
+
+// ----------------------
+-SLIDE
+
+_TITLE
+Why?
+
+_CONTENT
+
+<p>
+Because I can.
+
+// ----------------------
+-SLIDE
+
+_TITLE
+Seriously, why?
+
+_CONTENT
+
+<ol>
+<li>Started as a technical exercise
+<li>Slideshow = list of "pages"
+
+
+// ----------------------
+-SLIDE
+
+_TITLE
+How does it work?
+
+_CONTENT
+
+<ol>
+<li>Started as a technical exercise
+<li>Slideshow = list of "pages"
+
+
+
+// ----------------------
+-SLIDE
+
+_TITLE
+EPUB3 is ZIP
+
+_CONTENT
+
+<ol>
+<li>Started as a technical exercise

@@ -711,7 +711,7 @@ if (this.epubReadingSystem != null)
 {
 	    var a = document.createElement('a');
 				a.id="epubReadingSystemLink";
-				
+				a.title="EPUB Reading System info";
 	    a.href = "javascript:window.alert(window.Daniel.epubReadingSystem.name + '_' + window.Daniel.epubReadingSystem.version)";
 //	    a.href = "javascript:window.parent.alert('daniel')";
 //	    a.className = 'previous';
@@ -751,6 +751,8 @@ if (this.next != "")
 {
     var a = document.createElement('a');
 			a.id="nextLink";
+				a.title="Next slide";
+				
     a.href = this.next;
 //    a.className = 'next';
     a.innerHTML = "&#9658;";
@@ -762,6 +764,8 @@ if (this.prev != "")
 {
     var a = document.createElement('a');
 			a.id="prevLink";
+				a.title="Previous slide";
+				
     a.href = this.prev;
 //    a.className = 'previous';
     a.innerHTML = "&#9668;";
@@ -772,6 +776,8 @@ if (this.prev != "")
 
 	var aa = document.createElement('a');
 	aa.id="tocLink";
+				aa.title="Menu slide";
+				
 	aa.href = this.toc;
 //	aa.className = 'toc';
 	aa.innerHTML = "&#9733;";
