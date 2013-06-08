@@ -19,8 +19,34 @@
     text-shadow:none;
 }
 
+.animatedz
+{
+	visibility: hidden !important;
+
+    -webkit-animation-iteration-count:0;
+    -moz-animation-iteration-count:0;
+    -ms-animation-iteration-count:0;
+    -o-animation-iteration-count:0;
+	animation-iteration-count:0;
+}
+
+/* OPERA HACK */
+@media (min-resolution: .001dpcm) {
+    _:-o-prefocus, .animatedz {
+animation-iteration-count: 1 !important;
+-o-animation-iteration-count: 1 !important;
+    };
+}
+
+.animated
+{
+	visibility: visible !important;
+}
+
 .animateStart
 {
+	visibility: visible !important;
+	
     -webkit-animation-iteration-count:1 !important;
     -moz-animation-iteration-count:1 !important;
     -ms-animation-iteration-count:1 !important;

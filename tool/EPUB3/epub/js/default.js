@@ -845,7 +845,7 @@ function ready() {
 					{
 						elem.classList.remove("animatedz");
 
-						elem.classList.add("animated"); // HIDES BY DEFAULT
+						elem.classList.add("animated"); // STOPPED BY DEFAULT
 						
 						elem.classList.add("animateStart"); // THEN ANIMATES
 					}

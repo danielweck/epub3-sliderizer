@@ -14,28 +14,10 @@ _CSS_STYLE
 
 #logo
 {
--PREFIXED_PROPERTY-animation-iteration-count: 0;
+opacity: 0.6;
 
 -PREFIXED_PROPERTY-animation-duration: 1s;
 -PREFIXED_PROPERTY-animation-delay: 0.5s;
-}
-
-/* OPERA HACK */
-@media (min-resolution: .001dpcm) {
-    _:-o-prefocus, #logo {
-animation-iteration-count: 1;
--o-animation-iteration-count: 1;
-    };
-}
-
-body.epubReadingSystem #logo
-{
-opacity: 1;
-}
-
-body:not(.epubReadingSystem) #logo
-{
-opacity: 0.6;
 }
 
 html#nav #logo
