@@ -40,7 +40,7 @@ java -classpath "${root}/tool/epub3-sliderizer/bin/:${root}/tool/epub3-sliderize
 
 
 
-#open ${EPUB_FOLDER}
+open ${EPUB_FOLDER}
 exit
 
 

@@ -75,7 +75,7 @@ public final class SlideShow extends Fielder {
 
 	public String NOTES = null;
 
-	public ArrayList<Slide> slides = new ArrayList<Slide>();
+	public final ArrayList<Slide> slides = new ArrayList<Slide>();
 
 	public void toString(Appendable appendable) throws Exception {
 

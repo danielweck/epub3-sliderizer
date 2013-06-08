@@ -103,6 +103,79 @@ public final class XHTML {
 		}
 	}
 
+	private final static String CSS_PREFIXED_PROP = "-PREFIXED_PROPERTY-";
+	private final static String[] CSS_PREFIXES = new String[] { "webkit",
+			"moz", "ms", "o" };
+
+	private static String processCssStyle(String css) throws Exception {
+		String style = css;
+
+		int i1 = -1;
+		int iStart = 0;
+		while ((i1 = style.indexOf(CSS_PREFIXED_PROP, iStart)) >= 0) {
+
+			String before = "";
+			if (i1 > 0) {
+				before = style.substring(0, i1);
+			}
+
+			int iOpeningComment = before.lastIndexOf("/*");
+
+			if (iOpeningComment >= 0) {
+
+				int iClosingComment = before.lastIndexOf("*/");
+
+				if (iClosingComment < iOpeningComment) {
+
+					iStart = i1 + CSS_PREFIXED_PROP.length();
+					continue;
+				}
+			}
+
+			int iSemicolon = style.indexOf(';', i1);
+			int iClosingCurlyBrace = style.indexOf('}', i1);
+
+			int iRight = -1;
+
+			if (iSemicolon < 0 && iClosingCurlyBrace < 0) {
+				iRight = style.length();
+			} else {
+				if (iSemicolon < 0) {
+					iSemicolon = Integer.MAX_VALUE;
+				}
+				if (iClosingCurlyBrace < 0) {
+					iClosingCurlyBrace = Integer.MAX_VALUE;
+				}
+				iRight = Math.min(iSemicolon, iClosingCurlyBrace);
+			}
+
+			String toReplace = style.substring(i1, iRight).trim();
+
+			String replacement = "\n";
+			for (String prefix : CSS_PREFIXES) {
+				replacement = replacement
+						+ toReplace.replaceAll(CSS_PREFIXED_PROP, "-" + prefix
+								+ "-") + ";\n";
+			}
+			replacement = replacement
+					+ toReplace.replaceAll(CSS_PREFIXED_PROP, "") + ";\n";
+
+			String after = "";
+			if (iRight < style.length()) {
+				after = style.substring(
+						((style.charAt(iRight) == ';' && iRight < style
+								.length() - 1) ? iRight + 1 : iRight), style
+								.length());
+			}
+
+			style = before + replacement + after;
+
+			iStart = i1 + replacement.length();
+		}
+
+		return style;
+	}
+
 	static Element create_Boilerplate(Document document, Slide slide,
 			SlideShow slideShow, String pathEpubFolder, int verbosity)
 			throws Exception {
@@ -223,8 +296,8 @@ public final class XHTML {
 			elementHead.appendChild(elementStyle);
 			elementStyle.setAttribute("type", "text/css");
 			elementStyle.appendChild(document.createTextNode("\n"));
-			elementStyle.appendChild(document
-					.createTextNode(slideShow.CSS_STYLE));
+			String css = processCssStyle(slideShow.CSS_STYLE);
+			elementStyle.appendChild(document.createTextNode(css));
 			elementStyle.appendChild(document.createTextNode("\n"));
 		}
 
@@ -233,7 +306,8 @@ public final class XHTML {
 			elementHead.appendChild(elementStyle);
 			elementStyle.setAttribute("type", "text/css");
 			elementStyle.appendChild(document.createTextNode("\n"));
-			elementStyle.appendChild(document.createTextNode(slide.CSS_STYLE));
+			String css = processCssStyle(slide.CSS_STYLE);
+			elementStyle.appendChild(document.createTextNode(css));
 			elementStyle.appendChild(document.createTextNode("\n"));
 		}
 
