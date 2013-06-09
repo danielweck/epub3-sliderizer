@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 
 _CSS_STYLE
 
-_PREFIXED_@keyframes pulse
+_PREFIXED_@keyframes pulsez
 {
    from
    {
@@ -113,8 +113,30 @@ Why?
 
 _CONTENT
 
+<div class="incremental auto">
 <p>
-Because I can.
+A1 asdfsdf
+<p>
+A2 sdfds sfsfs
+<p>
+A3 sfgsf
+</div>
+<ul class="incremental auto">
+<li>
+B1 sgsd
+<li>
+B2 sgsdg sdg
+<li>
+B3 sgasd
+</ul>
+<ol class="incremental auto">
+<li>
+C1 sfgs sfgs
+<li>
+C2 sdsdf
+<li>
+C3 sgsfsrgrgre
+</ol>
 
 // ----------------------
 -SLIDE
@@ -124,10 +146,30 @@ Seriously, why?
 
 _CONTENT
 
-<ol>
-<li>Started as a technical exercise
-<li>Slideshow = list of "pages"
-
+<div class="incremental">
+<p>
+A1 asdfsdf
+<p>
+A2 sdfds sfsfs
+<p>
+A3 sfgsf
+</div>
+<ul class="incremental">
+<li>
+B1 sgsd
+<li>
+B2 sgsdg sdg
+<li>
+B3 sgasd
+</ul>
+<ol class="incremental">
+<li>
+C1 sfgs sfgs
+<li>
+C2 sdsdf
+<li>
+C3 sgsfsrgrgre
+</ol>
 
 // ----------------------
 -SLIDE
