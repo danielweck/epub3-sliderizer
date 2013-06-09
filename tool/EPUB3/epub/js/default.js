@@ -386,6 +386,12 @@ Epub3Sliderizer.initReverse = function()
 	function getRank(fileName)
 	{
 		var rank = 0;
+		
+		if (fileName == null)
+		{
+			return rank;
+		}
+		
 		var unit = 1;
 		for (var i = fileName.length-1; i >= 0; i--)
 		{
@@ -454,10 +460,10 @@ Epub3Sliderizer.initReverse = function()
 	console.log("RANK this: " + thisRank);
 	console.log("RANK prev: " + prevRank);
 	
-	if (prevRank > thisRank)
+	if (prevRank >= thisRank)
 	{
 		this.reverse = true;
-		document.body.classList.add("epb3sldrzr-reverse");
+		//document.body.classList.add("epb3sldrzr-reverse");
 	}
 }
 
@@ -547,6 +553,8 @@ Epub3Sliderizer.initLinks = function()
 
 Epub3Sliderizer.initAnimations = function()
 {
+	querySelector$("#epb3sldrzr-body").style.visibility = "visible";
+	
 	//var elems = Array.prototype.slice.call(querySelector$$("img[class]"));
 	querySelectorForEach(
 		querySelector$$("*[class]"),
@@ -662,11 +670,11 @@ function readyFirst()
 
 	if (!Epub3Sliderizer.reverse)
 	{
-		querySelector$("#epb3sldrzr-body").classList.add("fadeInRight");
+		querySelector$("#epb3sldrzr-body").classList.add("fadeInRightBig");//bounceInRight
 	}
 	else
 	{
-		querySelector$("#epb3sldrzr-body").classList.add("bounceInLeft");
+		querySelector$("#epb3sldrzr-body").classList.add("fadeInLeftBig");//bounceInLeft
 	}
 	querySelector$("#epb3sldrzr-body").classList.add("epb3sldrzr-animated");
 }
