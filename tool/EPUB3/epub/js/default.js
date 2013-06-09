@@ -609,6 +609,11 @@ Epub3Sliderizer.init = function()
 		console.log(this.epubReadingSystem.name);
 		console.log(this.epubReadingSystem.version);
 	}
+	else if (this.readium)
+	{
+		//console.log(window.parent);
+		//console.log(window.parent.Readium);
+	}
 
 	if (this.epubReadingSystem != null || this.readium)
 	{
@@ -621,8 +626,17 @@ Epub3Sliderizer.init = function()
 		var a = document.createElement('a');
 		a.id = "epb3sldrzr-link-epubReadingSystem";
 		a.title = "EPUB Reading System info";
-		a.href = "javascript:window.alert(window.Epub3Sliderizer.epubReadingSystem.name + '_' + window.Epub3Sliderizer.epubReadingSystem.version)";
-		a.innerHTML = this.epubReadingSystem.name + '_' + this.epubReadingSystem.version;
+		
+		if (this.epubReadingSystem == null)
+		{
+			a.href = "javascript:window.alert('Readium')";
+			a.innerHTML = "Readium";
+		}
+		else
+		{
+			a.href = "javascript:window.alert(window.Epub3Sliderizer.epubReadingSystem.name + '_' + window.Epub3Sliderizer.epubReadingSystem.version)";
+			a.innerHTML = this.epubReadingSystem.name + '_' + this.epubReadingSystem.version;
+		}
 
 		document.body.insertBefore(a, document.body.children[0]);
 	}

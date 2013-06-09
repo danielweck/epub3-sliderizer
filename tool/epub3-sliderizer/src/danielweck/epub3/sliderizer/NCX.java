@@ -119,7 +119,7 @@ public final class NCX {
 			elementContent = document.createElement("content");
 			elementPageTarget.appendChild(elementContent);
 			elementContent.setAttribute("src", Epub3FileSet.HTML_FOLDER_NAME
-					+ "/" + XHTML.getFileName(i) + "#body");
+					+ "/" + XHTML.getFileName(i) + "#epb3sldrzr-title");
 		}
 
 		XmlDocument.save(document, pathEpubFolder + '/' + getFileName(),

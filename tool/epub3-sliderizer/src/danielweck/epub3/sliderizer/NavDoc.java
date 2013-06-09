@@ -91,7 +91,7 @@ public final class NavDoc {
 			Element elementAPageList = document.createElement("a");
 			elementLiPageList.appendChild(elementAPageList);
 			elementAPageList.setAttribute("href", Epub3FileSet.HTML_FOLDER_NAME
-					+ "/" + XHTML.getFileName(i) + "#body");
+					+ "/" + XHTML.getFileName(i) + "#epb3sldrzr-title");
 			elementAPageList.appendChild(document.createTextNode("" + i));
 		}
 	}

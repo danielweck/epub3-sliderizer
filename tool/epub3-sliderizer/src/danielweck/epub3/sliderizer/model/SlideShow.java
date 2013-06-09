@@ -58,8 +58,8 @@ public final class SlideShow extends Fielder {
 	public String RIGHTS = "Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)";
 	public String LICENSE = "http://creativecommons.org/licenses/by-sa/3.0/";
 
-	public String VIEWPORT_WIDTH = "1024";
-	public String VIEWPORT_HEIGHT = "768";
+	public String VIEWPORT_WIDTH = "1290";
+	public String VIEWPORT_HEIGHT = "1000";
 
 	public String FAVICON = "favicon.ico";
 

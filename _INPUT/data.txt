@@ -97,7 +97,9 @@ body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-epubReadingSystem
 
 border: 4px solid red;
 
+/*
 -PREFIXED_PROPERTY-box-shadow: 0 0 15px red;
+*/
 
 -PREFIXED_PROPERTY-animation-name: pulse;
 -PREFIXED_PROPERTY-animation-timing-function: linear;
