@@ -121,7 +121,7 @@ A2 sdfds sfsfs
 <p>
 A3 sfgsf
 </div>
-<ul class="incremental auto">
+<ul class="incremental">
 <li>
 B1 sgsd
 <li>

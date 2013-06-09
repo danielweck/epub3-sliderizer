@@ -177,7 +177,7 @@ Epub3Sliderizer.onKeyDown = function(keyDownEvent)
 	else if (keyDownEvent.keyCode == 32) // space
 	{
 		keyDownEvent.preventDefault();
-		this.gotoNext();
+		this.nextIncremental(false);
 	}
 	else if (keyDownEvent.keyCode == 77) // m
 	{
@@ -579,7 +579,7 @@ Epub3Sliderizer.reAnimate = function(elem)
 
 // ----------
 
-Epub3Sliderizer.invalidateIncremental = function()
+Epub3Sliderizer.invalidateIncremental = function(enableAuto)
 {
 	if (this.epubReadingSystem != null || this.readium)
 	{
@@ -624,6 +624,26 @@ Epub3Sliderizer.invalidateIncremental = function()
 			}
 			else if (i > that.increment)
 			{
+				if (enableAuto && (i == that.increment + 1))
+				{
+					//console.log(elem.parentNode.classList.toString());
+				
+					if (elem.classList.contains("auto")
+						||
+						elem.parentNode.classList.contains("auto"))
+						{
+						var auto = i;
+						setTimeout(function()
+						{
+							if (auto == that.increment + 1)
+							{
+								that.increment += 1;
+								that.invalidateIncremental(true);
+							}
+						}, 500);
+					}
+				}
+				
 				var found = false;
 				for (var j = 0; j < elem.parentNode.childNodes.length; j++)
 				{
@@ -672,7 +692,7 @@ Epub3Sliderizer.lastIncremental = function()
 	
 	this.increment = this.incrementals.length - 1;
 	
-	this.invalidateIncremental();
+	this.invalidateIncremental(false);
 }
 
 // ----------
@@ -686,7 +706,7 @@ Epub3Sliderizer.firstIncremental = function()
 	
 	this.increment = 0;
 	
-	this.invalidateIncremental();
+	this.invalidateIncremental(true);
 }
 
 // ----------
@@ -713,7 +733,7 @@ Epub3Sliderizer.nextIncremental = function(backward)
 	
 	this.increment = (backward ? (this.increment - 1) : (this.increment + 1));
 	
-	this.invalidateIncremental();
+	this.invalidateIncremental(!backward);
 }
 
 // ----------
@@ -782,6 +802,10 @@ Epub3Sliderizer.initIncrementals = function()
 	if (this.reverse)
 	{
 		this.lastIncremental();
+	}
+	else
+	{
+		this.firstIncremental();
 	}
 }
 
