@@ -542,6 +542,7 @@ html#epb3sldrzr-NavDoc ol li:before
 	content:counter(item);
 }
 
+a#epb3sldrzr-noteback,
 a#epb3sldrzr-notesref,
 a#epb3sldrzr-link-previous,
 a#epb3sldrzr-link-next,
@@ -568,16 +569,24 @@ a#epb3sldrzr-link-epubReadingSystem
 
 	border-radius:10px;
 
-	position:absolute;
-	z-index:20;
-	bottom:10px;
-
 	/*
 	-PREFIXED_PROPERTY-box-shadow: 2px 2px 4px rgba(255, 255, 255, 0.9), inset 2px 2px 6px rgba(0, 0, 0, 0.5);
 
 	*/
 }
 
+a#epb3sldrzr-notesref,
+a#epb3sldrzr-link-previous,
+a#epb3sldrzr-link-next,
+a#epb3sldrzr-link-toc,
+a#epb3sldrzr-link-epubReadingSystem
+{
+	position:absolute;
+	z-index:20;
+	bottom:10px;
+}
+
+a#epb3sldrzr-noteback:link,
 a#epb3sldrzr-notesref:link,
 a#epb3sldrzr-link-previous:link,
 a#epb3sldrzr-link-next:link,
@@ -595,6 +604,7 @@ a#epb3sldrzr-link-toc:visited
 	color:#3D6AA2;
 }
 
+a#epb3sldrzr-noteback:hover,
 a#epb3sldrzr-notesref:hover,
 a#epb3sldrzr-link-previous:hover,
 a#epb3sldrzr-link-next:hover,
@@ -630,10 +640,19 @@ a#epb3sldrzr-link-next
 	right:15px;
 }
 
+body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-noteback
+{
+	display: none;
+}
+
+a#epb3sldrzr-noteback
+{
+	float: right;
+}
+
 a#epb3sldrzr-notesref
 {
-	bottom:60px;
-	left:580px;
+	right:300px;
 }
 
 nav#epb3sldrzr-pageList

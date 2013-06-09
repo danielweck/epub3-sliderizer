@@ -111,6 +111,8 @@ public final class XHTML {
 			SlideShow slideShow, String pathEpubFolder, int verbosity,
 			boolean notes) throws Exception {
 
+		int i = slide == null ? -1 : slideShow.slides.indexOf(slide) + 1;
+
 		alreadyAddedHeadScripts.clear();
 		alreadyAddedHeadLinks.clear();
 
@@ -122,7 +124,6 @@ public final class XHTML {
 		if (slide == null) {
 			elementHtml.setAttribute("id", "epb3sldrzr-NavDoc");
 		} else {
-			int i = slideShow.slides.indexOf(slide) + 1;
 			elementHtml.setAttribute("id", "epb3sldrzr-Slide"
 					+ (notes ? "Notes" : "") + "_" + i);
 		}
@@ -231,7 +232,6 @@ public final class XHTML {
 			create_HeadLinks(XHTML.getFileName(1), document, elementHead,
 					"next", null, Epub3FileSet.HTML_FOLDER_NAME);
 		} else if (!notes) {
-			int i = slideShow.slides.indexOf(slide) + 1;
 
 			String prev = "../" + NavDoc.getFileName();
 			if (i > 1) {
@@ -349,6 +349,16 @@ public final class XHTML {
 					+ (notes ? "-NOTES" : ""));
 			// elementSpan.setAttribute("class", "fade smaller");
 			elementSpan.appendChild(document.createTextNode(subtitle));
+		}
+
+		if (notes) {
+			Element elementA = document.createElement("a");
+			elementA.setAttribute("href", XHTML.getFileName(i));
+			elementA.setAttribute("id", "epb3sldrzr-noteback");
+			elementA.appendChild(document.createTextNode("Back"));
+			Element elementP = document.createElement("p");
+			elementP.appendChild(elementA);
+			elementDiv.appendChild(elementP);
 		}
 
 		Element elementSection = document.createElement("section");
