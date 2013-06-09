@@ -291,10 +291,12 @@ Epub3Sliderizer.onResize = function()
 		return;
 	}
 
+	/*
 	if (document.body.classList.contains("epb3sldrzr-NOTES"))
 	{
 		return;
 	}
+	*/
 
 	var transformOrigin = "0px 0px";
 
@@ -343,10 +345,12 @@ Epub3Sliderizer.onOrientationChange = function()
 		return;
 	}
 
+	/*
 	if (document.body.classList.contains("epb3sldrzr-NOTES"))
 	{
 		return;
 	}
+	*/
 
 	var viewport = querySelector$("meta[name=viewport]");
 	if (typeof viewport != 'undefined')

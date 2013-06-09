@@ -171,7 +171,8 @@ public final class XHTML {
 				"shortcut icon", null, PATH_PREFIX
 						+ Epub3FileSet.IMG_FOLDER_NAME);
 
-		if (!notes && slideShow.VIEWPORT_WIDTH != null
+		if (//!notes &&
+				slideShow.VIEWPORT_WIDTH != null
 				&& slideShow.VIEWPORT_HEIGHT != null) {
 			Element elementMeta2 = document.createElement("meta");
 			elementHead.appendChild(elementMeta2);
@@ -302,7 +303,7 @@ public final class XHTML {
 		}
 
 		Element elementBody = null;
-		if (notes) {
+		if (false && notes) {
 			elementBody = elementBody_;
 		} else {
 			elementBody = document.createElement("div");
@@ -311,7 +312,8 @@ public final class XHTML {
 			elementBody_.appendChild(elementBody);
 		}
 
-		if (!notes && slideShow.LOGO != null) {
+		if (//!notes &&
+				slideShow.LOGO != null) {
 			String relativeDestinationPath = PATH_PREFIX
 					+ Epub3FileSet.IMG_FOLDER_NAME + '/' + slideShow.LOGO;
 
@@ -323,7 +325,7 @@ public final class XHTML {
 		}
 
 		Element elementDiv = null;
-		if (notes) {
+		if (false && notes) {
 			elementDiv = elementBody_;
 		} else {
 			elementDiv = document.createElement("div");
@@ -338,7 +340,9 @@ public final class XHTML {
 		elementH1.appendChild(document.createTextNode(title));
 
 		if (subtitle != null) {
-			if (slide == null || notes) {
+			if (slide == null
+					//|| notes
+					) {
 				Element elementLineBreak = document.createElement("br");
 				elementH1.appendChild(elementLineBreak);
 			}
@@ -463,7 +467,7 @@ public final class XHTML {
 			Element elementNotesRef = document.createElement("a");
 			elementSection.appendChild(elementNotesRef);
 			elementNotesRef.appendChild(document.createTextNode("Notes"));
-			elementNotesRef.setAttribute("id", "epb3sldrzr-notesref");
+			elementNotesRef.setAttribute("id", "epb3sldrzr-link-notesref");
 			elementNotesRef.setAttributeNS("http://www.idpf.org/2007/ops",
 					"epub:type", "noteref");
 
