@@ -2,6 +2,30 @@
 
 @namespace epub 'http://www.idpf.org/2007/ops'
 
+
+code
+{
+    padding:0;
+    margin:0;
+    font-size:70%;
+}
+
+div.code
+{
+    background:#FFF;
+
+    margin-right:90px;
+
+    padding:0.3em;
+
+    font-size:80%;
+
+    z-index:15;
+
+    -PREFIXED_PROPERTY-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+
 body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .incremental:not([incremental-active])
 {
 	visibility: hidden;
@@ -509,7 +533,7 @@ html#epb3sldrzr-NavDoc ol
 	list-style-type:none;
 	counter-reset:item;
 	margin-top:0.4em;
-		margin-left:0.4em;
+	margin-left:0.4em;
 
 	font-size:66%;
 }
@@ -529,6 +553,51 @@ html#epb3sldrzr-NavDoc ol li
 }
 
 html#epb3sldrzr-NavDoc ol li:before
+{
+	font-family:Tahoma, "arial black", verdana, arial, sans-serif;
+	font-size:80%;
+	
+	margin-right: 0.3em;
+	
+	color: #efefef;
+	background-colorx: #555555;
+	background-color: #0066FF; /* #003399; */
+	
+	border-radius: 0.9em;
+	
+	padding: 0.3em;
+	padding-right: 0.6em;
+	padding-left: 0.6em;
+	
+	counter-increment:item;
+	content:counter(item);
+}
+
+
+html:not(#epb3sldrzr-NavDoc) ol
+{
+	list-style-type:none;
+	counter-reset:item;
+	margin-top:0.4em;
+	margin-left:0.4em;
+
+	font-size:66%;
+}
+
+html:not(#epb3sldrzr-NavDoc) ol li
+{
+	float:left;
+	display:inline;
+	width:100%;
+
+	margin-top:0.2em;
+
+	list-style-type:none;
+	
+	padding-right: 0em;
+}
+
+html:not(#epb3sldrzr-NavDoc) ol li:before
 {
 	font-family:Tahoma, "arial black", verdana, arial, sans-serif;
 	font-size:80%;

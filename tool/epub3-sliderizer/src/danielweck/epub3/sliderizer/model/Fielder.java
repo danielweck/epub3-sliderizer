@@ -193,7 +193,13 @@ public abstract class Fielder {
 				if (lines.length() > 0) {
 					lines.append('\n');
 				}
-				lines.append(line);
+				if (line.charAt(0) == '\\') {
+					if (line.length() > 1) {
+						lines.append(line.substring(1));
+					}
+				} else {
+					lines.append(line);
+				}
 			}
 		}
 	}
