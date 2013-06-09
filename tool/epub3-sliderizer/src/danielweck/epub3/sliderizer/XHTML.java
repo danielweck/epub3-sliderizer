@@ -240,7 +240,8 @@ public final class XHTML {
 			elementHead.appendChild(elementStyle);
 			elementStyle.setAttribute("type", "text/css");
 			elementStyle.appendChild(document.createTextNode("\n"));
-			String css = Epub3FileSet.processCssStyle(slideShow.CSS_STYLE);
+			String css = Epub3FileSet.processCssStyle(slideShow,
+					slideShow.CSS_STYLE);
 			elementStyle.appendChild(document.createTextNode(css));
 			elementStyle.appendChild(document.createTextNode("\n"));
 		}
@@ -250,7 +251,8 @@ public final class XHTML {
 			elementHead.appendChild(elementStyle);
 			elementStyle.setAttribute("type", "text/css");
 			elementStyle.appendChild(document.createTextNode("\n"));
-			String css = Epub3FileSet.processCssStyle(slide.CSS_STYLE);
+			String css = Epub3FileSet.processCssStyle(slideShow,
+					slide.CSS_STYLE);
 			elementStyle.appendChild(document.createTextNode(css));
 			elementStyle.appendChild(document.createTextNode("\n"));
 		}

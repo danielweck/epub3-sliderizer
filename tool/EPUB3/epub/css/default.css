@@ -120,8 +120,8 @@ body
 
 	position:absolute;
 
-	width:1290px;
-	height:1000px;
+	width:VIEWPORT_WIDTHpx;
+	height:VIEWPORT_HEIGHTpx;
 
 	overflow:hidden;
 }
@@ -163,8 +163,8 @@ body div#epb3sldrzr-body
 	height:100%;
 
 /*	
-	width:1290px;
-	height:1000px;
+	width:VIEWPORT_WIDTHpx;
+	height:VIEWPORT_HEIGHTpx;
 
 	position:absolute;
 
@@ -181,8 +181,8 @@ img.full
 	top:0;
 	left:0;
 
-	width:1290px;
-	height:1000px;
+	width:VIEWPORT_WIDTHpx;
+	height:VIEWPORT_HEIGHTpx;
 
 	z-index:0;
 }

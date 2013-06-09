@@ -34,8 +34,8 @@ public final class Epub3FileSet {
 	private final static String[] CSS_PREFIXES = new String[] { "webkit",
 			"moz", "ms", "o" };
 
-	private static void processCssFile(File cssFile, int verbosity)
-			throws Exception {
+	private static void processCssFile(SlideShow slideShow, File cssFile,
+			int verbosity) throws Exception {
 		if (!cssFile.exists()) {
 			throw new FileNotFoundException(cssFile.getAbsolutePath());
 		}
@@ -62,7 +62,7 @@ public final class Epub3FileSet {
 			}
 		}
 
-		String updatedCSS = processCssStyle(strBuilder.toString());
+		String updatedCSS = processCssStyle(slideShow, strBuilder.toString());
 
 		FileWriter fileWriter = null;
 		try {
@@ -164,7 +164,8 @@ public final class Epub3FileSet {
 		return style;
 	}
 
-	public static String processCssStyle(String css) throws Exception {
+	public static String processCssStyle(SlideShow slideShow, String css)
+			throws Exception {
 		String style = css;
 
 		int i1 = -1;
@@ -232,6 +233,9 @@ public final class Epub3FileSet {
 
 		style = processCssStyle_(style);
 
+		style = style.replaceAll("VIEWPORT_WIDTH", slideShow.VIEWPORT_WIDTH);
+		style = style.replaceAll("VIEWPORT_HEIGHT", slideShow.VIEWPORT_HEIGHT);
+
 		return style;
 	}
 
@@ -277,8 +281,9 @@ public final class Epub3FileSet {
 			throw new FileNotFoundException(pathEpubFolder);
 		}
 
-		processCssFile(new File(pathEpubFolder, Epub3FileSet.CSS_FOLDER_NAME
-				+ "/" + Epub3FileSet.CSS_DEFAULT_NAME), verbosity);
+		processCssFile(slideShow, new File(pathEpubFolder,
+				Epub3FileSet.CSS_FOLDER_NAME + "/"
+						+ Epub3FileSet.CSS_DEFAULT_NAME), verbosity);
 
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.IMG_FOLDER_NAME,
 				slideShow.LOGO, verbosity);
