@@ -17,74 +17,27 @@ assets/EPUB.png
 // --------------------------------------------
 _CSS_STYLE
 
-#epb3sldrzr-logo.animated
+body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-logo.animated
 {
 	-PREFIXED_PROPERTY-animation-duration: 1.5s;
 	-PREFIXED_PROPERTY-animation-delay: 2s;
-	-PREFIXED_PROPERTY-animation-iteration-count: 1 !important;
 }
 
 html#epb3sldrzr-NavDoc #epb3sldrzr-logo
 {
-	top: auto !important;
-	bottom: 40px !important;
-
-	right: 500px !important;
+	bottom: 40px;
+	right: 500px;
 
 	/* -PREFIXED_PROPERTY-transform:rotate(-16deg); */
 }
 
 html:not(#epb3sldrzr-NavDoc) #epb3sldrzr-logo
 {
-	top: 15px !important;
-	right: 25px !important;
+	top: 15px;
+	right: 25px;
 
 	width: 200px;
 	height: 83px;
-}
-
-// --------------------------------------------
-_NOTES
-
-_PREFIXED_@keyframes pulse
-{
-   from
-   {
-   border: 4px solid white;
-   /* -PREFIXED_PROPERTY-box-shadow: 0 0 15px white; */
-   }
-
-   /* 50% { } */
-
-   to {
-   border: 4px solid red;
-   /* -PREFIXED_PROPERTY-box-shadow: 0 0 15px red; */
-   }
-}
-   
-
-html#epb3sldrzr-NavDoc body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-previous,
-html#epb3sldrzr-NavDoc body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-next,
-html#epb3sldrzr-NavDoc body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc,
-html#epb3sldrzr-NavDoc body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-epubReadingSystem,
-html#epb3sldrzr-Slide_1 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-previous,
-html#epb3sldrzr-Slide_1 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-next,
-html#epb3sldrzr-Slide_1 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc,
-html#epb3sldrzr-Slide_1 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-epubReadingSystem,
-html#epb3sldrzr-Slide_2 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-notesref
-{
-	/*
-	-PREFIXED_PROPERTY-transition: border 0.1s linear, box-shadow 0.1s linear;
-	-PREFIXED_PROPERTY-box-shadow: 0 0 15px red;
-	*/
-
-	border: 4px solid red;
-
-	-PREFIXED_PROPERTY-animation-name: pulse;
-	-PREFIXED_PROPERTY-animation-timing-function: linear;
-	-PREFIXED_PROPERTY-animation-duration: 1s;
-	-PREFIXED_PROPERTY-animation-iteration-count: infinite;
-	-PREFIXED_PROPERTY-animation-delay: 2s;
 }
 
 // --------------------------------------------
@@ -110,12 +63,68 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 // --------------------------------------------
 _CSS_STYLE
 
-#imgInc
+_PREFIXED_@keyframes pulse
 {
-	/* <img src="../img/assets/EPUB.png" class="epb3sldrzr-animated bounceInRight" id="imgInc"> */
-	-PREFIXED_PROPERTY-animation-duration: 1s;
+   from
+   {
+   opacity: 0;
+   /* -PREFIXED_PROPERTY-box-shadow: 0 0 15px white; */
+   }
+
+   /* 50% { } */
+
+   to {
+   opacity: 1;
+   /* -PREFIXED_PROPERTY-box-shadow: 0 0 15px red; */
+   }
+}
+
+body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-previous,
+body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-next,
+body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc
+{
+	opacity: 1;
+	border: 4px solid #FF0033;
+
+	-PREFIXED_PROPERTY-animation-name: pulse;
+	-PREFIXED_PROPERTY-animation-timing-function: linear;
+	-PREFIXED_PROPERTY-animation-duration: 0.8s;
+	-PREFIXED_PROPERTY-animation-iteration-count: infinite;
 	-PREFIXED_PROPERTY-animation-delay: 1s;
 }
+
+// --------------------------------------------
+_TITLE
+
+What's this?
+
+// --------------------------------------------
+_CONTENT
+
+<div class="auto incremental">
+
+<p>
+<!-- &#8658;&#xa0; -->
+EPUB3-Sliderizer creates <strong>HTML 5</strong> (web) and <strong>EPUB 3</strong> (e-book) slideshows, based on a simple single-file input format.
+</p>
+
+<p>
+This slide deck was made with EPUB3-Sliderizer, see the input file <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/data.txt">at GitHub</a> (the open-source code is there too).
+</p>
+
+<div class="boxed">
+<p>
+To navigate, press the <span style="padding-left: 5px; padding-right: 5px; background-color:#eeeeee; color: #3D6AA2; border: 4px solid #FF0033; border-radius:10px;">buttons</span> below or use the keyboard: 'm' for menu, space bar, arrow keys
+(up/down for bullets, left/right for slides).
+</p>
+</div>
+
+</div>
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
 
 // --------------------------------------------
 _TITLE
@@ -127,9 +136,9 @@ _CONTENT
 <ol class="incremental auto">
 
 <li>
-Simple plain-text syntax:
-<div class="code">
-<code>
+<strong>Simple plain-text syntax:</strong>
+<div class="boxed">
+<p class="code">
 	<span style="background: rgba(255, 0, 0, 0.2);">
 \	// This is a line comment -------------------
 	</span>
@@ -157,8 +166,9 @@ Simple plain-text syntax:
 	<span style="background: rgba(0, 255, 0, 0.2);">
 	assets/image.png
 	</span>
-</code>
+</p>
 </div>
+A line below.
 </li>
 
 
@@ -166,6 +176,15 @@ Simple plain-text syntax:
 CSS / Javascript snippets and HTML (look ma, no closing tags!)
 </li>
 
+<li>
+Testing...
+</li>
+<li>
+Testing...
+</li>
+<li>
+Testing...
+</li>
 <li>
 Testing...
 </li>
@@ -197,3 +216,110 @@ EPUB3 Sldrzr takes a
 - author basic HTML (look ma, no cloing tags!)
 - animations (animate.css)
 - 
+
+#imgInc
+{
+	/* <img src="../img/assets/EPUB.png" class="epb3sldrzr-animated bounceInRight" id="imgInc"> */
+	-PREFIXED_PROPERTY-animation-duration: 1s;
+	-PREFIXED_PROPERTY-animation-delay: 1s;
+}
+
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE

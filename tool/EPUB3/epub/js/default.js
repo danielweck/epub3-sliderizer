@@ -907,11 +907,11 @@ function readyFirst()
 
 	if (!Epub3Sliderizer.reverse)
 	{
-		querySelector$("#epb3sldrzr-body").classList.add("fadeInRightBig");//bounceInRight
+		querySelector$("#epb3sldrzr-body").classList.add("fadeInRight");//Big bounceInRight
 	}
 	else
 	{
-		querySelector$("#epb3sldrzr-body").classList.add("fadeInLeftBig");//bounceInLeft
+		querySelector$("#epb3sldrzr-body").classList.add("fadeInLeft");//Big bounceInLeft
 	}
 	querySelector$("#epb3sldrzr-body").classList.add("epb3sldrzr-animated");
 }
