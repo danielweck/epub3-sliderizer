@@ -1,9 +1,12 @@
 package danielweck.epub3.sliderizer;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -21,6 +24,216 @@ public final class Epub3FileSet {
 	final static String CSS_ANIMATE_NAME = "animate.css";
 
 	final static String JS_DEFAULT_NAME = "default.js";
+	final static String JS_SCREENFULL_NAME = "screenfull.js";
+	final static String JS_CLASSLIST_NAME = "classList.js";
+	// final static String JS_HISTORY_NAME = "history.js";
+	// final static String JS_JSON_NAME = "json2.js";
+
+	private final static String CSS_PREFIXED = "_PREFIXED_";
+	private final static String CSS_PREFIXED_PROP = "-PREFIXED_PROPERTY-";
+	private final static String[] CSS_PREFIXES = new String[] { "webkit",
+			"moz", "ms", "o" };
+
+	private static void processCssFile(File cssFile, int verbosity)
+			throws Exception {
+		if (!cssFile.exists()) {
+			throw new FileNotFoundException(cssFile.getAbsolutePath());
+		}
+
+		if (verbosity > 0) {
+			System.out.println(" ");
+			System.out.println("+++++ PROCESSING CSS: "
+					+ cssFile.getAbsolutePath());
+		}
+
+		StringBuilder strBuilder = new StringBuilder();
+		BufferedReader bufferedReader = null;
+		try {
+			bufferedReader = new BufferedReader(new FileReader(cssFile));
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				strBuilder.append(line);
+				strBuilder.append('\n');
+			}
+
+		} finally {
+			if (bufferedReader != null) {
+				bufferedReader.close();
+			}
+		}
+
+		String updatedCSS = processCssStyle(strBuilder.toString());
+
+		FileWriter fileWriter = null;
+		try {
+			fileWriter = new FileWriter(cssFile);
+			fileWriter.write(updatedCSS);
+		} finally {
+			if (fileWriter != null) {
+				fileWriter.close();
+			}
+		}
+
+		if (verbosity > 2) {
+			System.out.println(" ");
+			System.out.println("+++++ PROCESSED CSS: \n\n" + updatedCSS);
+		}
+	}
+
+	private static String processCssStyle_(String css) throws Exception {
+		String style = css;
+
+		int i1 = -1;
+		int iStart = 0;
+		while ((i1 = style.indexOf(CSS_PREFIXED, iStart)) >= 0) {
+
+			String before = "";
+			if (i1 > 0) {
+				before = style.substring(0, i1);
+			}
+
+			int iOpeningComment = before.lastIndexOf("/*");
+
+			if (iOpeningComment >= 0) {
+
+				int iClosingComment = before.lastIndexOf("*/");
+
+				if (iClosingComment < iOpeningComment) {
+
+					iStart = i1 + CSS_PREFIXED.length();
+					continue;
+				}
+			}
+
+			int iOpeningCurlyBrace = style.indexOf('{', i1);
+			int iClosingCurlyBrace = -1;
+
+			int depth = -1;
+
+			int i = iOpeningCurlyBrace;
+			while (i < style.length()) {
+				if (style.charAt(i) == '{') {
+					depth++;
+					i++;
+					continue;
+				}
+				if (style.charAt(i) == '}') {
+					depth--;
+
+					if (depth == -1) {
+						iClosingCurlyBrace = i;
+						break;
+					}
+				}
+
+				i++;
+			}
+
+			int iRight = iClosingCurlyBrace;
+
+			String toReplace = style.substring(i1, iRight).trim();
+
+			String matchKeyFrames = CSS_PREFIXED + "@";
+			boolean isKeyFrames = toReplace.indexOf(matchKeyFrames) == 0;
+
+			String matchSelection = CSS_PREFIXED + "::";
+			boolean isSelection = toReplace.indexOf(matchSelection) == 0;
+
+			String replacement = "\n";
+			for (String prefix : CSS_PREFIXES) {
+				replacement = replacement
+						+ (isKeyFrames ? toReplace.replaceAll(matchKeyFrames,
+								"@-" + prefix + "-") : (isSelection ? toReplace
+								.replaceAll(matchSelection, "::-" + prefix
+										+ "-") : toReplace.replaceAll(
+								CSS_PREFIXED, "-" + prefix + "-"))) + "\n}\n";
+			}
+			replacement = replacement + toReplace.replaceAll(CSS_PREFIXED, "")
+					+ "\n}\n";
+
+			String after = "";
+			if (iRight < style.length() - 1) {
+				after = style.substring(iRight + 1, style.length());
+			}
+
+			style = before + replacement + after;
+
+			iStart = i1 + replacement.length();
+		}
+
+		return style;
+	}
+
+	public static String processCssStyle(String css) throws Exception {
+		String style = css;
+
+		int i1 = -1;
+		int iStart = 0;
+		while ((i1 = style.indexOf(CSS_PREFIXED_PROP, iStart)) >= 0) {
+
+			String before = "";
+			if (i1 > 0) {
+				before = style.substring(0, i1);
+			}
+
+			int iOpeningComment = before.lastIndexOf("/*");
+
+			if (iOpeningComment >= 0) {
+
+				int iClosingComment = before.lastIndexOf("*/");
+
+				if (iClosingComment < iOpeningComment) {
+
+					iStart = i1 + CSS_PREFIXED_PROP.length();
+					continue;
+				}
+			}
+
+			int iSemicolon = style.indexOf(';', i1);
+			int iClosingCurlyBrace = style.indexOf('}', i1);
+
+			int iRight = -1;
+
+			if (iSemicolon < 0 && iClosingCurlyBrace < 0) {
+				iRight = style.length();
+			} else {
+				if (iSemicolon < 0) {
+					iSemicolon = Integer.MAX_VALUE;
+				}
+				if (iClosingCurlyBrace < 0) {
+					iClosingCurlyBrace = Integer.MAX_VALUE;
+				}
+				iRight = Math.min(iSemicolon, iClosingCurlyBrace);
+			}
+
+			String toReplace = style.substring(i1, iRight).trim();
+
+			String replacement = "\n";
+			for (String prefix : CSS_PREFIXES) {
+				replacement = replacement
+						+ toReplace.replaceAll(CSS_PREFIXED_PROP, "-" + prefix
+								+ "-") + ";\n";
+			}
+			replacement = replacement
+					+ toReplace.replaceAll(CSS_PREFIXED_PROP, "") + ";\n";
+
+			String after = "";
+			if (iRight < style.length()) {
+				after = style.substring(
+						((style.charAt(iRight) == ';' && iRight < style
+								.length() - 1) ? iRight + 1 : iRight), style
+								.length());
+			}
+
+			style = before + replacement + after;
+
+			iStart = i1 + replacement.length();
+		}
+
+		style = processCssStyle_(style);
+
+		return style;
+	}
 
 	private static void handleFile(SlideShow slideShow, String pathEpubFolder,
 			String destFolder, String path, int verbosity) throws Exception {
@@ -63,6 +276,9 @@ public final class Epub3FileSet {
 		if (!epubFolder.isDirectory()) {
 			throw new FileNotFoundException(pathEpubFolder);
 		}
+
+		processCssFile(new File(pathEpubFolder, Epub3FileSet.CSS_FOLDER_NAME
+				+ "/" + Epub3FileSet.CSS_DEFAULT_NAME), verbosity);
 
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.IMG_FOLDER_NAME,
 				slideShow.LOGO, verbosity);
@@ -123,7 +339,7 @@ public final class Epub3FileSet {
 		OutputStream outStream = null;
 		try {
 			fileDst.getParentFile().mkdirs();
-			
+
 			inStream = new FileInputStream(fileSrc);
 			outStream = new FileOutputStream(fileDst);
 

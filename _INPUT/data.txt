@@ -12,15 +12,13 @@ assets/EPUB.png
 
 _CSS_STYLE
 
-#logo
+#epb3sldrzr-logo
 {
-opacity: 0.6;
-
 -PREFIXED_PROPERTY-animation-duration: 1s;
--PREFIXED_PROPERTY-animation-delay: 0.5s;
+-PREFIXED_PROPERTY-animation-delay: 1s;
 }
 
-html#nav #logo
+html#epb3sldrzr-NavDoc #epb3sldrzr-logo
 {
 top: auto !important;
 bottom: 50px !important;
@@ -30,7 +28,7 @@ right: 30px !important;
 -PREFIXED_PROPERTY-transform:rotate(-16deg);
 }
 
-html:not(#nav) #logo
+html:not(#epb3sldrzr-NavDoc) #epb3sldrzr-logo
 {
 top: 15px !important;
 right: 25px !important;
@@ -41,38 +39,34 @@ height: 83px;
 
 _JS_SCRIPT
 
-function animateLogo()
+function setupAnimations()
 {
-	var html = document.documentElement; //document.body
-	if (html.id == "nav")
+	var html = document.documentElement;
+	if (html.id == "epb3sldrzr-NavDoc")
 	{
-		//$("#logo").classList.add("rotateIn");
+		//querySelector$("#epb3sldrzr-logo").classList.add("rotateIn");
 		
-		//$("#logo").classList.add("rollIn");
+		//querySelector$("#epb3sldrzr-logo").classList.add("rollIn");
 		
-		//$("#logo").classList.add("tada");
+		//querySelector$("#epb3sldrzr-logo").classList.add("tada");
 		
-		//$("#logo").classList.add("bounceInLeft");
+		//querySelector$("#epb3sldrzr-logo").classList.add("bounceInLeft");
 		
-		$("#logo").classList.add("fadeIn");
-		//$("#logo").classList.add("fadeInLeft");
-	}
-	else
-	{
-		$("#logo").classList.add("fadeInLeft");
-		//$("#logo").classList.add("bounceInLeft");
-	}
+		querySelector$("#epb3sldrzr-logo").classList.add("fadeIn");
+		//querySelector$("#epb3sldrzr-logo").classList.add("fadeInLeft");
 
-	$("#logo").classList.add("animatedz");
+		querySelector$("#epb3sldrzr-logo").classList.add("epb3sldrzr-animated");
+	}
 }
-document.addEventListener("DOMContentLoaded", function(e) { animateLogo(); }, false);
+//document.addEventListener("DOMContentLoaded", function(e) { setTimeout(setupAnimations, 100); }, false);
+document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
 
 // ----------------------
 -SLIDE
 
 _CSS_STYLE
 
-@keyframes pulse
+_PREFIXED_@keyframes pulse
 {
    from
    {
@@ -89,10 +83,10 @@ _CSS_STYLE
 }
    
 
-body:not(.epubReadingSystem) a#prevLink,
-body:not(.epubReadingSystem) a#nextLink,
-body:not(.epubReadingSystem) a#tocLink,
-body.epubReadingSystem a#epubReadingSystemLink
+body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-previous,
+body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-next,
+body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc,
+body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-epubReadingSystem
 {
 /*
 	-PREFIXED_PROPERTY-transition: border 0.1s linear, box-shadow 0.1s linear;

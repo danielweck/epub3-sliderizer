@@ -27,7 +27,7 @@ public final class NavDoc {
 		if (slideShow.NOTES != null) {
 			Element elementNotes = document.createElement("div");
 			elementSection.getParentNode().appendChild(elementNotes);
-			elementNotes.setAttribute("id", "notes");
+			elementNotes.setAttribute("id", "epb3sldrzr-notes");
 			// elementNotes.appendChild(document.createTextNode("SLIDE NOTES:"));
 			XHTML.create_Content(elementNotes, document, slideShow.NOTES,
 					slideShow, pathEpubFolder, verbosity);
@@ -43,7 +43,7 @@ public final class NavDoc {
 
 		Element elementNavToc = document.createElement("nav");
 		elementSection.appendChild(elementNavToc);
-		elementNavToc.setAttribute("id", "toc");
+		elementNavToc.setAttribute("id", "epb3sldrzr-toc");
 		elementNavToc.setAttributeNS("http://www.idpf.org/2007/ops",
 				"epub:type", "toc");
 
@@ -52,7 +52,7 @@ public final class NavDoc {
 
 		Element elementNavPageList = document.createElement("nav");
 		elementSection.appendChild(elementNavPageList);
-		elementNavPageList.setAttribute("id", "pageList");
+		elementNavPageList.setAttribute("id", "epb3sldrzr-pageList");
 		elementNavPageList.setAttributeNS("http://www.idpf.org/2007/ops",
 				"epub:type", "page-list");
 

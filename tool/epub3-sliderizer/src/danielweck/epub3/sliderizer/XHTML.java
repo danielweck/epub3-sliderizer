@@ -103,79 +103,6 @@ public final class XHTML {
 		}
 	}
 
-	private final static String CSS_PREFIXED_PROP = "-PREFIXED_PROPERTY-";
-	private final static String[] CSS_PREFIXES = new String[] { "webkit",
-			"moz", "ms", "o" };
-
-	private static String processCssStyle(String css) throws Exception {
-		String style = css;
-
-		int i1 = -1;
-		int iStart = 0;
-		while ((i1 = style.indexOf(CSS_PREFIXED_PROP, iStart)) >= 0) {
-
-			String before = "";
-			if (i1 > 0) {
-				before = style.substring(0, i1);
-			}
-
-			int iOpeningComment = before.lastIndexOf("/*");
-
-			if (iOpeningComment >= 0) {
-
-				int iClosingComment = before.lastIndexOf("*/");
-
-				if (iClosingComment < iOpeningComment) {
-
-					iStart = i1 + CSS_PREFIXED_PROP.length();
-					continue;
-				}
-			}
-
-			int iSemicolon = style.indexOf(';', i1);
-			int iClosingCurlyBrace = style.indexOf('}', i1);
-
-			int iRight = -1;
-
-			if (iSemicolon < 0 && iClosingCurlyBrace < 0) {
-				iRight = style.length();
-			} else {
-				if (iSemicolon < 0) {
-					iSemicolon = Integer.MAX_VALUE;
-				}
-				if (iClosingCurlyBrace < 0) {
-					iClosingCurlyBrace = Integer.MAX_VALUE;
-				}
-				iRight = Math.min(iSemicolon, iClosingCurlyBrace);
-			}
-
-			String toReplace = style.substring(i1, iRight).trim();
-
-			String replacement = "\n";
-			for (String prefix : CSS_PREFIXES) {
-				replacement = replacement
-						+ toReplace.replaceAll(CSS_PREFIXED_PROP, "-" + prefix
-								+ "-") + ";\n";
-			}
-			replacement = replacement
-					+ toReplace.replaceAll(CSS_PREFIXED_PROP, "") + ";\n";
-
-			String after = "";
-			if (iRight < style.length()) {
-				after = style.substring(
-						((style.charAt(iRight) == ';' && iRight < style
-								.length() - 1) ? iRight + 1 : iRight), style
-								.length());
-			}
-
-			style = before + replacement + after;
-
-			iStart = i1 + replacement.length();
-		}
-
-		return style;
-	}
-
 	static Element create_Boilerplate(Document document, Slide slide,
 			SlideShow slideShow, String pathEpubFolder, int verbosity)
 			throws Exception {
@@ -189,7 +116,7 @@ public final class XHTML {
 				"http://www.w3.org/1999/xhtml", "html");
 		document.appendChild(elementHtml);
 		if (slide == null) {
-			elementHtml.setAttribute("id", "nav");
+			elementHtml.setAttribute("id", "epb3sldrzr-NavDoc");
 		}
 
 		elementHtml.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
@@ -264,6 +191,23 @@ public final class XHTML {
 				null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
 
+		create_HeadScripts(Epub3FileSet.JS_SCREENFULL_NAME, document,
+				elementHead, null, // "text/javascript",
+				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+
+		create_HeadScripts(Epub3FileSet.JS_CLASSLIST_NAME, document,
+				elementHead, null, // "text/javascript",
+				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+
+		// create_HeadScripts(Epub3FileSet.JS_HISTORY_NAME, document,
+		// elementHead,
+		// null, // "text/javascript",
+		// PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+		//
+		// create_HeadScripts(Epub3FileSet.JS_JSON_NAME, document, elementHead,
+		// null, // "text/javascript",
+		// PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+
 		create_HeadScripts(slideShow.FILES_JS, document, elementHead, null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
 
@@ -296,7 +240,7 @@ public final class XHTML {
 			elementHead.appendChild(elementStyle);
 			elementStyle.setAttribute("type", "text/css");
 			elementStyle.appendChild(document.createTextNode("\n"));
-			String css = processCssStyle(slideShow.CSS_STYLE);
+			String css = Epub3FileSet.processCssStyle(slideShow.CSS_STYLE);
 			elementStyle.appendChild(document.createTextNode(css));
 			elementStyle.appendChild(document.createTextNode("\n"));
 		}
@@ -306,7 +250,7 @@ public final class XHTML {
 			elementHead.appendChild(elementStyle);
 			elementStyle.setAttribute("type", "text/css");
 			elementStyle.appendChild(document.createTextNode("\n"));
-			String css = processCssStyle(slide.CSS_STYLE);
+			String css = Epub3FileSet.processCssStyle(slide.CSS_STYLE);
 			elementStyle.appendChild(document.createTextNode(css));
 			elementStyle.appendChild(document.createTextNode("\n"));
 		}
@@ -332,11 +276,14 @@ public final class XHTML {
 			elementScript.appendChild(document.createTextNode("\n"));
 		}
 
-		Element elementBody = document.createElement("body");
-		elementHtml.appendChild(elementBody);
-		elementBody.setAttribute("id", "body");
-		elementBody.setAttributeNS("http://www.idpf.org/2007/ops", "epub:type",
-				"bodymatter");
+		Element elementBody_ = document.createElement("body");
+		elementHtml.appendChild(elementBody_);
+		elementBody_.setAttributeNS("http://www.idpf.org/2007/ops",
+				"epub:type", "bodymatter");
+
+		Element elementBody = document.createElement("div");
+		elementBody.setAttribute("id", "epb3sldrzr-body");
+		elementBody_.appendChild(elementBody);
 
 		if (slideShow.LOGO != null) {
 
@@ -345,16 +292,17 @@ public final class XHTML {
 
 			Element elementImg = document.createElement("img");
 			elementBody.appendChild(elementImg);
-			elementImg.setAttribute("id", "logo");
+			elementImg.setAttribute("id", "epb3sldrzr-logo");
 			elementImg.setAttribute("alt", "");
 			elementImg.setAttribute("src", relativeDestinationPath);
 		}
 
 		Element elementDiv = document.createElement("div");
 		elementBody.appendChild(elementDiv);
-		elementDiv.setAttribute("id", "root");
+		elementDiv.setAttribute("id", "epb3sldrzr-root");
 
 		Element elementH1 = document.createElement("h1");
+		elementH1.setAttribute("id", "epb3sldrzr-title");
 		elementDiv.appendChild(elementH1);
 		elementH1.appendChild(document.createTextNode(title));
 
@@ -366,13 +314,14 @@ public final class XHTML {
 			Element elementSpan = document.createElement("span");
 			elementH1.appendChild(document.createTextNode(" "));
 			elementH1.appendChild(elementSpan);
-			elementSpan.setAttribute("class", "fade smaller");
+			elementSpan.setAttribute("id", "epb3sldrzr-subtitle");
+			// elementSpan.setAttribute("class", "fade smaller");
 			elementSpan.appendChild(document.createTextNode(subtitle));
 		}
 
 		Element elementSection = document.createElement("section");
 		elementDiv.appendChild(elementSection);
-		elementSection.setAttribute("id", "content");
+		elementSection.setAttribute("id", "epb3sldrzr-content");
 
 		return elementSection;
 	}
@@ -450,7 +399,7 @@ public final class XHTML {
 		if (slide.NOTES != null) {
 			Element elementNotes = document.createElement("div");
 			elementSection.getParentNode().appendChild(elementNotes);
-			elementNotes.setAttribute("id", "notes");
+			elementNotes.setAttribute("id", "epb3sldrzr-notes");
 			// elementNotes.appendChild(document.createTextNode("SLIDE NOTES:"));
 			create_Content(elementNotes, document, slide.NOTES, slideShow,
 					pathEpubFolder, verbosity);

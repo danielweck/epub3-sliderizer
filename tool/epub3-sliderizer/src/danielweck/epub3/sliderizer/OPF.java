@@ -197,6 +197,22 @@ public final class OPF {
 				elementManifest, "js-default", false,
 				Epub3FileSet.JS_FOLDER_NAME, null);
 
+		create_ManifestItem(Epub3FileSet.JS_SCREENFULL_NAME, document,
+				elementManifest, "js-screenfull", false,
+				Epub3FileSet.JS_FOLDER_NAME, null);
+
+		create_ManifestItem(Epub3FileSet.JS_CLASSLIST_NAME, document,
+				elementManifest, "js-classList", false,
+				Epub3FileSet.JS_FOLDER_NAME, null);
+
+		// create_ManifestItem(Epub3FileSet.JS_HISTORY_NAME, document,
+		// elementManifest, "js-history", false,
+		// Epub3FileSet.JS_FOLDER_NAME, null);
+		//
+		// create_ManifestItem(Epub3FileSet.JS_JSON_NAME, document,
+		// elementManifest, "js-json", false,
+		// Epub3FileSet.JS_FOLDER_NAME, null);
+
 		create_ManifestItem(Epub3FileSet.CSS_DEFAULT_NAME, document,
 				elementManifest, "css-default", false,
 				Epub3FileSet.CSS_FOLDER_NAME, null);
