@@ -291,6 +291,11 @@ Epub3Sliderizer.onResize = function()
 		return;
 	}
 
+	if (document.body.classList.contains("epb3sldrzr-NOTES"))
+	{
+		return;
+	}
+
 	var transformOrigin = "0px 0px";
 
 	document.body.style.MozTransformOrigin = transformOrigin;
@@ -334,6 +339,11 @@ Epub3Sliderizer.onResize = function()
 Epub3Sliderizer.onOrientationChange = function()
 {
 	if (this.epubReadingSystem != null || this.readium)
+	{
+		return;
+	}
+
+	if (document.body.classList.contains("epb3sldrzr-NOTES"))
 	{
 		return;
 	}

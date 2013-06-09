@@ -258,6 +258,12 @@ public final class OPF {
 					elementManifest, id, false, Epub3FileSet.HTML_FOLDER_NAME,
 					"scripted");
 
+			if (slide.NOTES != null) {
+				create_ManifestItem(XHTML.getFileName_Notes(n), document,
+						elementManifest, id.replaceAll("page_", "page_Notes"),
+						false, Epub3FileSet.HTML_FOLDER_NAME, "scripted");
+			}
+
 			create_ManifestItem(slide.FILES_CSS, document, elementManifest,
 					"css", true, Epub3FileSet.CSS_FOLDER_NAME, null);
 
@@ -306,6 +312,16 @@ public final class OPF {
 			elementItemRef.setAttribute("idref", id);
 			elementItemRef.setAttribute("properties", left ? "page-spread-left"
 					: "page-spread-right");
+
+			if (slide.NOTES != null) {
+				elementItemRef = document.createElement("itemref");
+				elementSpine.appendChild(elementItemRef);
+				elementItemRef.setAttribute("idref",
+						id.replaceAll("page_", "page_Notes"));
+				elementItemRef.setAttribute("properties",
+						"rendition:layout-reflowable");
+				elementItemRef.setAttribute("linear", "no");
+			}
 
 			left = !left;
 		}

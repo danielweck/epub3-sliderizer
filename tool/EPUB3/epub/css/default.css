@@ -97,7 +97,7 @@ a:active
 
 *
 {
-	-PREFIXED_PROPERTY-box-sizing:border-box;
+/*	-PREFIXED_PROPERTY-box-sizing:border-box; */
 
 	margin:0;
 	padding:0;
@@ -110,13 +110,10 @@ html
 	-PREFIXED_PROPERTY-background-clip:border-box;
 	-PREFIXED_PROPERTY-background-origin:padding-box;
 	-PREFIXED_PROPERTY-background-size:auto;
+	-PREFIXED_PROPERTY-background-attachment:scroll;
+	-PREFIXED_PROPERTY-background-image:url(../img/back.png);
 
-	background-attachment:scroll;
-	background-clip:border-box;
-	background-image:url(../img/back.png);
-	background-origin:padding-box;
-	background-size:auto;
-	box-sizing:border-box;
+	-PREFIXED_PROPERTY-box-sizing:border-box;
 }
 
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body
@@ -129,7 +126,18 @@ body.epb3sldrzr-epubReadingSystem *.epb3sldrzr-notEpubReadingSystem
 	display: none;
 }
 
-body
+body.epb3sldrzr-NOTES
+{
+	background-color:#efefef;
+	background-color:white;
+
+
+	font-size:30px;
+
+	font-family:Tahoma, verdana, arial, sans-serif;
+}
+
+body:not(.epb3sldrzr-NOTES)
 {
 
 	-PREFIXED_PROPERTY-box-sizing:content-box;
@@ -144,7 +152,7 @@ body
 	overflow:hidden;
 }
 
-body div#epb3sldrzr-body
+body:not(.epb3sldrzr-NOTES) div#epb3sldrzr-body
 {
 -PREFIXED_PROPERTY-animation-duration: 1s;
 -PREFIXED_PROPERTY-animation-delay: 0s;
@@ -218,7 +226,8 @@ img.hr
 	height:40px;
 }
 
-h1#epb3sldrzr-title
+h1#epb3sldrzr-title,
+h1#epb3sldrzr-title-NOTES
 {
 	background-colorx:#3D6AA2;
 	background-colorx:rgba(10, 60, 150, 0.7);
@@ -272,6 +281,7 @@ h1#epb3sldrzr-title
 	'Myriad Pro', 
 	*/
 	font-family:Tahoma, "arial black", verdana, arial, sans-serif;
+	
 
 	line-height:1em;
 	letter-spacing:0.03em;
@@ -283,6 +293,7 @@ h1#epb3sldrzr-title
 	padding-top:0.3em;
 	
 }
+
 
 .h1x
 {
@@ -412,8 +423,16 @@ div#epb3sldrzr-root
 	overflow:auto;
 }
 
+div#epb3sldrzr-root-NOTES
+{
+	width:100%;
+	height:100%;
 
-section#epb3sldrzr-content
+}
+
+
+section#epb3sldrzr-content,
+section#epb3sldrzr-content-NOTES
 {
 	/* background-color: white;
 	background-color: rgba(240,240,240,0.9); */
@@ -422,7 +441,8 @@ section#epb3sldrzr-content
 	margin:20px;
 }
 
-section#epb3sldrzr-content > p
+section#epb3sldrzr-content > p,
+section#epb3sldrzr-content-NOTES > p
 {
 	margin-left:1em;
 }
@@ -522,6 +542,7 @@ html#epb3sldrzr-NavDoc ol li:before
 	content:counter(item);
 }
 
+a#epb3sldrzr-notesref,
 a#epb3sldrzr-link-previous,
 a#epb3sldrzr-link-next,
 a#epb3sldrzr-link-toc,
@@ -557,7 +578,7 @@ a#epb3sldrzr-link-epubReadingSystem
 	*/
 }
 
-
+a#epb3sldrzr-notesref:link,
 a#epb3sldrzr-link-previous:link,
 a#epb3sldrzr-link-next:link,
 a#epb3sldrzr-link-epubReadingSystem:link,
@@ -574,6 +595,7 @@ a#epb3sldrzr-link-toc:visited
 	color:#3D6AA2;
 }
 
+a#epb3sldrzr-notesref:hover,
 a#epb3sldrzr-link-previous:hover,
 a#epb3sldrzr-link-next:hover,
 a#epb3sldrzr-link-toc:hover,
@@ -606,6 +628,12 @@ a#epb3sldrzr-link-epubReadingSystem
 a#epb3sldrzr-link-next
 {
 	right:15px;
+}
+
+a#epb3sldrzr-notesref
+{
+	bottom:60px;
+	left:580px;
 }
 
 nav#epb3sldrzr-pageList

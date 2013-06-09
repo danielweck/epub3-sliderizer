@@ -19,7 +19,7 @@ public final class NavDoc {
 		Document document = XmlDocument.create();
 
 		Element elementSection = XHTML.create_Boilerplate(document, null,
-				slideShow, pathEpubFolder, verbosity);
+				slideShow, pathEpubFolder, verbosity, false);
 
 		create_ContentFragment(elementSection, document, slideShow,
 				pathEpubFolder, verbosity);
