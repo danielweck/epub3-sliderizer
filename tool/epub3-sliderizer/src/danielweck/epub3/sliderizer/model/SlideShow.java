@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;
 
+import danielweck.epub3.sliderizer.Epub3FileSet;
+
 public final class SlideShow extends Fielder {
 
 	SlideShow() throws Exception {
@@ -43,20 +45,20 @@ public final class SlideShow extends Fielder {
 	public String TITLE = "DEFAULT TITLE";
 	public String SUBTITLE = null;
 
-	public String SUMMARY = "DEFAULT SUMMARY";
-	public String DESCRIPTION = "DEFAULT DESCRIPTION";
-	public String SUBJECT = "DEFAULT SUBJECT";
+	public String SUMMARY = null;
+	public String DESCRIPTION = null;
+	public String SUBJECT = null;
 
-	public String CREATOR = "DEFAULT CREATOR";
-	public String PUBLISHER = "DEFAULT PUBLISHER";
+	public String CREATOR = Epub3FileSet.THIS;
+	public String PUBLISHER = null;
 
 	public String IDENTIFIER = "DEFAULT-UID";
 
 	public String LANGUAGE = "en-US";
 	public String PAGE_DIR = "ltr";
 
-	public String RIGHTS = "Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)";
-	public String LICENSE = "http://creativecommons.org/licenses/by-sa/3.0/";
+	public String RIGHTS = null;
+	public String LICENSE = null;
 
 	public String VIEWPORT_WIDTH = "1290";
 	public String VIEWPORT_HEIGHT = "1000";
@@ -64,7 +66,7 @@ public final class SlideShow extends Fielder {
 	public String FAVICON = "favicon.ico";
 
 	public String LOGO = null;
-	
+
 	public String COVER = null;
 
 	public String FILES_CSS = null;

@@ -15,6 +15,8 @@ import danielweck.epub3.sliderizer.model.SlideShow;
 
 public final class Epub3FileSet {
 
+	public final static String THIS = "EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer";
+
 	final static String HTML_FOLDER_NAME = "html";
 	final static String JS_FOLDER_NAME = "js";
 	final static String IMG_FOLDER_NAME = "img";

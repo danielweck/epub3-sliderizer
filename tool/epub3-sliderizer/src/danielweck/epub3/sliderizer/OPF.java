@@ -56,18 +56,23 @@ public final class OPF {
 				XMLConstants.XMLNS_ATTRIBUTE + ":dcterms",
 				"http://purl.org/dc/terms/");
 
-		if (slideShow.COVER != null) {
-			Element elementMeta = document.createElement("meta");
-			elementMetadata.appendChild(elementMeta);
-			elementMeta.setAttribute("name", "cover");
-			elementMeta.setAttribute("content", COVER_ID);
-		}
-
+		Element elementMeta_ = document.createElement("meta");
+		elementMetadata.appendChild(elementMeta_);
+		elementMeta_.setAttribute("property", "dcterms:contributor");
+		elementMeta_.appendChild(document.createTextNode(Epub3FileSet.THIS));
+		
 		if (slideShow.DATE != null) {
 			Element elementMeta = document.createElement("meta");
 			elementMetadata.appendChild(elementMeta);
 			elementMeta.setAttribute("property", "dcterms:modified");
 			elementMeta.appendChild(document.createTextNode(slideShow.DATE));
+		}
+
+		if (slideShow.COVER != null) {
+			Element elementMeta = document.createElement("meta");
+			elementMetadata.appendChild(elementMeta);
+			elementMeta.setAttribute("name", "cover");
+			elementMeta.setAttribute("content", COVER_ID);
 		}
 
 		if (slideShow.IDENTIFIER != null) {

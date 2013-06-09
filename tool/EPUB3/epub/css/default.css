@@ -468,7 +468,7 @@ ol
 	margin:0;
 	padding:0;
 
-	margin-top:1em;
+	margin-top:1.5em;
 	margin-left:1em;
 }
 
@@ -485,6 +485,8 @@ ol li
 ul
 {
 	list-style-type:square;
+
+	margin-left:2em;
 }
 
 ol
@@ -581,7 +583,7 @@ Slide content
 	padding:0;
 
 	padding:1em;
-	padding-bottom:0.5em;
+	padding-bottom:0em;
 	
 	line-height: 1.4em;
 }
@@ -596,13 +598,22 @@ Slide content
 	padding:1em;
 }
 
-#epb3sldrzr-content div.boxed > *,
-#epb3sldrzr-content-NOTES div.boxed > *
+#epb3sldrzr-content div.boxed > p,
+#epb3sldrzr-content-NOTES div.boxed > p
 {
-	background: white;
+	padding-bottom:1em;
 	
-
+	background: white;
 	-PREFIXED_PROPERTY-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+#epb3sldrzr-content div.boxed > h3,
+#epb3sldrzr-content-NOTES div.boxed > h3
+{
+	padding:0;
+	margin:0;
+	
+	line-height: 0;
 }
 
 #epb3sldrzr-content li div.boxed,
