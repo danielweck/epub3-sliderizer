@@ -31,7 +31,8 @@ _PREFIXED_::selection
 	text-shadow:none;
 }
 
-.epb3sldrzr-animated
+.epb3sldrzr-animated,
+.animated
 {
 	visibility: hidden;
 
@@ -43,16 +44,11 @@ body.epb3sldrzr-epubReadingSystem .epb3sldrzr-animated
 	visibility: visible !important;
 }
 
-.animated
+.animated.epb3sldrzr-animateStart
 {
-	/* visibility: visible !important; */
-}
-
-.epb3sldrzr-animateStart
-{
-	visibility: visible !important;
+	visibility: visible;
 	
-	-PREFIXED_PROPERTY-animation-iteration-count: 1 !important;
+	-PREFIXED_PROPERTY-animation-iteration-count: 1;
 }
 
 /* OPERA HACK */
@@ -60,8 +56,8 @@ body.epb3sldrzr-epubReadingSystem .epb3sldrzr-animated
 {
 	_:-o-prefocus, .epb3sldrzr-animated
 	{
-animation-iteration-count: 1 !important;
--o-animation-iteration-count: 1 !important;
+animation-iteration-count: 1;
+-o-animation-iteration-count: 1;
 	}
 }
 

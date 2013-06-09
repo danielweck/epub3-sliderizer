@@ -14,8 +14,9 @@ _CSS_STYLE
 
 #epb3sldrzr-logo
 {
--PREFIXED_PROPERTY-animation-duration: 1s;
+-PREFIXED_PROPERTY-animation-duration: 1.5s;
 -PREFIXED_PROPERTY-animation-delay: 2s;
+-PREFIXED_PROPERTY-animation-iteration-count: infinite !important;
 }
 
 html#epb3sldrzr-NavDoc #epb3sldrzr-logo
