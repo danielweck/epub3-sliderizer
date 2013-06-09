@@ -595,12 +595,6 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto)
 			this.incrementals,
 			function(elem)
 			{
-				/*
-				if (elem.parentNode.classList.contains("incremental-active"))
-				{
-					elem.parentNode.classList.remove("incremental-active");
-				}
-				*/
 				elem.parentNode.removeAttribute("incremental-active");
 				elem.removeAttribute("aria-selected");
 			}
@@ -666,16 +660,10 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto)
 			}
 			else if (i == that.increment)
 			{
-				//this.reAnimate(elem);
-				
-				/*
-				if (!elem.parentNode.classList.contains("incremental-active"))
-				{
-					elem.parentNode.classList.add("incremental-active");
-				}
-				*/
 				elem.parentNode.setAttribute("incremental-active", "true");
 				elem.setAttribute("aria-selected", "true");
+				
+				that.reAnimate(elem);
 			}
 		}
 	);
