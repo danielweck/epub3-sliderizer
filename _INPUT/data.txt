@@ -12,21 +12,21 @@ assets/EPUB.png
 
 _CSS_STYLE
 
-#epb3sldrzr-logo
+#epb3sldrzr-logo.animated
 {
 -PREFIXED_PROPERTY-animation-duration: 1.5s;
 -PREFIXED_PROPERTY-animation-delay: 2s;
--PREFIXED_PROPERTY-animation-iteration-count: infinite !important;
+-PREFIXED_PROPERTY-animation-iteration-count: 1 !important;
 }
 
 html#epb3sldrzr-NavDoc #epb3sldrzr-logo
 {
 top: auto !important;
-bottom: 50px !important;
+bottom: 40px !important;
 
-right: 30px !important;
+right: 500px !important;
 
--PREFIXED_PROPERTY-transform:rotate(-16deg);
+/* -PREFIXED_PROPERTY-transform:rotate(-16deg); */
 }
 
 html:not(#epb3sldrzr-NavDoc) #epb3sldrzr-logo
@@ -37,38 +37,6 @@ right: 25px !important;
 width: 200px;
 height: 83px;
 }
-
-_JS_SCRIPT
-
-function setupAnimations()
-{
-	var html = document.documentElement;
-	if (html.id == "epb3sldrzr-NavDoc")
-	{
-		//querySelector$("#epb3sldrzr-logo").classList.add("rotateIn");
-		
-		//querySelector$("#epb3sldrzr-logo").classList.add("rollIn");
-		
-		//querySelector$("#epb3sldrzr-logo").classList.add("tada");
-		
-		//querySelector$("#epb3sldrzr-logo").classList.add("bounceInLeft");
-		
-		//querySelector$("#epb3sldrzr-logo").classList.add("fadeIn");
-		
-		//querySelector$("#epb3sldrzr-logo").classList.add("fadeInLeft");
-
-		querySelector$("#epb3sldrzr-logo").classList.add("swing");
-
-		querySelector$("#epb3sldrzr-logo").classList.add("epb3sldrzr-animated");
-	}
-}
-//document.addEventListener("DOMContentLoaded", function(e) { setTimeout(setupAnimations, 100); }, false);
-document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
-
-// ----------------------
--SLIDE
-
-_CSS_STYLE
 
 _PREFIXED_@keyframes pulse
 {
@@ -87,10 +55,14 @@ _PREFIXED_@keyframes pulse
 }
    
 
-body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-previous,
-body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-next,
-body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc,
-body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-epubReadingSystem
+html#epb3sldrzr-NavDoc body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-previous,
+html#epb3sldrzr-NavDoc body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-next,
+html#epb3sldrzr-NavDoc body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc,
+html#epb3sldrzr-NavDoc body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-epubReadingSystem,
+html#epb3sldrzr-Slide_1 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-previous,
+html#epb3sldrzr-Slide_1 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-next,
+html#epb3sldrzr-Slide_1 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc,
+html#epb3sldrzr-Slide_1 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-epubReadingSystem
 {
 /*
 	-PREFIXED_PROPERTY-transition: border 0.1s linear, box-shadow 0.1s linear;
@@ -102,12 +74,46 @@ border: 4px solid red;
 -PREFIXED_PROPERTY-box-shadow: 0 0 15px red;
 */
 
--PREFIXED_PROPERTY-animation-name: pulsezzz;
+-PREFIXED_PROPERTY-animation-name: pulse;
 -PREFIXED_PROPERTY-animation-timing-function: linear;
 -PREFIXED_PROPERTY-animation-duration: 1s;
 -PREFIXED_PROPERTY-animation-iteration-count: infinite;
--PREFIXED_PROPERTY-animation-delay: 3s;
+-PREFIXED_PROPERTY-animation-delay: 2s;
 }
+
+_JS_SCRIPT
+
+function setupAnimations()
+{
+	var html = document.documentElement;
+	if (html.id == "epb3sldrzr-NavDoc")
+	{
+		//querySelector$("#epb3sldrzr-logo").classList.add("rotateIn");
+		
+		//querySelector$("#epb3sldrzr-logo").classList.add("rollIn");
+		
+		//querySelector$("#epb3sldrzr-logo").classList.add("tada");
+		
+		//querySelector$("#epb3sldrzr-logo").classList.add("bounceInLeft");
+		
+		querySelector$("#epb3sldrzr-logo").classList.add("fadeInUp");
+		
+		//querySelector$("#epb3sldrzr-logo").classList.add("fadeInLeft");
+
+		//querySelector$("#epb3sldrzr-logo").classList.add("swing");
+
+
+
+		querySelector$("#epb3sldrzr-logo").classList.add("epb3sldrzr-animated");
+	}
+}
+//document.addEventListener("DOMContentLoaded", function(e) { setTimeout(setupAnimations, 100); }, false);
+document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
+
+// ----------------------
+-SLIDE
+
+_CSS_STYLE
 
 #imgInc
 {

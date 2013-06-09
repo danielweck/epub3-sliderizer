@@ -117,6 +117,9 @@ public final class XHTML {
 		document.appendChild(elementHtml);
 		if (slide == null) {
 			elementHtml.setAttribute("id", "epb3sldrzr-NavDoc");
+		} else {
+			int i = slideShow.slides.indexOf(slide) + 1;
+			elementHtml.setAttribute("id", "epb3sldrzr-Slide_" + i);
 		}
 
 		elementHtml.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
