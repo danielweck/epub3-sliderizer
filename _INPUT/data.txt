@@ -433,7 +433,40 @@ _CONTENT
 
 // --------------------------------------------
 _TITLE
-SLIDE
+Long content
+
+// --------------------------------------------
+_SUBTITLE
+(overflow)
+
+// --------------------------------------------
+_CONTENT
+
+<p>Long slide content can be scrolled:
+<ol>
+<li>I wonder...
+<li>what could be
+<li>at the bottom
+<li>of this list?
+<li>Perhaps I should
+<li>scroll down...
+<li>to find out.
+<li>All the way down...
+<li>a bit more.
+<li>Let me guess...
+<li>That? No way.
+<li>Ah, maybe.
+<li>OMG!
+<li>It's a...
+<li>...
+<li>kitten!!!
+</ol>
+<p style="text-align: center;">
+<img src="../img/assets/kitten.jpg">
+
+_FILES_IMG
+assets/kitten.jpg
+
 
 // #########################################################
 // #########################################################
