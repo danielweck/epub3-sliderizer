@@ -54,6 +54,10 @@ html:not(#epb3sldrzr-NavDoc) #epb3sldrzr-logo
 {
 	background: rgba(0, 0, 0, 0.2);
 }
+.magenta
+{
+	background: #ff00ff;
+}
 
 // --------------------------------------------
 _JS_SCRIPT
@@ -376,7 +380,7 @@ _CONTENT
 </div>
 
 <div class="boxed">
-<h3>Supports these too:</h3>
+<h3>These are supported too:</h3>
 <p class="code">
 	<span class="pale-blue">
 	_PREFIXED_</span><span class="pale-green">::selection { ... }</span>
@@ -411,17 +415,41 @@ _CONTENT
 <br>
 	<span class="pale-green">&lt;img src="../img/assets/logo.png"</span>
 	<br>
-	<span class="pale-green">class="</span><span class="pale-red">epb3sldrzr-animated</span><span class="pale-green"> </span><span class="pale-red">bounceInRight</span><span class="pale-green"> </span><span class="pale-grey">my-logo</span><span class="pale-green">"&gt;</span>
+	<span class="pale-green">class="</span><span class="pale-red">epb3sldrzr-animated</span><span class="pale-green"> </span><span class="magenta">bounceInLeft</span><span class="pale-green"> </span><span class="pale-grey">my-logo</span><span class="pale-green">"&gt;</span>
 <br>
 <br>
 	<span class="pale-blue">
 \	_CSS_STYLE</span>
 <br>
-	<span class="pale-green">img.</span><span class="pale-grey">my-logo</span><span class="pale-green"> {<br>-PREFIXED_PROPERTY-animation-duration: 1s;<br>-PREFIXED_PROPERTY-animation-delay: 0.5s; }</span>
+	<span class="pale-green">img.</span><span class="pale-grey">my-logo</span><span class="pale-green"> {<br>-PREFIXED_PROPERTY-animation-duration: 1.5s;<br>-PREFIXED_PROPERTY-animation-delay: 1s;<br>-PREFIXED_PROPERTY-animation-iteration-count: infinite; }</span>
 </p>
 </div>
 
-<p><em>Note</em>: the <span class="code">epb3sldrzr-animated</span> class (defined by EPUB3-Sliderizer) controls the initial firing of animations, to avoid premature triggers due to preloading pages in e-book readers.
+<p><em>Note</em>: the <span class="code pale-red">epb3sldrzr-animated</span> class (defined by EPUB3-Sliderizer) controls the initial firing of animations, to avoid premature triggers due to preloading pages in e-book readers.
+
+// --------------------------------------------
+_CSS_STYLE
+
+img#epb3sldrzr-logo
+{
+	-PREFIXED_PROPERTY-animation-duration: 1.5s;
+	-PREFIXED_PROPERTY-animation-delay: 1s;
+
+	-PREFIXED_PROPERTY-animation-iteration-count: infinite;
+}
+
+// --------------------------------------------
+_JS_SCRIPT
+
+function setupAnimations()
+{
+	var html = document.documentElement;
+	var elem = querySelector$("#epb3sldrzr-logo");
+	elem.classList.add("bounceInLeft");
+	elem.classList.add("epb3sldrzr-animated");
+}
+//setTimeout(setupAnimations, 100);
+document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
 
 
 // #########################################################
@@ -431,93 +459,7 @@ _CONTENT
 
 // --------------------------------------------
 _TITLE
-Wish list
-
-// --------------------------------------------
-_CONTENT
-
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-Long content
+Long slide
 
 // --------------------------------------------
 _SUBTITLE
@@ -526,7 +468,7 @@ _SUBTITLE
 // --------------------------------------------
 _CONTENT
 
-<p>Long slide content can be <strong>scrolled</strong>:
+<p>If necessary, slide content can be <strong>scrolled</strong>:
 <ol>
 <li>I wonder...
 <li>what could be
