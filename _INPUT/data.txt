@@ -25,10 +25,8 @@ body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-logo.animated
 
 html#epb3sldrzr-NavDoc #epb3sldrzr-logo
 {
-	bottom: 40px;
+	bottom: 30px;
 	right: 500px;
-
-	/* -PREFIXED_PROPERTY-transform:rotate(-16deg); */
 }
 
 html:not(#epb3sldrzr-NavDoc) #epb3sldrzr-logo
@@ -52,7 +50,7 @@ function setupAnimations()
 		querySelector$("#epb3sldrzr-logo").classList.add("epb3sldrzr-animated");
 	}
 }
-//document.addEventListener("DOMContentLoaded", function(e) { setTimeout(setupAnimations, 100); }, false);
+//setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
 
 // #########################################################
@@ -61,82 +59,63 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 -SLIDE
 
 // --------------------------------------------
+_TITLE
+What is that?
+
+// --------------------------------------------
+_CONTENT
+ 
+<a href="https://github.com/danielweck/epub3-sliderizer/" style="border: 0; padding: 0; margin: 0; float: right; ">
+<img style="border: 0; padding: 0; margin: 0; width: 200px; height: 200px;" src="../img/assets/forkme.png" alt="Fork me on GitHub"/>
+</a>
+
+<div class="auto incremental">
+  
+<p>
+EPUB3-Sliderizer creates slideshows in <strong>HTML 5</strong> (web) and <strong>EPUB 3</strong> (e-book) formats, based on a simple plain-text input format.
+
+<p>
+See the <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/data.txt" target="_blank">input file</a> for this slidedeck.
+EPUB3-Sliderizer is a free and open-source tool (<a href="https://github.com/danielweck/epub3-sliderizer/" target="_blank">GitHub</a>).
+
+<div class="boxed epb3sldrzr-notEpubReadingSystem" style="margin-top: 1em;">
+<p style="line-height: 1.7em;">
+To navigate, press the <span style="padding-left: 0.3em; padding-right: 0.3em; background-color:#eeeeee; color: #3D6AA2; border: 4px solid #ff00ff; border-radius:10px;">&#8226;</span> buttons below or use the keyboard: <span class="keyboard">m</span> (menu), <span class="keyboard" title="up">&#8593;</span> previous / <span class="keyboard" title="down">&#8595;</span> next "bullet point" (space bar also), <span class="keyboard" title="left">&#8592;</span> previous / <span class="keyboard" title="right">&#8594;</span> next slides.
+</p>
+</div>
+
+<div class="boxed epb3sldrzr-epubReadingSystem" style="margin-top: 1em;">
+<h3>Tip</h3>
+<p>
+Depending on which EPUB3 reading system you are using ("e-reader" app or device),
+you can navigate these slides by <strong>flipping the pages</strong> of the e-book (left/right tap or swipe).
+</p>
+</div>
+
+</div>
+
+// --------------------------------------------
+_FILES_IMG
+
+assets/forkme.png
+
+// --------------------------------------------
 _CSS_STYLE
-
-.key
-{
-	padding-left: 0.2em;
-	padding-right: 0.2em;
-
-	background-color: #D0D0D0;
-	
-	border-top: 4px solid #E0E0E0;
-	border-left: 4px solid #E0E0E0;
-	border-bottom: 4px solid #A8A8A8;
-	border-right: 4px solid #A8A8A8;
-}
-
-_PREFIXED_@keyframes pulse
-{
-   from
-   {
-   opacity: 0;
-   /* -PREFIXED_PROPERTY-box-shadow: 0 0 15px white; */
-   }
-
-   /* 50% { } */
-
-   to {
-   opacity: 1;
-   /* -PREFIXED_PROPERTY-box-shadow: 0 0 15px red; */
-   }
-}
 
 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-previous,
 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-next,
 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc
 {
 	opacity: 1;
-	border: 4px solid #FF0033;
+		
+	border: 4px solid #ff00ff;
 
-	-PREFIXED_PROPERTY-animation-name: pulse;
+	-PREFIXED_PROPERTY-animation-name: onoff;
 	-PREFIXED_PROPERTY-animation-timing-function: linear;
 	-PREFIXED_PROPERTY-animation-duration: 1.8s;
 	-PREFIXED_PROPERTY-animation-iteration-count: infinite;
 	-PREFIXED_PROPERTY-animation-delay: 1s;
 }
-
-// --------------------------------------------
-_TITLE
-
-What's that?
-
-// --------------------------------------------
-_CONTENT
-
-<div class="auto incremental">
-
-<p>
-<!-- &#8658;&#xa0; -->
-EPUB3-Sliderizer creates <strong>HTML 5</strong> (web) and <strong>EPUB 3</strong> (e-book) slideshows, based on a simple plain-text input format.
-</p>
-
-<p>
-In fact, this slide deck was made with EPUB3-Sliderizer. <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/data.txt">Click here</a> to see the input file (link to GitHub).
-</p>
-
-<p>
-EPUB3-Sliderizer is a free and open-source tool.
-</p>
-
-<div class="boxed" style="margin-top: 0.3em;">
-<h3>Tip</h3>
-<p style="line-height: 1.7em;">
-To navigate, press the <span style="padding-left: 5px; padding-right: 5px; background-color:#eeeeee; color: #3D6AA2; border: 4px solid #FF0033; border-radius:10px;">buttons</span> below or use the keyboard: <span class="key">m</span> (menu), <span class="key" title="up">&#8593;</span> previous / <span class="key" title="down">&#8595;</span> next "bullet point" (space bar also), <span class="key" title="left">&#8592;</span> previous / <span class="key" title="right">&#8594;</span> next slides.
-</p>
-</div>
-
-</div>
 
 // #########################################################
 // #########################################################
@@ -150,10 +129,53 @@ Why EPUB3?
 // --------------------------------------------
 _CONTENT
 
-<ul>
-<li><strong>HTML5 slide decks</strong>: live presentations, online archiving / viewing
-<li><strong>EPUB3 e-books</strong>: redistributable single-file archive (zip), offline reading ("page flipping")
+<!-- &#xa0; -->
+<ul style="list-style-type: none;">
+<li>
+<img src="../img/assets/HTML5.png" class="epb3sldrzr-animated bounceInRight animated-logos">
+<strong>HTML5 slide deck</strong>: great for live presentations <br/> + online viewing / browsing
 
+<li>
+<img src="../img/assets/EPUB.png" class="epb3sldrzr-animated bounceInRight animated-logos later">
+<strong>EPUB3 e-book</strong>: standalone redistributable file <br/> &#8658; offline reading (<span style="font-family: monospace;">book.epub</span> = zip archive)
+</ul>
+
+<p>Internally, EPUB3 uses (X)HTML5, CSS, Javscript, SVG, MathML etc. EPUB3 is a structured container for web documents.
+
+<div class="boxed" style="margin-top: 0.4em;">
+
+<p>EPUB3-Sliderizer generates a <strong>single</strong> fileset, which delivers <strong>both</strong> the <em>web</em> and <em>e-book</em> functions.
+
+
+// --------------------------------------------
+_FILES_IMG
+
+assets/HTML5.png
+
+
+// --------------------------------------------
+_CSS_STYLE
+
+.animated-logos
+{
+	margin-right: 1em;
+
+	float: left;
+
+	width: 125px;
+	height: 125px;
+	
+	-PREFIXED_PROPERTY-animation-duration: 1s;
+	-PREFIXED_PROPERTY-animation-delay: 0.5s;
+}
+
+.later
+{	
+	-PREFIXED_PROPERTY-animation-delay: 1s;
+}
+
+
+</div>
 
 // #########################################################
 // #########################################################
@@ -162,101 +184,167 @@ _CONTENT
 
 // --------------------------------------------
 _TITLE
-Usage
+Syntax
+
+// --------------------------------------------
+_SUBTITLE
+(slideshow)
 
 // --------------------------------------------
 _CONTENT
 
-<ol class="incremental auto">
-
-<li>
-<strong>Simple plain-text syntax:</strong>
 <div class="boxed">
 <p class="code">
-	<span style="background: rgba(255, 0, 0, 0.2);">
-\	// This is a line comment -------------------
-	</span>
-<br />
 	<span style="background: rgba(0, 0, 255, 0.2);">
 \	_TITLE
 	</span>
-<br />
+<br>
 	<span style="background: rgba(0, 255, 0, 0.2);">
-	This is my slideshow title.
+	The slideshow title
 	</span>
-<br />
+<br>
 	<span style="background: rgba(0, 0, 255, 0.2);">
 \	_CREATOR
 	</span>
-<br />
+<br>
 	<span style="background: rgba(0, 255, 0, 0.2);">
-	Put your name here :)
+	Your name / organisation
 	</span>
-<br />
+<br>
 	<span style="background: rgba(0, 0, 255, 0.2);">
 \	_COVER
 	</span>
-<br />
+<br>
 	<span style="background: rgba(0, 255, 0, 0.2);">
-	assets/image.png
+	assets/cover-image.png
+	</span>
+<br>
+<br>
+	<span style="background: rgba(0, 0, 255, 0.2);">
+\	_CSS_STYLE
+	</span>
+<br>
+	<span style="background: rgba(0, 255, 0, 0.2);">
+	.myClass { color: red; }
+	</span>
+<br>
+	<span style="background: rgba(0, 0, 255, 0.2);">
+\	_FILES_CSS
+	</span>
+<br>
+	<span style="background: rgba(0, 255, 0, 0.2);">
+	assets/my-styles.css
+	</span>
+<br>
+<br>
+	<span style="background: rgba(0, 0, 255, 0.2);">
+\	_JS_SCRIPT
+	</span>
+<br>
+	<span style="background: rgba(0, 255, 0, 0.2);">
+	document.addEventListener("DOMContentLoaded", function(e) { alert("hello!"); }, false);
+	</span>
+<br>
+	<span style="background: rgba(0, 0, 255, 0.2);">
+\	_FILES_JS
+	</span>
+<br>
+	<span style="background: rgba(0, 255, 0, 0.2);">
+	assets/my-scripts.js
 	</span>
 </p>
 </div>
-A line below.
-</li>
 
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
 
-<li>
-CSS / Javascript snippets and HTML (look ma, no closing tags!)
-</li>
+// --------------------------------------------
+_TITLE
+Syntax
 
-<li>
-Testing...
-</li>
-<li>
-Testing...
-</li>
-<li>
-Testing...
-</li>
-<li>
-Testing...
-</li>
-<li>
-Testing...
-</li>
-<li>
-Testing...
-</li>
-<li>
-Testing...
-</li>
+// --------------------------------------------
+_SUBTITLE
+(slide)
 
-</ol>
+// --------------------------------------------
+_CONTENT
+
+<div class="boxed">
+<p class="code">
+	<span style="background: rgba(0, 0, 0, 0.2);">
+\	// ------------------- (line comment)
+	</span>
+<br>
+	<span style="background: rgba(255, 0, 0, 0.2);">
+\	-SLIDE
+	</span>
+<br>
+<br>
+	<span style="background: rgba(0, 0, 255, 0.2);">
+\	_TITLE
+	</span>
+<br>
+	<span style="background: rgba(0, 255, 0, 0.2);">
+	The slide title
+	</span>
+<br>
+<br>
+	<span style="background: rgba(0, 0, 255, 0.2);">
+\	_CONTENT
+	</span>
+<br>
+	<span style="background: rgba(0, 255, 0, 0.2);">
+	&lt;img src="../img/assets/me.jpeg"&gt;
+<br>
+	&lt;ol&gt;
+	<br>
+	&lt;li&gt;bullet point 1
+	<br>
+	&lt;li&gt;bullet point 2
+	<br>
+	&lt;!-- look ma, no closing tags! (converts to HTML5 XML) --&gt;
+	</span>
+<br>
+	<span style="background: rgba(0, 0, 255, 0.2);">
+\	_FILES_IMG
+	</span>
+<br>
+	<span style="background: rgba(0, 255, 0, 0.2);">
+	assets/me.jpeg
+	</span>
+<br>
+<br>
+	<span style="background: rgba(0, 0, 255, 0.2);">
+\	_NOTES
+	</span>
+<br>
+	<span style="background: rgba(0, 255, 0, 0.2);">
+	&lt;p&gt;My personal notes...(do not appear during presentation)
+	</span>
+</p>
+</div>
+
+// --------------------------------------------
+_CSS_STYLE
+
+body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-notesref
+{
+	opacity: 1;
+		
+	border: 4px solid #ff00ff;
+
+	-PREFIXED_PROPERTY-animation-name: onoff;
+	-PREFIXED_PROPERTY-animation-timing-function: linear;
+	-PREFIXED_PROPERTY-animation-duration: 1.8s;
+	-PREFIXED_PROPERTY-animation-iteration-count: infinite;
+	-PREFIXED_PROPERTY-animation-delay: 1s;
+}
 
 _NOTES
 
-HTML5 slide deck for online viewing
-EPUB3 e-book download (offline reading)
-
-EPUB3 Sldrzr takes a 
-- simple plain-text format
-- conversion to single fileset with dual purpose
-- dual support: HTML5 in web browsers + EPUB3 in reading systems (iBooks, Readium, Kobo, etc.)
-
-- Powerpoint / Keynote etc. NO
-- Mobile Webkit (iOS / Safari, Android / Chrome, etc.) 
-- PREFIXED_PROPERTY CSS vendor prefixes
-- author basic HTML (look ma, no cloing tags!)
-- animations (animate.css)
-- 
-
-#imgInc
-{
-	/* <img src="../img/assets/EPUB.png" class="epb3sldrzr-animated bounceInRight" id="imgInc"> */
-	-PREFIXED_PROPERTY-animation-duration: 1s;
-	-PREFIXED_PROPERTY-animation-delay: 1s;
-}
+<p>Slides notes are linked, and opened as a separate slide.
 
 
 // #########################################################

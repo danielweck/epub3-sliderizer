@@ -1,8 +1,9 @@
 @charset "utf-8";
 
-@namespace epub 'http://www.idpf.org/2007/ops'
+@namespace epub 'http://www.idpf.org/2007/ops';
 
 /*
+
 ==============================================================================
 
 Globals
@@ -10,24 +11,37 @@ Globals
 ==============================================================================
 */
 
+em
+{
+	border-bottom: 2px #333333 dotted;
+}
+
+_PREFIXED_@keyframes onoff
+{
+from
+{
+opacity: 0;
+}
+
+to
+{
+opacity: 1;
+}
+}
+
 .fade
 {
 	opacity:0.6;
 }
 
-*[hidden],
-body.epb3sldrzr-epubReadingSystem *.epb3sldrzr-notEpubReadingSystem
+body.epb3sldrzr-epubReadingSystem *.epb3sldrzr-notEpubReadingSystem,
+body:not(.epb3sldrzr-epubReadingSystem) *.epb3sldrzr-epubReadingSystem
 {
 	display:none;
 }
 
 #epb3sldrzr-notes,
 nav#epb3sldrzr-pageList
-{
-	display:none;
-}
-
-nav[epub|type ~= 'page-list']
 {
 	display:none;
 }
@@ -44,28 +58,28 @@ a:link
 	color:#003399;
 	text-decoration:none;
 	
-    border-bottom: 1px #0066FF dotted;
+	border-bottom: 2px #0066FF dotted;
 }
 a:visited
 {
 	color:#003399;
 	text-decoration:none;
 	
-    border-bottom: 1px #0066FF dotted;
+	border-bottom: 2px #0066FF dotted;
 }
 a:hover
 {
 	color:#0066FF;
 	text-decoration:underline;
 	
-    border-bottom: none;
+	border: none;
 }
 a:active
 {
 	color:#0066FF;
 	text-decoration:none;
 	
-    border-bottom: 1px #0066FF dotted;
+	border-bottom: 2px #0066FF dotted;
 }
 
 img.full
@@ -85,6 +99,23 @@ img.full
 {
 	background-color:#003399;
 	color:white;
+}
+
+
+span.keyboard
+{
+	border-radius: 10px;
+	
+	padding-left: 0.2em;
+	padding-right: 0.2em;
+	padding-bottom: 0.2em;
+
+	background-color: #D0D0D0;
+	
+	border-top: 4px solid #E0E0E0;
+	border-left: 4px solid #E0E0E0;
+	border-bottom: 4px solid #A8A8A8;
+	border-right: 4px solid #A8A8A8;
 }
 
 /*
@@ -195,7 +226,7 @@ body
 
 body div#epb3sldrzr-body-NOTES,
 body div#epb3sldrzr-body
-{
+{	
 	margin:0;
 	padding:0;
 
@@ -254,8 +285,6 @@ div#epb3sldrzr-root
 	
 	margin:0;
 	padding:0;
-
-	margin:20px;
 }
 
 
@@ -267,6 +296,11 @@ Title
 ==============================================================================
 */
 
+span#epb3sldrzr-subtitle,
+span#epb3sldrzr-subtitle-NOTES
+{
+	opacity: 0.7;
+}
 
 h1#epb3sldrzr-title,
 h1#epb3sldrzr-title-NOTES
@@ -277,7 +311,9 @@ h1#epb3sldrzr-title-NOTES
 	font-size:110%;
 	
 	font-family:Tahoma, "arial black", verdana, arial, sans-serif;
+	
 	line-height:1em;
+	
 	letter-spacing:0.03em;
 	
 	padding:0.4em;
@@ -461,15 +497,15 @@ Lists
 ==============================================================================
 */
 
-
 ul,
 ol
 {
 	margin:0;
 	padding:0;
 
-	margin-top:1.5em;
 	margin-left:1em;
+	margin-right:1em;
+	margin-top:1em;
 }
 
 ul li,
@@ -479,7 +515,6 @@ ol li
 	padding:0;
 
 	margin-bottom:0.8em;
-	margin-top:0.4em;
 }
 
 ul
@@ -497,12 +532,12 @@ ol
 
 ul li
 {
-	list-style-type:square;
+/*	list-style-type:square; */
 }
 
 ol li
 {
-	list-style-type:none;
+/*	list-style-type:none; */
 }
 
 ol li:before
@@ -537,6 +572,9 @@ NavDoc lists
 
 html#epb3sldrzr-NavDoc ol
 {
+	-PREFIXED_PROPERTY-column-count: 2;
+	-PREFIXED_PROPERTY-column-gap: 1em;
+/* 	-PREFIXED_PROPERTY-column-rule: 10px dotted #ff00ff;	*/
 }
 
 html#epb3sldrzr-NavDoc ol li a:link,
@@ -551,9 +589,6 @@ html#epb3sldrzr-NavDoc ol li
 {
 	font-weight:900;
 	
-	float:left;
-	display:inline;
-	width:50%;
 	/*
 	width:25%;
 	width:33.33333%;
@@ -563,17 +598,44 @@ html#epb3sldrzr-NavDoc ol li
 html#epb3sldrzr-NavDoc ol li:before
 {
 	color: #ffffff;
+	background-color: #CC3300;
+}
+
+html#epb3sldrzr-NavDoc ol li:hover:before
+{
 	background-color: #FF0033;
 }
 
 
+/* OPERA HACK */
+@media (min-resolution: .001dpcm)
+{
+	_:-o-prefocus, html#epb3sldrzr-NavDoc ol
+	{
+	-o-column-count: auto;
+	column-count: auto;
+	}
+}
+
+/* OPERA HACK */
+@media (min-resolution: .001dpcm)
+{
+	_:-o-prefocus, html#epb3sldrzr-NavDoc ol li
+	{
+	float:left;
+	display:inline;
+	width:50%;
+	}
+}
 
 /*
+
 ==============================================================================
 
 Slide content
 
 ==============================================================================
+
 */
 
 #epb3sldrzr-content p,
@@ -582,12 +644,13 @@ Slide content
 	margin:0;
 	padding:0;
 
-	padding:1em;
+	padding-left:1em;
+	padding-right:1em;
 	padding-bottom:0em;
+	padding-top:0.8em;
 	
 	line-height: 1.4em;
 }
-
 
 #epb3sldrzr-content div.boxed,
 #epb3sldrzr-content-NOTES div.boxed
@@ -613,8 +676,9 @@ Slide content
 	padding:0;
 	margin:0;
 	
-	line-height: 0;
+	line-height: 0.9em;
 }
+
 
 #epb3sldrzr-content li div.boxed,
 #epb3sldrzr-content-NOTES li div.boxed
@@ -630,6 +694,17 @@ Slide content
 }
 
 
+
+nav[epub|type~='page-list']
+{
+	display:none;
+}
+
+
+*[hidden]
+{
+	display:none;
+}
 
 
 
@@ -683,3 +758,4 @@ box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
 
 	font-family:georgia, palatino, "times new roman", serif;
 	*/
+

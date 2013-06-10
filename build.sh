@@ -40,7 +40,7 @@ java -classpath "${root}/tool/epub3-sliderizer/bin/:${root}/tool/epub3-sliderize
 
 
 
-open ${EPUB_FOLDER}
+#open ${EPUB_FOLDER}
 #exit
 
 
@@ -57,4 +57,4 @@ find "${EPUB_FOLDER}" -name ".DS_Store" -depth -exec rm {} \;
 
 java -jar "${root}/tool/epubcheck/epubcheck.jar" "${EPUB_FOLDER}" -mode exp -save
 
-open "${root}/_OUTPUT/content/"
+#open "${root}/_OUTPUT/content/"
