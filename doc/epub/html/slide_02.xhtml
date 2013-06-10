@@ -1,59 +1,106 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<html xmlns:epub="http://www.idpf.org/2007/ops" lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta charset="UTF-8"/>
-    <title>How?</title>
-    <link href="../img/favicon.ico" rel="shortcut icon"/>
-    <meta content="width=1024,height=768" name="viewport"/>
-    <link href="../css/default.css" rel="stylesheet" type="text/css"/>
-    <link href="../css/animate.css" rel="stylesheet" type="text/css"/>
-    <script src="../js/default.js"> </script>
-    <link href="./slide_01.xhtml" rel="prev"/>
-    <link href="./slide_03.xhtml" rel="next"/>
-    <style type="text/css">
-#logo
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_2" lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8"/><title>EPUB3 Sliderizer / Why EPUB3?</title><link href="../img/favicon.ico" rel="shortcut icon"/><meta content="width=1290,height=1000" name="viewport"/><link href="../css/default.css" rel="stylesheet" type="text/css"/><link href="../css/animate.css" rel="stylesheet" type="text/css"/><script src="../js/default.js"> </script><script src="../js/screenfull.js"> </script><script src="../js/classList.js"> </script><link href="./slide_01.xhtml" rel="prev"/><link href="./slide_03.xhtml" rel="next"/><style type="text/css">
+body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-logo.animated
 {
-width: 140px;
-height: 140px;
+
+-webkit-animation-duration: 1.5s;
+-moz-animation-duration: 1.5s;
+-ms-animation-duration: 1.5s;
+-o-animation-duration: 1.5s;
+animation-duration: 1.5s;
+
+
+-webkit-animation-delay: 1s;
+-moz-animation-delay: 1s;
+-ms-animation-delay: 1s;
+-o-animation-delay: 1s;
+animation-delay: 1s;
+
 }
-</style>
-  </head>
-  <body epub:type="bodymatter" id="body">
-    <img alt="" id="logo" src="../img/assets/EPUB.png"/>
-    <div id="root">
-      <h1>How?</h1>
-      <section id="content">
-   <p>Javascript + CSS magic :) </p>
-   <ol> 
-    <li>Bullet 1 
-     <ol> 
-      <li>Bullet 1.1 </li>
-      <li>Bullet 1.2 </li>
-     </ol> </li>
-    <li>Bullet 2 
-     <ol> 
-      <li>Bullet 2.1 </li>
-      <li>Bullet 2.2 </li>
-      <li>Bullet 3.2 </li>
-     </ol> </li>
-    <li>Bullet 3 
-     <ol> 
-      <li>Bullet 1 
-       <ol> 
-        <li>Bullet 1.1 </li>
-        <li>Bullet 1.2 </li>
-       </ol> </li>
-      <li>Bullet 2 
-       <ol> 
-        <li>Bullet 2.1 </li>
-        <li>Bullet 2.2 </li>
-        <li>Bullet 3.2 </li>
-       </ol> </li>
-      <li>Bullet 3</li>
-     </ol>
-          </li>
-   </ol>
-  </section>
-    </div>
-  </body>
-</html>
+html#epb3sldrzr-NavDoc #epb3sldrzr-logo
+{
+bottom: 30px;
+right: 500px;
+}
+html:not(#epb3sldrzr-NavDoc) #epb3sldrzr-logo
+{
+top: 15px;
+right: 25px;
+width: 200px;
+height: 83px;
+}
+.pale-red
+{
+background: rgba(255, 0, 0, 0.2);
+}
+.pale-green
+{
+background: rgba(0, 255, 0, 0.2);
+}
+.pale-blue
+{
+background: rgba(0, 0, 255, 0.2);
+}
+.pale-grey
+{
+background: rgba(0, 0, 0, 0.2);
+}
+.magenta
+{
+background: #ff00ff;
+}
+</style><style type="text/css">
+.animated-logos
+{
+margin-right: 1em;
+float: left;
+width: 125px;
+height: 125px;
+
+-webkit-animation-duration: 1s;
+-moz-animation-duration: 1s;
+-ms-animation-duration: 1s;
+-o-animation-duration: 1s;
+animation-duration: 1s;
+
+
+-webkit-animation-delay: 0.5s;
+-moz-animation-delay: 0.5s;
+-ms-animation-delay: 0.5s;
+-o-animation-delay: 0.5s;
+animation-delay: 0.5s;
+
+}
+.later
+{
+
+-webkit-animation-delay: 1s;
+-moz-animation-delay: 1s;
+-ms-animation-delay: 1s;
+-o-animation-delay: 1s;
+animation-delay: 1s;
+
+}
+</style><script>
+//<![CDATA[
+function setupAnimations()
+{
+var html = document.documentElement;
+if (html.id == "epb3sldrzr-NavDoc")
+{
+querySelector$("#epb3sldrzr-logo").classList.add("bounceInLeft");//fadeInUp
+querySelector$("#epb3sldrzr-logo").classList.add("epb3sldrzr-animated");
+}
+}
+//setTimeout(setupAnimations, 100);
+document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
+//]]>
+</script></head><body class="epb3sldrzr-SLIDE" epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Why EPUB3?</h1><section id="epb3sldrzr-content"><!--SOUP-->
+   <ul style="list-style-type: none;"> 
+    <li> <img class="epb3sldrzr-animated bounceInRight animated-logos" src="../img/assets/HTML5.png"/> <strong>HTML5 slide deck</strong>: great for live presentations <br/> + online viewing / browsing </li>
+    <li> <img class="epb3sldrzr-animated bounceInRight animated-logos later" src="../img/assets/EPUB.png"/> <strong>EPUB3 e-book</strong>: standalone redistributable file <br/> ⇒ offline reading (<span class="code">book.epub</span> = zip archive) </li>
+   </ul> 
+   <p>Internally, EPUB3 uses (X)HTML5, CSS, Javscript, SVG, MathML etc. EPUB3 is a structured container for web documents. </p>
+   <div class="boxed" style="margin-top: 0.4em;"> 
+    <p>EPUB3-Sliderizer generates a <strong>single</strong> fileset, which delivers <strong>both</strong> the <em>web</em> and <em>e-book</em> functions.</p>
+   </div>
+  </section></div></div></body></html>

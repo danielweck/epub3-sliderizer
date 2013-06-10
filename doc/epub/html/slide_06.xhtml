@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_6" lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8"/><title>EPUB3 Sliderizer / Animations</title><link href="../img/favicon.ico" rel="shortcut icon"/><meta content="width=1290,height=1000" name="viewport"/><link href="../css/default.css" rel="stylesheet" type="text/css"/><link href="../css/animate.css" rel="stylesheet" type="text/css"/><script src="../js/default.js"> </script><script src="../js/screenfull.js"> </script><script src="../js/classList.js"> </script><link href="./slide_05.xhtml" rel="prev"/><link href="./slide_07.xhtml" rel="next"/><style type="text/css">
+body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-logo.animated
+{
+
+-webkit-animation-duration: 1.5s;
+-moz-animation-duration: 1.5s;
+-ms-animation-duration: 1.5s;
+-o-animation-duration: 1.5s;
+animation-duration: 1.5s;
+
+
+-webkit-animation-delay: 1s;
+-moz-animation-delay: 1s;
+-ms-animation-delay: 1s;
+-o-animation-delay: 1s;
+animation-delay: 1s;
+
+}
+html#epb3sldrzr-NavDoc #epb3sldrzr-logo
+{
+bottom: 30px;
+right: 500px;
+}
+html:not(#epb3sldrzr-NavDoc) #epb3sldrzr-logo
+{
+top: 15px;
+right: 25px;
+width: 200px;
+height: 83px;
+}
+.pale-red
+{
+background: rgba(255, 0, 0, 0.2);
+}
+.pale-green
+{
+background: rgba(0, 255, 0, 0.2);
+}
+.pale-blue
+{
+background: rgba(0, 0, 255, 0.2);
+}
+.pale-grey
+{
+background: rgba(0, 0, 0, 0.2);
+}
+.magenta
+{
+background: #ff00ff;
+}
+</style><style type="text/css">
+img#epb3sldrzr-logo
+{
+
+-webkit-animation-duration: 1.5s;
+-moz-animation-duration: 1.5s;
+-ms-animation-duration: 1.5s;
+-o-animation-duration: 1.5s;
+animation-duration: 1.5s;
+
+
+-webkit-animation-delay: 1s;
+-moz-animation-delay: 1s;
+-ms-animation-delay: 1s;
+-o-animation-delay: 1s;
+animation-delay: 1s;
+
+
+-webkit-animation-iteration-count: infinite;
+-moz-animation-iteration-count: infinite;
+-ms-animation-iteration-count: infinite;
+-o-animation-iteration-count: infinite;
+animation-iteration-count: infinite;
+
+}
+</style><script>
+//<![CDATA[
+function setupAnimations()
+{
+var html = document.documentElement;
+if (html.id == "epb3sldrzr-NavDoc")
+{
+querySelector$("#epb3sldrzr-logo").classList.add("bounceInLeft");//fadeInUp
+querySelector$("#epb3sldrzr-logo").classList.add("epb3sldrzr-animated");
+}
+}
+//setTimeout(setupAnimations, 100);
+document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
+//]]>
+</script><script>
+//<![CDATA[
+function setupAnimations()
+{
+var html = document.documentElement;
+var elem = querySelector$("#epb3sldrzr-logo");
+elem.classList.add("bounceInLeft");
+elem.classList.add("epb3sldrzr-animated");
+}
+//setTimeout(setupAnimations, 100);
+document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
+//]]>
+</script></head><body class="epb3sldrzr-SLIDE" epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Animations</h1><section id="epb3sldrzr-content"><!--SOUP-->
+   <p>EPUB3-Sliderizer ships with <a href="http://daneden.me/animate">Animate.css</a> by default. <br/> </p>
+   <div class="boxed"> 
+    <h3>Example:</h3> 
+    <p class="code"> <span class="pale-blue"> _CONTENT</span> <br/> <span class="pale-green">&lt;img src="../img/assets/logo.png"</span> <br/> <span class="pale-green">class="</span><span class="pale-red">epb3sldrzr-animated</span><span class="pale-green"> </span><span class="magenta">bounceInLeft</span><span class="pale-green"> </span><span class="pale-grey">my-logo</span><span class="pale-green">"&gt;</span> <br/> <br/> <span class="pale-blue"> _CSS_STYLE</span> <br/> <span class="pale-green">img.</span><span class="pale-grey">my-logo</span><span class="pale-green"> {<br/>-PREFIXED_PROPERTY-animation-duration: 1.5s;<br/>-PREFIXED_PROPERTY-animation-delay: 1s;<br/>-PREFIXED_PROPERTY-animation-iteration-count: infinite; }</span> </p> 
+   </div> 
+   <p><em>Note</em>: the <span class="code pale-red">epb3sldrzr-animated</span> class (defined by EPUB3-Sliderizer) controls the initial firing of animations, to avoid premature triggers due to preloading pages in e-book readers.</p>
+  </section></div></div></body></html>
