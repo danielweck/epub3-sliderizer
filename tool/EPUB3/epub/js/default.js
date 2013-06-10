@@ -840,8 +840,6 @@ Epub3Sliderizer.init = function()
 	{
 		this.resetOnResizeTransform();
 
-		querySelector$("#epb3sldrzr-body").style.visibility = "visible";
-		
 		document.body.classList.add("epb3sldrzr-epubReadingSystem");
 
 		var a = document.createElement('a');
@@ -862,6 +860,8 @@ Epub3Sliderizer.init = function()
 		document.body.insertBefore(a, document.body.children[0]);
 	}
 
+	querySelector$("#epb3sldrzr-body").style.visibility = "visible";
+	
 	if (this.epubReadingSystem == null && !this.readium)
 	{
 		this.initLinks();
@@ -897,9 +897,11 @@ function readyDelayed()
 
 function readyFirst()
 {
-	querySelector$("#epb3sldrzr-body").style.visibility = "hidden";
+//	querySelector$("#epb3sldrzr-body").style.visibility = "hidden";
 	
 	Epub3Sliderizer.onResize();
+
+//	querySelector$("#epb3sldrzr-body").style.visibility = "visible";
 	
 	Epub3Sliderizer.initReverse();
 
@@ -907,18 +909,19 @@ function readyFirst()
 
 	if (!Epub3Sliderizer.reverse)
 	{
-		querySelector$("#epb3sldrzr-body").classList.add("fadeInRight");//Big bounceInRight
+		querySelector$("#epb3sldrzr-body").classList.add("fadeInRightBig");// bounceInRight
 	}
 	else
 	{
-		querySelector$("#epb3sldrzr-body").classList.add("fadeInLeft");//Big bounceInLeft
+		querySelector$("#epb3sldrzr-body").classList.add("fadeInLeftBig");// bounceInLeft
 	}
 	querySelector$("#epb3sldrzr-body").classList.add("epb3sldrzr-animated");
 }
 
 // ----------
 
-window.onload = readyFirst;
+//window.onload = readyFirst;
+document.addEventListener("DOMContentLoaded", function(e) { readyFirst(); }, false);
 
 // ----------
 

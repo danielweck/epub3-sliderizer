@@ -78,7 +78,7 @@ public final class NavDoc {
 				Element elementSpan = document.createElement("span");
 				elementAToc.appendChild(document.createTextNode(" "));
 				elementAToc.appendChild(elementSpan);
-				elementSpan.setAttribute("class", "fade smaller");
+				//elementSpan.setAttribute("class", "fade");
 				elementSpan
 						.appendChild(document.createTextNode(slide.SUBTITLE));
 			}

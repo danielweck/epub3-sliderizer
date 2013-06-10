@@ -63,7 +63,7 @@ function setupAnimations()
 	var html = document.documentElement;
 	if (html.id == "epb3sldrzr-NavDoc")
 	{
-		querySelector$("#epb3sldrzr-logo").classList.add("fadeInUp");
+		querySelector$("#epb3sldrzr-logo").classList.add("bounceInLeft");//fadeInUp
 		querySelector$("#epb3sldrzr-logo").classList.add("epb3sldrzr-animated");
 	}
 }
@@ -146,7 +146,6 @@ Why EPUB3?
 // --------------------------------------------
 _CONTENT
 
-<!-- &#xa0; -->
 <ul style="list-style-type: none;">
 <li>
 <img src="../img/assets/HTML5.png" class="epb3sldrzr-animated bounceInRight animated-logos">
@@ -192,6 +191,7 @@ _CSS_STYLE
 }
 
 
+
 // #########################################################
 // #########################################################
 // #########################################################
@@ -208,65 +208,52 @@ _SUBTITLE
 // --------------------------------------------
 _CONTENT
 
-<div class="boxed">
+<div class="boxed framed">
+<h3>slideshow-data.txt</h3>
 <p class="code">
 	<span class="pale-blue">
-\	_TITLE
-	</span>
+\	_TITLE</span>
 <br>
 	<span class="pale-green">
-	The slideshow title
-	</span>
+	The slideshow title</span>
 <br>
 	<span class="pale-blue">
-\	_CREATOR
-	</span>
+\	_CREATOR</span>
 <br>
 	<span class="pale-green">
-	Your name / organisation
-	</span>
+	Your name / organisation</span>
 <br>
 	<span class="pale-blue">
-\	_COVER
-	</span>
+\	_COVER</span>
 <br>
 	<span class="pale-green">
-	assets/cover-image.png
-	</span>
+	assets/cover-image.png</span>
 <br>
 <br>
 	<span class="pale-blue">
-\	_CSS_STYLE
-	</span>
+\	_CSS_STYLE</span>
 <br>
 	<span class="pale-green">
-	.myClass { color: red; }
-	</span>
+	.myClass { color: red; }</span>
 <br>
 	<span class="pale-blue">
-\	_FILES_CSS
-	</span>
+\	_FILES_CSS</span>
 <br>
 	<span class="pale-green">
-	assets/my-styles.css
-	</span>
+	assets/my-styles.css</span>
 <br>
 <br>
 	<span class="pale-blue">
-\	_JS_SCRIPT
-	</span>
+\	_JS_SCRIPT</span>
 <br>
 	<span class="pale-green">
-	document.addEventListener("DOMContentLoaded", function(e) { alert("hello!"); }, false);
-	</span>
+	document.addEventListener("DOMContentLoaded", function(e) { alert("hello!"); }, false);</span>
 <br>
 	<span class="pale-blue">
-\	_FILES_JS
-	</span>
+\	_FILES_JS</span>
 <br>
 	<span class="pale-green">
-	assets/my-scripts.js
-	</span>
+	assets/my-scripts.js</span>
 </p>
 </div>
 
@@ -286,58 +273,41 @@ _SUBTITLE
 // --------------------------------------------
 _CONTENT
 
-<div class="boxed">
+<div class="boxed framed">
+<h3>slideshow-data.txt</h3>
 <p class="code">
 	<span class="pale-grey">
-\	// ------------------- (line comment)
-	</span>
+\	// (line comment)</span>
 <br>
 	<span class="pale-red">
-\	-SLIDE
-	</span>
+\	-SLIDE</span>
 <br>
 <br>
 	<span class="pale-blue">
-\	_TITLE
-	</span>
+\	_TITLE</span>
 <br>
 	<span class="pale-green">
-	The slide title
-	</span>
+	The slide title</span>
 <br>
 <br>
 	<span class="pale-blue">
-\	_CONTENT
-	</span>
+\	_CONTENT</span>
 <br>
 	<span class="pale-green">
-	&lt;img src="../img/assets/me.jpeg"&gt;
-<br>
-	&lt;ol&gt;
-	<br>
-	&lt;li&gt;bullet point 1
-	<br>
-	&lt;li&gt;bullet point 2
-	<br>
-	&lt;!-- look ma, no closing tags! (converts to HTML5 XML) --&gt;
-	</span>
+	&lt;img src="../img/assets/me.jpeg"&gt;<br>&lt;ol&gt;<br>&lt;li&gt;bullet point 1<br>&lt;li&gt;bullet point 2<br>&lt;!-- look ma, no closing tags! (converts to HTML5 XML) --&gt;</span>
 <br>
 	<span class="pale-blue">
-\	_FILES_IMG
-	</span>
+\	_FILES_IMG</span>
 <br>
 	<span class="pale-green">
-	assets/me.jpeg
-	</span>
+	assets/me.jpeg</span>
 <br>
 <br>
 	<span class="pale-blue">
-\	_NOTES
-	</span>
+\	_NOTES</span>
 <br>
 	<span class="pale-green">
-	&lt;p&gt;My personal notes...(do not appear during presentation)
-	</span>
+	&lt;p&gt;My personal notes...(do not appear during presentation)</span>
 </p>
 </div>
 
@@ -372,7 +342,7 @@ CSS
 
 // --------------------------------------------
 _SUBTITLE
-vendor prefixes
+(vendor prefix)
 
 // --------------------------------------------
 _CONTENT
@@ -381,8 +351,7 @@ _CONTENT
 <h3>The following CSS property:</h3>
 <p class="code">
 	<span class="pale-blue">
-	-PREFIXED_PROPERTY-</span><span class="pale-green">user-select: none;
-	</span>
+	-PREFIXED_PROPERTY-</span><span class="pale-green">user-select: none;</span>
 </p>
 </div>
 
@@ -390,41 +359,156 @@ _CONTENT
 <h3>...automatically expands to:</h3>
 <p class="code">
 	<span class="pale-blue">
-	-webkit-</span><span class="pale-green">user-select: none;
-	</span>
+	-webkit-</span><span class="pale-green">user-select: none;</span>
 <br>
 	<span class="pale-blue">
-	-moz-</span><span class="pale-green">user-select: none;
-	</span>
+	-moz-</span><span class="pale-green">user-select: none;</span>
 <br>
 	<span class="pale-blue">
-	-ms-</span><span class="pale-green">user-select: none;
-	</span>
+	-ms-</span><span class="pale-green">user-select: none;</span>
 <br>
 	<span class="pale-blue">
-	-o-</span><span class="pale-green">user-select: none;
-	</span>
+	-o-</span><span class="pale-green">user-select: none;</span>
 <br>
 	<span class="pale-green">
-	user-select: none;
-	</span>
+	user-select: none;</span>
 </p>
 </div>
 
 <div class="boxed">
-<h3>Works with these too:</h3>
+<h3>Supports these too:</h3>
 <p class="code">
 	<span class="pale-blue">
-	_PREFIXED_</span><span class="pale-green">::selection { ... }
-	</span>
+	_PREFIXED_</span><span class="pale-green">::selection { ... }</span>
 <br>
 	<span class="pale-blue">
-	_PREFIXED_</span><span class="pale-green">@keyframes animation-name { ... }
-	</span>
+	_PREFIXED_</span><span class="pale-green">@keyframes animation-name { ... }</span>
 </p>
 </div>
 
 <p><em>Note</em>: does not work in <span class="code">style="..."</span> attributes</p>
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Animations
+
+// --------------------------------------------
+_CONTENT
+
+<p>EPUB3-Sliderizer ships with <a href="http://daneden.me/animate">Animate.css</a> by default.
+<br>
+
+<div class="boxed">
+<h3>Example:</h3>
+<p class="code">
+	<span class="pale-blue">
+\	_CONTENT</span>
+<br>
+	<span class="pale-green">&lt;img src="../img/assets/logo.png"</span>
+	<br>
+	<span class="pale-green">class="</span><span class="pale-red">epb3sldrzr-animated</span><span class="pale-green"> </span><span class="pale-red">bounceInRight</span><span class="pale-green"> </span><span class="pale-grey">my-logo</span><span class="pale-green">"&gt;</span>
+<br>
+<br>
+	<span class="pale-blue">
+\	_CSS_STYLE</span>
+<br>
+	<span class="pale-green">img.</span><span class="pale-grey">my-logo</span><span class="pale-green"> {<br>-PREFIXED_PROPERTY-animation-duration: 1s;<br>-PREFIXED_PROPERTY-animation-delay: 0.5s; }</span>
+</p>
+</div>
+
+<p><em>Note</em>: the <span class="code">epb3sldrzr-animated</span> class (defined by EPUB3-Sliderizer) controls the initial firing of animations, to avoid premature triggers due to preloading pages in e-book readers.
+
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Wish list
+
+// --------------------------------------------
+_CONTENT
+
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+SLIDE
+
 
 // #########################################################
 // #########################################################
@@ -442,7 +526,7 @@ _SUBTITLE
 // --------------------------------------------
 _CONTENT
 
-<p>Long slide content can be scrolled:
+<p>Long slide content can be <strong>scrolled</strong>:
 <ol>
 <li>I wonder...
 <li>what could be
@@ -459,7 +543,6 @@ _CONTENT
 <li>OMG!
 <li>It's a...
 <li>...
-<li>kitten!!!
 </ol>
 <p style="text-align: center;">
 <img src="../img/assets/kitten.jpg">
@@ -467,93 +550,3 @@ _CONTENT
 _FILES_IMG
 assets/kitten.jpg
 
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-SLIDE

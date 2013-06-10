@@ -170,13 +170,14 @@ body:not(.epb3sldrzr-epubReadingSystem) .animated.epb3sldrzr-animateStart
 	-PREFIXED_PROPERTY-animation-iteration-count: 1;
 }
 
+
 /* OPERA HACK */
 @media (min-resolution: .001dpcm)
 {
-	_:-o-prefocus, .epb3sldrzr-animated
+	_:-o-prefocus, body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animated:not(#epb3sldrzr-body)
 	{
-animation-iteration-count: 1;
--o-animation-iteration-count: 1;
+animation-iteration-count: 1 !important;
+-o-animation-iteration-count: 1 !important;
 	}
 }
 
@@ -192,9 +193,10 @@ html
 {
 	margin:0;
 	padding:0;
+}
 
-	-PREFIXED_PROPERTY-box-sizing:border-box;
-	
+body
+{
 	background-color:#333333;
 
 	-PREFIXED_PROPERTY-background-clip:border-box;
@@ -202,10 +204,7 @@ html
 	-PREFIXED_PROPERTY-background-size:auto;
 	-PREFIXED_PROPERTY-background-attachment:scroll;
 	-PREFIXED_PROPERTY-background-image:url(../img/back.png);
-}
-
-body
-{
+	
 	margin:0;
 	padding:0;
 
@@ -222,6 +221,11 @@ body
 
 	font-size:60px;
 	font-family:Tahoma, verdana, arial, sans-serif;
+}
+
+body div#epb3sldrzr-body
+{
+	visibility: hidden;
 }
 
 body div#epb3sldrzr-body-NOTES,
@@ -249,7 +253,7 @@ body div#epb3sldrzr-body
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body-NOTES,
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body
 {
-	-PREFIXED_PROPERTY-animation-duration: 1s;
+	-PREFIXED_PROPERTY-animation-duration: 0.5s;
 	-PREFIXED_PROPERTY-animation-delay: 0s;
 
 	border-radius:20px;
@@ -680,6 +684,25 @@ Slide content
 	margin:0;
 	
 	line-height: 0.9em;
+}
+
+#epb3sldrzr-content div.boxed.framed > p,
+#epb3sldrzr-content-NOTES div.boxed.framed > p
+{
+	border: 2px solid #333333;
+}
+
+#epb3sldrzr-content div.boxed.framed > h3,
+#epb3sldrzr-content-NOTES div.boxed.framed > h3
+{
+	float: right;
+	
+	background: #222222;
+	color: white;
+	
+	font-weight: 400;
+	
+	padding: 0.2em;
 }
 
 
