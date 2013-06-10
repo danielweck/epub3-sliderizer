@@ -7,6 +7,7 @@ import javax.xml.XMLConstants;
 import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import danielweck.epub3.sliderizer.model.Slide;
@@ -391,27 +392,31 @@ public final class XHTML {
 		String wrappedContent = "<wrapper xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:epub=\"http://www.idpf.org/2007/ops\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns:m=\"http://www.w3.org/1998/Math/MathML\">"
 				+ content + "</wrapper>";
 
+		boolean xmlSuccess = false;
 		Document documentFragment = null;
 		try {
 			documentFragment = XmlDocument.parse(wrappedContent);
+			xmlSuccess = true;
 		} catch (Exception ex) {
 			// ex.printStackTrace();
 		}
 
 		boolean soupedUp = false;
-		org.jsoup.nodes.Document soupDoc = null;
-		try {
-			soupDoc = Jsoup.parse(wrappedContent);
-			soupDoc.outputSettings().prettyPrint(true);
-			wrappedContent = soupDoc.outerHtml();
+		if (documentFragment == null) {
+			org.jsoup.nodes.Document soupDoc = null;
 			try {
-				documentFragment = XmlDocument.parse(wrappedContent);
-				soupedUp = true;
+				soupDoc = Jsoup.parse(wrappedContent);
+				soupDoc.outputSettings().prettyPrint(true);
+				wrappedContent = soupDoc.outerHtml();
+				try {
+					documentFragment = XmlDocument.parse(wrappedContent);
+					soupedUp = true;
+				} catch (Exception ex) {
+					// ex.printStackTrace();
+				}
 			} catch (Exception ex) {
 				// ex.printStackTrace();
 			}
-		} catch (Exception ex) {
-			// ex.printStackTrace();
 		}
 
 		if (documentFragment != null) {
@@ -426,12 +431,36 @@ public final class XHTML {
 				}
 			}
 
+			if (xmlSuccess) {
+				elementSection.appendChild(document.createComment("XML"));
+			} else {
+				elementSection.appendChild(document.createComment("SOUP"));
+			}
+
 			NodeList list = docElement.getChildNodes();
 			for (int j = 0; j < list.getLength(); ++j) {
-				elementSection.appendChild(document.importNode(list.item(j),
-						true));
+				Node node = list.item(j);
+				// if (node.getNodeType() == Node.TEXT_NODE
+				// && node.getTextContent().trim().isEmpty()) {
+				// //if (true) throw new Exception("HERE");
+				// elementSection.appendChild(document
+				// .createComment("EMPTY_TEXT"));
+				// continue;
+				// }
+				if (node.getNodeType() == Node.TEXT_NODE
+						|| node.getNodeType() == Node.ELEMENT_NODE
+						|| node.getNodeType() == Node.COMMENT_NODE
+						|| node.getNodeType() == Node.CDATA_SECTION_NODE) {
+					elementSection.appendChild(document.importNode(node, true));
+				} else {
+					throw new Exception("node.getNodeType() = "
+							+ node.getNodeType());
+				}
 			}
 		} else {
+			elementSection.appendChild(document
+					.createComment("XML / SOUP FAIL"));
+
 			elementSection.appendChild(document.createTextNode(content));
 		}
 	}

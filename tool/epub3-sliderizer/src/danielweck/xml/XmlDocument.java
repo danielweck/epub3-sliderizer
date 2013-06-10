@@ -24,6 +24,7 @@ public final class XmlDocument {
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
 					.newInstance();
 			documentBuilderFactory.setNamespaceAware(true);
+			// documentBuilderFactory.setIgnoringElementContentWhitespace(true);
 
 			documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		}
@@ -48,7 +49,7 @@ public final class XmlDocument {
 
 	private static Transformer transformer = null;
 
-	public static Transformer getTransformer() throws Exception {
+	public static Transformer getTransformer(int verbosity) throws Exception {
 		if (transformer == null) {
 			TransformerFactory transformerFactory = TransformerFactory
 					.newInstance();
@@ -58,7 +59,8 @@ public final class XmlDocument {
 
 			// transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,
 			// "testing.dtd");
-			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			transformer.setOutputProperty(OutputKeys.INDENT,
+					verbosity > 2 ? "yes" : "no");
 			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 			transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 			transformer.setOutputProperty(
@@ -74,11 +76,7 @@ public final class XmlDocument {
 			System.out.println("----- XML file created: " + filePath);
 		}
 
-		TransformerFactory transformerFactory = TransformerFactory
-				.newInstance();
-		transformerFactory.setAttribute("indent-number", new Integer(2));
-
-		Transformer transformer = getTransformer();
+		Transformer transformer = getTransformer(verbosity);
 
 		DOMSource domSource = new DOMSource(document);
 

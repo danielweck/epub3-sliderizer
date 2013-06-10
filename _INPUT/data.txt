@@ -38,6 +38,23 @@ html:not(#epb3sldrzr-NavDoc) #epb3sldrzr-logo
 	height: 83px;
 }
 
+.pale-red
+{
+	background: rgba(255, 0, 0, 0.2);
+}
+.pale-green
+{
+	background: rgba(0, 255, 0, 0.2);
+}
+.pale-blue
+{
+	background: rgba(0, 0, 255, 0.2);
+}
+.pale-grey
+{
+	background: rgba(0, 0, 0, 0.2);
+}
+
 // --------------------------------------------
 _JS_SCRIPT
 
@@ -137,7 +154,7 @@ _CONTENT
 
 <li>
 <img src="../img/assets/EPUB.png" class="epb3sldrzr-animated bounceInRight animated-logos later">
-<strong>EPUB3 e-book</strong>: standalone redistributable file <br/> &#8658; offline reading (<span style="font-family: monospace;">book.epub</span> = zip archive)
+<strong>EPUB3 e-book</strong>: standalone redistributable file <br/> &#8658; offline reading (<span class="code">book.epub</span> = zip archive)
 </ul>
 
 <p>Internally, EPUB3 uses (X)HTML5, CSS, Javscript, SVG, MathML etc. EPUB3 is a structured container for web documents.
@@ -175,8 +192,6 @@ _CSS_STYLE
 }
 
 
-</div>
-
 // #########################################################
 // #########################################################
 // #########################################################
@@ -195,61 +210,61 @@ _CONTENT
 
 <div class="boxed">
 <p class="code">
-	<span style="background: rgba(0, 0, 255, 0.2);">
+	<span class="pale-blue">
 \	_TITLE
 	</span>
 <br>
-	<span style="background: rgba(0, 255, 0, 0.2);">
+	<span class="pale-green">
 	The slideshow title
 	</span>
 <br>
-	<span style="background: rgba(0, 0, 255, 0.2);">
+	<span class="pale-blue">
 \	_CREATOR
 	</span>
 <br>
-	<span style="background: rgba(0, 255, 0, 0.2);">
+	<span class="pale-green">
 	Your name / organisation
 	</span>
 <br>
-	<span style="background: rgba(0, 0, 255, 0.2);">
+	<span class="pale-blue">
 \	_COVER
 	</span>
 <br>
-	<span style="background: rgba(0, 255, 0, 0.2);">
+	<span class="pale-green">
 	assets/cover-image.png
 	</span>
 <br>
 <br>
-	<span style="background: rgba(0, 0, 255, 0.2);">
+	<span class="pale-blue">
 \	_CSS_STYLE
 	</span>
 <br>
-	<span style="background: rgba(0, 255, 0, 0.2);">
+	<span class="pale-green">
 	.myClass { color: red; }
 	</span>
 <br>
-	<span style="background: rgba(0, 0, 255, 0.2);">
+	<span class="pale-blue">
 \	_FILES_CSS
 	</span>
 <br>
-	<span style="background: rgba(0, 255, 0, 0.2);">
+	<span class="pale-green">
 	assets/my-styles.css
 	</span>
 <br>
 <br>
-	<span style="background: rgba(0, 0, 255, 0.2);">
+	<span class="pale-blue">
 \	_JS_SCRIPT
 	</span>
 <br>
-	<span style="background: rgba(0, 255, 0, 0.2);">
+	<span class="pale-green">
 	document.addEventListener("DOMContentLoaded", function(e) { alert("hello!"); }, false);
 	</span>
 <br>
-	<span style="background: rgba(0, 0, 255, 0.2);">
+	<span class="pale-blue">
 \	_FILES_JS
 	</span>
 <br>
-	<span style="background: rgba(0, 255, 0, 0.2);">
+	<span class="pale-green">
 	assets/my-scripts.js
 	</span>
 </p>
@@ -273,29 +288,29 @@ _CONTENT
 
 <div class="boxed">
 <p class="code">
-	<span style="background: rgba(0, 0, 0, 0.2);">
+	<span class="pale-grey">
 \	// ------------------- (line comment)
 	</span>
 <br>
-	<span style="background: rgba(255, 0, 0, 0.2);">
+	<span class="pale-red">
 \	-SLIDE
 	</span>
 <br>
 <br>
-	<span style="background: rgba(0, 0, 255, 0.2);">
+	<span class="pale-blue">
 \	_TITLE
 	</span>
 <br>
-	<span style="background: rgba(0, 255, 0, 0.2);">
+	<span class="pale-green">
 	The slide title
 	</span>
 <br>
 <br>
-	<span style="background: rgba(0, 0, 255, 0.2);">
+	<span class="pale-blue">
 \	_CONTENT
 	</span>
 <br>
-	<span style="background: rgba(0, 255, 0, 0.2);">
+	<span class="pale-green">
 	&lt;img src="../img/assets/me.jpeg"&gt;
 <br>
 	&lt;ol&gt;
@@ -307,20 +322,20 @@ _CONTENT
 	&lt;!-- look ma, no closing tags! (converts to HTML5 XML) --&gt;
 	</span>
 <br>
-	<span style="background: rgba(0, 0, 255, 0.2);">
+	<span class="pale-blue">
 \	_FILES_IMG
 	</span>
 <br>
-	<span style="background: rgba(0, 255, 0, 0.2);">
+	<span class="pale-green">
 	assets/me.jpeg
 	</span>
 <br>
 <br>
-	<span style="background: rgba(0, 0, 255, 0.2);">
+	<span class="pale-blue">
 \	_NOTES
 	</span>
 <br>
-	<span style="background: rgba(0, 255, 0, 0.2);">
+	<span class="pale-green">
 	&lt;p&gt;My personal notes...(do not appear during presentation)
 	</span>
 </p>
@@ -346,6 +361,70 @@ _NOTES
 
 <p>Slides notes are linked, and opened as a separate slide.
 
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+CSS
+
+// --------------------------------------------
+_SUBTITLE
+vendor prefixes
+
+// --------------------------------------------
+_CONTENT
+
+<div class="boxed">
+<h3>The following CSS property:</h3>
+<p class="code">
+	<span class="pale-blue">
+	-PREFIXED_PROPERTY-</span><span class="pale-green">user-select: none;
+	</span>
+</p>
+</div>
+
+<div class="boxed">
+<h3>...automatically expands to:</h3>
+<p class="code">
+	<span class="pale-blue">
+	-webkit-</span><span class="pale-green">user-select: none;
+	</span>
+<br>
+	<span class="pale-blue">
+	-moz-</span><span class="pale-green">user-select: none;
+	</span>
+<br>
+	<span class="pale-blue">
+	-ms-</span><span class="pale-green">user-select: none;
+	</span>
+<br>
+	<span class="pale-blue">
+	-o-</span><span class="pale-green">user-select: none;
+	</span>
+<br>
+	<span class="pale-green">
+	user-select: none;
+	</span>
+</p>
+</div>
+
+<div class="boxed">
+<h3>Works with these too:</h3>
+<p class="code">
+	<span class="pale-blue">
+	_PREFIXED_</span><span class="pale-green">::selection { ... }
+	</span>
+<br>
+	<span class="pale-blue">
+	_PREFIXED_</span><span class="pale-green">@keyframes animation-name { ... }
+	</span>
+</p>
+</div>
+
+<p><em>Note</em>: does not work in <span class="code">style="..."</span> attributes</p>
 
 // #########################################################
 // #########################################################

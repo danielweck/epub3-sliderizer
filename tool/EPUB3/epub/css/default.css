@@ -659,6 +659,7 @@ Slide content
 	margin:0;
 	
 	padding:1em;
+	padding-bottom:0;
 }
 
 #epb3sldrzr-content div.boxed > p,
@@ -673,6 +674,8 @@ Slide content
 #epb3sldrzr-content div.boxed > h3,
 #epb3sldrzr-content-NOTES div.boxed > h3
 {
+	font-size: 90%;
+	
 	padding:0;
 	margin:0;
 	
