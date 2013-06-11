@@ -27,7 +27,9 @@ javac -classpath ".:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" "${root}/
 
 fi
 
-DATA_file="${root}/_INPUT/data.txt"
+#DATA_file="${root}/_INPUT/data.txt"
+DATA_file="${root}/_INPUT/book_UNZIPPED.epub/OEBPS/content.opf"
+
 DATA_url="file://${DATA_file}"
 
 EPUB_FOLDER="${root}/_OUTPUT/content/EPUB3/epub"
@@ -36,7 +38,7 @@ echo "EPUB3-Sliderization in progress..."
 echo ${DATA_file}
 echo ${EPUB_FOLDER}
 
-java -classpath "${root}/tool/epub3-sliderizer/bin/:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" Main ${DATA_url} ${EPUB_FOLDER} VERBOSE_medium
+java -classpath "${root}/tool/epub3-sliderizer/bin/:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" Main ${DATA_url} ${EPUB_FOLDER} VERBOSE_min
 
 
 

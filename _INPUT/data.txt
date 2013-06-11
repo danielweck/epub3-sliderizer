@@ -88,7 +88,7 @@ What is that?
 _CONTENT
  
 <a href="https://github.com/danielweck/epub3-sliderizer/" style="border: 0; padding: 0; margin: 0; float: right; ">
-<img style="border: 0; padding: 0; margin: 0; width: 200px; height: 200px;" src="../img/assets/forkme.png" alt="Fork me on GitHub"/>
+<img style="border: 0; padding: 0; margin: 0; width: 200px; height: 200px;" src="assets/forkme.png" alt="Fork me on GitHub"/>
 </a>
 
 <div class="auto incremental">
@@ -153,11 +153,11 @@ _CONTENT
 
 <ul style="list-style-type: none;">
 <li>
-<img src="../img/assets/HTML5.png" class="epb3sldrzr-animated bounceInRight animated-logos">
+<img src="assets/HTML5.png" class="epb3sldrzr-animated bounceInRight animated-logos">
 <strong>HTML5 slide deck</strong>: great for live presentations <br/> + online viewing / browsing
 
 <li>
-<img src="../img/assets/EPUB.png" class="epb3sldrzr-animated bounceInRight animated-logos later">
+<img src="assets/EPUB.png" class="epb3sldrzr-animated bounceInRight animated-logos later">
 <strong>EPUB3 e-book</strong>: standalone redistributable file <br/> &#8658; offline reading (<span class="code">book.epub</span> = zip archive)
 </ul>
 
@@ -302,7 +302,7 @@ _CONTENT
 \	_CONTENT</span>
 <br>
 	<span class="pale-green">
-	&lt;img src="../img/assets/me.jpeg"&gt;<br>&lt;ol&gt;<br>&lt;li&gt;bullet point 1<br>&lt;li&gt;bullet point 2<br>&lt;!-- look ma, no closing tags! (converts to HTML5 XML) --&gt;</span>
+	&lt;img src="assets/me.jpeg"&gt;<br>&lt;ol&gt;<br>&lt;li&gt;bullet point 1<br>&lt;li&gt;bullet point 2<br>&lt;!-- look ma, no closing tags! (converts to HTML5 XML) --&gt;</span>
 <br>
 	<span class="pale-blue">
 \	_FILES_IMG</span>
@@ -418,7 +418,7 @@ _CONTENT
 	<span class="pale-blue">
 \	_CONTENT</span>
 <br>
-	<span class="pale-green">&lt;img src="../img/assets/logo.png"</span>
+	<span class="pale-green">&lt;img src="assets/logo.png"</span>
 	<br>
 	<span class="pale-green">class="</span><span class="pale-red">epb3sldrzr-animated</span><span class="pale-green"> </span><span class="magenta">bounceInLeft</span><span class="pale-green"> </span><span class="pale-grey">my-logo</span><span class="pale-green">"&gt;</span>
 <br>
@@ -494,7 +494,7 @@ _CONTENT
 <li>...
 </ol>
 <p style="text-align: center;">
-<img src="../img/assets/kitten.jpg">
+<img src="assets/kitten.jpg">
 
 _FILES_IMG
 assets/kitten.jpg

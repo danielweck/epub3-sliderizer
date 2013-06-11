@@ -7,6 +7,7 @@ import javax.xml.XMLConstants;
 import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -39,24 +40,17 @@ public final class XHTML {
 
 	private static ArrayList<String> alreadyAddedHeadLinks = new ArrayList<String>();
 
-	private static void create_HeadLinks(String relFilePath, Document document,
+	private static void create_HeadLinks(String paths, Document document,
 			Element elementHead, String linkRel, String linkType,
 			String destFolder) {
-		if (relFilePath == null) {
+		if (paths == null) {
 			return;
 		}
 
-		String[] relPaths = null;
-		if (relFilePath.indexOf('\n') < 0) {
-			relPaths = new String[1];
-			relPaths[0] = relFilePath;
-		} else {
-			relPaths = relFilePath.split("\n");
-		}
+		ArrayList<String> array = Epub3FileSet.splitPaths(paths);
+		for (String path : array) {
 
-		for (int i = 0; i < relPaths.length; i++) {
-
-			String ref = destFolder + "/" + relPaths[i];
+			String ref = destFolder + "/" + path;
 			if (alreadyAddedHeadLinks.contains(ref)) {
 				continue;
 			}
@@ -74,24 +68,16 @@ public final class XHTML {
 
 	private static ArrayList<String> alreadyAddedHeadScripts = new ArrayList<String>();
 
-	private static void create_HeadScripts(String relFilePath,
-			Document document, Element elementHead, String linkType,
-			String destFolder) {
-		if (relFilePath == null) {
+	private static void create_HeadScripts(String paths, Document document,
+			Element elementHead, String linkType, String destFolder) {
+		if (paths == null) {
 			return;
 		}
 
-		String[] relPaths = null;
-		if (relFilePath.indexOf('\n') < 0) {
-			relPaths = new String[1];
-			relPaths[0] = relFilePath;
-		} else {
-			relPaths = relFilePath.split("\n");
-		}
+		ArrayList<String> array = Epub3FileSet.splitPaths(paths);
+		for (String path : array) {
 
-		for (int i = 0; i < relPaths.length; i++) {
-
-			String ref = destFolder + "/" + relPaths[i];
+			String ref = destFolder + "/" + path;
 			if (alreadyAddedHeadScripts.contains(ref)) {
 				continue;
 			}
@@ -159,6 +145,10 @@ public final class XHTML {
 		elementMeta.setAttribute("charset", "UTF-8");
 
 		String title = slide == null ? slideShow.TITLE : slide.TITLE;
+		if (title == null || title.isEmpty()) {
+			title = "NO TITLE!";
+		}
+
 		String subtitle = slide == null ? slideShow.SUBTITLE : slide.SUBTITLE;
 
 		String htmlTitle = (slideShow.TITLE != null ? slideShow.TITLE : "")
@@ -176,9 +166,16 @@ public final class XHTML {
 		elementHead.appendChild(elementTitle);
 		elementTitle.appendChild(document.createTextNode(htmlTitle));
 
-		create_HeadLinks(slideShow.FAVICON, document, elementHead,
-				"shortcut icon", null, PATH_PREFIX
-						+ Epub3FileSet.IMG_FOLDER_NAME);
+		create_HeadLinks(
+				slideShow.FAVICON,
+				document,
+				elementHead,
+				"shortcut icon",
+				null,
+				PATH_PREFIX
+						+ Epub3FileSet.IMG_FOLDER_NAME
+						+ (slideShow.FAVICON.equals("favicon.ico") ? "" : "/"
+								+ Epub3FileSet.CUSTOM_FOLDER_NAME));
 
 		if (// !notes &&
 		slideShow.VIEWPORT_WIDTH != null && slideShow.VIEWPORT_HEIGHT != null) {
@@ -200,12 +197,14 @@ public final class XHTML {
 
 		create_HeadLinks(slideShow.FILES_CSS, document, elementHead,
 				"stylesheet", "text/css", PATH_PREFIX
-						+ Epub3FileSet.CSS_FOLDER_NAME);
+						+ Epub3FileSet.CSS_FOLDER_NAME + "/"
+						+ Epub3FileSet.CUSTOM_FOLDER_NAME);
 
 		if (slide != null) {
 			create_HeadLinks(slide.FILES_CSS, document, elementHead,
 					"stylesheet", "text/css", PATH_PREFIX
-							+ Epub3FileSet.CSS_FOLDER_NAME);
+							+ Epub3FileSet.CSS_FOLDER_NAME + "/"
+							+ Epub3FileSet.CUSTOM_FOLDER_NAME);
 		}
 
 		create_HeadScripts(Epub3FileSet.JS_SCREENFULL_NAME, document,
@@ -230,11 +229,13 @@ public final class XHTML {
 		// PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
 
 		create_HeadScripts(slideShow.FILES_JS, document, elementHead, null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME + "/"
+						+ Epub3FileSet.CUSTOM_FOLDER_NAME);
 
 		if (slide != null) {
 			create_HeadScripts(slide.FILES_JS, document, elementHead, null, // "text/javascript",
-					PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+					PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME + "/"
+							+ Epub3FileSet.CUSTOM_FOLDER_NAME);
 		}
 
 		if (slide == null) {
@@ -323,7 +324,8 @@ public final class XHTML {
 		if (// !notes &&
 		slideShow.LOGO != null) {
 			String relativeDestinationPath = PATH_PREFIX
-					+ Epub3FileSet.IMG_FOLDER_NAME + '/' + slideShow.LOGO;
+					+ Epub3FileSet.IMG_FOLDER_NAME + "/"
+					+ Epub3FileSet.CUSTOM_FOLDER_NAME + '/' + slideShow.LOGO;
 
 			Element elementImg = document.createElement("img");
 			elementBody.appendChild(elementImg);
@@ -341,6 +343,7 @@ public final class XHTML {
 			elementDiv.setAttribute("id", "epb3sldrzr-root"
 					+ (notes ? "-NOTES" : ""));
 		}
+
 		Element elementH1 = document.createElement("h1");
 		elementH1.setAttribute("id", "epb3sldrzr-title"
 				+ (notes ? "-NOTES" : ""));
@@ -381,9 +384,65 @@ public final class XHTML {
 		return elementSection;
 	}
 
-	static void create_Content(Element elementSection, Document document,
-			String content, SlideShow slideShow, String pathEpubFolder,
+	private static void fixRelativeReferences(ArrayList<String> slideIMGs,
+			ArrayList<String> slideShowLOGO, ArrayList<String> slideShowCOVER,
+			Element element, Document document, String content,
+			SlideShow slideShow, Slide slide, String pathEpubFolder,
 			int verbosity) throws Exception {
+		if (slide == null) {
+			return;
+		}
+
+		NamedNodeMap attrs = element.getAttributes();
+		for (int i = 0; i < attrs.getLength(); i++) {
+			Node attr = attrs.item(i);
+			String attrVal = attr.getNodeValue();
+
+			for (String path : slideIMGs) {
+				if (attrVal.indexOf(path) >= 0) {
+					attrVal = attrVal.replaceAll(path, "../"
+							+ Epub3FileSet.IMG_FOLDER_NAME + "/"
+							+ Epub3FileSet.CUSTOM_FOLDER_NAME + "/" + path);
+				}
+			}
+			for (String path : slideShowLOGO) {
+				if (attrVal.indexOf(path) >= 0) {
+					attrVal = attrVal.replaceAll(path, "../"
+							+ Epub3FileSet.IMG_FOLDER_NAME + "/"
+							+ Epub3FileSet.CUSTOM_FOLDER_NAME + "/" + path);
+				}
+			}
+			for (String path : slideShowCOVER) {
+				if (attrVal.indexOf(path) >= 0) {
+					attrVal = attrVal.replaceAll(path, "../"
+							+ Epub3FileSet.IMG_FOLDER_NAME + "/"
+							+ Epub3FileSet.CUSTOM_FOLDER_NAME + "/" + path);
+				}
+			}
+
+			if (attrVal != attr.getNodeValue()) {
+				attr.setNodeValue(attrVal);
+				System.out.println("################### " + attrVal);
+			}
+		}
+
+		NodeList list = element.getChildNodes();
+		for (int j = 0; j < list.getLength(); j++) {
+			Node node = list.item(j);
+
+			if (node.getNodeType() != Node.ELEMENT_NODE) {
+				continue;
+			}
+
+			fixRelativeReferences(slideIMGs, slideShowLOGO, slideShowCOVER,
+					(Element) node, document, content, slideShow, slide,
+					pathEpubFolder, verbosity);
+		}
+	}
+
+	static void create_Content(Element elementSection, Document document,
+			String content, SlideShow slideShow, Slide slide,
+			String pathEpubFolder, int verbosity) throws Exception {
 
 		if (content == null) {
 			return;
@@ -438,7 +497,7 @@ public final class XHTML {
 			}
 
 			NodeList list = docElement.getChildNodes();
-			for (int j = 0; j < list.getLength(); ++j) {
+			for (int j = 0; j < list.getLength(); j++) {
 				Node node = list.item(j);
 				// if (node.getNodeType() == Node.TEXT_NODE
 				// && node.getTextContent().trim().isEmpty()) {
@@ -457,11 +516,26 @@ public final class XHTML {
 							+ node.getNodeType());
 				}
 			}
+
+			System.out.println("------------ ");
+
+			ArrayList<String> slideIMGs = Epub3FileSet
+					.splitPaths(slide.FILES_IMG);
+			ArrayList<String> slideShowLOGO = Epub3FileSet
+					.splitPaths(slideShow.LOGO);
+			ArrayList<String> slideShowCOVER = Epub3FileSet
+					.splitPaths(slideShow.COVER);
+
+			fixRelativeReferences(slideIMGs, slideShowLOGO, slideShowCOVER,
+					elementSection, document, content, slideShow, slide,
+					pathEpubFolder, verbosity);
 		} else {
 			elementSection.appendChild(document
 					.createComment("XML / SOUP FAIL"));
 
 			elementSection.appendChild(document.createTextNode(content));
+
+			throw new Exception("XML / SOUP FAIL");
 		}
 	}
 
@@ -474,7 +548,7 @@ public final class XHTML {
 		Element elementSection = create_Boilerplate(document, slide, slideShow,
 				pathEpubFolder, verbosity, true);
 
-		create_Content(elementSection, document, notes, slideShow,
+		create_Content(elementSection, document, notes, slideShow, slide,
 				pathEpubFolder, verbosity);
 
 		String fileName = XHTML.getFileName_Notes(i);
@@ -494,7 +568,7 @@ public final class XHTML {
 				pathEpubFolder, verbosity, false);
 
 		create_Content(elementSection, document, slide.CONTENT, slideShow,
-				pathEpubFolder, verbosity);
+				slide, pathEpubFolder, verbosity);
 
 		if (slide.NOTES != null) {
 			create_Notes(slide.NOTES, slideShow, slide, i, pathEpubFolder,
@@ -517,7 +591,7 @@ public final class XHTML {
 					"epub:type", "footnote");
 
 			create_Content(elementNotes, document, slide.NOTES, slideShow,
-					pathEpubFolder, verbosity);
+					slide, pathEpubFolder, verbosity);
 		}
 
 		String fileName = XHTML.getFileName(i);

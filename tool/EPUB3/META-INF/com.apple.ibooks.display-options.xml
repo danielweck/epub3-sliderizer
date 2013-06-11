@@ -2,5 +2,6 @@
 <display_options>
     <platform name="*">
         <option name="fixed-layout">true</option>
+		<option name="specified-fonts">true</option>
     </platform>
 </display_options>

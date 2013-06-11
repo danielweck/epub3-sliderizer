@@ -60,7 +60,7 @@ public final class OPF {
 		elementMetadata.appendChild(elementMeta_);
 		elementMeta_.setAttribute("property", "dcterms:contributor");
 		elementMeta_.appendChild(document.createTextNode(Epub3FileSet.THIS));
-		
+
 		if (slideShow.DATE != null) {
 			Element elementMeta = document.createElement("meta");
 			elementMetadata.appendChild(elementMeta);
@@ -193,10 +193,18 @@ public final class OPF {
 				"background", false, Epub3FileSet.IMG_FOLDER_NAME, null);
 
 		create_ManifestItem(slideShow.COVER, document, elementManifest,
-				COVER_ID, false, Epub3FileSet.IMG_FOLDER_NAME, "cover-image");
+				COVER_ID, false, Epub3FileSet.IMG_FOLDER_NAME + "/"
+						+ Epub3FileSet.CUSTOM_FOLDER_NAME, "cover-image");
 
-		create_ManifestItem(slideShow.FAVICON, document, elementManifest,
-				"ico", false, Epub3FileSet.IMG_FOLDER_NAME, null);
+		create_ManifestItem(
+				slideShow.FAVICON,
+				document,
+				elementManifest,
+				"ico",
+				false,
+				Epub3FileSet.IMG_FOLDER_NAME
+						+ (slideShow.FAVICON.equals("favicon.ico") ? "" : "/"
+								+ Epub3FileSet.CUSTOM_FOLDER_NAME), null);
 
 		create_ManifestItem(Epub3FileSet.JS_DEFAULT_NAME, document,
 				elementManifest, "js-default", false,
@@ -227,13 +235,16 @@ public final class OPF {
 				Epub3FileSet.CSS_FOLDER_NAME, null);
 
 		create_ManifestItem(slideShow.LOGO, document, elementManifest, "logo",
-				false, Epub3FileSet.IMG_FOLDER_NAME, null);
+				false, Epub3FileSet.IMG_FOLDER_NAME + "/"
+						+ Epub3FileSet.CUSTOM_FOLDER_NAME, null);
 
 		create_ManifestItem(slideShow.FILES_CSS, document, elementManifest,
-				"css", true, Epub3FileSet.CSS_FOLDER_NAME, null);
+				"css", true, Epub3FileSet.CSS_FOLDER_NAME + "/"
+						+ Epub3FileSet.CUSTOM_FOLDER_NAME, null);
 
 		create_ManifestItem(slideShow.FILES_JS, document, elementManifest,
-				"js", true, Epub3FileSet.JS_FOLDER_NAME, null);
+				"js", true, Epub3FileSet.JS_FOLDER_NAME + "/"
+						+ Epub3FileSet.CUSTOM_FOLDER_NAME, null);
 
 		Element elementSpine = document.createElement("spine");
 		elementPackage.appendChild(elementSpine);
@@ -270,13 +281,16 @@ public final class OPF {
 			}
 
 			create_ManifestItem(slide.FILES_CSS, document, elementManifest,
-					"css", true, Epub3FileSet.CSS_FOLDER_NAME, null);
+					"css", true, Epub3FileSet.CSS_FOLDER_NAME + "/"
+							+ Epub3FileSet.CUSTOM_FOLDER_NAME, null);
 
 			create_ManifestItem(slide.FILES_JS, document, elementManifest,
-					"js", true, Epub3FileSet.JS_FOLDER_NAME, null);
+					"js", true, Epub3FileSet.JS_FOLDER_NAME + "/"
+							+ Epub3FileSet.CUSTOM_FOLDER_NAME, null);
 
 			create_ManifestItem(slide.FILES_IMG, document, elementManifest,
-					"img", true, Epub3FileSet.IMG_FOLDER_NAME, null);
+					"img", true, Epub3FileSet.IMG_FOLDER_NAME + "/"
+							+ Epub3FileSet.CUSTOM_FOLDER_NAME, null);
 
 			//
 			// if (slide.MO_SYNC != null) {
@@ -382,24 +396,17 @@ public final class OPF {
 
 	private static ArrayList<String> alreadyAddedManifestItem = new ArrayList<String>();
 
-	private static void create_ManifestItem(String relFilePath,
-			Document document, Element elementManifest, String id,
-			boolean idPrefixOnly, String destFolder, String properties) {
-		if (relFilePath == null) {
+	private static void create_ManifestItem(String paths, Document document,
+			Element elementManifest, String id, boolean idPrefixOnly,
+			String destFolder, String properties) {
+		if (paths == null) {
 			return;
 		}
 
-		String[] relPaths = null;
-		if (relFilePath.indexOf('\n') < 0) {
-			relPaths = new String[1];
-			relPaths[0] = relFilePath;
-		} else {
-			relPaths = relFilePath.split("\n");
-		}
+		ArrayList<String> array = Epub3FileSet.splitPaths(paths);
+		for (String path : array) {
 
-		for (int i = 0; i < relPaths.length; i++) {
-
-			String ref = destFolder + "/" + relPaths[i];
+			String ref = destFolder + "/" + path;
 			if (alreadyAddedManifestItem.contains(ref)) {
 				continue;
 			}
@@ -411,7 +418,7 @@ public final class OPF {
 					: (idPrefixOnly ? getNextID(id) : id));
 			elementItem.setAttribute("href", ref);
 			elementItem.setAttribute("media-type",
-					Epub3FileSet.getMediaType(relPaths[i]));
+					Epub3FileSet.getMediaType(path));
 
 			if (properties != null) {
 				elementItem.setAttribute("properties", properties);

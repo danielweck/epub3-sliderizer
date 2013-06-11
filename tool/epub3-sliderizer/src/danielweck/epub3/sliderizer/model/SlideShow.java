@@ -134,13 +134,18 @@ public final class SlideShow extends Fielder {
 
 		SlideShow slideShow = new SlideShow(file.getParent());
 
-		BufferedReader bufferedReader = null;
-		try {
-			bufferedReader = new BufferedReader(new FileReader(file));
-			parseFields(slideShow, bufferedReader, verbosity);
-		} finally {
-			if (bufferedReader != null) {
-				bufferedReader.close();
+		String ext = Epub3FileSet.getFileExtension(file.getAbsolutePath());
+		if (ext.equalsIgnoreCase("opf")) {
+			EPubImporter.parse(slideShow, file, verbosity);
+		} else {
+			BufferedReader bufferedReader = null;
+			try {
+				bufferedReader = new BufferedReader(new FileReader(file));
+				parseFields(slideShow, bufferedReader, verbosity);
+			} finally {
+				if (bufferedReader != null) {
+					bufferedReader.close();
+				}
 			}
 		}
 
@@ -172,19 +177,22 @@ public final class SlideShow extends Fielder {
 			// writer.write('(');
 			if (defaultFieldValue == null) {
 				writer.write("NULL");
-			} else if (defaultFieldValue.indexOf('\n') < 0) {
-				writer.write(defaultFieldValue);
 			} else {
-				String[] lines = defaultFieldValue.split("\n");
-				writer.write(lines[0]);
-				if (lines.length > 1) {
-					for (int i = 1; i < lines.length; i++) {
+				boolean first = true;
+				ArrayList<String> array = Epub3FileSet
+						.splitPaths(defaultFieldValue);
+				for (String path : array) {
+
+					if (!first) {
 						writer.write('\n');
 						writer.write(Fielder.COMMENT_PREFIX);
-						writer.write(lines[i]);
 					}
+
+					writer.write(path);
+					first = false;
 				}
 			}
+
 			// writer.write(')');
 			writer.write('\n');
 			writer.write('\n');

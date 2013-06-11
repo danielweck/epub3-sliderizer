@@ -30,7 +30,7 @@ public final class NavDoc {
 			elementNotes.setAttribute("id", "epb3sldrzr-notes");
 			// elementNotes.appendChild(document.createTextNode("SLIDE NOTES:"));
 			XHTML.create_Content(elementNotes, document, slideShow.NOTES,
-					slideShow, pathEpubFolder, verbosity);
+					slideShow, null, pathEpubFolder, verbosity);
 		}
 
 		XmlDocument.save(document, pathEpubFolder + '/' + getFileName(),
@@ -78,7 +78,7 @@ public final class NavDoc {
 				Element elementSpan = document.createElement("span");
 				elementAToc.appendChild(document.createTextNode(" "));
 				elementAToc.appendChild(elementSpan);
-				//elementSpan.setAttribute("class", "fade");
+				// elementSpan.setAttribute("class", "fade");
 				elementSpan
 						.appendChild(document.createTextNode(slide.SUBTITLE));
 			}

@@ -1,8 +1,11 @@
 package danielweck.xml;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.StringReader;
+import java.io.StringWriter;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -13,9 +16,32 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
 public final class XmlDocument {
+
+	public static StringBuilder readFileLines(File file) throws Exception {
+
+		StringBuilder strBuilder = new StringBuilder();
+
+		BufferedReader bufferedReader = null;
+		try {
+			bufferedReader = new BufferedReader(new FileReader(file));
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				strBuilder.append(line);
+				strBuilder.append('\n');
+			}
+
+		} finally {
+			if (bufferedReader != null) {
+				bufferedReader.close();
+			}
+		}
+
+		return strBuilder;
+	}
 
 	private static DocumentBuilder documentBuilder = null;
 
@@ -29,6 +55,11 @@ public final class XmlDocument {
 			documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		}
 		return documentBuilder;
+	}
+
+	public static Document parse(File file) throws Exception {
+		StringBuilder strBuilder = XmlDocument.readFileLines(file);
+		return parse(strBuilder.toString());
 	}
 
 	public static Document parse(String xmlStr) throws Exception {
@@ -67,6 +98,18 @@ public final class XmlDocument {
 					"{http://xml.apache.org/xslt}indent-amount", "2");
 		}
 		return transformer;
+	}
+
+	public static String toString(Node elementFragment, int verbosity)
+			throws Exception {
+
+		Transformer transformer = getTransformer(verbosity);
+		DOMSource domSource = new DOMSource(elementFragment);
+		StringWriter stringWriter = new StringWriter();
+		StreamResult streamResult = new StreamResult(stringWriter);
+		transformer.transform(domSource, streamResult);
+		stringWriter.flush();
+		return stringWriter.toString();
 	}
 
 	public static void save(Document document, String filePath, int verbosity)
