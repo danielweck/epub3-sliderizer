@@ -164,7 +164,7 @@ Animations
 body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animated,
 body:not(.epb3sldrzr-epubReadingSystem) .animated:not(.epb3sldrzr-animateStart)
 {
-	visibilityzzz: hidden;
+	visibility: hidden;
 }
 
 .epb3sldrzr-animated:not(.epb3sldrzr-animateStart),
@@ -239,7 +239,7 @@ body
 
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body
 {
-	visibilityxx: hidden;
+	visibility: hidden;
 }
 
 body div#epb3sldrzr-body-NOTES,
