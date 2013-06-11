@@ -233,7 +233,7 @@ body
 
 	overflow:hidden;
 
-	font-size:58px;
+	font-size: FONT_SIZEpx;
 	font-family:Tahoma, verdana, arial, sans-serif;
 }
 
@@ -303,7 +303,7 @@ div#epb3sldrzr-root
 #epb3sldrzr-content,
 #epb3sldrzr-content-NOTES
 {
-	font-size:70%;
+	font-size: 100%;
 	
 	margin:0;
 	padding:0;
@@ -330,7 +330,7 @@ h1#epb3sldrzr-title-NOTES
 	margin:0;
 	padding:0;
 
-	font-size:110%;
+	font-size: 150%;
 	
 	font-family:Tahoma, "arial black", verdana, arial, sans-serif;
 	
@@ -404,7 +404,7 @@ a#epb3sldrzr-link-epubReadingSystem
 	font-family:arial, helvetica, sans-serif;
 	font-weight:bold;
 	
-	font-size:45%;
+	font-size: 50%;
 
 	text-transform:uppercase;
 
@@ -476,7 +476,7 @@ a#epb3sldrzr-link-toc
 	padding-bottom:2px;
 	padding-top:4px;
 
-	left:620px;
+	left: 50%;
 	/*
 	margin: 50% auto 0 0;
 	*/
@@ -565,7 +565,7 @@ ol li
 ol li:before
 {
 	font-family:Tahoma, "arial black", verdana, arial, sans-serif;
-	font-size:70%;
+	font-size: 70%;
 	
 	color: #efefef;
 	background-color: #555555;
@@ -696,7 +696,7 @@ Slide content
 #epb3sldrzr-content div.boxed > h3,
 #epb3sldrzr-content-NOTES div.boxed > h3
 {
-	font-size: 90%;
+	font-size: 80%;
 	
 	padding:0;
 	margin:0;

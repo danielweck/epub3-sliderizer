@@ -272,7 +272,8 @@ public final class OPF {
 
 			create_ManifestItem(XHTML.getFileName(n), document,
 					elementManifest, id, false, Epub3FileSet.HTML_FOLDER_NAME,
-					"scripted");
+					"scripted" + (slide.containsSVG ? " svg" : "")
+							+ (slide.containsMATHML ? " math" : ""));
 
 			if (slide.NOTES != null) {
 				create_ManifestItem(XHTML.getFileName_Notes(n), document,

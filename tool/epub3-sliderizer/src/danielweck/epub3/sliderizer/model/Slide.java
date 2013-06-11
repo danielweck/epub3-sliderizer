@@ -7,6 +7,9 @@ public final class Slide extends Fielder {
 	public Slide() throws Exception {
 	}
 
+	public boolean containsSVG = false;
+	public boolean containsMATHML = false;
+	
 	public String TITLE = "DEFAULT TITLE";
 	public String SUBTITLE = null;
 

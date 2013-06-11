@@ -226,6 +226,8 @@ public final class Epub3FileSet {
 		style = style.replaceAll("VIEWPORT_WIDTH", slideShow.VIEWPORT_WIDTH);
 		style = style.replaceAll("VIEWPORT_HEIGHT", slideShow.VIEWPORT_HEIGHT);
 
+		style = style.replaceAll("FONT_SIZE", slideShow.FONT_SIZE);
+
 		return style;
 	}
 
@@ -299,7 +301,7 @@ public final class Epub3FileSet {
 				+ "/" + Epub3FileSet.CUSTOM_FOLDER_NAME, slideShow.COVER,
 				verbosity);
 
-		// MASSIVE hack!!
+		// TODO: MASSIVE hack!!
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.IMG_FOLDER_NAME
 				+ (slideShow.FAVICON.equals("favicon.ico") ? "" : "/"
 						+ Epub3FileSet.CUSTOM_FOLDER_NAME), slideShow.FAVICON,
@@ -328,10 +330,13 @@ public final class Epub3FileSet {
 					verbosity);
 		}
 
-		NavDoc.create(slideShow, pathEpubFolder, verbosity);
 		NCX.create(slideShow, pathEpubFolder, verbosity);
-		OPF.create(slideShow, pathEpubFolder, verbosity);
+		
+		NavDoc.create(slideShow, pathEpubFolder, verbosity);
+		
 		XHTML.createAll(slideShow, pathEpubFolder, verbosity);
+
+		OPF.create(slideShow, pathEpubFolder, verbosity);
 	}
 
 	public static void copyFile(String srcFullPath, String dstFullPath,

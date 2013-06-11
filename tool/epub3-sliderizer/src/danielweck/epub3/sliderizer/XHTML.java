@@ -191,9 +191,11 @@ public final class XHTML {
 				"stylesheet", "text/css", PATH_PREFIX
 						+ Epub3FileSet.CSS_FOLDER_NAME);
 
-		create_HeadLinks(Epub3FileSet.CSS_DEFAULT_NAME, document, elementHead,
-				"stylesheet", "text/css", PATH_PREFIX
-						+ Epub3FileSet.CSS_FOLDER_NAME);
+		if (!slideShow.importedConverted) {
+			create_HeadLinks(Epub3FileSet.CSS_DEFAULT_NAME, document,
+					elementHead, "stylesheet", "text/css", PATH_PREFIX
+							+ Epub3FileSet.CSS_FOLDER_NAME);
+		}
 
 		create_HeadLinks(slideShow.FILES_CSS, document, elementHead,
 				"stylesheet", "text/css", PATH_PREFIX
@@ -205,6 +207,12 @@ public final class XHTML {
 					"stylesheet", "text/css", PATH_PREFIX
 							+ Epub3FileSet.CSS_FOLDER_NAME + "/"
 							+ Epub3FileSet.CUSTOM_FOLDER_NAME);
+		}
+
+		if (slideShow.importedConverted) {
+			create_HeadLinks(Epub3FileSet.CSS_DEFAULT_NAME, document,
+					elementHead, "stylesheet", "text/css", PATH_PREFIX
+							+ Epub3FileSet.CSS_FOLDER_NAME);
 		}
 
 		create_HeadScripts(Epub3FileSet.JS_SCREENFULL_NAME, document,
@@ -274,6 +282,19 @@ public final class XHTML {
 			elementStyle.appendChild(document.createTextNode("\n"));
 			String css = Epub3FileSet.processCssStyle(slideShow,
 					slide.CSS_STYLE);
+			elementStyle.appendChild(document.createTextNode(css));
+			elementStyle.appendChild(document.createTextNode("\n"));
+		}
+
+		if (slideShow.importedConverted) {
+			Element elementStyle = document.createElement("style");
+			elementHead.appendChild(elementStyle);
+			elementStyle.setAttribute("type", "text/css");
+			elementStyle.appendChild(document.createTextNode("\n"));
+
+			String css = "\n\nh1#epb3sldrzr-title,\nh1#epb3sldrzr-title-NOTES\n{\nposition: absolute; left: 0; top: 0; right: 0; display: none; \n}\n\n";
+			css += "\n\ndiv#epb3sldrzr-root-NOTES,div#epb3sldrzr-root{overflow:hidden;}\n\n";
+
 			elementStyle.appendChild(document.createTextNode(css));
 			elementStyle.appendChild(document.createTextNode("\n"));
 		}
@@ -384,45 +405,62 @@ public final class XHTML {
 		return elementSection;
 	}
 
-	private static void fixRelativeReferences(ArrayList<String> slideIMGs,
-			ArrayList<String> slideShowLOGO, ArrayList<String> slideShowCOVER,
-			Element element, Document document, String content,
-			SlideShow slideShow, Slide slide, String pathEpubFolder,
-			int verbosity) throws Exception {
+	private static void fixRelativeReferences(Element element,
+			Document document, String content, SlideShow slideShow,
+			Slide slide, String pathEpubFolder, int verbosity) throws Exception {
 		if (slide == null) {
 			return;
 		}
 
-		NamedNodeMap attrs = element.getAttributes();
-		for (int i = 0; i < attrs.getLength(); i++) {
-			Node attr = attrs.item(i);
-			String attrVal = attr.getNodeValue();
+		String name = element.getLocalName();
+		if (name == null) {
+			name = element.getNodeName();
+		}
+		//
+		// if (name.equals("svg")) {
+		// slide.containsSVG = true;
+		// }
+		// if (name.equals("math")) {
+		// slide.containsMATHML = true;
+		// }
 
-			for (String path : slideIMGs) {
-				if (attrVal.indexOf(path) >= 0) {
-					attrVal = attrVal.replaceAll(path, "../"
-							+ Epub3FileSet.IMG_FOLDER_NAME + "/"
-							+ Epub3FileSet.CUSTOM_FOLDER_NAME + "/" + path);
-				}
-			}
-			for (String path : slideShowLOGO) {
-				if (attrVal.indexOf(path) >= 0) {
-					attrVal = attrVal.replaceAll(path, "../"
-							+ Epub3FileSet.IMG_FOLDER_NAME + "/"
-							+ Epub3FileSet.CUSTOM_FOLDER_NAME + "/" + path);
-				}
-			}
-			for (String path : slideShowCOVER) {
-				if (attrVal.indexOf(path) >= 0) {
-					attrVal = attrVal.replaceAll(path, "../"
-							+ Epub3FileSet.IMG_FOLDER_NAME + "/"
-							+ Epub3FileSet.CUSTOM_FOLDER_NAME + "/" + path);
-				}
-			}
+		if (name.equals("image") || name.equals("img")) {
 
-			if (attrVal != attr.getNodeValue()) {
-				attr.setNodeValue(attrVal);
-				System.out.println("################### " + attrVal);
+			ArrayList<String> allReferences_IMG = slideShow
+					.getAllReferences_IMG();
+
+			NamedNodeMap attrs = element.getAttributes();
+			for (int i = 0; i < attrs.getLength(); i++) {
+
+				Node attr = attrs.item(i);
+
+				String attrVal = attr.getNodeValue();
+
+				String attrName = attr.getLocalName();
+				if (attrName == null) {
+					attrName = attr.getNodeName();
+				}
+
+				if (attrName != null
+						&& (attrName.equals("xlink:href")
+								|| attrName.equals("href") || attrName
+									.equals("src"))) {
+
+					System.out.println("###### " + attrVal);
+
+					for (String path : allReferences_IMG) {
+						if (attrVal.indexOf(path) >= 0) {
+							attrVal = attrVal.replaceAll(path, "../"
+									+ Epub3FileSet.IMG_FOLDER_NAME + "/"
+									+ Epub3FileSet.CUSTOM_FOLDER_NAME + "/"
+									+ path);
+						}
+					}
+
+					if (attrVal != attr.getNodeValue()) {
+						attr.setNodeValue(attrVal);
+					}
+				}
 			}
 		}
 
@@ -434,9 +472,8 @@ public final class XHTML {
 				continue;
 			}
 
-			fixRelativeReferences(slideIMGs, slideShowLOGO, slideShowCOVER,
-					(Element) node, document, content, slideShow, slide,
-					pathEpubFolder, verbosity);
+			fixRelativeReferences((Element) node, document, content, slideShow,
+					slide, pathEpubFolder, verbosity);
 		}
 	}
 
@@ -516,19 +553,8 @@ public final class XHTML {
 							+ node.getNodeType());
 				}
 			}
-
-			System.out.println("------------ ");
-
-			ArrayList<String> slideIMGs = Epub3FileSet
-					.splitPaths(slide.FILES_IMG);
-			ArrayList<String> slideShowLOGO = Epub3FileSet
-					.splitPaths(slideShow.LOGO);
-			ArrayList<String> slideShowCOVER = Epub3FileSet
-					.splitPaths(slideShow.COVER);
-
-			fixRelativeReferences(slideIMGs, slideShowLOGO, slideShowCOVER,
-					elementSection, document, content, slideShow, slide,
-					pathEpubFolder, verbosity);
+			fixRelativeReferences(elementSection, document, content, slideShow,
+					slide, pathEpubFolder, verbosity);
 		} else {
 			elementSection.appendChild(document
 					.createComment("XML / SOUP FAIL"));

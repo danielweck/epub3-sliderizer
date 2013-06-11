@@ -63,6 +63,8 @@ public final class SlideShow extends Fielder {
 	public String VIEWPORT_WIDTH = "1290";
 	public String VIEWPORT_HEIGHT = "1000";
 
+	public String FONT_SIZE = "40";
+
 	public String FAVICON = "favicon.ico";
 
 	public String LOGO = null;
@@ -78,6 +80,25 @@ public final class SlideShow extends Fielder {
 	public String NOTES = null;
 
 	public final ArrayList<Slide> slides = new ArrayList<Slide>();
+
+	private ArrayList<String> allReferences_IMG = null;
+
+	public ArrayList<String> getAllReferences_IMG() {
+
+		if (allReferences_IMG == null) {
+			allReferences_IMG = new ArrayList<String>();
+
+			allReferences_IMG.addAll(Epub3FileSet.splitPaths(this.LOGO));
+			allReferences_IMG.addAll(Epub3FileSet.splitPaths(this.COVER));
+
+			for (Slide slide : slides) {
+				allReferences_IMG.addAll(Epub3FileSet
+						.splitPaths(slide.FILES_IMG));
+			}
+		}
+
+		return allReferences_IMG;
+	}
 
 	public void toString(Appendable appendable) throws Exception {
 
@@ -114,6 +135,8 @@ public final class SlideShow extends Fielder {
 		return false;
 	}
 
+	public boolean importedConverted = false;
+	
 	public static SlideShow parse(String uriDataFile, int verbosity)
 			throws Exception {
 
