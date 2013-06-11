@@ -66,7 +66,8 @@ var Epub3Sliderizer = {
 	thisFilename: null,
 	thisHash: null,
 	incrementals: null,
-	increment: -1
+	increment: -1,
+	bodyRoot: null
 };
 
 // ----------
@@ -222,13 +223,16 @@ Epub3Sliderizer.initTouch = function()
 	}
 
 	var startX, moveX;
+	var startY, moveY;
 	var tracking = false;
 
 	function onTouchStart(touchEvent)
 	{
 		// touchEvent.preventDefault();
 		tracking = true;
+		
 		startX = touchEvent.changedTouches[0].pageX;
+		startY = touchEvent.changedTouches[0].pageY;
 	}
 
 	function onTouchMove(touchEvent)
@@ -239,6 +243,7 @@ Epub3Sliderizer.initTouch = function()
 		}
 	
 		moveX = touchEvent.changedTouches[0].pageX;
+		moveY = touchEvent.changedTouches[0].pageY;
 
 		var THRESHOLD = 100;
 	
@@ -253,6 +258,18 @@ Epub3Sliderizer.initTouch = function()
 			tracking = false;
 		
 			this.gotoPrevious();
+		}
+		else if (startY - moveY > THRESHOLD)
+		{
+			tracking = false;
+
+			this.nextIncremental(true);
+		}
+		else if (startY - moveY < -THRESHOLD)
+		{
+			tracking = false;
+
+			this.nextIncremental(false);
 		}
 	}
 
@@ -352,7 +369,7 @@ Epub3Sliderizer.onOrientationChange = function()
 	}
 	*/
 
-	var viewport = querySelector$("meta[name=viewport]");
+	var viewport = querySelector$("html > head > meta[name=viewport]");
 	if (typeof viewport != 'undefined')
 	{
 		var sx = document.body.clientWidth / window.innerWidth;
@@ -502,35 +519,39 @@ Epub3Sliderizer.initLinks = function()
 		return;
 	}
 	
-	var links = Array.prototype.slice.call(querySelectorAll$("head > link"));
-	if (typeof links != 'undefined')
-	{		
-		for (var i = 0; i < links.length; i++)
+	//	var links = Array.prototype.slice.call(querySelectorAll$("html > head > link"));
+	//	if (typeof links != 'undefined')
+	//	{		
+	//		for (var i = 0; i < links.length; i++) { links[i] }
+
+	var that = this;
+
+	querySelectorForEach(
+		querySelectorAll$("html > head > link"),
+		function(link)
 		{
-			if (typeof links[i].attributes == 'undefined'
-				|| links[i].attributes.length <= 0
-				|| typeof links[i].attributes['href'] == 'undefined'
+			if (typeof link.attributes == 'undefined'
+				|| link.attributes.length <= 0
+				|| typeof link.attributes['href'] == 'undefined'
 			)
 			{
-				continue;
+				return;
 			}
 
-			var rel = links[i].attributes['rel'];
+			var rel = link.attributes['rel'];
 			if (typeof rel != 'undefined')
 			{
 				if (rel.nodeValue === "prev")
 				{
-					this.prev = links[i].attributes['href'].nodeValue;
+					that.prev = link.attributes['href'].nodeValue;
 				}
 				else if (rel.nodeValue === "next")
 				{
-					this.next = links[i].attributes['href'].nodeValue;
+					that.next = link.attributes['href'].nodeValue;
 				}
 			}
 		}
-	}
-	
-	var root = querySelector$("#epb3sldrzr-body"); //document.body
+	);
 	
 	if (this.next != "")
 	{
@@ -545,7 +566,7 @@ Epub3Sliderizer.initLinks = function()
 		a.href = "javascript:Epub3Sliderizer.gotoNext();";
 		a.innerHTML = "&#9658;";
 
-		root.insertBefore(a, root.children[0]);
+		this.bodyRoot.insertBefore(a, this.bodyRoot.children[0]);
 	}
 
 	if (this.prev != "")
@@ -561,7 +582,7 @@ Epub3Sliderizer.initLinks = function()
 		a.href = "javascript:Epub3Sliderizer.gotoPrevious();";
 		a.innerHTML = "&#9668;";
 
-		root.insertBefore(a, root.children[0]);
+		this.bodyRoot.insertBefore(a, this.bodyRoot.children[0]);
 
 
 
@@ -571,22 +592,29 @@ Epub3Sliderizer.initLinks = function()
 		aa.href = "javascript:Epub3Sliderizer.gotoToc();";
 		aa.innerHTML = "&#9733;";
 
-		root.insertBefore(aa, root.children[0]);
+		this.bodyRoot.insertBefore(aa, this.bodyRoot.children[0]);
 	}
 }
 
 
 // ----------
 
-Epub3Sliderizer.reAnimate = function(elem)
+Epub3Sliderizer.reAnimateElement = function(elem)
+{	
+	var elm = elem;
+	var newOne = elm.cloneNode(true);
+	elm.parentNode.replaceChild(newOne, elm);
+}
+
+// ----------
+
+Epub3Sliderizer.reAnimateAll = function(element)
 {
 	querySelectorForEach(
-		elem.querySelectorAll$(".animated"),
+		element.querySelectorAll$(".animated"),
 		function(elem)
 		{
-			var elm = elem;
-			var newOne = elm.cloneNode(true);
-			elm.parentNode.replaceChild(newOne, elm);
+			reAnimateElement(elem);
 		}
 	);
 }
@@ -603,7 +631,6 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto)
 	if (this.increment < 0 || this.increment > (this.incrementals.length - 1))
 	{
 		this.increment = -1;
-
 	
 		querySelectorForEach(
 			this.incrementals,
@@ -677,7 +704,7 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto)
 				elem.parentNode.setAttribute("incremental-active", "true");
 				elem.setAttribute("aria-selected", "true");
 				
-				that.reAnimate(elem);
+				that.reAnimateAll(elem);
 			}
 		}
 	);
@@ -747,23 +774,54 @@ Epub3Sliderizer.initAnimations = function()
 		return;
 	}
 	
-	querySelector$("#epb3sldrzr-body").style.visibility = "visible";
+	var that = this;
 	
-	//var elems = Array.prototype.slice.call(querySelectorAll$("img[class]"));
 	querySelectorForEach(
-		querySelectorAll$("*[class]"),
+		document.body.querySelectorAll$(".epb3sldrzr-animated"),
 		function(elem)
-		{	
-			if (elem.classList.contains("epb3sldrzr-animated"))
-			{
-				elem.classList.remove("epb3sldrzr-animated");
+		{
+			elem.classList.remove("epb3sldrzr-animated");
 
-				elem.classList.add("animated"); // IF STOPPED BY DEFAULT (animation-iteration-count: 0) ...
-					
-				elem.classList.add("epb3sldrzr-animateStart"); // ... THEN, ANIMATES (animation-iteration-count: 1)
+			elem.classList.add("animated"); // STOPPED BY DEFAULT IN CSS (animation-iteration-count: 0) ...
+				
+			elem.classList.add("epb3sldrzr-animateStart"); // ... THEN, ANIMATES (animation-iteration-count: N)
+			
+			var firefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+			var opera = (typeof window.opera != "undefined") || navigator.userAgent.toLowerCase().indexOf(' opr/') >= 0;
+			if (firefox || opera)
+			{
+				that.reAnimateElement(elem);
 			}
 		}
 	);
+}
+
+// ----------
+
+Epub3Sliderizer.initSlideTransition = function()
+{
+	if (this.epubReadingSystem != null || this.readium)
+	{
+		return;
+	}
+
+	if (!this.reverse)
+	{
+		this.bodyRoot.classList.add("fadeInRightBig");// bounceInRight
+	}
+	else
+	{
+		this.bodyRoot.classList.add("fadeInLeftBig");// bounceInLeft
+	}
+	//this.bodyRoot.classList.add("epb3sldrzr-animated");
+	
+	this.bodyRoot.style.visibility = "visible";
+	
+	//this.bodyRoot.classList.remove("epb3sldrzr-animated");
+	this.bodyRoot.classList.add("animated");
+	this.bodyRoot.classList.add("epb3sldrzr-animateStart");
+	
+	//this.reAnimateElement(this.bodyRoot);
 }
 
 // ----------
@@ -776,15 +834,12 @@ Epub3Sliderizer.initMediaOverlays = function()
 	}
 	
 	querySelectorForEach(
-		querySelectorAll$("span[class]"),
+		this.bodyRoot.querySelectorAll$("#epb3sldrzr-content .epb3sldrzr-epubMediaOverlayActive"),
 		function(elem)
 		{
-			if (elem.classList.contains("epb3sldrzr-epubMediaOverlayActive"))
-			{
-				elem.classList.remove("epb3sldrzr-epubMediaOverlayActive");
-				
-				elem.classList.add("-epub-media-overlay-active");
-			}
+			elem.classList.remove("epb3sldrzr-epubMediaOverlayActive");
+			
+			elem.classList.add("-epub-media-overlay-active");
 		}
 	);
 }
@@ -798,8 +853,7 @@ Epub3Sliderizer.initIncrementals = function()
 		return;
 	}
 	
-	var content = querySelector$("#epb3sldrzr-content");
-	this.incrementals = content.querySelectorAll$(".incremental > *");
+	this.incrementals = this.bodyRoot.querySelectorAll$("#epb3sldrzr-content .incremental > *");
 
 	if (this.reverse)
 	{
@@ -858,16 +912,18 @@ Epub3Sliderizer.init = function()
 		}
 
 		document.body.insertBefore(a, document.body.children[0]);
+		
+		this.bodyRoot.style.visibility = "visible";
 	}
 
-	querySelector$("#epb3sldrzr-body").style.visibility = "visible";
-	
 	if (this.epubReadingSystem == null && !this.readium)
 	{
+		this.initReverse();
+
 		this.initLinks();
 
 		window.onkeydown = this.onKeyDown.bind(this);
-		//this.initTouch();
+		this.initTouch();
 
 		if (typeof window.orientation != 'undefined')
 		{
@@ -881,8 +937,15 @@ Epub3Sliderizer.init = function()
 		}
 
 		this.initMediaOverlays();
+
+		this.initSlideTransition();
 		
-		this.initAnimations();
+		var that = this;
+		setTimeout(function()
+		{
+			that.initIncrementals();
+			that.initAnimations();
+		}, 500);
 	}
 }
 
@@ -897,25 +960,9 @@ function readyDelayed()
 
 function readyFirst()
 {
-//	querySelector$("#epb3sldrzr-body").style.visibility = "hidden";
+	Epub3Sliderizer.bodyRoot = querySelector$("#epb3sldrzr-body"); //document.body
 	
 	Epub3Sliderizer.onResize();
-
-//	querySelector$("#epb3sldrzr-body").style.visibility = "visible";
-	
-	Epub3Sliderizer.initReverse();
-
-	Epub3Sliderizer.initIncrementals();
-
-	if (!Epub3Sliderizer.reverse)
-	{
-		querySelector$("#epb3sldrzr-body").classList.add("fadeInRightBig");// bounceInRight
-	}
-	else
-	{
-		querySelector$("#epb3sldrzr-body").classList.add("fadeInLeftBig");// bounceInLeft
-	}
-	querySelector$("#epb3sldrzr-body").classList.add("epb3sldrzr-animated");
 }
 
 // ----------
