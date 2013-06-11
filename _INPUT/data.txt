@@ -17,19 +17,19 @@ assets/EPUB.png
 // --------------------------------------------
 _CSS_STYLE
 
-body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-logo.animated
+body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.animated
 {
 	-PREFIXED_PROPERTY-animation-duration: 1.5s;
 	-PREFIXED_PROPERTY-animation-delay: 1s;
 }
 
-html#epb3sldrzr-NavDoc #epb3sldrzr-logo
+html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
 {
 	bottom: 30px;
 	right: 500px;
 }
 
-html:not(#epb3sldrzr-NavDoc) #epb3sldrzr-logo
+html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
 	top: 15px;
 	right: 25px;
@@ -67,8 +67,9 @@ function setupAnimations()
 	var html = document.documentElement;
 	if (html.id == "epb3sldrzr-NavDoc")
 	{
-		querySelector$("#epb3sldrzr-logo").classList.add("bounceInLeft");//fadeInUp
-		querySelector$("#epb3sldrzr-logo").classList.add("epb3sldrzr-animated");
+		var elem = querySelector$("#epb3sldrzr-logo");
+		elem.classList.add("bounceInLeft");//fadeInUp
+		elem.classList.add("epb3sldrzr-animated");
 	}
 }
 //setTimeout(setupAnimations, 100);
@@ -176,7 +177,7 @@ assets/HTML5.png
 // --------------------------------------------
 _CSS_STYLE
 
-.animated-logos
+img.animated-logos
 {
 	margin-right: 1em;
 
@@ -184,12 +185,15 @@ _CSS_STYLE
 
 	width: 125px;
 	height: 125px;
-	
+}
+
+body:not(.epb3sldrzr-epubReadingSystem) img.animated-logos.animated
+{	
 	-PREFIXED_PROPERTY-animation-duration: 1s;
 	-PREFIXED_PROPERTY-animation-delay: 0.5s;
 }
 
-.later
+body:not(.epb3sldrzr-epubReadingSystem) img.animated-logos.later.animated
 {	
 	-PREFIXED_PROPERTY-animation-delay: 1s;
 }
@@ -404,8 +408,9 @@ Animations
 // --------------------------------------------
 _CONTENT
 
+<div class="auto incremental">
+
 <p>EPUB3-Sliderizer ships with <a href="http://daneden.me/animate">Animate.css</a> by default.
-<br>
 
 <div class="boxed">
 <h3>Example:</h3>
@@ -427,10 +432,12 @@ _CONTENT
 
 <p><em>Note</em>: the <span class="code pale-red">epb3sldrzr-animated</span> class (defined by EPUB3-Sliderizer) controls the initial firing of animations, to avoid premature triggers due to preloading pages in e-book readers.
 
+</div>
+
 // --------------------------------------------
 _CSS_STYLE
 
-img#epb3sldrzr-logo
+body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.animated
 {
 	-PREFIXED_PROPERTY-animation-duration: 1.5s;
 	-PREFIXED_PROPERTY-animation-delay: 1s;

@@ -126,6 +126,13 @@ Incrementals (slide "bullet points")
 ==============================================================================
 */
 
+body.epb3sldrzr-epubReadingSystem #epb3sldrzr-content .incremental,
+body.epb3sldrzr-epubReadingSystem #epb3sldrzr-content .incremental > *
+{
+	visibility: visible;
+	opacity: 1;
+}
+
 body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .incremental:not([incremental-active])
 {
 	visibility: hidden;
@@ -146,7 +153,6 @@ body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .incremental > *[ari
 	pointer-events: none;
 }
 
-
 /*
 ==============================================================================
 
@@ -158,12 +164,16 @@ Animations
 body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animated,
 body:not(.epb3sldrzr-epubReadingSystem) .animated:not(.epb3sldrzr-animateStart)
 {
-	visibility: hidden;
+	visibilityzzz: hidden;
+}
 
+.epb3sldrzr-animated:not(.epb3sldrzr-animateStart),
+.animated:not(.epb3sldrzr-animateStart)
+{
 	-PREFIXED_PROPERTY-animation-iteration-count: 0;
 }
 
-body:not(.epb3sldrzr-epubReadingSystem) .animated.epb3sldrzr-animateStart
+body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animateStart
 {
 	visibility: visible;
 	
@@ -172,6 +182,7 @@ body:not(.epb3sldrzr-epubReadingSystem) .animated.epb3sldrzr-animateStart
 
 
 /* OPERA HACK */
+/*
 @media (min-resolution: .001dpcm)
 {
 	_:-o-prefocus, body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animated:not(#epb3sldrzr-body)
@@ -180,6 +191,7 @@ animation-iteration-count: 1 !important;
 -o-animation-iteration-count: 1 !important;
 	}
 }
+*/
 
 /*
 ==============================================================================
@@ -197,6 +209,8 @@ html
 
 body
 {
+	-webkit-font-smoothing: subpixel-antialiased;
+	
 	background-color:#333333;
 
 	-PREFIXED_PROPERTY-background-clip:border-box;
@@ -219,13 +233,13 @@ body
 
 	overflow:hidden;
 
-	font-size:60px;
+	font-size:58px;
 	font-family:Tahoma, verdana, arial, sans-serif;
 }
 
-body div#epb3sldrzr-body
+body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body
 {
-	visibility: hidden;
+	visibilityxx: hidden;
 }
 
 body div#epb3sldrzr-body-NOTES,
@@ -253,12 +267,16 @@ body div#epb3sldrzr-body
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body-NOTES,
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body
 {
-	-PREFIXED_PROPERTY-animation-duration: 0.5s;
-	-PREFIXED_PROPERTY-animation-delay: 0s;
-
 	border-radius:20px;
 
 	-PREFIXED_PROPERTY-box-shadow:0 0 50px rgba(0, 0, 0, 1);
+}
+
+body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body-NOTES.animated,
+body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body.animated
+{
+	-PREFIXED_PROPERTY-animation-duration: 0.5s;
+	-PREFIXED_PROPERTY-animation-delay: 0s;
 }
 
 
@@ -371,7 +389,7 @@ Links
 */
 
 
-a#epb3sldrzr-noteback,
+a#epb3sldrzr-link-noteback,
 a#epb3sldrzr-link-notesref,
 a#epb3sldrzr-link-previous,
 a#epb3sldrzr-link-next,
@@ -400,9 +418,9 @@ a#epb3sldrzr-link-epubReadingSystem
 	border-radius:10px;
 }
 
-a#epb3sldrzr-noteback:link,
-a#epb3sldrzr-noteback:visited,
-a#epb3sldrzr-noteback:active,
+a#epb3sldrzr-link-noteback:link,
+a#epb3sldrzr-link-noteback:visited,
+a#epb3sldrzr-link-noteback:active,
 a#epb3sldrzr-link-notesref:link,
 a#epb3sldrzr-link-notesref:visited,
 a#epb3sldrzr-link-notesref:active,
@@ -423,7 +441,7 @@ a#epb3sldrzr-link-toc:active
 	color:#3D6AA2;
 }
 
-a#epb3sldrzr-noteback:hover,
+a#epb3sldrzr-link-noteback:hover,
 a#epb3sldrzr-link-notesref:hover,
 a#epb3sldrzr-link-previous:hover,
 a#epb3sldrzr-link-next:hover,
@@ -435,7 +453,7 @@ a#epb3sldrzr-link-epubReadingSystem:hover
 	text-decoration:none;
 }
 
-a#epb3sldrzr-noteback
+a#epb3sldrzr-link-noteback
 {
 	float: right;
 	margin-right: 1em;
@@ -481,7 +499,7 @@ a#epb3sldrzr-link-notesref
 	right:300px;
 }
 
-body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-noteback
+body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-noteback
 {
 	display: none;
 }

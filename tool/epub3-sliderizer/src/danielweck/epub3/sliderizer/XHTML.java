@@ -190,11 +190,11 @@ public final class XHTML {
 					+ slideShow.VIEWPORT_HEIGHT);
 		}
 
-		create_HeadLinks(Epub3FileSet.CSS_DEFAULT_NAME, document, elementHead,
+		create_HeadLinks(Epub3FileSet.CSS_ANIMATE_NAME, document, elementHead,
 				"stylesheet", "text/css", PATH_PREFIX
 						+ Epub3FileSet.CSS_FOLDER_NAME);
 
-		create_HeadLinks(Epub3FileSet.CSS_ANIMATE_NAME, document, elementHead,
+		create_HeadLinks(Epub3FileSet.CSS_DEFAULT_NAME, document, elementHead,
 				"stylesheet", "text/css", PATH_PREFIX
 						+ Epub3FileSet.CSS_FOLDER_NAME);
 
@@ -208,16 +208,16 @@ public final class XHTML {
 							+ Epub3FileSet.CSS_FOLDER_NAME);
 		}
 
-		create_HeadScripts(Epub3FileSet.JS_DEFAULT_NAME, document, elementHead,
-				null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
-
 		create_HeadScripts(Epub3FileSet.JS_SCREENFULL_NAME, document,
 				elementHead, null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
 
 		create_HeadScripts(Epub3FileSet.JS_CLASSLIST_NAME, document,
 				elementHead, null, // "text/javascript",
+				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+
+		create_HeadScripts(Epub3FileSet.JS_DEFAULT_NAME, document, elementHead,
+				null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
 
 		// create_HeadScripts(Epub3FileSet.JS_HISTORY_NAME, document,
@@ -366,7 +366,7 @@ public final class XHTML {
 		if (notes) {
 			Element elementA = document.createElement("a");
 			elementA.setAttribute("href", XHTML.getFileName(i));
-			elementA.setAttribute("id", "epb3sldrzr-noteback");
+			elementA.setAttribute("id", "epb3sldrzr-link-noteback");
 			elementA.appendChild(document.createTextNode("Back"));
 			Element elementP = document.createElement("p");
 			elementP.appendChild(elementA);
