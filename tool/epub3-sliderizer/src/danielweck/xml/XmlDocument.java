@@ -2,8 +2,10 @@ package danielweck.xml;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.StringWriter;
 
@@ -27,7 +29,10 @@ public final class XmlDocument {
 
 		BufferedReader bufferedReader = null;
 		try {
-			bufferedReader = new BufferedReader(new FileReader(file));
+			bufferedReader = new BufferedReader(new InputStreamReader(
+					new FileInputStream(file), "UTF-8")
+			// new FileReader(file)
+			);
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
 				strBuilder.append(line);

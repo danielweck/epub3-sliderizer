@@ -1,10 +1,12 @@
 package danielweck.epub3.sliderizer;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 import javax.xml.XMLConstants;
 
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Entities.EscapeMode;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -501,8 +503,10 @@ public final class XHTML {
 		if (documentFragment == null) {
 			org.jsoup.nodes.Document soupDoc = null;
 			try {
-				soupDoc = Jsoup.parse(wrappedContent);
-				soupDoc.outputSettings().prettyPrint(true);
+				soupDoc = Jsoup.parse(wrappedContent, "UTF-8");
+				soupDoc.outputSettings().prettyPrint(false);
+				soupDoc.outputSettings().charset(Charset.forName("UTF-8"));
+				soupDoc.outputSettings().escapeMode(EscapeMode.xhtml);
 				wrappedContent = soupDoc.outerHtml();
 				try {
 					documentFragment = XmlDocument.parse(wrappedContent);

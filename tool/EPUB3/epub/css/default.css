@@ -562,7 +562,7 @@ ol li
 /*	list-style-type:none; */
 }
 
-ol li:before
+ol > li:before
 {
 	font-family:Tahoma, "arial black", verdana, arial, sans-serif;
 	font-size: 70%;
@@ -685,18 +685,45 @@ Slide content
 }
 
 #epb3sldrzr-content div.boxed > p,
+#epb3sldrzr-content-NOTES div.boxed > p,
+#epb3sldrzr-content div.boxed > ul,
+#epb3sldrzr-content-NOTES div.boxed > ul,
+#epb3sldrzr-content div.boxed > ol,
+#epb3sldrzr-content-NOTES div.boxed > ol,
+#epb3sldrzr-content div.boxed > div,
+#epb3sldrzr-content-NOTES div.boxed > div
+{
+	background: white;
+	-PREFIXED_PROPERTY-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+#epb3sldrzr-content div.boxed > p,
 #epb3sldrzr-content-NOTES div.boxed > p
 {
 	padding-bottom:1em;
-	
-	background: white;
-	-PREFIXED_PROPERTY-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+
+#epb3sldrzr-content div.boxed > div,
+#epb3sldrzr-content-NOTES div.boxed > div
+{
+	padding: 0;
+	margin: 0;
+	padding-bottom: 0.5em;
+}
+
+#epb3sldrzr-content div.boxed > div > ol,
+#epb3sldrzr-content-NOTES div.boxed > div > ol,
+#epb3sldrzr-content div.boxed > div > ul,
+#epb3sldrzr-content-NOTES div.boxed > div > ul
+{
+	padding-top: 1em;
+	padding-bottom: 0;
 }
 
 #epb3sldrzr-content div.boxed > h3,
 #epb3sldrzr-content-NOTES div.boxed > h3
 {
-	font-size: 80%;
+	font-size: 90%;
 	
 	padding:0;
 	margin:0;

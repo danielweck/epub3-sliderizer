@@ -2,8 +2,9 @@ package danielweck.epub3.sliderizer.model;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -136,7 +137,7 @@ public final class SlideShow extends Fielder {
 	}
 
 	public boolean importedConverted = false;
-	
+
 	public static SlideShow parse(String uriDataFile, int verbosity)
 			throws Exception {
 
@@ -163,7 +164,10 @@ public final class SlideShow extends Fielder {
 		} else {
 			BufferedReader bufferedReader = null;
 			try {
-				bufferedReader = new BufferedReader(new FileReader(file));
+				bufferedReader = new BufferedReader(new InputStreamReader(
+						new FileInputStream(file), "UTF-8")
+				// new FileReader(file)
+				);
 				parseFields(slideShow, bufferedReader, verbosity);
 			} finally {
 				if (bufferedReader != null) {
