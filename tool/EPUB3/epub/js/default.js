@@ -562,9 +562,10 @@ Epub3Sliderizer.initLinks = function()
 		
 		var a = document.createElement('a');
 		a.id = "epb3sldrzr-link-next";
-		a.title = "Next slide";	
+		a.title = "Next slide";
+//		a.onMouseOver = "func('Next slide')";
 		a.href = "javascript:Epub3Sliderizer.gotoNext();";
-		a.innerHTML = "&#9658;";
+		a.innerHTML = "<span style=\"display:none;\">Next slide</span>&#9658;";
 
 		this.bodyRoot.insertBefore(a, this.bodyRoot.children[0]);
 	}
@@ -579,8 +580,9 @@ Epub3Sliderizer.initLinks = function()
 		var a = document.createElement('a');
 		a.id = "epb3sldrzr-link-previous";
 		a.title = "Previous slide";	
+//		a.onMouseOver = "func('Previous slide')";
 		a.href = "javascript:Epub3Sliderizer.gotoPrevious();";
-		a.innerHTML = "&#9668;";
+		a.innerHTML = "<span style=\"display:none;\">Previous slide</span>&#9668;";
 
 		this.bodyRoot.insertBefore(a, this.bodyRoot.children[0]);
 
@@ -588,9 +590,10 @@ Epub3Sliderizer.initLinks = function()
 
 		var aa = document.createElement('a');
 		aa.id = "epb3sldrzr-link-toc";
-		aa.title = "Menu slide";
+		aa.title = "Slide menu";
+//		a.onMouseOver = "func('Slide menu')";
 		aa.href = "javascript:Epub3Sliderizer.gotoToc();";
-		aa.innerHTML = "&#9733;";
+		aa.innerHTML = "<span style=\"display:none;\">Slide menu</span>&#9733;";
 
 		this.bodyRoot.insertBefore(aa, this.bodyRoot.children[0]);
 	}

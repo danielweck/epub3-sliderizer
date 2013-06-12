@@ -89,12 +89,27 @@ public final class SlideShow extends Fielder {
 		if (allReferences_IMG == null) {
 			allReferences_IMG = new ArrayList<String>();
 
-			allReferences_IMG.addAll(Epub3FileSet.splitPaths(this.LOGO));
-			allReferences_IMG.addAll(Epub3FileSet.splitPaths(this.COVER));
+			ArrayList<String> array = Epub3FileSet.splitPaths(this.LOGO);
+			for (String str : array) {
+				if (!allReferences_IMG.contains(str)) {
+					allReferences_IMG.add(str);
+				}
+			}
+
+			array = Epub3FileSet.splitPaths(this.COVER);
+			for (String str : array) {
+				if (!allReferences_IMG.contains(str)) {
+					allReferences_IMG.add(str);
+				}
+			}
 
 			for (Slide slide : slides) {
-				allReferences_IMG.addAll(Epub3FileSet
-						.splitPaths(slide.FILES_IMG));
+				array = Epub3FileSet.splitPaths(slide.FILES_IMG);
+				for (String str : array) {
+					if (!allReferences_IMG.contains(str)) {
+						allReferences_IMG.add(str);
+					}
+				}
 			}
 		}
 

@@ -164,6 +164,8 @@ public final class XHTML {
 			htmlTitle = htmlTitle + " (NOTES)";
 		}
 
+		htmlTitle = "(" + i + "/" + slideShow.slides.size() + ") " + htmlTitle;
+
 		Element elementTitle = document.createElement("title");
 		elementHead.appendChild(elementTitle);
 		elementTitle.appendChild(document.createTextNode(htmlTitle));
