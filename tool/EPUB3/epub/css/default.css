@@ -716,7 +716,7 @@ Slide content
 #epb3sldrzr-content div.boxed > div > ul,
 #epb3sldrzr-content-NOTES div.boxed > div > ul
 {
-	padding-top: 1em;
+	padding-top: 0em;
 	padding-bottom: 0;
 }
 
@@ -731,8 +731,8 @@ Slide content
 	line-height: 0.9em;
 }
 
-#epb3sldrzr-content div.boxed.framed > p,
-#epb3sldrzr-content-NOTES div.boxed.framed > p
+#epb3sldrzr-content div.boxed.framed > *,
+#epb3sldrzr-content-NOTES div.boxed.framed > *
 {
 	border: 2px solid #333333;
 }
