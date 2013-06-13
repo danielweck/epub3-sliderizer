@@ -389,6 +389,19 @@ Links
 */
 
 
+a#epb3sldrzr-link-toc:before
+{
+	content: "\2605";
+}
+a#epb3sldrzr-link-previous:before
+{
+	content: "\25C4";
+}
+a#epb3sldrzr-link-next:before
+{
+	content: "\25BA";
+}
+
 a#epb3sldrzr-link-noteback,
 a#epb3sldrzr-link-notesref,
 a#epb3sldrzr-link-previous,
@@ -581,7 +594,6 @@ ol > li:before
 	counter-increment:item;
 	content:counter(item);
 }
-
 
 /*
 ==============================================================================
