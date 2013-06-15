@@ -298,6 +298,8 @@ div#epb3sldrzr-root
 	z-index:5;
 
 	overflow:auto;
+
+	-webkit-overflow-scrolling: touch;
 }
 
 #epb3sldrzr-content,

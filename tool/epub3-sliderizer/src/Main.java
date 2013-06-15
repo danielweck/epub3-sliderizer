@@ -45,7 +45,7 @@ public final class Main {
 
 			SlideShow slideShow = SlideShow.parse(uriDataFile, verbosity);
 
-			if (verbosity > 1) {
+			if (verbosity > 2) {
 				slideShow.createSampleTemplate(new PrintWriter(System.out),
 						verbosity);
 			}

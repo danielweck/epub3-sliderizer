@@ -30,6 +30,11 @@ public final class Epub3FileSet {
 	final static String JS_DEFAULT_NAME = "default.js";
 	final static String JS_SCREENFULL_NAME = "screenfull.js";
 	final static String JS_CLASSLIST_NAME = "classList.js";
+	final static String JS_SCROLLFIX_NAME = "scrollFix.js";
+	
+	//final static String JS_FIREBUG_NAME = "firebug-lite.js";
+	
+	
 	// final static String JS_HISTORY_NAME = "history.js";
 	// final static String JS_JSON_NAME = "json2.js";
 

@@ -218,6 +218,14 @@ public final class OPF {
 				elementManifest, "js-classList", false,
 				Epub3FileSet.JS_FOLDER_NAME, null);
 
+		create_ManifestItem(Epub3FileSet.JS_SCROLLFIX_NAME, document,
+				elementManifest, "js-scrollFix", false,
+				Epub3FileSet.JS_FOLDER_NAME, null);
+
+		// create_ManifestItem(Epub3FileSet.JS_FIREBUG_NAME, document,
+		// elementManifest, "js-firebug", false,
+		// Epub3FileSet.JS_FOLDER_NAME, null);
+
 		// create_ManifestItem(Epub3FileSet.JS_HISTORY_NAME, document,
 		// elementManifest, "js-history", false,
 		// Epub3FileSet.JS_FOLDER_NAME, null);

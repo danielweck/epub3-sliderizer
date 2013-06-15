@@ -64,7 +64,7 @@ public final class SlideShow extends Fielder {
 	public String VIEWPORT_WIDTH = "1290";
 	public String VIEWPORT_HEIGHT = "1000";
 
-	public String FONT_SIZE = "40";
+	public String FONT_SIZE = "36";
 
 	public String FAVICON = "favicon.ico";
 
@@ -81,6 +81,19 @@ public final class SlideShow extends Fielder {
 	public String NOTES = null;
 
 	public final ArrayList<Slide> slides = new ArrayList<Slide>();
+
+	public void setDimensions(int width, int height) {
+		
+		int originalWidth = Integer.parseInt(VIEWPORT_WIDTH);
+		float ratio = originalWidth / (float) width;
+
+		int originalFontSize = Integer.parseInt(FONT_SIZE);
+		float size = originalFontSize / ratio;
+
+		FONT_SIZE = "" + Math.ceil(size);
+		VIEWPORT_WIDTH = ("" + width);
+		VIEWPORT_HEIGHT = ("" + height);
+	}
 
 	private ArrayList<String> allReferences_IMG = null;
 
@@ -176,6 +189,8 @@ public final class SlideShow extends Fielder {
 		String ext = Epub3FileSet.getFileExtension(file.getAbsolutePath());
 		if (ext.equalsIgnoreCase("opf")) {
 			EPubImporter.parse(slideShow, file, verbosity);
+		} else if (ext.equalsIgnoreCase("html")) {
+			DZSlidesImporter.parse(slideShow, file, verbosity);
 		} else {
 			BufferedReader bufferedReader = null;
 			try {

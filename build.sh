@@ -27,7 +27,8 @@ javac -classpath ".:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" "${root}/
 
 fi
 
-DATA_file="${root}/_INPUT/DAISY/data.txt"
+DATA_file="${root}/_INPUT/Romain/slides.html"
+#DATA_file="${root}/_INPUT/DAISY/data.txt"
 #DATA_file="${root}/_INPUT/data.txt"
 #DATA_file="${root}/_INPUT/book_UNZIPPED.epub/OEBPS/content.opf"
 

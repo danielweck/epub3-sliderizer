@@ -135,7 +135,10 @@ public final class EPubImporter {
 						|| mediaType.getNodeValue().equals("image/jpeg")
 						|| mediaType.getNodeValue().equals("image/gif")) {
 
-					images.add(href.getNodeValue());
+					String href_ = href.getNodeValue();
+					if (!images.contains(href_)) {
+						images.add(href_);
+					}
 					continue;
 				}
 				if (mediaType.getNodeValue().equals("image/vnd.microsoft.icon")) {
@@ -289,7 +292,7 @@ public final class EPubImporter {
 
 				slideShow.slides.add(slide);
 
-				// TODO: parse inline head CSS 
+				// TODO: parse inline head CSS
 				// TODO: IMG, CSS, JS references (need to match OPF relative
 				// location)
 			}
@@ -297,18 +300,7 @@ public final class EPubImporter {
 
 		if (width != -1 && height != -1) {
 
-			int originalWidth = Integer.parseInt(slideShow.VIEWPORT_WIDTH);
-
-			float ratio = originalWidth / (float) width;
-
-			int originalFontSize = Integer.parseInt(slideShow.FONT_SIZE);
-
-			float size = originalFontSize / ratio;
-
-			slideShow.FONT_SIZE = "" + Math.ceil(size);
-
-			slideShow.VIEWPORT_WIDTH = "" + width;
-			slideShow.VIEWPORT_HEIGHT = "" + height;
+			slideShow.setDimensions(width, height);
 		}
 		//
 		// for (Slide slide : slideShow.slides) {
@@ -326,16 +318,14 @@ public final class EPubImporter {
 		// }
 
 		Slide slide = slideShow.slides.get(0);
-		if (slide != null) {
-			for (String path : images) {
-				String imagePath = slideShow.getBaseFolderPath() + '/' + path;
-				File imageFile = new File(imagePath);
-				if (imageFile.exists()) {
-					if (slide.FILES_IMG == null) {
-						slide.FILES_IMG = "";
-					}
-					slide.FILES_IMG += '\n' + path;
+		for (String path : images) {
+			String imagePath = slideShow.getBaseFolderPath() + '/' + path;
+			File imageFile = new File(imagePath);
+			if (imageFile.exists()) {
+				if (slide.FILES_IMG == null) {
+					slide.FILES_IMG = "";
 				}
+				slide.FILES_IMG += '\n' + path;
 			}
 		}
 
