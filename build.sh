@@ -27,10 +27,10 @@ javac -classpath ".:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" "${root}/
 
 fi
 
-DATA_file="${root}/_INPUT/Romain/slides.html"
+#DATA_file="${root}/_INPUT/Romain/slides.html"
 #DATA_file="${root}/_INPUT/DAISY/data.txt"
-#DATA_file="${root}/_INPUT/data.txt"
 #DATA_file="${root}/_INPUT/book_UNZIPPED.epub/OEBPS/content.opf"
+DATA_file="${root}/_INPUT/data.txt"
 
 DATA_url="file://${DATA_file}"
 
@@ -44,7 +44,7 @@ java -classpath "${root}/tool/epub3-sliderizer/bin/:${root}/tool/epub3-sliderize
 
 
 
-#open ${EPUB_FOLDER}
+open ${EPUB_FOLDER}
 #exit
 
 

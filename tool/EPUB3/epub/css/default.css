@@ -11,6 +11,14 @@ Globals
 ==============================================================================
 */
 
+@font-face
+{
+	font-family: 'Entypo';
+	font-weight: normal;
+	font-style: normal;
+	src:url(Entypo.woff) format('woff');
+}
+
 em
 {
 	border-bottom: 2px #333333 dotted;
@@ -108,6 +116,7 @@ span.keyboard
 	
 	padding-left: 0.2em;
 	padding-right: 0.2em;
+	
 	padding-bottom: 0.2em;
 
 	background-color: #D0D0D0;
@@ -116,6 +125,14 @@ span.keyboard
 	border-left: 4px solid #E0E0E0;
 	border-bottom: 4px solid #A8A8A8;
 	border-right: 4px solid #A8A8A8;
+}
+
+html:not(.opera) span.keyboard.symbols
+{
+	font-family: Entypo;
+	font-size: 120%;
+	
+	padding-bottom: 0;
 }
 
 /*
@@ -390,16 +407,47 @@ Links
 ==============================================================================
 */
 
+html:not(.opera) a#epb3sldrzr-link-toc:before,
+html:not(.opera) a#epb3sldrzr-link-next:before,
+html:not(.opera) a#epb3sldrzr-link-previous:before
+{
+	margin:0;
+	padding:0;
+	font-size: 200%;
+	font-family: 'Entypo';
+}
 
-a#epb3sldrzr-link-toc:before
+html:not(.opera) a#epb3sldrzr-link-toc:before
+{
+	content: "\E005";
+	/*
+	content: "\2605";
+	*/
+}
+html:not(.opera) a#epb3sldrzr-link-previous:before
+{
+	content: "\25C2";
+	/*
+	content: "\25C4";
+	*/
+}
+html:not(.opera) a#epb3sldrzr-link-next:before
+{
+	content: "\25B8";
+	/*
+	content: "\25BA";
+	*/
+}
+
+html.opera a#epb3sldrzr-link-toc:before
 {
 	content: "\2605";
 }
-a#epb3sldrzr-link-previous:before
+html.opera a#epb3sldrzr-link-previous:before
 {
 	content: "\25C4";
 }
-a#epb3sldrzr-link-next:before
+html.opera a#epb3sldrzr-link-next:before
 {
 	content: "\25BA";
 }

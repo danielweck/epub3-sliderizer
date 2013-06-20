@@ -234,6 +234,10 @@ public final class OPF {
 		// elementManifest, "js-json", false,
 		// Epub3FileSet.JS_FOLDER_NAME, null);
 
+		create_ManifestItem(Epub3FileSet.FONT_ENTYPO_NAME, document,
+				elementManifest, "font-entypo", false,
+				Epub3FileSet.CSS_FOLDER_NAME, null);
+
 		create_ManifestItem(Epub3FileSet.CSS_DEFAULT_NAME, document,
 				elementManifest, "css-default", false,
 				Epub3FileSet.CSS_FOLDER_NAME, null);

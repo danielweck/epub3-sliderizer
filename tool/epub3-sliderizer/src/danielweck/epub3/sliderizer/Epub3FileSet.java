@@ -24,6 +24,8 @@ public final class Epub3FileSet {
 
 	final static String CUSTOM_FOLDER_NAME = "custom";
 
+	final static String FONT_ENTYPO_NAME = "Entypo.woff";
+
 	final static String CSS_DEFAULT_NAME = "default.css";
 	final static String CSS_ANIMATE_NAME = "animate.css";
 
@@ -31,10 +33,9 @@ public final class Epub3FileSet {
 	final static String JS_SCREENFULL_NAME = "screenfull.js";
 	final static String JS_CLASSLIST_NAME = "classList.js";
 	final static String JS_SCROLLFIX_NAME = "scrollFix.js";
-	
-	//final static String JS_FIREBUG_NAME = "firebug-lite.js";
-	
-	
+
+	// final static String JS_FIREBUG_NAME = "firebug-lite.js";
+
 	// final static String JS_HISTORY_NAME = "history.js";
 	// final static String JS_JSON_NAME = "json2.js";
 
@@ -256,7 +257,7 @@ public final class Epub3FileSet {
 
 	public static ArrayList<String> splitPaths(String paths) {
 		ArrayList<String> array = new ArrayList<String>();
-		
+
 		if (paths == null) {
 			return array;
 		}
@@ -298,6 +299,9 @@ public final class Epub3FileSet {
 				Epub3FileSet.CSS_FOLDER_NAME + "/"
 						+ Epub3FileSet.CSS_DEFAULT_NAME), verbosity);
 
+		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.CSS_FOLDER_NAME,
+				Epub3FileSet.FONT_ENTYPO_NAME, verbosity);
+
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.IMG_FOLDER_NAME
 				+ "/" + Epub3FileSet.CUSTOM_FOLDER_NAME, slideShow.LOGO,
 				verbosity);
@@ -336,9 +340,9 @@ public final class Epub3FileSet {
 		}
 
 		NCX.create(slideShow, pathEpubFolder, verbosity);
-		
+
 		NavDoc.create(slideShow, pathEpubFolder, verbosity);
-		
+
 		XHTML.createAll(slideShow, pathEpubFolder, verbosity);
 
 		OPF.create(slideShow, pathEpubFolder, verbosity);
@@ -400,6 +404,15 @@ public final class Epub3FileSet {
 		if (fileExtension.equalsIgnoreCase("ico")) {
 			return "image/vnd.microsoft.icon";
 		}
+		if (fileExtension.equalsIgnoreCase("ttf")) {
+			return "application/vnd.ms-opentype";
+		}
+		if (fileExtension.equalsIgnoreCase("otf")) {
+			return "application/vnd.ms-opentype"; // "font/opentype";
+		}
+		if (fileExtension.equalsIgnoreCase("woff")) {
+			return "application/font-woff";
+		}
 		if (fileExtension.equalsIgnoreCase("jpg")
 				|| fileExtension.equalsIgnoreCase("jpeg")) {
 			return "image/jpeg";
@@ -432,6 +445,9 @@ public final class Epub3FileSet {
 		}
 		if (fileExtension.equalsIgnoreCase("mp4")) {
 			return "audio/mp4";
+		}
+		if (fileExtension.equalsIgnoreCase("pls")) {
+			return "application/pls+xml";
 		}
 
 		return "??";
