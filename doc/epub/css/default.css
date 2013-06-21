@@ -500,6 +500,11 @@ span#epb3sldrzr-subtitle-NOTES
 h1#epb3sldrzr-title,
 h1#epb3sldrzr-title-NOTES
 {
+	/* 
+	HW acceleration (iScroll)
+	-webkit-transform:translate3d(0,0,0);
+	*/
+	
 	margin:0;
 	padding:0;
 

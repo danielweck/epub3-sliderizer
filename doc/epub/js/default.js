@@ -1145,6 +1145,10 @@ Epub3Sliderizer.init = function()
 		//console.log(window.parent.Readium);
 	}
 	
+	/*
+	TOO SLOW! :(
+	(despite CSS HW acceleration)
+	
 	var scroll = querySelector$("div#epb3sldrzr-root");
 	if (typeof scroll == "undefined" || scroll == null)
 	{
@@ -1152,8 +1156,9 @@ Epub3Sliderizer.init = function()
 	}
 	if (scroll.offsetHeight < scroll.scrollHeight)
 	{
-		var iScroll = new IScroll(scroll, { fadeScrollbar: false, bounce: false, preventDefault: false });
+		var iScroll = new IScroll(scroll, { fadeScrollbar: false, bounce: false, preventDefault: false, useTransition: true, useTransform: false });
 	}
+	*/
 
 	/*
 	var aa_ = document.createElement('a');
@@ -1178,7 +1183,7 @@ Epub3Sliderizer.init = function()
 			prevent_default: false,
 			css_hacks: false
 		});
-
+			  
 	if (this.epubReadingSystem != null || this.readium)
 	{
 		this.resetOnResizeTransform();
