@@ -310,7 +310,7 @@ Epub3Sliderizer.initTouch = function()
 							scrolling = true;
 							if (hammerEvent.gesture)
 							{
-								hammerEvent.gesture.stopPropagation();
+								//hammerEvent.gesture.stopPropagation();
 							}
 							return;
 						}
@@ -1152,8 +1152,7 @@ Epub3Sliderizer.init = function()
 	}
 	if (scroll.offsetHeight < scroll.scrollHeight)
 	{
-		alert("ISCROLL");
-		var iScroll = new IScroll(scroll, { fadeScrollbar: false, bounce: false });
+		var iScroll = new IScroll(scroll, { fadeScrollbar: false, bounce: false, preventDefault: false });
 	}
 
 	/*
