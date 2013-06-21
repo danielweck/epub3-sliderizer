@@ -1150,7 +1150,7 @@ Epub3Sliderizer.init = function()
 	{
 		scroll = querySelector$("div#epb3sldrzr-root-NOTES");
 	}
-	if (scroll.offsetHeight < scroll.scrollHeight)
+	if (true) //scroll.offsetHeight < scroll.scrollHeight)
 	{
 		alert("ISCROLL");
 		var iScroll = new IScroll(scroll, { fadeScrollbar: false, bounce: false });
