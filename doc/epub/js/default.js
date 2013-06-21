@@ -68,8 +68,12 @@ var Epub3Sliderizer = {
 	increment: -1,
 	bodyRoot: null,
 	zoom: 1,
+	left: 0,
+	top: 0,
 	firefox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
-	opera: (typeof window.opera != "undefined") || navigator.userAgent.toLowerCase().indexOf(' opr/') >= 0
+	opera: (typeof window.opera != "undefined") || navigator.userAgent.toLowerCase().indexOf(' opr/') >= 0,
+	mobile: navigator.userAgent.match(/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Mobile)/)
+	// && navigator.userAgent.match(/AppleWebKit/)
 };
 
 // ----------
@@ -228,16 +232,31 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onSwipeLeft(hammerEvent)
 	{
+		if (this.zoom != 1)
+		{
+			return;
+		}
+		
 		this.gotoNext();
 	}
 	
 	function onSwipeRight(hammerEvent)
 	{
+		if (this.zoom != 1)
+		{
+			return;
+		}
+		
 		this.gotoPrevious();
 	}
 	
 	function onSwipeUp(hammerEvent)
 	{
+		if (this.zoom != 1)
+		{
+			return;
+		}
+		
 		if (scrolling)
 		{
 			return;
@@ -249,6 +268,11 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onSwipeDown(hammerEvent)
 	{
+		if (this.zoom != 1)
+		{
+			return;
+		}
+		
 		if (scrolling)
 		{
 			return;
@@ -258,71 +282,156 @@ Epub3Sliderizer.initTouch = function()
 		this.nextIncremental(false);
 	}
 	
-	function onDoubleTap(hammerEvent)
+	var dragStartX = 0;
+	var dragStartY = 0;
+	
+	var zoomStart = 1;
+	
+	function onTransform(hammerEvent)
 	{
-		if (this.zoom != 1)
+		if (scrolling)
 		{
-			this.zoom = 1;
+			return;
+		}
+		
+		if (hammerEvent.gesture)
+		{
+			this.zoom = zoomStart * hammerEvent.gesture.scale;
+			
+			if (this.zoom <= 1)
+			{
+				this.zoom = 1;
+				
+				this.left = 0;
+				this.top = 0;
+			}
+			else
+			{
+				this.left = hammerEvent.gesture.center.pageX - dragStartX * this.zoom;
+				this.top = hammerEvent.gesture.center.pageY - dragStartY * this.zoom;
+			}
+
+			this.onResize();
+		}
+	}
+	
+	function onTransformStart(hammerEvent)
+	{
+		if (scrolling)
+		{
+			return;
+		}
+		
+		if (hammerEvent.gesture)
+		{
+			zoomStart = this.zoom;
+			
+			dragStartX = (hammerEvent.gesture.center.pageX - this.left) / zoomStart;
+			dragStartY = (hammerEvent.gesture.center.pageY - this.top) / zoomStart;
+			
+			hammerEvent.gesture.preventDefault();
 		}
 		else
 		{
-			this.zoom = 2;
+			zoomStart = 1;
+			
+			dragStartX = 0;
+			dragStartY = 0;
+		}
+	}
+	
+	function onDrag(hammerEvent)
+	{
+		if (hammerEvent.gesture)
+		{
+			if (this.zoom == 1)
+			{
+				return;
+			}
+			
+			//hammerEvent.gesture.deltaX / Y;
+			
+			this.left = hammerEvent.gesture.center.pageX - dragStartX;
+			this.top = hammerEvent.gesture.center.pageY - dragStartY;
+		
+			this.onResize();
+		}
+	}
+	
+	function onDragStart(hammerEvent)
+	{
+		if (hammerEvent.gesture)
+		{
+			dragStartX = hammerEvent.gesture.center.pageX - this.left;
+			dragStartY = hammerEvent.gesture.center.pageY - this.top;
+			
+			hammerEvent.gesture.preventDefault();
+		}
+		else
+		{
+			dragStartX = 0;
+			dragStartY = 0;
 		}
 		
-		this.onResize();
+		scrolling = false;
+
+		if (this.zoom != 1)
+		{
+			return;
+		}
+
+		var scroll = querySelector$("div#epb3sldrzr-root");
+		if (typeof scroll == "undefined" || scroll == null)
+		{
+			scroll = querySelector$("div#epb3sldrzr-root-NOTES");
+		}
+		
+		var target = hammerEvent.target;
+		while (target)
+		{
+			if(target == scroll)
+			{
+				if (scroll.offsetHeight < scroll.scrollHeight)
+				{
+					if (scroll.scrollTop == 0
+							&& hammerEvent.gesture && hammerEvent.gesture.direction == "down")
+					{
+						;
+					}
+					else if (scroll.scrollTop >= (scroll.scrollHeight - scroll.offsetHeight)
+							&& hammerEvent.gesture && hammerEvent.gesture.direction == "up")
+					{
+						;
+					}
+					else
+					{
+						scrolling = true;
+						if (hammerEvent.gesture)
+						{
+							//hammerEvent.gesture.stopPropagation();
+						}
+						return;
+					}
+				}
+			}
+			target = target.parentNode;
+		}
 	}
 	
 	this.hammer.on("dragstart",
-		function(hammerEvent)
-		{
-			if (hammerEvent.gesture)
-			{
-				hammerEvent.gesture.preventDefault();
-			}
-			
-			var scroll = querySelector$("div#epb3sldrzr-root");
-			if (typeof scroll == "undefined" || scroll == null)
-			{
-				scroll = querySelector$("div#epb3sldrzr-root-NOTES");
-			}
-			
-			scrolling = false;
-	
-			var target = hammerEvent.target;
-			while (target)
-			{
-				if(target == scroll)
-				{
-					if (scroll.offsetHeight < scroll.scrollHeight)
-					{
-						if (scroll.scrollTop == 0
-								&& hammerEvent.gesture && hammerEvent.gesture.direction == "down")
-						{
-							;
-						}
-						else if (scroll.scrollTop >= (scroll.scrollHeight - scroll.offsetHeight)
-								&& hammerEvent.gesture && hammerEvent.gesture.direction == "up")
-						{
-							;
-						}
-						else
-						{
-							scrolling = true;
-							if (hammerEvent.gesture)
-							{
-								//hammerEvent.gesture.stopPropagation();
-							}
-							return;
-						}
-					}
-				}
-				target = target.parentNode;
-			}
-		}
+		onDragStart.bind(this)
 	);
 	
-	this.hammer.on("doubletap",
-		onDoubleTap.bind(this)
+	this.hammer.on("drag",
+		onDrag.bind(this)
+	);
+	
+	this.hammer.on("transformstart",
+		onTransformStart.bind(this)
+	);
+	
+	this.hammer.on("transform",
+		onTransform.bind(this)
 	);
 	
 	this.hammer.on("swipeleft",
@@ -340,165 +449,44 @@ Epub3Sliderizer.initTouch = function()
 	this.hammer.on("swipedown",
 		onSwipeDown.bind(this)
 	);
-}
-
-// ----------
-
-Epub3Sliderizer.initTouch_ = function()
-{
-	if (this.epubReadingSystem != null || this.readium)
-	{
-		return;
-	}
-
-	var startX, moveX;
-	var startY, moveY;
-	var tracking = false;
-	var scrolling = false;
 	
-	var scroll = querySelector$("div#epb3sldrzr-root");
-	if (typeof scroll == "undefined" || scroll == null)
+	function onDoubleTap(hammerEvent)
 	{
-		scroll = querySelector$("div#epb3sldrzr-root-NOTES");
-	}		
-	
-
-	function onTouchStart(touchEvent)
-	{
-		// touchEvent.preventDefault();
-		tracking = true;
-		
-		startX = touchEvent.changedTouches[0].pageX;
-		startY = touchEvent.changedTouches[0].pageY;
-	}
-
-	function onTouchMove(touchEvent)
-	{
-		if (!tracking)
+		if (this.zoom != 1)
 		{
-			return;
-		}
-		
-		var target = touchEvent.currentTarget;
-		while (target)
-		{
-			console.log(target);
-				
-			if(target == scroll
-				&& scroll.offsetHeight < scroll.scrollHeight)
-			{
-				console.log(scroll);
-				console.log(scroll.offsetHeight);
-				console.log(scroll.scrollHeight);
+			this.zoom = 1;
 			
-				return;
-			}
-			target = target.parentNode;
-		}
-		touchEvent.preventDefault();
-
-		/*
-		if (
-			//(typeof touchEvent.scrolled == undefined) ||
-			!this.scrolling)
-		{
-			touchEvent.preventDefault();
+			this.left = 0;
+			this.top = 0;
 		}
 		else
 		{
-			return;
+			this.zoom = 2;
+			
+			if (hammerEvent.gesture)
+			{
+				this.left = -hammerEvent.gesture.center.pageX;
+				this.top = -hammerEvent.gesture.center.pageY;
+			}
+			else
+			{
+				this.left = 0;
+				this.top = 0;
+			}
 		}
-		*/
-
-		moveX = touchEvent.changedTouches[0].pageX;
-		moveY = touchEvent.changedTouches[0].pageY;
-
-		var THRESHOLD = 200;
-	
-		if (startX - moveX > THRESHOLD)
-		{
-			tracking = false;
 		
-			this.gotoNext();
-		}
-		else if (startX - moveX < -THRESHOLD)
-		{
-			tracking = false;
-		
-			this.gotoPrevious();
-		}
-		else if (startY - moveY > THRESHOLD)
-		{
-			tracking = false;
-
-			this.nextIncremental(true);
-		}
-		else if (startY - moveY < -THRESHOLD)
-		{
-			tracking = false;
-
-			this.nextIncremental(false);
-		}
+		this.onResize();
 	}
 
-	
-	/*
-	var that = this;
-	scroll.addEventListener("touchmove",
-		function(touchEvent)
+	hammer = Hammer(document.documentElement,
 		{
-			
-			that.scrolling =  scroll.offsetHeight < scroll.scrollHeight;
-			
-			alert(that.scrolling);
-	
-			var condition = scroll.offsetHeight < scroll.scrollHeight;
-			if (condition)
-			{
-				touchEvent.stopPropagation();
-				//touchEvent.stopImmediatePropagation();
-			}
-
+			prevent_default: true,
+			css_hacks: false
 		});
-	*/
-		
 	
-	/*
-		new ScrollFix(scroll);
-
-	scroll.addEventListener('touchstart', function(touchEvent){
-	    this.allowUp = (this.scrollTop > 0);
-	    this.allowDown = (this.scrollTop < this.scrollHeight - this.clientHeight);
-	    this.prevTop = null; 
-	    this.prevBot = null;
-	    this.lastY = touchEvent.pageY;
-	});
-
-	scroll.addEventListener('touchmove', function(touchEvent){
-	    var up = (touchEvent.pageY > this.lastY), 
-	        down = !up;
-
-	    this.lastY = event.pageY;
-
-	    if ((up && this.allowUp) || (down && this.allowDown)) 
-	        touchEvent.stopPropagation();
-	    else 
-	        touchEvent.preventDefault();
-	});
-
-		*/
-	
-	
-	document.addEventListener("touchstart", onTouchStart.bind(this), false);
-	document.addEventListener("touchmove", onTouchMove.bind(this), false);
-	
-	/*
-	scroll.ontouchmove = function(e)
-	{
-		console.log(e.currentTarget);
-		e.stopPropagation();
-	};
-	*/
+	hammer.on("doubletap",
+		onDoubleTap.bind(this)
+	);
 }
 
 // ----------
@@ -509,6 +497,12 @@ Epub3Sliderizer.resetOnResizeTransform = function()
 	{
 		return;
 	}
+
+	document.body.style.MozTransformOrigin = null;
+	document.body.style.WebkitTransformOrigin = null;
+	document.body.style.OTransformOrigin = null;
+	document.body.style.msTransformOrigin = null;
+	document.body.style.transformOrigin = null;
 
 	document.body.style.MozTransform = null;
 	document.body.style.WebkitTransform = null;
@@ -539,14 +533,6 @@ Epub3Sliderizer.onResize = function()
 	}
 	*/
 
-	var transformOrigin = "0px 0px";
-
-	document.body.style.MozTransformOrigin = transformOrigin;
-	document.body.style.WebkitTransformOrigin = transformOrigin;
-	document.body.style.OTransformOrigin = transformOrigin;
-	document.body.style.msTransformOrigin = transformOrigin;
-	document.body.style.transformOrigin = transformOrigin;
-
 	var sx = document.body.clientWidth / window.innerWidth;
 	var sy = document.body.clientHeight / window.innerHeight;
 	var ratio = 1.0 / Math.max(sx, sy);
@@ -568,6 +554,18 @@ Epub3Sliderizer.onResize = function()
 	offsetY = Math.round( offsetY * 1000 ) / 1000;
 
 
+
+	var transformOrigin = "0px 0px"; //this.left * this.zoom / ratio + "px " + this.top * this.zoom / ratio + "px";
+
+	document.body.style.MozTransformOrigin = transformOrigin;
+	document.body.style.WebkitTransformOrigin = transformOrigin;
+	document.body.style.OTransformOrigin = transformOrigin;
+	document.body.style.msTransformOrigin = transformOrigin;
+	document.body.style.transformOrigin = transformOrigin;
+
+	offsetX += this.left;
+	offsetY += this.top;
+	
 	var transform = "translate(" + offsetX + "px," + offsetY + "px)" + " " + "scale(" + ratio * this.zoom + ")" ;
 
 	document.body.style.MozTransform = transform;
@@ -882,7 +880,7 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto)
 	if (this.increment < 0 || this.increment > (this.incrementals.length - 1))
 	{
 		this.increment = -1;
-	
+		
 		Array.prototype.forEach.call(
 			this.incrementals,
 			function(elem)
@@ -972,7 +970,7 @@ Epub3Sliderizer.lastIncremental = function()
 	{
 		return;
 	}
-	
+
 	this.increment = this.incrementals.length - 1;
 
 	this.invalidateIncremental(false);
@@ -986,7 +984,7 @@ Epub3Sliderizer.firstIncremental = function()
 	{
 		return;
 	}
-	
+
 	this.increment = 0;
 	
 	this.invalidateIncremental(true);
@@ -1013,7 +1011,6 @@ Epub3Sliderizer.nextIncremental = function(backward)
 		return;
 	}
 
-	
 	this.increment = (backward ? (this.increment - 1) : (this.increment + 1));
 	
 	this.invalidateIncremental(!backward);
@@ -1175,8 +1172,11 @@ Epub3Sliderizer.init = function()
 	this.bodyRoot.insertBefore(aa_, this.bodyRoot.children[0]);
 	*/
 
-	//Hammer.plugins.showTouches();
-	//Hammer.plugins.fakeMultitouch();
+	if (!this.mobile)
+	{
+		Hammer.plugins.showTouches();
+		Hammer.plugins.fakeMultitouch();
+	}
 	delete Hammer.defaults.stop_browser_behavior.userSelect;
 	this.hammer = Hammer(document.body,
 		{
@@ -1232,7 +1232,14 @@ Epub3Sliderizer.init = function()
 
 		this.initMediaOverlays();
 
-		this.initSlideTransition();
+		if (this.mobile)
+		{
+			this.bodyRoot.style.visibility = "visible";
+		}
+		else
+		{
+			this.initSlideTransition();
+		}
 		
 		var that = this;
 		setTimeout(function()
@@ -1258,6 +1265,15 @@ function readyFirst()
 	{
 		document.documentElement.classList.add("opera");
 	}
+	if (Epub3Sliderizer.firefox)
+	{
+		document.documentElement.classList.add("firefox");
+	}
+	if (Epub3Sliderizer.mobile)
+	{
+		document.documentElement.classList.add("mobile");
+	}
+	
 	
 	Epub3Sliderizer.bodyRoot = querySelector$("#epb3sldrzr-body"); //document.body
 
