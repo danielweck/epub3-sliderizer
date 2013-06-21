@@ -1,6 +1,6 @@
 #!/bin/sh
 
-./make.sh
+./build.sh
 
 root=$(pwd)
 
