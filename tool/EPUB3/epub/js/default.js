@@ -282,34 +282,6 @@ Epub3Sliderizer.initTouch = function()
 		this.nextIncremental(false);
 	}
 	
-	function onDoubleTap(hammerEvent)
-	{
-		if (this.zoom != 1)
-		{
-			this.zoom = 1;
-			
-			this.left = 0;
-			this.top = 0;
-		}
-		else
-		{
-			this.zoom = 2;
-			
-			if (hammerEvent.gesture)
-			{
-				this.left = -hammerEvent.gesture.center.pageX;
-				this.top = -hammerEvent.gesture.center.pageY;
-			}
-			else
-			{
-				this.left = 0;
-				this.top = 0;
-			}
-		}
-		
-		this.onResize();
-	}
-	
 	var dragStartX = 0;
 	var dragStartY = 0;
 	
@@ -325,6 +297,7 @@ Epub3Sliderizer.initTouch = function()
 		if (hammerEvent.gesture)
 		{
 			this.zoom = zoomStart * hammerEvent.gesture.scale;
+			
 			if (this.zoom <= 1)
 			{
 				this.zoom = 1;
@@ -334,11 +307,8 @@ Epub3Sliderizer.initTouch = function()
 			}
 			else
 			{
-	//			this.left = -hammerEvent.gesture.center.pageX * this.zoom;
-	//			this.top = -hammerEvent.gesture.center.pageY * this.zoom;
-
-				this.left =  (hammerEvent.gesture.center.pageX - dragStartX);
-				this.top =  (hammerEvent.gesture.center.pageY - dragStartY);
+				this.left = hammerEvent.gesture.center.pageX - dragStartX * this.zoom;
+				this.top = hammerEvent.gesture.center.pageY - dragStartY * this.zoom;
 			}
 
 			this.onResize();
@@ -356,8 +326,8 @@ Epub3Sliderizer.initTouch = function()
 		{
 			zoomStart = this.zoom;
 			
-			dragStartX = hammerEvent.gesture.center.pageX - this.left;
-			dragStartY = hammerEvent.gesture.center.pageY - this.top;
+			dragStartX = (hammerEvent.gesture.center.pageX - this.left) / zoomStart;
+			dragStartY = (hammerEvent.gesture.center.pageY - this.top) / zoomStart;
 			
 			hammerEvent.gesture.preventDefault();
 		}
@@ -456,10 +426,6 @@ Epub3Sliderizer.initTouch = function()
 		onDrag.bind(this)
 	);
 	
-	this.hammer.on("doubletap",
-		onDoubleTap.bind(this)
-	);
-	
 	this.hammer.on("transformstart",
 		onTransformStart.bind(this)
 	);
@@ -482,6 +448,44 @@ Epub3Sliderizer.initTouch = function()
 	
 	this.hammer.on("swipedown",
 		onSwipeDown.bind(this)
+	);
+	
+	function onDoubleTap(hammerEvent)
+	{
+		if (this.zoom != 1)
+		{
+			this.zoom = 1;
+			
+			this.left = 0;
+			this.top = 0;
+		}
+		else
+		{
+			this.zoom = 2;
+			
+			if (hammerEvent.gesture)
+			{
+				this.left = -hammerEvent.gesture.center.pageX;
+				this.top = -hammerEvent.gesture.center.pageY;
+			}
+			else
+			{
+				this.left = 0;
+				this.top = 0;
+			}
+		}
+		
+		this.onResize();
+	}
+
+	hammer = Hammer(document.documentElement,
+		{
+			prevent_default: true,
+			css_hacks: false
+		});
+	
+	hammer.on("doubletap",
+		onDoubleTap.bind(this)
 	);
 }
 
