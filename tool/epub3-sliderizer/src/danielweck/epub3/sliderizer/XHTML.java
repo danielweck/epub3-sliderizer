@@ -193,7 +193,8 @@ public final class XHTML {
 									+ slideShow.VIEWPORT_WIDTH
 									+ ", height="
 									+ slideShow.VIEWPORT_HEIGHT
-									+ ", user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1");
+									//+ ", user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"
+									);
 		}
 
 		create_HeadLinks(Epub3FileSet.CSS_ANIMATE_NAME, document, elementHead,
