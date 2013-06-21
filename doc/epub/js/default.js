@@ -1179,7 +1179,8 @@ Epub3Sliderizer.init = function()
 			prevent_default: false,
 			css_hacks: false
 		});
-			  
+
+		alert("HAMMER");
 	if (this.epubReadingSystem != null || this.readium)
 	{
 		this.resetOnResizeTransform();
