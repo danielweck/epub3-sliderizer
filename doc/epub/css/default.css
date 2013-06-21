@@ -470,7 +470,7 @@ div#epb3sldrzr-root
 
 	overflow:auto;
 
-	-webkit-overflow-scrolling: touch;
+/*	-webkit-overflow-scrolling: touch; */
 }
 
 #epb3sldrzr-content,

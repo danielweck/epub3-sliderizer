@@ -1,8 +1,10 @@
 // REQUIRES:
 // screenfull.js
 // classList.js
-// scrollFix.js
+// iscroll-lite-min.js
 // hammer.js + fakemultitouch + showtouches
+
+// scrollFix.js
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1143,6 +1145,16 @@ Epub3Sliderizer.init = function()
 		//console.log(window.parent.Readium);
 	}
 	
+	var scroll = querySelector$("div#epb3sldrzr-root");
+	if (typeof scroll == "undefined" || scroll == null)
+	{
+		scroll = querySelector$("div#epb3sldrzr-root-NOTES");
+	}
+	if (scroll.offsetHeight < scroll.scrollHeight)
+	{
+		alert("ISCROLL");
+		var iScroll = new IScroll(scroll, { fadeScrollbar: false, bounce: false });
+	}
 
 	/*
 	var aa_ = document.createElement('a');
@@ -1159,8 +1171,8 @@ Epub3Sliderizer.init = function()
 	this.bodyRoot.insertBefore(aa_, this.bodyRoot.children[0]);
 	*/
 
-	Hammer.plugins.showTouches();
-	Hammer.plugins.fakeMultitouch();
+	//Hammer.plugins.showTouches();
+	//Hammer.plugins.fakeMultitouch();
 	delete Hammer.defaults.stop_browser_behavior.userSelect;
 	this.hammer = Hammer(document.body,
 		{
