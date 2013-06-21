@@ -57,9 +57,9 @@ var querySelectorAll$ = (HTMLElement.prototype.querySelectorAll$ = function(sele
 
 var Epub3Sliderizer = {
 	epubReadingSystem: null,
-	readium: false,
-	kobo: false,
-	ibooks: false,
+	readium: typeof window.parent.Readium != 'undefined',
+	kobo: false, //DELAYED !! typeof window.KOBO_TAG != 'undefined', //typeof window.nextKoboSpan != 'undefined' || 
+	ibooks: typeof window.iBooks != 'undefined',
 	prev: "",
 	next: "",
 	toc: "../nav.xhtml",
@@ -1144,10 +1144,6 @@ Epub3Sliderizer.init = function()
 	console.log("Epub3Sliderizer");
 	console.log(window.navigator.userAgent);
 
-	this.readium = typeof window.parent.Readium != 'undefined';
-	this.kobo = window.nextKoboSpan || window.KOBO_TAG || false;
-	this.ibooks = window.iBooks || false;
-
 	if (typeof navigator.epubReadingSystem != 'undefined')
 	{
 		this.epubReadingSystem = navigator.epubReadingSystem;
@@ -1158,6 +1154,8 @@ Epub3Sliderizer.init = function()
 		console.log(this.epubReadingSystem.name);
 		console.log(this.epubReadingSystem.version);
 	}
+	
+	this.kobo = typeof window.KOBO_TAG != 'undefined'; //typeof window.nextKoboSpan != 'undefined' || 
 	
 	/*
 	var obj = window;
@@ -1308,6 +1306,11 @@ Epub3Sliderizer.init = function()
 
 function readyDelayed()
 {
+	if (Epub3Sliderizer.ibooks || Epub3Sliderizer.readium)
+	{
+		return;
+	}
+
 	Epub3Sliderizer.init();
 }
 
@@ -1315,6 +1318,8 @@ function readyDelayed()
 
 function readyFirst()
 {
+	Epub3Sliderizer.bodyRoot = querySelector$("#epb3sldrzr-body"); //document.body
+		
 	if (Epub3Sliderizer.opera)
 	{
 		document.documentElement.classList.add("opera");
@@ -1327,11 +1332,15 @@ function readyFirst()
 	{
 		document.documentElement.classList.add("mobile");
 	}
-	
-	
-	Epub3Sliderizer.bodyRoot = querySelector$("#epb3sldrzr-body"); //document.body
 
-	Epub3Sliderizer.onResize();
+	if (Epub3Sliderizer.ibooks || Epub3Sliderizer.readium)
+	{
+		Epub3Sliderizer.init();
+	}
+	else
+	{
+		Epub3Sliderizer.onResize();
+	}
 }
 
 // ----------
