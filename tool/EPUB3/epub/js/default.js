@@ -226,12 +226,12 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onSwipeLeft(hammerEvent)
 	{
-		this.gotoPrevious();
+		this.gotoNext();
 	}
 	
 	function onSwipeRight(hammerEvent)
 	{
-		this.gotoNext();
+		this.gotoPrevious();
 	}
 	
 	function onSwipeUp(hammerEvent)
@@ -273,6 +273,11 @@ Epub3Sliderizer.initTouch = function()
 	this.hammer.on("dragstart",
 		function(hammerEvent)
 		{
+			if (hammerEvent.gesture)
+			{
+				hammerEvent.gesture.preventDefault();
+			}
+			
 			var scroll = querySelector$("div#epb3sldrzr-root");
 			if (typeof scroll == "undefined" || scroll == null)
 			{
@@ -301,10 +306,13 @@ Epub3Sliderizer.initTouch = function()
 						else
 						{
 							scrolling = true;
+							if (hammerEvent.gesture)
+							{
+								hammerEvent.gesture.stopPropagation();
+							}
+							return;
 						}
 					}
-					
-					return;
 				}
 				target = target.parentNode;
 			}
