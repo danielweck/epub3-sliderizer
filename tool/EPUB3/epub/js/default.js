@@ -325,13 +325,22 @@ Epub3Sliderizer.initTouch = function()
 		if (hammerEvent.gesture)
 		{
 			this.zoom = zoomStart * hammerEvent.gesture.scale;
+			if (this.zoom <= 1)
+			{
+				this.zoom = 1;
+				
+				this.left = 0;
+				this.top = 0;
+			}
+			else
+			{
+	//			this.left = -hammerEvent.gesture.center.pageX * this.zoom;
+	//			this.top = -hammerEvent.gesture.center.pageY * this.zoom;
 
-//			this.left = -hammerEvent.gesture.center.pageX * this.zoom;
-//			this.top = -hammerEvent.gesture.center.pageY * this.zoom;
-			
-			this.left =  (hammerEvent.gesture.center.pageX - dragStartX);
-			this.top =  (hammerEvent.gesture.center.pageY - dragStartY);
-		
+				this.left =  (hammerEvent.gesture.center.pageX - dragStartX);
+				this.top =  (hammerEvent.gesture.center.pageY - dragStartY);
+			}
+
 			this.onResize();
 		}
 	}
