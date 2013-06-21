@@ -11,6 +11,14 @@ Globals
 ==============================================================================
 */
 
+@font-face
+{
+	font-family: 'Entypo';
+	font-weight: normal;
+	font-style: normal;
+	src:url(Entypo.woff) format('woff');
+}
+
 em
 {
 	border-bottom: 2px #333333 dotted;
@@ -184,6 +192,7 @@ span.keyboard
 	
 	padding-left: 0.2em;
 	padding-right: 0.2em;
+	
 	padding-bottom: 0.2em;
 
 	background-color: #D0D0D0;
@@ -192,6 +201,14 @@ span.keyboard
 	border-left: 4px solid #E0E0E0;
 	border-bottom: 4px solid #A8A8A8;
 	border-right: 4px solid #A8A8A8;
+}
+
+html:not(.opera) span.keyboard.symbols
+{
+	font-family: Entypo;
+	font-size: 120%;
+	
+	padding-bottom: 0;
 }
 
 /*
@@ -363,7 +380,7 @@ box-sizing:border-box;
 
 	overflow:hidden;
 
-	font-size:58px;
+	font-size: 36px;
 	font-family:Tahoma, verdana, arial, sans-serif;
 }
 
@@ -452,12 +469,14 @@ div#epb3sldrzr-root
 	z-index:5;
 
 	overflow:auto;
+
+	-webkit-overflow-scrolling: touch;
 }
 
 #epb3sldrzr-content,
 #epb3sldrzr-content-NOTES
 {
-	font-size:70%;
+	font-size: 100%;
 	
 	margin:0;
 	padding:0;
@@ -484,7 +503,7 @@ h1#epb3sldrzr-title-NOTES
 	margin:0;
 	padding:0;
 
-	font-size:110%;
+	font-size: 150%;
 	
 	font-family:Tahoma, "arial black", verdana, arial, sans-serif;
 	
@@ -542,6 +561,50 @@ Links
 ==============================================================================
 */
 
+html:not(.opera) a#epb3sldrzr-link-toc:before,
+html:not(.opera) a#epb3sldrzr-link-next:before,
+html:not(.opera) a#epb3sldrzr-link-previous:before
+{
+	margin:0;
+	padding:0;
+	font-size: 200%;
+	font-family: 'Entypo';
+}
+
+html:not(.opera) a#epb3sldrzr-link-toc:before
+{
+	content: "\E005";
+	/*
+	content: "\2605";
+	*/
+}
+html:not(.opera) a#epb3sldrzr-link-previous:before
+{
+	content: "\25C2";
+	/*
+	content: "\25C4";
+	*/
+}
+html:not(.opera) a#epb3sldrzr-link-next:before
+{
+	content: "\25B8";
+	/*
+	content: "\25BA";
+	*/
+}
+
+html.opera a#epb3sldrzr-link-toc:before
+{
+	content: "\2605";
+}
+html.opera a#epb3sldrzr-link-previous:before
+{
+	content: "\25C4";
+}
+html.opera a#epb3sldrzr-link-next:before
+{
+	content: "\25BA";
+}
 
 a#epb3sldrzr-link-noteback,
 a#epb3sldrzr-link-notesref,
@@ -564,7 +627,7 @@ user-select:none;
 	font-family:arial, helvetica, sans-serif;
 	font-weight:bold;
 	
-	font-size:45%;
+	font-size: 50%;
 
 	text-transform:uppercase;
 
@@ -636,7 +699,7 @@ a#epb3sldrzr-link-toc
 	padding-bottom:2px;
 	padding-top:4px;
 
-	left:620px;
+	left: 50%;
 	/*
 	margin: 50% auto 0 0;
 	*/
@@ -722,10 +785,10 @@ ol li
 /*	list-style-type:none; */
 }
 
-ol li:before
+ol > li:before
 {
 	font-family:Tahoma, "arial black", verdana, arial, sans-serif;
-	font-size:70%;
+	font-size: 70%;
 	
 	color: #efefef;
 	background-color: #555555;
@@ -741,7 +804,6 @@ ol li:before
 	counter-increment:item;
 	content:counter(item);
 }
-
 
 /*
 ==============================================================================
@@ -857,10 +919,14 @@ Slide content
 }
 
 #epb3sldrzr-content div.boxed > p,
-#epb3sldrzr-content-NOTES div.boxed > p
+#epb3sldrzr-content-NOTES div.boxed > p,
+#epb3sldrzr-content div.boxed > ul,
+#epb3sldrzr-content-NOTES div.boxed > ul,
+#epb3sldrzr-content div.boxed > ol,
+#epb3sldrzr-content-NOTES div.boxed > ol,
+#epb3sldrzr-content div.boxed > div,
+#epb3sldrzr-content-NOTES div.boxed > div
 {
-	padding-bottom:1em;
-	
 	background: white;
 	
 -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
@@ -869,6 +935,29 @@ Slide content
 -o-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 
+}
+
+#epb3sldrzr-content div.boxed > p,
+#epb3sldrzr-content-NOTES div.boxed > p
+{
+	padding-bottom:1em;
+}
+
+#epb3sldrzr-content div.boxed > div,
+#epb3sldrzr-content-NOTES div.boxed > div
+{
+	padding: 0;
+	margin: 0;
+	padding-bottom: 0.5em;
+}
+
+#epb3sldrzr-content div.boxed > div > ol,
+#epb3sldrzr-content-NOTES div.boxed > div > ol,
+#epb3sldrzr-content div.boxed > div > ul,
+#epb3sldrzr-content-NOTES div.boxed > div > ul
+{
+	padding-top: 0em;
+	padding-bottom: 0;
 }
 
 #epb3sldrzr-content div.boxed > h3,
@@ -882,8 +971,8 @@ box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 	line-height: 0.9em;
 }
 
-#epb3sldrzr-content div.boxed.framed > p,
-#epb3sldrzr-content-NOTES div.boxed.framed > p
+#epb3sldrzr-content div.boxed.framed > *,
+#epb3sldrzr-content-NOTES div.boxed.framed > *
 {
 	border: 2px solid #333333;
 }
