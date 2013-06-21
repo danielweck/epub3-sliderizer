@@ -310,7 +310,7 @@ Epub3Sliderizer.initTouch = function()
 							scrolling = true;
 							if (hammerEvent.gesture)
 							{
-								hammerEvent.gesture.stopPropagation();
+								//hammerEvent.gesture.stopPropagation();
 							}
 							return;
 						}
@@ -1145,6 +1145,10 @@ Epub3Sliderizer.init = function()
 		//console.log(window.parent.Readium);
 	}
 	
+	/*
+	TOO SLOW! :(
+	(despite CSS HW acceleration)
+	
 	var scroll = querySelector$("div#epb3sldrzr-root");
 	if (typeof scroll == "undefined" || scroll == null)
 	{
@@ -1152,9 +1156,9 @@ Epub3Sliderizer.init = function()
 	}
 	if (scroll.offsetHeight < scroll.scrollHeight)
 	{
-		alert("ISCROLL");
-		var iScroll = new IScroll(scroll, { fadeScrollbar: false, bounce: false });
+		var iScroll = new IScroll(scroll, { fadeScrollbar: false, bounce: false, preventDefault: false, useTransition: true, useTransform: false });
 	}
+	*/
 
 	/*
 	var aa_ = document.createElement('a');
