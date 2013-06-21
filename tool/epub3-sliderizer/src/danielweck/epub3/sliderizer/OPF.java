@@ -222,6 +222,19 @@ public final class OPF {
 				elementManifest, "js-scrollFix", false,
 				Epub3FileSet.JS_FOLDER_NAME, null);
 
+		create_ManifestItem(Epub3FileSet.JS_HAMMER_NAME, document,
+				elementManifest, "js-hammer", false,
+				Epub3FileSet.JS_FOLDER_NAME, null);
+
+		create_ManifestItem(Epub3FileSet.JS_HAMMER_FAKEMULTITOUCH_NAME, document,
+				elementManifest, "js-hammer-fakemultitouch", false,
+				Epub3FileSet.JS_FOLDER_NAME, null);
+
+		create_ManifestItem(Epub3FileSet.JS_HAMMER_SHOWTOUCHES_NAME, document,
+				elementManifest, "js-hammer-showtouches", false,
+				Epub3FileSet.JS_FOLDER_NAME, null);
+		
+		
 		// create_ManifestItem(Epub3FileSet.JS_FIREBUG_NAME, document,
 		// elementManifest, "js-firebug", false,
 		// Epub3FileSet.JS_FOLDER_NAME, null);

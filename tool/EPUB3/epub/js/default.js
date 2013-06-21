@@ -2,6 +2,7 @@
 // screenfull.js
 // classList.js
 // scrollFix.js
+// hammer.js + fakemultitouch + showtouches
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,6 +65,7 @@ var Epub3Sliderizer = {
 	incrementals: null,
 	increment: -1,
 	bodyRoot: null,
+	zoom: 1,
 	firefox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
 	opera: (typeof window.opera != "undefined") || navigator.userAgent.toLowerCase().indexOf(' opr/') >= 0
 };
@@ -214,6 +216,125 @@ Epub3Sliderizer.onKeyDown = function(keyDownEvent)
 // ----------
 
 Epub3Sliderizer.initTouch = function()
+{
+	if (this.epubReadingSystem != null || this.readium)
+	{
+		return;
+	}
+	
+	var scrolling = false;
+	
+	function onSwipeLeft(hammerEvent)
+	{
+		this.gotoPrevious();
+	}
+	
+	function onSwipeRight(hammerEvent)
+	{
+		this.gotoNext();
+	}
+	
+	function onSwipeUp(hammerEvent)
+	{
+		if (scrolling)
+		{
+			return;
+		}
+		//hammerEvent.gesture.preventDefault();
+		
+		this.nextIncremental(true);
+	}
+	
+	function onSwipeDown(hammerEvent)
+	{
+		if (scrolling)
+		{
+			return;
+		}
+		//hammerEvent.gesture.preventDefault();
+		
+		this.nextIncremental(false);
+	}
+	
+	function onDoubleTap(hammerEvent)
+	{
+		if (this.zoom != 1)
+		{
+			this.zoom = 1;
+		}
+		else
+		{
+			this.zoom = 2;
+		}
+		
+		this.onResize();
+	}
+	
+	this.hammer.on("dragstart",
+		function(hammerEvent)
+		{
+			var scroll = querySelector$("div#epb3sldrzr-root");
+			if (typeof scroll == "undefined" || scroll == null)
+			{
+				scroll = querySelector$("div#epb3sldrzr-root-NOTES");
+			}
+			
+			scrolling = false;
+	
+			var target = hammerEvent.target;
+			while (target)
+			{
+				if(target == scroll)
+				{
+					if (scroll.offsetHeight < scroll.scrollHeight)
+					{
+						if (scroll.scrollTop == 0
+								&& hammerEvent.gesture && hammerEvent.gesture.direction == "down")
+						{
+							;
+						}
+						else if (scroll.scrollTop >= (scroll.scrollHeight - scroll.offsetHeight)
+								&& hammerEvent.gesture && hammerEvent.gesture.direction == "up")
+						{
+							;
+						}
+						else
+						{
+							scrolling = true;
+						}
+					}
+					
+					return;
+				}
+				target = target.parentNode;
+			}
+		}
+	);
+	
+	this.hammer.on("doubletap",
+		onDoubleTap.bind(this)
+	);
+	
+	this.hammer.on("swipeleft",
+		onSwipeLeft.bind(this)
+	);
+	
+	this.hammer.on("swiperight",
+		onSwipeRight.bind(this)
+	);
+	
+	this.hammer.on("swipeup",
+		onSwipeUp.bind(this)
+	);
+	
+	this.hammer.on("swipedown",
+		onSwipeDown.bind(this)
+	);
+}
+
+// ----------
+
+Epub3Sliderizer.initTouch_ = function()
 {
 	if (this.epubReadingSystem != null || this.readium)
 	{
@@ -437,7 +558,7 @@ Epub3Sliderizer.onResize = function()
 	offsetY = Math.round( offsetY * 1000 ) / 1000;
 
 
-	var transform = "translate(" + offsetX + "px," + offsetY + "px)" + " " + "scale(" + ratio + ")" ;
+	var transform = "translate(" + offsetX + "px," + offsetY + "px)" + " " + "scale(" + ratio * this.zoom + ")" ;
 
 	document.body.style.MozTransform = transform;
 	document.body.style.WebkitTransform = transform;
@@ -477,12 +598,12 @@ Epub3Sliderizer.onOrientationChange = function()
 		viewport.setAttribute('content',
 			'width=' + (Math.round( adjustedWidth * 1000000.0 ) / 1000000.0)
 			+ ',height=' + (Math.round( adjustedHeight * 1000000.0 ) / 1000000.0 - 300)
-			+ ',user-scalable=yes'
+			+ ',user-scalable=no'
 			+ ',initial-scale='
-			+ rounded
+			+ '1' //rounded
 			+ ',minimum-scale='
-			+ rounded
-			+ ',maximum-scale=2'
+			+ '1' //rounded
+			+ ',maximum-scale=1' //2
 			);
 	}
 
@@ -706,6 +827,8 @@ Epub3Sliderizer.reAnimateElement = function(elem)
 	var elm = elem;
 	var newOne = elm.cloneNode(true);
 	elm.parentNode.replaceChild(newOne, elm);
+	
+	console.log("REANIMATE");
 	
 	if (elm == this.bodyRoot)
 	{
@@ -939,8 +1062,11 @@ Epub3Sliderizer.initSlideTransition = function()
 	//this.bodyRoot.classList.remove("epb3sldrzr-animated");
 	this.bodyRoot.classList.add("animated");
 	this.bodyRoot.classList.add("epb3sldrzr-animateStart");
-	
-	this.reAnimateElement(this.bodyRoot);
+
+	if (this.firefox || this.opera)
+	{
+		this.reAnimateElement(this.bodyRoot);
+	}
 }
 
 // ----------
@@ -1024,7 +1150,16 @@ Epub3Sliderizer.init = function()
 
 	this.bodyRoot.insertBefore(aa_, this.bodyRoot.children[0]);
 	*/
-	
+
+	Hammer.plugins.showTouches();
+	Hammer.plugins.fakeMultitouch();
+	delete Hammer.defaults.stop_browser_behavior.userSelect;
+	this.hammer = Hammer(document.body,
+		{
+			prevent_default: false,
+			css_hacks: false
+		});
+			  
 	if (this.epubReadingSystem != null || this.readium)
 	{
 		this.resetOnResizeTransform();

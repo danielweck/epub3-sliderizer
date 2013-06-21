@@ -186,9 +186,14 @@ public final class XHTML {
 			Element elementMeta2 = document.createElement("meta");
 			elementHead.appendChild(elementMeta2);
 			elementMeta2.setAttribute("name", "viewport");
-			elementMeta2.setAttribute("content", "width="
-					+ slideShow.VIEWPORT_WIDTH + ",height="
-					+ slideShow.VIEWPORT_HEIGHT);
+			elementMeta2
+					.setAttribute(
+							"content",
+							"width="
+									+ slideShow.VIEWPORT_WIDTH
+									+ ", height="
+									+ slideShow.VIEWPORT_HEIGHT
+									+ ", user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1");
 		}
 
 		create_HeadLinks(Epub3FileSet.CSS_ANIMATE_NAME, document, elementHead,
@@ -228,6 +233,18 @@ public final class XHTML {
 				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
 
 		create_HeadScripts(Epub3FileSet.JS_SCROLLFIX_NAME, document,
+				elementHead, null, // "text/javascript",
+				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+
+		create_HeadScripts(Epub3FileSet.JS_HAMMER_NAME, document, elementHead,
+				null, // "text/javascript",
+				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+
+		create_HeadScripts(Epub3FileSet.JS_HAMMER_FAKEMULTITOUCH_NAME,
+				document, elementHead, null, // "text/javascript",
+				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+
+		create_HeadScripts(Epub3FileSet.JS_HAMMER_SHOWTOUCHES_NAME, document,
 				elementHead, null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
 
