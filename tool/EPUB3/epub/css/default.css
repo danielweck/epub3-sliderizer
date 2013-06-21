@@ -157,9 +157,12 @@ body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .incremental:not([in
 
 body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .incremental > *
 {
-	-PREFIXED_PROPERTY-transition: opacity 500ms ease-in-out 0ms;
-	
 	opacity: 1;
+}
+
+html:not(.mobile) body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .incremental > *
+{
+	-PREFIXED_PROPERTY-transition: opacity 500ms ease-in-out 0ms;
 }
 
 body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .incremental:not([incremental-active]) > *,
@@ -300,6 +303,11 @@ body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body.animated
 div#epb3sldrzr-root-NOTES,
 div#epb3sldrzr-root
 {
+	/* 
+	HW acceleration
+	*/
+	-webkit-transform:translate3d(0,0,0);
+	
 	margin:0;
 	padding:0;
 
@@ -346,11 +354,6 @@ span#epb3sldrzr-subtitle-NOTES
 h1#epb3sldrzr-title,
 h1#epb3sldrzr-title-NOTES
 {
-	/* 
-	HW acceleration (iScroll)
-	-webkit-transform:translate3d(0,0,0);
-	*/
-	
 	margin:0;
 	padding:0;
 

@@ -100,6 +100,8 @@ EPUB3-Sliderizer creates slideshows in <strong>HTML 5</strong> (web) and <strong
 See the <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/data.txt" target="_blank">input file</a> for this slidedeck.
 EPUB3-Sliderizer is a free and open-source tool (<a href="https://github.com/danielweck/epub3-sliderizer/" target="_blank">GitHub</a>).
 
+<div id="incremental-wrapper">
+
 <div class="boxed epb3sldrzr-notEpubReadingSystem" style="margin-top: 1em;">
 <p style="line-height: 1.7em;">
 To navigate, press the <span style="padding-left: 0.3em; padding-right: 0.3em; background-color:#eeeeee; color: #3D6AA2; border: 4px solid #ff00ff; border-radius:10px;">&#8226;</span> buttons below or use the keyboard: <span class="keyboard">m</span> (menu), <span class="keyboard symbols" title="up">&#9652;<!-- &#8593; --></span> previous / <span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span> next "bullet point" (space bar also), <span class="keyboard symbols" title="left">&#9666;<!-- &#8592; --></span> previous / <span class="keyboard symbols" title="right">&#9656;<!-- &#8594; --></span> next slides.
@@ -112,6 +114,8 @@ To navigate, press the <span style="padding-left: 0.3em; padding-right: 0.3em; b
 Depending on which EPUB3 reading system you are using ("e-reader" app or device),
 you can navigate these slides by <strong>flipping the pages</strong> of the e-book (left/right tap or swipe).
 </p>
+</div>
+
 </div>
 
 </div>
