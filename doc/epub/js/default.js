@@ -1150,7 +1150,7 @@ Epub3Sliderizer.init = function()
 	{
 		scroll = querySelector$("div#epb3sldrzr-root-NOTES");
 	}
-	if (true) //scroll.offsetHeight < scroll.scrollHeight)
+	if (scroll.offsetHeight < scroll.scrollHeight)
 	{
 		alert("ISCROLL");
 		var iScroll = new IScroll(scroll, { fadeScrollbar: false, bounce: false });
@@ -1180,7 +1180,6 @@ Epub3Sliderizer.init = function()
 			css_hacks: false
 		});
 
-		alert("HAMMER");
 	if (this.epubReadingSystem != null || this.readium)
 	{
 		this.resetOnResizeTransform();
