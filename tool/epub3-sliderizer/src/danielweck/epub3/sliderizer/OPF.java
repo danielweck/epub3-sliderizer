@@ -221,6 +221,10 @@ public final class OPF {
 		create_ManifestItem(Epub3FileSet.JS_SCROLLFIX_NAME, document,
 				elementManifest, "js-scrollFix", false,
 				Epub3FileSet.JS_FOLDER_NAME, null);
+		
+		create_ManifestItem(Epub3FileSet.JS_iSCROLL_NAME, document,
+				elementManifest, "js-iScroll", false,
+				Epub3FileSet.JS_FOLDER_NAME, null);
 
 		create_ManifestItem(Epub3FileSet.JS_HAMMER_NAME, document,
 				elementManifest, "js-hammer", false,

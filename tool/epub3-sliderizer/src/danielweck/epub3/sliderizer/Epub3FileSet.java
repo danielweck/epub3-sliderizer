@@ -33,6 +33,7 @@ public final class Epub3FileSet {
 	final static String JS_SCREENFULL_NAME = "screenfull.js";
 	final static String JS_CLASSLIST_NAME = "classList.js";
 	final static String JS_SCROLLFIX_NAME = "scrollFix.js";
+	final static String JS_iSCROLL_NAME = "iscroll-lite-min.js";
 
 	final static String JS_HAMMER_NAME = "hammer.min.js";
 	final static String JS_HAMMER_FAKEMULTITOUCH_NAME = "hammer.fakemultitouch.js";

@@ -235,6 +235,10 @@ public final class XHTML {
 		create_HeadScripts(Epub3FileSet.JS_SCROLLFIX_NAME, document,
 				elementHead, null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+		
+		create_HeadScripts(Epub3FileSet.JS_iSCROLL_NAME, document,
+				elementHead, null, // "text/javascript",
+				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
 
 		create_HeadScripts(Epub3FileSet.JS_HAMMER_NAME, document, elementHead,
 				null, // "text/javascript",
