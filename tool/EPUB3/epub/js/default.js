@@ -1386,10 +1386,16 @@ Epub3Sliderizer.init = function()
 		
 				var canScrollUp = false;
 				var canScrollDown = false;
+				
+				var scrollableX = false;
+				var scrollableY = false;
 		
 				var func = function()
 				{
 					var elem = $(this)[0];
+
+					scrollableX = scrollableX || elem.scrollLeft != 0;
+					scrollableY = scrollableY || elem.scrollTop != 0;
 
 					canScrollLeft = canScrollLeft || deltaX < 0 && (elem.scrollLeft + deltaX) > 0;
 			
@@ -1422,9 +1428,18 @@ Epub3Sliderizer.init = function()
 				console.log("canScrollDown: "+canScrollDown);
 				*/
 		
+		
+				var left = deltaX < 0 && deltaX < deltaY;
+				var right = deltaX > 0 && deltaX > deltaY;
+				var up = deltaY < 0 && deltaY < deltaX;
+				var down = deltaY > 0 && deltaY > deltaX;
+		
 				if (Epub3Sliderizer.zoom == 1)
 				{
-					if (!hasScroll && (Math.abs(deltaX) > 40 || Math.abs(deltaY) > 40))
+					if ((scrollableX && (up || down)
+					|| scrollableY && (left || right)
+					|| !scrollableY && !scrollableX)
+						&& (Math.abs(deltaX) > 40 || Math.abs(deltaY) > 40))
 					{
 						if (!that.pauseEvents)
 						{
@@ -1434,19 +1449,19 @@ Epub3Sliderizer.init = function()
 								that.pauseEvents = false;
 							}, 1000);
 						
-							if (deltaX < 0 && deltaX < deltaY)
+							if (left)
 							{
 								Epub3Sliderizer.gotoPrevious();
 							}
-							else if (deltaX > 0 && deltaX > deltaY)
+							else if (right)
 							{
 								Epub3Sliderizer.gotoNext();
 							}
-							else if (deltaY < 0 && deltaY < deltaX)
+							else if (up)
 							{
 								Epub3Sliderizer.nextIncremental(true);
 							}
-							else if (deltaY > 0 && deltaY > deltaX)
+							else if (down)
 							{
 								Epub3Sliderizer.nextIncremental(false);
 							}

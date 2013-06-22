@@ -17,32 +17,40 @@ public final class Epub3FileSet {
 
 	public final static String THIS = "EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer";
 
-	final static String HTML_FOLDER_NAME = "html";
-	final static String JS_FOLDER_NAME = "js";
-	final static String IMG_FOLDER_NAME = "img";
-	final static String CSS_FOLDER_NAME = "css";
+	final static String FOLDER_HTML = "html";
+	final static String FOLDER_JS = "js";
+	final static String FOLDER_IMG = "img";
+	final static String FOLDER_CSS = "css";
 
-	final static String CUSTOM_FOLDER_NAME = "custom";
+	final static String FOLDER_CUSTOM = "custom";
 
-	final static String FONT_ENTYPO_NAME = "Entypo.woff";
+	final static String FONT_ENTYPO_WOFF = "Entypo.woff";
 
-	final static String CSS_DEFAULT_NAME = "default.css";
-	final static String CSS_ANIMATE_NAME = "animate.css";
+	final static String FONT_ROBOTO_BLACK_WOFF = "Roboto-Black.woff";
+	final static String FONT_ROBOTO_BLACK_TTF = "Roboto-Black.ttf";
+	final static String FONT_ROBOTO_MEDIUM_WOFF = "Roboto-Medium.woff";
+	final static String FONT_ROBOTO_MEDIUM_TTF = "Roboto-Medium.ttf";
 
-	final static String JS_DEFAULT_NAME = "default.js";
-	final static String JS_SCREENFULL_NAME = "screenfull.js";
-	final static String JS_CLASSLIST_NAME = "classList.js";
-	
-	final static String JS_JQUERY_NAME = "jquery-2.0.2.min.js";
-	final static String JS_JQUERY_MOUSEWHEEL_NAME = "jquery.mousewheel.js";
-	final static String JS_JQUERY_BLOCKUI_NAME = "jquery.blockUI.js";
+	final static String FONT_INCONSOLATA_WOFF = "Inconsolata.woff";
+	final static String FONT_INCONSOLATA_TTF = "Inconsolata.ttf";
 
-	final static String JS_HAMMER_NAME = "hammer.min.js";
-	final static String JS_HAMMER_FAKEMULTITOUCH_NAME = "hammer.fakemultitouch.js";
-	final static String JS_HAMMER_SHOWTOUCHES_NAME = "hammer.showtouches.js";
-	
-	//final static String JS_SCROLLFIX_NAME = "scrollFix.js";
-	//final static String JS_iSCROLL_NAME = "iscroll-lite-min.js";	
+	final static String CSS_DEFAULT = "default.css";
+	final static String CSS_ANIMATE = "animate.css";
+
+	final static String JS_DEFAULT = "default.js";
+	final static String JS_SCREENFULL = "screenfull.js";
+	final static String JS_CLASSLIST = "classList.js";
+
+	final static String JS_JQUERY = "jquery-2.0.2.min.js";
+	final static String JS_JQUERY_MOUSEWHEEL = "jquery.mousewheel.js";
+	final static String JS_JQUERY_BLOCKUI = "jquery.blockUI.js";
+
+	final static String JS_HAMMER = "hammer.min.js";
+	final static String JS_HAMMER_FAKEMULTITOUCH = "hammer.fakemultitouch.js";
+	final static String JS_HAMMER_SHOWTOUCHES = "hammer.showtouches.js";
+
+	// final static String JS_SCROLLFIX_NAME = "scrollFix.js";
+	// final static String JS_iSCROLL_NAME = "iscroll-lite-min.js";
 	// final static String JS_FIREBUG_NAME = "firebug-lite.js";
 	// final static String JS_HISTORY_NAME = "history.js";
 	// final static String JS_JSON_NAME = "json2.js";
@@ -304,47 +312,62 @@ public final class Epub3FileSet {
 		}
 
 		processCssFile(slideShow, new File(pathEpubFolder,
-				Epub3FileSet.CSS_FOLDER_NAME + "/"
-						+ Epub3FileSet.CSS_DEFAULT_NAME), verbosity);
-
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.CSS_FOLDER_NAME,
-				Epub3FileSet.FONT_ENTYPO_NAME, verbosity);
-
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.IMG_FOLDER_NAME
-				+ "/" + Epub3FileSet.CUSTOM_FOLDER_NAME, slideShow.LOGO,
+				Epub3FileSet.FOLDER_CSS + "/" + Epub3FileSet.CSS_DEFAULT),
 				verbosity);
 
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.IMG_FOLDER_NAME
-				+ "/" + Epub3FileSet.CUSTOM_FOLDER_NAME, slideShow.COVER,
-				verbosity);
+		/*
+		 * handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS,
+		 * Epub3FileSet.FONT_ENTYPO_WOFF, verbosity);
+		 * 
+		 * handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS,
+		 * Epub3FileSet.FONT_INCONSOLATA_WOFF, verbosity);
+		 * 
+		 * handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS,
+		 * Epub3FileSet.FONT_INCONSOLATA_TTF, verbosity);
+		 * 
+		 * handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS,
+		 * Epub3FileSet.FONT_ROBOTO_BLACK_WOFF, verbosity);
+		 * 
+		 * handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS,
+		 * Epub3FileSet.FONT_ROBOTO_BLACK_TTF, verbosity);
+		 * 
+		 * handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS,
+		 * Epub3FileSet.FONT_ROBOTO_MEDIUM_WOFF, verbosity);
+		 * 
+		 * handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS,
+		 * Epub3FileSet.FONT_ROBOTO_MEDIUM_TTF, verbosity);
+		 */
+
+		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
+				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.LOGO, verbosity);
+
+		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
+				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.COVER, verbosity);
 
 		// TODO: MASSIVE hack!!
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.IMG_FOLDER_NAME
+		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG
 				+ (slideShow.FAVICON.equals("favicon.ico") ? "" : "/"
-						+ Epub3FileSet.CUSTOM_FOLDER_NAME), slideShow.FAVICON,
+						+ Epub3FileSet.FOLDER_CUSTOM), slideShow.FAVICON,
 				verbosity);
 
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.CSS_FOLDER_NAME
-				+ "/" + Epub3FileSet.CUSTOM_FOLDER_NAME, slideShow.FILES_CSS,
-				verbosity);
+		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS + "/"
+				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_CSS, verbosity);
 
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.JS_FOLDER_NAME
-				+ "/" + Epub3FileSet.CUSTOM_FOLDER_NAME, slideShow.FILES_JS,
-				verbosity);
+		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_JS + "/"
+				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_JS, verbosity);
 
 		for (Slide slide : slideShow.slides) {
 
-			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.IMG_FOLDER_NAME
-					+ "/" + Epub3FileSet.CUSTOM_FOLDER_NAME, slide.FILES_IMG,
+			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG
+					+ "/" + Epub3FileSet.FOLDER_CUSTOM, slide.FILES_IMG,
 					verbosity);
 
-			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.CSS_FOLDER_NAME
-					+ "/" + Epub3FileSet.CUSTOM_FOLDER_NAME, slide.FILES_CSS,
+			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS
+					+ "/" + Epub3FileSet.FOLDER_CUSTOM, slide.FILES_CSS,
 					verbosity);
 
-			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.JS_FOLDER_NAME
-					+ "/" + Epub3FileSet.CUSTOM_FOLDER_NAME, slide.FILES_JS,
-					verbosity);
+			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_JS + "/"
+					+ Epub3FileSet.FOLDER_CUSTOM, slide.FILES_JS, verbosity);
 		}
 
 		NCX.create(slideShow, pathEpubFolder, verbosity);

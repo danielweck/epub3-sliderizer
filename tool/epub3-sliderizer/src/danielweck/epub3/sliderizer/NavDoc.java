@@ -70,7 +70,7 @@ public final class NavDoc {
 
 			Element elementAToc = document.createElement("a");
 			elementLiToc.appendChild(elementAToc);
-			elementAToc.setAttribute("href", Epub3FileSet.HTML_FOLDER_NAME
+			elementAToc.setAttribute("href", Epub3FileSet.FOLDER_HTML
 					+ "/" + XHTML.getFileName(i));
 			elementAToc.appendChild(document.createTextNode(slide.TITLE));
 
@@ -90,7 +90,7 @@ public final class NavDoc {
 
 			Element elementAPageList = document.createElement("a");
 			elementLiPageList.appendChild(elementAPageList);
-			elementAPageList.setAttribute("href", Epub3FileSet.HTML_FOLDER_NAME
+			elementAPageList.setAttribute("href", Epub3FileSet.FOLDER_HTML
 					+ "/" + XHTML.getFileName(i) + "#epb3sldrzr-title");
 			elementAPageList.appendChild(document.createTextNode("" + i));
 		}

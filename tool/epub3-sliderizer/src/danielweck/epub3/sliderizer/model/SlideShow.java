@@ -64,7 +64,7 @@ public final class SlideShow extends Fielder {
 	public String VIEWPORT_WIDTH = "1290";
 	public String VIEWPORT_HEIGHT = "1000";
 
-	public String FONT_SIZE = "36";
+	public String FONT_SIZE = "40";
 
 	public String FAVICON = "favicon.ico";
 

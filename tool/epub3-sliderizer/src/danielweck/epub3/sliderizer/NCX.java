@@ -99,7 +99,7 @@ public final class NCX {
 
 			Element elementContent = document.createElement("content");
 			elementNavPoint.appendChild(elementContent);
-			elementContent.setAttribute("src", Epub3FileSet.HTML_FOLDER_NAME
+			elementContent.setAttribute("src", Epub3FileSet.FOLDER_HTML
 					+ "/" + XHTML.getFileName(i));
 
 			Element elementPageTarget = document.createElement("pageTarget");
@@ -118,7 +118,7 @@ public final class NCX {
 
 			elementContent = document.createElement("content");
 			elementPageTarget.appendChild(elementContent);
-			elementContent.setAttribute("src", Epub3FileSet.HTML_FOLDER_NAME
+			elementContent.setAttribute("src", Epub3FileSet.FOLDER_HTML
 					+ "/" + XHTML.getFileName(i) + "#epb3sldrzr-title");
 		}
 

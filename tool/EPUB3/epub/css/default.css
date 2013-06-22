@@ -13,6 +13,33 @@ Globals
 
 @font-face
 {
+	font-family: 'InconsolataMedium';
+	src: url('Inconsolata.woff') format('woff'),
+	url('Inconsolata.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: 'RobotoMedium';
+	src: url('Roboto-Medium.woff') format('woff'),
+	url('Roboto-Medium.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: 'RobotoBlack';
+	src: url('Roboto-Black.woff') format('woff'),
+	url('Roboto-Black.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face
+{
 	font-family: 'Entypo';
 	font-weight: normal;
 	font-style: normal;
@@ -254,7 +281,7 @@ body
 	overflow:hidden;
 
 	font-size: FONT_SIZEpx;
-	font-family:Tahoma, verdana, arial, sans-serif;
+	font-family: RobotoMedium, Tahoma, verdana, arial, sans-serif;
 }
 
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body
@@ -380,14 +407,16 @@ h1#epb3sldrzr-title-NOTES
 
 	font-size: 150%;
 	
-	font-family:Tahoma, "arial black", verdana, arial, sans-serif;
+	font-family: RobotoBlack, Tahoma, "arial black", verdana, arial, sans-serif;
 	
+	/*
 	line-height:1em;
-	
 	letter-spacing:0.03em;
+
+	padding-top:0.3em;
+	*/
 	
 	padding:0.4em;
-	padding-top:0.3em;
 	
 	color:rgba(0, 0, 0, 0.5);
 	background-color:#efefef;
@@ -493,7 +522,7 @@ a#epb3sldrzr-link-epubReadingSystem
 	margin:0;
 	padding:0;
 
-	font-family:arial, helvetica, sans-serif;
+	font-family: RobotoMedium, arial, helvetica, sans-serif;
 	font-weight:bold;
 	
 	font-size: 50%;
@@ -656,7 +685,7 @@ ol li
 
 ol > li:before
 {
-	font-family:Tahoma, "arial black", verdana, arial, sans-serif;
+	font-family: RobotoMedium, Tahoma, "arial black", verdana, arial, sans-serif;
 	font-size: 70%;
 	
 	color: #efefef;
@@ -852,7 +881,7 @@ Slide content
 .code
 {
 	font-size: 70%;
-	font-family: monospace;
+	font-family: InconsolataMedium, monospace;
 }
 
 

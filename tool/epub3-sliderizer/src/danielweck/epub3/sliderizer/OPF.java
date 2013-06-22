@@ -187,14 +187,14 @@ public final class OPF {
 				"ncx", false, ".", null);
 
 		create_ManifestItem("600px.png", document, elementManifest, "px600",
-				false, Epub3FileSet.IMG_FOLDER_NAME, null);
+				false, Epub3FileSet.FOLDER_IMG, null);
 
 		create_ManifestItem("back.png", document, elementManifest,
-				"background", false, Epub3FileSet.IMG_FOLDER_NAME, null);
+				"background", false, Epub3FileSet.FOLDER_IMG, null);
 
 		create_ManifestItem(slideShow.COVER, document, elementManifest,
-				COVER_ID, false, Epub3FileSet.IMG_FOLDER_NAME + "/"
-						+ Epub3FileSet.CUSTOM_FOLDER_NAME, "cover-image");
+				COVER_ID, false, Epub3FileSet.FOLDER_IMG + "/"
+						+ Epub3FileSet.FOLDER_CUSTOM, "cover-image");
 
 		create_ManifestItem(
 				slideShow.FAVICON,
@@ -202,45 +202,45 @@ public final class OPF {
 				elementManifest,
 				"ico",
 				false,
-				Epub3FileSet.IMG_FOLDER_NAME
+				Epub3FileSet.FOLDER_IMG
 						+ (slideShow.FAVICON.equals("favicon.ico") ? "" : "/"
-								+ Epub3FileSet.CUSTOM_FOLDER_NAME), null);
+								+ Epub3FileSet.FOLDER_CUSTOM), null);
 
-		create_ManifestItem(Epub3FileSet.JS_DEFAULT_NAME, document,
+		create_ManifestItem(Epub3FileSet.JS_DEFAULT, document,
 				elementManifest, "js-default", false,
-				Epub3FileSet.JS_FOLDER_NAME, null);
+				Epub3FileSet.FOLDER_JS, null);
 
-		create_ManifestItem(Epub3FileSet.JS_SCREENFULL_NAME, document,
+		create_ManifestItem(Epub3FileSet.JS_SCREENFULL, document,
 				elementManifest, "js-screenfull", false,
-				Epub3FileSet.JS_FOLDER_NAME, null);
+				Epub3FileSet.FOLDER_JS, null);
 
-		create_ManifestItem(Epub3FileSet.JS_CLASSLIST_NAME, document,
+		create_ManifestItem(Epub3FileSet.JS_CLASSLIST, document,
 				elementManifest, "js-classList", false,
-				Epub3FileSet.JS_FOLDER_NAME, null);
+				Epub3FileSet.FOLDER_JS, null);
 
-		create_ManifestItem(Epub3FileSet.JS_JQUERY_NAME, document,
+		create_ManifestItem(Epub3FileSet.JS_JQUERY, document,
 				elementManifest, "js-jquery", false,
-				Epub3FileSet.JS_FOLDER_NAME, null);
+				Epub3FileSet.FOLDER_JS, null);
 
-		create_ManifestItem(Epub3FileSet.JS_JQUERY_BLOCKUI_NAME, document,
+		create_ManifestItem(Epub3FileSet.JS_JQUERY_BLOCKUI, document,
 				elementManifest, "js-jquery-blockui", false,
-				Epub3FileSet.JS_FOLDER_NAME, null);
+				Epub3FileSet.FOLDER_JS, null);
 
-		create_ManifestItem(Epub3FileSet.JS_JQUERY_MOUSEWHEEL_NAME, document,
+		create_ManifestItem(Epub3FileSet.JS_JQUERY_MOUSEWHEEL, document,
 				elementManifest, "js-jquery-mousewheel", false,
-				Epub3FileSet.JS_FOLDER_NAME, null);
+				Epub3FileSet.FOLDER_JS, null);
 
-		create_ManifestItem(Epub3FileSet.JS_HAMMER_NAME, document,
+		create_ManifestItem(Epub3FileSet.JS_HAMMER, document,
 				elementManifest, "js-hammer", false,
-				Epub3FileSet.JS_FOLDER_NAME, null);
+				Epub3FileSet.FOLDER_JS, null);
 
-		create_ManifestItem(Epub3FileSet.JS_HAMMER_FAKEMULTITOUCH_NAME,
+		create_ManifestItem(Epub3FileSet.JS_HAMMER_FAKEMULTITOUCH,
 				document, elementManifest, "js-hammer-fakemultitouch", false,
-				Epub3FileSet.JS_FOLDER_NAME, null);
+				Epub3FileSet.FOLDER_JS, null);
 
-		create_ManifestItem(Epub3FileSet.JS_HAMMER_SHOWTOUCHES_NAME, document,
+		create_ManifestItem(Epub3FileSet.JS_HAMMER_SHOWTOUCHES, document,
 				elementManifest, "js-hammer-showtouches", false,
-				Epub3FileSet.JS_FOLDER_NAME, null);
+				Epub3FileSet.FOLDER_JS, null);
 
 		// create_ManifestItem(Epub3FileSet.JS_SCROLLFIX_NAME, document,
 		// elementManifest, "js-scrollFix", false,
@@ -262,29 +262,53 @@ public final class OPF {
 		// elementManifest, "js-json", false,
 		// Epub3FileSet.JS_FOLDER_NAME, null);
 
-		create_ManifestItem(Epub3FileSet.FONT_ENTYPO_NAME, document,
+		create_ManifestItem(Epub3FileSet.FONT_ENTYPO_WOFF, document,
 				elementManifest, "font-entypo", false,
-				Epub3FileSet.CSS_FOLDER_NAME, null);
+				Epub3FileSet.FOLDER_CSS, null);
 
-		create_ManifestItem(Epub3FileSet.CSS_DEFAULT_NAME, document,
+		create_ManifestItem(Epub3FileSet.FONT_INCONSOLATA_WOFF, document,
+				elementManifest, "font-inconsolata-woff", false,
+				Epub3FileSet.FOLDER_CSS, null);
+
+		create_ManifestItem(Epub3FileSet.FONT_INCONSOLATA_TTF, document,
+				elementManifest, "font-inconsolata-ttf", false,
+				Epub3FileSet.FOLDER_CSS, null);
+		
+		create_ManifestItem(Epub3FileSet.FONT_ROBOTO_BLACK_WOFF, document,
+				elementManifest, "font-roboto-black-woff", false,
+				Epub3FileSet.FOLDER_CSS, null);
+		
+		create_ManifestItem(Epub3FileSet.FONT_ROBOTO_BLACK_TTF, document,
+				elementManifest, "font-roboto-black-ttf", false,
+				Epub3FileSet.FOLDER_CSS, null);
+
+		create_ManifestItem(Epub3FileSet.FONT_ROBOTO_MEDIUM_WOFF, document,
+				elementManifest, "font-roboto-medium-woff", false,
+				Epub3FileSet.FOLDER_CSS, null);
+		
+		create_ManifestItem(Epub3FileSet.FONT_ROBOTO_MEDIUM_TTF, document,
+				elementManifest, "font-roboto-medium-ttf", false,
+				Epub3FileSet.FOLDER_CSS, null);
+
+		create_ManifestItem(Epub3FileSet.CSS_DEFAULT, document,
 				elementManifest, "css-default", false,
-				Epub3FileSet.CSS_FOLDER_NAME, null);
+				Epub3FileSet.FOLDER_CSS, null);
 
-		create_ManifestItem(Epub3FileSet.CSS_ANIMATE_NAME, document,
+		create_ManifestItem(Epub3FileSet.CSS_ANIMATE, document,
 				elementManifest, "css-animate", false,
-				Epub3FileSet.CSS_FOLDER_NAME, null);
+				Epub3FileSet.FOLDER_CSS, null);
 
 		create_ManifestItem(slideShow.LOGO, document, elementManifest, "logo",
-				false, Epub3FileSet.IMG_FOLDER_NAME + "/"
-						+ Epub3FileSet.CUSTOM_FOLDER_NAME, null);
+				false, Epub3FileSet.FOLDER_IMG + "/"
+						+ Epub3FileSet.FOLDER_CUSTOM, null);
 
 		create_ManifestItem(slideShow.FILES_CSS, document, elementManifest,
-				"css", true, Epub3FileSet.CSS_FOLDER_NAME + "/"
-						+ Epub3FileSet.CUSTOM_FOLDER_NAME, null);
+				"css", true, Epub3FileSet.FOLDER_CSS + "/"
+						+ Epub3FileSet.FOLDER_CUSTOM, null);
 
 		create_ManifestItem(slideShow.FILES_JS, document, elementManifest,
-				"js", true, Epub3FileSet.JS_FOLDER_NAME + "/"
-						+ Epub3FileSet.CUSTOM_FOLDER_NAME, null);
+				"js", true, Epub3FileSet.FOLDER_JS + "/"
+						+ Epub3FileSet.FOLDER_CUSTOM, null);
 
 		Element elementSpine = document.createElement("spine");
 		elementPackage.appendChild(elementSpine);
@@ -311,27 +335,27 @@ public final class OPF {
 			String id = "page_" + nStr;
 
 			create_ManifestItem(XHTML.getFileName(n), document,
-					elementManifest, id, false, Epub3FileSet.HTML_FOLDER_NAME,
+					elementManifest, id, false, Epub3FileSet.FOLDER_HTML,
 					"scripted" + (slide.containsSVG ? " svg" : "")
 							+ (slide.containsMATHML ? " math" : ""));
 
 			if (slide.NOTES != null) {
 				create_ManifestItem(XHTML.getFileName_Notes(n), document,
 						elementManifest, id.replaceAll("page_", "page_Notes"),
-						false, Epub3FileSet.HTML_FOLDER_NAME, "scripted");
+						false, Epub3FileSet.FOLDER_HTML, "scripted");
 			}
 
 			create_ManifestItem(slide.FILES_CSS, document, elementManifest,
-					"css", true, Epub3FileSet.CSS_FOLDER_NAME + "/"
-							+ Epub3FileSet.CUSTOM_FOLDER_NAME, null);
+					"css", true, Epub3FileSet.FOLDER_CSS + "/"
+							+ Epub3FileSet.FOLDER_CUSTOM, null);
 
 			create_ManifestItem(slide.FILES_JS, document, elementManifest,
-					"js", true, Epub3FileSet.JS_FOLDER_NAME + "/"
-							+ Epub3FileSet.CUSTOM_FOLDER_NAME, null);
+					"js", true, Epub3FileSet.FOLDER_JS + "/"
+							+ Epub3FileSet.FOLDER_CUSTOM, null);
 
 			create_ManifestItem(slide.FILES_IMG, document, elementManifest,
-					"img", true, Epub3FileSet.IMG_FOLDER_NAME + "/"
-							+ Epub3FileSet.CUSTOM_FOLDER_NAME, null);
+					"img", true, Epub3FileSet.FOLDER_IMG + "/"
+							+ Epub3FileSet.FOLDER_CUSTOM, null);
 
 			//
 			// if (slide.MO_SYNC != null) {

@@ -177,9 +177,9 @@ public final class XHTML {
 				"shortcut icon",
 				null,
 				PATH_PREFIX
-						+ Epub3FileSet.IMG_FOLDER_NAME
+						+ Epub3FileSet.FOLDER_IMG
 						+ (slideShow.FAVICON.equals("favicon.ico") ? "" : "/"
-								+ Epub3FileSet.CUSTOM_FOLDER_NAME));
+								+ Epub3FileSet.FOLDER_CUSTOM));
 
 		if (// !notes &&
 		slideShow.VIEWPORT_WIDTH != null && slideShow.VIEWPORT_HEIGHT != null) {
@@ -194,69 +194,69 @@ public final class XHTML {
 					);
 		}
 
-		create_HeadLinks(Epub3FileSet.CSS_ANIMATE_NAME, document, elementHead,
+		create_HeadLinks(Epub3FileSet.CSS_ANIMATE, document, elementHead,
 				"stylesheet", "text/css", PATH_PREFIX
-						+ Epub3FileSet.CSS_FOLDER_NAME);
+						+ Epub3FileSet.FOLDER_CSS);
 
 		if (!slideShow.importedConverted) {
-			create_HeadLinks(Epub3FileSet.CSS_DEFAULT_NAME, document,
+			create_HeadLinks(Epub3FileSet.CSS_DEFAULT, document,
 					elementHead, "stylesheet", "text/css", PATH_PREFIX
-							+ Epub3FileSet.CSS_FOLDER_NAME);
+							+ Epub3FileSet.FOLDER_CSS);
 		}
 
 		create_HeadLinks(slideShow.FILES_CSS, document, elementHead,
 				"stylesheet", "text/css", PATH_PREFIX
-						+ Epub3FileSet.CSS_FOLDER_NAME + "/"
-						+ Epub3FileSet.CUSTOM_FOLDER_NAME);
+						+ Epub3FileSet.FOLDER_CSS + "/"
+						+ Epub3FileSet.FOLDER_CUSTOM);
 
 		if (slide != null) {
 			create_HeadLinks(slide.FILES_CSS, document, elementHead,
 					"stylesheet", "text/css", PATH_PREFIX
-							+ Epub3FileSet.CSS_FOLDER_NAME + "/"
-							+ Epub3FileSet.CUSTOM_FOLDER_NAME);
+							+ Epub3FileSet.FOLDER_CSS + "/"
+							+ Epub3FileSet.FOLDER_CUSTOM);
 		}
 
 		if (slideShow.importedConverted) {
-			create_HeadLinks(Epub3FileSet.CSS_DEFAULT_NAME, document,
+			create_HeadLinks(Epub3FileSet.CSS_DEFAULT, document,
 					elementHead, "stylesheet", "text/css", PATH_PREFIX
-							+ Epub3FileSet.CSS_FOLDER_NAME);
+							+ Epub3FileSet.FOLDER_CSS);
 		}
 
-		create_HeadScripts(Epub3FileSet.JS_SCREENFULL_NAME, document,
+		create_HeadScripts(Epub3FileSet.JS_SCREENFULL, document,
 				elementHead, null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
-		create_HeadScripts(Epub3FileSet.JS_CLASSLIST_NAME, document,
+		create_HeadScripts(Epub3FileSet.JS_CLASSLIST, document,
 				elementHead, null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
-		create_HeadScripts(Epub3FileSet.JS_JQUERY_NAME, document, elementHead,
+		create_HeadScripts(Epub3FileSet.JS_JQUERY, document, elementHead,
 				null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
-		create_HeadScripts(Epub3FileSet.JS_JQUERY_BLOCKUI_NAME, document, elementHead,
+		create_HeadScripts(Epub3FileSet.JS_JQUERY_BLOCKUI, document, elementHead,
 				null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
-		create_HeadScripts(Epub3FileSet.JS_JQUERY_MOUSEWHEEL_NAME, document, elementHead,
+		create_HeadScripts(Epub3FileSet.JS_JQUERY_MOUSEWHEEL, document, elementHead,
 				null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
-		create_HeadScripts(Epub3FileSet.JS_HAMMER_NAME, document, elementHead,
+		create_HeadScripts(Epub3FileSet.JS_HAMMER, document, elementHead,
 				null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
-		create_HeadScripts(Epub3FileSet.JS_HAMMER_FAKEMULTITOUCH_NAME,
+		create_HeadScripts(Epub3FileSet.JS_HAMMER_FAKEMULTITOUCH,
 				document, elementHead, null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
-		create_HeadScripts(Epub3FileSet.JS_HAMMER_SHOWTOUCHES_NAME, document,
+		create_HeadScripts(Epub3FileSet.JS_HAMMER_SHOWTOUCHES, document,
 				elementHead, null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
-		create_HeadScripts(Epub3FileSet.JS_DEFAULT_NAME, document, elementHead,
+		create_HeadScripts(Epub3FileSet.JS_DEFAULT, document, elementHead,
 				null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
 		// create_HeadScripts(Epub3FileSet.JS_SCROLLFIX_NAME, document,
 		// elementHead, null, // "text/javascript",
@@ -276,18 +276,18 @@ public final class XHTML {
 		// PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
 
 		create_HeadScripts(slideShow.FILES_JS, document, elementHead, null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME + "/"
-						+ Epub3FileSet.CUSTOM_FOLDER_NAME);
+				PATH_PREFIX + Epub3FileSet.FOLDER_JS + "/"
+						+ Epub3FileSet.FOLDER_CUSTOM);
 
 		if (slide != null) {
 			create_HeadScripts(slide.FILES_JS, document, elementHead, null, // "text/javascript",
-					PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME + "/"
-							+ Epub3FileSet.CUSTOM_FOLDER_NAME);
+					PATH_PREFIX + Epub3FileSet.FOLDER_JS + "/"
+							+ Epub3FileSet.FOLDER_CUSTOM);
 		}
 
 		if (slide == null) {
 			create_HeadLinks(XHTML.getFileName(1), document, elementHead,
-					"next", null, Epub3FileSet.HTML_FOLDER_NAME);
+					"next", null, Epub3FileSet.FOLDER_HTML);
 		} else if (!notes) {
 
 			String prev = "../" + NavDoc.getFileName();
@@ -384,8 +384,8 @@ public final class XHTML {
 		if (// !notes &&
 		slideShow.LOGO != null) {
 			String relativeDestinationPath = PATH_PREFIX
-					+ Epub3FileSet.IMG_FOLDER_NAME + "/"
-					+ Epub3FileSet.CUSTOM_FOLDER_NAME + '/' + slideShow.LOGO;
+					+ Epub3FileSet.FOLDER_IMG + "/"
+					+ Epub3FileSet.FOLDER_CUSTOM + '/' + slideShow.LOGO;
 
 			Element elementImg = document.createElement("img");
 			elementBody.appendChild(elementImg);
@@ -490,8 +490,8 @@ public final class XHTML {
 					for (String path : allReferences_IMG) {
 						if (attrVal.indexOf(path) >= 0) {
 							attrVal = attrVal.replaceAll(path, "../"
-									+ Epub3FileSet.IMG_FOLDER_NAME + "/"
-									+ Epub3FileSet.CUSTOM_FOLDER_NAME + "/"
+									+ Epub3FileSet.FOLDER_IMG + "/"
+									+ Epub3FileSet.FOLDER_CUSTOM + "/"
 									+ path);
 						}
 					}
@@ -620,7 +620,7 @@ public final class XHTML {
 
 		String fileName = XHTML.getFileName_Notes(i);
 		XmlDocument.save(document, pathEpubFolder + "/"
-				+ Epub3FileSet.HTML_FOLDER_NAME + "/" + fileName, verbosity);
+				+ Epub3FileSet.FOLDER_HTML + "/" + fileName, verbosity);
 	}
 
 	private static void create(SlideShow slideShow, int i,
@@ -663,6 +663,6 @@ public final class XHTML {
 
 		String fileName = XHTML.getFileName(i);
 		XmlDocument.save(document, pathEpubFolder + "/"
-				+ Epub3FileSet.HTML_FOLDER_NAME + "/" + fileName, verbosity);
+				+ Epub3FileSet.FOLDER_HTML + "/" + fileName, verbosity);
 	}
 }
