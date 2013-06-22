@@ -77,6 +77,7 @@ var Epub3Sliderizer = {
 	zoom: 1,
 	left: 0,
 	top: 0,
+	pauseEvents: false,
 	firefox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
 	opera: (typeof window.opera != "undefined") || navigator.userAgent.toLowerCase().indexOf(' opr/') >= 0,
 	mobile: navigator.userAgent.match(/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Mobile)/)
@@ -1354,6 +1355,114 @@ Epub3Sliderizer.init = function()
 			that.initIncrementals();
 			that.initAnimations();
 		}, 500);
+		
+		//if (typeof jquery != "undefined")
+		if ($)
+		{
+
+		//$(document).ready(function()
+		//{
+	
+		(function($)
+		{
+			if (typeof $(window).mousewheel == "undefined")
+			{
+				return;
+			}
+	
+			if (!navigator.userAgent.match(/Macintosh/))
+			{
+				return;
+			}
+
+			$(window).mousewheel(function (event, delta, deltaX, deltaY)
+			{
+				deltaY = -deltaY;
+		
+				var parents = $(event.target).parents();
+		
+				var canScrollLeft = false;
+				var canScrollRight = false;
+		
+				var canScrollUp = false;
+				var canScrollDown = false;
+		
+				var func = function()
+				{
+					var elem = $(this)[0];
+
+					canScrollLeft = canScrollLeft || deltaX < 0 && (elem.scrollLeft + deltaX) > 0;
+			
+					canScrollUp = canScrollUp || deltaY < 0 && (elem.scrollTop + deltaY) > 0;
+			
+					canScrollRight = canScrollRight || deltaX > 0 && (elem.scrollLeft + deltaX) < (elem.scrollWidth - elem.offsetWidth);
+			
+					canScrollDown = canScrollDown || deltaY > 0 && (elem.scrollTop + deltaY) < (elem.scrollHeight - elem.offsetHeight);
+				};
+		
+				$(event.target).each(func);
+				parents.each(func);
+		
+				var hasScroll = canScrollLeft || canScrollUp || canScrollRight || canScrollDown;
+		
+				if (!hasScroll)
+				{
+					event.preventDefault();
+					event.stopPropagation();
+				}
+
+				/*
+				console.log("deltaX: "+deltaX);
+				console.log("deltaY: "+deltaY);
+		
+				console.log("canScrollLeft: "+canScrollLeft);
+				console.log("canScrollRight: "+canScrollRight);
+		
+				console.log("canScrollUp: "+canScrollUp);
+				console.log("canScrollDown: "+canScrollDown);
+				*/
+		
+				if (Epub3Sliderizer.zoom == 1)
+				{
+					if (!hasScroll && (Math.abs(deltaX) > 40 || Math.abs(deltaY) > 40))
+					{
+						if (!that.pauseEvents)
+						{
+							that.pauseEvents = true;
+							setTimeout(function()
+							{
+								that.pauseEvents = false;
+							}, 1000);
+						
+							if (deltaX < 0 && deltaX < deltaY)
+							{
+								Epub3Sliderizer.gotoPrevious();
+							}
+							else if (deltaX > 0 && deltaX > deltaY)
+							{
+								Epub3Sliderizer.gotoNext();
+							}
+							else if (deltaY < 0 && deltaY < deltaX)
+							{
+								Epub3Sliderizer.nextIncremental(true);
+							}
+							else if (deltaY > 0 && deltaY > deltaX)
+							{
+								Epub3Sliderizer.nextIncremental(false);
+							}
+						}
+					}
+				}
+				else
+				{
+					//TODO: pan
+				}
+			});
+		}(jQuery));
+
+		//});
+
+		}
 	}
 }
 
@@ -1454,101 +1563,4 @@ document.addEventListener("DOMContentLoaded", function(e) { setTimeout(readyDela
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-//if (typeof jquery != "undefined")
-if ($)
-{
-(function($)
-{
-	if (typeof $(window).mousewheel == "undefined")
-	{
-		return;
-	}
-	
-	if (!navigator.userAgent.match(/Macintosh/))
-	{
-		return;
-	}
 
-	$(window).mousewheel(function (event, delta, deltaX, deltaY)
-	{
-		deltaY = -deltaY;
-		
-		var parents = $(event.target).parents();
-		
-		var canScrollLeft = false;
-		var canScrollRight = false;
-		
-		var canScrollUp = false;
-		var canScrollDown = false;
-		
-		var func = function()
-		{
-			var elem = $(this)[0];
-
-			canScrollLeft = canScrollLeft || deltaX < 0 && (elem.scrollLeft + deltaX) > 0;
-			
-			canScrollUp = canScrollUp || deltaY < 0 && (elem.scrollTop + deltaY) > 0;
-			
-			canScrollRight = canScrollRight || deltaX > 0 && (elem.scrollLeft + deltaX) < (elem.scrollWidth - elem.offsetWidth);
-			
-			canScrollDown = canScrollDown || deltaY > 0 && (elem.scrollTop + deltaY) < (elem.scrollHeight - elem.offsetHeight);
-		};
-		
-		$(event.target).each(func);
-		parents.each(func);
-		
-		if (deltaX < 0 && !canScrollLeft
-			|| deltaX > 0 && !canScrollRight
-			|| deltaY < 0 && !canScrollUp
-			|| deltaY > 0 && !canScrollDown)
-		{
-			event.preventDefault();
-		}
-
-		/*
-		console.log("deltaX: "+deltaX);
-		console.log("deltaY: "+deltaY);
-		
-		console.log("canScrollLeft: "+canScrollLeft);
-		console.log("canScrollRight: "+canScrollRight);
-		
-		console.log("canScrollUp: "+canScrollUp);
-		console.log("canScrollDown: "+canScrollDown);
-		*/
-		
-		var hasScroll = canScrollLeft || canScrollUp || canScrollRight || canScrollDown;
-		
-		if (Epub3Sliderizer.zoom == 1)
-		{
-			if (!hasScroll && delta > 40)
-			{
-				console.log(Epub3Sliderizer.incrementals);
-				
-				if (deltaX < 0)
-				{
-					Epub3Sliderizer.gotoPrevious();
-				}
-				else if (deltaX > 0)
-				{
-					Epub3Sliderizer.gotoNext();
-				}
-				else if (deltaY < 0)
-				{
-					if (Epub3Sliderizer.incrementals)
-					{
-						Epub3Sliderizer.nextIncremental(false);
-					}
-				}
-				else if (deltaY > 0)
-				{
-					Epub3Sliderizer.nextIncremental(true);
-				}
-			}
-		}
-		else
-		{
-			//TODO: pan
-		}
-	});
-}(jQuery));
-}
