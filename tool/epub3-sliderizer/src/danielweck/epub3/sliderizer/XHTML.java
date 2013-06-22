@@ -186,15 +186,12 @@ public final class XHTML {
 			Element elementMeta2 = document.createElement("meta");
 			elementHead.appendChild(elementMeta2);
 			elementMeta2.setAttribute("name", "viewport");
-			elementMeta2
-					.setAttribute(
-							"content",
-							"width="
-									+ slideShow.VIEWPORT_WIDTH
-									+ ", height="
-									+ slideShow.VIEWPORT_HEIGHT
-									//+ ", user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"
-									);
+			elementMeta2.setAttribute("content", "width="
+					+ slideShow.VIEWPORT_WIDTH + ", height="
+					+ slideShow.VIEWPORT_HEIGHT
+			// +
+			// ", user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"
+					);
 		}
 
 		create_HeadLinks(Epub3FileSet.CSS_ANIMATE_NAME, document, elementHead,
@@ -233,12 +230,16 @@ public final class XHTML {
 				elementHead, null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
 
-		create_HeadScripts(Epub3FileSet.JS_SCROLLFIX_NAME, document,
-				elementHead, null, // "text/javascript",
+		create_HeadScripts(Epub3FileSet.JS_JQUERY_NAME, document, elementHead,
+				null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
-		
-		create_HeadScripts(Epub3FileSet.JS_iSCROLL_NAME, document,
-				elementHead, null, // "text/javascript",
+
+		create_HeadScripts(Epub3FileSet.JS_JQUERY_BLOCKUI_NAME, document, elementHead,
+				null, // "text/javascript",
+				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+
+		create_HeadScripts(Epub3FileSet.JS_JQUERY_MOUSEWHEEL_NAME, document, elementHead,
+				null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
 
 		create_HeadScripts(Epub3FileSet.JS_HAMMER_NAME, document, elementHead,
@@ -257,6 +258,14 @@ public final class XHTML {
 				null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
 
+		// create_HeadScripts(Epub3FileSet.JS_SCROLLFIX_NAME, document,
+		// elementHead, null, // "text/javascript",
+		// PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+		//
+		// create_HeadScripts(Epub3FileSet.JS_iSCROLL_NAME, document,
+		// elementHead, null, // "text/javascript",
+		// PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+		//
 		// create_HeadScripts(Epub3FileSet.JS_HISTORY_NAME, document,
 		// elementHead,
 		// null, // "text/javascript",

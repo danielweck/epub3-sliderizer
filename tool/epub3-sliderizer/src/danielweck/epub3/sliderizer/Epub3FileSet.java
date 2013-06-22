@@ -32,13 +32,17 @@ public final class Epub3FileSet {
 	final static String JS_DEFAULT_NAME = "default.js";
 	final static String JS_SCREENFULL_NAME = "screenfull.js";
 	final static String JS_CLASSLIST_NAME = "classList.js";
-	final static String JS_SCROLLFIX_NAME = "scrollFix.js";
-	final static String JS_iSCROLL_NAME = "iscroll-lite-min.js";
+	
+	final static String JS_JQUERY_NAME = "jquery-2.0.2.min.js";
+	final static String JS_JQUERY_MOUSEWHEEL_NAME = "jquery.mousewheel.js";
+	final static String JS_JQUERY_BLOCKUI_NAME = "jquery.blockUI.js";
 
 	final static String JS_HAMMER_NAME = "hammer.min.js";
 	final static String JS_HAMMER_FAKEMULTITOUCH_NAME = "hammer.fakemultitouch.js";
 	final static String JS_HAMMER_SHOWTOUCHES_NAME = "hammer.showtouches.js";
 	
+	//final static String JS_SCROLLFIX_NAME = "scrollFix.js";
+	//final static String JS_iSCROLL_NAME = "iscroll-lite-min.js";	
 	// final static String JS_FIREBUG_NAME = "firebug-lite.js";
 	// final static String JS_HISTORY_NAME = "history.js";
 	// final static String JS_JSON_NAME = "json2.js";

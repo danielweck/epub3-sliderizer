@@ -292,6 +292,27 @@ body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body
 	-PREFIXED_PROPERTY-box-shadow:0 0 50px rgba(0, 0, 0, 1);
 }
 
+html.static body.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body-NOTES,
+html.static body.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body
+{
+	border-radius: 40px;
+}
+
+
+html.static body.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title,
+html.static body.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title-NOTES
+{
+	border-top-left-radius:40px;
+	border-top-right-radius:40px;
+}
+
+body:not(.epb3sldrzr-epubReadingSystem) h1#epb3sldrzr-title,
+body:not(.epb3sldrzr-epubReadingSystem) h1#epb3sldrzr-title-NOTES
+{
+	border-top-left-radius:20px;
+	border-top-right-radius:20px;
+}
+
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body-NOTES.animated,
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body.animated
 {

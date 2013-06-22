@@ -67,7 +67,7 @@ function setupAnimations()
 	var html = document.documentElement;
 	if (html.id == "epb3sldrzr-NavDoc")
 	{
-		var elem = querySelector$("#epb3sldrzr-logo");
+		var elem = querySelectorZ("#epb3sldrzr-logo");
 		elem.classList.add("bounceInRight");//fadeInUp
 		elem.classList.add("epb3sldrzr-animated");
 	}
@@ -461,7 +461,7 @@ _JS_SCRIPT
 function setupAnimations()
 {
 	var html = document.documentElement;
-	var elem = querySelector$("#epb3sldrzr-logo");
+	var elem = querySelectorZ("#epb3sldrzr-logo");
 	elem.classList.add("bounceInLeft");
 	elem.classList.add("epb3sldrzr-animated");
 }

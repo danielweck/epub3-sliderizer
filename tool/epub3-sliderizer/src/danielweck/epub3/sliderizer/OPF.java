@@ -218,27 +218,38 @@ public final class OPF {
 				elementManifest, "js-classList", false,
 				Epub3FileSet.JS_FOLDER_NAME, null);
 
-		create_ManifestItem(Epub3FileSet.JS_SCROLLFIX_NAME, document,
-				elementManifest, "js-scrollFix", false,
+		create_ManifestItem(Epub3FileSet.JS_JQUERY_NAME, document,
+				elementManifest, "js-jquery", false,
 				Epub3FileSet.JS_FOLDER_NAME, null);
-		
-		create_ManifestItem(Epub3FileSet.JS_iSCROLL_NAME, document,
-				elementManifest, "js-iScroll", false,
+
+		create_ManifestItem(Epub3FileSet.JS_JQUERY_BLOCKUI_NAME, document,
+				elementManifest, "js-jquery-blockui", false,
+				Epub3FileSet.JS_FOLDER_NAME, null);
+
+		create_ManifestItem(Epub3FileSet.JS_JQUERY_MOUSEWHEEL_NAME, document,
+				elementManifest, "js-jquery-mousewheel", false,
 				Epub3FileSet.JS_FOLDER_NAME, null);
 
 		create_ManifestItem(Epub3FileSet.JS_HAMMER_NAME, document,
 				elementManifest, "js-hammer", false,
 				Epub3FileSet.JS_FOLDER_NAME, null);
 
-		create_ManifestItem(Epub3FileSet.JS_HAMMER_FAKEMULTITOUCH_NAME, document,
-				elementManifest, "js-hammer-fakemultitouch", false,
+		create_ManifestItem(Epub3FileSet.JS_HAMMER_FAKEMULTITOUCH_NAME,
+				document, elementManifest, "js-hammer-fakemultitouch", false,
 				Epub3FileSet.JS_FOLDER_NAME, null);
 
 		create_ManifestItem(Epub3FileSet.JS_HAMMER_SHOWTOUCHES_NAME, document,
 				elementManifest, "js-hammer-showtouches", false,
 				Epub3FileSet.JS_FOLDER_NAME, null);
-		
-		
+
+		// create_ManifestItem(Epub3FileSet.JS_SCROLLFIX_NAME, document,
+		// elementManifest, "js-scrollFix", false,
+		// Epub3FileSet.JS_FOLDER_NAME, null);
+		//
+		// create_ManifestItem(Epub3FileSet.JS_iSCROLL_NAME, document,
+		// elementManifest, "js-iScroll", false,
+		// Epub3FileSet.JS_FOLDER_NAME, null);
+
 		// create_ManifestItem(Epub3FileSet.JS_FIREBUG_NAME, document,
 		// elementManifest, "js-firebug", false,
 		// Epub3FileSet.JS_FOLDER_NAME, null);
