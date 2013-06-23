@@ -75,8 +75,11 @@ var Epub3Sliderizer = {
 	increment: -1,
 	bodyRoot: null,
 	zoom: 1,
+	rotation: 0,
 	left: 0,
 	top: 0,
+	windowInnerWidth: -1,
+	windowInnerHeight: -1,
 	pauseEvents: false,
 	firefox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
 	opera: (typeof window.opera != "undefined") || navigator.userAgent.toLowerCase().indexOf(' opr/') >= 0,
@@ -301,6 +304,7 @@ Epub3Sliderizer.initTouch = function()
 	var dragStartY = 0;
 	
 	var zoomStart = 1;
+	var rotationStart = 0;
 	
 	function onTransform(hammerEvent)
 	{
@@ -316,12 +320,15 @@ Epub3Sliderizer.initTouch = function()
 			if (this.zoom <= 1)
 			{
 				this.zoom = 1;
+				this.rotation = 0;
 				
 				this.left = 0;
 				this.top = 0;
 			}
 			else
 			{
+				this.rotation = rotationStart + hammerEvent.gesture.rotation;
+			
 				this.left = hammerEvent.gesture.center.pageX - dragStartX * this.zoom;
 				this.top = hammerEvent.gesture.center.pageY - dragStartY * this.zoom;
 			}
@@ -340,6 +347,7 @@ Epub3Sliderizer.initTouch = function()
 		if (hammerEvent.gesture)
 		{
 			zoomStart = this.zoom;
+			rotationStart = this.rotation;
 			
 			dragStartX = (hammerEvent.gesture.center.pageX - this.left) / zoomStart;
 			dragStartY = (hammerEvent.gesture.center.pageY - this.top) / zoomStart;
@@ -349,6 +357,7 @@ Epub3Sliderizer.initTouch = function()
 		else
 		{
 			zoomStart = 1;
+			rotationStart = 0;
 			
 			dragStartX = 0;
 			dragStartY = 0;
@@ -368,7 +377,7 @@ Epub3Sliderizer.initTouch = function()
 			
 			this.left = hammerEvent.gesture.center.pageX - dragStartX;
 			this.top = hammerEvent.gesture.center.pageY - dragStartY;
-		
+
 			this.onResize();
 		}
 	}
@@ -467,8 +476,15 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onDoubleTap(hammerEvent)
 	{
+		if (hammerEvent.gesture)
+		{
+			hammerEvent.gesture.preventDefault();
+			hammerEvent.gesture.stopPropagation();
+		}
+		
 		if (this.zoom != 1)
 		{
+			this.rotation = 0;
 			this.zoom = 1;
 			
 			this.left = 0;
@@ -476,6 +492,7 @@ Epub3Sliderizer.initTouch = function()
 		}
 		else
 		{
+			this.rotation = 0;
 			this.zoom = 2;
 			
 			if (hammerEvent.gesture)
@@ -489,8 +506,23 @@ Epub3Sliderizer.initTouch = function()
 				this.top = 0;
 			}
 		}
-		
+
 		this.onResize();
+
+		/*
+		var that = this;
+		setTimeout(function()
+		{
+			if (typeof window.orientation != 'undefined')
+			{
+				that.onOrientationChange();
+			}
+			else
+			{
+				that.onResize();
+			}
+		}, 20);
+		*/
 	}
 
 	hammer = Hammer(document.documentElement,
@@ -502,6 +534,43 @@ Epub3Sliderizer.initTouch = function()
 	hammer.on("doubletap",
 		onDoubleTap.bind(this)
 	);
+	
+	/*
+	function onHold(hammerEvent)
+	{
+	}
+	
+	hammer.on("hold",
+		onHold.bind(this)
+	);
+	*/
+	
+	/*
+	function onTap(hammerEvent)
+	{
+		console.log("TAP");
+	}
+	
+	hammer.on("tap",
+		onTap.bind(this)
+	);
+	*/
+	
+	document.addEventListener('touchstart', function(e)
+	{
+		var t2 = e.timeStamp;
+		var t1 = document.documentElement.getAttribute('data-touchStart') || t2;
+		var dt = t2 - t1;
+		var fingers = e.touches.length;
+		document.documentElement.setAttribute('data-touchStart', t2);
+		
+		if (!dt || dt > 500 || fingers > 1)
+		{
+			return;
+		}
+		
+		e.preventDefault();
+	}, true );
 }
 
 // ----------
@@ -558,35 +627,43 @@ Epub3Sliderizer.onResize = function()
 	console.log("--- 3");
 	*/
 
-	var sx = document.body.clientWidth / window.innerWidth;
-	var sy = document.body.clientHeight / window.innerHeight;
+	/*
+	var windowInnerWidth = this.windowInnerWidth != -1 ? this.windowInnerWidth : window.innerWidth;
+	var windowInnerHeight = this.windowInnerHeight != -1 ? this.windowInnerHeight : window.innerHeight;
+	
+	console.log("windowInnerWidth 2: "  + windowInnerWidth);
+	console.log("windowInnerHeight 2: "  + windowInnerHeight);
+	*/
+
+	var windowInnerWidth = window.innerWidth;
+	var windowInnerHeight = window.innerHeight;
+	
+	/*
+	console.log("window.innerWidth: "  + window.innerWidth);
+	console.log("window.innerHeight: "  + window.innerHeight);
+	*/
+	
+	var sx = document.body.clientWidth / windowInnerWidth;
+	var sy = document.body.clientHeight / windowInnerHeight;
 	var ratio = 1.0 / Math.max(sx, sy);
 
 	var newWidth = document.body.clientWidth * ratio;
 	var offsetX = 0;
-	if (window.innerWidth > newWidth)
+	if (windowInnerWidth > newWidth)
 	{
-		offsetX = (window.innerWidth - newWidth) / 2;
+		offsetX = (windowInnerWidth - newWidth) / 2;
 	}
 	offsetX = Math.round( offsetX * 1000.0 ) / 1000.0;
 
 	var newHeight = document.body.clientHeight * ratio;
 	var offsetY = 0;
-	if (window.innerHeight > newHeight)
+	if (windowInnerHeight > newHeight)
 	{
-		offsetY = (window.innerHeight - newHeight) / 2;
+		offsetY = (windowInnerHeight - newHeight) / 2;
 	}
 	offsetY = Math.round( offsetY * 1000.0 ) / 1000.0;
 
 
-
-	var transformOrigin = "0px 0px"; //this.left * this.zoom / ratio + "px " + this.top * this.zoom / ratio + "px";
-
-	document.body.style.MozTransformOrigin = transformOrigin;
-	document.body.style.WebkitTransformOrigin = transformOrigin;
-	document.body.style.OTransformOrigin = transformOrigin;
-	document.body.style.msTransformOrigin = transformOrigin;
-	document.body.style.transformOrigin = transformOrigin;
 
 	offsetX += this.left;
 	offsetY += this.top;
@@ -594,7 +671,39 @@ Epub3Sliderizer.onResize = function()
 	offsetX = Math.round(offsetX);
 	offsetY = Math.round(offsetY);
 	
-	var transform = "translate(" + offsetX + "px," + offsetY + "px)" + " " + "scale(" + ratio * this.zoom + ")" ;
+	var scale = ratio * this.zoom;
+	
+	/*
+	console.log("===");
+	console.log(this.left);
+	console.log(this.top);
+	*/
+
+	//var transformOrigin = "0px 0px";
+	var transformOrigin =  offsetX + "px " + offsetY + "px";
+
+	document.body.style.MozTransformOrigin = transformOrigin;
+	document.body.style.WebkitTransformOrigin = transformOrigin;
+	document.body.style.OTransformOrigin = transformOrigin;
+	document.body.style.msTransformOrigin = transformOrigin;
+	document.body.style.transformOrigin = transformOrigin;
+	
+	
+	var transform = ""
+	//	" translate3d(" + offsetX + "px," + offsetY + "px,0) "
+	//	+ " scale3d(" + scale + "," + scale + ",0) "
+	//	+ " rotate(" + this.rotation + "deg) " 
+	//+ " rotate3d(" + this.rotation + "deg," + this.rotation + "deg," + this.rotation + "deg) "
+	
+	
+	+ " scale(" + scale + ") "
+	
+	+ " translate(" + offsetX  + "px," + offsetY + "px) "
+		
+
+//	+ " rotate(" + this.rotation + "deg) "
+
+	;
 
 	document.body.style.MozTransform = transform;
 	document.body.style.WebkitTransform = transform;
@@ -612,18 +721,17 @@ Epub3Sliderizer.onOrientationChange = function()
 		return;
 	}
 
-	/*
-	if (document.body.classList.contains("epb3sldrzr-NOTES"))
-	{
-		return;
-	}
-	*/
-
 	var viewport = querySelectorZ("html > head > meta[name=viewport]");
 	if (typeof viewport != 'undefined')
 	{
-		var sx = document.body.clientWidth / window.innerWidth;
-		var sy = document.body.clientHeight / window.innerHeight;
+		this.windowInnerWidth = window.innerWidth;
+		this.windowInnerHeight = window.innerHeight;
+		
+		console.log("windowInnerWidth: "  + this.windowInnerWidth);
+		console.log("windowInnerHeight: "  + this.windowInnerHeight);
+		
+		var sx = document.body.clientWidth / this.windowInnerWidth;
+		var sy = document.body.clientHeight / this.windowInnerHeight;
 		var ratio = 1.0 / Math.max(sx, sy);
 
 		var adjustedWidth = document.body.clientWidth * ratio;
@@ -650,20 +758,34 @@ Epub3Sliderizer.onOrientationChange = function()
 		console.log(height);
 		*/
 
-		viewport.removeAttribute("content");
-		viewport.setAttribute('content',
-			'width=' + width
-			+ ',height=' + height
-			+ ',user-scalable=no'
-			+ ',initial-scale='
-			+ '1' //rounded
-			+ ',minimum-scale='
-			+ '1' //rounded
-			+ ',maximum-scale=1' //2
-			);
+		var content = viewport.getAttribute('content');
+		console.log(content);
+					
+//		content = 'width=' + width + ',height=' + height;
+//		console.log(content);
+
+		if (content.indexOf('user-scalable') < 0)
+		{
+			console.log("VIEWPORT");
+
+			viewport.removeAttribute("content");
+			viewport.setAttribute('content',
+				content
+				+ ',user-scalable=no'
+				+ ',initial-scale='
+				+ '1' //rounded
+				+ ',minimum-scale='
+				+ '1' //rounded
+				+ ',maximum-scale=1' //2
+				);
+		}
 	}
 
-	this.onResize();
+	var that = this;
+	setTimeout(function()
+	{
+		that.onResize();
+	}, 20);
 }
 
 // ----------
@@ -1434,7 +1556,7 @@ Epub3Sliderizer.init = function()
 				var up = deltaY < 0 && deltaY < deltaX;
 				var down = deltaY > 0 && deltaY > deltaX;
 		
-				if (Epub3Sliderizer.zoom == 1)
+				if (that.zoom == 1)
 				{
 					if ((scrollableX && (up || down)
 					|| scrollableY && (left || right)
@@ -1451,19 +1573,19 @@ Epub3Sliderizer.init = function()
 						
 							if (left)
 							{
-								Epub3Sliderizer.gotoPrevious();
+								that.gotoPrevious();
 							}
 							else if (right)
 							{
-								Epub3Sliderizer.gotoNext();
+								that.gotoNext();
 							}
 							else if (up)
 							{
-								Epub3Sliderizer.nextIncremental(true);
+								that.nextIncremental(true);
 							}
 							else if (down)
 							{
-								Epub3Sliderizer.nextIncremental(false);
+								that.nextIncremental(false);
 							}
 						}
 					}

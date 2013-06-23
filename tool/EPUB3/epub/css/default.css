@@ -254,8 +254,17 @@ html
 	padding:0;
 }
 
+body:not(.epb3sldrzr-epubReadingSystem)
+{
+	/* 
+	HW acceleration
+	*/
+	-webkit-transform:translate3d(0,0,0);
+}
+
 body
 {
+	-webkit-text-size-adjust:none;
 	-webkit-font-smoothing: subpixel-antialiased;
 	
 	background-color:#333333;
@@ -351,11 +360,6 @@ body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body.animated
 div#epb3sldrzr-root-NOTES,
 div#epb3sldrzr-root
 {
-	/* 
-	HW acceleration
-	*/
-	-webkit-transform:translate3d(0,0,0);
-	
 	margin:0;
 	padding:0;
 
