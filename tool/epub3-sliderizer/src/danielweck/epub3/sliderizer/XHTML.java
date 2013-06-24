@@ -280,7 +280,8 @@ public final class XHTML {
 			create_HeadLinks(XHTML.getFileName(1), document, elementHead,
 					"next", null, Epub3FileSet.FOLDER_HTML);
 
-			create_HeadLinks("EPUB3.epub", document, elementHead, "epub", null,
+			create_HeadLinks(slideShow.FILE_EPUB != null ? slideShow.FILE_EPUB
+					: "EPUB3.epub", document, elementHead, "epub", null,
 					"../..");
 		} else if (!notes) {
 

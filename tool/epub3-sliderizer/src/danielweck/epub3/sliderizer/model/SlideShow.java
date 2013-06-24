@@ -75,6 +75,8 @@ public final class SlideShow extends Fielder {
 	public String FILES_CSS = null;
 	public String FILES_JS = null;
 
+	public String FILE_EPUB = null;
+	
 	public String CSS_STYLE = null;
 	public String JS_SCRIPT = null;
 

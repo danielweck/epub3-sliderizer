@@ -30,7 +30,9 @@ fi
 #DATA_file="${root}/_INPUT/Romain/slides.html"
 #DATA_file="${root}/_INPUT/DAISY/data.txt"
 #DATA_file="${root}/_INPUT/book_UNZIPPED.epub/OEBPS/content.opf"
+
 DATA_file="${root}/_INPUT/data.txt"
+EPUB_FILENAME="EPUB3-Sliderizer"
 
 DATA_url="file://${DATA_file}"
 
@@ -60,5 +62,7 @@ find "${EPUB_FOLDER}" -name ".DS_Store" -depth -exec rm {} \;
 #   done
 
 java -jar "${root}/tool/epubcheck/epubcheck.jar" "${EPUB_FOLDER}" -mode exp -save
+
+mv "${root}/_OUTPUT/content/EPUB3.epub" "${root}/_OUTPUT/content/${EPUB_FILENAME}.epub"
 
 #open "${root}/_OUTPUT/content/"

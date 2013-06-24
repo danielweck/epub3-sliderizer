@@ -15,6 +15,10 @@ _COVER
 assets/EPUB.png
 
 // --------------------------------------------
+_FILE_EPUB
+EPUB3-Sliderizer.epub
+
+// --------------------------------------------
 _CSS_STYLE
 
 body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.animated
