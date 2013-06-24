@@ -263,7 +263,11 @@ public final class OPF {
 		// Epub3FileSet.JS_FOLDER_NAME, null);
 
 		create_ManifestItem(Epub3FileSet.FONT_ENTYPO_WOFF, document,
-				elementManifest, "font-entypo", false,
+				elementManifest, "font-entypo-woff", false,
+				Epub3FileSet.FOLDER_CSS, null);
+		
+		create_ManifestItem(Epub3FileSet.FONT_ENTYPO_TTF, document,
+				elementManifest, "font-entypo-ttf", false,
 				Epub3FileSet.FOLDER_CSS, null);
 
 		create_ManifestItem(Epub3FileSet.FONT_INCONSOLATA_WOFF, document,
@@ -274,20 +278,52 @@ public final class OPF {
 				elementManifest, "font-inconsolata-ttf", false,
 				Epub3FileSet.FOLDER_CSS, null);
 		
-		create_ManifestItem(Epub3FileSet.FONT_ROBOTO_BLACK_WOFF, document,
-				elementManifest, "font-roboto-black-woff", false,
+		create_ManifestItem(Epub3FileSet.FONT_LATO_400_WOFF, document,
+				elementManifest, "font-lato-400-woff", false,
 				Epub3FileSet.FOLDER_CSS, null);
 		
-		create_ManifestItem(Epub3FileSet.FONT_ROBOTO_BLACK_TTF, document,
-				elementManifest, "font-roboto-black-ttf", false,
+		create_ManifestItem(Epub3FileSet.FONT_LATO_400_TTF, document,
+				elementManifest, "font-lato-400-ttf", false,
 				Epub3FileSet.FOLDER_CSS, null);
 
-		create_ManifestItem(Epub3FileSet.FONT_ROBOTO_MEDIUM_WOFF, document,
-				elementManifest, "font-roboto-medium-woff", false,
+		create_ManifestItem(Epub3FileSet.FONT_LATO_900_WOFF, document,
+				elementManifest, "font-lato-900-woff", false,
 				Epub3FileSet.FOLDER_CSS, null);
 		
-		create_ManifestItem(Epub3FileSet.FONT_ROBOTO_MEDIUM_TTF, document,
-				elementManifest, "font-roboto-medium-ttf", false,
+		create_ManifestItem(Epub3FileSet.FONT_LATO_900_TTF, document,
+				elementManifest, "font-lato-900-ttf", false,
+				Epub3FileSet.FOLDER_CSS, null);
+
+		create_ManifestItem(Epub3FileSet.FONT_NEUTON_400_WOFF, document,
+				elementManifest, "font-neuton-400-woff", false,
+				Epub3FileSet.FOLDER_CSS, null);
+		
+		create_ManifestItem(Epub3FileSet.FONT_NEUTON_400_TTF, document,
+				elementManifest, "font-neuton-400-ttf", false,
+				Epub3FileSet.FOLDER_CSS, null);
+
+		create_ManifestItem(Epub3FileSet.FONT_NEUTON_700_WOFF, document,
+				elementManifest, "font-neuton-700-woff", false,
+				Epub3FileSet.FOLDER_CSS, null);
+		
+		create_ManifestItem(Epub3FileSet.FONT_NEUTON_700_TTF, document,
+				elementManifest, "font-neuton-700-ttf", false,
+				Epub3FileSet.FOLDER_CSS, null);
+
+		create_ManifestItem(Epub3FileSet.FONT_ARVO_400_WOFF, document,
+				elementManifest, "font-arvo-400-woff", false,
+				Epub3FileSet.FOLDER_CSS, null);
+		
+		create_ManifestItem(Epub3FileSet.FONT_ARVO_400_TTF, document,
+				elementManifest, "font-arvo-400-ttf", false,
+				Epub3FileSet.FOLDER_CSS, null);
+
+		create_ManifestItem(Epub3FileSet.FONT_ARVO_700_WOFF, document,
+				elementManifest, "font-arvo-700-woff", false,
+				Epub3FileSet.FOLDER_CSS, null);
+		
+		create_ManifestItem(Epub3FileSet.FONT_ARVO_700_TTF, document,
+				elementManifest, "font-arvo-700-ttf", false,
 				Epub3FileSet.FOLDER_CSS, null);
 
 		create_ManifestItem(Epub3FileSet.CSS_DEFAULT, document,

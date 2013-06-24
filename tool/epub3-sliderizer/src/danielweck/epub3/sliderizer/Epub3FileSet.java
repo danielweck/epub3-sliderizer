@@ -25,11 +25,29 @@ public final class Epub3FileSet {
 	final static String FOLDER_CUSTOM = "custom";
 
 	final static String FONT_ENTYPO_WOFF = "Entypo.woff";
+	final static String FONT_ENTYPO_TTF = "Entypo.ttf";
 
+	final static String FONT_NEUTON_400_WOFF = "Neuton_400.woff";
+	final static String FONT_NEUTON_400_TTF = "Neuton_400.ttf";
+	final static String FONT_NEUTON_700_WOFF = "Neuton_700.woff";
+	final static String FONT_NEUTON_700_TTF = "Neuton_700.ttf";
+	
+	final static String FONT_ARVO_400_WOFF = "Arvo_400.woff";
+	final static String FONT_ARVO_400_TTF = "Arvo_400.ttf";
+	final static String FONT_ARVO_700_WOFF = "Arvo_700.woff";
+	final static String FONT_ARVO_700_TTF = "Arvo_700.ttf";
+	
+	final static String FONT_LATO_400_WOFF = "Lato_400.woff";
+	final static String FONT_LATO_400_TTF = "Lato_400.ttf";
+	final static String FONT_LATO_900_WOFF = "Lato_900.woff";
+	final static String FONT_LATO_900_TTF = "Lato_900.ttf";
+
+	/*
 	final static String FONT_ROBOTO_BLACK_WOFF = "Roboto-Black.woff";
 	final static String FONT_ROBOTO_BLACK_TTF = "Roboto-Black.ttf";
 	final static String FONT_ROBOTO_MEDIUM_WOFF = "Roboto-Medium.woff";
 	final static String FONT_ROBOTO_MEDIUM_TTF = "Roboto-Medium.ttf";
+	*/
 
 	final static String FONT_INCONSOLATA_WOFF = "Inconsolata.woff";
 	final static String FONT_INCONSOLATA_TTF = "Inconsolata.ttf";

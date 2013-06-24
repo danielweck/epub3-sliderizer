@@ -103,14 +103,14 @@ EPUB3-Sliderizer is a free and open-source tool (<a href="https://github.com/dan
 <div id="incremental-wrapper">
 
 <div class="boxed epb3sldrzr-notEpubReadingSystem" style="margin-top: 1em;">
-<p style="line-height: 1.7em;">
-To navigate, press the <span style="padding-left: 0.3em; padding-right: 0.3em; background-color:#eeeeee; color: #3D6AA2; border: 4px solid #ff00ff; border-radius:10px;">&#8226;</span> buttons below or use the keyboard: <span class="keyboard">m</span> (menu), <span class="keyboard symbols" title="up">&#9652;<!-- &#8593; --></span> previous / <span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span> next "bullet point" (space bar also), <span class="keyboard symbols" title="left">&#9666;<!-- &#8592; --></span> previous / <span class="keyboard symbols" title="right">&#9656;<!-- &#8594; --></span> next slides.
+<p style="line-height: 1.7em; font-weight: 400; font-family: Lato, Tahoma, 'arial black', verdana, arial, sans-serif;">
+To navigate, press the <span style="padding-left: 0.3em; padding-right: 0.3em; color: #3D6AA2; border: 4px solid #ff00ff; border-radius:10px; font-family: Entypo;">&#9632;</span> buttons below or use the keyboard: <span class="keyboard">m</span> (menu), <span class="keyboard symbols" title="up">&#9652;<!-- &#8593; --></span> previous / <span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span> next "bullet point" (space bar also), <span class="keyboard symbols" title="left">&#9666;<!-- &#8592; --></span> previous / <span class="keyboard symbols" title="right">&#9656;<!-- &#8594; --></span> next slides.
 </p>
 </div>
 
 <div class="boxed epb3sldrzr-epubReadingSystem" style="margin-top: 1em;">
 <h3>Tip</h3>
-<p>
+<p style="font-weight: 400; font-family: Lato, Tahoma, 'arial black', verdana, arial, sans-serif;">
 Depending on which EPUB3 reading system you are using ("e-reader" app or device),
 you can navigate these slides by <strong>flipping the pages</strong> of the e-book (left/right tap or swipe).
 </p>
@@ -156,7 +156,7 @@ Why EPUB3?
 _CONTENT
 
 <ul style="list-style-type: none;">
-<li style="margin-bottom: 2em;">
+<li style="margin-bottom: 1.5em;">
 <img src="assets/HTML5.png" class="epb3sldrzr-animated bounceInRight animated-logos">
 <strong>HTML5 slide deck</strong>: great for live presentations <br/> + online viewing / browsing
 
@@ -169,7 +169,8 @@ _CONTENT
 
 <div class="boxed" style="margin-top: 0.4em;">
 
-<p>EPUB3-Sliderizer generates a <strong>single</strong> fileset, which delivers <strong>both</strong> the <em>web</em> and <em>e-book</em> functions.
+<p style="font-weight: 400; font-family: Lato, Tahoma, 'arial black', verdana, arial, sans-serif;">
+EPUB3-Sliderizer generates a <strong>single</strong> fileset, which delivers <strong>both</strong> the <em>web</em> and <em>e-book</em> functions.
 
 
 // --------------------------------------------
@@ -228,7 +229,7 @@ _CONTENT
 
 <div class="boxed framed">
 <h3>slideshow-data.txt</h3>
-<p class="code">
+<p class="code" style="font-size: 70%;">
 	<span class="pale-blue">
 \	_TITLE</span>
 <br>
@@ -293,7 +294,7 @@ _CONTENT
 
 <div class="boxed framed">
 <h3>slideshow-data.txt</h3>
-<p class="code">
+<p class="code" style="font-size: 70%;">
 	<span class="pale-grey">
 \	// (line comment)</span>
 <br>
@@ -321,7 +322,7 @@ _CONTENT
 	assets/me.jpeg</span>
 <br>
 <br>
-	<span class="pale-blue">
+	<span class="pale-blue notes-highlight" style="padding: 0.1em">
 \	_NOTES</span>
 <br>
 	<span class="pale-green">
@@ -332,6 +333,7 @@ _CONTENT
 // --------------------------------------------
 _CSS_STYLE
 
+.notes-highlight,
 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-notesref
 {
 	opacity: 1;
@@ -367,7 +369,7 @@ _CONTENT
 
 <div class="boxed">
 <h3>The following CSS property:</h3>
-<p class="code">
+<p class="code" style="font-size: 70%;">
 	<span class="pale-blue">
 	-PREFIXED_PROPERTY-</span><span class="pale-green">user-select: none;</span>
 </p>
@@ -375,7 +377,7 @@ _CONTENT
 
 <div class="boxed">
 <h3>...automatically expands to:</h3>
-<p class="code">
+<p class="code" style="font-size: 70%;">
 	<span class="pale-blue">
 	-webkit-</span><span class="pale-green">user-select: none;</span>
 <br>
@@ -395,7 +397,7 @@ _CONTENT
 
 <div class="boxed">
 <h3>These are supported too:</h3>
-<p class="code">
+<p class="code" style="font-size: 70%;">
 	<span class="pale-blue">
 	_PREFIXED_</span><span class="pale-green">::selection { ... }</span>
 <br>
@@ -404,7 +406,7 @@ _CONTENT
 </p>
 </div>
 
-<p><em>Note</em>: does not work in <span class="code">style="..."</span> attributes</p>
+<p><em>Note:</em> does not work in <span class="code">style="..."</span> attributes</p>
 
 // #########################################################
 // #########################################################
@@ -420,11 +422,11 @@ _CONTENT
 
 <div class="auto incremental">
 
-<p>EPUB3-Sliderizer ships with <a href="http://daneden.me/animate">Animate.css</a> by default.
+<p>EPUB3-Sliderizer ships with <a href="http://daneden.me/animate">Animate.css</a>
 
 <div class="boxed">
 <h3>Example:</h3>
-<p class="code">
+<p class="code" style="font-size: 70%;">
 	<span class="pale-blue">
 \	_CONTENT</span>
 <br>
@@ -440,7 +442,8 @@ _CONTENT
 </p>
 </div>
 
-<p><em>Note</em>: the <span class="code pale-red">epb3sldrzr-animated</span> class (defined by EPUB3-Sliderizer) controls the initial firing of animations, to avoid premature triggers due to preloading pages in e-book readers.
+<p style="font-weight: 400; font-family: Lato, Tahoma, 'arial black', verdana, arial, sans-serif;">
+<em>Note:</em> the <span class="code pale-red">epb3sldrzr-animated</span> class controls the initial firing of animations (to avoids premature trigger during page preloading in e-book readers).
 
 </div>
 
@@ -486,7 +489,8 @@ _SUBTITLE
 _CONTENT
 
 <p>If necessary, slide content can be <strong>scrolled</strong>:
-<ol>
+
+<ol style="font-weight: 700; font-family: Neuton, Lato, Tahoma, 'arial black', verdana, arial, sans-serif;">
 <li>I wonder...
 <li>what could be
 <li>at the bottom

@@ -68,6 +68,7 @@ var Epub3Sliderizer = {
 	prev: "",
 	next: "",
 	toc: "../nav.xhtml",
+	epub: "",
 	reverse: false,
 	thisFilename: null,
 	thisHash: null,
@@ -75,11 +76,15 @@ var Epub3Sliderizer = {
 	increment: -1,
 	bodyRoot: null,
 	zoom: 1,
+	zoomPrevious: 1,
 	rotation: 0,
+	rotationPrevious: 0,
 	left: 0,
+	leftPrevious: 0,
 	top: 0,
-	windowInnerWidth: -1,
-	windowInnerHeight: -1,
+	topPrevious: 0,
+	offsetXPrevious: 0,
+	offsetYPrevious: 0,
 	pauseEvents: false,
 	firefox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
 	opera: (typeof window.opera != "undefined") || navigator.userAgent.toLowerCase().indexOf(' opr/') >= 0,
@@ -481,24 +486,32 @@ Epub3Sliderizer.initTouch = function()
 			hammerEvent.gesture.preventDefault();
 			hammerEvent.gesture.stopPropagation();
 		}
+
+		this.rotationPrevious = this.rotation;
+		this.zoomPrevious = this.zoom;
 		
-		if (this.zoom != 1)
+//		this.leftPrevious = this.left;
+//		this.topPrevious = this.top;
+		
+		if (this.zoom > 4)
 		{
 			this.rotation = 0;
 			this.zoom = 1;
 			
 			this.left = 0;
 			this.top = 0;
+		
+this.leftPrevious = 0;
+this.topPrevious = 0;
 		}
 		else
 		{
-			this.rotation = 0;
-			this.zoom = 2;
+			this.zoom += 1;
 			
 			if (hammerEvent.gesture)
 			{
-				this.left = -hammerEvent.gesture.center.pageX;
-				this.top = -hammerEvent.gesture.center.pageY;
+				this.left = hammerEvent.gesture.center.pageX;
+				this.top = hammerEvent.gesture.center.pageY;
 			}
 			else
 			{
@@ -524,7 +537,7 @@ Epub3Sliderizer.initTouch = function()
 		}, 20);
 		*/
 	}
-
+	
 	hammer = Hammer(document.documentElement,
 		{
 			prevent_default: true,
@@ -556,6 +569,8 @@ Epub3Sliderizer.initTouch = function()
 	);
 	*/
 	
+	var that = this;
+	
 	document.addEventListener('touchstart', function(e)
 	{
 		var t2 = e.timeStamp;
@@ -566,6 +581,11 @@ Epub3Sliderizer.initTouch = function()
 		
 		if (!dt || dt > 500 || fingers > 1)
 		{
+			/*
+			console.log("===");
+			console.log(that.left);
+			console.log(that.top);
+			*/
 			return;
 		}
 		
@@ -628,60 +648,34 @@ Epub3Sliderizer.onResize = function()
 	*/
 
 	/*
-	var windowInnerWidth = this.windowInnerWidth != -1 ? this.windowInnerWidth : window.innerWidth;
-	var windowInnerHeight = this.windowInnerHeight != -1 ? this.windowInnerHeight : window.innerHeight;
-	
-	console.log("windowInnerWidth 2: "  + windowInnerWidth);
-	console.log("windowInnerHeight 2: "  + windowInnerHeight);
-	*/
-
-	var windowInnerWidth = window.innerWidth;
-	var windowInnerHeight = window.innerHeight;
-	
-	/*
 	console.log("window.innerWidth: "  + window.innerWidth);
 	console.log("window.innerHeight: "  + window.innerHeight);
 	*/
 	
-	var sx = document.body.clientWidth / windowInnerWidth;
-	var sy = document.body.clientHeight / windowInnerHeight;
+	var sx = document.body.clientWidth / window.innerWidth;
+	var sy = document.body.clientHeight / window.innerHeight;
 	var ratio = 1.0 / Math.max(sx, sy);
 
 	var newWidth = document.body.clientWidth * ratio;
 	var offsetX = 0;
-	if (windowInnerWidth > newWidth)
+	if (window.innerWidth > newWidth)
 	{
-		offsetX = (windowInnerWidth - newWidth) / 2;
+		offsetX = (window.innerWidth - newWidth) / 2;
 	}
 	offsetX = Math.round( offsetX * 1000.0 ) / 1000.0;
+	offsetX = Math.round(offsetX);
 
 	var newHeight = document.body.clientHeight * ratio;
 	var offsetY = 0;
-	if (windowInnerHeight > newHeight)
+	if (window.innerHeight > newHeight)
 	{
-		offsetY = (windowInnerHeight - newHeight) / 2;
+		offsetY = (window.innerHeight - newHeight) / 2;
 	}
 	offsetY = Math.round( offsetY * 1000.0 ) / 1000.0;
-
-
-
-	offsetX += this.left;
-	offsetY += this.top;
-	
-	offsetX = Math.round(offsetX);
 	offsetY = Math.round(offsetY);
-	
-	var scale = ratio * this.zoom;
-	
-	/*
-	console.log("===");
-	console.log(this.left);
-	console.log(this.top);
-	*/
 
-	//var transformOrigin = "0px 0px";
-	var transformOrigin =  offsetX + "px " + offsetY + "px";
-
+	var transformOrigin = "0px 0px";
+	
 	document.body.style.MozTransformOrigin = transformOrigin;
 	document.body.style.WebkitTransformOrigin = transformOrigin;
 	document.body.style.OTransformOrigin = transformOrigin;
@@ -689,20 +683,96 @@ Epub3Sliderizer.onResize = function()
 	document.body.style.transformOrigin = transformOrigin;
 	
 	
+	var is3D = false;
+	
+	var transOriginX = 0;
+	var transOriginY = 0;
+	
 	var transform = ""
-	//	" translate3d(" + offsetX + "px," + offsetY + "px,0) "
-	//	+ " scale3d(" + scale + "," + scale + ",0) "
-	//	+ " rotate(" + this.rotation + "deg) " 
-	//+ " rotate3d(" + this.rotation + "deg," + this.rotation + "deg," + this.rotation + "deg) "
 	
+	//  ========##################
 	
-	+ " scale(" + scale + ") "
+	/*
+	// (-T6) TransformOrigin: RESTORE
+	+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=offsetX)  + "px," + (transOriginY=offsetY) + "px"+(is3D?", 0":"")+") "
 	
-	+ " translate(" + offsetX  + "px," + offsetY + "px) "
-		
+	// ----
+	// (6) USER TRANS (AFTER)
+	+ " translate"+(is3D?"3d":"")+"(" + (this.left-offsetX)/(this.zoomPrevious*ratio) + "px," + -this.top*this.zoomPrevious + "px"+(is3D?", 0":"")+") "
+	
+	// (T6) TransformOrigin: touch point inside already-translated/scaled body
+	+ " translate"+(is3D?"3d":"")+"(" + -transOriginX + "px," + -transOriginY + "px"+(is3D?", 0":"")+") "
+	*/
+	
+	//  ========##################
+	
+	// (-T5) TransformOrigin: RESTORE
+	//+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=(offsetX+this.left-offsetX))  + "px," + (transOriginY=(offsetY+this.top-offsetY)) + "px"+(is3D?", 0":"")+") "
+	+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=this.left*this.zoomPrevious-this.leftPrevious)  + "px," + (transOriginY=this.top*this.zoomPrevious-this.topPrevious) + "px"+(is3D?", 0":"")+") "
 
-//	+ " rotate(" + this.rotation + "deg) "
+	
+	// ----
+	// (5) USER SCALE (AFTER)
+	//+ " scale"+(is3D?"3d":"")+"(" + this.zoom/this.zoomPrevious + (is3D? "," + this.zoom/this.zoomPrevious + ",0":"") + ") "
+	+ " scale"+(is3D?"3d":"")+"(" + this.zoom + (is3D? "," + this.zoom + ",0":"") + ") "
+	
+	// (T5) TransformOrigin: touch point inside already-translated/scaled body
+	+ " translate"+(is3D?"3d":"")+"(" + -transOriginX + "px," + -transOriginY + "px"+(is3D?", 0":"")+") "
+	
+	//  ========##################
 
+	/*
+	// (-T4) TransformOrigin: RESTORE
+	+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=offsetX) + "px," + (transOriginY=offsetY) + "px"+(is3D?", 0":"")+") "
+	
+	// ----
+	// (4) USER TRANS (BEFORE)
+	+ " translate"+(is3D?"3d":"")+"(" + -this.left + "px," + -this.top + "px"+(is3D?", 0":"")+") "
+	
+	// (T4) TransformOrigin: top-left corner of already-translated body (offsetX,offsetY)
+	+ " translate"+(is3D?"3d":"")+"(" + -transOriginX  + "px," + -transOriginY + "px"+(is3D?", 0":"")+") "
+	*/
+	
+	//  ========##################
+	
+	/*
+	// (-T3) TransformOrigin: RESTORE
+	+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=this.offsetXPrevious+this.leftPrevious-this.offsetXPrevious)  + "px," + (transOriginY=this.offsetYPrevious+this.topPrevious-this.offsetYPrevious) + "px"+(is3D?", 0":"")+") "
+	
+	// ----
+	// (3) USER SCALE (BEFORE)
+	+ " scale"+(is3D?"3d":"")+"(" + this.zoomPrevious + (is3D? "," + this.zoomPrevious + ",0":"") + ") "
+	
+	// (T3) TransformOrigin: top-left corner of already-translated body (offsetX,offsetY)
+	+ " translate"+(is3D?"3d":"")+"(" + -transOriginX  + "px," + -transOriginY + "px"+(is3D?", 0":"")+") "
+	*/
+	
+	//  ========##################
+	
+	// (-T2) TransformOrigin: NOP
+	//
+	
+	// ----
+	// (2) CENTER VERTICAL / HORIZONTAL (MEET / FIT SCREEN MIDDLE)
+	+ " translate"+(is3D?"3d":"")+"(" + offsetX  + "px," + offsetY + "px"+(is3D?", 0":"")+") "
+	
+	// (T2) TransformOrigin (unchanged): top-left corner (0px,0px)
+	//
+	
+	//  ========##################
+	
+	// (-T1) TransformOrigin: NOP
+	//
+	
+	// ----
+	// (1) SCALE (FIT SCREEN) 
+	+ " scale"+(is3D?"3d":"")+"(" + ratio + (is3D? "," + ratio + ",0":"") + ") "
+	
+	// (T1) TransformOrigin: top-left corner (0px,0px)
+	//
+	
+	//  ========##################
+	
 	;
 
 	document.body.style.MozTransform = transform;
@@ -710,6 +780,12 @@ Epub3Sliderizer.onResize = function()
 	document.body.style.OTransform = transform;
 	document.body.style.msTransform = transform;
 	document.body.style.transform = transform;
+	
+	this.offsetXPrevious = offsetX;
+	this.offsetYPrevious = offsetY;
+	
+	this.leftPrevious += this.left;
+	this.topPrevious += this.top;
 }
 
 // ----------
@@ -724,14 +800,8 @@ Epub3Sliderizer.onOrientationChange = function()
 	var viewport = querySelectorZ("html > head > meta[name=viewport]");
 	if (typeof viewport != 'undefined')
 	{
-		this.windowInnerWidth = window.innerWidth;
-		this.windowInnerHeight = window.innerHeight;
-		
-		console.log("windowInnerWidth: "  + this.windowInnerWidth);
-		console.log("windowInnerHeight: "  + this.windowInnerHeight);
-		
-		var sx = document.body.clientWidth / this.windowInnerWidth;
-		var sy = document.body.clientHeight / this.windowInnerHeight;
+		var sx = document.body.clientWidth / window.innerWidth;
+		var sy = document.body.clientHeight / window.innerHeight;
 		var ratio = 1.0 / Math.max(sx, sy);
 
 		var adjustedWidth = document.body.clientWidth * ratio;
@@ -959,6 +1029,10 @@ Epub3Sliderizer.initLinks = function()
 				{
 					that.next = link.attributes['href'].nodeValue;
 				}
+				else if (rel.nodeValue === "epub")
+				{
+					that.epub = link.attributes['href'].nodeValue;
+				}
 			}
 		}
 	);
@@ -973,6 +1047,22 @@ Epub3Sliderizer.initLinks = function()
 
 	this.bodyRoot.insertBefore(aa, this.bodyRoot.children[0]);
 		
+	if (this.epub != "")
+	{
+		var nav = querySelectorZ("html#epb3sldrzr-NavDoc");
+		if (typeof nav != "undefined" && nav != null && nav)
+		{
+			var a = document.createElement('a');
+			a.id = "epb3sldrzr-link-epub";
+			a.title = "Download EPUB file";
+	//		a.onMouseOver = "func('EPUB download')";
+			a.href = this.epub;
+			//a.innerHTML = "<span style=\"display:none;\">EPUB download</span>&#9658;";
+
+			this.bodyRoot.insertBefore(a, this.bodyRoot.children[0]);
+		}
+	}	
+	
 	if (this.next != "")
 	{
 		if (this.thisFilename != null)
@@ -1005,7 +1095,6 @@ Epub3Sliderizer.initLinks = function()
 		//a.innerHTML = "<span style=\"display:none;\">Previous slide</span>&#9668;";
 
 		this.bodyRoot.insertBefore(a, this.bodyRoot.children[0]);
-
 	}
 }
 
@@ -1254,7 +1343,7 @@ Epub3Sliderizer.initSlideTransition = function()
 
 	if (this.firefox || this.opera)
 	{
-		this.reAnimateElement(this.bodyRoot);
+//		this.reAnimateElement(this.bodyRoot);
 	}
 }
 

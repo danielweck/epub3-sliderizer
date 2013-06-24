@@ -13,6 +13,60 @@ Globals
 
 @font-face
 {
+	font-family: 'Neuton';
+	src: url('Neuton_400.woff') format('woff'),
+	url('Neuton_400.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: 'Neuton';
+	src: url('Neuton_700.woff') format('woff'),
+	url('Neuton_700.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: 'Arvo';
+	src: url('Arvo_400.woff') format('woff'),
+	url('Arvo_400.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: 'Arvo';
+	src: url('Arvo_700.woff') format('woff'),
+	url('Arvo_700.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: 'Lato';
+	src: url('Lato_400.woff') format('woff'),
+	url('Lato_400.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face
+{
+	font-family: 'Lato';
+	src: url('Lato_900.woff') format('woff'),
+	url('Lato_900.ttf') format('truetype');
+	font-weight: 900;
+	font-style: normal;
+}
+
+@font-face
+{
 	font-family: 'InconsolataMedium';
 	src: url('Inconsolata.woff') format('woff'),
 	url('Inconsolata.ttf') format('truetype');
@@ -22,28 +76,11 @@ Globals
 
 @font-face
 {
-	font-family: 'RobotoMedium';
-	src: url('Roboto-Medium.woff') format('woff'),
-	url('Roboto-Medium.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face
-{
-	font-family: 'RobotoBlack';
-	src: url('Roboto-Black.woff') format('woff'),
-	url('Roboto-Black.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face
-{
 	font-family: 'Entypo';
 	font-weight: normal;
 	font-style: normal;
-	src:url(Entypo.woff) format('woff');
+	src:url(Entypo.woff) format('woff'),
+	url('Entypo.ttf') format('truetype');
 }
 
 em
@@ -290,7 +327,8 @@ body
 	overflow:hidden;
 
 	font-size: FONT_SIZEpx;
-	font-family: RobotoMedium, Tahoma, verdana, arial, sans-serif;
+	font-weight: 400;
+	font-family: Arvo, Tahoma, verdana, arial, sans-serif;
 }
 
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body
@@ -411,7 +449,8 @@ h1#epb3sldrzr-title-NOTES
 
 	font-size: 150%;
 	
-	font-family: RobotoBlack, Tahoma, "arial black", verdana, arial, sans-serif;
+	font-weight: 900;
+	font-family: Lato, Tahoma, "arial black", verdana, arial, sans-serif;
 	
 	/*
 	line-height:1em;
@@ -420,7 +459,8 @@ h1#epb3sldrzr-title-NOTES
 	padding-top:0.3em;
 	*/
 	
-	padding:0.4em;
+	padding:0.2em;
+	padding-left:0.4em;
 	
 	color:rgba(0, 0, 0, 0.5);
 	background-color:#efefef;
@@ -469,14 +509,29 @@ Links
 ==============================================================================
 */
 
+html.opera a#epb3sldrzr-link-toc:before,
+html.opera a#epb3sldrzr-link-next:before,
+html.opera a#epb3sldrzr-link-previous:before,
+html.opera a#epb3sldrzr-link-epub:before
+{
+	font-size: 180%;
+	font-family: Tahoma, verdana, arial, sans-serif;
+}
+
 html:not(.opera) a#epb3sldrzr-link-toc:before,
 html:not(.opera) a#epb3sldrzr-link-next:before,
-html:not(.opera) a#epb3sldrzr-link-previous:before
+html:not(.opera) a#epb3sldrzr-link-previous:before,
+html:not(.opera) a#epb3sldrzr-link-epub:before
 {
 	margin:0;
 	padding:0;
 	font-size: 200%;
 	font-family: 'Entypo';
+}
+
+html:not(.opera) a#epb3sldrzr-link-epub:before
+{
+	content: "\1F4E5";
 }
 
 html:not(.opera) a#epb3sldrzr-link-toc:before
@@ -488,15 +543,19 @@ html:not(.opera) a#epb3sldrzr-link-toc:before
 }
 html:not(.opera) a#epb3sldrzr-link-previous:before
 {
-	content: "\25C2";
+	content: "\E759";
 	/*
+	content: "\25C2";
+
 	content: "\25C4";
 	*/
 }
 html:not(.opera) a#epb3sldrzr-link-next:before
 {
-	content: "\25B8";
+	content: "\E75A";
 	/*
+	content: "\25B8";
+	
 	content: "\25BA";
 	*/
 }
@@ -504,6 +563,10 @@ html:not(.opera) a#epb3sldrzr-link-next:before
 html.opera a#epb3sldrzr-link-toc:before
 {
 	content: "\2605";
+}
+html.opera a#epb3sldrzr-link-epub:before
+{
+	content: "\25bc";
 }
 html.opera a#epb3sldrzr-link-previous:before
 {
@@ -519,16 +582,17 @@ a#epb3sldrzr-link-notesref,
 a#epb3sldrzr-link-previous,
 a#epb3sldrzr-link-next,
 a#epb3sldrzr-link-toc,
+a#epb3sldrzr-link-epub,
 a#epb3sldrzr-link-epubReadingSystem
 {
 	-PREFIXED_PROPERTY-user-select:none;
-
+	
 	margin:0;
 	padding:0;
 
-	font-family: RobotoMedium, arial, helvetica, sans-serif;
-	font-weight:bold;
-	
+	font-weight: 400;
+	font-family: Lato, Tahoma, arial, verdana, arial, sans-serif;
+		
 	font-size: 50%;
 
 	text-transform:uppercase;
@@ -538,9 +602,15 @@ a#epb3sldrzr-link-epubReadingSystem
 	padding:10px;
 	padding-bottom:6px;
 
+	/*
 	background-color:#eeeeee;
+	*/
 
 	border-radius:10px;
+
+
+	border-bottom: none;
+	text-decoration:none;
 }
 
 a#epb3sldrzr-link-noteback:link,
@@ -561,9 +631,14 @@ a#epb3sldrzr-link-epubReadingSystem:active,
 a#epb3sldrzr-link-toc:link,
 a#epb3sldrzr-link-toc:visited,
 a#epb3sldrzr-link-toc:active
+a#epb3sldrzr-link-epub:link,
+a#epb3sldrzr-link-epub:visited,
+a#epb3sldrzr-link-epub:active
 {
-	border-bottom: none;
 	color:#3D6AA2;
+
+	border-bottom: none;
+	text-decoration:none;
 }
 
 a#epb3sldrzr-link-noteback:hover,
@@ -571,10 +646,13 @@ a#epb3sldrzr-link-notesref:hover,
 a#epb3sldrzr-link-previous:hover,
 a#epb3sldrzr-link-next:hover,
 a#epb3sldrzr-link-toc:hover,
+a#epb3sldrzr-link-epub:hover,
 a#epb3sldrzr-link-epubReadingSystem:hover
 {
 	background-color:#003399;
 	color:white;
+
+	border-bottom: none;
 	text-decoration:none;
 }
 
@@ -588,6 +666,7 @@ a#epb3sldrzr-link-notesref,
 a#epb3sldrzr-link-previous,
 a#epb3sldrzr-link-next,
 a#epb3sldrzr-link-toc,
+a#epb3sldrzr-link-epub,
 a#epb3sldrzr-link-epubReadingSystem
 {
 	position:absolute;
@@ -595,14 +674,24 @@ a#epb3sldrzr-link-epubReadingSystem
 	bottom:10px;
 }
 
+
+a#epb3sldrzr-link-epub
+{
+	bottom: auto;
+	top: 10px;
+	right: 20px;
+}
+
 a#epb3sldrzr-link-toc
 {
+	left: 50%;
+	/*
+
 	padding:10px;
 	padding-bottom:2px;
 	padding-top:4px;
-
-	left: 50%;
-	/*
+	
+	
 	margin: 50% auto 0 0;
 	*/
 }
@@ -624,15 +713,11 @@ a#epb3sldrzr-link-notesref
 	right:300px;
 }
 
-body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-noteback
+body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-noteback,
+body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-notesref,
+body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-epub
 {
 	display: none;
-}
-
-body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-notesref
-{
-	display: none;
-	right:15px;
 }
 
 
@@ -689,7 +774,8 @@ ol li
 
 ol > li:before
 {
-	font-family: RobotoMedium, Tahoma, "arial black", verdana, arial, sans-serif;
+	font-weight: 900;
+	font-family: Lato, Arvo, Tahoma, "arial black", verdana, arial, sans-serif;
 	font-size: 70%;
 	
 	color: #efefef;
@@ -721,6 +807,11 @@ html#epb3sldrzr-NavDoc ol
 	-PREFIXED_PROPERTY-column-count: 2;
 	-PREFIXED_PROPERTY-column-gap: 1em;
 /* 	-PREFIXED_PROPERTY-column-rule: 10px dotted #ff00ff;	*/
+	
+
+	font-weight: 900;
+	font-family: Lato, Arvo, Neuton, Tahoma, "arial black", verdana, arial, sans-serif;
+	font-size: 100%;
 }
 
 html#epb3sldrzr-NavDoc ol li a:link,
@@ -884,7 +975,7 @@ Slide content
 
 .code
 {
-	font-size: 70%;
+	font-size: 100%;
 	font-family: InconsolataMedium, monospace;
 }
 
