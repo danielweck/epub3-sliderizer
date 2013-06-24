@@ -458,7 +458,16 @@ box-sizing:border-box;
 
 	font-size: 40px;
 	font-weight: 400;
-	font-family: Arvo, Tahoma, verdana, arial, sans-serif;
+	font-family: Lato, Tahoma, verdana, arial, sans-serif;
+
+	border-right: 2px solid transparent;
+	border-left: 2px solid transparent;
+}
+
+html:not(.static) body.epb3sldrzr-epubReadingSystem
+{
+	border-right: 2px solid #aaaaaa;
+	border-left: 2px solid #aaaaaa;
 }
 
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body
@@ -613,12 +622,20 @@ h1#epb3sldrzr-title-NOTES
 	padding-top:0.3em;
 	*/
 	
-	padding:0.2em;
-	padding-left:0.4em;
+	padding:0.4em;
+	padding-left:0.6em;
 	
 	color:rgba(0, 0, 0, 0.5);
 	background-color:#efefef;
-	border-bottom: 8px solid #aaaaaa;
+	border-bottom: 2px solid #8AC007;
+
+	
+-webkit-box-shadow: 0 0 16px 0px black;
+-moz-box-shadow: 0 0 16px 0px black;
+-ms-box-shadow: 0 0 16px 0px black;
+-o-box-shadow: 0 0 16px 0px black;
+box-shadow: 0 0 16px 0px black;
+
 
 	text-shadow:2px 2px 4px rgba(255, 255, 255, 1), 0 0 0 rgba(0, 0, 0, 0.5); /* 2px 2px 4px white; */
 	
@@ -635,6 +652,10 @@ h1#epb3sldrzr-title-NOTES
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
 }
 
+html#epb3sldrzr-NavDoc h1#epb3sldrzr-title
+{
+	border-bottom: 2px solid #CC3300;
+}
 
 /*
 ==============================================================================
@@ -654,6 +675,21 @@ img#epb3sldrzr-logo
 	z-index:10;
 }
 
+html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
+{
+	bottom: 30px;
+	left: 50px;
+}
+
+html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+	top: 15px;
+	right: 25px;
+
+	width: 200px;
+	height: 83px;
+}
+
 
 /*
 ==============================================================================
@@ -669,6 +705,8 @@ html.opera a#epb3sldrzr-link-previous:before,
 html.opera a#epb3sldrzr-link-epub:before
 {
 	font-size: 180%;
+
+	font-weight: 400;
 	font-family: Tahoma, verdana, arial, sans-serif;
 }
 
@@ -680,6 +718,8 @@ html:not(.opera) a#epb3sldrzr-link-epub:before
 	margin:0;
 	padding:0;
 	font-size: 200%;
+
+	font-weight: 400;
 	font-family: 'Entypo';
 }
 
@@ -838,7 +878,7 @@ a#epb3sldrzr-link-epubReadingSystem
 a#epb3sldrzr-link-epub
 {
 	bottom: auto;
-	top: 10px;
+	top: 25px;
 	right: 20px;
 }
 
@@ -877,7 +917,7 @@ body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-noteback,
 body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-notesref,
 body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-epub
 {
-	display: none;
+	display: none !important;
 }
 
 
@@ -1053,8 +1093,8 @@ Slide content
 	margin:0;
 	padding:0;
 
-	padding-left:1em;
-	padding-right:1em;
+	padding-left: 40px;
+	padding-right: 40px;
 	padding-bottom:0em;
 	padding-top:0.8em;
 	
@@ -1102,6 +1142,7 @@ box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 	padding: 0;
 	margin: 0;
 	padding-bottom: 0.5em;
+	padding-top: 0.5em;
 }
 
 #epb3sldrzr-content div.boxed > div > ol,
@@ -1109,14 +1150,20 @@ box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 #epb3sldrzr-content div.boxed > div > ul,
 #epb3sldrzr-content-NOTES div.boxed > div > ul
 {
-	padding-top: 0em;
+	margin-top: 0;
+	margin-bottom: 0;
+	
+	padding-top: 0.5em;
 	padding-bottom: 0;
 }
 
 #epb3sldrzr-content div.boxed > h3,
 #epb3sldrzr-content-NOTES div.boxed > h3
 {
-	font-size: 90%;
+	font-weight: 900;
+	font-family: Lato, Tahoma, 'arial black', verdana, arial, sans-serif;
+	
+	font-size: 96%;
 	
 	padding:0;
 	margin:0;
@@ -1154,6 +1201,7 @@ box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 .code
 {
 	font-size: 100%;
+	font-weight: 400;
 	font-family: InconsolataMedium, monospace;
 }
 
@@ -1171,6 +1219,16 @@ nav[epub|type~='page-list']
 }
 
 
+.epb3sldrzr-author-INIT
+{
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: auto;
+	bottom: auto;
+	width: auto;
+	height: auto;
+}
 
 /*
 

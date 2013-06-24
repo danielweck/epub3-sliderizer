@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_3" lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8"/><title>(3/7) EPUB3 Sliderizer / Syntax - (slideshow)</title><link href="../img/favicon.ico" rel="shortcut icon"/><meta content="width=1290, height=1000" name="viewport"/><link href="../css/animate.css" rel="stylesheet" type="text/css"/><link href="../css/default.css" rel="stylesheet" type="text/css"/><script src="../js/screenfull.js"> </script><script src="../js/classList.js"> </script><script src="../js/jquery-2.0.2.min.js"> </script><script src="../js/jquery.blockUI.js"> </script><script src="../js/jquery.mousewheel.js"> </script><script src="../js/hammer.min.js"> </script><script src="../js/hammer.fakemultitouch.js"> </script><script src="../js/hammer.showtouches.js"> </script><script src="../js/default.js"> </script><link href="./slide_02.xhtml" rel="prev"/><link href="./slide_04.xhtml" rel="next"/><style type="text/css">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_3" lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8"/><title>(3/8) EPUB3 Sliderizer / Why EPUB3?</title><link href="../img/favicon.ico" rel="shortcut icon"/><meta content="width=1290, height=1000" name="viewport"/><link href="../css/animate.css" rel="stylesheet" type="text/css"/><link href="../css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css"/><link href="../css/default.css" rel="stylesheet" type="text/css"/><script src="../js/classList.js"> </script><script src="../js/screenfull.js"> </script><script src="../js/hammer.min.js"> </script><script src="../js/hammer.fakemultitouch.js"> </script><script src="../js/hammer.showtouches.js"> </script><script src="../js/jquery-2.0.2.min.js"> </script><script src="../js/jquery-ui-1.10.3.custom.min.js"> </script><script src="../js/jquery.blockUI.js"> </script><script src="../js/jquery.mousewheel.js"> </script><script src="../js/default.js"> </script><link href="./slide_02.xhtml" rel="prev"/><link href="./slide_04.xhtml" rel="next"/><style type="text/css">
 body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.animated
 {
 
@@ -15,18 +15,6 @@ animation-duration: 1.5s;
 -o-animation-delay: 1s;
 animation-delay: 1s;
 
-}
-html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
-{
-bottom: 30px;
-left: 50px;
-}
-html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
-{
-top: 5px;
-right: 25px;
-width: 200px;
-height: 83px;
 }
 .pale-red
 {
@@ -48,6 +36,50 @@ background: rgba(0, 0, 0, 0.2);
 {
 background: #ff00ff;
 }
+.red
+{
+background: #FF0033;
+}
+</style><style type="text/css">
+div#epb3sldrzr-root
+{
+overflow: hidden;
+}
+img.animated-logos
+{
+margin-right: 1em;
+clear: both;
+float: left;
+width: 125px;
+height: 125px;
+}
+body:not(.epb3sldrzr-epubReadingSystem) img.animated-logos.animated
+{
+
+-webkit-animation-duration: 1s;
+-moz-animation-duration: 1s;
+-ms-animation-duration: 1s;
+-o-animation-duration: 1s;
+animation-duration: 1s;
+
+
+-webkit-animation-delay: 0.5s;
+-moz-animation-delay: 0.5s;
+-ms-animation-delay: 0.5s;
+-o-animation-delay: 0.5s;
+animation-delay: 0.5s;
+
+}
+body:not(.epb3sldrzr-epubReadingSystem) img.animated-logos.later.animated
+{
+
+-webkit-animation-delay: 1s;
+-moz-animation-delay: 1s;
+-ms-animation-delay: 1s;
+-o-animation-delay: 1s;
+animation-delay: 1s;
+
+}
 </style><script>
 //<![CDATA[
 function setupAnimations()
@@ -63,51 +95,17 @@ elem.classList.add("epb3sldrzr-animated");
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
 //]]>
-</script></head><body class="epb3sldrzr-SLIDE" epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Syntax <span id="epb3sldrzr-subtitle">(slideshow)</span></h1><section id="epb3sldrzr-content"><!--SOUP--><div class="boxed framed">
-<h3>slideshow-data.txt</h3>
-<p class="code" style="font-size: 70%;">
-<span class="pale-blue">
-	_TITLE</span>
-<br/>
-<span class="pale-green">
-The slideshow title</span>
-<br/>
-<span class="pale-blue">
-	_CREATOR</span>
-<br/>
-<span class="pale-green">
-Your name / organisation</span>
-<br/>
-<span class="pale-blue">
-	_COVER</span>
-<br/>
-<span class="pale-green">
-assets/cover-image.png</span>
-<br/>
-<br/>
-<span class="pale-blue">
-	_CSS_STYLE</span>
-<br/>
-<span class="pale-green">
-.myClass { color: red; }</span>
-<br/>
-<span class="pale-blue">
-	_FILES_CSS</span>
-<br/>
-<span class="pale-green">
-assets/my-styles.css</span>
-<br/>
-<br/>
-<span class="pale-blue">
-	_JS_SCRIPT</span>
-<br/>
-<span class="pale-green">
-document.addEventListener("DOMContentLoaded", function(e) { alert("hello!"); }, false);</span>
-<br/>
-<span class="pale-blue">
-	_FILES_JS</span>
-<br/>
-<span class="pale-green">
-assets/my-scripts.js</span>
-</p>
-</div></section></div></div></body></html>
+</script></head><body class="epb3sldrzr-SLIDE" epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Why EPUB3?</h1><section id="epb3sldrzr-content"><!--SOUP--><ul style="list-style-type: none;">
+<li style="margin-bottom: 1.5em;">
+<img class="epb3sldrzr-animated bounceInRight animated-logos" src="../img/custom/assets/HTML5.png"/>
+<strong>HTML5 slide deck</strong>: for live interactive presentations ⇒ online viewing / browsing
+</li><li>
+<img class="epb3sldrzr-animated bounceInRight animated-logos later" src="../img/custom/assets/EPUB.png"/>
+<strong>EPUB3 e-book</strong>: for offline reading ⇒ re-distributable file archive
+</li></ul>
+<p>Internally, EPUB3 uses HTML5, CSS, Javscript, SVG, MathML etc.
+EPUB3 is a structured container for web documents
+(unzip <span class="code">ebook.epub</span> to see the files)
+</p><div class="boxed" style="margin-top: 0.4em;">
+<p>
+EPUB3-Sliderizer generates a <strong>single</strong> fileset, which delivers <strong>both</strong> the <em>web</em> and <em>e-book</em> functions.</p></div></section></div></div></body></html>
