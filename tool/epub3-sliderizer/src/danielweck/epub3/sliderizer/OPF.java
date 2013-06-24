@@ -222,6 +222,10 @@ public final class OPF {
 				elementManifest, "js-jquery", false,
 				Epub3FileSet.FOLDER_JS, null);
 
+		create_ManifestItem(Epub3FileSet.JS_JQUERY_UI, document,
+				elementManifest, "js-jquery-ui", false,
+				Epub3FileSet.FOLDER_JS, null);
+
 		create_ManifestItem(Epub3FileSet.JS_JQUERY_BLOCKUI, document,
 				elementManifest, "js-jquery-blockui", false,
 				Epub3FileSet.FOLDER_JS, null);
@@ -332,6 +336,10 @@ public final class OPF {
 
 		create_ManifestItem(Epub3FileSet.CSS_ANIMATE, document,
 				elementManifest, "css-animate", false,
+				Epub3FileSet.FOLDER_CSS, null);
+
+		create_ManifestItem(Epub3FileSet.CSS_JQUERY_UI, document,
+				elementManifest, "css-jquery-ui", false,
 				Epub3FileSet.FOLDER_CSS, null);
 
 		create_ManifestItem(slideShow.LOGO, document, elementManifest, "logo",

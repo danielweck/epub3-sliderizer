@@ -192,6 +192,9 @@ public final class XHTML {
 		create_HeadLinks(Epub3FileSet.CSS_ANIMATE, document, elementHead,
 				"stylesheet", "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
 
+		create_HeadLinks(Epub3FileSet.CSS_JQUERY_UI, document, elementHead,
+				"stylesheet", "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
+
 		if (!slideShow.importedConverted) {
 			create_HeadLinks(Epub3FileSet.CSS_DEFAULT, document, elementHead,
 					"stylesheet", "text/css", PATH_PREFIX
@@ -235,6 +238,9 @@ public final class XHTML {
 				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
 		create_HeadScripts(Epub3FileSet.JS_JQUERY, document, elementHead, null, // "text/javascript",
+				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
+
+		create_HeadScripts(Epub3FileSet.JS_JQUERY_UI, document, elementHead, null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
 		create_HeadScripts(Epub3FileSet.JS_JQUERY_BLOCKUI, document,

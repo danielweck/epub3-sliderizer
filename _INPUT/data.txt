@@ -27,21 +27,6 @@ body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.animated
 	-PREFIXED_PROPERTY-animation-delay: 1s;
 }
 
-html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
-{
-	bottom: 30px;
-	left: 50px;
-}
-
-html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
-{
-	top: 5px;
-	right: 25px;
-
-	width: 200px;
-	height: 83px;
-}
-
 .pale-red
 {
 	background: rgba(255, 0, 0, 0.2);
@@ -62,6 +47,10 @@ html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
 	background: #ff00ff;
 }
+.red
+{
+	background: #FF0033;
+}
 
 // --------------------------------------------
 _JS_SCRIPT
@@ -79,6 +68,7 @@ function setupAnimations()
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
 
+
 // #########################################################
 // #########################################################
 // #########################################################
@@ -86,55 +76,52 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 
 // --------------------------------------------
 _TITLE
-What is that?
+Usage tips
 
 // --------------------------------------------
 _CONTENT
- 
-<a href="https://github.com/danielweck/epub3-sliderizer/" style="border: 0; padding: 0; margin: 0; float: right; ">
-<img style="border: 0; padding: 0; margin: 0; width: 200px; height: 200px;" src="assets/forkme.png" alt="Fork me on GitHub"/>
-</a>
 
-<div class="auto incremental">
-  
-<p>
-EPUB3-Sliderizer creates slideshows in <strong>HTML 5</strong> (web) and <strong>EPUB 3</strong> (e-book) formats, based on a simple plain-text input format.
+<div class="boxed">
+
+<h3>Gestures</h3>
 
 <p>
-See the <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/data.txt" target="_blank">input file</a> for this slidedeck.
-EPUB3-Sliderizer is a free and open-source tool (<a href="https://github.com/danielweck/epub3-sliderizer/" target="_blank">GitHub</a>).
-
-<div id="incremental-wrapper">
-
-<div class="boxed epb3sldrzr-notEpubReadingSystem" style="margin-top: 1em;">
-<p style="line-height: 1.7em; font-weight: 400; font-family: Lato, Tahoma, 'arial black', verdana, arial, sans-serif;">
-To navigate, press the <span style="padding-left: 0.3em; padding-right: 0.3em; color: #3D6AA2; border: 4px solid #ff00ff; border-radius:10px; font-family: Entypo;">&#9632;</span> buttons below or use the keyboard: <span class="keyboard">m</span> (menu), <span class="keyboard symbols" title="up">&#9652;<!-- &#8593; --></span> previous / <span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span> next "bullet point" (space bar also), <span class="keyboard symbols" title="left">&#9666;<!-- &#8592; --></span> previous / <span class="keyboard symbols" title="right">&#9656;<!-- &#8594; --></span> next slides.
+<strong>Touch</strong> or <strong>mouse</strong>:
+<br><em>left</em> - <em>right</em> swipe &#8658; <em>previous</em> - <em>next</em> slide
+<br><em>up</em> - <em>down</em> swipe &#8658; <em>previous</em> - <em>next</em> incremental item
 </p>
+
 </div>
 
-<div class="boxed epb3sldrzr-epubReadingSystem" style="margin-top: 1em;">
-<h3>Tip</h3>
-<p style="font-weight: 400; font-family: Lato, Tahoma, 'arial black', verdana, arial, sans-serif;">
-Depending on which EPUB3 reading system you are using ("e-reader" app or device),
-you can navigate these slides by <strong>flipping the pages</strong> of the e-book (left/right tap or swipe).
+<div class="boxed">
+
+<h3>Keyboard</h3>
+
+<p class="epb3sldrzr-notEpubReadingSystem" style="line-height: 1.7em;">
+
+<span class="keyboard symbols" title="left">&#9666;<!-- &#8592; --></span>
+<span class="keyboard symbols" title="right">&#9656;<!-- &#8594; --></span> <em>previous</em> - <em>next</em> slide
+<br>
+<span class="keyboard symbols" title="up">&#9652;<!-- &#8593; --></span>
+<span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span> <em>previous</em> - <em>next</em> incremental item (space bar works too)
+<br>
+<span class="keyboard">m</span> slides <em>m</em>enu (table of contents)
+
 </p>
-</div>
 
 </div>
 
-</div>
+<p>...or use the buttons below (not displayed in e-book readers).
 
-// --------------------------------------------
-_FILES_IMG
-
-assets/forkme.png
+<!-- span style="padding-left: 0.3em; padding-right: 0.3em; color: #3D6AA2; border-radius:10px; font-family: Entypo;" class="glowButt">&#9632;</span -->
 
 // --------------------------------------------
 _CSS_STYLE
 
 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-previous,
 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-next,
-body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc
+body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc,
+.glowButt
 {
 	opacity: 1;
 		
@@ -146,6 +133,136 @@ body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc
 	-PREFIXED_PROPERTY-animation-iteration-count: infinite;
 	-PREFIXED_PROPERTY-animation-delay: 1s;
 }
+
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Intro pitch
+
+// --------------------------------------------
+_CONTENT
+ 
+<a id="FMOGH" href="https://github.com/danielweck/epub3-sliderizer/" style="border: 0; padding: 0; margin: 0; float: right; ">
+<img style="border: 0; padding: 0; margin: 0; width: 200px; height: 200px;" src="assets/forkme.png" alt="Fork me on GitHub"/>
+</a>
+
+<div class="auto incremental intro" data-incremental-delay="100">
+
+<p class="title" style="font-size: 120%;"><strong>EPUB3-Sliderizer</strong>
+<p>is a command-line tool
+<p>that creates slideshow presentations
+<p class="pale-blue">for web-browsers (HTML 5)
+<p class="pale-green">and for e-book readers (EPUB 3)
+<p>by converting a simple input format (single text file)
+<p>to a pre-paginated / fixed-layout <span class="code">.epub</span> e-book,
+<p>which (thanks to a built-in slide flippin' engine&#8482;)
+<p>can also be viewed using a standard web browser.
+
+</div>
+
+<div class="boxed" style="position: absolute; bottom: 90px; right: 60px; left: 60px;">
+
+<div>
+<ul>
+<li>
+<strong>See</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/data.txt" target="_blank">input file</a> for this slidedeck
+</li>
+<li>
+<strong>Grab</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/" target="_blank">open-source code</a> from GitHub
+</li>
+</ul>
+</div>
+
+</div>
+
+
+// --------------------------------------------
+_FILES_IMG
+
+assets/forkme.png
+
+// --------------------------------------------
+_CSS_STYLE
+
+html:not(.mobile) body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .incremental > *
+{
+	-PREFIXED_PROPERTY-transition: opacity 200ms ease-in-out 0ms !important;
+}
+
+#epb3sldrzr-content div.intro
+{
+	margin: 0;
+	padding: 0;
+
+	padding-top: 60px;
+	margin-left: 60px;
+}
+
+#epb3sldrzr-content div.intro > p
+{
+	margin-bottom: 0.2em;
+	padding-bottom: 0;
+	margin-top: 0;
+	padding-top: 0;
+}
+
+#epb3sldrzr-content div.intro > p:not(.title)
+{
+	font-weight: 400;
+	font-family: Arvo, Lato, Tahoma, verdana, arial, sans-serif;
+	font-size: 100%;
+}
+
+h1#epb3sldrzr-title
+{
+	display: none;
+}
+
+img#epb3sldrzr-logo
+{
+	top: auto !important;
+	left: auto !important;
+
+	bottom: auto !important;
+	right: auto !important;
+
+	width: 300px !important;
+	height: 125px !important;
+	
+	bottom: 180px !important;
+	right: 100px !important;
+
+	-PREFIXED_PROPERTY-transform: rotate(45deg);
+}
+
+// --------------------------------------------
+_JS_SCRIPT
+
+function setupLogoAnimation()
+{
+	var elem = querySelectorZ("img#epb3sldrzr-logo");
+	elem.classList.add("fadeIn");
+	elem.classList.add("epb3sldrzr-animated");
+}
+document.addEventListener("DOMContentLoaded", function(e) { setupLogoAnimation(); }, false);
+
+/*
+function setupLogo()
+{
+	if (Epub3Sliderizer.authorMode)
+	{
+//		Epub3Sliderizer.AUTHORize("img#epb3sldrzr-logo");
+//		Epub3Sliderizer.AUTHORize("#FMOGH");
+	}
+}
+document.addEventListener("DOMContentLoaded", function(e) { setTimeout(setupLogo, 1000); }, false);
+*/
+
 
 // #########################################################
 // #########################################################
@@ -162,18 +279,20 @@ _CONTENT
 <ul style="list-style-type: none;">
 <li style="margin-bottom: 1.5em;">
 <img src="assets/HTML5.png" class="epb3sldrzr-animated bounceInRight animated-logos">
-<strong>HTML5 slide deck</strong>: great for live presentations <br/> + online viewing / browsing
+<strong>HTML5 slide deck</strong>: for live interactive presentations &#8658; online viewing / browsing
 
 <li>
 <img src="assets/EPUB.png" class="epb3sldrzr-animated bounceInRight animated-logos later">
-<strong>EPUB3 e-book</strong>: standalone redistributable file <br/> &#8658; offline reading (<span class="code">book.epub</span> = zip archive)
+<strong>EPUB3 e-book</strong>: for offline reading &#8658; re-distributable file archive
 </ul>
 
-<p>Internally, EPUB3 uses (X)HTML5, CSS, Javscript, SVG, MathML etc. EPUB3 is a structured container for web documents.
+<p>Internally, EPUB3 uses HTML5, CSS, Javscript, SVG, MathML etc.
+EPUB3 is a structured container for web documents
+(unzip <span class="code">ebook.epub</span> to see the files)
 
 <div class="boxed" style="margin-top: 0.4em;">
 
-<p style="font-weight: 400; font-family: Lato, Tahoma, 'arial black', verdana, arial, sans-serif;">
+<p>
 EPUB3-Sliderizer generates a <strong>single</strong> fileset, which delivers <strong>both</strong> the <em>web</em> and <em>e-book</em> functions.
 
 
@@ -232,7 +351,9 @@ _SUBTITLE
 _CONTENT
 
 <div class="boxed framed">
+
 <h3>slideshow-data.txt</h3>
+
 <p class="code" style="font-size: 70%;">
 	<span class="pale-blue">
 \	_TITLE</span>
@@ -270,7 +391,9 @@ _CONTENT
 \	_JS_SCRIPT</span>
 <br>
 	<span class="pale-green">
-	document.addEventListener("DOMContentLoaded", function(e) { alert("hello!"); }, false);</span>
+	document.addEventListener("DOMContentLoaded",
+	<br>
+	function(e) { alert("hello!"); }, false);</span>
 <br>
 	<span class="pale-blue">
 \	_FILES_JS</span>
@@ -297,7 +420,9 @@ _SUBTITLE
 _CONTENT
 
 <div class="boxed framed">
+
 <h3>slideshow-data.txt</h3>
+
 <p class="code" style="font-size: 70%;">
 	<span class="pale-grey">
 \	// (line comment)</span>
@@ -317,7 +442,7 @@ _CONTENT
 \	_CONTENT</span>
 <br>
 	<span class="pale-green">
-	&lt;img src="assets/me.jpeg"&gt;<br>&lt;ol&gt;<br>&lt;li&gt;bullet point 1<br>&lt;li&gt;bullet point 2<br>&lt;!-- look ma, no closing tags! (converts to HTML5 XML) --&gt;</span>
+	&lt;img src="assets/me.jpeg"&gt;<br>&lt;ol&gt;<br>&lt;li&gt;bullet point 1<br>&lt;li&gt;bullet point 2<br>&lt;!-- look ma, no closing tags! (automatically converts to HTML5 XML) --&gt;</span>
 <br>
 	<span class="pale-blue">
 \	_FILES_IMG</span>
@@ -326,7 +451,7 @@ _CONTENT
 	assets/me.jpeg</span>
 <br>
 <br>
-	<span class="pale-blue notes-highlight" style="padding: 0.1em">
+	<span class="pale-blue notes-highlightx" style="paddingx: 0.1em">
 \	_NOTES</span>
 <br>
 	<span class="pale-green">
@@ -366,13 +491,15 @@ CSS
 
 // --------------------------------------------
 _SUBTITLE
-(vendor prefix)
+vendor prefixes
 
 // --------------------------------------------
 _CONTENT
 
 <div class="boxed">
-<h3>The following CSS property:</h3>
+
+<h3>"Special" CSS properties...</h3>
+
 <p class="code" style="font-size: 70%;">
 	<span class="pale-blue">
 	-PREFIXED_PROPERTY-</span><span class="pale-green">user-select: none;</span>
@@ -380,7 +507,9 @@ _CONTENT
 </div>
 
 <div class="boxed">
-<h3>...automatically expands to:</h3>
+
+<h3>...automatically expand to:</h3>
+
 <p class="code" style="font-size: 70%;">
 	<span class="pale-blue">
 	-webkit-</span><span class="pale-green">user-select: none;</span>
@@ -400,7 +529,9 @@ _CONTENT
 </div>
 
 <div class="boxed">
+
 <h3>These are supported too:</h3>
+
 <p class="code" style="font-size: 70%;">
 	<span class="pale-blue">
 	_PREFIXED_</span><span class="pale-green">::selection { ... }</span>
@@ -410,7 +541,7 @@ _CONTENT
 </p>
 </div>
 
-<p><em>Note:</em> does not work in <span class="code">style="..."</span> attributes</p>
+<p><em>Note:</em> does not work in <span class="code">style="..."</span> HTML attributes</p>
 
 // #########################################################
 // #########################################################
@@ -429,7 +560,9 @@ _CONTENT
 <p>EPUB3-Sliderizer ships with <a href="http://daneden.me/animate">Animate.css</a>
 
 <div class="boxed">
+
 <h3>Example:</h3>
+
 <p class="code" style="font-size: 70%;">
 	<span class="pale-blue">
 \	_CONTENT</span>
@@ -446,8 +579,8 @@ _CONTENT
 </p>
 </div>
 
-<p style="font-weight: 400; font-family: Lato, Tahoma, 'arial black', verdana, arial, sans-serif;">
-<em>Note:</em> the <span class="code pale-red">epb3sldrzr-animated</span> class controls the initial firing of animations (to avoids premature trigger during page preloading in e-book readers).
+<p>
+<em>Note:</em> the <span class="code pale-red">epb3sldrzr-animated</span> class controls the initial firing of animations, avoiding premature trigger during page caching in e-book readers.
 
 </div>
 
@@ -465,7 +598,7 @@ body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.animated
 // --------------------------------------------
 _JS_SCRIPT
 
-function setupAnimations()
+function setupAnimatedLogo()
 {
 	var html = document.documentElement;
 	var elem = querySelectorZ("#epb3sldrzr-logo");
@@ -473,7 +606,7 @@ function setupAnimations()
 	elem.classList.add("epb3sldrzr-animated");
 }
 //setTimeout(setupAnimations, 100);
-document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
+document.addEventListener("DOMContentLoaded", function(e) { setupAnimatedLogo(); }, false);
 
 
 // #########################################################
@@ -487,14 +620,14 @@ Long slide
 
 // --------------------------------------------
 _SUBTITLE
-(overflow)
+scrolling
 
 // --------------------------------------------
 _CONTENT
 
-<p>If necessary, slide content can be <strong>scrolled</strong>:
+<p>If necessary, overflowing content can be scrolled:
 
-<ol style="font-weight: 700; font-family: Neuton, Lato, Tahoma, 'arial black', verdana, arial, sans-serif;">
+<ol style="font-weight: 400; font-family: Neuton, Lato, Tahoma, 'arial black', verdana, arial, sans-serif;">
 <li>I wonder...
 <li>what could be
 <li>at the bottom
@@ -505,11 +638,13 @@ _CONTENT
 <li>All the way down...
 <li>a bit more.
 <li>Let me guess...
-<li>That? No way.
-<li>Ah, maybe.
+<li>That thing?
+<li>No way.
+<li>Ah, maybe...
+<li>Yes
 <li>OMG!
-<li>It's a...
-<li>...
+<li>It is...
+<li>...a KITTEN !!!!!
 </ol>
 <p style="text-align: center;">
 <img src="assets/kitten.jpg">

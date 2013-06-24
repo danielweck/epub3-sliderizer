@@ -54,6 +54,7 @@ public final class Epub3FileSet {
 
 	final static String CSS_DEFAULT = "default.css";
 	final static String CSS_ANIMATE = "animate.css";
+	final static String CSS_JQUERY_UI = "jquery-ui-1.10.3.custom.css";
 
 	final static String JS_DEFAULT = "default.js";
 	final static String JS_SCREENFULL = "screenfull.js";
@@ -62,6 +63,7 @@ public final class Epub3FileSet {
 	final static String JS_JQUERY = "jquery-2.0.2.min.js";
 	final static String JS_JQUERY_MOUSEWHEEL = "jquery.mousewheel.js";
 	final static String JS_JQUERY_BLOCKUI = "jquery.blockUI.js";
+	final static String JS_JQUERY_UI = "jquery-ui-1.10.3.custom.min.js";
 
 	final static String JS_HAMMER = "hammer.min.js";
 	final static String JS_HAMMER_FAKEMULTITOUCH = "hammer.fakemultitouch.js";

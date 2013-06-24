@@ -61,6 +61,7 @@ var Epub3Sliderizer = {
 	kobo: false, //DELAYED !! typeof window.KOBO_TAG != 'undefined', //typeof window.nextKoboSpan != 'undefined' || 
 	ibooks: false,
 	staticMode: false,
+	authorMode: false,
 	prev: "",
 	next: "",
 	toc: "../nav.xhtml",
@@ -87,6 +88,41 @@ var Epub3Sliderizer = {
 	mobile: navigator.userAgent.match(/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Mobile)/)
 	// && navigator.userAgent.match(/AppleWebKit/)
 };
+
+// ----------
+
+Epub3Sliderizer.AUTHORize = function(selector)
+{
+	if (typeof $ == "undefined")
+	{
+		return;
+	}
+
+	var elems = $(selector);
+	elems.addClass("ui-widget-content");
+	elems.addClass("epb3sldrzr-author");
+	
+	// Mhmmm? ...
+	elems.addClass("epb3sldrzr-author-INIT");
+
+
+	if (typeof $(window).draggable != "undefined")
+	{
+		elems.draggable();
+	}
+
+	if (typeof $(window).resizable != "undefined")
+	{
+		elems.resizable();
+	}
+
+	/*
+	if (typeof $(window).selectable != "undefined")
+	{
+		elems.selectable();
+	}
+	*/
+}
 
 // ----------
 
@@ -684,7 +720,7 @@ Epub3Sliderizer.onResize = function()
 	document.body.style.transformOrigin = transformOrigin;
 	
 	
-	var is3D = false;
+	var is3D = this.opera ? false : true;
 	
 	var transOriginX = 0;
 	var transOriginY = 0;
@@ -708,14 +744,14 @@ Epub3Sliderizer.onResize = function()
 	//  ========##################
 	
 	// (-T5) TransformOrigin: RESTORE
-	//+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=(offsetX+this.left-offsetX))  + "px," + (transOriginY=(offsetY+this.top-offsetY)) + "px"+(is3D?", 0":"")+") "
-	+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=this.left*this.zoomPrevious-this.leftPrevious)  + "px," + (transOriginY=this.top*this.zoomPrevious-this.topPrevious) + "px"+(is3D?", 0":"")+") "
+	+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=(offsetX+this.left-offsetX))  + "px," + (transOriginY=(offsetY+this.top-offsetY)) + "px"+(is3D?", 0":"")+") "
+	//+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=this.left*this.zoomPrevious-this.leftPrevious)  + "px," + (transOriginY=this.top*this.zoomPrevious-this.topPrevious) + "px"+(is3D?", 0":"")+") "
 
 	
 	// ----
 	// (5) USER SCALE (AFTER)
 	//+ " scale"+(is3D?"3d":"")+"(" + this.zoom/this.zoomPrevious + (is3D? "," + this.zoom/this.zoomPrevious + ",0":"") + ") "
-	+ " scale"+(is3D?"3d":"")+"(" + this.zoom + (is3D? "," + this.zoom + ",0":"") + ") "
+	+ " scale"+(is3D?"3d":"")+"(" + this.zoom + (is3D? "," + this.zoom + ",1":"") + ") "
 	
 	// (T5) TransformOrigin: touch point inside already-translated/scaled body
 	+ " translate"+(is3D?"3d":"")+"(" + -transOriginX + "px," + -transOriginY + "px"+(is3D?", 0":"")+") "
@@ -767,7 +803,7 @@ Epub3Sliderizer.onResize = function()
 	
 	// ----
 	// (1) SCALE (FIT SCREEN) 
-	+ " scale"+(is3D?"3d":"")+"(" + ratio + (is3D? "," + ratio + ",0":"") + ") "
+	+ " scale"+(is3D?"3d":"")+"(" + ratio + (is3D? "," + ratio + ",1":"") + ") "
 	
 	// (T1) TransformOrigin: top-left corner (0px,0px)
 	//
@@ -775,6 +811,7 @@ Epub3Sliderizer.onResize = function()
 	//  ========##################
 	
 	;
+
 
 	document.body.style.MozTransform = transform;
 	document.body.style.WebkitTransform = transform;
@@ -1172,7 +1209,9 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto)
 		function(elem)
 		{
 			i++;
-
+	
+			var delay = elem.parentNode.getAttribute('data-incremental-delay') || 500;
+	
 			if (i < that.increment)
 			{
 				elem.parentNode.setAttribute("incremental-active", "true");
@@ -1196,7 +1235,7 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto)
 								that.increment += 1;
 								that.invalidateIncremental(true);
 							}
-						}, 500);
+						}, delay);
 					}
 				}
 				
@@ -1512,7 +1551,7 @@ Epub3Sliderizer.init = function()
 
 		this.bodyRoot.style.visibility = "visible";
 	}
-	else if (this.staticMode)
+	else if (this.staticMode || this.authorMode)
 	{
 		//console.log("STATIC (iframe)");
 		
@@ -1528,15 +1567,21 @@ Epub3Sliderizer.init = function()
 		}
 		
 		this.bodyRoot.style.visibility = "visible";
+
+		if (this.authorMode)
+	    {
+			alert("AUTHOR MODE");
+			
+			this.AUTHORize(".epb3sldrzr-author");
+		}
 	}
 	else
 	{	
 		this.initReverse();
 		
 		this.initLinks();
-		
+
 		window.onkeydown = this.onKeyDown.bind(this);
-		
 	
 		if (typeof Hammer != "undefined")
 		{
@@ -1551,18 +1596,18 @@ Epub3Sliderizer.init = function()
 					Hammer.plugins.fakeMultitouch();
 				}
 			}
-		
+	
 			delete Hammer.defaults.stop_browser_behavior.userSelect;
-		
+	
 			this.hammer = Hammer(document.body,
 				{
 					prevent_default: false,
 					css_hacks: false
 				});
 		}
-		
+	
 		this.initTouch();
-		
+	
 		if (typeof window.orientation != 'undefined')
 		{
 			window.onorientationchange = this.onOrientationChange.bind(this);
@@ -1756,11 +1801,18 @@ function readyFirst()
 	//if (window.location.href.indexOf("static") >= 0)
 	{
 		Epub3Sliderizer.staticMode = true;
+		document.documentElement.classList.add("static");
 	}
-	
+
+	if (window.location.search && window.location.search.indexOf("author") >= 0)
+	//if (window.location.href.indexOf("static") >= 0)
+	{
+		Epub3Sliderizer.authorMode = true;
+		document.documentElement.classList.add("author");
+	}
+
 	if (Epub3Sliderizer.staticMode)
 	{
-		document.documentElement.classList.add("static");
 		
 		window.setTimeout(
 			function()
