@@ -5,10 +5,6 @@
 // jquery.js
 // jquery.mousewheel.js
 // jquery.blockUI.js
-	
-// NOT IN USE:
-// scrollFix.js
-// iscroll-lite-min.js
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -247,6 +243,11 @@ Epub3Sliderizer.onKeyDown = function(keyDownEvent)
 Epub3Sliderizer.initTouch = function()
 {
 	if (this.isEpubReadingSystem())
+	{
+		return;
+	}
+	
+	if (typeof Hammer == "undefined")
 	{
 		return;
 	}
@@ -538,7 +539,7 @@ this.topPrevious = 0;
 		*/
 	}
 	
-	hammer = Hammer(document.documentElement,
+	var hammer = Hammer(document.documentElement,
 		{
 			prevent_default: true,
 			css_hacks: false
@@ -1522,19 +1523,29 @@ Epub3Sliderizer.init = function()
 		
 		window.onkeydown = this.onKeyDown.bind(this);
 		
-		if (!this.mobile)
+	
+		if (typeof Hammer != "undefined")
 		{
-			Hammer.plugins.showTouches();
-			Hammer.plugins.fakeMultitouch();
-		}
-		
-		delete Hammer.defaults.stop_browser_behavior.userSelect;
-		
-		this.hammer = Hammer(document.body,
+			if (!this.mobile)
 			{
-				prevent_default: false,
-				css_hacks: false
-			});
+				if (typeof Hammer.plugins.showTouches != "undefined")
+				{
+					Hammer.plugins.showTouches();
+				}
+				if (typeof Hammer.plugins.fakeMultitouch != "undefined")
+				{
+					Hammer.plugins.fakeMultitouch();
+				}
+			}
+		
+			delete Hammer.defaults.stop_browser_behavior.userSelect;
+		
+			this.hammer = Hammer(document.body,
+				{
+					prevent_default: false,
+					css_hacks: false
+				});
+		}
 		
 		this.initTouch();
 		
@@ -1567,8 +1578,7 @@ Epub3Sliderizer.init = function()
 			that.initAnimations();
 		}, 500);
 		
-		//if (typeof jquery != "undefined")
-		if ($)
+		if (typeof $ != "undefined")
 		{
 
 		//$(document).ready(function()
@@ -1647,10 +1657,15 @@ Epub3Sliderizer.init = function()
 		
 				if (that.zoom == 1)
 				{
-					if ((scrollableX && (up || down)
-					|| scrollableY && (left || right)
-					|| !scrollableY && !scrollableX)
-						&& (Math.abs(deltaX) > 40 || Math.abs(deltaY) > 40))
+					if (false && // Interferes! :(
+						(
+							scrollableX && (up || down)
+							|| scrollableY && (left || right)
+							|| !scrollableY && !scrollableX
+						)
+						&&
+						(Math.abs(deltaX) > 40 || Math.abs(deltaY) > 40)
+					)
 					{
 						if (!that.pauseEvents)
 						{
@@ -1738,7 +1753,7 @@ function readyFirst()
 			{
 				Epub3Sliderizer.init();
 
-				if ($)
+				if (typeof $ != "undefined")
 				{
 					//$.blockUI.defaults.css = { cursor: "default" };
 					$.blockUI.defaults.overlayCSS.opacity = 0;

@@ -215,23 +215,12 @@ public final class XHTML {
 							+ Epub3FileSet.FOLDER_CSS);
 		}
 
-		create_HeadScripts(Epub3FileSet.JS_SCREENFULL, document, elementHead,
-				null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
-
 		create_HeadScripts(Epub3FileSet.JS_CLASSLIST, document, elementHead,
 				null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
-		create_HeadScripts(Epub3FileSet.JS_JQUERY, document, elementHead, null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
-
-		create_HeadScripts(Epub3FileSet.JS_JQUERY_BLOCKUI, document,
-				elementHead, null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
-
-		create_HeadScripts(Epub3FileSet.JS_JQUERY_MOUSEWHEEL, document,
-				elementHead, null, // "text/javascript",
+		create_HeadScripts(Epub3FileSet.JS_SCREENFULL, document, elementHead,
+				null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
 		create_HeadScripts(Epub3FileSet.JS_HAMMER, document, elementHead, null, // "text/javascript",
@@ -242,6 +231,17 @@ public final class XHTML {
 				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
 		create_HeadScripts(Epub3FileSet.JS_HAMMER_SHOWTOUCHES, document,
+				elementHead, null, // "text/javascript",
+				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
+
+		create_HeadScripts(Epub3FileSet.JS_JQUERY, document, elementHead, null, // "text/javascript",
+				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
+
+		create_HeadScripts(Epub3FileSet.JS_JQUERY_BLOCKUI, document,
+				elementHead, null, // "text/javascript",
+				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
+
+		create_HeadScripts(Epub3FileSet.JS_JQUERY_MOUSEWHEEL, document,
 				elementHead, null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
