@@ -329,6 +329,15 @@ body
 	font-size: FONT_SIZEpx;
 	font-weight: 400;
 	font-family: Arvo, Tahoma, verdana, arial, sans-serif;
+
+	border-right: 2px solid transparent;
+	border-left: 2px solid transparent;
+}
+
+html:not(.static) body.epb3sldrzr-epubReadingSystem
+{
+	border-right: 2px solid #aaaaaa;
+	border-left: 2px solid #aaaaaa;
 }
 
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body

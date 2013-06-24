@@ -1396,11 +1396,22 @@ Epub3Sliderizer.init = function()
 	console.log("Epub3Sliderizer");
 	console.log(window.navigator.userAgent);
 
+	var fakeEpubReadingSystem = false;
+
 	if (typeof navigator.epubReadingSystem != 'undefined')
 	{
 		this.epubReadingSystem = navigator.epubReadingSystem;
 	}
-
+	else
+	{
+		if (window.location.search && window.location.search.indexOf("epub") >= 0)
+		//if (window.location.href.indexOf("static") >= 0)
+		{
+			fakeEpubReadingSystem = true;
+			this.epubReadingSystem = {name: "FAKE epub reader", version: "0.0.1"};
+		}
+	}
+	
 	if (this.epubReadingSystem != null)
 	{
 		console.log(this.epubReadingSystem.name);
@@ -1457,7 +1468,10 @@ Epub3Sliderizer.init = function()
 
 	if (this.isEpubReadingSystem())
 	{
-		this.resetOnResizeTransform();
+		if (!fakeEpubReadingSystem)
+		{
+			this.resetOnResizeTransform();
+		}
 
 		document.body.classList.add("epb3sldrzr-epubReadingSystem");
 
