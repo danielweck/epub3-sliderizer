@@ -337,8 +337,6 @@ Epub3Sliderizer.initTouch = function()
 	}
 	
 	/*
-	var dragXStart = 0;
-	var dragYStart = 0;
 	var totalDragX = 0;
 	var totalDragY = 0;
 
@@ -347,10 +345,12 @@ Epub3Sliderizer.initTouch = function()
 	*/
 	
 	var zoomStart = 1;
+	var dragXStart = 0;
+	var dragYStart = 0;
 	
 	function resetTransform()
 	{
-		var b = that.totalZoom <= 1 || that.totalZoom >= 8;
+		var b = that.totalZoom <= 1 || that.totalZoom >= 18;
 		
 		if (b)
 		{
@@ -366,7 +366,7 @@ Epub3Sliderizer.initTouch = function()
 		return b;
 	}
 	
-	var first = true;
+	var firstTransform = true;
 	
 	function onTransform(hammerEvent)
 	{
@@ -382,17 +382,19 @@ Epub3Sliderizer.initTouch = function()
 
 			if (!resetTransform())
 			{
-				if (!first)
+				if (!firstTransform)
 				{
 					this.transforms.pop();
 				}
-				first = false;
+				firstTransform = false;
 				
 				this.transforms.push({
 					rotation: hammerEvent.gesture.rotation,
 					zoom: hammerEvent.gesture.scale,
 					left: hammerEvent.gesture.center.pageX,
-					top: hammerEvent.gesture.center.pageY
+					top: hammerEvent.gesture.center.pageY,
+					transX: (hammerEvent.gesture.center.pageX*hammerEvent.gesture.scale - dragXStart*hammerEvent.gesture.scale),
+					transY: (hammerEvent.gesture.center.pageY*hammerEvent.gesture.scale - dragYStart*hammerEvent.gesture.scale)
 				});
 
 				this.onResize();
@@ -407,17 +409,17 @@ Epub3Sliderizer.initTouch = function()
 			return;
 		}
 		
-		first = true;
+		firstTransform = true;
 		
 		if (hammerEvent.gesture)
 		{
 			zoomStart = this.totalZoom;
 			
+			dragXStart = hammerEvent.gesture.center.pageX;
+			dragYStart = hammerEvent.gesture.center.pageY;
+			
 			/*
 			rotationStart = totalRotation;
-			
-			dragXStart = totalDragX;
-			dragYStart = totalDragY;
 			*/
 			
 			hammerEvent.gesture.preventDefault();
@@ -426,29 +428,39 @@ Epub3Sliderizer.initTouch = function()
 		{
 			zoomStart = 1;
 			
-			/*
-			rotationStart = 0;
-			
 			dragXStart = 0;
 			dragYStart = 0;
+			
+			/*
+			rotationStart = 0;
 			*/
 		}
 	}
+	
+	var firstDrag = true;
 	
 	function onDrag(hammerEvent)
 	{
 		if (hammerEvent.gesture)
 		{
-			if (false || this.totalZoom == 1)
+			if (this.totalZoom == 1)
 			{
 				return;
 			}
 
+			if (!firstDrag)
+			{
+				this.transforms.pop();
+			}
+			firstDrag = false;
+			
 			this.transforms.push({
 				rotation: 0,
 				zoom: 1,
 				left: hammerEvent.gesture.center.pageX,
-				top: hammerEvent.gesture.center.pageY
+				top: hammerEvent.gesture.center.pageY,
+				transX: hammerEvent.gesture.center.pageX - dragXStart,
+				transY: hammerEvent.gesture.center.pageY - dragYStart
 			});
 
 			this.onResize();
@@ -457,21 +469,19 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onDragStart(hammerEvent)
 	{
+		firstDrag = true;
+		
 		if (hammerEvent.gesture)
 		{
-			/*
-			dragStartX = hammerEvent.gesture.center.pageX - this.left;
-			dragStartY = hammerEvent.gesture.center.pageY - this.top;
-			*/
+			dragXStart = hammerEvent.gesture.center.pageX;
+			dragYStart = hammerEvent.gesture.center.pageY;
 			
 			hammerEvent.gesture.preventDefault();
 		}
 		else
 		{
-			/*
-			dragStartX = 0;
-			dragStartY = 0;
-			*/
+			dragXStart = 0;
+			dragYStart = 0;
 		}
 		
 		scrolling = false;
@@ -574,7 +584,9 @@ Epub3Sliderizer.initTouch = function()
 					rotation: 0,
 					zoom: zoom,
 					left: hammerEvent.gesture.center.pageX,
-					top: hammerEvent.gesture.center.pageY
+					top: hammerEvent.gesture.center.pageY,
+					transX: 0,
+					transY: 0
 				});
 		
 				this.onResize();
@@ -764,16 +776,28 @@ Epub3Sliderizer.onResize = function()
 
 		transformCSS += " translate"+(is3D?"3d":"")+"(" + transform.left + "px," + transform.top + "px"+(is3D?", 0":"")+") ";
 		
-		if (transform.zoom != 1)
-		{
-			transformCSS += " scale"+(is3D?"3d":"")+"(" + transform.zoom + (is3D? "," + transform.zoom + ",1":"") + ") ";
-		}
 		if (transform.rotation != 0)
 		{
 			transformCSS += " rotate"+(is3D?"3d":"")+"(" + (is3D? "0,0,1,":"") + transform.rotation + "deg) ";
 		}
 
 		transformCSS += " translate"+(is3D?"3d":"")+"(" + -transform.left + "px," + -transform.top + "px"+(is3D?", 0":"")+") ";
+		
+
+
+		transformCSS += " translate"+(is3D?"3d":"")+"(" + transform.transX + "px," + transform.transY + "px"+(is3D?", 0":"")+") ";
+
+
+
+		transformCSS += " translate"+(is3D?"3d":"")+"(" + transform.left + "px," + transform.top + "px"+(is3D?", 0":"")+") ";
+
+		if (transform.zoom != 1)
+		{
+			transformCSS += " scale"+(is3D?"3d":"")+"(" + transform.zoom + (is3D? "," + transform.zoom + ",1":"") + ") ";
+		}		
+
+		transformCSS += " translate"+(is3D?"3d":"")+"(" + -transform.left + "px," + -transform.top + "px"+(is3D?", 0":"")+") ";
+
 	}
 	
 	
