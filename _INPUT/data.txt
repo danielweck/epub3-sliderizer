@@ -87,8 +87,8 @@ _CONTENT
 
 <p>
 <strong>Touch</strong> or <strong>mouse</strong>:
-<br><em>left</em> - <em>right</em> swipe &#8658; <em>previous</em> - <em>next</em> slide
-<br><em>up</em> - <em>down</em> swipe &#8658; <em>previous</em> - <em>next</em> incremental item
+<br><em>left</em> or <em>right</em> swipe &#8658; previous / next slide
+<br><em>up</em> or <em>down</em> swipe &#8658; previous / next incremental item
 </p>
 
 </div>
@@ -100,12 +100,12 @@ _CONTENT
 <p class="epb3sldrzr-notEpubReadingSystem" style="line-height: 1.7em;">
 
 <span class="keyboard symbols" title="left">&#9666;<!-- &#8592; --></span>
-<span class="keyboard symbols" title="right">&#9656;<!-- &#8594; --></span> <em>previous</em> - <em>next</em> slide
+<span class="keyboard symbols" title="right">&#9656;<!-- &#8594; --></span> previous / next slide
 <br>
 <span class="keyboard symbols" title="up">&#9652;<!-- &#8593; --></span>
-<span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span> <em>previous</em> - <em>next</em> incremental item (space bar works too)
+<span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span> previous / next incremental item (or space bar)
 <br>
-<span class="keyboard">m</span> slides <em>m</em>enu (table of contents)
+<span class="keyboard">m</span> slides <em style="font-style: normal;">m</em>enu (table of contents)
 
 </p>
 
@@ -279,18 +279,21 @@ _CONTENT
 <ul style="list-style-type: none;">
 <li style="margin-bottom: 1.5em;">
 <img src="assets/HTML5.png" class="epb3sldrzr-animated bounceInRight animated-logos">
-<strong>HTML5 slide deck</strong>: for live interactive presentations &#8658; online viewing / browsing
+<strong>HTML5</strong> interactive slide deck for live presentations
+<br>&#8658; online viewing / browsing
 
 <li>
 <img src="assets/EPUB.png" class="epb3sldrzr-animated bounceInRight animated-logos later">
-<strong>EPUB3 e-book</strong>: for offline reading &#8658; re-distributable file archive
+<strong>EPUB3</strong> e-book for offline reading
+<br>&#8658; re-distributable file archive
 </ul>
 
-<p>Internally, EPUB3 uses HTML5, CSS, Javscript, SVG, MathML etc.
-EPUB3 is a structured container for web documents
-(unzip <span class="code">ebook.epub</span> to see the files)
+<p>
+EPUB3 is a structured container for web documents:
+<br>
+&#8658; unzip <span class="code">[ebook.epub]</span> to see the files inside (HTML, CSS, Javscript, SVG, MathML, images, fonts, etc.)
 
-<div class="boxed" style="margin-top: 0.4em;">
+<div class="boxed" style="margin-top: 0.1em;">
 
 <p>
 EPUB3-Sliderizer generates a <strong>single</strong> fileset, which delivers <strong>both</strong> the <em>web</em> and <em>e-book</em> functions.
@@ -324,12 +327,12 @@ img.animated-logos
 body:not(.epb3sldrzr-epubReadingSystem) img.animated-logos.animated
 {	
 	-PREFIXED_PROPERTY-animation-duration: 1s;
-	-PREFIXED_PROPERTY-animation-delay: 0.5s;
+	-PREFIXED_PROPERTY-animation-delay: 0s;
 }
 
 body:not(.epb3sldrzr-epubReadingSystem) img.animated-logos.later.animated
 {	
-	-PREFIXED_PROPERTY-animation-delay: 1s;
+	-PREFIXED_PROPERTY-animation-delay: 0.5s;
 }
 
 
