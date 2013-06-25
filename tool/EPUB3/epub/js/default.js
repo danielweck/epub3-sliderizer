@@ -611,25 +611,31 @@ Epub3Sliderizer.initTouch = function()
 		}
 		
 		if (hammerEvent.gesture)
-		{
-			if (!firstDrag)
-			{
-				this.transforms.pop();
-			}
-			firstDrag = false;
-			
+		{			
 			var xOffset = hammerEvent.gesture.center.pageX - dragXStart;
 
 			var opacity = 1;
 			if (this.totalZoom == 1)
 			{
 				var off = Math.abs(xOffset);
+				if (off < 60)
+				{
+					// to allow swipe up/down
+					return;
+				}
+				
 				opacity = 1 - (off / window.innerWidth); //document.body.clientWidth
 				
 				document.body.style.opacity = opacity;
 			}
 			
 			//$("h1#epb3sldrzr-title").html(this.totalZoom + " - " + opacity);
+			
+			if (!firstDrag)
+			{
+				this.transforms.pop();
+			}
+			firstDrag = false;
 			
 			this.transforms.push({
 				rotation: 0,
