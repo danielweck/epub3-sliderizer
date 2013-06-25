@@ -253,6 +253,7 @@ Epub3Sliderizer.toggleZoom = function(x, y)
 
 // ----------
 
+//http://www.sceneonthe.net/unicode.htm
 //http://www.w3.org/2002/09/tests/keys.html
 Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 {
@@ -472,6 +473,8 @@ Epub3Sliderizer.initTouch = function()
 	
 	function resetTransform()
 	{
+		document.body.style.opacity = "1";
+		
 		var b = that.totalZoom <= 1 || that.totalZoom >= 18;
 		
 		if (b)
@@ -519,6 +522,11 @@ Epub3Sliderizer.initTouch = function()
 					transY: (hammerEvent.gesture.center.pageY*hammerEvent.gesture.scale - dragYStart*hammerEvent.gesture.scale)
 				});
 
+				if (this.totalZoom < 1)
+				{
+					document.body.style.opacity = this.totalZoom;
+				}
+				
 				this.onResize();
 			}
 		}
@@ -578,28 +586,58 @@ Epub3Sliderizer.initTouch = function()
 	
 	var firstDrag = true;
 	
+	function onDragEnd(hammerEvent)
+	{
+		if (scrolling)
+		{
+			return;
+		}
+		
+		if (this.totalZoom == 1)
+		{
+			this.transition(true);
+		
+			resetTransform();
+			
+			this.transition(false);
+		}
+	}
+	
 	function onDrag(hammerEvent)
 	{
+		if (scrolling)
+		{
+			return;
+		}
+		
 		if (hammerEvent.gesture)
 		{
-			if (this.totalZoom == 1)
-			{
-				return;
-			}
-
 			if (!firstDrag)
 			{
 				this.transforms.pop();
 			}
 			firstDrag = false;
 			
+			var xOffset = hammerEvent.gesture.center.pageX - dragXStart;
+
+			var opacity = 1;
+			if (this.totalZoom == 1)
+			{
+				var off = Math.abs(xOffset);
+				opacity = 1 - (off / window.innerWidth); //document.body.clientWidth
+				
+				document.body.style.opacity = opacity;
+			}
+			
+			//$("h1#epb3sldrzr-title").html(this.totalZoom + " - " + opacity);
+			
 			this.transforms.push({
 				rotation: 0,
-				zoom: 1,
+				zoom: 1, //opacity,
 				left: hammerEvent.gesture.center.pageX,
 				top: hammerEvent.gesture.center.pageY,
-				transX: hammerEvent.gesture.center.pageX - dragXStart,
-				transY: hammerEvent.gesture.center.pageY - dragYStart
+				transX: xOffset,
+				transY: this.totalZoom == 1 ? 0 : hammerEvent.gesture.center.pageY - dragYStart
 			});
 
 			this.onResize();
@@ -670,6 +708,10 @@ Epub3Sliderizer.initTouch = function()
 	
 	this.hammer.on("dragstart",
 		onDragStart.bind(this)
+	);
+	
+	this.hammer.on("dragend",
+		onDragEnd.bind(this)
 	);
 	
 	this.hammer.on("drag",
@@ -1705,7 +1747,8 @@ Epub3Sliderizer.init = function()
 			this.hammer = Hammer(document.body,
 				{
 					prevent_default: false,
-					css_hacks: false
+					css_hacks: false,
+					swipe_velocity: 1
 				});
 		}
 	

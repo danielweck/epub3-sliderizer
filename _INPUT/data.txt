@@ -85,12 +85,12 @@ _CONTENT
 
 <div class="boxed">
 
-<h3>Gestures <span class="fade">(touch or mouse)</span></h3>
+<h3>Swipe gestures <span class="fade">(touch or mouse)</span></h3>
 
 <p style="line-height: 1.7em;">
-<em>left</em> or <em>right</em> swipe &#8658; previous / next slide
+<span class="symbols pale-blue" title="left">&#8592;</span> <span class="symbols pale-red" title="right">&#8594;</span> previous / next slide
 <br>
-<em>up</em> or <em>down</em> swipe &#8658; previous / next incremental item
+<span class="symbols pale-blue" title="up" style="padding-left: 0.24em;padding-right: 0.24em;">&#8593;</span> <span class="symbols pale-red" title="down" style="padding-left: 0.24em;padding-right: 0.24em;">&#8595;</span> previous / next incremental item
 </p>
 
 </div>
@@ -107,7 +107,7 @@ _CONTENT
 <span class="keyboard symbols" title="up">&#9652;<!-- &#8593; --></span>
 <span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span> previous / next incremental item
 <br>
-<span class="keyboard symbols" title="down">_</span> (space bar) next incremental item
+<span class="keyboard symbols" title="down">_</span> <span class="code">(space bar)</span> next incremental item
 <br>
 <span class="keyboard">m</span> slides <em style="font-style: normal;">m</em>enu (table of contents)
 
@@ -148,7 +148,7 @@ body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc,
 
 // --------------------------------------------
 _TITLE
-Zoom tips
+Zooming tips
 
 // --------------------------------------------
 _CONTENT
@@ -158,13 +158,23 @@ _CONTENT
 <h3>Gestures <span class="fade">(touch or mouse)</span></h3>
 
 <p style="line-height: 1.7em;">
-<em>double tap / click</em> &#8658; toggle zoom
+<span class="symbols pale-green" title="double tap" style="padding-left: 0.2em;padding-right: 0.2em;">&#128261;</span> 
+<em>double tap</em> &#8658; toggle zoom
 <br>
+<span class="symbols pale-green" title="pan" style="padding-left: 0.1em;padding-right: 0.1em;">&#59212;</span> 
 <em>drag</em> &#8658; pan (only when zoomed-in)
 <br>
-<em>pinch</em> or <em>stretch</em> &#8658; zoom out / in + rotate + pan
+<span class="symbols pale-blue" title="pinch">&#59206;</span> 
+<em>pinch</em> 
+<span class="symbols pale-red" title="stretch" style="padding-left: 0.1em;padding-right: 0.1em;">&#59204;</span> 
+<em>stretch</em> &#8658; zoom out / in
 <br>
-(multitouch simulated with mouse drag + SHIFT key)
+<span class="symbols pale-green" title="rotate" style="padding-left: 0.1em;padding-right: 0.1em;">&#128260;</span> 
+<em>twist</em> &#8658; rotate slide
+
+<span style="font-size: 80%" class="fade">
+(use SHIFT + mouse drag to simulate multitouch)
+</span>
 </p>
 
 </div>
@@ -183,7 +193,7 @@ _CONTENT
 <span class="keyboard symbols" title="right">&#9656;<!-- &#8594; --></span>
 <span class="keyboard symbols" title="up">&#9652;<!-- &#8593; --></span>
 <span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span>
-pan left / right / up / down (only when zoomed-in)
+pan (only when zoomed-in)
 
 </p>
 
@@ -340,13 +350,15 @@ _CONTENT
 <li>
 <img src="assets/EPUB.png" class="epb3sldrzr-animated bounceInRight animated-logos later">
 <strong>EPUB3</strong> e-book for offline reading
-<br>&#8658; re-distributable file archive
+<br>&#8658; re-distributable single file archive
 </ul>
 
-<p>
-EPUB3 is a structured container for web documents:
+<p style="margin-left: 5em;">
+EPUB3 is a structured container for web documents.
 <br>
-&#8658; unzip <span class="code">[ebook.epub]</span> to see the files inside (HTML, CSS, Javscript, SVG, MathML, images, fonts, etc.)
+&#8658; unzip <span class="code">[ebook.epub]</span> to see the files inside
+<br>
+<span class="fade" style="font-size: 80%">(HTML, CSS, Javscript, SVG, MathML, images, fonts, etc.)</span>
 
 <div class="boxed" style="margin-top: 0.1em;">
 
