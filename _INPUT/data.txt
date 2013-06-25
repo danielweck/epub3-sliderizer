@@ -76,18 +76,19 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 
 // --------------------------------------------
 _TITLE
-Usage tips
+Navigation tips
 
 // --------------------------------------------
 _CONTENT
 
+<div class="incremental auto">
+
 <div class="boxed">
 
-<h3>Gestures</h3>
+<h3>Gestures <span class="fade">(touch or mouse)</span></h3>
 
-<p>
-<strong>Touch</strong> or <strong>mouse</strong>:
-<br><em>left</em> or <em>right</em> swipe &#8658; previous / next slide
+<p style="line-height: 1.7em;">
+<em>left</em> or <em>right</em> swipe &#8658; previous / next slide
 <br><em>up</em> or <em>down</em> swipe &#8658; previous / next incremental item
 </p>
 
@@ -103,7 +104,9 @@ _CONTENT
 <span class="keyboard symbols" title="right">&#9656;<!-- &#8594; --></span> previous / next slide
 <br>
 <span class="keyboard symbols" title="up">&#9652;<!-- &#8593; --></span>
-<span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span> previous / next incremental item (or space bar)
+<span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span> previous / next incremental item
+<br>
+<span class="keyboard symbols" title="down">_</span> (space bar) next incremental item
 <br>
 <span class="keyboard">m</span> slides <em style="font-style: normal;">m</em>enu (table of contents)
 
@@ -111,9 +114,12 @@ _CONTENT
 
 </div>
 
-<p>...or use the buttons below (not displayed in e-book readers).
+<p>...or use the buttons below (not displayed in e-book readers)
 
 <!-- span style="padding-left: 0.3em; padding-right: 0.3em; color: #3D6AA2; border-radius:10px; font-family: Entypo;" class="glowButt">&#9632;</span -->
+
+
+</div>
 
 // --------------------------------------------
 _CSS_STYLE
@@ -133,6 +139,43 @@ body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc,
 	-PREFIXED_PROPERTY-animation-iteration-count: infinite;
 	-PREFIXED_PROPERTY-animation-delay: 1s;
 }
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Zoom tips
+
+// --------------------------------------------
+_CONTENT
+
+<div class="boxed">
+
+<h3>Gestures <span class="fade">(touch or mouse)</span></h3>
+
+<p style="line-height: 1.7em;">
+<em>drag</em> &#8658; pan (only when zoomed-in)
+<br><em>double tap / click</em> &#8658; toggle zoom (reset)
+<br><em>pinch</em> or <em>stretch</em> &#8658; zoom out / in + rotate + pan
+<br>(multitouch simulated with mouse drag + SHIFT key)
+</p>
+
+</div>
+
+<div class="boxed">
+
+<h3>Keyboard</h3>
+
+<p style="line-height: 1.7em;">
+
+<span class="keyboard">z</span> toggle zoom
+
+</p>
+
+</div>
 
 
 // #########################################################

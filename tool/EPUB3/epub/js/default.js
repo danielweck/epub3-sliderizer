@@ -176,7 +176,65 @@ Epub3Sliderizer.gotoNext = function()
 
 // ----------
 
-Epub3Sliderizer.onKeyDown = function(keyDownEvent)
+Epub3Sliderizer.transition = function(on)
+{
+	var milliseconds = 500;
+	
+	if (on)
+	{
+		var transition = "all "+milliseconds+"ms ease-in-out";
+		document.body.style.MozTransition = transition;
+		document.body.style.WebkitTransition = transition;
+		document.body.style.OTransition = transition;
+		document.body.style.msTransition = transition;
+		document.body.style.transition = transition;
+	}
+	else
+	{
+		setTimeout(function()
+		{
+			document.body.style.MozTransition = null;
+			document.body.style.WebkitTransition = null;
+			document.body.style.OTransition = null;
+			document.body.style.msTransition = null;
+			document.body.style.transition = null;
+		}, milliseconds + 10);
+	}
+}
+
+// ----------
+
+Epub3Sliderizer.toggleZoom = function(x, y)
+{
+	this.transition(true);
+
+	if (this.totalZoom != 1)
+	{
+		this.resetResize();
+	}
+	else
+	{
+		this.totalZoom = 2;
+
+		this.transforms.push({
+			rotation: 0,
+			zoom: this.totalZoom,
+			left: x,
+			top: y,
+			transX: 0,
+			transY: 0
+		});
+
+		this.onResize();
+	}
+
+	this.transition(false);
+}
+
+// ----------
+
+//http://www.w3.org/2002/09/tests/keys.html
+Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 {
 	if (this.isEpubReadingSystem())
 	{
@@ -184,83 +242,87 @@ Epub3Sliderizer.onKeyDown = function(keyDownEvent)
 	}
 	
 	// Filter out keyboard shortcuts
-	if (keyDownEvent.altKey
-	|| keyDownEvent.ctrlKey
-	|| keyDownEvent.metaKey
-	|| keyDownEvent.shiftKey)
+	if (keyboardEvent.altKey
+	|| keyboardEvent.ctrlKey
+	|| keyboardEvent.metaKey
+	|| keyboardEvent.shiftKey)
 	{
 		return;
 	}
 
-	if (keyDownEvent.keyCode == 37 // left arrow
-	//|| keyDownEvent.keyCode == 38 // up arrow
-	|| keyDownEvent.keyCode == 33 // page up
+	if (keyboardEvent.keyCode == 37 // left arrow
+	//|| keyboardEvent.keyCode == 38 // up arrow
+	|| keyboardEvent.keyCode == 33 // page up
 	)
 	{
-		keyDownEvent.preventDefault();
+		keyboardEvent.preventDefault();
 		this.gotoPrevious();
 	}
-	else if (keyDownEvent.keyCode == 39 // right arrow
-	//|| keyDownEvent.keyCode == 40 // down arrow
-	|| keyDownEvent.keyCode == 34 // page down
+	else if (keyboardEvent.keyCode == 39 // right arrow
+	//|| keyboardEvent.keyCode == 40 // down arrow
+	|| keyboardEvent.keyCode == 34 // page down
 	)
 	{
-		keyDownEvent.preventDefault();
+		keyboardEvent.preventDefault();
 		this.gotoNext();
 	}
-	else if (keyDownEvent.keyCode == 40) // down arrow
+	else if (keyboardEvent.keyCode == 40) // down arrow
 	{
-		keyDownEvent.preventDefault();
+		keyboardEvent.preventDefault();
 		this.nextIncremental(false);
 	}
-	else if (keyDownEvent.keyCode == 38) // up arrow
+	else if (keyboardEvent.keyCode == 38) // up arrow
 	{
-		keyDownEvent.preventDefault();
+		keyboardEvent.preventDefault();
 		this.nextIncremental(true);
 	}
-	else if (keyDownEvent.keyCode == 35) // end
+	else if (keyboardEvent.keyCode == 35) // end
 	{
-		keyDownEvent.preventDefault();
+		keyboardEvent.preventDefault();
 		this.gotoNext();
 	}
-	else if (keyDownEvent.keyCode == 36) // home
+	else if (keyboardEvent.keyCode == 36) // home
 	{
-		keyDownEvent.preventDefault();
+		keyboardEvent.preventDefault();
 		this.gotoPrevious();
 	}
-	else if (keyDownEvent.keyCode == 32) // space
+	else if (keyboardEvent.keyCode == 32) // space
 	{
-		keyDownEvent.preventDefault();
+		keyboardEvent.preventDefault();
 		this.nextIncremental(false);
 	}
-	else if (keyDownEvent.keyCode == 77) // m
+	else if (keyboardEvent.keyCode == 77) // m
 	{
 		if (this.prev != "")
 		{
-			keyDownEvent.preventDefault();
+			keyboardEvent.preventDefault();
 			this.gotoToc();
 		}
 	}
-	/*
-	else if (keyDownEvent.keyCode == 13) // RETURN / ENTER
+	else if (keyboardEvent.keyCode == 90) // z
 	{
-		keyDownEvent.preventDefault();	
+		this.toggleZoom(0,0);
+	}
+	/*
+	else if (keyboardEvent.keyCode == 13) // RETURN / ENTER
+	{
+		keyboardEvent.preventDefault();	
 		this.gotoToc();
 	}
 	*/
-	else if (keyDownEvent.keyCode == 70) // F
+	else if (keyboardEvent.keyCode == 70) // F
 	{
 		if (typeof screenfull != 'undefined')
 		{
-			keyDownEvent.preventDefault();
+			keyboardEvent.preventDefault();
 			screenfull.toggle();
 		}
 	}
-	else if (keyDownEvent.keyCode == 27) // ESC
+	else if (keyboardEvent.keyCode == 27) // ESC
 	{
 		if (typeof screenfull != 'undefined')
 		{
-			keyDownEvent.preventDefault();
+			keyboardEvent.preventDefault();
 			screenfull.exit();
 		}
 	}
@@ -336,6 +398,7 @@ Epub3Sliderizer.initTouch = function()
 		this.nextIncremental(false);
 	}
 	
+	
 	/*
 	var totalDragX = 0;
 	var totalDragY = 0;
@@ -380,7 +443,7 @@ Epub3Sliderizer.initTouch = function()
 			this.totalZoom = zoomStart * hammerEvent.gesture.scale;
 			//totalRotation = rotationStart + hammerEvent.gesture.rotation;
 
-			if (!resetTransform())
+			if (this.totalZoom <= 1 || !resetTransform())
 			{
 				if (!firstTransform)
 				{
@@ -399,6 +462,23 @@ Epub3Sliderizer.initTouch = function()
 
 				this.onResize();
 			}
+		}
+	}
+	
+	function onTransformEnd(hammerEvent)
+	{
+		if (scrolling)
+		{
+			return;
+		}
+		
+		if (this.totalZoom <= 1)
+		{
+			this.transition(true);
+		
+			resetTransform();
+			
+			this.transition(false);
 		}
 	}
 	
@@ -541,6 +621,10 @@ Epub3Sliderizer.initTouch = function()
 		onTransformStart.bind(this)
 	);
 	
+	this.hammer.on("transformend",
+		onTransformEnd.bind(this)
+	);
+	
 	this.hammer.on("transform",
 		onTransform.bind(this)
 	);
@@ -569,30 +653,7 @@ Epub3Sliderizer.initTouch = function()
 			hammerEvent.gesture.stopPropagation();
 		}
 
-		if (this.totalZoom != 1)
-		{
-			this.resetResize();
-		}
-		else
-		{
-			var zoom = 2.2;
-			this.totalZoom *= zoom;
-		
-			if (!resetTransform())
-			{
-				this.transforms.push({
-					rotation: 0,
-					zoom: zoom,
-					left: hammerEvent.gesture.center.pageX,
-					top: hammerEvent.gesture.center.pageY,
-					transX: 0,
-					transY: 0
-				});
-		
-				this.onResize();
-			}
-		}
-		
+		this.toggleZoom(hammerEvent.gesture.center.pageX, hammerEvent.gesture.center.pageY);
 
 		/*
 		var that = this;
@@ -766,13 +827,9 @@ Epub3Sliderizer.onResize = function()
 	
 	var transformCSS = "";
 	
-	//for (var i = 0; i < this.transforms.length; i++)
 	for (var i = this.transforms.length-1; i >= 0; i--)
 	{
 		var transform = this.transforms[i];
-		
-//		console.log(transform);
-//		console.log(this.totalZoom);
 
 		transformCSS += " translate"+(is3D?"3d":"")+"(" + transform.left + "px," + transform.top + "px"+(is3D?", 0":"")+") ";
 		
@@ -801,17 +858,11 @@ Epub3Sliderizer.onResize = function()
 	}
 	
 	
-	//+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=(offsetX+this.left-offsetX))  + "px," + (transOriginY=(offsetY+this.top-offsetY)) + "px"+(is3D?", 0":"")+") "
-	
-	//+ " translate"+(is3D?"3d":"")+"(" + -transOriginX + "px," + -transOriginY + "px"+(is3D?", 0":"")+") "
-	
-	
-	
 	transformCSS += " translate"+(is3D?"3d":"")+"(" + offsetX  + "px," + offsetY + "px"+(is3D?", 0":"")+") "
 	
 	transformCSS += " scale"+(is3D?"3d":"")+"(" + ratio + (is3D? "," + ratio + ",1":"") + ") ";
 	
-
+	
 	document.body.style.MozTransform = transformCSS;
 	document.body.style.WebkitTransform = transformCSS;
 	document.body.style.OTransform = transformCSS;
@@ -1317,7 +1368,7 @@ Epub3Sliderizer.nextIncremental = function(backward)
 
 	this.increment = (backward ? (this.increment - 1) : (this.increment + 1));
 	
-	this.invalidateIncremental(!backward);
+	this.invalidateIncremental(!backward && this.increment == 0);
 }
 
 // ----------
@@ -1574,7 +1625,7 @@ Epub3Sliderizer.init = function()
 		
 		this.initLinks();
 
-		window.onkeydown = this.onKeyDown.bind(this);
+		window.onkeyup = this.onKeyboard.bind(this);
 	
 		if (typeof Hammer != "undefined")
 		{
