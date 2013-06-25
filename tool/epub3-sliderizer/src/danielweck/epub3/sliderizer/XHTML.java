@@ -146,6 +146,16 @@ public final class XHTML {
 		elementHead.appendChild(elementMeta);
 		elementMeta.setAttribute("charset", "UTF-8");
 
+		elementMeta = document.createElement("meta");
+		elementHead.appendChild(elementMeta);
+		elementMeta.setAttribute("name", "description");
+		elementMeta.setAttribute("content", Epub3FileSet.THIS);
+
+		elementMeta = document.createElement("meta");
+		elementHead.appendChild(elementMeta);
+		elementMeta.setAttribute("name", "keywords");
+		elementMeta.setAttribute("content", "EPUB EPUB3 HTML5 Sliderizer slideshow slide deck e-book ebook");
+
 		String title = slide == null ? slideShow.TITLE : slide.TITLE;
 		if (title == null || title.isEmpty()) {
 			title = "NO TITLE!";

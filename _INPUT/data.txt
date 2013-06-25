@@ -167,7 +167,7 @@ _CONTENT
 
 <p style="line-height: 1.7em;">
 <span class="symbols pale-green" title="double tap" style="padding-left: 0.2em;padding-right: 0.2em;">&#128261;</span> 
-<em>double tap</em> &#8658; toggle zoom
+<em>double tap</em> &#8658; toggle zoom (aim at target)
 <br>
 <span class="symbols pale-green" title="pan" style="padding-left: 0.1em;padding-right: 0.1em;">&#59212;</span> 
 <em>drag</em> &#8658; pan (only when zoomed-in)
@@ -238,7 +238,7 @@ _CONTENT
 
 </div>
 
-<div class="boxed" style="position: absolute; bottom: 90px; right: 60px; left: 60px;">
+<div id="boox" class="boxed" style="position: absolute; bottom: 90px; right: 60px; left: 60px;">
 
 <div>
 <ul>

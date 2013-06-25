@@ -384,19 +384,6 @@ html.static body.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body
 }
 
 
-html.static body.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title,
-html.static body.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title-NOTES
-{
-	border-top-left-radius:40px;
-	border-top-right-radius:40px;
-}
-
-body:not(.epb3sldrzr-epubReadingSystem) h1#epb3sldrzr-title,
-body:not(.epb3sldrzr-epubReadingSystem) h1#epb3sldrzr-title-NOTES
-{
-	border-top-left-radius:20px;
-	border-top-right-radius:20px;
-}
 
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body-NOTES.animated,
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body.animated
@@ -475,29 +462,48 @@ h1#epb3sldrzr-title-NOTES
 	
 	color:rgba(0, 0, 0, 0.5);
 	background-color:#efefef;
-	border-bottom: 2px solid #8AC007;
-
-	-PREFIXED_PROPERTY-box-shadow: 0 0 16px 0px black;
+	border-bottom: 4px solid #8AC007;
 
 	text-shadow:2px 2px 4px rgba(255, 255, 255, 1), 0 0 0 rgba(0, 0, 0, 0.5); /* 2px 2px 4px white; */
 	
-	background: rgb(238,238,238); /* Old browsers */
-	background: -moz-linear-gradient(top,	rgba(238,238,238,1) 0%, rgba(204,204,204,1) 100%); /* FF3.6+ */
+	background: rgb(238,238,238);
+	
 	/*
-	Chrome,Safari4+
+
+	-PREFIXED_PROPERTY-box-shadow: 0 0 16px 0px black;
+	
+	
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(204,204,204,1))); 
 	*/
-	background: -webkit-linear-gradient(top,	rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,	rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,	rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* IE10+ */
-	background: linear-gradient(to bottom,	rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
+	/*
+	background: -moz-linear-gradient(top,	rgba(238,238,238,1) 0%, rgba(204,204,204,1) 100%);
+	background: -webkit-linear-gradient(top,	rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%);
+	background: -o-linear-gradient(top,	rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%);
+	background: -ms-linear-gradient(top,	rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%);
+	background: linear-gradient(to bottom,	rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 );
+	*/
 }
 
 html#epb3sldrzr-NavDoc h1#epb3sldrzr-title
 {
-	border-bottom: 2px solid #CC3300;
+	border-bottom: 4px solid #CC3300;
 }
+
+html.static body.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title,
+html.static body.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title-NOTES
+{
+	border-top-left-radius:40px;
+	border-top-right-radius:40px;
+}
+
+body:not(.epb3sldrzr-epubReadingSystem) h1#epb3sldrzr-title,
+body:not(.epb3sldrzr-epubReadingSystem) h1#epb3sldrzr-title-NOTES
+{
+	border-top-left-radius:20px;
+	border-top-right-radius:20px;
+}
+
 
 /*
 ==============================================================================
@@ -525,7 +531,7 @@ html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
 
 html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
-	top: 15px;
+	top: 10px;
 	right: 25px;
 
 	width: 200px;
