@@ -72,16 +72,8 @@ var Epub3Sliderizer = {
 	incrementals: null,
 	increment: -1,
 	bodyRoot: null,
-	zoom: 1,
-	zoomPrevious: 1,
-	rotation: 0,
-	rotationPrevious: 0,
-	left: 0,
-	leftPrevious: 0,
-	top: 0,
-	topPrevious: 0,
-	offsetXPrevious: 0,
-	offsetYPrevious: 0,
+	transforms: new Array(),
+	totalZoom: 1,
 	pauseEvents: false,
 	firefox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
 	opera: (typeof window.opera != "undefined") || navigator.userAgent.toLowerCase().indexOf(' opr/') >= 0,
@@ -288,11 +280,13 @@ Epub3Sliderizer.initTouch = function()
 		return;
 	}
 	
+	var that = this;
+	
 	var scrolling = false;
 	
 	function onSwipeLeft(hammerEvent)
 	{
-		if (this.zoom != 1)
+		if (this.totalZoom != 1)
 		{
 			return;
 		}
@@ -302,7 +296,7 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onSwipeRight(hammerEvent)
 	{
-		if (this.zoom != 1)
+		if (this.totalZoom != 1)
 		{
 			return;
 		}
@@ -312,7 +306,7 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onSwipeUp(hammerEvent)
 	{
-		if (this.zoom != 1)
+		if (this.totalZoom != 1)
 		{
 			return;
 		}
@@ -328,7 +322,7 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onSwipeDown(hammerEvent)
 	{
-		if (this.zoom != 1)
+		if (this.totalZoom != 1)
 		{
 			return;
 		}
@@ -342,11 +336,37 @@ Epub3Sliderizer.initTouch = function()
 		this.nextIncremental(false);
 	}
 	
-	var dragStartX = 0;
-	var dragStartY = 0;
+	/*
+	var dragXStart = 0;
+	var dragYStart = 0;
+	var totalDragX = 0;
+	var totalDragY = 0;
+
+	var rotationStart = 0;
+	var totalRotation = 0;
+	*/
 	
 	var zoomStart = 1;
-	var rotationStart = 0;
+	
+	function resetTransform()
+	{
+		var b = that.totalZoom <= 1 || that.totalZoom >= 8;
+		
+		if (b)
+		{
+			/*
+			totalRotation = 0;
+			totalDragX = 0;
+			totalDragY = 0;
+			*/
+			
+			that.resetResize();
+		}
+		
+		return b;
+	}
+	
+	var first = true;
 	
 	function onTransform(hammerEvent)
 	{
@@ -357,25 +377,26 @@ Epub3Sliderizer.initTouch = function()
 		
 		if (hammerEvent.gesture)
 		{
-			this.zoom = zoomStart * hammerEvent.gesture.scale;
-			
-			if (this.zoom <= 1)
-			{
-				this.zoom = 1;
-				this.rotation = 0;
-				
-				this.left = 0;
-				this.top = 0;
-			}
-			else
-			{
-				this.rotation = rotationStart + hammerEvent.gesture.rotation;
-			
-				this.left = hammerEvent.gesture.center.pageX - dragStartX * this.zoom;
-				this.top = hammerEvent.gesture.center.pageY - dragStartY * this.zoom;
-			}
+			this.totalZoom = zoomStart * hammerEvent.gesture.scale;
+			//totalRotation = rotationStart + hammerEvent.gesture.rotation;
 
-			this.onResize();
+			if (!resetTransform())
+			{
+				if (!first)
+				{
+					this.transforms.pop();
+				}
+				first = false;
+				
+				this.transforms.push({
+					rotation: hammerEvent.gesture.rotation,
+					zoom: hammerEvent.gesture.scale,
+					left: hammerEvent.gesture.center.pageX,
+					top: hammerEvent.gesture.center.pageY
+				});
+
+				this.onResize();
+			}
 		}
 	}
 	
@@ -386,23 +407,31 @@ Epub3Sliderizer.initTouch = function()
 			return;
 		}
 		
+		first = true;
+		
 		if (hammerEvent.gesture)
 		{
-			zoomStart = this.zoom;
-			rotationStart = this.rotation;
+			zoomStart = this.totalZoom;
 			
-			dragStartX = (hammerEvent.gesture.center.pageX - this.left) / zoomStart;
-			dragStartY = (hammerEvent.gesture.center.pageY - this.top) / zoomStart;
+			/*
+			rotationStart = totalRotation;
+			
+			dragXStart = totalDragX;
+			dragYStart = totalDragY;
+			*/
 			
 			hammerEvent.gesture.preventDefault();
 		}
 		else
 		{
 			zoomStart = 1;
+			
+			/*
 			rotationStart = 0;
 			
-			dragStartX = 0;
-			dragStartY = 0;
+			dragXStart = 0;
+			dragYStart = 0;
+			*/
 		}
 	}
 	
@@ -410,15 +439,17 @@ Epub3Sliderizer.initTouch = function()
 	{
 		if (hammerEvent.gesture)
 		{
-			if (this.zoom == 1)
+			if (false || this.totalZoom == 1)
 			{
 				return;
 			}
-			
-			//hammerEvent.gesture.deltaX / Y;
-			
-			this.left = hammerEvent.gesture.center.pageX - dragStartX;
-			this.top = hammerEvent.gesture.center.pageY - dragStartY;
+
+			this.transforms.push({
+				rotation: 0,
+				zoom: 1,
+				left: hammerEvent.gesture.center.pageX,
+				top: hammerEvent.gesture.center.pageY
+			});
 
 			this.onResize();
 		}
@@ -428,20 +459,24 @@ Epub3Sliderizer.initTouch = function()
 	{
 		if (hammerEvent.gesture)
 		{
+			/*
 			dragStartX = hammerEvent.gesture.center.pageX - this.left;
 			dragStartY = hammerEvent.gesture.center.pageY - this.top;
+			*/
 			
 			hammerEvent.gesture.preventDefault();
 		}
 		else
 		{
+			/*
 			dragStartX = 0;
 			dragStartY = 0;
+			*/
 		}
 		
 		scrolling = false;
 
-		if (this.zoom != 1)
+		if (this.totalZoom != 1)
 		{
 			return;
 		}
@@ -524,40 +559,28 @@ Epub3Sliderizer.initTouch = function()
 			hammerEvent.gesture.stopPropagation();
 		}
 
-		this.rotationPrevious = this.rotation;
-		this.zoomPrevious = this.zoom;
-		
-//		this.leftPrevious = this.left;
-//		this.topPrevious = this.top;
-		
-		if (this.zoom > 4)
+		if (this.totalZoom != 1)
 		{
-			this.rotation = 0;
-			this.zoom = 1;
-			
-			this.left = 0;
-			this.top = 0;
-		
-this.leftPrevious = 0;
-this.topPrevious = 0;
+			this.resetResize();
 		}
 		else
 		{
-			this.zoom += 1;
-			
-			if (hammerEvent.gesture)
+			var zoom = 2.2;
+			this.totalZoom *= zoom;
+		
+			if (!resetTransform())
 			{
-				this.left = hammerEvent.gesture.center.pageX;
-				this.top = hammerEvent.gesture.center.pageY;
-			}
-			else
-			{
-				this.left = 0;
-				this.top = 0;
+				this.transforms.push({
+					rotation: 0,
+					zoom: zoom,
+					left: hammerEvent.gesture.center.pageX,
+					top: hammerEvent.gesture.center.pageY
+				});
+		
+				this.onResize();
 			}
 		}
-
-		this.onResize();
+		
 
 		/*
 		var that = this;
@@ -606,8 +629,6 @@ this.topPrevious = 0;
 	);
 	*/
 	
-	var that = this;
-	
 	document.addEventListener('touchstart', function(e)
 	{
 		var t2 = e.timeStamp;
@@ -650,6 +671,15 @@ Epub3Sliderizer.resetOnResizeTransform = function()
 	document.body.style.OTransform = null;
 	document.body.style.msTransform = null;
 	document.body.style.transform = null;
+}
+
+
+Epub3Sliderizer.resetResize = function()
+{
+	this.totalZoom = 1;
+	this.transforms = new Array();
+	
+	this.onResize();
 }
 
 // ----------
@@ -722,108 +752,47 @@ Epub3Sliderizer.onResize = function()
 	
 	var is3D = this.opera ? false : true;
 	
-	var transOriginX = 0;
-	var transOriginY = 0;
+	var transformCSS = "";
 	
-	var transform = ""
-	
-	//  ========##################
-	
-	/*
-	// (-T6) TransformOrigin: RESTORE
-	+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=offsetX)  + "px," + (transOriginY=offsetY) + "px"+(is3D?", 0":"")+") "
-	
-	// ----
-	// (6) USER TRANS (AFTER)
-	+ " translate"+(is3D?"3d":"")+"(" + (this.left-offsetX)/(this.zoomPrevious*ratio) + "px," + -this.top*this.zoomPrevious + "px"+(is3D?", 0":"")+") "
-	
-	// (T6) TransformOrigin: touch point inside already-translated/scaled body
-	+ " translate"+(is3D?"3d":"")+"(" + -transOriginX + "px," + -transOriginY + "px"+(is3D?", 0":"")+") "
-	*/
-	
-	//  ========##################
-	
-	// (-T5) TransformOrigin: RESTORE
-	+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=(offsetX+this.left-offsetX))  + "px," + (transOriginY=(offsetY+this.top-offsetY)) + "px"+(is3D?", 0":"")+") "
-	//+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=this.left*this.zoomPrevious-this.leftPrevious)  + "px," + (transOriginY=this.top*this.zoomPrevious-this.topPrevious) + "px"+(is3D?", 0":"")+") "
+	//for (var i = 0; i < this.transforms.length; i++)
+	for (var i = this.transforms.length-1; i >= 0; i--)
+	{
+		var transform = this.transforms[i];
+		
+//		console.log(transform);
+//		console.log(this.totalZoom);
 
-	
-	// ----
-	// (5) USER SCALE (AFTER)
-	//+ " scale"+(is3D?"3d":"")+"(" + this.zoom/this.zoomPrevious + (is3D? "," + this.zoom/this.zoomPrevious + ",0":"") + ") "
-	+ " scale"+(is3D?"3d":"")+"(" + this.zoom + (is3D? "," + this.zoom + ",1":"") + ") "
-	
-	// (T5) TransformOrigin: touch point inside already-translated/scaled body
-	+ " translate"+(is3D?"3d":"")+"(" + -transOriginX + "px," + -transOriginY + "px"+(is3D?", 0":"")+") "
-	
-	//  ========##################
+		transformCSS += " translate"+(is3D?"3d":"")+"(" + transform.left + "px," + transform.top + "px"+(is3D?", 0":"")+") ";
+		
+		if (transform.zoom != 1)
+		{
+			transformCSS += " scale"+(is3D?"3d":"")+"(" + transform.zoom + (is3D? "," + transform.zoom + ",1":"") + ") ";
+		}
+		if (transform.rotation != 0)
+		{
+			transformCSS += " rotate"+(is3D?"3d":"")+"(" + (is3D? "0,0,1,":"") + transform.rotation + "deg) ";
+		}
 
-	/*
-	// (-T4) TransformOrigin: RESTORE
-	+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=offsetX) + "px," + (transOriginY=offsetY) + "px"+(is3D?", 0":"")+") "
+		transformCSS += " translate"+(is3D?"3d":"")+"(" + -transform.left + "px," + -transform.top + "px"+(is3D?", 0":"")+") ";
+	}
 	
-	// ----
-	// (4) USER TRANS (BEFORE)
-	+ " translate"+(is3D?"3d":"")+"(" + -this.left + "px," + -this.top + "px"+(is3D?", 0":"")+") "
 	
-	// (T4) TransformOrigin: top-left corner of already-translated body (offsetX,offsetY)
-	+ " translate"+(is3D?"3d":"")+"(" + -transOriginX  + "px," + -transOriginY + "px"+(is3D?", 0":"")+") "
-	*/
+	//+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=(offsetX+this.left-offsetX))  + "px," + (transOriginY=(offsetY+this.top-offsetY)) + "px"+(is3D?", 0":"")+") "
 	
-	//  ========##################
+	//+ " translate"+(is3D?"3d":"")+"(" + -transOriginX + "px," + -transOriginY + "px"+(is3D?", 0":"")+") "
 	
-	/*
-	// (-T3) TransformOrigin: RESTORE
-	+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=this.offsetXPrevious+this.leftPrevious-this.offsetXPrevious)  + "px," + (transOriginY=this.offsetYPrevious+this.topPrevious-this.offsetYPrevious) + "px"+(is3D?", 0":"")+") "
 	
-	// ----
-	// (3) USER SCALE (BEFORE)
-	+ " scale"+(is3D?"3d":"")+"(" + this.zoomPrevious + (is3D? "," + this.zoomPrevious + ",0":"") + ") "
 	
-	// (T3) TransformOrigin: top-left corner of already-translated body (offsetX,offsetY)
-	+ " translate"+(is3D?"3d":"")+"(" + -transOriginX  + "px," + -transOriginY + "px"+(is3D?", 0":"")+") "
-	*/
+	transformCSS += " translate"+(is3D?"3d":"")+"(" + offsetX  + "px," + offsetY + "px"+(is3D?", 0":"")+") "
 	
-	//  ========##################
+	transformCSS += " scale"+(is3D?"3d":"")+"(" + ratio + (is3D? "," + ratio + ",1":"") + ") ";
 	
-	// (-T2) TransformOrigin: NOP
-	//
-	
-	// ----
-	// (2) CENTER VERTICAL / HORIZONTAL (MEET / FIT SCREEN MIDDLE)
-	+ " translate"+(is3D?"3d":"")+"(" + offsetX  + "px," + offsetY + "px"+(is3D?", 0":"")+") "
-	
-	// (T2) TransformOrigin (unchanged): top-left corner (0px,0px)
-	//
-	
-	//  ========##################
-	
-	// (-T1) TransformOrigin: NOP
-	//
-	
-	// ----
-	// (1) SCALE (FIT SCREEN) 
-	+ " scale"+(is3D?"3d":"")+"(" + ratio + (is3D? "," + ratio + ",1":"") + ") "
-	
-	// (T1) TransformOrigin: top-left corner (0px,0px)
-	//
-	
-	//  ========##################
-	
-	;
 
-
-	document.body.style.MozTransform = transform;
-	document.body.style.WebkitTransform = transform;
-	document.body.style.OTransform = transform;
-	document.body.style.msTransform = transform;
-	document.body.style.transform = transform;
-	
-	this.offsetXPrevious = offsetX;
-	this.offsetYPrevious = offsetY;
-	
-	this.leftPrevious += this.left;
-	this.topPrevious += this.top;
+	document.body.style.MozTransform = transformCSS;
+	document.body.style.WebkitTransform = transformCSS;
+	document.body.style.OTransform = transformCSS;
+	document.body.style.msTransform = transformCSS;
+	document.body.style.transform = transformCSS;
 }
 
 // ----------
@@ -892,7 +861,7 @@ Epub3Sliderizer.onOrientationChange = function()
 	var that = this;
 	setTimeout(function()
 	{
-		that.onResize();
+		that.resetResize();
 	}, 20);
 }
 
@@ -1563,7 +1532,7 @@ Epub3Sliderizer.init = function()
 		}
 		else
 		{
-			this.onResize();
+			this.resetResize();
 		}
 		
 		this.bodyRoot.style.visibility = "visible";
@@ -1616,7 +1585,7 @@ Epub3Sliderizer.init = function()
 		else
 		{
 			window.onresize = this.onResize.bind(this);
-			this.onResize();
+			this.resetResize();
 		}
 
 		this.initMediaOverlays();
@@ -1714,7 +1683,7 @@ Epub3Sliderizer.init = function()
 				var up = deltaY < 0 && deltaY < deltaX;
 				var down = deltaY > 0 && deltaY > deltaX;
 		
-				if (that.zoom == 1)
+				if (this.totalZoom == 1)
 				{
 					if (false && // Interferes! :(
 						(
@@ -1840,7 +1809,7 @@ function readyFirst()
 		}
 		else
 		{
-			Epub3Sliderizer.onResize();
+			Epub3Sliderizer.resetResize();
 		}
 	}
 }
