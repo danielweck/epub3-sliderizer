@@ -843,7 +843,7 @@ Epub3Sliderizer.initTouch = function()
 				while (target)
 				{
 					var name = target.nodeName.toLowerCase();
-					if (name === "p" || name === "img" || name === "video" || name === "svg" || name === "div" || name === "h1" || name === "h2" || name === "h3" || name === "h4" || name === "li" || name === "ul" || name === "ol")
+					if (name === "p" || name === "img" || name === "video" || name === "svg" || name === "td" || name === "div" || name === "h1" || name === "h2" || name === "h3" || name === "h4" || name === "li" || name === "ul" || name === "ol")
 					{
 						done = true;
 						this.zoomTo(target);
