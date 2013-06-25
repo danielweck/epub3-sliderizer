@@ -236,6 +236,7 @@ Epub3Sliderizer.toggleZoom = function(x, y)
 	{
 		this.totalZoom = 2;
 
+		this.transforms = new Array();
 		this.transforms.push({
 			rotation: 0,
 			zoom: this.totalZoom,
@@ -249,6 +250,68 @@ Epub3Sliderizer.toggleZoom = function(x, y)
 	}
 
 	this.transition(false);
+}
+
+
+// ----------
+
+Epub3Sliderizer.zoomTo = function(element)
+{
+	if (this.totalZoom != 1)
+	{
+		this.transition(true);
+		this.resetResize();
+		this.transition(false);
+		return;
+	}
+	
+	if (element == null || typeof element.getBoundingClientRect == "undefined")
+	{
+		alert(element != null ? "UNDEFINED" : "NULL");
+		
+		return;
+	}
+	
+	var border = element.style.border;
+	element.style.border = "4px solid #ff00ff";
+	
+	var rect = element.getBoundingClientRect();
+	var rectX = rect.left + document.body.scrollLeft;
+	var rectY = rect.top + document.body.scrollTop;
+	var rectFit = this.getRectFit(rect.width, rect.height);
+	
+	var rectBody = document.body.getBoundingClientRect();
+//	var bodyFit = this.getElementFit(rectBody.width, rectBody.height);
+
+	var rotation = 0;
+	var zoom = rectFit.ratio;
+	var left = Math.round(rectX + rect.width / 2); // - rectBody.left;
+	var top = Math.round(rectY + rect.height / 2); // - rectBody.top;
+	var transX = -(left - window.innerWidth / 2);
+	var transY = -(top - window.innerHeight / 2);
+
+	this.totalZoom = zoom;
+	
+	this.transition(true);
+
+	this.transforms = new Array();
+	this.transforms.push({
+		rotation: rotation,
+		zoom: zoom,
+		left: left,
+		top: top,
+		transX: transX,
+		transY: transY
+	});
+
+	this.onResize();
+
+	this.transition(false);
+	
+	setTimeout(function()
+	{
+		element.style.border = border;
+	}, 500);
 }
 
 // ----------
@@ -273,7 +336,8 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 
 	if (keyboardEvent.keyCode == 90) // Z
 	{
-		this.toggleZoom(0,0);
+		var rectBody = document.body.getBoundingClientRect();
+		this.toggleZoom(rectBody.left,rectBody.top );
 	}
 	else if (keyboardEvent.keyCode == 27) // ESC
 	{
@@ -518,8 +582,8 @@ Epub3Sliderizer.initTouch = function()
 					zoom: hammerEvent.gesture.scale,
 					left: hammerEvent.gesture.center.pageX,
 					top: hammerEvent.gesture.center.pageY,
-					transX: (hammerEvent.gesture.center.pageX*hammerEvent.gesture.scale - dragXStart*hammerEvent.gesture.scale),
-					transY: (hammerEvent.gesture.center.pageY*hammerEvent.gesture.scale - dragYStart*hammerEvent.gesture.scale)
+					transX: (hammerEvent.gesture.center.pageX - dragXStart) * hammerEvent.gesture.scale,
+					transY: (hammerEvent.gesture.center.pageY - dragYStart) * hammerEvent.gesture.scale
 				});
 
 				if (this.totalZoom < 1)
@@ -763,24 +827,38 @@ Epub3Sliderizer.initTouch = function()
 		{
 			hammerEvent.gesture.preventDefault();
 			hammerEvent.gesture.stopPropagation();
-		}
 
-		this.toggleZoom(hammerEvent.gesture.center.pageX, hammerEvent.gesture.center.pageY);
-
-		/*
-		var that = this;
-		setTimeout(function()
-		{
-			if (typeof window.orientation != 'undefined')
+			if (this.totalZoom != 1)
 			{
-				that.onOrientationChange();
+				this.transition(true);
+				this.resetResize();
+				this.transition(false);
+				//this.toggleZoom(hammerEvent.gesture.center.pageX, hammerEvent.gesture.center.pageY);
 			}
 			else
 			{
-				that.onResize();
+				var done = false;
+
+				var target = hammerEvent.target;
+				while (target)
+				{
+					var name = target.nodeName.toLowerCase();
+					if (name === "p" || name === "img" || name === "video" || name === "svg" || name === "div" || name === "h1" || name === "h2" || name === "h3" || name === "h4" || name === "li" || name === "ul" || name === "ol")
+					{
+						done = true;
+						this.zoomTo(target);
+						break;
+					}
+			
+					target = target.parentNode;
+				}
+		
+				if (!done)
+				{
+					this.toggleZoom(hammerEvent.gesture.center.pageX, hammerEvent.gesture.center.pageY);
+				}
 			}
-		}, 20);
-		*/
+		}
 	}
 	
 	var hammer = Hammer(document.documentElement,
@@ -845,6 +923,9 @@ Epub3Sliderizer.resetOnResizeTransform = function()
 		return;
 	}
 
+	this.totalZoom = 1;
+	this.transforms = new Array();
+	
 	document.body.style.MozTransformOrigin = null;
 	document.body.style.WebkitTransformOrigin = null;
 	document.body.style.OTransformOrigin = null;
@@ -865,6 +946,42 @@ Epub3Sliderizer.resetResize = function()
 	this.transforms = new Array();
 	
 	this.onResize();
+}
+
+// ----------
+
+Epub3Sliderizer.getElementFit = function(element)
+{
+	return this.getRectFit(element.clientWidth, element.clientHeight);
+}
+
+// ----------
+
+Epub3Sliderizer.getRectFit = function(w, h)
+{
+	var sx = w / window.innerWidth;
+	var sy = h / window.innerHeight;
+	var ratio = 1.0 / Math.max(sx, sy);
+
+	var newWidth = w * ratio;
+	var offsetX = 0;
+	if (window.innerWidth > newWidth)
+	{
+		offsetX = (window.innerWidth - newWidth) / 2;
+	}
+	offsetX = Math.round( offsetX * 1000.0 ) / 1000.0;
+	offsetX = Math.round(offsetX);
+
+	var newHeight = h * ratio;
+	var offsetY = 0;
+	if (window.innerHeight > newHeight)
+	{
+		offsetY = (window.innerHeight - newHeight) / 2;
+	}
+	offsetY = Math.round( offsetY * 1000.0 ) / 1000.0;
+	offsetY = Math.round(offsetY);
+
+	return { "ratio": ratio, "offsetX": offsetX, "offsetY": offsetY };
 }
 
 // ----------
@@ -904,28 +1021,6 @@ Epub3Sliderizer.onResize = function()
 	console.log("window.innerHeight: "  + window.innerHeight);
 	*/
 	
-	var sx = document.body.clientWidth / window.innerWidth;
-	var sy = document.body.clientHeight / window.innerHeight;
-	var ratio = 1.0 / Math.max(sx, sy);
-
-	var newWidth = document.body.clientWidth * ratio;
-	var offsetX = 0;
-	if (window.innerWidth > newWidth)
-	{
-		offsetX = (window.innerWidth - newWidth) / 2;
-	}
-	offsetX = Math.round( offsetX * 1000.0 ) / 1000.0;
-	offsetX = Math.round(offsetX);
-
-	var newHeight = document.body.clientHeight * ratio;
-	var offsetY = 0;
-	if (window.innerHeight > newHeight)
-	{
-		offsetY = (window.innerHeight - newHeight) / 2;
-	}
-	offsetY = Math.round( offsetY * 1000.0 ) / 1000.0;
-	offsetY = Math.round(offsetY);
-
 	var transformOrigin = "0px 0px";
 	
 	document.body.style.MozTransformOrigin = transformOrigin;
@@ -934,6 +1029,10 @@ Epub3Sliderizer.onResize = function()
 	document.body.style.msTransformOrigin = transformOrigin;
 	document.body.style.transformOrigin = transformOrigin;
 	
+	var bodyFit = this.getElementFit(document.body);
+	var ratio = bodyFit.ratio;
+	var offsetX = bodyFit.offsetX;
+	var offsetY = bodyFit.offsetY;
 	
 	var is3D = this.opera ? false : true;
 	
@@ -1187,6 +1286,7 @@ Epub3Sliderizer.initLinks = function()
 		return;
 	}
 
+
 	var nav = querySelectorZ("html#epb3sldrzr-NavDoc");
 	if (typeof nav != "undefined" && nav != null && nav)
 	{
@@ -1419,7 +1519,7 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto)
 			{
 				elem.parentNode.setAttribute("incremental-active", "true");
 				elem.setAttribute("aria-selected", "true");
-			
+				
 				if (that.firefox || that.opera)
 				{
 					that.reAnimateAll(elem);
@@ -1772,7 +1872,7 @@ Epub3Sliderizer.init = function()
 		}
 		else
 		{
-			window.onresize = this.onResize.bind(this);
+			window.onresize = this.resetResize.bind(this);
 			this.resetResize();
 		}
 
@@ -1940,6 +2040,11 @@ function readyDelayed()
 function readyFirst()
 {
 	Epub3Sliderizer.bodyRoot = querySelectorZ("#epb3sldrzr-body"); //document.body
+	if (Epub3Sliderizer.bodyRoot == null)
+	{
+		Epub3Sliderizer.bodyRoot = querySelectorZ("#epb3sldrzr-body-NOTES");
+	}
+	
 		
 	if (Epub3Sliderizer.opera)
 	{
