@@ -72,16 +72,8 @@ var Epub3Sliderizer = {
 	incrementals: null,
 	increment: -1,
 	bodyRoot: null,
-	zoom: 1,
-	zoomPrevious: 1,
-	rotation: 0,
-	rotationPrevious: 0,
-	left: 0,
-	leftPrevious: 0,
-	top: 0,
-	topPrevious: 0,
-	offsetXPrevious: 0,
-	offsetYPrevious: 0,
+	transforms: new Array(),
+	totalZoom: 1,
 	pauseEvents: false,
 	firefox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
 	opera: (typeof window.opera != "undefined") || navigator.userAgent.toLowerCase().indexOf(' opr/') >= 0,
@@ -184,7 +176,86 @@ Epub3Sliderizer.gotoNext = function()
 
 // ----------
 
-Epub3Sliderizer.onKeyDown = function(keyDownEvent)
+Epub3Sliderizer.transition = function(on)
+{
+	var milliseconds = 500;
+	
+	if (on)
+	{
+		var transition = "all "+milliseconds+"ms ease-in-out";
+		document.body.style.MozTransition = transition;
+		document.body.style.WebkitTransition = transition;
+		document.body.style.OTransition = transition;
+		document.body.style.msTransition = transition;
+		document.body.style.transition = transition;
+	}
+	else
+	{
+		setTimeout(function()
+		{
+			document.body.style.MozTransition = null;
+			document.body.style.WebkitTransition = null;
+			document.body.style.OTransition = null;
+			document.body.style.msTransition = null;
+			document.body.style.transition = null;
+		}, milliseconds + 10);
+	}
+}
+
+// ----------
+
+Epub3Sliderizer.pan = function(x, y)
+{
+	this.transition(true);
+	
+	this.transforms.push({
+		rotation: 0,
+		zoom: 1,
+		left: 0,
+		top: 0,
+		transX: x,
+		transY: y
+	});
+
+	this.onResize();
+
+	this.transition(false);
+}
+
+// ----------
+
+Epub3Sliderizer.toggleZoom = function(x, y)
+{
+	this.transition(true);
+
+	if (this.totalZoom != 1)
+	{
+		this.resetResize();
+	}
+	else
+	{
+		this.totalZoom = 2;
+
+		this.transforms.push({
+			rotation: 0,
+			zoom: this.totalZoom,
+			left: x,
+			top: y,
+			transX: 0,
+			transY: 0
+		});
+
+		this.onResize();
+	}
+
+	this.transition(false);
+}
+
+// ----------
+
+//http://www.sceneonthe.net/unicode.htm
+//http://www.w3.org/2002/09/tests/keys.html
+Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 {
 	if (this.isEpubReadingSystem())
 	{
@@ -192,84 +263,127 @@ Epub3Sliderizer.onKeyDown = function(keyDownEvent)
 	}
 	
 	// Filter out keyboard shortcuts
-	if (keyDownEvent.altKey
-	|| keyDownEvent.ctrlKey
-	|| keyDownEvent.metaKey
-	|| keyDownEvent.shiftKey)
+	if (keyboardEvent.altKey
+	|| keyboardEvent.ctrlKey
+	|| keyboardEvent.metaKey
+	|| keyboardEvent.shiftKey)
 	{
 		return;
 	}
 
-	if (keyDownEvent.keyCode == 37 // left arrow
-	//|| keyDownEvent.keyCode == 38 // up arrow
-	|| keyDownEvent.keyCode == 33 // page up
-	)
+	if (keyboardEvent.keyCode == 90) // Z
 	{
-		keyDownEvent.preventDefault();
-		this.gotoPrevious();
+		this.toggleZoom(0,0);
 	}
-	else if (keyDownEvent.keyCode == 39 // right arrow
-	//|| keyDownEvent.keyCode == 40 // down arrow
-	|| keyDownEvent.keyCode == 34 // page down
-	)
+	else if (keyboardEvent.keyCode == 27) // ESC
 	{
-		keyDownEvent.preventDefault();
-		this.gotoNext();
-	}
-	else if (keyDownEvent.keyCode == 40) // down arrow
-	{
-		keyDownEvent.preventDefault();
-		this.nextIncremental(false);
-	}
-	else if (keyDownEvent.keyCode == 38) // up arrow
-	{
-		keyDownEvent.preventDefault();
-		this.nextIncremental(true);
-	}
-	else if (keyDownEvent.keyCode == 35) // end
-	{
-		keyDownEvent.preventDefault();
-		this.gotoNext();
-	}
-	else if (keyDownEvent.keyCode == 36) // home
-	{
-		keyDownEvent.preventDefault();
-		this.gotoPrevious();
-	}
-	else if (keyDownEvent.keyCode == 32) // space
-	{
-		keyDownEvent.preventDefault();
-		this.nextIncremental(false);
-	}
-	else if (keyDownEvent.keyCode == 77) // m
-	{
-		if (this.prev != "")
+		if (this.totalZoom != 1)
 		{
-			keyDownEvent.preventDefault();
-			this.gotoToc();
+			this.toggleZoom(0,0);
 		}
 	}
 	/*
-	else if (keyDownEvent.keyCode == 13) // RETURN / ENTER
+	else if (keyboardEvent.keyCode == 13) // RETURN / ENTER
 	{
-		keyDownEvent.preventDefault();	
-		this.gotoToc();
+		keyboardEvent.preventDefault();	
 	}
 	*/
-	else if (keyDownEvent.keyCode == 70) // F
+	/*
+	else if (keyboardEvent.keyCode == 70) // F
 	{
 		if (typeof screenfull != 'undefined')
 		{
-			keyDownEvent.preventDefault();
+			keyboardEvent.preventDefault();
 			screenfull.toggle();
 		}
 	}
-	else if (keyDownEvent.keyCode == 27) // ESC
+	else if (keyboardEvent.keyCode == 27) // ESC
 	{
 		if (typeof screenfull != 'undefined')
 		{
-			keyDownEvent.preventDefault();
+			keyboardEvent.preventDefault();
 			screenfull.exit();
+		}
+	}
+	*/
+	else if (this.totalZoom != 1)
+	{
+		var offset = 100;
+	
+		if (keyboardEvent.keyCode == 37 // left arrow
+		)
+		{
+			keyboardEvent.preventDefault();
+			this.pan(offset, 0);
+		}
+		else if (keyboardEvent.keyCode == 39 // right arrow
+		)
+		{
+			keyboardEvent.preventDefault();
+			this.pan(-offset, 0);
+		}
+		else if (keyboardEvent.keyCode == 38 // up arrow
+			|| keyboardEvent.keyCode == 33 // page up
+		)
+		{
+			keyboardEvent.preventDefault();
+			this.pan(0, offset);
+		}
+		else if (keyboardEvent.keyCode == 40 // down arrow
+			|| keyboardEvent.keyCode == 34 // page down
+		)
+		{
+			keyboardEvent.preventDefault();
+			this.pan(0, -offset);
+		}
+	}
+	else if (keyboardEvent.keyCode == 37 // left arrow
+	//|| keyboardEvent.keyCode == 38 // up arrow
+	|| keyboardEvent.keyCode == 33 // page up
+	)
+	{
+		keyboardEvent.preventDefault();
+		this.gotoPrevious();
+	}
+	else if (keyboardEvent.keyCode == 39 // right arrow
+	//|| keyboardEvent.keyCode == 40 // down arrow
+	|| keyboardEvent.keyCode == 34 // page down
+	)
+	{
+		keyboardEvent.preventDefault();
+		this.gotoNext();
+	}
+	else if (keyboardEvent.keyCode == 40) // down arrow
+	{
+		keyboardEvent.preventDefault();
+		this.nextIncremental(false);
+	}
+	else if (keyboardEvent.keyCode == 38) // up arrow
+	{
+		keyboardEvent.preventDefault();
+		this.nextIncremental(true);
+	}
+	else if (keyboardEvent.keyCode == 35) // end
+	{
+		keyboardEvent.preventDefault();
+		this.gotoNext();
+	}
+	else if (keyboardEvent.keyCode == 36) // home
+	{
+		keyboardEvent.preventDefault();
+		this.gotoPrevious();
+	}
+	else if (keyboardEvent.keyCode == 32) // space
+	{
+		keyboardEvent.preventDefault();
+		this.nextIncremental(false);
+	}
+	else if (keyboardEvent.keyCode == 77) // m
+	{
+		if (this.prev != "")
+		{
+			keyboardEvent.preventDefault();
+			this.gotoToc();
 		}
 	}
 }
@@ -288,11 +402,13 @@ Epub3Sliderizer.initTouch = function()
 		return;
 	}
 	
+	var that = this;
+	
 	var scrolling = false;
 	
 	function onSwipeLeft(hammerEvent)
 	{
-		if (this.zoom != 1)
+		if (this.totalZoom != 1)
 		{
 			return;
 		}
@@ -302,7 +418,7 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onSwipeRight(hammerEvent)
 	{
-		if (this.zoom != 1)
+		if (this.totalZoom != 1)
 		{
 			return;
 		}
@@ -312,7 +428,7 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onSwipeUp(hammerEvent)
 	{
-		if (this.zoom != 1)
+		if (this.totalZoom != 1)
 		{
 			return;
 		}
@@ -328,7 +444,7 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onSwipeDown(hammerEvent)
 	{
-		if (this.zoom != 1)
+		if (this.totalZoom != 1)
 		{
 			return;
 		}
@@ -342,11 +458,40 @@ Epub3Sliderizer.initTouch = function()
 		this.nextIncremental(false);
 	}
 	
-	var dragStartX = 0;
-	var dragStartY = 0;
+	
+	/*
+	var totalDragX = 0;
+	var totalDragY = 0;
+
+	var rotationStart = 0;
+	var totalRotation = 0;
+	*/
 	
 	var zoomStart = 1;
-	var rotationStart = 0;
+	var dragXStart = 0;
+	var dragYStart = 0;
+	
+	function resetTransform()
+	{
+		document.body.style.opacity = "1";
+		
+		var b = that.totalZoom <= 1 || that.totalZoom >= 18;
+		
+		if (b)
+		{
+			/*
+			totalRotation = 0;
+			totalDragX = 0;
+			totalDragY = 0;
+			*/
+			
+			that.resetResize();
+		}
+		
+		return b;
+	}
+	
+	var firstTransform = true;
 	
 	function onTransform(hammerEvent)
 	{
@@ -357,25 +502,50 @@ Epub3Sliderizer.initTouch = function()
 		
 		if (hammerEvent.gesture)
 		{
-			this.zoom = zoomStart * hammerEvent.gesture.scale;
-			
-			if (this.zoom <= 1)
-			{
-				this.zoom = 1;
-				this.rotation = 0;
-				
-				this.left = 0;
-				this.top = 0;
-			}
-			else
-			{
-				this.rotation = rotationStart + hammerEvent.gesture.rotation;
-			
-				this.left = hammerEvent.gesture.center.pageX - dragStartX * this.zoom;
-				this.top = hammerEvent.gesture.center.pageY - dragStartY * this.zoom;
-			}
+			this.totalZoom = zoomStart * hammerEvent.gesture.scale;
+			//totalRotation = rotationStart + hammerEvent.gesture.rotation;
 
-			this.onResize();
+			if (this.totalZoom <= 1 || !resetTransform())
+			{
+				if (!firstTransform)
+				{
+					this.transforms.pop();
+				}
+				firstTransform = false;
+				
+				this.transforms.push({
+					rotation: hammerEvent.gesture.rotation,
+					zoom: hammerEvent.gesture.scale,
+					left: hammerEvent.gesture.center.pageX,
+					top: hammerEvent.gesture.center.pageY,
+					transX: (hammerEvent.gesture.center.pageX*hammerEvent.gesture.scale - dragXStart*hammerEvent.gesture.scale),
+					transY: (hammerEvent.gesture.center.pageY*hammerEvent.gesture.scale - dragYStart*hammerEvent.gesture.scale)
+				});
+
+				if (this.totalZoom < 1)
+				{
+					document.body.style.opacity = this.totalZoom;
+				}
+				
+				this.onResize();
+			}
+		}
+	}
+	
+	function onTransformEnd(hammerEvent)
+	{
+		if (scrolling)
+		{
+			return;
+		}
+		
+		if (this.totalZoom <= 1)
+		{
+			this.transition(true);
+		
+			resetTransform();
+			
+			this.transition(false);
 		}
 	}
 	
@@ -386,39 +556,100 @@ Epub3Sliderizer.initTouch = function()
 			return;
 		}
 		
+		firstTransform = true;
+		
 		if (hammerEvent.gesture)
 		{
-			zoomStart = this.zoom;
-			rotationStart = this.rotation;
+			zoomStart = this.totalZoom;
 			
-			dragStartX = (hammerEvent.gesture.center.pageX - this.left) / zoomStart;
-			dragStartY = (hammerEvent.gesture.center.pageY - this.top) / zoomStart;
+			dragXStart = hammerEvent.gesture.center.pageX;
+			dragYStart = hammerEvent.gesture.center.pageY;
+			
+			/*
+			rotationStart = totalRotation;
+			*/
 			
 			hammerEvent.gesture.preventDefault();
 		}
 		else
 		{
 			zoomStart = 1;
-			rotationStart = 0;
 			
-			dragStartX = 0;
-			dragStartY = 0;
+			dragXStart = 0;
+			dragYStart = 0;
+			
+			/*
+			rotationStart = 0;
+			*/
+		}
+	}
+	
+	var firstDrag = true;
+	
+	function onDragEnd(hammerEvent)
+	{
+		if (scrolling)
+		{
+			return;
+		}
+		
+		var that = this;
+		
+		if (this.totalZoom == 1)
+		{
+			setTimeout(function()
+			{
+				that.transition(true);
+		
+				resetTransform();
+			
+				that.transition(false);
+			}, 100);
 		}
 	}
 	
 	function onDrag(hammerEvent)
 	{
-		if (hammerEvent.gesture)
+		if (scrolling)
 		{
-			if (this.zoom == 1)
+			return;
+		}
+		
+		if (hammerEvent.gesture)
+		{			
+			var xOffset = hammerEvent.gesture.center.pageX - dragXStart;
+
+			var opacity = 1;
+			if (this.totalZoom == 1)
 			{
-				return;
+				var off = Math.abs(xOffset);
+				if (off < 60)
+				{
+					// to allow swipe up/down
+					return;
+				}
+				
+				opacity = 1 - (off / window.innerWidth); //document.body.clientWidth
+				
+				document.body.style.opacity = opacity;
 			}
 			
-			//hammerEvent.gesture.deltaX / Y;
+			//$("h1#epb3sldrzr-title").html(this.totalZoom + " - " + opacity);
 			
-			this.left = hammerEvent.gesture.center.pageX - dragStartX;
-			this.top = hammerEvent.gesture.center.pageY - dragStartY;
+			if (!firstDrag)
+			{
+				this.transforms.pop();
+			}
+			firstDrag = false;
+			
+			this.transforms.push({
+				rotation: 0,
+				zoom: 1, //opacity,
+				left: hammerEvent.gesture.center.pageX,
+				top: hammerEvent.gesture.center.pageY,
+				transX: xOffset,
+				transY: this.totalZoom == 1 ? 0 : hammerEvent.gesture.center.pageY - dragYStart
+			});
 
 			this.onResize();
 		}
@@ -426,22 +657,24 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onDragStart(hammerEvent)
 	{
+		firstDrag = true;
+		
 		if (hammerEvent.gesture)
 		{
-			dragStartX = hammerEvent.gesture.center.pageX - this.left;
-			dragStartY = hammerEvent.gesture.center.pageY - this.top;
+			dragXStart = hammerEvent.gesture.center.pageX;
+			dragYStart = hammerEvent.gesture.center.pageY;
 			
 			hammerEvent.gesture.preventDefault();
 		}
 		else
 		{
-			dragStartX = 0;
-			dragStartY = 0;
+			dragXStart = 0;
+			dragYStart = 0;
 		}
 		
 		scrolling = false;
 
-		if (this.zoom != 1)
+		if (this.totalZoom != 1)
 		{
 			return;
 		}
@@ -488,12 +721,20 @@ Epub3Sliderizer.initTouch = function()
 		onDragStart.bind(this)
 	);
 	
+	this.hammer.on("dragend",
+		onDragEnd.bind(this)
+	);
+	
 	this.hammer.on("drag",
 		onDrag.bind(this)
 	);
 	
 	this.hammer.on("transformstart",
 		onTransformStart.bind(this)
+	);
+	
+	this.hammer.on("transformend",
+		onTransformEnd.bind(this)
 	);
 	
 	this.hammer.on("transform",
@@ -524,40 +765,7 @@ Epub3Sliderizer.initTouch = function()
 			hammerEvent.gesture.stopPropagation();
 		}
 
-		this.rotationPrevious = this.rotation;
-		this.zoomPrevious = this.zoom;
-		
-//		this.leftPrevious = this.left;
-//		this.topPrevious = this.top;
-		
-		if (this.zoom > 4)
-		{
-			this.rotation = 0;
-			this.zoom = 1;
-			
-			this.left = 0;
-			this.top = 0;
-		
-this.leftPrevious = 0;
-this.topPrevious = 0;
-		}
-		else
-		{
-			this.zoom += 1;
-			
-			if (hammerEvent.gesture)
-			{
-				this.left = hammerEvent.gesture.center.pageX;
-				this.top = hammerEvent.gesture.center.pageY;
-			}
-			else
-			{
-				this.left = 0;
-				this.top = 0;
-			}
-		}
-
-		this.onResize();
+		this.toggleZoom(hammerEvent.gesture.center.pageX, hammerEvent.gesture.center.pageY);
 
 		/*
 		var that = this;
@@ -606,8 +814,6 @@ this.topPrevious = 0;
 	);
 	*/
 	
-	var that = this;
-	
 	document.addEventListener('touchstart', function(e)
 	{
 		var t2 = e.timeStamp;
@@ -650,6 +856,15 @@ Epub3Sliderizer.resetOnResizeTransform = function()
 	document.body.style.OTransform = null;
 	document.body.style.msTransform = null;
 	document.body.style.transform = null;
+}
+
+
+Epub3Sliderizer.resetResize = function()
+{
+	this.totalZoom = 1;
+	this.transforms = new Array();
+	
+	this.onResize();
 }
 
 // ----------
@@ -722,108 +937,49 @@ Epub3Sliderizer.onResize = function()
 	
 	var is3D = this.opera ? false : true;
 	
-	var transOriginX = 0;
-	var transOriginY = 0;
+	var transformCSS = "";
 	
-	var transform = ""
-	
-	//  ========##################
-	
-	/*
-	// (-T6) TransformOrigin: RESTORE
-	+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=offsetX)  + "px," + (transOriginY=offsetY) + "px"+(is3D?", 0":"")+") "
-	
-	// ----
-	// (6) USER TRANS (AFTER)
-	+ " translate"+(is3D?"3d":"")+"(" + (this.left-offsetX)/(this.zoomPrevious*ratio) + "px," + -this.top*this.zoomPrevious + "px"+(is3D?", 0":"")+") "
-	
-	// (T6) TransformOrigin: touch point inside already-translated/scaled body
-	+ " translate"+(is3D?"3d":"")+"(" + -transOriginX + "px," + -transOriginY + "px"+(is3D?", 0":"")+") "
-	*/
-	
-	//  ========##################
-	
-	// (-T5) TransformOrigin: RESTORE
-	+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=(offsetX+this.left-offsetX))  + "px," + (transOriginY=(offsetY+this.top-offsetY)) + "px"+(is3D?", 0":"")+") "
-	//+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=this.left*this.zoomPrevious-this.leftPrevious)  + "px," + (transOriginY=this.top*this.zoomPrevious-this.topPrevious) + "px"+(is3D?", 0":"")+") "
+	for (var i = this.transforms.length-1; i >= 0; i--)
+	{
+		var transform = this.transforms[i];
 
-	
-	// ----
-	// (5) USER SCALE (AFTER)
-	//+ " scale"+(is3D?"3d":"")+"(" + this.zoom/this.zoomPrevious + (is3D? "," + this.zoom/this.zoomPrevious + ",0":"") + ") "
-	+ " scale"+(is3D?"3d":"")+"(" + this.zoom + (is3D? "," + this.zoom + ",1":"") + ") "
-	
-	// (T5) TransformOrigin: touch point inside already-translated/scaled body
-	+ " translate"+(is3D?"3d":"")+"(" + -transOriginX + "px," + -transOriginY + "px"+(is3D?", 0":"")+") "
-	
-	//  ========##################
+		transformCSS += " translate"+(is3D?"3d":"")+"(" + transform.left + "px," + transform.top + "px"+(is3D?", 0":"")+") ";
+		
+		if (transform.rotation != 0)
+		{
+			transformCSS += " rotate"+(is3D?"3d":"")+"(" + (is3D? "0,0,1,":"") + transform.rotation + "deg) ";
+		}
 
-	/*
-	// (-T4) TransformOrigin: RESTORE
-	+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=offsetX) + "px," + (transOriginY=offsetY) + "px"+(is3D?", 0":"")+") "
-	
-	// ----
-	// (4) USER TRANS (BEFORE)
-	+ " translate"+(is3D?"3d":"")+"(" + -this.left + "px," + -this.top + "px"+(is3D?", 0":"")+") "
-	
-	// (T4) TransformOrigin: top-left corner of already-translated body (offsetX,offsetY)
-	+ " translate"+(is3D?"3d":"")+"(" + -transOriginX  + "px," + -transOriginY + "px"+(is3D?", 0":"")+") "
-	*/
-	
-	//  ========##################
-	
-	/*
-	// (-T3) TransformOrigin: RESTORE
-	+ " translate"+(is3D?"3d":"")+"(" + (transOriginX=this.offsetXPrevious+this.leftPrevious-this.offsetXPrevious)  + "px," + (transOriginY=this.offsetYPrevious+this.topPrevious-this.offsetYPrevious) + "px"+(is3D?", 0":"")+") "
-	
-	// ----
-	// (3) USER SCALE (BEFORE)
-	+ " scale"+(is3D?"3d":"")+"(" + this.zoomPrevious + (is3D? "," + this.zoomPrevious + ",0":"") + ") "
-	
-	// (T3) TransformOrigin: top-left corner of already-translated body (offsetX,offsetY)
-	+ " translate"+(is3D?"3d":"")+"(" + -transOriginX  + "px," + -transOriginY + "px"+(is3D?", 0":"")+") "
-	*/
-	
-	//  ========##################
-	
-	// (-T2) TransformOrigin: NOP
-	//
-	
-	// ----
-	// (2) CENTER VERTICAL / HORIZONTAL (MEET / FIT SCREEN MIDDLE)
-	+ " translate"+(is3D?"3d":"")+"(" + offsetX  + "px," + offsetY + "px"+(is3D?", 0":"")+") "
-	
-	// (T2) TransformOrigin (unchanged): top-left corner (0px,0px)
-	//
-	
-	//  ========##################
-	
-	// (-T1) TransformOrigin: NOP
-	//
-	
-	// ----
-	// (1) SCALE (FIT SCREEN) 
-	+ " scale"+(is3D?"3d":"")+"(" + ratio + (is3D? "," + ratio + ",1":"") + ") "
-	
-	// (T1) TransformOrigin: top-left corner (0px,0px)
-	//
-	
-	//  ========##################
-	
-	;
+		transformCSS += " translate"+(is3D?"3d":"")+"(" + -transform.left + "px," + -transform.top + "px"+(is3D?", 0":"")+") ";
+		
 
 
-	document.body.style.MozTransform = transform;
-	document.body.style.WebkitTransform = transform;
-	document.body.style.OTransform = transform;
-	document.body.style.msTransform = transform;
-	document.body.style.transform = transform;
+		transformCSS += " translate"+(is3D?"3d":"")+"(" + transform.transX + "px," + transform.transY + "px"+(is3D?", 0":"")+") ";
+
+
+
+		transformCSS += " translate"+(is3D?"3d":"")+"(" + transform.left + "px," + transform.top + "px"+(is3D?", 0":"")+") ";
+
+		if (transform.zoom != 1)
+		{
+			transformCSS += " scale"+(is3D?"3d":"")+"(" + transform.zoom + (is3D? "," + transform.zoom + ",1":"") + ") ";
+		}		
+
+		transformCSS += " translate"+(is3D?"3d":"")+"(" + -transform.left + "px," + -transform.top + "px"+(is3D?", 0":"")+") ";
+
+	}
 	
-	this.offsetXPrevious = offsetX;
-	this.offsetYPrevious = offsetY;
 	
-	this.leftPrevious += this.left;
-	this.topPrevious += this.top;
+	transformCSS += " translate"+(is3D?"3d":"")+"(" + offsetX  + "px," + offsetY + "px"+(is3D?", 0":"")+") "
+	
+	transformCSS += " scale"+(is3D?"3d":"")+"(" + ratio + (is3D? "," + ratio + ",1":"") + ") ";
+	
+	
+	document.body.style.MozTransform = transformCSS;
+	document.body.style.WebkitTransform = transformCSS;
+	document.body.style.OTransform = transformCSS;
+	document.body.style.msTransform = transformCSS;
+	document.body.style.transform = transformCSS;
 }
 
 // ----------
@@ -892,7 +1048,7 @@ Epub3Sliderizer.onOrientationChange = function()
 	var that = this;
 	setTimeout(function()
 	{
-		that.onResize();
+		that.resetResize();
 	}, 20);
 }
 
@@ -1324,7 +1480,7 @@ Epub3Sliderizer.nextIncremental = function(backward)
 
 	this.increment = (backward ? (this.increment - 1) : (this.increment + 1));
 	
-	this.invalidateIncremental(!backward);
+	this.invalidateIncremental(!backward && this.increment == 0);
 }
 
 // ----------
@@ -1563,7 +1719,7 @@ Epub3Sliderizer.init = function()
 		}
 		else
 		{
-			this.onResize();
+			this.resetResize();
 		}
 		
 		this.bodyRoot.style.visibility = "visible";
@@ -1581,7 +1737,7 @@ Epub3Sliderizer.init = function()
 		
 		this.initLinks();
 
-		window.onkeydown = this.onKeyDown.bind(this);
+		window.onkeyup = this.onKeyboard.bind(this);
 	
 		if (typeof Hammer != "undefined")
 		{
@@ -1602,7 +1758,8 @@ Epub3Sliderizer.init = function()
 			this.hammer = Hammer(document.body,
 				{
 					prevent_default: false,
-					css_hacks: false
+					css_hacks: false,
+					swipe_velocity: 1
 				});
 		}
 	
@@ -1616,7 +1773,7 @@ Epub3Sliderizer.init = function()
 		else
 		{
 			window.onresize = this.onResize.bind(this);
-			this.onResize();
+			this.resetResize();
 		}
 
 		this.initMediaOverlays();
@@ -1714,7 +1871,7 @@ Epub3Sliderizer.init = function()
 				var up = deltaY < 0 && deltaY < deltaX;
 				var down = deltaY > 0 && deltaY > deltaX;
 		
-				if (that.zoom == 1)
+				if (this.totalZoom == 1)
 				{
 					if (false && // Interferes! :(
 						(
@@ -1840,7 +1997,7 @@ function readyFirst()
 		}
 		else
 		{
-			Epub3Sliderizer.onResize();
+			Epub3Sliderizer.resetResize();
 		}
 	}
 }
