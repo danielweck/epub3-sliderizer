@@ -686,6 +686,57 @@ function setupAnimatedLogo()
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimatedLogo(); }, false);
 
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Incremental items
+
+// --------------------------------------------
+_CONTENT
+
+<ul class="auto incremental" data-incremental-delay="200">
+<li>
+CSS class <span class="code pale-blue">incremental</span> on a wrapper element
+<br>&#8658;
+reveal children in sequence
+</li>
+<li>
+Additional <span class="code pale-red">auto</span> class &#8658; automatic reveal
+</li>
+<li>
+Custom attribute <span class="code pale-green">data-incremental-delay</span>
+<br>
+&#8658; milliseconds offset <span class="fade">(default: 500ms)</span>
+</li>
+</ul>
+
+<div class="boxed">
+
+<h3>Example:</h3>
+
+<p class="code" style="font-size: 70%;">
+
+&lt;ul class="<span class="code pale-red">auto</span> <span class="code pale-blue">incremental</span>" <span class="code pale-green">data-incremental-delay</span>="200"&gt;
+<br>
+
+<span class="auto incremental" data-incremental-delay="200">
+<span style="font-weight: 900" class="code pale-grey">&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt; <strong>1</strong> &lt;/li&gt;<br></span>
+
+<span style="font-weight: 900" class="code pale-grey">&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt; <strong>2</strong> &lt;/li&gt;<br></span>
+
+<span style="font-weight: 900" class="code pale-grey">&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt; <strong>3</strong> &lt;/li&gt;<br></span>
+</span>
+
+&lt;/ul&gt;
+
+</p>
+</div>
+
+
 
 // #########################################################
 // #########################################################
