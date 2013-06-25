@@ -297,6 +297,8 @@ body:not(.epb3sldrzr-epubReadingSystem)
 	HW acceleration
 	*/
 	-webkit-transform:translate3d(0,0,0);
+
+	-PREFIXED_PROPERTY-user-select:none;
 }
 
 body
@@ -619,8 +621,6 @@ a#epb3sldrzr-link-toc,
 a#epb3sldrzr-link-epub,
 a#epb3sldrzr-link-epubReadingSystem
 {
-	-PREFIXED_PROPERTY-user-select:none;
-	
 	margin:0;
 	padding:0;
 
@@ -944,6 +944,10 @@ Slide content
 {
 	background: white;
 	-PREFIXED_PROPERTY-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	border-top-right-radius: 20px;
 }
 
 #epb3sldrzr-content div.boxed > p,

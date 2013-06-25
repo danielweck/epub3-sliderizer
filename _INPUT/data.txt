@@ -89,7 +89,8 @@ _CONTENT
 
 <p style="line-height: 1.7em;">
 <em>left</em> or <em>right</em> swipe &#8658; previous / next slide
-<br><em>up</em> or <em>down</em> swipe &#8658; previous / next incremental item
+<br>
+<em>up</em> or <em>down</em> swipe &#8658; previous / next incremental item
 </p>
 
 </div>
@@ -157,10 +158,13 @@ _CONTENT
 <h3>Gestures <span class="fade">(touch or mouse)</span></h3>
 
 <p style="line-height: 1.7em;">
+<em>double tap / click</em> &#8658; toggle zoom
+<br>
 <em>drag</em> &#8658; pan (only when zoomed-in)
-<br><em>double tap / click</em> &#8658; toggle zoom (reset)
-<br><em>pinch</em> or <em>stretch</em> &#8658; zoom out / in + rotate + pan
-<br>(multitouch simulated with mouse drag + SHIFT key)
+<br>
+<em>pinch</em> or <em>stretch</em> &#8658; zoom out / in + rotate + pan
+<br>
+(multitouch simulated with mouse drag + SHIFT key)
 </p>
 
 </div>
@@ -172,6 +176,14 @@ _CONTENT
 <p style="line-height: 1.7em;">
 
 <span class="keyboard">z</span> toggle zoom
+<br>
+<span class="keyboard">esc</span> reset zoom
+<br>
+<span class="keyboard symbols" title="left">&#9666;<!-- &#8592; --></span>
+<span class="keyboard symbols" title="right">&#9656;<!-- &#8594; --></span>
+<span class="keyboard symbols" title="up">&#9652;<!-- &#8593; --></span>
+<span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span>
+pan left / right / up / down (only when zoomed-in)
 
 </p>
 

@@ -204,6 +204,26 @@ Epub3Sliderizer.transition = function(on)
 
 // ----------
 
+Epub3Sliderizer.pan = function(x, y)
+{
+	this.transition(true);
+	
+	this.transforms.push({
+		rotation: 0,
+		zoom: 1,
+		left: 0,
+		top: 0,
+		transX: x,
+		transY: y
+	});
+
+	this.onResize();
+
+	this.transition(false);
+}
+
+// ----------
+
 Epub3Sliderizer.toggleZoom = function(x, y)
 {
 	this.transition(true);
@@ -250,7 +270,73 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 		return;
 	}
 
-	if (keyboardEvent.keyCode == 37 // left arrow
+	if (keyboardEvent.keyCode == 90) // Z
+	{
+		this.toggleZoom(0,0);
+	}
+	else if (keyboardEvent.keyCode == 27) // ESC
+	{
+		if (this.totalZoom != 1)
+		{
+			this.toggleZoom(0,0);
+		}
+	}
+	/*
+	else if (keyboardEvent.keyCode == 13) // RETURN / ENTER
+	{
+		keyboardEvent.preventDefault();	
+	}
+	*/
+	/*
+	else if (keyboardEvent.keyCode == 70) // F
+	{
+		if (typeof screenfull != 'undefined')
+		{
+			keyboardEvent.preventDefault();
+			screenfull.toggle();
+		}
+	}
+	else if (keyboardEvent.keyCode == 27) // ESC
+	{
+		if (typeof screenfull != 'undefined')
+		{
+			keyboardEvent.preventDefault();
+			screenfull.exit();
+		}
+	}
+	*/
+	else if (this.totalZoom != 1)
+	{
+		var offset = 100;
+	
+		if (keyboardEvent.keyCode == 37 // left arrow
+		)
+		{
+			keyboardEvent.preventDefault();
+			this.pan(offset, 0);
+		}
+		else if (keyboardEvent.keyCode == 39 // right arrow
+		)
+		{
+			keyboardEvent.preventDefault();
+			this.pan(-offset, 0);
+		}
+		else if (keyboardEvent.keyCode == 38 // up arrow
+			|| keyboardEvent.keyCode == 33 // page up
+		)
+		{
+			keyboardEvent.preventDefault();
+			this.pan(0, offset);
+		}
+		else if (keyboardEvent.keyCode == 40 // down arrow
+			|| keyboardEvent.keyCode == 34 // page down
+		)
+		{
+			keyboardEvent.preventDefault();
+			this.pan(0, -offset);
+		}
+	}
+	else if (keyboardEvent.keyCode == 37 // left arrow
 	//|| keyboardEvent.keyCode == 38 // up arrow
 	|| keyboardEvent.keyCode == 33 // page up
 	)
@@ -297,33 +383,6 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 		{
 			keyboardEvent.preventDefault();
 			this.gotoToc();
-		}
-	}
-	else if (keyboardEvent.keyCode == 90) // z
-	{
-		this.toggleZoom(0,0);
-	}
-	/*
-	else if (keyboardEvent.keyCode == 13) // RETURN / ENTER
-	{
-		keyboardEvent.preventDefault();	
-		this.gotoToc();
-	}
-	*/
-	else if (keyboardEvent.keyCode == 70) // F
-	{
-		if (typeof screenfull != 'undefined')
-		{
-			keyboardEvent.preventDefault();
-			screenfull.toggle();
-		}
-	}
-	else if (keyboardEvent.keyCode == 27) // ESC
-	{
-		if (typeof screenfull != 'undefined')
-		{
-			keyboardEvent.preventDefault();
-			screenfull.exit();
 		}
 	}
 }
