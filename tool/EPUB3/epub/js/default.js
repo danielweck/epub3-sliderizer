@@ -593,13 +593,18 @@ Epub3Sliderizer.initTouch = function()
 			return;
 		}
 		
+		var that = this;
+		
 		if (this.totalZoom == 1)
 		{
-			this.transition(true);
+			setTimeout(function()
+			{
+				that.transition(true);
 		
-			resetTransform();
+				resetTransform();
 			
-			this.transition(false);
+				that.transition(false);
+			}, 100);
 		}
 	}
 	
