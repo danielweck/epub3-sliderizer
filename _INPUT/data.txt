@@ -97,7 +97,7 @@ _CONTENT
 
 <h3>Keyboard</h3>
 
-<p class="epb3sldrzr-notEpubReadingSystem" style="line-height: 1.7em;">
+<p style="line-height: 1.7em;">
 
 <span class="keyboard symbols" title="left">&#9666;<!-- &#8592; --></span>
 <span class="keyboard symbols" title="right">&#9656;<!-- &#8594; --></span> previous / next slide
