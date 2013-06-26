@@ -25,35 +25,35 @@ public final class Epub3FileSet {
 	final static String FOLDER_CUSTOM = "custom";
 
 	final static String FONT_ENTYPO_WOFF = "Entypo.woff";
-	final static String FONT_ENTYPO_TTF = "Entypo.ttf";
+	//final static String FONT_ENTYPO_TTF = "Entypo.ttf";
 
 	final static String FONT_NEUTON_400_WOFF = "Neuton_400.woff";
-	final static String FONT_NEUTON_400_TTF = "Neuton_400.ttf";
+	//final static String FONT_NEUTON_400_TTF = "Neuton_400.ttf";
 	final static String FONT_NEUTON_700_WOFF = "Neuton_700.woff";
-	final static String FONT_NEUTON_700_TTF = "Neuton_700.ttf";
-	
+	//final static String FONT_NEUTON_700_TTF = "Neuton_700.ttf";
+
 	final static String FONT_ARVO_400_WOFF = "Arvo_400.woff";
-	final static String FONT_ARVO_400_TTF = "Arvo_400.ttf";
+	//final static String FONT_ARVO_400_TTF = "Arvo_400.ttf";
 	final static String FONT_ARVO_700_WOFF = "Arvo_700.woff";
-	final static String FONT_ARVO_700_TTF = "Arvo_700.ttf";
-	
+	//final static String FONT_ARVO_700_TTF = "Arvo_700.ttf";
+
 	final static String FONT_LATO_400_WOFF = "Lato_400.woff";
-	final static String FONT_LATO_400_TTF = "Lato_400.ttf";
+	//final static String FONT_LATO_400_TTF = "Lato_400.ttf";
 	final static String FONT_LATO_900_WOFF = "Lato_900.woff";
-	final static String FONT_LATO_900_TTF = "Lato_900.ttf";
+	//final static String FONT_LATO_900_TTF = "Lato_900.ttf";
 
 	/*
-	final static String FONT_ROBOTO_BLACK_WOFF = "Roboto-Black.woff";
-	final static String FONT_ROBOTO_BLACK_TTF = "Roboto-Black.ttf";
-	final static String FONT_ROBOTO_MEDIUM_WOFF = "Roboto-Medium.woff";
-	final static String FONT_ROBOTO_MEDIUM_TTF = "Roboto-Medium.ttf";
-	*/
+	 * final static String FONT_ROBOTO_BLACK_WOFF = "Roboto-Black.woff"; final
+	 * static String FONT_ROBOTO_BLACK_TTF = "Roboto-Black.ttf"; final static
+	 * String FONT_ROBOTO_MEDIUM_WOFF = "Roboto-Medium.woff"; final static
+	 * String FONT_ROBOTO_MEDIUM_TTF = "Roboto-Medium.ttf";
+	 */
 
 	final static String FONT_INCONSOLATA_WOFF = "Inconsolata.woff";
-	final static String FONT_INCONSOLATA_TTF = "Inconsolata.ttf";
+	//final static String FONT_INCONSOLATA_TTF = "Inconsolata.ttf";
 
 	final static String CSS_DEFAULT = "default.css";
-	final static String CSS_ANIMATE = "animate.css";
+	//final static String CSS_ANIMATE = "animate.css";
 	final static String CSS_JQUERY_UI = "jquery-ui-1.10.3.custom.css";
 
 	final static String JS_DEFAULT = "default.js";
@@ -178,10 +178,13 @@ public final class Epub3FileSet {
 								"@-" + prefix + "-") : (isSelection ? toReplace
 								.replaceAll(matchSelection, "::-" + prefix
 										+ "-") : toReplace.replaceAll(
-								CSS_PREFIXED, "-" + prefix + "-"))) + "\n}\n";
+								CSS_PREFIXED, "-" + prefix + "-"))).replaceAll(
+								CSS_PREFIXED_PROP, "-" + prefix + "-")
+						+ "\n}\n";
 			}
-			replacement = replacement + toReplace.replaceAll(CSS_PREFIXED, "")
-					+ "\n}\n";
+			replacement = replacement
+					+ toReplace.replaceAll(CSS_PREFIXED, "").replaceAll(
+							CSS_PREFIXED_PROP, "") + "\n}\n";
 
 			String after = "";
 			if (iRight < style.length() - 1) {
@@ -199,6 +202,8 @@ public final class Epub3FileSet {
 	public static String processCssStyle(SlideShow slideShow, String css)
 			throws Exception {
 		String style = css;
+
+		style = processCssStyle_(style);
 
 		int i1 = -1;
 		int iStart = 0;
@@ -262,8 +267,6 @@ public final class Epub3FileSet {
 
 			iStart = i1 + replacement.length();
 		}
-
-		style = processCssStyle_(style);
 
 		style = style.replaceAll("VIEWPORT_WIDTH", slideShow.VIEWPORT_WIDTH);
 		style = style.replaceAll("VIEWPORT_HEIGHT", slideShow.VIEWPORT_HEIGHT);

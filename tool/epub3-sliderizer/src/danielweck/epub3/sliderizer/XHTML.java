@@ -154,7 +154,9 @@ public final class XHTML {
 		elementMeta = document.createElement("meta");
 		elementHead.appendChild(elementMeta);
 		elementMeta.setAttribute("name", "keywords");
-		elementMeta.setAttribute("content", "EPUB EPUB3 HTML5 Sliderizer slideshow slide deck e-book ebook");
+		elementMeta
+				.setAttribute("content",
+						"EPUB EPUB3 HTML5 Sliderizer slideshow slide deck e-book ebook");
 
 		String title = slide == null ? slideShow.TITLE : slide.TITLE;
 		if (title == null || title.isEmpty()) {
@@ -199,8 +201,8 @@ public final class XHTML {
 					);
 		}
 
-		create_HeadLinks(Epub3FileSet.CSS_ANIMATE, document, elementHead,
-				"stylesheet", "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
+		// create_HeadLinks(Epub3FileSet.CSS_ANIMATE, document, elementHead,
+		// "stylesheet", "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
 
 		create_HeadLinks(Epub3FileSet.CSS_JQUERY_UI, document, elementHead,
 				"stylesheet", "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
@@ -250,7 +252,8 @@ public final class XHTML {
 		create_HeadScripts(Epub3FileSet.JS_JQUERY, document, elementHead, null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
-		create_HeadScripts(Epub3FileSet.JS_JQUERY_UI, document, elementHead, null, // "text/javascript",
+		create_HeadScripts(Epub3FileSet.JS_JQUERY_UI, document, elementHead,
+				null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
 		create_HeadScripts(Epub3FileSet.JS_JQUERY_BLOCKUI, document,
