@@ -267,6 +267,10 @@ public final class OPF {
 				elementManifest, "font-entypo-woff", false,
 				Epub3FileSet.FOLDER_CSS, null);
 		//
+		create_ManifestItem(Epub3FileSet.FONT_AWESOME_WOFF, document,
+				elementManifest, "font-awesome-woff", false,
+				Epub3FileSet.FOLDER_CSS, null);
+		//
 		// create_ManifestItem(Epub3FileSet.FONT_ENTYPO_TTF, document,
 		// elementManifest, "font-entypo-ttf", false,
 		// Epub3FileSet.FOLDER_CSS, null);
@@ -330,6 +334,10 @@ public final class OPF {
 		create_ManifestItem(Epub3FileSet.CSS_DEFAULT, document,
 				elementManifest, "css-default", false, Epub3FileSet.FOLDER_CSS,
 				null);
+
+		create_ManifestItem(Epub3FileSet.CSS_FONT_AWESOME, document,
+				elementManifest, "css-font-awesome", false,
+				Epub3FileSet.FOLDER_CSS, null);
 		//
 		// create_ManifestItem(Epub3FileSet.CSS_ANIMATE, document,
 		// elementManifest, "css-animate", false,

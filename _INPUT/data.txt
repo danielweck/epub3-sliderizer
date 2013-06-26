@@ -76,147 +76,6 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 
 // --------------------------------------------
 _TITLE
-Tips:
-
-// --------------------------------------------
-_SUBTITLE
-navigation
-
-// --------------------------------------------
-_CONTENT
-
-<div class="incremental auto">
-
-<div class="boxed">
-
-<h3>Swipe gestures <span class="fade">(touch or mouse)</span></h3>
-
-<p style="line-height: 1.7em;">
-<span class="symbols pale-blue" title="left">&#8592;</span> <span class="symbols pale-red" title="right">&#8594;</span> previous / next slide
-<br>
-<span class="symbols pale-blue" title="up" style="padding-left: 0.24em;padding-right: 0.24em;">&#8593;</span> <span class="symbols pale-red" title="down" style="padding-left: 0.24em;padding-right: 0.24em;">&#8595;</span> previous / next incremental item
-</p>
-
-</div>
-
-<div class="boxed">
-
-<h3>Keyboard</h3>
-
-<p style="line-height: 1.7em;">
-
-<span class="keyboard symbols" title="left">&#9666;<!-- &#8592; --></span>
-<span class="keyboard symbols" title="right">&#9656;<!-- &#8594; --></span> previous / next slide
-<br>
-<span class="keyboard symbols" title="up">&#9652;<!-- &#8593; --></span>
-<span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span> previous / next incremental item
-<br>
-<span class="keyboard symbols" title="down">_</span> <span class="code">(space bar)</span> next incremental item
-<br>
-<span class="keyboard">m</span> slides <em style="font-style: normal;">m</em>enu (table of contents)
-
-</p>
-
-</div>
-
-<p>...or use the buttons below (not displayed in e-book readers)
-
-<!-- span style="padding-left: 0.3em; padding-right: 0.3em; color: #3D6AA2; border-radius:10px; font-family: Entypo;" class="glowButt">&#9632;</span -->
-
-
-</div>
-
-// --------------------------------------------
-_CSS_STYLE
-
-body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-previous,
-body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-next,
-body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc,
-.glowButt
-{
-	-webkit-backface-visibility: hidden;
-
-	opacity: 1;
-		
-	border: 4px solid #ff00ff;
-
-	-PREFIXED_PROPERTY-animation-name: onoff;
-	-PREFIXED_PROPERTY-animation-timing-function: linear;
-	-PREFIXED_PROPERTY-animation-duration: 1.8s;
-	-PREFIXED_PROPERTY-animation-iteration-count: infinite;
-	-PREFIXED_PROPERTY-animation-delay: 1s;
-}
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
-Tips:
-
-// --------------------------------------------
-_SUBTITLE
-zooming
-
-// --------------------------------------------
-_CONTENT
-
-<div class="boxed">
-
-<h3>Gestures <span class="fade">(touch or mouse)</span></h3>
-
-<p style="line-height: 1.7em;">
-<span class="symbols pale-green" title="double tap" style="padding-left: 0.2em;padding-right: 0.2em;">&#128261;</span> 
-<em>double tap</em> &#8658; toggle zoom (aim at target)
-<br>
-<span class="symbols pale-green" title="pan" style="padding-left: 0.1em;padding-right: 0.1em;">&#59212;</span> 
-<em>drag</em> &#8658; pan (only when zoomed-in)
-<br>
-<span class="symbols pale-blue" title="pinch">&#59206;</span> 
-<em>pinch</em> 
-<span class="symbols pale-red" title="stretch" style="padding-left: 0.1em;padding-right: 0.1em;">&#59204;</span> 
-<em>stretch</em> &#8658; zoom out / in
-<br>
-<span class="symbols pale-green" title="rotate" style="padding-left: 0.1em;padding-right: 0.1em;">&#128260;</span> 
-<em>twist</em> &#8658; rotate slide
-
-<span style="font-size: 80%" class="fade">
-(use SHIFT + mouse drag to simulate multitouch)
-</span>
-</p>
-
-</div>
-
-<div class="boxed">
-
-<h3>Keyboard</h3>
-
-<p style="line-height: 1.7em;">
-
-<span class="keyboard">z</span> toggle zoom
-<br>
-<span class="keyboard">esc</span> reset zoom
-<br>
-<span class="keyboard symbols" title="left">&#9666;<!-- &#8592; --></span>
-<span class="keyboard symbols" title="right">&#9656;<!-- &#8594; --></span>
-<span class="keyboard symbols" title="up">&#9652;<!-- &#8593; --></span>
-<span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span>
-pan (only when zoomed-in)
-
-</p>
-
-</div>
-
-
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
-// --------------------------------------------
-_TITLE
 Intro pitch
 
 // --------------------------------------------
@@ -245,7 +104,7 @@ _CONTENT
 
 </div>
 
-<div id="boox" class="boxed" style="position: absolute; bottom: 90px; right: 60px; left: 60px;">
+<div id="boox" class="boxed" >
 
 <div>
 <ul>
@@ -303,19 +162,19 @@ h1#epb3sldrzr-title
 	display: none;
 }
 
-img#epb3sldrzr-logo
+html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
-	top: auto !important;
-	left: auto !important;
+	top: auto ;
+	left: auto ;
 
-	bottom: auto !important;
-	right: auto !important;
+	bottom: auto ;
+	right: auto ;
 
-	width: 300px !important;
-	height: 125px !important;
+	width: 300px ;
+	height: 125px ;
 	
-	bottom: 180px !important;
-	right: 100px !important;
+	bottom: 180px ;
+	right: 60px ;
 
 	-PREFIXED_PROPERTY-transform: rotate(45deg);
 }
@@ -342,6 +201,203 @@ function setupLogo()
 }
 document.addEventListener("DOMContentLoaded", function(e) { setTimeout(setupLogo, 1000); }, false);
 */
+
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Tips:
+
+// --------------------------------------------
+_SUBTITLE
+navigation
+
+// --------------------------------------------
+_CONTENT
+
+<div class="incremental auto">
+
+<div class="boxed">
+
+<h3>Swipe gestures <span class="fade">(touch or mouse)</span></h3>
+
+<p style="line-height: 1.7em;">
+<span class="symbols pale-blue" title="left">&#8592;</span> <span class="symbols pale-red" title="right">&#8594;</span> previous / next slide
+<br>
+<span class="symbols pale-blue" title="up" style="padding-left: 0.24em;padding-right: 0.24em;">&#8593;</span> <span class="symbols pale-red" title="down" style="padding-left: 0.24em;padding-right: 0.24em;">&#8595;</span> previous / next incremental item
+</p>
+
+</div>
+
+<div class="boxed">
+
+<h3>Keyboard</h3>
+
+<p style="line-height: 1.7em;">
+
+<span class="keyboard symbols" title="left">&#9666;<!-- &#8592; --></span>
+<span class="keyboard symbols" title="right">&#9656;<!-- &#8594; --></span> previous / next slide
+<br>
+<span class="keyboard symbols" title="up">&#9652;<!-- &#8593; --></span>
+<span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span> previous / next incremental item
+<br>
+<span class="keyboard symbols" title="down">_</span> <span class="code">(space bar)</span> next incremental item
+<br>
+<span class="keyboard">m</span> slides <em style="font-style: normal;">m</em>enu (table of contents)
+
+</p>
+
+</div>
+
+<p>...or use the buttons below (not displayed in e-book readers)
+
+<!-- span style="padding-left: 0.3em; padding-right: 0.3em; color: #3D6AA2; border-radius:10px; font-family: FontAwesome, Entypo;" class="glowButt">&#9632;</span -->
+
+
+</div>
+
+// --------------------------------------------
+_CSS_STYLE
+
+body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-previous,
+body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-next,
+body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc,
+.glowButt
+{
+	-webkit-backface-visibility: hidden;
+
+	opacity: 1;
+		
+	border: 4px solid #ff00ff;
+
+	-PREFIXED_PROPERTY-animation-name: onoff;
+	-PREFIXED_PROPERTY-animation-timing-function: linear;
+	-PREFIXED_PROPERTY-animation-duration: 1.8s;
+	-PREFIXED_PROPERTY-animation-iteration-count: infinite;
+	-PREFIXED_PROPERTY-animation-delay: 1s;
+}
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Tips:
+
+// --------------------------------------------
+_SUBTITLE
+zooming
+
+// --------------------------------------------
+_CONTENT
+
+<div class="boxed">
+
+<h3>Gestures <span class="fade">(touch or mouse)</span></h3>
+
+<p style="line-height: 1.7em;">
+<span class="symbols alt pale-green" title="double tap" style="padding-left: 0.2em;padding-right: 0;">&#xf140; <!-- &#128261; --></span> 
+<em>double tap</em> &#8658; toggle zoom (aim at target)
+<br>
+<span class="symbols pale-green" title="pan" style="padding-left: 0.1em;padding-right: 0.1em;">&#59212;</span> 
+<em>drag</em> &#8658; pan (only when zoomed-in)
+<br>
+<span class="symbols pale-blue" title="pinch">&#59206;<!-- &#xf066; --></span> 
+<em>pinch</em> 
+<span class="symbols pale-red" title="stretch" style="padding-left: 0.1em;padding-right: 0.1em;">&#59204;</span> 
+<em>stretch</em> &#8658; zoom out / in
+<br>
+<span class="symbols pale-green" title="rotate" style="padding-left: 0.1em;padding-right: 0.1em;">&#128260;</span> 
+<em>twist</em> &#8658; rotate slide
+
+<span style="font-size: 80%" class="fade">
+(use SHIFT + mouse drag to simulate multitouch)
+</span>
+</p>
+
+</div>
+
+<div class="boxed">
+
+<h3>Keyboard</h3>
+
+<p style="line-height: 1.7em;">
+
+<span class="keyboard">z</span> toggle zoom
+<br>
+<span class="keyboard">esc</span> reset zoom
+<br>
+<span class="keyboard symbols" title="left">&#9666;<!-- &#8592; --></span>
+<span class="keyboard symbols" title="right">&#9656;<!-- &#8594; --></span>
+<span class="keyboard symbols" title="up">&#9652;<!-- &#8593; --></span>
+<span class="keyboard symbols" title="down">&#9662;<!-- &#8595; --></span>
+pan (only when zoomed-in)
+
+</p>
+
+</div>
+
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Tips:
+
+// --------------------------------------------
+_SUBTITLE
+text size
+
+// --------------------------------------------
+_CONTENT
+
+<p><strong>EPUB3-Sliderizer</strong> cares about accessibility
+<br> &#8658; text can be magnified, whilst allowing the slide to reflow (fit-to-width)
+
+
+<div class="boxed">
+
+<h3>Gestures <span class="fade">(touch)</span></h3>
+
+<p style="line-height: 1.7em;">
+<span class="symbols alt pale-green" title="two-finger tap" style="padding-top: 0; padding-left: 0.2em;padding-right: 0;">&#xf042; <!-- &#9205; --></span> 
+<em>hold once</em> &#8658; increase font size
+</p>
+
+</div>
+
+
+<div class="boxed">
+
+<h3>Keyboard</h3>
+
+<p style="line-height: 1.7em;">
+
+<span class="keyboard symbols" title="zero">0</span> reset font size
+<br>
+<span class="keyboard symbols" title="1">1</span>
+<span class="keyboard symbols" title="2">2</span>
+<span class="keyboard symbols" title="3">3</span>
+<span class="keyboard symbols" title="4">4</span>
+<span class="keyboard symbols" title="5">5</span>
+<span class="keyboard symbols" title="6">6</span>
+<span class="keyboard symbols" title="7">7</span>
+<span class="keyboard symbols" title="8">8</span>
+<span class="keyboard symbols" title="9">9</span>
+increase font size
+</p>
+
+</div>
+
 
 
 // #########################################################
@@ -391,10 +447,12 @@ assets/HTML5.png
 // --------------------------------------------
 _CSS_STYLE
 
+/*
 div#epb3sldrzr-root
 {
 	overflow: hidden;
 }
+*/
 
 img.animated-logos
 {

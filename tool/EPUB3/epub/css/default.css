@@ -12,10 +12,24 @@
 /*
 ==============================================================================
 
-Globals
+Font faces
 
 ==============================================================================
+
+http://fortawesome.github.io/Font-Awesome/cheatsheet/
+
+http://www.entypo.com/characters/
 */
+
+@font-face
+{
+	font-family: 'FontAwesome';
+	src: url('FontAwesome.woff') format('woff')
+	/* url('FontAwesome.ttf') format('truetype') */
+	;
+	font-weight: normal;
+	font-style: normal;
+}
 
 @font-face
 {
@@ -97,6 +111,14 @@ Globals
 	;
 }
 
+/*
+==============================================================================
+
+Globals
+
+==============================================================================
+*/
+
 em
 {
 	border-bottom: 2px #333333 dotted;
@@ -170,6 +192,7 @@ a:active
 
 img
 {
+	-webkit-transform: translateZ(0);
 	-webkit-backface-visibility: hidden;
 }
 
@@ -212,10 +235,15 @@ span.keyboard
 
 html:not(.opera) span.symbols
 {
-	font-family: Entypo;
+	font-family: Entypo, Lato;
 	font-size: 120%;
 	
 	padding-bottom: 0;
+}
+
+html:not(.opera) span.symbols.alt
+{
+	font-family: FontAwesome, Entypo, Lato;
 }
 
 /*
@@ -250,8 +278,9 @@ body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .incremental:not(.fa
 }
 
 /*html:not(.mobile)*/
+body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .incremental,
 body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .incremental > *
-{	
+{
 	-webkit-backface-visibility: hidden;
 }
 
@@ -325,6 +354,7 @@ body
 	overflow:hidden;
 
 	font-size: FONT_SIZEpx;
+	
 	font-weight: 400;
 	font-family: Lato, Tahoma, verdana, arial, sans-serif;
 
@@ -408,7 +438,7 @@ div#epb3sldrzr-root
 
 	overflow:auto;
 
-/*	-webkit-overflow-scrolling: touch; */
+	-webkit-overflow-scrolling: touch;
 }
 
 #epb3sldrzr-content,
@@ -692,6 +722,18 @@ a#epb3sldrzr-link-epubReadingSystem:hover
 	text-decoration:none;
 }
 
+a#epb3sldrzr-link-toc:link,
+a#epb3sldrzr-link-toc:visited,
+a#epb3sldrzr-link-toc:active
+{
+	color: #33CC00;
+}
+a#epb3sldrzr-link-toc:hover
+{
+	background-color:#33CC00;
+	color:white;
+}
+
 a#epb3sldrzr-link-noteback
 {
 	float: right;
@@ -927,12 +969,19 @@ Slide content
 
 #epb3sldrzr-content div.boxed,
 #epb3sldrzr-content-NOTES div.boxed
-{	
+{
 	padding:0;
 	margin:0;
 	
 	padding:1em;
 	padding-bottom:0;
+}
+
+#epb3sldrzr-content div.paper,
+#epb3sldrzr-content-NOTES div.paper
+{
+	background: white;
+	-PREFIXED_PROPERTY-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
 
 #epb3sldrzr-content div.boxed > p,
@@ -945,7 +994,10 @@ Slide content
 #epb3sldrzr-content-NOTES div.boxed > div
 {
 	background: white;
-	-PREFIXED_PROPERTY-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+
+	-PREFIXED_PROPERTY-box-shadow: 2px 2px 4px rgb(200, 200, 200); /* , 0 0 10px rgba(210, 220, 230, 1) inset; 0 0 50px rgba(0, 0, 0, 1) 0 0 40px rgba(0, 0, 0, 0.1) inset */
+
+	border: 1px solid rgb(210, 220, 230);
 
 	border-bottom-left-radius: 20px;
 	border-bottom-right-radius: 20px;
@@ -996,7 +1048,7 @@ Slide content
 #epb3sldrzr-content div.boxed.framed > *,
 #epb3sldrzr-content-NOTES div.boxed.framed > *
 {
-	border: 2px solid #333333;
+	border: 2px solid #888888;
 }
 
 #epb3sldrzr-content div.boxed.framed > h3,
@@ -1004,7 +1056,7 @@ Slide content
 {
 	float: right;
 	
-	background: #222222;
+	background: #333333;
 	color: white;
 	
 	font-weight: 400;
