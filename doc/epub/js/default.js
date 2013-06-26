@@ -160,6 +160,7 @@ var Epub3Sliderizer = {
 	pauseEvents: false,
 	cookieFontSize: "Epub3Sliderizer_FontSize",
 	firefox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
+	android: navigator.userAgent.toLowerCase().indexOf('android') > -1,
 	opera: (typeof window.opera != "undefined") || navigator.userAgent.toLowerCase().indexOf(' opr/') >= 0,
 	IE: navigator.userAgent.indexOf('MSIE') >= 0 && navigator.userAgent.toLowerCase().indexOf('opera') < 0,
 	mobile: navigator.userAgent.match(/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Mobile)/)
@@ -301,12 +302,15 @@ Epub3Sliderizer.transition = function(on)
 	
 	if (on)
 	{
-		var transition = "all "+milliseconds+"ms ease-in-out";
-		document.body.style.MozTransition = transition;
-		document.body.style.WebkitTransition = transition;
-		document.body.style.OTransition = transition;
-		document.body.style.msTransition = transition;
-		document.body.style.transition = transition;
+		if (!this.basicMode)
+		{
+			var transition = "all "+milliseconds+"ms ease-in-out";
+			document.body.style.MozTransition = transition;
+			document.body.style.WebkitTransition = transition;
+			document.body.style.OTransition = transition;
+			document.body.style.msTransition = transition;
+			document.body.style.transition = transition;
+		}
 	}
 	else
 	{
@@ -817,6 +821,11 @@ Epub3Sliderizer.initTouch = function()
 		
 		if (hammerEvent.gesture)
 		{			
+			if (this.totalZoom == 1 && this.basicMode)
+			{
+				return;
+			}
+			
 			var xOffset = hammerEvent.gesture.center.pageX - dragXStart;
 
 			var opacity = 1;
@@ -1465,8 +1474,7 @@ Epub3Sliderizer.initLinks = function()
 	if (typeof nav != "undefined" && nav != null && nav)
 	{
 		this.toc = "html/" + this.toc;
-		
-		
+
 		Array.prototype.forEach.call(
 			querySelectorAllZ("html > body #epb3sldrzr-content a"),
 			function(link)
@@ -1958,7 +1966,7 @@ Epub3Sliderizer.initIncrementals = function()
 Epub3Sliderizer.init = function()
 {
 	console.log("Epub3Sliderizer");
-	console.log(window.navigator.userAgent);
+	console.log(window.navigator.userAgent);	
 
 	var fakeEpubReadingSystem = false;
 
@@ -2385,7 +2393,9 @@ function readyFirst()
 		document.documentElement.classList.add("author");
 	}
 
-	if (window.location.search && window.location.search.indexOf("basic") >= 0)
+	if (Epub3Sliderizer.android ||
+		(window.location.search && window.location.search.indexOf("basic") >= 0)
+	)
 	//if (window.location.href.indexOf("static") >= 0)
 	{
 		Epub3Sliderizer.basicMode = true;
