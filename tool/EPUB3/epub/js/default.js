@@ -143,6 +143,7 @@ var Epub3Sliderizer = {
 	ibooks: false,
 	staticMode: false,
 	authorMode: false,
+	basicMode: false,
 	prev: "",
 	next: "",
 	toc: "../nav.xhtml",
@@ -160,6 +161,7 @@ var Epub3Sliderizer = {
 	cookieFontSize: "Epub3Sliderizer_FontSize",
 	firefox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
 	opera: (typeof window.opera != "undefined") || navigator.userAgent.toLowerCase().indexOf(' opr/') >= 0,
+	IE: navigator.userAgent.indexOf('MSIE') >= 0 && navigator.userAgent.toLowerCase().indexOf('opera') < 0,
 	mobile: navigator.userAgent.match(/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Mobile)/)
 	// && navigator.userAgent.match(/AppleWebKit/)
 };
@@ -208,6 +210,40 @@ Epub3Sliderizer.isEpubReadingSystem = function()
 
 // ----------
 
+Epub3Sliderizer.urlParams = function(hash)
+{
+	var params = "?";
+	
+	if (window.location.search)
+	{
+		if (window.location.search.indexOf("static") >= 0)
+		{
+			params += "static&"
+		}
+		if (window.location.search.indexOf("author") >= 0)
+		{
+			params += "author&"
+		}
+		if (window.location.search.indexOf("basic") >= 0)
+		{
+			params += "basic&"
+		}
+		if (window.location.search.indexOf("epub") >= 0)
+		{
+			params += "epub&"
+		}
+	}
+
+	if (hash && this.thisFilename != null)
+	{
+		params += ("#" + this.thisFilename);
+	}
+	
+	return params;
+}
+
+// ----------
+
 Epub3Sliderizer.gotoToc = function()
 {
 	if (this.isEpubReadingSystem())
@@ -220,7 +256,7 @@ Epub3Sliderizer.gotoToc = function()
 		return;
 	}
 	
-	window.location = this.toc;
+	window.location = this.toc + this.urlParams(true);
 }
 
 // ----------
@@ -237,7 +273,7 @@ Epub3Sliderizer.gotoPrevious = function()
 		return;
 	}
 	
-	window.location = this.prev;
+	window.location = this.prev + this.urlParams(true);
 }
 
 // ----------
@@ -254,7 +290,7 @@ Epub3Sliderizer.gotoNext = function()
 		return;
 	}
 	
-	window.location = this.next;
+	window.location = this.next + this.urlParams(true);
 }
 
 // ----------
@@ -1295,7 +1331,25 @@ Epub3Sliderizer.initReverse = function()
 	
 	var hash = null;
 	i = thisFilename.indexOf('#');
-	if (i >= 0)
+	if (i < 0)
+	{
+		i = 9999;
+	}
+	var ii = thisFilename.indexOf('?');
+	if (ii < 0)
+	{
+		ii = 9999;
+	}
+	
+	var iii = thisFilename.indexOf('&');
+	if (iii < 0)
+	{
+		iii = 9999;
+	}
+	
+	i = Math.min(i, Math.min(ii, iii));
+	
+	if (i >= 0 && i < 9999)
 	{
 		if (i < thisFilename.length-1)
 		{
@@ -1405,11 +1459,33 @@ Epub3Sliderizer.initLinks = function()
 		return;
 	}
 
+	var that = this;
 
 	var nav = querySelectorZ("html#epb3sldrzr-NavDoc");
 	if (typeof nav != "undefined" && nav != null && nav)
 	{
 		this.toc = "html/" + this.toc;
+		
+		
+		Array.prototype.forEach.call(
+			querySelectorAllZ("html > body #epb3sldrzr-content a"),
+			function(link)
+			{
+				if (typeof link.attributes == 'undefined'
+					|| link.attributes.length <= 0
+					|| typeof link.attributes['href'] == 'undefined'
+				)
+				{
+					return;
+				}
+
+				var href = link.getAttribute('href');
+				
+				var updatedHref = href + that.urlParams(false);
+
+				link.setAttribute("href", updatedHref);
+			}
+		);
 	}
 	
 	//	var links = Array.prototype.slice.call(querySelectorAllZ("html > head > link"));
@@ -1417,7 +1493,6 @@ Epub3Sliderizer.initLinks = function()
 	//	{		
 	//		for (var i = 0; i < links.length; i++) { links[i] }
 
-	var that = this;
 
 	Array.prototype.forEach.call(
 		querySelectorAllZ("html > head > link"),
@@ -1478,11 +1553,6 @@ Epub3Sliderizer.initLinks = function()
 	
 	if (this.next != "")
 	{
-		if (this.thisFilename != null)
-		{
-			this.next = this.next + "#" + this.thisFilename;
-		}
-		
 		var a = document.createElement('a');
 		a.id = "epb3sldrzr-link-next";
 		a.title = "Next slide";
@@ -1495,11 +1565,6 @@ Epub3Sliderizer.initLinks = function()
 
 	if (this.prev != "")
 	{
-		if (this.thisFilename != null)
-		{
-			this.prev = this.prev + "#" + this.thisFilename;
-		}
-		
 		var a = document.createElement('a');
 		a.id = "epb3sldrzr-link-previous";
 		a.title = "Previous slide";	
@@ -1576,7 +1641,7 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate)
 	{
 		return;
 	}
-	
+
 	if (this.increment < 0 || this.increment > (this.incrementals.length - 1))
 	{
 		this.increment = -1;
@@ -1799,7 +1864,7 @@ Epub3Sliderizer.initAnimations = function()
 				
 			elem.classList.add("epb3sldrzr-animateStart"); // ... THEN, ANIMATES (animation-iteration-count: N)
 			
-			if (that.bodyRoot != elem && (that.opera || that.firefox))
+			if (that.bodyRoot != elem && (that.opera || that.firefox || that.IE))
 			{
 				that.reAnimateElement(elem);
 			}
@@ -1816,7 +1881,7 @@ Epub3Sliderizer.initSlideTransition = function()
 		return;
 	}
 
-	var animate = !this.opera;
+	var animate = !this.opera && !this.IE;
 	if (animate
 	//	&& !this.mobile
 	)
@@ -1833,15 +1898,17 @@ Epub3Sliderizer.initSlideTransition = function()
 		this.bodyRoot.classList.add("epb3sldrzr-animated");
 	//	this.bodyRoot.classList.add("animated");
 		this.bodyRoot.classList.add("epb3sldrzr-animateStart");
+		
+
+
+		if (this.firefox || this.opera)
+		{
+	//		this.reAnimateElement(this.bodyRoot);
+		}
 	}
 	else
 	{
 		this.bodyRoot.style.visibility = "visible";
-	}
-
-	if (this.firefox || this.opera)
-	{
-//		this.reAnimateElement(this.bodyRoot);
 	}
 }
 
@@ -2035,6 +2102,12 @@ Epub3Sliderizer.init = function()
 	}
 	else
 	{	
+		
+		if (this.basicMode)
+		{
+			document.body.classList.add("epb3sldrzr-epubReadingSystem");
+		}
+		
 		this.initReverse();
 		
 		this.initLinks();
@@ -2080,15 +2153,22 @@ Epub3Sliderizer.init = function()
 
 		this.initMediaOverlays();
 
-		this.initSlideTransition();
-
-		
-		var that = this;
-		setTimeout(function()
+		if (!this.basicMode)
 		{
-			that.initIncrementals();
-			that.initAnimations();
-		}, 500);
+			this.initSlideTransition();
+
+			var that = this;
+			setTimeout(function()
+			{
+				that.initIncrementals();
+				that.initAnimations();
+			}, 500);
+		}
+		else
+		{
+			this.initIncrementals();
+			this.bodyRoot.style.visibility = "visible";
+		}
 		
 		if (typeof $ != "undefined")
 		{
@@ -2223,7 +2303,7 @@ Epub3Sliderizer.init = function()
 
 function readyDelayed()
 {
-	if (Epub3Sliderizer.staticMode || Epub3Sliderizer.ibooks || Epub3Sliderizer.readium)
+	if (Epub3Sliderizer.staticMode || Epub3Sliderizer.basicMode || Epub3Sliderizer.ibooks || Epub3Sliderizer.readium)
 	{
 		return;
 	}
@@ -2281,6 +2361,11 @@ function readyFirst()
 	{
 		document.documentElement.classList.add("firefox");
 	}
+
+	if (Epub3Sliderizer.IE)
+	{
+		document.documentElement.classList.add("IE");
+	}
 	if (Epub3Sliderizer.mobile)
 	{
 		document.documentElement.classList.add("mobile");
@@ -2300,9 +2385,15 @@ function readyFirst()
 		document.documentElement.classList.add("author");
 	}
 
+	if (window.location.search && window.location.search.indexOf("basic") >= 0)
+	//if (window.location.href.indexOf("static") >= 0)
+	{
+		Epub3Sliderizer.basicMode = true;
+		document.documentElement.classList.add("basic");
+	}
+
 	if (Epub3Sliderizer.staticMode)
 	{
-		
 		window.setTimeout(
 			function()
 			{
@@ -2317,6 +2408,10 @@ function readyFirst()
 				}
 			}
 			, 0);
+	}
+	else if (Epub3Sliderizer.basicMode)
+	{
+		Epub3Sliderizer.init();
 	}
 	else
 	{
