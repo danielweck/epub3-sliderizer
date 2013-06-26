@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_10" lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8"/><meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/><meta content="EPUB EPUB3 HTML5 Sliderizer slideshow slide deck e-book ebook" name="keywords"/><title>(10/10) EPUB3 Sliderizer / Long slide - scrolling</title><link href="../img/favicon.ico" rel="shortcut icon"/><meta content="width=1290, height=1000" name="viewport"/><link href="../css/animate.css" rel="stylesheet" type="text/css"/><link href="../css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css"/><link href="../css/default.css" rel="stylesheet" type="text/css"/><script src="../js/classList.js"> </script><script src="../js/screenfull.js"> </script><script src="../js/hammer.min.js"> </script><script src="../js/hammer.fakemultitouch.js"> </script><script src="../js/hammer.showtouches.js"> </script><script src="../js/jquery-2.0.2.min.js"> </script><script src="../js/jquery-ui-1.10.3.custom.min.js"> </script><script src="../js/jquery.blockUI.js"> </script><script src="../js/jquery.mousewheel.js"> </script><script src="../js/default.js"> </script><link href="./slide_09.xhtml" rel="prev"/><style type="text/css">
-body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.animated
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_10" lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8"/><meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/><meta content="EPUB EPUB3 HTML5 Sliderizer slideshow slide deck e-book ebook" name="keywords"/><title>(10/11) EPUB3 Sliderizer / Incremental items</title><link href="../img/favicon.ico" rel="shortcut icon"/><meta content="width=1290, height=1000" name="viewport"/><link href="../css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css"/><link href="../css/FontAwesome.css" rel="stylesheet" type="text/css"/><link href="../css/default.css" rel="stylesheet" type="text/css"/><script src="../js/classList.js"> </script><script src="../js/screenfull.js"> </script><script src="../js/hammer.min.js"> </script><script src="../js/hammer.fakemultitouch.js"> </script><script src="../js/hammer.showtouches.js"> </script><script src="../js/jquery-2.0.2.min.js"> </script><script src="../js/jquery-ui-1.10.3.custom.min.js"> </script><script src="../js/jquery.blockUI.js"> </script><script src="../js/jquery.mousewheel.js"> </script><script src="../js/default.js"> </script><link href="./slide_09.xhtml" rel="prev"/><link href="./slide_11.xhtml" rel="next"/><style type="text/css">
+body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
 {
 
 -webkit-animation-duration: 1.5s;
@@ -48,32 +48,38 @@ var html = document.documentElement;
 if (html.id == "epb3sldrzr-NavDoc")
 {
 var elem = querySelectorZ("#epb3sldrzr-logo");
-elem.classList.add("bounceInRight");//fadeInUp
+elem.classList.add("bounceInRight");
 elem.classList.add("epb3sldrzr-animated");
 }
 }
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
 //]]>
-</script></head><body class="epb3sldrzr-SLIDE" epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Long slide <span id="epb3sldrzr-subtitle">scrolling</span></h1><section id="epb3sldrzr-content"><!--SOUP--><p>If necessary, overflowing content can be scrolled:
-</p><ol style="font-weight: 400; font-family: Neuton, Lato, Tahoma, 'arial black', verdana, arial, sans-serif;">
-<li>I wonder...
-</li><li>what could be
-</li><li>at the bottom
-</li><li>of this list?
-</li><li>Perhaps I should
-</li><li>scroll down...
-</li><li>to find out.
-</li><li>All the way down...
-</li><li>a bit more.
-</li><li>Let me guess...
-</li><li>That thing?
-</li><li>No way.
-</li><li>Ah, maybe...
-</li><li>Yes
-</li><li>OMG!
-</li><li>It is...
-</li><li>...a KITTEN !!!!!
-</li></ol>
-<p style="text-align: center;">
-<img src="../img/custom/assets/kitten.jpg"/></p></section></div></div></body></html>
+</script></head><body class="epb3sldrzr-SLIDE" epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Incremental items</h1><section id="epb3sldrzr-content"><!--SOUP--><ul class="auto incremental" data-incremental-delay="200">
+<li>
+CSS class <span class="code pale-blue">incremental</span> on a wrapper element
+<br/>⇒
+reveal children in sequence
+</li>
+<li>
+Additional <span class="code pale-red">auto</span> class ⇒ automatic reveal
+</li>
+<li>
+Custom attribute <span class="code pale-green">data-incremental-delay</span>
+<br/>
+⇒ milliseconds offset <span class="fade">(default: 500ms)</span>
+</li>
+</ul>
+<div class="boxed">
+<h3>Example:</h3>
+<p class="code" style="font-size: 70%;">
+&lt;ul class="<span class="code pale-red">auto</span> <span class="code pale-blue">incremental</span>" <span class="code pale-green">data-incremental-delay</span>="200"&gt;
+<br/>
+<span class="auto incremental" data-incremental-delay="200">
+<span class="code pale-grey" style="font-weight: 900">    &lt;li&gt; <strong>1</strong> &lt;/li&gt;<br/></span>
+<span class="code pale-grey" style="font-weight: 900">    &lt;li&gt; <strong>2</strong> &lt;/li&gt;<br/></span>
+<span class="code pale-grey" style="font-weight: 900">    &lt;li&gt; <strong>3</strong> &lt;/li&gt;<br/></span>
+</span>
+&lt;/ul&gt;
+</p>
+</div></section></div></div></body></html>
