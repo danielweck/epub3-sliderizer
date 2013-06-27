@@ -331,11 +331,13 @@ body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .incremental.fade-ac
 html.basic body.epb3sldrzr-epubReadingSystem #epb3sldrzr-content .incremental.fade-active[incremental-active] > *,
 html.basic body.epb3sldrzr-epubReadingSystem #epb3sldrzr-content .incremental.fade-active > *[aria-selected] ~ *
 {
-	opacity: 0.6;
+	opacity: 0.4;
 }
 
 body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .incremental > *[aria-selected],
-html.basic body.epb3sldrzr-epubReadingSystem #epb3sldrzr-content .incremental > *[aria-selected]
+html.basic body.epb3sldrzr-epubReadingSystem #epb3sldrzr-content .incremental > *[aria-selected],
+body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .incremental > *[aria-activedescendant],
+html.basic body.epb3sldrzr-epubReadingSystem #epb3sldrzr-content .incremental > *[aria-activedescendant]
 {
 	opacity: 1 !important;
 }

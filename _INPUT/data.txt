@@ -899,7 +899,7 @@ _CONTENT
 </div>
 
 <p>
-The <span class="code pale-red">epb3sldrzr-animated</span> CSS class ensures animations are fired when the slide is ready.
+The CSS class '<span class="code pale-red">epb3sldrzr-animated</span>' ensures that animations are fired only once the slide is ready.
 
 </div>
 
@@ -966,15 +966,16 @@ _CONTENT
 
 <ul class="auto incremental" data-incremental-delay="200">
 <li>
-CSS class <span class="code pale-blue">incremental</span> on a wrapper element
+CSS class '<span class="code pale-blue">incremental</span>' on wrapper element
 <br>&#8658;
-reveal children in sequence
+children revealed in sequence
 </li>
 <li>
-Additional <span class="code pale-red">auto</span> class &#8658; automatic progression
+CSS class '<span class="code pale-red">auto</span>' on wrapper element or child item
+&#8658; automatic progression
 </li>
 <li>
-Attribute <span class="code pale-green">data-incremental-delay</span>
+Attribute '<span class="code pale-green">data-incremental-delay</span>'
 <br>
 &#8658; custom milliseconds offset <span class="fade">(default: 500ms)</span>
 </li>
@@ -997,17 +998,17 @@ _SUBTITLE
 // --------------------------------------------
 _CONTENT
 
-<!-- p>Press <span class="code">[space]</span> or <span class="code">[arrow-down]</span>, swipe down, or scroll manually.</p>
-
-<div class="incremental">
-<br/>
-<br class="auto"/>
-</div -->
+<div  class="incremental">
+<p>Press <span class="code">[space]</span> or <span class="code">[arrow-down]</span>, or swipe down.
+<br>
+(alternatively, scroll manually)
+</p>
+</div>
 
 <ol style="font-weight: 400; font-family: Neuton, Lato, Tahoma, 'arial black', verdana, arial, sans-serif;"
-class="incremental auto fade-active" data-incremental-delay="300">
+class="incremental fade-active" data-incremental-delay="300">
 <li>I wonder...
-<li>what could be
+<li class="auto">what could be
 <li>at the bottom
 <li>of this list?
 <li>Perhaps I should
@@ -1050,3 +1051,62 @@ Media Overlays
 _CONTENT
 
 <h3>&nbsp;&nbsp;&nbsp;&nbsp;TODO
+
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+No-frills mode
+
+// --------------------------------------------
+_CONTENT
+
+<div class="incremental auto">
+
+<p>
+Slide transitions and fade-in transitions can sometimes impair performance.
+Fortunately, EPUB3-Sliderizer supports a "basic" mode that skips the eye candy stuff.
+
+<p>
+&#8658; For example, <a href="javascript:Epub3Sliderizer.reloadSlide('basic');">click here</a> to reload this slide without the fussy gloss,
+or simply pass the '<span class="code pale-red">basic</span>' parameter in the address bar ("URL query").
+<br>e.g. <span class="code pale-grey">http://dummy.org/epub/slide.xhtml?basic</span>
+
+<p>
+You can always remove the address parameters to restore the normal view.
+Try now by <a href="javascript:Epub3Sliderizer.reloadSlide('');">clicking here</a>.
+
+<p>
+<em>Note:</em> to check how a slide would look (and behave) as a single page within an e-book reader,
+simply use the '<span class="code pale-red">epub</span>' parameter.
+Try now by <a href="javascript:Epub3Sliderizer.reloadSlide('epub');">clicking here</a>.
+
+</div>
+
+// --------------------------------------------
+_CSS_STYLE
+
+body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
+{
+	-PREFIXED_PROPERTY-animation-duration: 1.5s;
+	-PREFIXED_PROPERTY-animation-delay: 1s;
+
+	-PREFIXED_PROPERTY-animation-iteration-count: infinite;
+}
+
+// --------------------------------------------
+_JS_SCRIPT
+
+function setupAnimatedLogo()
+{
+	var html = document.documentElement;
+	var elem = querySelectorZ("#epb3sldrzr-logo");
+	elem.classList.add("bounceInUp");
+	elem.classList.add("epb3sldrzr-animated");
+}
+//setTimeout(setupAnimations, 100);
+document.addEventListener("DOMContentLoaded", function(e) { setupAnimatedLogo(); }, false);
