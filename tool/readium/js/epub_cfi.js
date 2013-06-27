@@ -1,5 +1,5 @@
 var EpubCFIModule = function () {
-    
+
     var EPUBcfi = {};
 
     EPUBcfi.Parser = (function(){
@@ -1522,7 +1522,7 @@ var EpubCFIModule = function () {
   
   return result;
 })();
- 
+
     // Description: This model contains the implementation for "instructions" included in the EPUB CFI domain specific language (DSL). 
 //   Lexing and parsing a CFI produces a set of executable instructions for processing a CFI (represented in the AST). 
 //   This object contains a set of functions that implement each of the executable instructions in the AST. 
@@ -2657,28 +2657,51 @@ EPUBcfi.CFIAssertionError = function (expectedAssertion, targetElementAssertion,
     // The public interface
     return {
 
-        getContentDocHref : function (CFI, packageDocument) { return interpreter.getContentDocHref.call(interpreter, CFI, packageDocument); },
-        injectElement : function (CFI, contentDocument, elementToInject, classBlacklist, elementBlacklist, idBlacklist) { return interpreter.injectElement.call(interpreter, CFI, contentDocument, elementToInject, classBlacklist, elementBlacklist, idBlacklist); },
-        getTargetElement : function (CFI, contentDocument) { return interpreter.getTargetElement.call(interpreter, CFI, contentDocument); },
-        getTargetElementWithPartialCFI : function (contentDocumentCFI, contentDocument) { return interpreter.getTargetElementWithPartialCFI.call(interpreter, contentDocumentCFI, contentDocument); },
-        getTextTerminusInfoWithPartialCFI : function (contentDocumentCFI, contentDocument) { return interpreter.getTextTerminusInfoWithPartialCFI.call(interpreter, contentDocumentCFI, contentDocument); }, 
-        generateCharacterOffsetCFIComponent : function (startTextNode, characterOffset) { return generator.generateCharacterOffsetCFIComponent.call(generator, startTextNode, characterOffset); },
-        generateElementCFIComponent : function (startElement) { return generator.generateElementCFIComponent.call(generator, startElement); },
-        generatePackageDocumentCFIComponent : function (contentDocumentName, packageDocument) { return generator.generatePackageDocumentCFIComponent.call(generator, contentDocumentName, packageDocument); },
-        generatePackageDocumentCFIComponentWithSpineIndex : function (spineIndex, packageDocument) { return generator.generatePackageDocumentCFIComponentWithSpineIndex.call(generator, spineIndex, packageDocument); },
-        generateCompleteCFI : function (packageDocumentCFIComponent, contentDocumentCFIComponent) { return generator.generateCompleteCFI.call(generator, packageDocumentCFIComponent, contentDocumentCFIComponent); },
-        injectElementAtOffset : function ($textNodeList, textOffset, elementToInject) { return instructions.injectCFIMarkerIntoText.call(instructions, $textNodeList, textOffset, elementToInject); },
+        getContentDocHref : function (CFI, packageDocument) {
+            return interpreter.getContentDocHref(CFI, packageDocument);
+        },
+        injectElement : function (CFI, contentDocument, elementToInject, classBlacklist, elementBlacklist, idBlacklist) {
+            return interpreter.injectElement(CFI, contentDocument, elementToInject, classBlacklist, elementBlacklist, idBlacklist);
+        },
+        getTargetElement : function (CFI, contentDocument) {
+            return interpreter.getTargetElement(CFI, contentDocument);
+        },
+        getTargetElementWithPartialCFI : function (contentDocumentCFI, contentDocument) {
+            return interpreter.getTargetElementWithPartialCFI(contentDocumentCFI, contentDocument);
+        },
+        getTextTerminusInfoWithPartialCFI : function (contentDocumentCFI, contentDocument) {
+            return interpreter.getTextTerminusInfoWithPartialCFI(contentDocumentCFI, contentDocument);
+        },
+
+        generateCharacterOffsetCFIComponent : function (startTextNode, characterOffset) {
+            return generator.generateCharacterOffsetCFIComponent(startTextNode, characterOffset);
+        },
+        generateElementCFIComponent : function (startElement) {
+            return generator.generateElementCFIComponent(startElement);
+        },
+        generatePackageDocumentCFIComponent : function (contentDocumentName, packageDocument) {
+            return generator.generatePackageDocumentCFIComponent(contentDocumentName, packageDocument);
+        },
+        generatePackageDocumentCFIComponentWithSpineIndex : function (spineIndex, packageDocument) {
+            return generator.generatePackageDocumentCFIComponentWithSpineIndex(spineIndex, packageDocument);
+        },
+        generateCompleteCFI : function (packageDocumentCFIComponent, contentDocumentCFIComponent) {
+            return generator.generateCompleteCFI(packageDocumentCFIComponent, contentDocumentCFIComponent);
+        },
+        injectElementAtOffset : function ($textNodeList, textOffset, elementToInject) {
+            return instructions.injectCFIMarkerIntoText($textNodeList, textOffset, elementToInject);
+        },
         injectRangeElements : function (rangeCFI, contentDocument, startElementToInject, endElementToInject, classBlacklist, elementBlacklist, idBlacklist) {
-            return interpreter.injectRangeElements.call(interpreter, rangeCFI, contentDocument, startElementToInject, endElementToInject, classBlacklist, elementBlacklist, idBlacklist);
+            return interpreter.injectRangeElements(rangeCFI, contentDocument, startElementToInject, endElementToInject, classBlacklist, elementBlacklist, idBlacklist);
         },
         getRangeTargetElements : function (rangeCFI, contentDocument, classBlacklist, elementBlacklist, idBlacklist) {
-            return interpreter.getRangeTargetElements.call(interpreter, rangeCFI, contentDocument, classBlacklist, elementBlacklist, idBlacklist);
+            return interpreter.getRangeTargetElements(rangeCFI, contentDocument, classBlacklist, elementBlacklist, idBlacklist);
         },
         generateCharOffsetRangeComponent : function (rangeStartElement, startOffset, rangeEndElement, endOffset, classBlacklist, elementBlacklist, idBlacklist) {
-            return generator.generateCharOffsetRangeComponent.call(generator, rangeStartElement, startOffset, rangeEndElement, endOffset, classBlacklist, elementBlacklist, idBlacklist);
+            return generator.generateCharOffsetRangeComponent(rangeStartElement, startOffset, rangeEndElement, endOffset, classBlacklist, elementBlacklist, idBlacklist);
         },
         generateElementRangeComponent : function (rangeStartElement, rangeEndElement, classBlacklist, elementBlacklist, idBlacklist) {
-            return generator.generateElementRangeComponent.call(generator, rangeStartElement, rangeEndElement, classBlacklist, elementBlacklist, idBlacklist);
+            return generator.generateElementRangeComponent(rangeStartElement, rangeEndElement, classBlacklist, elementBlacklist, idBlacklist);
         }
     };
 };

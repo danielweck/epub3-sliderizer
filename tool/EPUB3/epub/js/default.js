@@ -1696,18 +1696,19 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate)
 				if (enableAuto && (i == that.increment + 1))
 				{
 					//console.log(elem.parentNode.classList.toString());
-				
+									
 					if (elem.classList.contains("auto")
 						||
 						elem.parentNode.classList.contains("auto"))
 						{
+
 						var auto = i;
 						setTimeout(function()
 						{
 							if (auto == that.increment + 1)
 							{
 								that.increment += 1;
-								that.invalidateIncremental(true, reanimate);
+								that.invalidateIncremental(enableAuto, reanimate);
 							}
 						}, delay);
 					}
@@ -1735,7 +1736,7 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate)
 				elem.removeAttribute("aria-activedescendant");
 			}
 			else if (i == that.increment)
-			{
+			{				
 				elem.parentNode.setAttribute("incremental-active", "true");
 				elem.setAttribute("aria-selected", "true");
 				elem.removeAttribute("aria-activedescendant");

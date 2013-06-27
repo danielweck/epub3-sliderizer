@@ -190,6 +190,35 @@ a:active
 	border-bottom: 2px #0066FF dotted;
 }
 
+table,
+table tr,
+table tr td
+{
+	-PREFIXED_PROPERTY-box-sizing:border-box;
+	
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+table.spaceLined
+{
+	width: 95%;
+}
+
+table.spaceLined td
+{
+	border-top: 2px solid #eeeeee;
+	
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
+}
+
+table.spaceLined tr:first-child td
+{
+	border-top: none;
+}
+
 img
 {
 	-webkit-transform: translateZ(0);
@@ -501,33 +530,17 @@ h1#epb3sldrzr-title-NOTES
 	padding-left:0.6em;
 	
 	color:rgba(0, 0, 0, 0.5);
-	background-color:#efefef;
-	border-bottom: 4px solid #8AC007;
 
 	text-shadow:2px 2px 4px rgba(255, 255, 255, 1), 0 0 0 rgba(0, 0, 0, 0.5); /* 2px 2px 4px white; */
+
+	background-color:#efefef;
 	
 	background: rgb(238,238,238);
-	
-	/*
-
-	-PREFIXED_PROPERTY-box-shadow: 0 0 16px 0px black;
-	
-	
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(204,204,204,1))); 
-	*/
-	/*
-	background: -moz-linear-gradient(top,	rgba(238,238,238,1) 0%, rgba(204,204,204,1) 100%);
-	background: -webkit-linear-gradient(top,	rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%);
-	background: -o-linear-gradient(top,	rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%);
-	background: -ms-linear-gradient(top,	rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%);
-	background: linear-gradient(to bottom,	rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 );
-	*/
 }
 
 html#epb3sldrzr-NavDoc h1#epb3sldrzr-title
 {
-	border-bottom: 4px solid #CC3300;
+	border-bottom: 8px solid #CC3300;
 }
 
 html.static body.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title,
@@ -776,22 +789,7 @@ a#epb3sldrzr-link-epub
 	right: 20px;
 }
 
-a#epb3sldrzr-link-toc
-{
-	left: 50%;
-	/*
-
-	padding:10px;
-	padding-bottom:2px;
-	padding-top:4px;
-	
-	
-	margin: 50% auto 0 0;
-	*/
-}
-
-
-a#epb3sldrzr-link-previous,
+a#epb3sldrzr-link-toc,
 a#epb3sldrzr-link-epubReadingSystem
 {
 	left:15px;
@@ -802,6 +800,11 @@ a#epb3sldrzr-link-next
 	right:15px;
 }
 
+a#epb3sldrzr-link-previous
+{
+	right:70px;
+}
+
 a#epb3sldrzr-link-notesref
 {
 	right:300px;
@@ -809,7 +812,8 @@ a#epb3sldrzr-link-notesref
 
 html:not(.basic) body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-noteback,
 html:not(.basic) body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-notesref,
-html:not(.basic) body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-epub
+html:not(.basic) body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-epub,
+html#epb3sldrzr-NavDoc a#epb3sldrzr-link-toc
 {
 	display: none !important;
 }
@@ -881,7 +885,7 @@ ol > li:before
 	padding-right: 0.6em;
 	padding-left: 0.6em;
 	
-	margin-right: 0.3em;
+	margin-right: 0.6em;
 	
 	counter-increment:item;
 	content:counter(item);
@@ -929,7 +933,7 @@ html#epb3sldrzr-NavDoc ol li
 html#epb3sldrzr-NavDoc ol li:before
 {
 	color: #ffffff;
-	background-color: #CC3300;
+	background-color: #8AC007;
 }
 
 html#epb3sldrzr-NavDoc ol li:hover:before
@@ -1009,7 +1013,7 @@ Slide content
 #epb3sldrzr-content div.boxed > div,
 #epb3sldrzr-content-NOTES div.boxed > div
 {
-	background: white;
+	background: transparent;
 
 	-PREFIXED_PROPERTY-box-shadow: 2px 2px 4px rgb(200, 200, 200); /* , 0 0 10px rgba(210, 220, 230, 1) inset; 0 0 50px rgba(0, 0, 0, 1) 0 0 40px rgba(0, 0, 0, 0.1) inset */
 
@@ -1047,9 +1051,17 @@ Slide content
 	padding-bottom: 0;
 }
 
+#epb3sldrzr-content div.boxed > div > table,
+#epb3sldrzr-content-NOTES div.boxed > div > table
+{
+	margin-left: 1em;
+}
+
 #epb3sldrzr-content div.boxed > h3,
 #epb3sldrzr-content-NOTES div.boxed > h3
 {
+	color: #CC3300;
+	
 	font-weight: 900;
 	font-family: Lato, Tahoma, 'arial black', verdana, arial, sans-serif;
 	
@@ -1072,8 +1084,8 @@ Slide content
 {
 	float: right;
 	
-	background: #333333;
-	color: white;
+	background: white;
+	color: #CC3300;
 	
 	font-weight: 400;
 	
@@ -1376,54 +1388,21 @@ _PREFIXED_@keyframes fadeIn
 	-PREFIXED_PROPERTY-animation-name: fadeIn;
 }
 
-/*
 
-	background-colorx:#3D6AA2;
-	background-colorx:rgba(10, 60, 150, 0.7);
-	
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+h1#epb3sldrzr-title,
+h1#epb3sldrzr-title-NOTES
+{	
+	background: -moz-linear-gradient(left,  rgba(237,237,237,1) 0%, rgba(250,250,250,1) 70%, rgba(255,255,255,0) 100%);
 
-	colorx:rgb(61, 106, 162);
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(237,237,237,1)), color-stop(70%,rgba(250,250,250,1)), color-stop(100%,rgba(255,255,255,0)));
 
-	colorx:rgba(10, 60, 150, 0.5);
-	
-	font-family: georgia, palatino, "times new roman", serif;
-	'PT Sans Narrow', 
-	Calibri, 
-	'Myriad Pro', 
-	
-	
-	
-	colorx:rgb(61, 106, 162);
-	colorx:rgba(10, 60, 150, 0.7);
-	colorx:rgba(0, 0, 0, 0.1);
-	color:rgba(255, 255, 255, 1);
-	colorx: #333300;
+	background: -webkit-linear-gradient(left,  rgba(237,237,237,1) 0%,rgba(250,250,250,1) 70%,rgba(255,255,255,0) 100%);
 
+	background: -o-linear-gradient(left,  rgba(237,237,237,1) 0%,rgba(250,250,250,1) 70%,rgba(255,255,255,0) 100%);
 
-	background-color:#276195;
-	background-colorx:rgba(10, 60, 150, 0.6);
-	background-colorx:#efefef;
-	
-	background-image: -moz-linear-gradient(#3c88cc,#276195);
-	background-image: -ms-linear-gradient(#3c88cc,#276195);
-	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#3c88cc),color-stop(100%,#276195));
-	background-image: -webkit-linear-gradient(#3c88cc,#276195);
-	background-image: -o-linear-gradient(#3c88cc,#276195);
-	
-	border-bottomx:4px solid rgb(61, 106, 162);
-	border-bottom:4px solid #333333;
+	background: -ms-linear-gradient(left,  rgba(237,237,237,1) 0%,rgba(250,250,250,1) 70%,rgba(255,255,255,0) 100%);
 
-box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+	background: linear-gradient(to right,  rgba(237,237,237,1) 0%,rgba(250,250,250,1) 70%,rgba(255,255,255,0) 100%);
 
-
-	border-bottom-right-radius:100px;
-
-
-	text-shadowx:2px 2px 2px rgba(255, 255, 255, 0.3), 0 0 0 rgba(0, 0, 0, 0.8);
-
-	text-shadow: 3px 3px 0 rgba(0,0,0,0.35);
-
-	font-family:georgia, palatino, "times new roman", serif;
-	*/
-
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#00ffffff',GradientType=1 );
+}

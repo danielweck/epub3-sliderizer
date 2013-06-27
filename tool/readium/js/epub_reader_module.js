@@ -1,5 +1,5 @@
 var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSettings, packageDocumentDOM, renderStrategy) {
-    
+
     var EpubReader = {};
 
     // Rationale: The order of these matters
@@ -128,6 +128,7 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
         this.set("spine", spineInfo.spine);
         this.set("bindings", spineInfo.bindings);
         this.set("annotations", spineInfo.annotations);
+        this.get("viewerSettings").customStyles = [];
 
         this.loadStrategy = new EpubReader.LoadStrategy({ spineInfo : this.get("spine")});
         this.cfi = new EpubCFIModule();
@@ -172,10 +173,12 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
         return this.get("loadedPagesViews")[this.get("currentPagesViewIndex")].pagesView;
     },
 
-    renderPagesView : function (pagesViewIndex, renderLast, hashFragmentId, callback, callbackContext) {
+    renderPagesView : function (pagesViewIndex, callback, callbackContext) {
 
+        var pagesViewInfo;
         var pagesView;
         var that = this;
+
         if (pagesViewIndex >= 0 && pagesViewIndex < this.numberOfLoadedPagesViews()) {
 
             this.hideRenderedViews();
@@ -187,9 +190,7 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
 
                 pagesView.showPagesView();
                 this.applyPreferences(pagesView);
-                if (renderLast) {
-                    pagesView.showPageByNumber(pagesView.numberOfPages());
-                }
+                this.fitCurrentPagesView();
                 callback.call(callbackContext, pagesView);
             }
             else {
@@ -199,9 +200,6 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
 
                     pagesView.showPagesView();
                     that.applyPreferences(pagesView);
-                    if (renderLast) {
-                        pagesView.showPageByNumber(pagesView.numberOfPages());
-                    }
 
                     _.each(that.get("pagesViewEventList"), function (eventInfo) {
                         pagesView.on(eventInfo.eventName, eventInfo.callback, eventInfo.callbackContext);
@@ -211,6 +209,7 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
                 }, this);
 
                 $(this.get("parentElement")).append(pagesView.render(false, undefined));
+                that.setLastRenderSize(pagesViewInfo, $(that.get("parentElement")).height(), $(that.get("parentElement")).width());
                 pagesViewInfo.isRendered = true;
             }
         }
@@ -218,26 +217,22 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
 
     renderNextPagesView : function (callback, callbackContext) {
 
-        var nextPagesViewIndex;
-        if (this.hasNextPagesView()) {
-            nextPagesViewIndex = this.get("currentPagesViewIndex") + 1;
-            this.renderPagesView(nextPagesViewIndex, false, undefined, callback, callbackContext);
-        }
-        else {
+        var nextPagesViewIndex = this.get("currentPagesViewIndex") + 1;
+        this.renderPagesView(nextPagesViewIndex, function (pagesView) {
+
+            pagesView.showPageByNumber(1);
             callback.call(callbackContext);
-        }
+        }, callbackContext);
     },
 
     renderPreviousPagesView : function (callback, callbackContext) {
 
-        var previousPagesViewIndex;
-        if (this.hasPreviousPagesView()) {
-            previousPagesViewIndex = this.get("currentPagesViewIndex") - 1;
-            this.renderPagesView(previousPagesViewIndex, true, undefined, callback, callbackContext);
-        }
-        else {
+        var previousPagesViewIndex = this.get("currentPagesViewIndex") - 1;
+        this.renderPagesView(previousPagesViewIndex, function (pagesView) {
+
+            pagesView.showPageByNumber(pagesView.numberOfPages());
             callback.call(callbackContext);
-        }
+        }, callbackContext);
     },
 
     attachEventHandler : function (eventName, callback, callbackContext) {
@@ -279,6 +274,24 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
         }, this);
     },
 
+    // REFACTORING CANDIDATE: For consistency, it might make more sense if each of the page sets kept track
+    //   of their own last size and made the decision as to whether to resize or not. Or maybe that doesn't make
+    //   sense.... something to think about. 
+    fitCurrentPagesView : function () {
+
+        var readerElementHeight = this.get("parentElement").height();
+        var readerElementWidth = this.get("parentElement").width();
+
+        var currPagesViewInfo = this.getCurrentPagesViewInfo();
+        var heightIsDifferent = currPagesViewInfo.lastRenderHeight !== readerElementHeight ? true : false;
+        var widthIsDifferent = currPagesViewInfo.lastRenderWidth !== readerElementWidth ? true : false;
+
+        if (heightIsDifferent || widthIsDifferent) {
+            this.setLastRenderSize(currPagesViewInfo, readerElementHeight, readerElementWidth);
+            currPagesViewInfo.pagesView.resizeContent();
+        }
+    },
+
     // ------------------------------------------------------------------------------------ //
     //  "PRIVATE" HELPERS                                                                   //
     // ------------------------------------------------------------------------------------ //
@@ -308,6 +321,7 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
             
             // This will cause the pages view to try to retrieve its resources
             $(that.get("parentElement")).append(pagesViewInfo.pagesView.render(false, undefined));
+            that.setLastRenderSize(pagesViewInfo, $(that.get("parentElement")).height(), $(that.get("parentElement")).width());
         });
 
         setTimeout(function () { 
@@ -423,12 +437,33 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
 
         var preferences = this.get("viewerSettings");
         pagesView.setSyntheticLayout(preferences.syntheticLayout);
-        pagesView.setMargin(preferences.currentMargin);
-        pagesView.setTheme(preferences.currentTheme);
-        pagesView.setFontSize(preferences.fontSize);
+
+        // Apply all current preferences to the next page set
+        pagesView.customize("margin", preferences.currentMargin + "");
+        pagesView.customize("fontSize", preferences.fontSize + "")
+        _.each(preferences.customStyles, function (customStyle) {
+            pagesView.customize(customStyle.customProperty, customStyle.styleNameOrCSSObject);
+        });
+    },
+
+    setLastRenderSize : function (pagesViewInfo, height, width) {
+
+        pagesViewInfo.lastRenderHeight = height;
+        pagesViewInfo.lastRenderWidth = width;
     }
 });
     EpubReader.EpubReaderView = Backbone.View.extend({
+
+    pageSetEvents : {
+        "contentDocumentLoaded" : false,
+        "epubLinkClicked" : true,
+        "atNextPage" : false,
+        "atPreviousPage" : false,
+        "atFirstPage" : false,
+        "atLastPage" : false,
+        "layoutChanged" : false,
+        "displayedContentChanged" : false
+    },
 
     initialize : function (options) {
 
@@ -445,6 +480,7 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
             that.trigger("epubLoaded");
             // that.$el.css("opacity", "1");
         }, this);
+        this.startPropogatingEvents();
 
         this.readerBoundElement = options.readerElement;
         this.cfi = new EpubCFIModule();
@@ -461,19 +497,19 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
 
     // ------------------------ Public interface ------------------------------------------------------------------------
 
-    // REFACTORING CANDIDATE: This will only work for reflowable page views; there is currently not a mapping between
-    //   spine items and the page views in which they are rendered, for FXL epubs. When support for FXL is included, this 
-    //   abstraction will include more.
     showSpineItem : function (spineIndex, callback, callbackContext) {
 
         var that = this;
         var pagesViewIndex = this.reader.getPagesViewIndex(spineIndex);
         this.$el.css("opacity", "0");
-        this.reader.renderPagesView(pagesViewIndex, false, undefined, function () {
+        this.reader.renderPagesView(pagesViewIndex, function () {
 
             var pagesViewInfo = this.reader.getCurrentPagesViewInfo();
 
             // If the pages view is fixed
+            // REFACTORING CANDIDATE: This will cause a displayedContentChanged event to be triggered twice when another show
+            //   method calls this to first load the spine item; Part of this method could be extracted and turned into a 
+            //   helper to prevent this.
             if (pagesViewInfo.type === "fixed") {
                 pageNumber = that.getPageNumber(pagesViewInfo, spineIndex);
                 pagesViewInfo.pagesView.showPageByNumber(pageNumber);
@@ -526,14 +562,26 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
 
         if (currentPagesView.onLastPage()) {
 
-            this.$el.css("opacity", "0");
-            this.reader.renderNextPagesView(function () {
-                that.$el.css("opacity", "1");
+            if (this.reader.hasNextPagesView()) {
+
+                this.$el.css("opacity", "0");
+                this.reader.renderNextPagesView(function () {
+
+                    that.$el.css("opacity", "1");
+                    that.trigger("atNextPage");
+                    callback.call(callbackContext);
+                }, this);
+            }
+            else {
+                this.trigger("atLastPage");
                 callback.call(callbackContext);
-            }, this);
+            }
         }
         else {
             currentPagesView.nextPage();
+            if (currentPagesView.onLastPage() && !this.reader.hasNextPagesView()) {
+                that.trigger("atLastPage");
+            }
         }
     },
 
@@ -544,14 +592,49 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
 
         if (currentPagesView.onFirstPage()) {
 
-            this.$el.css("opacity", "0");
-            this.reader.renderPreviousPagesView(function () {
-                that.$el.css("opacity", "1");
+            if (this.reader.hasPreviousPagesView()) {
+                
+                this.$el.css("opacity", "0");
+                this.reader.renderPreviousPagesView(function () {
+
+                    that.$el.css("opacity", "1");
+                    that.trigger("atPreviousPage");
+                    callback.call(callbackContext);
+                }, this);
+            }
+            else {
+                this.trigger("atFirstPage");
                 callback.call(callbackContext);
-            }, this);
+            }
         }
         else {
             currentPagesView.previousPage();
+            if (currentPagesView.onFirstPage() && !this.reader.hasPreviousPagesView()) {
+                that.trigger("atFirstPage");
+            }
+        }
+    },
+
+    // REFACTORING CANDIDATE: setFontSize and setMargin can be rolled into the custom
+    //   proprety infrastructure at some point
+    customize : function (customProperty, styleNameOrCSSObject) {
+
+        var currentView;
+
+        // delegate to font size, margin and theme
+        if (customProperty === "fontSize") {
+            this.setFontSize(parseInt(styleNameOrCSSObject));
+        }
+        else if (customProperty === "margin") {
+            this.setMargin(parseInt(styleNameOrCSSObject));
+        }
+        else {
+            currentView = this.reader.getCurrentPagesView();
+            currentView.customize(customProperty, styleNameOrCSSObject);
+            this.reader.get("viewerSettings")["customStyles"].push({ 
+                "customProperty" : customProperty,
+                "styleNameOrCSSObject" : styleNameOrCSSObject
+            });
         }
     },
 
@@ -567,13 +650,6 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
         var currentView = this.reader.getCurrentPagesView();
         currentView.setMargin(margin);
         this.reader.get("viewerSettings").currentMargin = margin;
-    },
-
-    setTheme : function (theme) {
-
-        var currentView = this.reader.getCurrentPagesView();
-        currentView.setTheme(theme);
-        this.reader.get("viewerSettings").currentTheme = theme;
     },
 
     setSyntheticLayout : function (isSynthetic) {
@@ -598,14 +674,13 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
         return this.reader.get("viewerSettings");
     },
 
-    assignEventHandler : function (eventName, callback, callbackContext) {
+    attachEventHandler : function (eventName, callback, callbackContext) {
 
-        if (eventName === "keydown-left") {
+        // Page set events
+        if (this.canHandlePageSetEvent(eventName)) {
             this.reader.attachEventHandler(eventName, callback, callbackContext);
         }
-        else if (eventName === "keydown-right") {
-            this.reader.attachEventHandler(eventName, callback, callbackContext);
-        } 
+        // Reader events
         else {
             this.on(eventName, callback, callbackContext);
         }
@@ -613,12 +688,11 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
 
     removeEventHandler : function (eventName) {
 
-        if (eventName === "keydown-left") {
-            this.reader.removeEventHandler(eventName);
+        // Page set events
+        if (this.canHandlePageSetEvent(eventName)) {
+            this.reader.removeEventHandler(eventName, callback, callbackContext);
         }
-        else if (eventName === "keydown-right") {
-            this.reader.removeEventHandler(eventName);
-        } 
+        // Reader events
         else {
             this.off(eventName);
         }
@@ -652,6 +726,35 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
         });
 
         return pageNumber;
+    },
+
+    canHandlePageSetEvent : function (eventName) {
+
+        if (this.pageSetEvents[eventName] === true) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    },
+
+    startPropogatingEvents : function () {
+
+        this.reader.attachEventHandler("atNextPage", function () {
+            this.trigger("atNextPage");
+        }, this);
+
+        this.reader.attachEventHandler("atPreviousPage", function () {
+            this.trigger("atPreviousPage");
+        }, this);
+
+        this.reader.attachEventHandler("layoutChanged", function (isSynthetic) {
+            this.trigger("layoutChanged", isSynthetic);
+        }, this);
+
+        this.reader.attachEventHandler("displayedContentChanged", function () {
+            this.trigger("displayedContentChanged");
+        }, this);        
     }
 });
 
@@ -666,20 +769,57 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
     // Description: The public interface
     return {
 
-        render : function () { return epubReaderView.render.call(epubReaderView); },
-        showSpineItem : function (spineIndex, callback, callbackContext) { return epubReaderView.showSpineItem.call(epubReaderView, spineIndex, callback, callbackContext); },
-        showPageByCFI : function (CFI, callback, callbackContext) { return epubReaderView.showPageByCFI.call(epubReaderView, CFI, callback, callbackContext); },
-        showPageByElementId : function (spineIndex, hashFragmentId, callback, callbackContext) { return epubReaderView.showPageByElementId.call(epubReaderView, spineIndex, hashFragmentId, callback, callbackContext); },
-        nextPage : function (callback, callbackContext) { return epubReaderView.nextPage.call(epubReaderView, callback, callbackContext); },
-        previousPage : function (callback, callbackContext) { return epubReaderView.previousPage.call(epubReaderView, callback, callbackContext); },
-        setFontSize : function (fontSize) { return epubReaderView.setFontSize.call(epubReaderView, fontSize); },
-        setMargin : function (margin) { return epubReaderView.setMargin.call(epubReaderView, margin); },
-        setTheme : function (theme) { return epubReaderView.setTheme.call(epubReaderView, theme); },
-        setSyntheticLayout : function (isSynthetic) { return epubReaderView.setSyntheticLayout.call(epubReaderView, isSynthetic); },
-        getNumberOfPages : function () { return epubReaderView.getNumberOfPages.call(epubReaderView); },
-        getCurrentPage : function () { return epubReaderView.getCurrentPage.call(epubReaderView); },
-        on : function (eventName, callback, callbackContext) { return epubReaderView.assignEventHandler.call(epubReaderView, eventName, callback, callbackContext); },
-        off : function (eventName) { return epubReaderView.removeEventHandler.call(epubReaderView, eventName); }, 
-        getViewerSettings : function () { return epubReaderView.getViewerSettings.call(epubReaderView); }
+        render : function () {
+            return epubReaderView.render();
+        },
+        showSpineItem : function (spineIndex, callback, callbackContext) {
+            return epubReaderView.showSpineItem(spineIndex, callback, callbackContext);
+        },
+        showPageByCFI : function (CFI, callback, callbackContext) {
+            return epubReaderView.showPageByCFI(CFI, callback, callbackContext);
+        },
+        showPageByElementId : function (spineIndex, hashFragmentId, callback, callbackContext) {
+            return epubReaderView.showPageByElementId(spineIndex, hashFragmentId, callback, callbackContext);
+        },
+        nextPage : function (callback, callbackContext) {
+            return epubReaderView.nextPage(callback, callbackContext);
+        },
+        previousPage : function (callback, callbackContext) {
+            return epubReaderView.previousPage(callback, callbackContext);
+        },
+        setFontSize : function (fontSize) {
+            return epubReaderView.setFontSize(fontSize);
+        },
+        setMargin : function (margin) {
+            return epubReaderView.setMargin(margin);
+        },
+        setTheme : function (theme) {
+            return epubReaderView.setTheme(theme);
+        },
+        setSyntheticLayout : function (isSynthetic) {
+            return epubReaderView.setSyntheticLayout(isSynthetic);
+        },
+        getNumberOfPages : function () {
+            return epubReaderView.getNumberOfPages();
+        },
+        getCurrentPage : function () {
+            return epubReaderView.getCurrentPage();
+        },
+        on : function (eventName, callback, callbackContext) {
+            return epubReaderView.attachEventHandler(eventName, callback, callbackContext);
+        },
+        off : function (eventName) {
+            return epubReaderView.removeEventHandler(eventName);
+        },
+        getViewerSettings : function () {
+            return epubReaderView.getViewerSettings();
+        },
+        resizeContent : function () {
+            return epubReaderView.reader.fitCurrentPagesView();
+        },
+        customize : function (customProperty, styleNameOrCSS) {
+            epubReaderView.customize(customProperty, styleNameOrCSS);
+            return this;
+        }
     };
 };

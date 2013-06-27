@@ -1,5 +1,5 @@
 var EpubParserModule = function(packageDocumentURI, packageDocumentXML) {
-    
+
     var EpubParser = {};
     // `PackageDocumentParser` is used to parse the xml of an epub package
 // document and build a javascript object. The constructor accepts an
@@ -256,14 +256,16 @@ EpubParser.PackageDocumentParser = Backbone.Model.extend({
     }
 });
 
-    var packageDocParser = new EpubParser.PackageDocumentParser({ 
+    var packageDocParser = new EpubParser.PackageDocumentParser({
         packageDocumentURI : packageDocumentURI,
-        packageDocumentXML : packageDocumentXML 
+        packageDocumentXML : packageDocumentXML
     });
 
     // Description: The public interface
     return {
 
-        parse : function () { return packageDocParser.parse.call(packageDocParser); }
+        parse : function () {
+            return packageDocParser.parse();
+        }
     };
 };

@@ -1,5 +1,5 @@
 var EpubFixedModule = function (spineObjects, viewerSettingsObject) {
-    
+
     var EpubFixed = {};
 
     // Rationale: The order of these matters
@@ -339,7 +339,7 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
         this.set("pageProgressionDirection", this.get("spineObjects")[0].pageProgressionDirection);
     },
 
-    loadFixedPages : function (bindingElement, viewerSettings) {
+    renderFixedPages : function (bindingElement, viewerSettings, linkClickHandler, handlerContext) {
 
         // Reset the default for a synthetic layout
         if (viewerSettings.syntheticLayout) {
@@ -347,29 +347,43 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
         }
 
         this.loadPageViews(viewerSettings);
-        this.renderAll(bindingElement);
+        this.renderAll(bindingElement, linkClickHandler, handlerContext);
     },
 
-    nextPage : function (twoUp) {
+    nextPage : function (twoUp, pageSetEventContext) {
 
         var newPageNums;
-        if (this.onLastPage()) {
-            return;
-        }
+        if (!this.onLastPage()) {
 
-        newPageNums = this.fixedPagination.getNextPageNumbers(this.get("currentPages"), twoUp, this.get("pageProgressionDirection"));
-        this.resetCurrentPages(newPageNums);
+            newPageNums = this.fixedPagination.getNextPageNumbers(this.get("currentPages"), twoUp, this.get("pageProgressionDirection"));
+            this.resetCurrentPages(newPageNums);
+
+            // Trigger events
+            pageSetEventContext.trigger("atNextPage");
+            pageSetEventContext.trigger("displayedContentChanged");
+            this.onLastPage() ? pageSetEventContext.trigger("atLastPage") : undefined;
+        }
+        else {
+            pageSetEventContext.trigger("atLastPage");
+        }
     },
 
-    previousPage : function (twoUp) {
+    previousPage : function (twoUp, pageSetEventContext) {
 
         var newPageNums;
-        if (this.onFirstPage()) {
-            return;
-        }
+        if (!this.onFirstPage()) {
 
-        newPageNums = this.fixedPagination.getPreviousPageNumbers(this.get("currentPages"), twoUp, this.get("pageProgressionDirection"));
-        this.resetCurrentPages(newPageNums);
+            newPageNums = this.fixedPagination.getPreviousPageNumbers(this.get("currentPages"), twoUp, this.get("pageProgressionDirection"));
+            this.resetCurrentPages(newPageNums);
+            
+            // Trigger events
+            pageSetEventContext.trigger("atPreviousPage");
+            pageSetEventContext.trigger("displayedContentChanged");
+            this.onFirstPage() ? pageSetEventContext.trigger("atFirstPage") : undefined;
+        }
+        else {
+            pageSetEventContext.trigger("atFirstPage");
+        }
     },
 
     onFirstPage : function () {
@@ -427,6 +441,12 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
         this.resetCurrentPages(newPageNumbers);
     },
 
+    getPageViewInfo : function (pageNumber) {
+
+        var pageIndex = pageNumber - 1;
+        return this.get("fixedPages")[pageIndex];
+    },
+
     // -------------------------------------------- PRIVATE HELPERS ---------------------------------
 
     hidePageViews : function () {
@@ -461,14 +481,17 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
                 fixedPageView : fixedPageView,
                 pageType : spineObject.fixedLayoutType,
                 isRendered : false,
-                spineIndex : spineObject.spineIndex
+                spineIndex : spineObject.spineIndex,
+                pageSpread : spineObject.pageSpread
             };
 
             that.get("fixedPages").push(fixedPageViewInfo);
         });
     },
 
-    renderAll : function (bindingElement) {
+    // REFACTORING CANDIDATE: the pageSetEventContext can be used to trigger the epubLoaded event; also, epubLoaded 
+    //   should be renamed to something like pageSetLoaded.
+    renderAll : function (bindingElement, linkClickHandler, handlerContext) {
 
         var that = this;
         var numFixedPages = this.get("fixedPages").length;
@@ -486,7 +509,7 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
                 }
             });
             
-            that.addPageViewToDom(bindingElement, fixedPageViewInfo.fixedPageView.render(false, undefined));
+            that.addPageViewToDom(bindingElement, fixedPageViewInfo.fixedPageView.render(false, undefined, linkClickHandler, handlerContext));
         });
 
         setTimeout(function () { 
@@ -517,12 +540,6 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
         }
     },
 
-    getPageViewInfo : function (pageNumber) {
-
-        var pageIndex = pageNumber - 1;
-        return this.get("fixedPages")[pageIndex];
-    },
-
     initializeImagePage : function (pageSpread, imageSrc, viewerSettings) {
 
         return new EpubFixed.ImagePageView({
@@ -539,16 +556,22 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
                         iframeSrc : iframeSrc,
                         viewerSettings : viewerSettings
                     });
+    },
+
+    resizePageViews : function () {
+
+        _.each(this.get("fixedPages"), function (fixedPageViewInfo) {
+            fixedPageViewInfo.fixedPageView.setPageSize();
+        });
     }
 });
     EpubFixed.FixedSizing = Backbone.Model.extend({
 
-    metaSize : {
-        width : undefined,
-        height : undefined
-    },
+    initialize : function (attributes) {
 
-    initialize : function (attributes) {},
+        this.metaSize = { width : undefined, height : undefined };
+        this.transformedPageSize = {};
+    },
 
     // ------------------ PUBLIC INTERFACE ---------------------------------
 
@@ -603,6 +626,9 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
         var scale = Math.min(horScale, verScale);
 
         var css = this.generateTransformCSS(scale);
+
+        this.transformedPageSize.width = Math.ceil(scale * bookSize.width);
+        this.transformedPageSize.height = Math.ceil(scale * bookSize.height);
         css["width"] = bookSize.width;
         css["height"] = bookSize.height;
 
@@ -647,7 +673,6 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
         return undefined;
     },
 
-    // Have to modernizer this
     generateTransformCSS : function (scale) {
 
         var transformString = "scale(" + scale + ")";
@@ -659,6 +684,7 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
     },
 
     modernizrCssPrefix : function (attr) {
+        
         var str = Modernizr.prefixed(attr);
         return str.replace(/([A-Z])/g, function(str, m1){ 
             return '-' + m1.toLowerCase(); 
@@ -671,7 +697,6 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
 
     getSinglePageSpreadCSS : function () {
 
-        // @include box-shadow(0 0 5px 5px rgba(80,80,80,0.5));
         return {
             "position" : "absolute",
             "overflow" : "hidden",
@@ -681,7 +706,8 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
             "-moz-transform-origin" : "top left",
             "-o-transform-origin" : "top left",
             "-ms-transform-origin" : "top left",
-            "left" : "25%"
+            "left" : "0%" // Expects that the parent element is resized to wrap it perfectly; this is done with
+            //   javascript in the fixed pagination view
         };
     },
 
@@ -757,7 +783,8 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
         }
     },
 
-    render : function () {
+    // REFACTORING CANDIDATE: Use page set event context to trigger the content document loaded event
+    render : function (goToLast, elementIdToShow, linkClickHandler, handlerContext) {
 
         var that = this;
         this.get$iframe().attr("src", this.iframeSrc);
@@ -788,7 +815,7 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
             }
 
             that.sizing = new EpubFixed.FixedSizing({ contentDocument : that.get$iframe()[0].contentDocument });
-            // this.injectLinkHandler(e.srcElement);
+            that.injectLinkHandler(that.get$iframe(), linkClickHandler, handlerContext);
             // that.applyKeydownHandler($(view.iframe()));
             that.setPageSize();
             that.trigger("contentDocumentLoaded");
@@ -807,6 +834,14 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
 
     showPage : function () {
         this.$el.show();
+    },
+
+    getTransformedWidth : function () {
+        return this.sizing.transformedPageSize.width;
+    },
+
+    getTransformedHeight : function () {
+        return this.sizing.transformedPageSize.height;
     },
 
     setSinglePageSpreadStyle : function () {
@@ -842,6 +877,14 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
             transformCss = this.sizing.fitToScreen($readerElement.width(), $readerElement.height());
             this.$el.css(transformCss);
         }
+    },
+
+    injectLinkHandler : function ($iframe, linkClickHandler, handlerContext) {
+
+        var that = this;
+        $('a', $iframe).on("click", function (e) {
+            linkClickHandler.call(handlerContext, e);
+        });
     }
 });
     EpubFixed.ImagePageView = Backbone.View.extend({
@@ -864,14 +907,14 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
         }
     },
 
-    render : function () {
+    // REFACTORING CANDIDATE: Use page set event context to trigger the contentDocumentLoaded event
+    render : function (goToLast, elementIdToShow, linkClickHandler, handlerContext) {
 
         var that = this;
         $("img", this.$el).attr("src", this.imageSrc);
         this.$("img").on("load", function() { 
 
             that.sizing = new EpubFixed.FixedSizing({ contentDocument : $("img", this.el)[0] });
-            // that.injectLinkHandler();
             // that.applyKeydownHandler($(view.iframe()));
             // that.mediaOverlayController.pagesLoaded();
             that.setPageSize();
@@ -887,6 +930,14 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
 
     showPage : function () {
         this.$el.show();
+    },
+
+    getTransformedWidth : function () {
+        return this.sizing.transformedPageSize.width;
+    },
+
+    getTransformedHeight : function () {
+        return this.sizing.transformedPageSize.height;
     },
 
     setSinglePageSpreadStyle : function () {
@@ -926,8 +977,8 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
 });
     EpubFixed.FixedPaginationView = Backbone.View.extend({
 
-	el : "<div class='fixed-pages-view' style='position:relative;'> \
-            <div class='fixed-spine-divider'></div> \
+	el : "<div class='fixed-pages-view' style='position:relative; height:100%'> \
+            <div class='fixed-spine-divider' style='position:absolute;z-index:2;width:1px;left:50%;top:3%;height:93%;'></div> \
           </div>",
 
 	// ------------------------------------------------------------------------------------ //
@@ -943,8 +994,11 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
 		// Rationale: Propagate the loaded event after all the content documents are loaded
         this.fixedPageViews.on("epubLoaded", function () {
             that.trigger("contentDocumentLoaded");
+            that.createEpubBorder();
             that.$el.css("opacity", "1");
         }, this);
+
+        this.customizer = new EpubFixed.FixedCustomizer();
 
 		// this.mediaOverlayController = this.model.get("media_overlay_controller");
         // this.mediaOverlayController.setPages(this.pages);
@@ -956,20 +1010,22 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
 
 	render : function (goToLastPage, hashFragmentId) {
 
-		var that = this;
-		this.fixedPageViews.loadFixedPages(this.$el[0], this.viewerSettings);
+		this.fixedPageViews.renderFixedPages(this.$el[0], this.viewerSettings, this.linkClickHandler, this);
 		return this.el;
 	},
 
-    // REFACTORING CANDIDATE: Might want these methods to be the goLeft and goRight methods
+    // REFACTORING CANDIDATE: Might want these methods to be the goLeft and goRight methods, 
+    //   Also, at the moment, the page-turn events are triggered from the delegate, as well as 
+    //   checking of page boundry conditions. Not sure if this makes sense, or if it would be clearer
+    //   if that stuff was in these two methods instead. 
 	nextPage : function () {
 
-		this.fixedPageViews.nextPage(this.viewerSettings.syntheticLayout);
+		this.fixedPageViews.nextPage(this.viewerSettings.syntheticLayout, this);
 	},
 
 	previousPage : function () {
 
-		this.fixedPageViews.previousPage(this.viewerSettings.syntheticLayout);
+		this.fixedPageViews.previousPage(this.viewerSettings.syntheticLayout, this);
 	},
 
     setSyntheticLayout : function (isSynthetic) {
@@ -977,16 +1033,27 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
         if (isSynthetic && this.viewerSettings.syntheticLayout === false) {
             this.viewerSettings.syntheticLayout = true;
             this.fixedPageViews.setSyntheticLayout(true);
+            $(".fixed-spine-divider", this.$el).show();
+            this.createEpubBorder();
+            this.trigger("layoutChanged", true);
         }
         else if (!isSynthetic && this.viewerSettings.syntheticLayout === true) {
             this.viewerSettings.syntheticLayout = false;
             this.fixedPageViews.setSyntheticLayout(false);
+            $(".fixed-spine-divider", this.$el).hide();
+            this.createEpubBorder();
+            this.trigger("layoutChanged", false);
         }
     },
 
     showPageNumber : function (pageNumber) {
 
+        var startPageNumbers = this.fixedPageViews.get("currentPages");
         this.fixedPageViews.showPageNumber(pageNumber, this.viewerSettings.syntheticLayout);
+
+        if (startPageNumbers != this.fixedPageViews.get("currentPages")) {
+            this.trigger("displayedContentChanged");    
+        }
     },
 
     showPagesView : function () {
@@ -1000,6 +1067,27 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
 
         this.$el.hide();
         this.fixedPageViews.hidePageViews();
+    },
+
+    resizePageViews : function () {
+
+        this.fixedPageViews.resizePageViews();
+        this.createEpubBorder();
+        this.trigger("displayedContentChanged");
+    },
+
+    customize : function (customProperty, styleNameOrCSS) {
+
+        // Font size, margin and theme are not included
+
+        this.customizer.setCustomStyle(
+            customProperty, 
+            styleNameOrCSS, 
+            this.fixedPageViews.get("fixedPages"),
+            this.el,
+            $(".fixed-spine-divider", this.$el)[0],
+            this.viewerSettings.syntheticLayout
+        );
     },
     
  //    // override
@@ -1036,10 +1124,93 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
 
 	destruct : function () {
 
+        this.off("epubLoaded");
         // this.mediaOverlayController.off("change:mo_text_id", this.highlightText);
         // this.mediaOverlayController.off("change:active_mo", this.indicateMoIsPlaying);
-		// this.resetEl();
 	},
+
+    linkClickHandler : function (e) {
+
+        this.trigger("epubLinkClicked", e);
+    },
+
+    // Rationale: Wraps a border around the absolutely position pages on the screen. This is used for both layout (in the case
+    //   of a single page spread, and for having a border around the pages that can be styled. 
+    createEpubBorder : function () {
+
+        var currentPages = this.fixedPageViews.get("currentPages");
+        var currPageViewInfo;
+        var epubBorderSize;
+        var originalWidth;
+        var originalHeight;
+
+        if (this.viewerSettings.syntheticLayout) {
+            epubBorderSize = this.getSyntheticBorderSize();   
+        }
+        else {
+            epubBorderSize = this.getSinglePageBorderSize();
+        }
+
+        originalWidth = this.$el.outerWidth(true);
+        originalHeight = this.$el.outerHeight(true);
+
+        if (epubBorderSize.width < originalWidth) {
+            this.setHorizontalMarginsForBorder(epubBorderSize.width, originalWidth);
+        }
+        else if (epubBorderSize.height < originalHeight) {
+            this.setVerticalMarginsForBorder(epubBorderSize.height, originalHeight);
+        }
+    },
+
+    setHorizontalMarginsForBorder : function (epubBorderWidth, currentWidth) {
+
+        var HEURISTIC_ADJUSTMENT = 5;
+        var difference = currentWidth - epubBorderWidth;
+        var margin = Math.ceil(difference / 2) - HEURISTIC_ADJUSTMENT;
+        this.$el.css({ "margin-left" : margin , "margin-right" : margin });
+    },
+
+    setVerticalMarginsForBorder : function (epubBorderHeight, currentHeight) {
+
+        var HEURISTIC_ADJUSTMENT = 5;
+        var difference = currentHeight - epubBorderHeight;
+        var margin = Math.ceil(difference / 2) - HEURISTIC_ADJUSTMENT;
+        this.$el.css({ "margin-top" : margin , "margin-bottom" : margin });
+    },
+
+    getSinglePageBorderSize : function () {
+
+        var page;
+        var currentPageNumber = this.fixedPageViews.get("currentPages")[0];
+
+        currentPage = this.fixedPageViews.getPageViewInfo(currentPageNumber).fixedPageView;
+
+        return {
+            height : currentPage.getTransformedHeight(),
+            width : currentPage.getTransformedWidth(),
+        };
+    },
+
+    getSyntheticBorderSize : function () {
+
+        var firstPage; 
+        var secondPage;
+        var maxHeight;
+        var maxWidth;
+        var firstPageNumber = this.fixedPageViews.get("currentPages")[0];
+        var secondPageNumber = this.fixedPageViews.get("currentPages")[1];
+
+        firstPage = this.fixedPageViews.getPageViewInfo(firstPageNumber).fixedPageView;
+        secondPage = this.fixedPageViews.getPageViewInfo(secondPageNumber).fixedPageView;
+
+        maxHeight = Math.max(firstPage.getTransformedHeight(), secondPage.getTransformedHeight());
+        maxWidth = Math.max(firstPage.getTransformedWidth(), secondPage.getTransformedWidth()) * 2;
+        
+        return {
+            height : maxHeight,
+            width : maxWidth,
+        };
+    }
 
 	// setFontSize: function() {
 	// 	var size = this.model.get("font_size") / 10;
@@ -1047,55 +1218,448 @@ EpubFixed.PageNumberDisplayLogic = Backbone.Model.extend({
 	// 	this.showCurrentPages();
 	// },
 
-	applyKeydownHandler : function ($pageViewContainer) {
+	// applyKeydownHandler : function ($pageViewContainer) {
 
-		var that = this;
-		$pageViewContainer.contents().keydown(function (e) {
+	// 	var that = this;
+	// 	$pageViewContainer.contents().keydown(function (e) {
 
-			if (e.which == 39) {
-				that.pages.goRight(); // Have to get ppd and two up
-			}
+	// 		if (e.which == 39) {
+	// 			that.pages.goRight(); // Have to get ppd and two up
+	// 		}
 							
-			if (e.which == 37) {
-				that.pages.goLeft(); // Have to get ppd and two up
-			}
-		});
-	},
+	// 		if (e.which == 37) {
+	// 			that.pages.goLeft(); // Have to get ppd and two up
+	// 		}
+	// 	});
+	// }
+});
+    EpubFixed.FixedCustomizer = Backbone.Model.extend({
 
-	injectLinkHandler : function (iframe) {
+    initialize : function (attributes, options) {
 
-    	var that = this;
-    	$('a', iframe.contentDocument).click(function(e) {
-    		that.linkClickHandler(e)
-    	});
+        // The list of page views
+        this.set("customPageBorder", new EpubFixed.FixedCustomPageBorder());
+        this.set("customEpubBorder", new EpubFixed.FixedCustomEpubBorder());  
+        this.set("customSpineDivider", new EpubFixed.FixedCustomSpineDivider());
+    },
+
+    // ----- PUBLIC INTERFACE -------------------------------------------------------------------
+
+    setCustomStyle : function (customProperty, styleNameOrCSS, pageViews, epubBorderElement, spineElement, isSynthetic) {
+
+        var that = this;
+        if (customProperty === "fixed-epub-border" || customProperty === "epub-border") {
+            that.get("customEpubBorder").setCurrentStyle(styleNameOrCSS, epubBorderElement);
+        }
+        else if (customProperty === "fixed-spine-divider" || customProperty === "spine-divider") {
+            this.get("customSpineDivider").setCurrentStyle(styleNameOrCSS, spineElement);
+        }
+        else if (customProperty === "fixed-page-border" || customProperty === "page-border") {
+            that.get("customPageBorder").setCurrentStyle(styleNameOrCSS, pageViews);
+        }
+        else if (customProperty === "fixed-page-border-left") {
+            that.get("customPageBorder").setCurrentStyle(styleNameOrCSS, pageViews, "left");
+        }
+        else if (customProperty === "fixed-page-border-right") {
+            that.get("customPageBorder").setCurrentStyle(styleNameOrCSS, pageViews, "right");
+        }
     }
-}); 
 
-    var fixedView = new EpubFixed.FixedPaginationView({  
-        spineObjects : spineObjects, 
+    // ----- PRIVATE HELPERS -------------------------------------------------------------------
+
+    // 
+
+});
+    EpubFixed.FixedCustomPageBorder = Backbone.Model.extend({
+
+    initialize : function (attributes, options) {
+
+        this.lastSetStyle = {};
+    },
+
+    setCurrentStyle : function (styleNameOrCSSObject, pageViews, pageSpread) {
+
+        var that = this;
+        var borderStyle;
+
+        // Rationale: If it's a string, we assume that the user specified one of the default names
+        if (typeof styleNameOrCSSObject === "string") {
+
+            // Iterate through each page view and set it's style
+            _.each(pageViews, function (pageViewInfo) {
+
+                if (pageSpread && pageViewInfo.pageSpread !== pageSpread) {
+                    return;
+                }
+
+                var $element = pageViewInfo.fixedPageView.$el;
+                if (pageSpread === "left") {
+                    borderStyle = that.getPageSpreadDefaultBorderStyle(styleNameOrCSSObject, "left");
+                }
+                else if (pageSpread === "right") {
+                    borderStyle = that.getPageSpreadDefaultBorderStyle(styleNameOrCSSObject, "right");
+                }
+                else {
+                    borderStyle = that.getDefaultBorderStyle(styleNameOrCSSObject);
+                }
+                
+                borderStyle = that.keepRequiredCSS(borderStyle);
+
+                if (borderStyle !== undefined) {
+                    that.removeLastSetStyle($element);
+                    that.renderCurrentStyle($element, borderStyle);
+                }
+            }); 
+            this.setAllCurrentStyles(borderStyle);
+        }
+        // Rationale: At this point, we're just assuming that the CSS provided is correct. Validation of some sort might be desirable 
+        //   at some point; hard to say. 
+        else if (typeof styleNameOrCSSObject === "object") {
+
+            borderStyle = that.keepRequiredCSS(styleNameOrCSSObject);
+            _.each(pageViews, function (pageViewInfo) {
+                that.removeLastSetStyle($element);
+                that.renderCurrentStyle($element, borderStyle);
+            });
+            this.setAllCurrentStyles(borderStyle);
+        }
+    },
+
+    // ------ PRIVATE HELPERS --------------------------------------------------------------
+
+    renderCurrentStyle : function ($element, currentStyle) {
+
+        $element.css(currentStyle);
+    },
+
+    getPageSpreadDefaultBorderStyle : function (defaultName, pageSpread) {
+
+        var defaultCSS;
+        if (defaultName === "box-shadow") {
+
+            if (pageSpread === "left") {
+                return { "-webkit-box-shadow" : "0px 0px 5px 5px rgba(80, 80, 80, 0.5)" };
+            }
+            else if (pageSpread === "right") {
+                return { "-webkit-box-shadow" : "0px 0px 5px 5px rgba(80, 80, 80, 0.5)" };
+            }
+            else {
+                return undefined;
+            }
+        }
+        else if (defaultName == "none") {
+            return {};
+        }
+        else {
+            return undefined;
+        }
+    },
+
+    getDefaultBorderStyle : function (defaultName) {
+
+        var defaultCSS;
+        if (defaultName === "box-shadow") {
+            return { "-webkit-box-shadow" : "0 0 5px 5px rgba(80, 80, 80, 0.5)" };
+        }
+        else if (defaultName == "none") {
+            return {};
+        }
+        else {
+            return undefined;
+        }
+    },
+
+    setAllCurrentStyles : function (styles) {
+        this.lastSetStyle = _.extend(this.lastSetStyle, styles);
+    },
+
+    keepRequiredCSS : function (customCSS) {
+
+        var requiredCSS = [
+            "position",
+            "z-index",
+            "top",
+            "left",
+            "width",
+            "height"
+        ];
+
+        // Remove properties that can't be changed
+        _.each(requiredCSS, function (propertyName) {
+            if (!customCSS.hasOwnProperty(propertyName)) {
+                delete customCSS[propertyName];
+            }
+        });
+
+        // Rationale: The underscore.js extend method will combine two (or more) objects. However, any properties in the second
+        //   object will overwrite the same properties in the first object. This is desired, as the position properties must be 
+        //   specified as defined in this view. 
+        return customCSS;
+    },
+
+    // REFACTORING CANDIDATE: Get modernizr in here
+    removeLastSetStyle : function ($element) {
+
+        _.each(this.lastSetStyle, function (styleValue, style) {
+            $element.css(style, "");
+        });
+    }
+});
+    EpubFixed.FixedCustomEpubBorder = Backbone.Model.extend({
+
+    initialize : function (attributes, options) {
+
+        this.lastSetStyle = {};
+    },
+
+    setCurrentStyle : function (styleNameOrCSSObject, epubBorderElement) {
+
+        var that = this;
+        var borderStyle;
+        var $element = $(epubBorderElement);
+
+        // Rationale: If it's a string, we assume that the user specified one of the default names
+        if (typeof styleNameOrCSSObject === "string") {
+
+            borderStyle = that.getDefaultBorderStyle(styleNameOrCSSObject);
+            borderStyle = that.keepRequiredCSS(borderStyle);
+
+            if (borderStyle !== undefined) {
+                that.removeLastSetStyle($element);
+                that.renderCurrentStyle($element, borderStyle);
+            }
+            this.setAllCurrentStyles(borderStyle);
+        }
+        // Rationale: At this point, we're just assuming that the CSS provided is correct. Validation of some sort might be desirable 
+        //   at some point; hard to say. 
+        else if (typeof styleNameOrCSSObject === "object") {
+
+            borderStyle = that.keepRequiredCSS(styleNameOrCSSObject);
+            that.removeLastSetStyle($element);
+            that.renderCurrentStyle($element, borderStyle);
+            this.setAllCurrentStyles(borderStyle);
+        }
+    },
+
+    // ------ PRIVATE HELPERS --------------------------------------------------------------
+
+    renderCurrentStyle : function ($element, currentStyle) {
+
+        $element.css(currentStyle);
+    },
+
+    getDefaultBorderStyle : function (defaultName) {
+
+        var defaultCSS;
+        if (defaultName === "box-shadow") {
+            return { "-webkit-box-shadow" : "0 0 5px 5px rgba(80, 80, 80, 0.5)" };
+        }
+        else if (defaultName == "none") {
+            return {};
+        }
+        else {
+            return undefined;
+        }
+    },
+
+    setAllCurrentStyles : function (styles) {
+        this.lastSetStyle = _.extend(this.lastSetStyle, styles);
+    },
+
+    keepRequiredCSS : function (customCSS) {
+
+        var requiredCSS = [
+            "position",
+            "z-index",
+            "top",
+            "left",
+            "width",
+            "height"
+        ];
+
+        // Remove properties that can't be changed
+        _.each(requiredCSS, function (propertyName) {
+            if (!customCSS.hasOwnProperty(propertyName)) {
+                delete customCSS[propertyName];
+            }
+        });
+
+        // Rationale: The underscore.js extend method will combine two (or more) objects. However, any properties in the second
+        //   object will overwrite the same properties in the first object. This is desired, as the position properties must be 
+        //   specified as defined in this view. 
+        return customCSS;
+    },
+
+    // REFACTORING CANDIDATE: Get modernizr in here
+    removeLastSetStyle : function ($element) {
+
+        _.each(this.lastSetStyle, function (styleValue, style) {
+            $element.css(style, "");
+        });
+    }
+});
+    EpubFixed.FixedCustomSpineDivider = Backbone.Model.extend({
+
+    initialize : function (attributes, options) {
+
+        this.lastSetStyle = {};
+    },
+
+    setCurrentStyle : function (styleNameOrCSSObject, spineElement) {
+
+        var that = this;
+        var spineStyle;
+        var $element = $(spineElement);
+
+        // Rationale: If it's a string, we assume that the user specified one of the default names
+        if (typeof styleNameOrCSSObject === "string") {
+
+            spineStyle = that.getDefaultSpineStyle(styleNameOrCSSObject);
+            spineStyle = that.keepRequiredCSS(spineStyle);
+
+            if (spineStyle !== undefined) {
+                that.removeLastSetStyle($element);
+                that.renderCurrentStyle($element, spineStyle);
+            }
+            this.setAllCurrentStyles(spineStyle);
+        }
+        // Rationale: At this point, we're just assuming that the CSS provided is correct. Validation of some sort might be desirable 
+        //   at some point; hard to say. 
+        else if (typeof styleNameOrCSSObject === "object") {
+
+            spineStyle = that.keepRequiredCSS(styleNameOrCSSObject);
+            that.removeLastSetStyle($element);
+            that.renderCurrentStyle($element, spineStyle);
+            this.setAllCurrentStyles(spineStyle);
+        }
+    },
+
+    // ------ PRIVATE HELPERS --------------------------------------------------------------
+
+    renderCurrentStyle : function ($element, currentStyle) {
+
+        $element.css(currentStyle);
+    },
+
+    getDefaultSpineStyle : function (defaultName) {
+
+        var defaultCSS;
+        if (defaultName === "box-shadow") {
+            return { "-webkit-box-shadow" : "0 0 5px 5px rgba(80, 80, 80, 0.5)" };
+        }
+        else if (defaultName == "none") {
+            return {};
+        }
+        else {
+            return undefined;
+        }
+    },
+
+    setAllCurrentStyles : function (styles) {
+        this.lastSetStyle = _.extend(this.lastSetStyle, styles);
+    },
+
+    keepRequiredCSS : function (customCSS) {
+
+        var requiredCSS = [
+            "position",
+            "z-index",
+            "top",
+            "left",
+            "width",
+            "height"
+        ];
+
+        // Remove properties that can't be changed
+        _.each(requiredCSS, function (propertyName) {
+            if (!customCSS.hasOwnProperty(propertyName)) {
+                delete customCSS[propertyName];
+            }
+        });
+
+        // Rationale: The underscore.js extend method will combine two (or more) objects. However, any properties in the second
+        //   object will overwrite the same properties in the first object. This is desired, as the position properties must be 
+        //   specified as defined in this view. 
+        return customCSS;
+    },
+
+    // REFACTORING CANDIDATE: Get modernizr in here
+    removeLastSetStyle : function ($element) {
+
+        _.each(this.lastSetStyle, function (styleValue, style) {
+            $element.css(style, "");
+        });
+    }
+});
+
+    var fixedView = new EpubFixed.FixedPaginationView({
+        spineObjects : spineObjects,
         viewerSettings : viewerSettingsObject
     });
 
     // Description: The public interface
     return {
 
-        render : function (goToLastPage, hashFragmentId) { return fixedView.render.call(fixedView, goToLastPage, hashFragmentId); },
-        nextPage : function () { return fixedView.nextPage.call(fixedView); },
-        previousPage : function () { return fixedView.previousPage.call(fixedView); },
-        showPageByHashFragment : function (hashFragmentId) { return; },
-        showPageByNumber : function (pageNumber) { return fixedView.showPageNumber.call(fixedView, pageNumber); },
-        showPageByCFI : function (CFI) { return; }, 
-        onFirstPage : function () { return fixedView.fixedPageViews.onFirstPage.call(fixedView.fixedPageViews); },
-        onLastPage : function () { return fixedView.fixedPageViews.onLastPage.call(fixedView.fixedPageViews); },
-        showPagesView : function () { return fixedView.showPagesView.call(fixedView); },
-        hidePagesView : function () { return fixedView.hidePagesView.call(fixedView); },
-        numberOfPages : function () { return fixedView.fixedPageViews.get("fixedPages").length; },
-        currentPage : function () { return fixedView.fixedPageViews.get("currentPages"); },
-        setFontSize : function (fontSize) { return; },
-        setMargin : function (margin) { return; },
-        setTheme : function (theme) { return; },
-        setSyntheticLayout : function (isSynthetic) { return fixedView.setSyntheticLayout.call(fixedView, isSynthetic); },
-        on : function (eventName, callback, callbackContext) { return fixedView.on.call(fixedView, eventName, callback, callbackContext); },
-        off : function (eventName, callback) { return fixedView.off.call(fixedView, eventName, callback); }
+        render : function (goToLastPage, hashFragmentId) {
+            return fixedView.render(goToLastPage, hashFragmentId);
+        },
+        nextPage : function () {
+            return fixedView.nextPage();
+        },
+        previousPage : function () {
+            return fixedView.previousPage();
+        },
+        showPageByHashFragment : function (hashFragmentId) {
+            return;
+        },
+        showPageByNumber : function (pageNumber) {
+            return fixedView.showPageNumber(pageNumber);
+        },
+        showPageByCFI : function (CFI) {
+            return;
+        },
+        onFirstPage : function () {
+            return fixedView.fixedPageViews.onFirstPage();
+        },
+        onLastPage : function () {
+            return fixedView.fixedPageViews.onLastPage();
+        },
+        showPagesView : function () {
+            return fixedView.showPagesView();
+        },
+        hidePagesView : function () {
+            return fixedView.hidePagesView();
+        },
+        numberOfPages : function () {
+            return fixedView.fixedPageViews.get("fixedPages").length;
+        },
+        currentPage : function () {
+            return fixedView.fixedPageViews.get("currentPages");
+        },
+        // setFontSize : function (fontSize) {
+        //     return;
+        // },
+        // setMargin : function (margin) {
+        //     return;
+        // },
+        // setTheme : function (theme) {
+        //     return;
+        // },
+        setSyntheticLayout : function (isSynthetic) {
+            return fixedView.setSyntheticLayout(isSynthetic);
+        },
+        on : function (eventName, callback, callbackContext) {
+            return fixedView.on(eventName, callback, callbackContext);
+        },
+        off : function (eventName, callback) {
+            return fixedView.off(eventName, callback);
+        },
+        resizeContent : function () {
+            return fixedView.resizePageViews();
+        },
+        customize : function (customProperty, styleNameOrCSS) {
+            fixedView.customize(customProperty, styleNameOrCSS);
+            return this;
+        }
     };
 };
