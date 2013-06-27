@@ -1,20 +1,29 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_1" lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8"/><meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/><meta content="EPUB EPUB3 HTML5 Sliderizer slideshow slide deck e-book ebook" name="keywords"/><title>(1/11) EPUB3 Sliderizer / Intro pitch</title><link href="../img/favicon.ico" rel="shortcut icon"/><meta content="width=1290, height=1000" name="viewport"/><link href="../css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css"/><link href="../css/FontAwesome.css" rel="stylesheet" type="text/css"/><link href="../css/default.css" rel="stylesheet" type="text/css"/><script src="../js/classList.js"> </script><script src="../js/screenfull.js"> </script><script src="../js/hammer.min.js"> </script><script src="../js/hammer.fakemultitouch.js"> </script><script src="../js/hammer.showtouches.js"> </script><script src="../js/jquery-2.0.2.min.js"> </script><script src="../js/jquery-ui-1.10.3.custom.min.js"> </script><script src="../js/jquery.blockUI.js"> </script><script src="../js/jquery.mousewheel.js"> </script><script src="../js/default.js"> </script><link href="./../nav.xhtml" rel="prev"/><link href="./slide_02.xhtml" rel="next"/><style type="text/css">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_1" lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8"/><meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/><meta content="EPUB EPUB3 HTML5 Sliderizer slideshow slide deck e-book ebook" name="keywords"/><title>(1/12) EPUB3 Sliderizer / Intro pitch</title><link href="../img/favicon.ico" rel="shortcut icon"/><meta content="width=1290, height=1000" name="viewport"/><link href="../css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css"/><link href="../css/FontAwesome.css" rel="stylesheet" type="text/css"/><link href="../css/default.css" rel="stylesheet" type="text/css"/><script src="../js/classList.js"> </script><script src="../js/screenfull.js"> </script><script src="../js/hammer.min.js"> </script><script src="../js/hammer.fakemultitouch.js"> </script><script src="../js/hammer.showtouches.js"> </script><script src="../js/jquery-2.0.2.min.js"> </script><script src="../js/jquery-ui-1.10.3.custom.min.js"> </script><script src="../js/jquery.blockUI.js"> </script><script src="../js/jquery.mousewheel.js"> </script><script src="../js/default.js"> </script><link href="./../nav.xhtml" rel="prev"/><link href="./slide_02.xhtml" rel="next"/><style type="text/css">
 body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
 {
 
--webkit-animation-duration: 1.5s;
--moz-animation-duration: 1.5s;
--ms-animation-duration: 1.5s;
--o-animation-duration: 1.5s;
-animation-duration: 1.5s;
+-webkit-animation-duration: 1s;
+-moz-animation-duration: 1s;
+-ms-animation-duration: 1s;
+-o-animation-duration: 1s;
+animation-duration: 1s;
 
 
--webkit-animation-delay: 1s;
--moz-animation-delay: 1s;
--ms-animation-delay: 1s;
--o-animation-delay: 1s;
-animation-delay: 1s;
+-webkit-animation-delay: 0s;
+-moz-animation-delay: 0s;
+-ms-animation-delay: 0s;
+-o-animation-delay: 0s;
+animation-delay: 0s;
 
+}
+html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
+{
+width: 200px;
+height: 84px;
+}
+html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+opacity: 0.4;
 }
 .pale-red
 {
@@ -41,6 +50,39 @@ background: #ff00ff;
 background: #FF0033;
 }
 </style><style type="text/css">
+#boox
+{
+
+-webkit-animation-duration: 1s;
+-moz-animation-duration: 1s;
+-ms-animation-duration: 1s;
+-o-animation-duration: 1s;
+animation-duration: 1s;
+
+
+-webkit-animation-delay: 1s;
+-moz-animation-delay: 1s;
+-ms-animation-delay: 1s;
+-o-animation-delay: 1s;
+animation-delay: 1s;
+
+}
+#logo
+{
+float: right;
+border: 0;
+padding: 0;
+margin: 0;
+width: 300px;
+height: 125px;
+
+-webkit-transform: rotate(45deg);
+-moz-transform: rotate(45deg);
+-ms-transform: rotate(45deg);
+-o-transform: rotate(45deg);
+transform: rotate(45deg);
+
+}
 html:not(.mobile) body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .incremental &gt; *
 {
 
@@ -77,13 +119,14 @@ display: none;
 }
 html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
+display: none;
 top: auto ;
 left: auto ;
 bottom: auto ;
 right: auto ;
 width: 300px ;
 height: 125px ;
-bottom: 180px ;
+bottom: 200px ;
 right: 60px ;
 
 -webkit-transform: rotate(45deg);
@@ -101,7 +144,7 @@ var html = document.documentElement;
 if (html.id == "epb3sldrzr-NavDoc")
 {
 var elem = querySelectorZ("#epb3sldrzr-logo");
-elem.classList.add("bounceInRight");
+elem.classList.add("fadeIn");
 elem.classList.add("epb3sldrzr-animated");
 }
 }
@@ -133,20 +176,18 @@ document.addEventListener("DOMContentLoaded", function(e) { setTimeout(setupLogo
 <img alt="Fork me on GitHub" src="../img/custom/assets/forkme.png" style="border: 0; padding: 0; margin: 0; width: 200px; height: 200px;"/>
 </a>
 <div class="intro">
-<p class="title" style="font-size: 120%;"><strong>EPUB3-Sliderizer</strong>
+<p class="title" style="font-size: 120%; padding-bottom: 0.22em; margin-bottom: 1em; border-bottom: 8px solid #8AC007;"><strong>EPUB3-Sliderizer</strong>
 </p><div class="auto incremental" data-incremental-delay="100">
-<p>is a command-line tool
-</p><p>that creates slideshow presentations
-</p><p class="pale-blue">for web-browsers (HTML 5)
-</p><p class="pale-green">and for e-book readers (EPUB 3)
+<p>a tool that creates slideshow presentations for
+</p><p><span class="pale-red">web-browsers</span> and <span class="pale-blue">e-book readers</span>
 </p><p>by converting a simple input format (single text file)
-</p><p>to a pre-paginated / fixed-layout <span class="code">.epub</span> e-book,
-</p><p>which (thanks to a built-in slide flippin' engine™)
-</p><p>can also be viewed using a standard web browser.
+</p><p>to a pre-paginated / fixed-layout EPUB 3 <span class="code"><em>.epub</em></span> e-book
+</p><p>that can also be viewed in modern HTML5 web browsers
+</p><p>thanks to a bespoke slide flippin' engine™
 </p></div>
-</div>
-<div class="boxed" id="boox">
+<div class="boxed epb3sldrzr-animated bounceInDown" id="boox" style="margin-top: 1em;">
 <div>
+<img alt="Logo" id="logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/>
 <ul>
 <li>
 <strong>See</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/data.txt" target="_blank">input file</a> for this slidedeck
@@ -155,5 +196,6 @@ document.addEventListener("DOMContentLoaded", function(e) { setTimeout(setupLogo
 <strong>Grab</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/" target="_blank">open-source code</a> from GitHub
 </li>
 </ul>
+</div>
 </div>
 </div></section></div></div></body></html>

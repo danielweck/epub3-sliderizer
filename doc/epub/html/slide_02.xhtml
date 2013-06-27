@@ -1,20 +1,29 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_2" lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8"/><meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/><meta content="EPUB EPUB3 HTML5 Sliderizer slideshow slide deck e-book ebook" name="keywords"/><title>(2/11) EPUB3 Sliderizer / Tips: - navigation</title><link href="../img/favicon.ico" rel="shortcut icon"/><meta content="width=1290, height=1000" name="viewport"/><link href="../css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css"/><link href="../css/FontAwesome.css" rel="stylesheet" type="text/css"/><link href="../css/default.css" rel="stylesheet" type="text/css"/><script src="../js/classList.js"> </script><script src="../js/screenfull.js"> </script><script src="../js/hammer.min.js"> </script><script src="../js/hammer.fakemultitouch.js"> </script><script src="../js/hammer.showtouches.js"> </script><script src="../js/jquery-2.0.2.min.js"> </script><script src="../js/jquery-ui-1.10.3.custom.min.js"> </script><script src="../js/jquery.blockUI.js"> </script><script src="../js/jquery.mousewheel.js"> </script><script src="../js/default.js"> </script><link href="./slide_01.xhtml" rel="prev"/><link href="./slide_03.xhtml" rel="next"/><style type="text/css">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_2" lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8"/><meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/><meta content="EPUB EPUB3 HTML5 Sliderizer slideshow slide deck e-book ebook" name="keywords"/><title>(2/12) EPUB3 Sliderizer / Tips: - navigation</title><link href="../img/favicon.ico" rel="shortcut icon"/><meta content="width=1290, height=1000" name="viewport"/><link href="../css/jquery-ui-1.10.3.custom.css" rel="stylesheet" type="text/css"/><link href="../css/FontAwesome.css" rel="stylesheet" type="text/css"/><link href="../css/default.css" rel="stylesheet" type="text/css"/><script src="../js/classList.js"> </script><script src="../js/screenfull.js"> </script><script src="../js/hammer.min.js"> </script><script src="../js/hammer.fakemultitouch.js"> </script><script src="../js/hammer.showtouches.js"> </script><script src="../js/jquery-2.0.2.min.js"> </script><script src="../js/jquery-ui-1.10.3.custom.min.js"> </script><script src="../js/jquery.blockUI.js"> </script><script src="../js/jquery.mousewheel.js"> </script><script src="../js/default.js"> </script><link href="./slide_01.xhtml" rel="prev"/><link href="./slide_03.xhtml" rel="next"/><style type="text/css">
 body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
 {
 
--webkit-animation-duration: 1.5s;
--moz-animation-duration: 1.5s;
--ms-animation-duration: 1.5s;
--o-animation-duration: 1.5s;
-animation-duration: 1.5s;
+-webkit-animation-duration: 1s;
+-moz-animation-duration: 1s;
+-ms-animation-duration: 1s;
+-o-animation-duration: 1s;
+animation-duration: 1s;
 
 
--webkit-animation-delay: 1s;
--moz-animation-delay: 1s;
--ms-animation-delay: 1s;
--o-animation-delay: 1s;
-animation-delay: 1s;
+-webkit-animation-delay: 0s;
+-moz-animation-delay: 0s;
+-ms-animation-delay: 0s;
+-o-animation-delay: 0s;
+animation-delay: 0s;
 
+}
+html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
+{
+width: 200px;
+height: 84px;
+}
+html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+opacity: 0.4;
 }
 .pale-red
 {
@@ -48,7 +57,9 @@ body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc,
 {
 -webkit-backface-visibility: hidden;
 opacity: 1;
+/*
 border: 4px solid #ff00ff;
+*/
 
 -webkit-animation-name: onoff;
 -moz-animation-name: onoff;
@@ -93,7 +104,7 @@ var html = document.documentElement;
 if (html.id == "epb3sldrzr-NavDoc")
 {
 var elem = querySelectorZ("#epb3sldrzr-logo");
-elem.classList.add("bounceInRight");
+elem.classList.add("fadeIn");
 elem.classList.add("epb3sldrzr-animated");
 }
 }
@@ -103,26 +114,67 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 </script></head><body class="epb3sldrzr-SLIDE" epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Tips: <span id="epb3sldrzr-subtitle">navigation</span></h1><section id="epb3sldrzr-content"><!--SOUP--><div class="incremental auto">
 <div class="boxed">
 <h3>Swipe gestures <span class="fade">(touch or mouse)</span></h3>
-<p style="line-height: 1.7em;">
-<span class="symbols pale-blue" title="left">←</span> <span class="symbols pale-red" title="right">→</span> previous / next slide
-<br/>
-<span class="symbols pale-blue" style="padding-left: 0.24em;padding-right: 0.24em;" title="up">↑</span> <span class="symbols pale-red" style="padding-left: 0.24em;padding-right: 0.24em;" title="down">↓</span> previous / next incremental item
-</p>
+<div>
+<table class="spaceLined">
+<tbody><tr>
+<td style="width: 30%">
+<span class="symbols pale-blue" title="left">←</span> <span class="symbols pale-red" title="right">→</span>
+</td>
+<td>
+previous / next slide
+</td>
+</tr>
+<tr>
+<td style="width: 30%">
+<span class="symbols pale-blue" style="padding-left: 0.24em;padding-right: 0.24em;" title="up">↑</span> <span class="symbols pale-red" style="padding-left: 0.24em;padding-right: 0.24em;" title="down">↓</span>
+</td>
+<td>
+previous / next incremental item
+</td>
+</tr>
+</tbody></table>
+</div>
 </div>
 <div class="boxed">
 <h3>Keyboard</h3>
-<p style="line-height: 1.7em;">
+<div>
+<table class="spaceLined">
+<tbody><tr>
+<td style="width: 30%">
 <span class="keyboard symbols" title="left">◂<!-- &#8592; --></span>
-<span class="keyboard symbols" title="right">▸<!-- &#8594; --></span> previous / next slide
-<br/>
+<span class="keyboard symbols" title="right">▸<!-- &#8594; --></span>
+</td>
+<td>
+previous / next slide
+</td>
+</tr>
+<tr>
+<td style="width: 30%">
 <span class="keyboard symbols" title="up">▴<!-- &#8593; --></span>
-<span class="keyboard symbols" title="down">▾<!-- &#8595; --></span> previous / next incremental item
-<br/>
-<span class="keyboard symbols" title="down">_</span> <span class="code">(space bar)</span> next incremental item
-<br/>
-<span class="keyboard">m</span> slides <em style="font-style: normal;">m</em>enu (table of contents)
-</p>
+<span class="keyboard symbols" title="down">▾<!-- &#8595; --></span>
+</td>
+<td>
+previous / next incremental item
+</td>
+</tr>
+<tr>
+<td style="width: 30%">
+<span class="keyboard symbols" title="down">_</span>
+</td>
+<td>
+<span class="code">[space bar]</span> next incremental item
+</td>
+</tr>
+<tr>
+<td style="width: 30%">
+<span class="keyboard">m</span>
+</td>
+<td>
+slides <em style="font-style: normal;">m</em>enu <span class="fade">(table of contents)</span>
+</td>
+</tr>
+</tbody></table>
 </div>
-<p>...or use the buttons below (not displayed in e-book readers)
-<!-- span style="padding-left: 0.3em; padding-right: 0.3em; color: #3D6AA2; border-radius:10px; font-family: FontAwesome, Entypo;" class="glowButt">&#9632;</span -->
+</div>
+<p style="margin-top: 1em;">...or use the controls below (not displayed in e-book readers)
 </p></div></section></div></div></body></html>
