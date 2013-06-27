@@ -564,6 +564,9 @@ _CONTENT
 <br>
 when the text font is enlarged &#8658; the slides <strong>reflow</strong> and <strong>scroll</strong>
 
+<p>
+<span class="fade" style="font-size: 80%;"><em>PS:</em> the font size is stored as a cookie for the location that serves the web pages.</span>
+
 </div>
 
 
@@ -768,11 +771,11 @@ _CONTENT
 	assets/me.jpeg</span>
 <br>
 <br>
-	<span class="pale-blue notes-highlightx" style="paddingx: 0.1em">
+	<span class="pale-blue" style="paddingx: 0.1em">
 \	_NOTES</span>
 <br>
 	<span class="pale-green">
-	&lt;p&gt;My personal notes...(do not appear during presentation)</span>
+	&lt;p&gt;Slide notes are displayed separately, can be <span class="notes-highlight" style="paddingx: 0.1em">linked</span> from the host slide</span>
 </p>
 </div>
 
@@ -797,7 +800,7 @@ body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-notesref
 
 _NOTES
 
-<p>Slides notes are linked, and opened as a separate slide.
+<p>Slide notes are displayed separately, can be linked from the host slide.
 
 // #########################################################
 // #########################################################
@@ -994,18 +997,18 @@ Slide scroll
 // --------------------------------------------
 _CONTENT
 
-<div  class="incremental">
+<div  class="incrementalx">
 <p>Press <span class="code">[space]</span> or <span class="code">[arrow-down]</span>, or swipe down.
 <br>
-(scroll will reveal the overflow)
+(scrolling reveals the overflow)
 </p>
 </div>
 
 <ol style="font-weight: 400; font-family: Neuton, Lato, Tahoma, 'arial black', verdana, arial, sans-serif;"
 class="incremental fade-active" data-incremental-delay="300">
 <li>I wonder...
-<li class="auto">what could be
-<li>at the bottom
+<li>what could be...
+<li class="auto">at the bottom
 <li>of this list?
 <li>Perhaps I should
 <li>scroll down...
@@ -1056,7 +1059,7 @@ _CONTENT
 
 // --------------------------------------------
 _TITLE
-No-frills mode
+View modes
 
 // --------------------------------------------
 _CONTENT
@@ -1082,11 +1085,12 @@ use the '<span class="code pale-green">epub</span>' parameter.
 Try now by <a href="javascript:Epub3Sliderizer.reloadSlide('epub');">clicking here</a>.
 
 
-<p class="fade" style="font-size: 80%;">
+<p>
+<span class="fade" style="font-size: 80%;">
 <em>Note:</em>
 the '<span class="code pale-red">static</span>' parameter is used internally to create frozen iframes (e.g. slide thumbnails).
 The '<span class="code pale-red">author</span>' parameter is reserved for future use.
-
+</span>
 
 </div>
 

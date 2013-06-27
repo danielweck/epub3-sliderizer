@@ -1496,7 +1496,12 @@ Epub3Sliderizer.initLinks = function()
 			}
 		}
 	);
-	
+
+
+	var controls = querySelectorZ("#epb3sldrzr-controls");
+	var anchor = controls; //this.bodyRoot
+
+
 
 	var aa = document.createElement('a');
 	aa.id = "epb3sldrzr-link-toc";
@@ -1505,7 +1510,35 @@ Epub3Sliderizer.initLinks = function()
 	aa.href = "javascript:Epub3Sliderizer.gotoToc();";
 	//aa.innerHTML = "<span style=\"display:none;\">Slide menu</span>&#9733;";
 
-	this.bodyRoot.insertBefore(aa, this.bodyRoot.children[0]);
+	anchor.insertBefore(aa, anchor.children[0]);
+
+	if (this.prev != "")
+	{
+		var a = document.createElement('a');
+		a.id = "epb3sldrzr-link-previous";
+		a.title = "Previous slide";	
+//		a.onMouseOver = "func('Previous slide')";
+		a.href = "javascript:Epub3Sliderizer.gotoPrevious();";
+		//a.innerHTML = "<span style=\"display:none;\">Previous slide</span>&#9668;";
+
+		anchor.insertBefore(a, anchor.children[0]);
+	}
+	
+		
+	if (this.next != "")
+	{
+		var a = document.createElement('a');
+		a.id = "epb3sldrzr-link-next";
+		a.title = "Next slide";
+//		a.onMouseOver = "func('Next slide')";
+		a.href = "javascript:Epub3Sliderizer.gotoNext();";
+		//a.innerHTML = "<span style=\"display:none;\">Next slide</span>&#9658;";
+
+		anchor.insertBefore(a, anchor.children[0]);
+	}
+
+		
+		
 		
 	if (this.epub != "")
 	{
@@ -1523,29 +1556,6 @@ Epub3Sliderizer.initLinks = function()
 		}
 	}	
 	
-	if (this.next != "")
-	{
-		var a = document.createElement('a');
-		a.id = "epb3sldrzr-link-next";
-		a.title = "Next slide";
-//		a.onMouseOver = "func('Next slide')";
-		a.href = "javascript:Epub3Sliderizer.gotoNext();";
-		//a.innerHTML = "<span style=\"display:none;\">Next slide</span>&#9658;";
-
-		this.bodyRoot.insertBefore(a, this.bodyRoot.children[0]);
-	}
-
-	if (this.prev != "")
-	{
-		var a = document.createElement('a');
-		a.id = "epb3sldrzr-link-previous";
-		a.title = "Previous slide";	
-//		a.onMouseOver = "func('Previous slide')";
-		a.href = "javascript:Epub3Sliderizer.gotoPrevious();";
-		//a.innerHTML = "<span style=\"display:none;\">Previous slide</span>&#9668;";
-
-		this.bodyRoot.insertBefore(a, this.bodyRoot.children[0]);
-	}
 }
 
 
@@ -2113,7 +2123,9 @@ Epub3Sliderizer.init = function()
 			a.innerHTML = this.epubReadingSystem.name + '_' + this.epubReadingSystem.version;
 		}
 
-		document.body.insertBefore(a, document.body.children[0]);
+		var controls = querySelectorZ("#epb3sldrzr-controls");
+		var anchor = controls; //this.bodyRoot
+		anchor.insertBefore(a, anchor.children[0]);
 
 		this.bodyRoot.style.visibility = "visible";
 	}
@@ -2360,6 +2372,15 @@ function readyFirst()
 	{
 		Epub3Sliderizer.bodyRoot = querySelectorZ("#epb3sldrzr-body-NOTES");
 	}
+	
+	
+	
+	var controls = document.createElement('div');
+	controls.id = "epb3sldrzr-controls";	
+	Epub3Sliderizer.bodyRoot.insertBefore(controls, Epub3Sliderizer.bodyRoot.children[0]);
+	
+	
+	
 	
 	if (document.defaultView && document.defaultView.getComputedStyle)
 	{

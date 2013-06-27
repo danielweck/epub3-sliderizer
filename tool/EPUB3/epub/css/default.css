@@ -771,12 +771,34 @@ a#epb3sldrzr-link-noteback
 	margin-right: 1em;
 }
 
+div#epb3sldrzr-controls
+{
+	position:absolute;
+	z-index:20;
+
+	left: 0px;
+	bottom:0px;
+	width: 100%;
+	
+	margin:0;
+	padding:0;
+	
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
+	
+	/*
+	background-color: rgba(0,0,0,0.3);
+	*/
+}
+
+/*
 a#epb3sldrzr-link-notesref,
 a#epb3sldrzr-link-previous,
 a#epb3sldrzr-link-next,
 a#epb3sldrzr-link-toc,
-a#epb3sldrzr-link-epub,
 a#epb3sldrzr-link-epubReadingSystem
+*/
+a#epb3sldrzr-link-epub
 {
 	position:absolute;
 	z-index:20;
@@ -794,22 +816,37 @@ a#epb3sldrzr-link-epub
 a#epb3sldrzr-link-toc,
 a#epb3sldrzr-link-epubReadingSystem
 {
-	left:15px;
+	float: left;
+	margin-left: 1em;
+	
+	/* left:15px; */
+}
+
+
+a#epb3sldrzr-link-notesref
+{
+	float: right;
+	
+	margin-right: 2em;
+	margin-top: 1em;
+	
+	/* right:300px; */
 }
 
 a#epb3sldrzr-link-next
 {
-	right:15px;
+	float: right;
+	margin-right: 1em;
+	
+	/* right:15px; */
 }
 
 a#epb3sldrzr-link-previous
 {
-	right:70px;
-}
-
-a#epb3sldrzr-link-notesref
-{
-	right:300px;
+	float: right;
+	margin-right: 0.5em;
+	
+	/* right:70px; */
 }
 
 html:not(.basic) body.epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-noteback,
