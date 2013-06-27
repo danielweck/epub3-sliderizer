@@ -1409,7 +1409,7 @@ Epub3Sliderizer.initReverse = function()
 	}
 
 	var thisRank = getRank(this.thisFilename);
-	var prevRank = getRank(this.hash);
+	var prevRank = getRank(this.thisHash);
 	
 	/*
 	console.log("RANK this: " + thisRank);
@@ -1938,14 +1938,15 @@ Epub3Sliderizer.initIncrementals = function()
 
 Epub3Sliderizer.initLocation = function()
 {
-	console.log("window.location: " + window.location);
-
 	if (!window.location || typeof window.location == "undefined"
 	|| !window.location.href || typeof window.location.href == "undefined"
 	|| typeof window.location.href == "")
 	{
 		return;
 	}
+
+	console.log("window.location: " + window.location);
+	console.log("window.location.href: " + window.location.href);
 
 	var i = window.location.href.lastIndexOf('/');
 

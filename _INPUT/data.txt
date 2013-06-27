@@ -564,8 +564,8 @@ _CONTENT
 <br>
 when the text font is enlarged &#8658; the slides <strong>reflow</strong> and <strong>scroll</strong>
 
-<p>
-<span class="fade" style="font-size: 80%;"><em>PS:</em> the font size is stored as a cookie for the location that serves the web pages.</span>
+<p style="text-align: right;">
+<span class="fade" style="font-size: 80%;"><em>Note:</em> the font size is stored as a cookie.</span>
 
 </div>
 
@@ -782,7 +782,7 @@ _CONTENT
 // --------------------------------------------
 _CSS_STYLE
 
-.notes-highlight,
+body:not(.epb3sldrzr-epubReadingSystem) .notes-highlight,
 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-notesref
 {
 	-webkit-backface-visibility: hidden;
@@ -817,6 +817,9 @@ prefixes
 
 // --------------------------------------------
 _CONTENT
+
+
+<div class="incremental auto">
 
 <div class="boxed">
 
@@ -863,7 +866,10 @@ _CONTENT
 </p>
 </div>
 
-<p class="fade"><em>Note:</em> does not work in <span class="code pale-red">style="..."</span> HTML attributes</p>
+<p>
+<span class="fade" style="font-size: 80%"><em>Note:</em> does not work in <span class="code pale-red">style="..."</span> HTML attributes</span>
+
+</div>
 
 // #########################################################
 // #########################################################
