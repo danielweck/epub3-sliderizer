@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 
 // --------------------------------------------
 _TITLE
-Intro pitch
+Intro
 
 // --------------------------------------------
 _CONTENT
@@ -121,7 +121,7 @@ _CONTENT
 <strong>See</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/data.txt" target="_blank">input file</a> for this slidedeck
 </li>
 <li>
-<strong>Grab</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/" target="_blank">open-source code</a> from GitHub
+<strong>Grab</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/" target="_blank">open-source code</a> from GitHub <i class="icon-github"></i> 
 </li>
 </ul>
 </div>
@@ -543,7 +543,7 @@ _CONTENT
 
 <p style="line-height: 1.7em;">
 
-<span class="keyboard symbols" title="zero">0</span> reset font size
+<span class="keyboard symbols" title="zero">0</span> &nbsp;&nbsp;&nbsp;reset font size
 <br>
 <span class="keyboard symbols" title="1">1</span>
 <span class="keyboard symbols" title="2">2</span>
@@ -554,7 +554,7 @@ _CONTENT
 <span class="keyboard symbols" title="7">7</span>
 <span class="keyboard symbols" title="8">8</span>
 <span class="keyboard symbols" title="9">9</span>
-increase font size
+&nbsp;&nbsp;&nbsp;increase font size
 </p>
 
 </div>
@@ -810,7 +810,7 @@ CSS
 
 // --------------------------------------------
 _SUBTITLE
-vendor prefixes
+prefixes
 
 // --------------------------------------------
 _CONTENT
@@ -827,7 +827,7 @@ _CONTENT
 
 <div class="boxed">
 
-<h3 style="color: #333333;">...automatically expand to:</h3>
+<h3 style="color: #333333;">...generates vendors prefixes:</h3>
 
 <p class="code" style="font-size: 70%;">
 	<span class="pale-blue">
@@ -860,7 +860,7 @@ _CONTENT
 </p>
 </div>
 
-<p class="fade"><em>Note:</em> does not work in <span class="code">style="..."</span> HTML attributes</p>
+<p class="fade"><em>Note:</em> does not work in <span class="code pale-red">style="..."</span> HTML attributes</p>
 
 // #########################################################
 // #########################################################
@@ -934,7 +934,7 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimatedLogo();
 
 // --------------------------------------------
 _TITLE
-Incremental items
+Incrementals
 
 // --------------------------------------------
 _CONTENT
@@ -989,11 +989,7 @@ Attribute '<span class="code pale-green">data-incremental-delay</span>'
 
 // --------------------------------------------
 _TITLE
-Slide overflow
-
-// --------------------------------------------
-_SUBTITLE
-(scroll)
+Slide scroll
 
 // --------------------------------------------
 _CONTENT
@@ -1001,7 +997,7 @@ _CONTENT
 <div  class="incremental">
 <p>Press <span class="code">[space]</span> or <span class="code">[arrow-down]</span>, or swipe down.
 <br>
-(alternatively, scroll manually)
+(scroll will reveal the overflow)
 </p>
 </div>
 
@@ -1068,22 +1064,29 @@ _CONTENT
 <div class="incremental auto">
 
 <p>
-Slide transitions and fade-in transitions can sometimes impair performance.
-Fortunately, EPUB3-Sliderizer supports a "basic" mode that skips the eye candy stuff.
+EPUB3-Sliderizer supports a "basic" mode that skips the eye candy stuff
+(&#8658; transitions and animations).
 
 <p>
-&#8658; For example, <a href="javascript:Epub3Sliderizer.reloadSlide('basic');">click here</a> to reload this slide without the fussy gloss,
-or simply pass the '<span class="code pale-red">basic</span>' parameter in the address bar ("URL query").
+For example, <a href="javascript:Epub3Sliderizer.reloadSlide('basic');">click here</a> to reload this slide without the fussy gloss,
+or simply pass the '<span class="code pale-green">basic</span>' parameter in the address bar ("URL query").
 <br>e.g. <span class="code pale-grey">http://dummy.org/epub/slide.xhtml?basic</span>
 
 <p>
-You can always remove the address parameters to restore the normal view.
-Try now by <a href="javascript:Epub3Sliderizer.reloadSlide('');">clicking here</a>.
+To restore the full-featured view: remove the address parameters,
+or try now by <a href="javascript:Epub3Sliderizer.reloadSlide('');">clicking here</a>.
 
 <p>
-<em>Note:</em> to check how a slide would look (and behave) as a single page within an e-book reader,
-simply use the '<span class="code pale-red">epub</span>' parameter.
+To check how a slide would look (and behave) as a single page within an <em>e-book reader</em>,
+use the '<span class="code pale-green">epub</span>' parameter.
 Try now by <a href="javascript:Epub3Sliderizer.reloadSlide('epub');">clicking here</a>.
+
+
+<p class="fade" style="font-size: 80%;">
+<em>Note:</em>
+the '<span class="code pale-red">static</span>' parameter is used internally to create frozen iframes (e.g. slide thumbnails).
+The '<span class="code pale-red">author</span>' parameter is reserved for future use.
+
 
 </div>
 
