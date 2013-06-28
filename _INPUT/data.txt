@@ -99,7 +99,7 @@ _CONTENT
 
 <div class="intro">
 
-<p class="title" style="font-size: 120%; padding-bottom: 0.22em; margin-bottom: 1em; border-bottom: 8px solid #8AC007;"><strong>EPUB3-Sliderizer</strong>
+<p class="title"><strong>EPUB3-Sliderizer</strong>
 
 <div class="auto incremental" data-incremental-delay="100">
 
@@ -112,7 +112,7 @@ _CONTENT
 
 </div>
 
-<div style="margin-top: 1em;" class="boxed epb3sldrzr-animated bounceInDown" id="boox">
+<div class="boxed epb3sldrzr-animated bounceInDown" id="boox">
 
 <div>
 <img id="logo" src="assets/EPUB3-Sliderizer.png" alt="Logo"/>
@@ -142,6 +142,8 @@ _CSS_STYLE
 
 #boox
 {
+	margin-top: 1em;
+	
 	-PREFIXED_PROPERTY-animation-duration: 1s;
 	-PREFIXED_PROPERTY-animation-delay: 1s;
 }
@@ -167,23 +169,38 @@ html:not(.mobile) body:not(.epb3sldrzr-epubReadingSystem) #epb3sldrzr-content .i
 	margin: 0;
 	padding: 0;
 
-	padding-top: 60px;
-	margin-left: 60px;
+	padding-top: FONT_SIZEpx;
+	margin-left: FONT_SIZEpx;
 }
 
-#epb3sldrzr-content div.intro p
+#epb3sldrzr-content div.intro p:not(.title)
 {
 	margin-bottom: 0.2em;
 	padding-bottom: 0;
 	margin-top: 0;
 	padding-top: 0;
-}
-
-#epb3sldrzr-content div.intro p:not(.title)
-{
+	
 	font-weight: 400;
 	font-family: Arvo, Lato, Tahoma, verdana, arial, sans-serif;
 	font-size: 100%;
+}
+
+#epb3sldrzr-content div.intro p.title
+{
+	margin: 0;
+	padding: 0;
+
+	font-size: 120%;
+
+	padding-bottom: 0.22em;
+	margin-bottom: 1em;
+
+	border-bottom: 8px solid #8AC007;
+
+	padding-left: 0;
+	margin-left: FONT_SIZEpx;
+	
+	padding-top: FONT_SIZEpx;
 }
 
 h1#epb3sldrzr-title
