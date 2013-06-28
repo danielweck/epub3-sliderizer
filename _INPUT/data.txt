@@ -277,7 +277,7 @@ _CONTENT
 <table class="spaceLined">
 <tr>
 <td style="width: 30%">
-<span class="symbols pale-blue" title="left">&#8592;</span> <span class="symbols pale-red" title="right">&#8594;</span>
+<span class="symbols pale-bluex" title="left">&#8592;</span> <span class="symbols pale-greenx" title="right">&#8594;</span>
 </td>
 <td>
 previous / next slide
@@ -285,7 +285,7 @@ previous / next slide
 </tr>
 <tr>
 <td style="width: 30%">
-<span class="symbols pale-blue" title="up" style="padding-left: 0.24em;padding-right: 0.24em;">&#8593;</span> <span class="symbols pale-red" title="down" style="padding-left: 0.24em;padding-right: 0.24em;">&#8595;</span>
+<span class="symbols pale-bluex" title="up" style="padding-left: 0.24em;padding-right: 0.24em;">&#8593;</span> <span class="symbols pale-greenx" title="down" style="padding-left: 0.24em;padding-right: 0.24em;">&#8595;</span>
 </td>
 <td>
 previous / next incremental item
@@ -397,7 +397,7 @@ _CONTENT
 <table class="spaceLined">
 <tr>
 <td style="width: 5%">
-<span class="symbols alt pale-green" title="double tap" style="padding-left: 0.2em;padding-right: 0;">&#xf140; <!-- &#128261; --></span> 
+<span class="symbols alt pale-greenx" title="double tap" style="padding-left: 0.2em;padding-right: 0;">&#xf140; <!-- &#128261; --></span> 
 </td>
 <td style="width: 25%">
 <span class="code">
@@ -410,7 +410,7 @@ toggle zoom <span style="font-size: 80%" class="fade">(aim at target)</span>
 </tr>
 <tr>
 <td style="width: 5%">
-<span class="symbols pale-green" title="pan" style="padding-left: 0.1em;padding-right: 0.1em;">&#59212;</span> 
+<span class="symbols pale-greenx" title="pan" style="padding-left: 0.1em;padding-right: 0.1em;">&#59212;</span> 
 </td>
 <td style="width: 25%">
 <span class="code">
@@ -425,7 +425,7 @@ pan <span style="font-size: 80%" class="fade">(only when zoomed-in)</span>
 
 <tr>
 <td style="width: 5%;  padding-bottom: 0;">
-<span class="symbols pale-blue" title="pinch">&#59206;<!-- &#xf066; --></span> 
+<span class="symbols pale-bluex" title="pinch">&#59206;<!-- &#xf066; --></span> 
 </td>
 <td style="width: 25%;  padding-bottom: 0;">
 <span class="code">
@@ -441,7 +441,7 @@ zoom out / in
 
 <tr>
 <td style="width: 5%; border: none;  padding-top: 0;">
-<span class="symbols pale-red" title="stretch" style="padding-left: 0.1em;padding-right: 0.1em;">&#59204;</span> 
+<span class="symbols pale-redx" title="stretch" style="padding-left: 0.1em;padding-right: 0.1em;">&#59204;</span> 
 </td>
 <td style="width: 25%; border: none; padding-top: 0;">
 <span class="code">
@@ -454,7 +454,7 @@ zoom out / in
 
 <tr>
 <td style="width: 5%">
-<span class="symbols pale-green" title="rotate" style="padding-left: 0.1em;padding-right: 0.1em;">&#128260;</span> 
+<span class="symbols pale-greenx" title="rotate" style="padding-left: 0.1em;padding-right: 0.1em;">&#128260;</span> 
 </td>
 <td style="width: 25%">
 <span class="code">
@@ -541,7 +541,7 @@ _CONTENT
 <h3>Gestures <span class="fade">(touch)</span></h3>
 
 <p style="line-height: 1.7em;">
-<span class="symbols alt pale-green" title="two-finger tap" style="padding-top: 0; padding-left: 0.2em;padding-right: 0;">&#xf042; <!-- &#9205; --></span> 
+<span class="symbols alt pale-greenx" title="two-finger tap" style="padding-top: 0; padding-left: 0.2em;padding-right: 0;">&#xf05c; <!-- &#9205; --></span> 
 
 <span class="code" style="padding-right: 2em;">
 [hold]
