@@ -333,7 +333,7 @@ Epub3Sliderizer.transition = function(on)
 	
 	if (on)
 	{
-		if (!this.basicMode && !this.opera && !this.IE && !this.firefox)
+		if (!this.basicMode && !this.opera)
 		{
 			var transition = "all "+milliseconds+"ms ease-in-out";
 			document.body.style.MozTransition = transition;
@@ -1037,16 +1037,6 @@ Epub3Sliderizer.initTouch = function()
 		}
 	}
 	
-	var hammer = Hammer(document.documentElement,
-		{
-			prevent_default: true,
-			css_hacks: false
-		});
-	
-	hammer.on("doubletap",
-		onDoubleTap.bind(this)
-	);
-	
 	
 	function onHold(hammerEvent)
 	{
@@ -1059,9 +1049,16 @@ Epub3Sliderizer.initTouch = function()
 					fontSizeIncreaseFactor = 0;
 				}
 
+				if (document.body.style.fontSize == this.defaultFontSize && fontSizeIncreaseFactor == 0)
+				{
+					fontSizeIncreaseFactor ++;
+				}
+
+				console.log("fontSizeIncreaseFactor: " + fontSizeIncreaseFactor);
+
 				document.body.style.fontSize = (this.defaultFontSize + fontSizeIncrease*fontSizeIncreaseFactor) + "px";
 
-				fontSizeIncreaseFactor += 1;
+				fontSizeIncreaseFactor ++;
 				
 			    setCookie(this.cookieFontSize, document.body.style.fontSize);
 			}
@@ -1069,7 +1066,7 @@ Epub3Sliderizer.initTouch = function()
 		
 	}
 	
-	hammer.on("hold",
+	this.hammer.on("hold",
 		onHold.bind(this)
 	);
 
@@ -1084,9 +1081,31 @@ Epub3Sliderizer.initTouch = function()
 		}
 	}
 	
-	hammer.on("tap",
+	this.hammer.on("tap",
 		onTap.bind(this)
 	);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	var hammer = Hammer(document.documentElement,
+		{
+			prevent_default: true,
+			css_hacks: false
+		});
+	
+	hammer.on("doubletap",
+		onDoubleTap.bind(this)
+	);
+	
 	
 	document.addEventListener('touchstart', function(e)
 	{
@@ -1889,7 +1908,7 @@ Epub3Sliderizer.initSlideTransition = function()
 		return;
 	}
 
-	var animate = !this.opera && !this.IE;
+	var animate = !this.opera; //&& !this.IE;
 	if (animate
 	//	&& !this.mobile
 	)
@@ -2207,7 +2226,7 @@ Epub3Sliderizer.init = function()
 		{
 			if (!this.mobile)
 			{
-				if (typeof Hammer.plugins.showTouches != "undefined")
+				if (false && typeof Hammer.plugins.showTouches != "undefined")
 				{
 					Hammer.plugins.showTouches();
 				}

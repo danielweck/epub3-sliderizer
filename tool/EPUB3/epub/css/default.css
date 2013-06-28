@@ -360,8 +360,18 @@ Major structural elements
 
 html
 {
+	background-color: black;
+	
 	margin:0;
 	padding:0;
+	
+	/*
+	-PREFIXED_PROPERTY-background-clip:border-box;
+	-PREFIXED_PROPERTY-background-origin:padding-box;
+	-PREFIXED_PROPERTY-background-size:auto;
+	-PREFIXED_PROPERTY-background-attachment:scroll;
+	-PREFIXED_PROPERTY-background-image:url(../img/back.png);
+	*/
 }
 
 html:not(.basic) body:not(.epb3sldrzr-epubReadingSystem),
@@ -376,13 +386,7 @@ body
 {
 	-webkit-text-size-adjust:none;
 	
-	background-color:#333333;
-
-	-PREFIXED_PROPERTY-background-clip:border-box;
-	-PREFIXED_PROPERTY-background-origin:padding-box;
-	-PREFIXED_PROPERTY-background-size:auto;
-	-PREFIXED_PROPERTY-background-attachment:scroll;
-	-PREFIXED_PROPERTY-background-image:url(../img/back.png);
+	background-color: black;
 	
 	margin:0;
 	padding:0;
@@ -440,6 +444,7 @@ body div#epb3sldrzr-body
 	background-color:white;
 }
 
+
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body-NOTES,
 body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body,
 html.basic body.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body-NOTES,
@@ -447,7 +452,9 @@ html.basic body.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body
 {
 	border-radius:20px;
 
+	/*
 	-PREFIXED_PROPERTY-box-shadow:0 0 50px rgba(0, 0, 0, 1);
+	*/
 }
 
 html.static body.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body-NOTES,
