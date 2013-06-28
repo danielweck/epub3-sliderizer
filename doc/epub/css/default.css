@@ -350,17 +350,17 @@ span.keyboard
 	border-right: 4px solid #A8A8A8;
 }
 
-html:not(.opera) span.symbols
+html:not(.operax) span.symbols
 {
-	font-family: Entypo, Lato;
+	font-family: Entypo, Lato, arial;
 	font-size: 120%;
 	
 	padding-bottom: 0;
 }
 
-html:not(.opera) span.symbols.alt
+html:not(.operax) span.symbols.alt
 {
-	font-family: FontAwesome, Entypo, Lato;
+	font-family: FontAwesome, Entypo, Lato, arial;
 }
 
 /*
@@ -772,21 +772,10 @@ Links
 ==============================================================================
 */
 
-html.opera a#epb3sldrzr-link-toc:before,
-html.opera a#epb3sldrzr-link-next:before,
-html.opera a#epb3sldrzr-link-previous:before,
-html.opera a#epb3sldrzr-link-epub:before
-{
-	font-size: 180%;
-
-	font-weight: 400;
-	font-family: Tahoma, verdana, arial, sans-serif;
-}
-
-html:not(.opera) a#epb3sldrzr-link-toc:before,
-html:not(.opera) a#epb3sldrzr-link-next:before,
-html:not(.opera) a#epb3sldrzr-link-previous:before,
-html:not(.opera) a#epb3sldrzr-link-epub:before
+html:not(.operax) a#epb3sldrzr-link-toc:before,
+html:not(.operax) a#epb3sldrzr-link-next:before,
+html:not(.operax) a#epb3sldrzr-link-previous:before,
+html:not(.operax) a#epb3sldrzr-link-epub:before
 {
 	margin:0;
 	padding:0;
@@ -796,19 +785,19 @@ html:not(.opera) a#epb3sldrzr-link-epub:before
 	font-family: 'Entypo';
 }
 
-html:not(.opera) a#epb3sldrzr-link-epub:before
+html:not(.operax) a#epb3sldrzr-link-epub:before
 {
 	content: "\1F4E5";
 }
 
-html:not(.opera) a#epb3sldrzr-link-toc:before
+html:not(.operax) a#epb3sldrzr-link-toc:before
 {
 	content: "\E005";
 	/*
 	content: "\2605";
 	*/
 }
-html:not(.opera) a#epb3sldrzr-link-previous:before
+html:not(.operax) a#epb3sldrzr-link-previous:before
 {
 	content: "\E759";
 	/*
@@ -817,7 +806,7 @@ html:not(.opera) a#epb3sldrzr-link-previous:before
 	content: "\25C4";
 	*/
 }
-html:not(.opera) a#epb3sldrzr-link-next:before
+html:not(.operax) a#epb3sldrzr-link-next:before
 {
 	content: "\E75A";
 	/*
@@ -825,6 +814,18 @@ html:not(.opera) a#epb3sldrzr-link-next:before
 	
 	content: "\25BA";
 	*/
+}
+
+/*
+html.opera a#epb3sldrzr-link-toc:before,
+html.opera a#epb3sldrzr-link-next:before,
+html.opera a#epb3sldrzr-link-previous:before,
+html.opera a#epb3sldrzr-link-epub:before
+{
+	font-size: 180%;
+
+	font-weight: 400;
+	font-family: Tahoma, verdana, arial, sans-serif;
 }
 
 html.opera a#epb3sldrzr-link-toc:before
@@ -843,6 +844,7 @@ html.opera a#epb3sldrzr-link-next:before
 {
 	content: "\25BA";
 }
+*/
 
 a#epb3sldrzr-link-noteback,
 a#epb3sldrzr-link-notesref,
@@ -1161,7 +1163,26 @@ html#epb3sldrzr-NavDoc ol li:hover:before
 }
 
 
-/* OPERA HACK */
+html#epb3sldrzr-NavDoc.opera ol
+{
+	-o-column-count: auto;
+	column-count: auto;
+}
+
+html#epb3sldrzr-NavDoc.opera ol li
+{
+	/*
+	float: left;
+	display: inline;
+	*/
+	
+	display: inline-block;
+	/* white-space: nowrap; */
+	
+	width:50%;
+}
+
+/* OPERA HACK
 @media (min-resolution: .001dpcm)
 {
 	_:-o-prefocus, html#epb3sldrzr-NavDoc ol
@@ -1171,7 +1192,6 @@ html#epb3sldrzr-NavDoc ol li:hover:before
 	}
 }
 
-/* OPERA HACK */
 @media (min-resolution: .001dpcm)
 {
 	_:-o-prefocus, html#epb3sldrzr-NavDoc ol li
@@ -1181,6 +1201,7 @@ html#epb3sldrzr-NavDoc ol li:hover:before
 	width:50%;
 	}
 }
+*/
 
 /*
 
