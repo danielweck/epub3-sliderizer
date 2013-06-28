@@ -52,6 +52,7 @@ background: #FF0033;
 </style><style type="text/css">
 #boox
 {
+margin-top: 1em;
 
 -webkit-animation-duration: 1s;
 -moz-animation-duration: 1s;
@@ -97,21 +98,30 @@ transition: opacity 200ms ease-in-out 0ms !important;
 {
 margin: 0;
 padding: 0;
-padding-top: 60px;
-margin-left: 60px;
+padding-top: 40px;
+margin-left: 40px;
 }
-#epb3sldrzr-content div.intro p
+#epb3sldrzr-content div.intro p:not(.title)
 {
 margin-bottom: 0.2em;
 padding-bottom: 0;
 margin-top: 0;
 padding-top: 0;
-}
-#epb3sldrzr-content div.intro p:not(.title)
-{
 font-weight: 400;
 font-family: Arvo, Lato, Tahoma, verdana, arial, sans-serif;
 font-size: 100%;
+}
+#epb3sldrzr-content div.intro p.title
+{
+margin: 0;
+padding: 0;
+font-size: 120%;
+padding-bottom: 0.22em;
+margin-bottom: 1em;
+border-bottom: 8px solid #8AC007;
+padding-left: 0;
+margin-left: 40px;
+padding-top: 40px;
 }
 h1#epb3sldrzr-title
 {
@@ -176,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function(e) { setTimeout(setupLogo
 <img alt="Fork me on GitHub" src="../img/custom/assets/forkme.png" style="border: 0; padding: 0; margin: 0; width: 200px; height: 200px;"/>
 </a>
 <div class="intro">
-<p class="title" style="font-size: 120%; padding-bottom: 0.22em; margin-bottom: 1em; border-bottom: 8px solid #8AC007;"><strong>EPUB3-Sliderizer</strong>
+<p class="title"><strong>EPUB3-Sliderizer</strong>
 </p><div class="auto incremental" data-incremental-delay="100">
 <p>a tool that creates slideshow presentations for
 </p><p><span class="pale-red">web-browsers</span> and <span class="pale-blue">e-book readers</span>
@@ -185,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function(e) { setTimeout(setupLogo
 </p><p>that can also be viewed in modern HTML5 web browsers
 </p><p>thanks to a bespoke slide flippin' engine™
 </p></div>
-<div class="boxed epb3sldrzr-animated bounceInDown" id="boox" style="margin-top: 1em;">
+<div class="boxed epb3sldrzr-animated bounceInDown" id="boox">
 <div>
 <img alt="Logo" id="logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/>
 <ul>
