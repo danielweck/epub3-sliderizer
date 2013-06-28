@@ -219,10 +219,10 @@ public final class OPF {
 
 		create_ManifestItem(Epub3FileSet.JS_JQUERY, document, elementManifest,
 				"js-jquery", false, Epub3FileSet.FOLDER_JS, null);
-
-		create_ManifestItem(Epub3FileSet.JS_JQUERY_UI, document,
-				elementManifest, "js-jquery-ui", false, Epub3FileSet.FOLDER_JS,
-				null);
+		//
+		// create_ManifestItem(Epub3FileSet.JS_JQUERY_UI, document,
+		// elementManifest, "js-jquery-ui", false, Epub3FileSet.FOLDER_JS,
+		// null);
 
 		create_ManifestItem(Epub3FileSet.JS_JQUERY_BLOCKUI, document,
 				elementManifest, "js-jquery-blockui", false,

@@ -256,9 +256,9 @@ public final class XHTML {
 		create_HeadScripts(Epub3FileSet.JS_JQUERY, document, elementHead, null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
-		create_HeadScripts(Epub3FileSet.JS_JQUERY_UI, document, elementHead,
-				null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
+		// create_HeadScripts(Epub3FileSet.JS_JQUERY_UI, document, elementHead,
+		// null, // "text/javascript",
+		// PATH_PREFIX + Epub3FileSet.FOLDER_JS);
 
 		create_HeadScripts(Epub3FileSet.JS_JQUERY_BLOCKUI, document,
 				elementHead, null, // "text/javascript",
