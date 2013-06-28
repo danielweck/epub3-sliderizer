@@ -176,7 +176,8 @@ public final class XHTML {
 			htmlTitle = htmlTitle + " (NOTES)";
 		}
 
-		htmlTitle = "(" + (i == -1 ? 0 : i) + "/" + slideShow.slides.size() + ") " + htmlTitle;
+		htmlTitle = "(" + (i == -1 ? 0 : i) + "/" + slideShow.slides.size()
+				+ ") " + htmlTitle;
 
 		Element elementTitle = document.createElement("title");
 		elementHead.appendChild(elementTitle);
@@ -204,8 +205,8 @@ public final class XHTML {
 		// create_HeadLinks(Epub3FileSet.CSS_ANIMATE, document, elementHead,
 		// "stylesheet", "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
 
-		create_HeadLinks(Epub3FileSet.CSS_JQUERY_UI, document, elementHead,
-				"stylesheet", "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
+		// create_HeadLinks(Epub3FileSet.CSS_JQUERY_UI, document, elementHead,
+		// "stylesheet", "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
 
 		create_HeadLinks(Epub3FileSet.CSS_FONT_AWESOME, document, elementHead,
 				"stylesheet", "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);

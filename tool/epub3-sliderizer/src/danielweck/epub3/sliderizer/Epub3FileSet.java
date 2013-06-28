@@ -26,7 +26,7 @@ public final class Epub3FileSet {
 
 	final static String FONT_AWESOME_WOFF = "FontAwesome.woff";
 	
-	final static String FONT_ENTYPO_WOFF = "Entypo.woff";
+	//final static String FONT_ENTYPO_WOFF = "Entypo.woff";
 	//final static String FONT_ENTYPO_TTF = "Entypo.ttf";
 
 	final static String FONT_NEUTON_400_WOFF = "Neuton_400.woff";
@@ -59,7 +59,7 @@ public final class Epub3FileSet {
 
 	final static String CSS_FONT_AWESOME = "FontAwesome.css";
 	
-	final static String CSS_JQUERY_UI = "jquery-ui-1.10.3.custom.css";
+	//final static String CSS_JQUERY_UI = "jquery-ui-1.10.3.custom.css";
 
 	final static String JS_DEFAULT = "default.js";
 	final static String JS_SCREENFULL = "screenfull.js";

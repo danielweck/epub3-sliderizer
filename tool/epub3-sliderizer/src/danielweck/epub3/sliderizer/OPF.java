@@ -263,9 +263,9 @@ public final class OPF {
 		// elementManifest, "js-json", false,
 		// Epub3FileSet.JS_FOLDER_NAME, null);
 
-		create_ManifestItem(Epub3FileSet.FONT_ENTYPO_WOFF, document,
-				elementManifest, "font-entypo-woff", false,
-				Epub3FileSet.FOLDER_CSS, null);
+		// create_ManifestItem(Epub3FileSet.FONT_ENTYPO_WOFF, document,
+		// elementManifest, "font-entypo-woff", false,
+		// Epub3FileSet.FOLDER_CSS, null);
 		//
 		create_ManifestItem(Epub3FileSet.FONT_AWESOME_WOFF, document,
 				elementManifest, "font-awesome-woff", false,
@@ -343,9 +343,9 @@ public final class OPF {
 		// elementManifest, "css-animate", false,
 		// Epub3FileSet.FOLDER_CSS, null);
 
-		create_ManifestItem(Epub3FileSet.CSS_JQUERY_UI, document,
-				elementManifest, "css-jquery-ui", false,
-				Epub3FileSet.FOLDER_CSS, null);
+		// create_ManifestItem(Epub3FileSet.CSS_JQUERY_UI, document,
+		// elementManifest, "css-jquery-ui", false,
+		// Epub3FileSet.FOLDER_CSS, null);
 
 		create_ManifestItem(slideShow.LOGO, document, elementManifest, "logo",
 				false, Epub3FileSet.FOLDER_IMG + "/"

@@ -3,22 +3,15 @@
 @namespace epub 'http://www.idpf.org/2007/ops';
 
 /*
-*:not(html)
-{
-	-PREFIXED_PROPERTY-backface-visibility: hidden;
-}
-*/
-
-/*
 ==============================================================================
 
 Font faces
 
 ==============================================================================
 
-http://fortawesome.github.io/Font-Awesome/cheatsheet/
 
-http://www.entypo.com/characters/
+
+http://fortawesome.github.io/Font-Awesome/cheatsheet/
 */
 
 @font-face
@@ -101,15 +94,20 @@ http://www.entypo.com/characters/
 	font-style: normal;
 }
 
+/*
+
+http://www.entypo.com/characters/
+
 @font-face
 {
 	font-family: 'Entypo';
 	font-weight: normal;
 	font-style: normal;
 	src:url(Entypo.woff) format('woff')
-	/* ,url('Entypo.ttf') format('truetype') */
 	;
 }
+*/
+	/* ,url('Entypo.ttf') format('truetype') */
 
 /*
 ==============================================================================
@@ -264,16 +262,18 @@ span.keyboard
 
 html:not(.operax) span.symbols
 {
-	font-family: Entypo, Lato, arial;
+	font-family: FontAwesome, Lato, arial;
 	font-size: 120%;
 	
 	padding-bottom: 0;
 }
 
+/*
 html:not(.operax) span.symbols.alt
 {
 	font-family: FontAwesome, Entypo, Lato, arial;
 }
+*/
 
 /*
 ==============================================================================
@@ -616,25 +616,43 @@ html:not(.operax) a#epb3sldrzr-link-epub:before
 	font-size: 200%;
 
 	font-weight: 400;
-	font-family: 'Entypo';
+	font-family: 'FontAwesome';
 }
 
 html:not(.operax) a#epb3sldrzr-link-epub:before
 {
+
+	content: "\f02d";
+	
+	/*
+
+	content: "\f0ed";
+	
 	content: "\1F4E5";
+	*/
+
+	/*
+	content: "\f019";
+	*/
 }
 
 html:not(.operax) a#epb3sldrzr-link-toc:before
 {
-	content: "\E005";
+	content: "\f0ca";
 	/*
+
+	font-size: 130%;
+	
+	
+	content: "\E005";
 	content: "\2605";
 	*/
 }
 html:not(.operax) a#epb3sldrzr-link-previous:before
 {
-	content: "\E759";
+	content: "\f0a8";
 	/*
+	content: "\E759";
 	content: "\25C2";
 
 	content: "\25C4";
@@ -642,8 +660,9 @@ html:not(.operax) a#epb3sldrzr-link-previous:before
 }
 html:not(.operax) a#epb3sldrzr-link-next:before
 {
-	content: "\E75A";
+	content: "\f0a9";
 	/*
+	content: "\E75A";
 	content: "\25B8";
 	
 	content: "\25BA";
@@ -757,12 +776,14 @@ a#epb3sldrzr-link-epubReadingSystem:hover
 	text-decoration:none;
 }
 
+
 a#epb3sldrzr-link-toc:link,
 a#epb3sldrzr-link-toc:visited,
 a#epb3sldrzr-link-toc:active
 {
-	color: #33CC00;
+	color: #999999;
 }
+
 a#epb3sldrzr-link-toc:hover
 {
 	background-color:#33CC00;
@@ -790,8 +811,11 @@ div#epb3sldrzr-controls
 	padding-top: 0.2em;
 	padding-bottom: 0.2em;
 	
+	background-color: transparent;
+	
 	/*
-	background-color: rgba(0,0,0,0.3);
+	
+	background-color: rgba(255,255,255,0.6);
 	*/
 }
 
@@ -832,7 +856,8 @@ a#epb3sldrzr-link-notesref
 	float: right;
 	
 	margin-right: 2em;
-	margin-top: 1em;
+
+	margin-top: 0.5em;
 	
 	/* right:300px; */
 }
@@ -943,11 +968,34 @@ NavDoc lists
 */
 
 
+/* 
+
+html#epb3sldrzr-NavDoc div#epb3sldrzr-root-NOTES,
+html#epb3sldrzr-NavDoc div#epb3sldrzr-root
+{
+	overflow: visible !important;
+	overflow-x: scroll !important;
+	overflow-y: visible !important;
+}
+
+min-width: 110%;
+
+-PREFIXED_PROPERTY-column-width: 15em;
+
+
+	white-space: no-wrap;
+
+*/
+
 html#epb3sldrzr-NavDoc ol
 {
 	-PREFIXED_PROPERTY-column-count: 2;
+	
 	-PREFIXED_PROPERTY-column-gap: 1em;
-/* 	-PREFIXED_PROPERTY-column-rule: 10px dotted #ff00ff;	*/
+	
+	-PREFIXED_PROPERTY-column-fill: auto;
+	
+	-PREFIXED_PROPERTY-column-rule: 2px dotted #eeeeee;
 	
 
 	font-weight: 900;
@@ -965,9 +1013,11 @@ html#epb3sldrzr-NavDoc ol li a:active
 	
 html#epb3sldrzr-NavDoc ol li
 {
+	
 	font-weight:900;
 	
 	/*
+
 	width:25%;
 	width:33.33333%;
 	*/
@@ -989,7 +1039,7 @@ html#epb3sldrzr-NavDoc.opera ol
 {
 	-o-column-count: auto;
 	column-count: auto;
-}
+}	
 
 html#epb3sldrzr-NavDoc.opera ol li
 {
@@ -997,33 +1047,13 @@ html#epb3sldrzr-NavDoc.opera ol li
 	float: left;
 	display: inline;
 	*/
-	
+
+
+	/* white-space: nowrap; */	
 	display: inline-block;
-	/* white-space: nowrap; */
-	
 	width:50%;
 }
 
-/* OPERA HACK
-@media (min-resolution: .001dpcm)
-{
-	_:-o-prefocus, html#epb3sldrzr-NavDoc ol
-	{
-	-o-column-count: auto;
-	column-count: auto;
-	}
-}
-
-@media (min-resolution: .001dpcm)
-{
-	_:-o-prefocus, html#epb3sldrzr-NavDoc ol li
-	{
-	float:left;
-	display:inline;
-	width:50%;
-	}
-}
-*/
 
 /*
 
@@ -1247,18 +1277,11 @@ body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animateStart
 	-PREFIXED_PROPERTY-animation-iteration-count: 1;
 }
 
-
-/* OPERA HACK */
-/*
-@media (min-resolution: .001dpcm)
+html.operax body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animated:not(#epb3sldrzr-body)
 {
-	_:-o-prefocus, body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animated:not(#epb3sldrzr-body)
-	{
 animation-iteration-count: 1 !important;
 -o-animation-iteration-count: 1 !important;
-	}
 }
-*/
 
 _PREFIXED_@keyframes bounceInDown
 {
@@ -1468,3 +1491,27 @@ h1#epb3sldrzr-title-NOTES
 
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#00ffffff',GradientType=1 );
 }
+
+
+
+/* OPERA HACK
+@media (min-resolution: .001dpcm)
+{
+	_:-o-prefocus, SELECTOR
+	{
+
+	}
+}
+
+
+html.opera .notOpera
+{
+display: none;
+}
+
+html:not(.opera) .isOpera
+{
+display: none;
+}
+
+*/
