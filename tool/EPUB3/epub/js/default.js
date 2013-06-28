@@ -314,7 +314,7 @@ Epub3Sliderizer.transition = function(on)
 	
 	if (on)
 	{
-		if (!this.basicMode)
+		if (!this.basicMode && !this.opera && !this.IE && !this.firefox)
 		{
 			var transition = "all "+milliseconds+"ms ease-in-out";
 			document.body.style.MozTransition = transition;
@@ -1209,7 +1209,8 @@ Epub3Sliderizer.onResize = function()
 	var offsetX = bodyFit.offsetX;
 	var offsetY = bodyFit.offsetY;
 	
-	var is3D = this.opera || this.firefox || this.mobile ? false : true;
+	var is3D = this.opera || this.firefox || this.mobile || this.IE ? false : true; // this leaves WebKit with 3D ...
+	
 	is3D = false;
 	
 	var transformCSS = "";
@@ -1502,7 +1503,6 @@ Epub3Sliderizer.initLinks = function()
 	var anchor = controls; //this.bodyRoot
 
 
-
 	var aa = document.createElement('a');
 	aa.id = "epb3sldrzr-link-toc";
 	aa.title = "Slide menu";
@@ -1510,7 +1510,14 @@ Epub3Sliderizer.initLinks = function()
 	aa.href = "javascript:Epub3Sliderizer.gotoToc();";
 	//aa.innerHTML = "<span style=\"display:none;\">Slide menu</span>&#9733;";
 
-	anchor.insertBefore(aa, anchor.children[0]);
+	if (anchor.children.length == 0)
+	{
+		anchor.appendChild(aa);
+	}
+	else
+	{
+		anchor.insertBefore(aa, anchor.children[0]);
+	}
 
 	if (this.prev != "")
 	{
@@ -2126,7 +2133,15 @@ Epub3Sliderizer.init = function()
 
 		var controls = querySelectorZ("#epb3sldrzr-controls");
 		var anchor = controls; //this.bodyRoot
-		anchor.insertBefore(a, anchor.children[0]);
+		
+		if (anchor.children.length == 0)
+		{
+			anchor.appendChild(a);
+		}
+		else
+		{
+			anchor.insertBefore(a, anchor.children[0]);
+		}
 
 		this.bodyRoot.style.visibility = "visible";
 	}
