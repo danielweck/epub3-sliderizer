@@ -169,6 +169,23 @@ var Epub3Sliderizer = {
 
 // ----------
 
+Epub3Sliderizer.ensureControlsVisible = function()
+{
+	var controls = querySelectorZ("#epb3sldrzr-controls");
+
+	if (!controls.style.opacity || controls.style.opacity == 0)
+	{
+		controls.style.opacity = 1;
+
+		setTimeout(function()
+		{
+			controls.style.opacity = 0;
+		}, 5000);
+	}
+}
+
+// ----------
+
 Epub3Sliderizer.AUTHORize = function(selector)
 {
 	if (typeof $ == "undefined")
@@ -176,6 +193,8 @@ Epub3Sliderizer.AUTHORize = function(selector)
 		return;
 	}
 
+	alert("AUTHOR MODE");
+	
 	var elems = $(selector);
 	elems.addClass("ui-widget-content");
 	elems.addClass("epb3sldrzr-author");
@@ -1053,9 +1072,12 @@ Epub3Sliderizer.initTouch = function()
 	hammer.on("hold",
 		onHold.bind(this)
 	);
-	/*
+
+
 	function onTap(hammerEvent)
 	{
+		this.ensureControlsVisible();
+		
 		if (hammerEvent.gesture)
 		{
 			
@@ -1065,7 +1087,6 @@ Epub3Sliderizer.initTouch = function()
 	hammer.on("tap",
 		onTap.bind(this)
 	);
-	*/
 	
 	document.addEventListener('touchstart', function(e)
 	{
@@ -2164,8 +2185,6 @@ Epub3Sliderizer.init = function()
 
 		if (this.authorMode)
 	    {
-			alert("AUTHOR MODE");
-			
 			this.AUTHORize(".epb3sldrzr-author");
 		}
 	}
@@ -2179,6 +2198,8 @@ Epub3Sliderizer.init = function()
 		this.initReverse();
 		
 		this.initLinks();
+		
+		this.ensureControlsVisible();
 
 		window.onkeyup = this.onKeyboard.bind(this);
 	
