@@ -322,7 +322,7 @@ previous / next incremental item
 </tr>
 <tr>
 <td style="width: 30%">
-<span class="keyboard symbols" title="down">_</span>
+<span class="keyboard" title="down">_</span>
 </td>
 <td>
 <span class="code">[space bar]</span> next incremental item
@@ -560,17 +560,17 @@ _CONTENT
 
 <p style="line-height: 1.7em;">
 
-<span class="keyboard symbols" title="zero">0</span> &nbsp;&nbsp;&nbsp;reset font size
+<span class="keyboard " title="zero">0</span> &nbsp;&nbsp;&nbsp;reset font size
 <br>
-<span class="keyboard symbols" title="1">1</span>
-<span class="keyboard symbols" title="2">2</span>
-<span class="keyboard symbols" title="3">3</span>
-<span class="keyboard symbols" title="4">4</span>
-<span class="keyboard symbols" title="5">5</span>
-<span class="keyboard symbols" title="6">6</span>
-<span class="keyboard symbols" title="7">7</span>
-<span class="keyboard symbols" title="8">8</span>
-<span class="keyboard symbols" title="9">9</span>
+<span class="keyboard " title="1">1</span>
+<span class="keyboard " title="2">2</span>
+<span class="keyboard " title="3">3</span>
+<span class="keyboard " title="4">4</span>
+<span class="keyboard " title="5">5</span>
+<span class="keyboard " title="6">6</span>
+<span class="keyboard " title="7">7</span>
+<span class="keyboard " title="8">8</span>
+<span class="keyboard " title="9">9</span>
 &nbsp;&nbsp;&nbsp;increase font size
 </p>
 
