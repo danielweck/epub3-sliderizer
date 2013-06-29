@@ -174,13 +174,13 @@ Epub3Sliderizer.ensureControlsVisible = function()
 	//var controls = querySelectorZ("#epb3sldrzr-controls");
 	var controls = document.getElementById("epb3sldrzr-controls");
 
-	if (!controls.style.opacity || controls.style.opacity == 0)
+	if (!controls.style.display || controls.style.display == "none")
 	{
-		controls.style.opacity = 1;
+		controls.style.display = "block";
 
 		setTimeout(function()
 		{
-			controls.style.opacity = 0;
+			controls.style.display = "none";
 		}, 5000);
 	}
 }
