@@ -740,16 +740,16 @@ div#epb3sldrzr-controls
 	background-color: transparent;
 	
 	/*
-	
 	background-color: rgba(255,255,255,0.6);
 	*/
 }
 
 a#epb3sldrzr-link-epub
 {
-	bottom: auto;
+	position:absolute;
 	top: 25px;
 	right: 20px;
+	z-index: 20;
 }
 
 
@@ -764,7 +764,6 @@ a#epb3sldrzr-link-epubReadingSystem
 a#epb3sldrzr-link-notesref
 {
 	float: right;
-	
 	margin-right: 2em;
 }
 
