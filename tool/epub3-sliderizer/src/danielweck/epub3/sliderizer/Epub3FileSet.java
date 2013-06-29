@@ -25,24 +25,24 @@ public final class Epub3FileSet {
 	final static String FOLDER_CUSTOM = "custom";
 
 	final static String FONT_AWESOME_WOFF = "FontAwesome.woff";
-	
-	//final static String FONT_ENTYPO_WOFF = "Entypo.woff";
-	//final static String FONT_ENTYPO_TTF = "Entypo.ttf";
+
+	// final static String FONT_ENTYPO_WOFF = "Entypo.woff";
+	// final static String FONT_ENTYPO_TTF = "Entypo.ttf";
 
 	final static String FONT_NEUTON_400_WOFF = "Neuton_400.woff";
-	//final static String FONT_NEUTON_400_TTF = "Neuton_400.ttf";
+	// final static String FONT_NEUTON_400_TTF = "Neuton_400.ttf";
 	final static String FONT_NEUTON_700_WOFF = "Neuton_700.woff";
-	//final static String FONT_NEUTON_700_TTF = "Neuton_700.ttf";
+	// final static String FONT_NEUTON_700_TTF = "Neuton_700.ttf";
 
 	final static String FONT_ARVO_400_WOFF = "Arvo_400.woff";
-	//final static String FONT_ARVO_400_TTF = "Arvo_400.ttf";
+	// final static String FONT_ARVO_400_TTF = "Arvo_400.ttf";
 	final static String FONT_ARVO_700_WOFF = "Arvo_700.woff";
-	//final static String FONT_ARVO_700_TTF = "Arvo_700.ttf";
+	// final static String FONT_ARVO_700_TTF = "Arvo_700.ttf";
 
 	final static String FONT_LATO_400_WOFF = "Lato_400.woff";
-	//final static String FONT_LATO_400_TTF = "Lato_400.ttf";
+	// final static String FONT_LATO_400_TTF = "Lato_400.ttf";
 	final static String FONT_LATO_900_WOFF = "Lato_900.woff";
-	//final static String FONT_LATO_900_TTF = "Lato_900.ttf";
+	// final static String FONT_LATO_900_TTF = "Lato_900.ttf";
 
 	/*
 	 * final static String FONT_ROBOTO_BLACK_WOFF = "Roboto-Black.woff"; final
@@ -52,15 +52,15 @@ public final class Epub3FileSet {
 	 */
 
 	final static String FONT_INCONSOLATA_WOFF = "Inconsolata.woff";
-	//final static String FONT_INCONSOLATA_TTF = "Inconsolata.ttf";
+	// final static String FONT_INCONSOLATA_TTF = "Inconsolata.ttf";
 
 	final static String CSS_DEFAULT = "default.css";
-	//final static String CSS_ANIMATE = "animate.css";
+	// final static String CSS_ANIMATE = "animate.css";
 
 	final static String CSS_FONT_AWESOME = "FontAwesome.css";
-	
-	//final static String CSS_JQUERY_UI = "jquery-ui-1.10.3.custom.css";
-	//final static String JS_JQUERY_UI = "jquery-ui-1.10.3.custom.min.js";
+
+	// final static String CSS_JQUERY_UI = "jquery-ui-1.10.3.custom.css";
+	// final static String JS_JQUERY_UI = "jquery-ui-1.10.3.custom.min.js";
 
 	final static String JS_DEFAULT = "default.js";
 	final static String JS_SCREENFULL = "screenfull.js";
@@ -276,7 +276,19 @@ public final class Epub3FileSet {
 		style = style.replaceAll("VIEWPORT_WIDTH", slideShow.VIEWPORT_WIDTH);
 		style = style.replaceAll("VIEWPORT_HEIGHT", slideShow.VIEWPORT_HEIGHT);
 
-		style = style.replaceAll("FONT_SIZE", slideShow.FONT_SIZE);
+		int fontSize = 40;
+		try {
+			fontSize = Integer.parseInt(slideShow.FONT_SIZE);
+		} catch (Exception ex) {
+			;
+		}
+
+		style = style.replaceAll("FONT_SIZEpx", fontSize + "px");
+		style = style.replaceAll("FONT_SIZErem", fontSize / 10 + "rem");
+
+		fontSize = Math.round(fontSize / 2);
+		style = style.replaceAll("FONT_SIZE_HALFpx", fontSize + "px");
+		style = style.replaceAll("FONT_SIZE_HALFrem", fontSize / 10 + "rem");
 
 		return style;
 	}

@@ -308,13 +308,13 @@ public final class EPubImporter {
 		// slide.CSS_STYLE = "";
 		// }
 		// slide.CSS_STYLE +=
-		// "\n\nh1#epb3sldrzr-title,\nh1#epb3sldrzr-title-NOTES\n{\nposition: absolute; left: 0; top: 0; right: 0; display: none; \n}\n\n";
+		// "\n\nh1#epb3sldrzr-title\n{\nposition: absolute; left: 0; top: 0; right: 0; display: none; \n}\n\n";
 		// slide.CSS_STYLE += "\n\nbody{font-size: " + slideShow.FONT_SIZE
 		// + "px !important;}\n\n";
 		// slide.CSS_STYLE +=
-		// "\n\n#epb3sldrzr-content,#epb3sldrzr-content-NOTES{font-size: 100% !important;}h1#epb3sldrzr-title,h1#epb3sldrzr-title-NOTES{font-size: 150% !important;}a#epb3sldrzr-link-noteback,a#epb3sldrzr-link-notesref,a#epb3sldrzr-link-previous,a#epb3sldrzr-link-next,a#epb3sldrzr-link-toc,a#epb3sldrzr-link-epubReadingSystem{	font-size: 50% !important;}ol li:before{font-size: 70% !important;}#epb3sldrzr-content div.boxed > h3,#epb3sldrzr-content-NOTES div.boxed > h3{font-size: 80% !important;}.code{font-size: 70% !important;}\n\n";
+		// "\n\n#epb3sldrzr-content{font-size: 100% !important;}h1#epb3sldrzr-title{font-size: 150% !important;}a#epb3sldrzr-link-noteback,a#epb3sldrzr-link-notesref,a#epb3sldrzr-link-previous,a#epb3sldrzr-link-next,a#epb3sldrzr-link-toc,a#epb3sldrzr-link-epubReadingSystem{	font-size: 50% !important;}ol li:before{font-size: 70% !important;}#epb3sldrzr-content div.boxed > h3{font-size: 80% !important;}.code{font-size: 70% !important;}\n\n";
 		// slide.CSS_STYLE +=
-		// "\n\ndiv#epb3sldrzr-root-NOTES,div#epb3sldrzr-root{overflow:hidden;}\n\n";
+		// "\n\ndiv#epb3sldrzr-root{overflow:hidden;}\n\n";
 		// }
 
 		Slide slide = slideShow.slides.get(0);

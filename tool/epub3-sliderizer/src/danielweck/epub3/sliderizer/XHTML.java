@@ -349,8 +349,8 @@ public final class XHTML {
 			elementStyle.setAttribute("type", "text/css");
 			elementStyle.appendChild(document.createTextNode("\n"));
 
-			String css = "\n\nh1#epb3sldrzr-title,\nh1#epb3sldrzr-title-NOTES\n{\nposition: absolute; left: 0; top: 0; right: 0; display: none; \n}\n\n";
-			css += "\n\ndiv#epb3sldrzr-root-NOTES,div#epb3sldrzr-root{overflow:hidden;}\n\n";
+			String css = "\n\nh1#epb3sldrzr-title\n{\nposition: absolute; left: 0; top: 0; right: 0; display: none; \n}\n\n";
+			css += "\n\ndiv#epb3sldrzr-root{overflow:hidden;}\n\n";
 
 			elementStyle.appendChild(document.createTextNode(css));
 			elementStyle.appendChild(document.createTextNode("\n"));
@@ -381,21 +381,13 @@ public final class XHTML {
 		elementHtml.appendChild(elementBody_);
 		elementBody_.setAttributeNS("http://www.idpf.org/2007/ops",
 				"epub:type", "bodymatter");
-		if (notes) {
-			elementBody_.setAttribute("class", "epb3sldrzr-NOTES");
-		} else if (slide != null) {
-			elementBody_.setAttribute("class", "epb3sldrzr-SLIDE");
-		} else {
-			elementBody_.setAttribute("class", "epb3sldrzr-NAVDOC");
-		}
-
+		
 		Element elementBody = null;
 		if (false && notes) {
 			elementBody = elementBody_;
 		} else {
 			elementBody = document.createElement("div");
-			elementBody.setAttribute("id", "epb3sldrzr-body"
-					+ (notes ? "-NOTES" : ""));
+			elementBody.setAttribute("id", "epb3sldrzr-body");
 			elementBody_.appendChild(elementBody);
 		}
 
@@ -418,13 +410,11 @@ public final class XHTML {
 		} else {
 			elementDiv = document.createElement("div");
 			elementBody.appendChild(elementDiv);
-			elementDiv.setAttribute("id", "epb3sldrzr-root"
-					+ (notes ? "-NOTES" : ""));
+			elementDiv.setAttribute("id", "epb3sldrzr-root");
 		}
 
 		Element elementH1 = document.createElement("h1");
-		elementH1.setAttribute("id", "epb3sldrzr-title"
-				+ (notes ? "-NOTES" : ""));
+		elementH1.setAttribute("id", "epb3sldrzr-title");
 		elementDiv.appendChild(elementH1);
 		elementH1.appendChild(document.createTextNode(title));
 
@@ -438,8 +428,7 @@ public final class XHTML {
 			Element elementSpan = document.createElement("span");
 			elementH1.appendChild(document.createTextNode(" "));
 			elementH1.appendChild(elementSpan);
-			elementSpan.setAttribute("id", "epb3sldrzr-subtitle"
-					+ (notes ? "-NOTES" : ""));
+			elementSpan.setAttribute("id", "epb3sldrzr-subtitle");
 			// elementSpan.setAttribute("class", "fade smaller");
 			elementSpan.appendChild(document.createTextNode(subtitle));
 		}
@@ -456,8 +445,7 @@ public final class XHTML {
 
 		Element elementSection = document.createElement("section");
 		elementDiv.appendChild(elementSection);
-		elementSection.setAttribute("id", "epb3sldrzr-content"
-				+ (notes ? "-NOTES" : ""));
+		elementSection.setAttribute("id", "epb3sldrzr-content");
 
 		return elementSection;
 	}
