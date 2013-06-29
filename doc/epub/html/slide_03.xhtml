@@ -56,7 +56,8 @@ function setupAnimations()
 var html = document.documentElement;
 if (html.id == "epb3sldrzr-NavDoc")
 {
-var elem = querySelectorZ("#epb3sldrzr-logo");
+//		var elem = querySelectorZ("#epb3sldrzr-logo");
+var elem = document.getElementById("epb3sldrzr-logo");
 elem.classList.add("fadeIn");
 elem.classList.add("epb3sldrzr-animated");
 }
@@ -64,14 +65,14 @@ elem.classList.add("epb3sldrzr-animated");
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
 //]]>
-</script></head><body class="epb3sldrzr-SLIDE" epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Tips: <span id="epb3sldrzr-subtitle">zoom &amp; pan</span></h1><section id="epb3sldrzr-content"><!--SOUP--><div class="incremental auto">
-<div class="boxed">
+</script></head><body epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Tips: <span id="epb3sldrzr-subtitle">zoom &amp; pan</span></h1><section id="epb3sldrzr-content"><!--SOUP--><div class="incremental auto">
+<div class="boxed" style="margin-bottom: 1em;">
 <h3>Gestures <span class="fade">(touch or mouse)</span></h3>
-<div>
+<div class="nopad">
 <table class="spaceLined">
 <tbody><tr>
 <td style="width: 5%">
-<span class="symbols pale-greenx" style="padding-left: 0.2em;padding-right: 0;" title="double tap"> <!-- &#128261; --></span>
+<span class="symbols pale-greenx" title="double tap"> <!-- &#128261; --></span>
 </td>
 <td style="width: 25%">
 <span class="code">
@@ -79,12 +80,12 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 </span>
 </td>
 <td>
-toggle zoom <span class="fade" style="font-size: 80%">(aim at target)</span>
+toggle zoom <span class="fade" style="font-size: 0.8em">(aim at target)</span>
 </td>
 </tr>
 <tr>
 <td style="width: 5%">
-<span class="symbols pale-greenx" style="padding-left: 0.1em;padding-right: 0.1em;" title="pan"></span>
+<span class="symbols pale-greenx" title="pan"></span>
 </td>
 <td style="width: 25%">
 <span class="code">
@@ -92,14 +93,14 @@ toggle zoom <span class="fade" style="font-size: 80%">(aim at target)</span>
 </span>
 </td>
 <td>
-pan <span class="fade" style="font-size: 80%">(only when zoomed-in)</span>
+pan <span class="fade" style="font-size: 0.8em">(only when zoomed-in)</span>
 </td>
 </tr>
 <tr>
-<td style="width: 5%;  padding-bottom: 0;">
+<td style="width: 5%;">
 <span class="symbols pale-bluex" title="pinch"><!-- &#xf066; --></span>
 </td>
-<td style="width: 25%;  padding-bottom: 0;">
+<td style="width: 25%;">
 <span class="code">
 [pinch]
 </span>
@@ -109,10 +110,10 @@ zoom out / in
 </td>
 </tr>
 <tr>
-<td style="width: 5%; border: none;  padding-top: 0;">
-<span class="symbols pale-redx" style="padding-left: 0.1em;padding-right: 0.1em;" title="stretch"></span>
+<td style="width: 5%; border: none;">
+<span class="symbols pale-redx" title="stretch"></span>
 </td>
-<td style="width: 25%; border: none; padding-top: 0;">
+<td style="width: 25%; border: none;">
 <span class="code">
 [stretch]
 </span>
@@ -120,7 +121,7 @@ zoom out / in
 </tr>
 <tr>
 <td style="width: 5%">
-<span class="symbols pale-greenx" style="padding-left: 0.1em;padding-right: 0.1em;" title="rotate"></span>
+<span class="symbols pale-greenx" title="rotate"></span>
 </td>
 <td style="width: 25%">
 <span class="code">
@@ -130,7 +131,7 @@ zoom out / in
 <td>
 rotate slide
 <br/>
-<span class="fade" style="font-size: 80%">(shift + drag mouse ⇒ simulate multitouch)</span>
+<span class="fade" style="font-size: 0.8em">(shift + drag mouse ⇒ simulate multitouch)</span>
 </td>
 </tr>
 </tbody></table>
@@ -138,11 +139,11 @@ rotate slide
 </div>
 <div class="boxed">
 <h3>Keyboard</h3>
-<div>
+<div class="nopad">
 <table class="spaceLined">
 <tbody><tr>
 <td style="width: 30%">
-<span class="keyboard" style="padding-left: 0.4em; padding-right: 0.4em;">z</span>
+<span class="keyboard" style="padding-left: 0.4em; padding-right: 0.4em; ">z</span>
 </td>
 <td>
 toggle zoom
@@ -158,13 +159,13 @@ reset zoom
 </tr>
 <tr>
 <td style="width: 30%">
-<span class="keyboard symbols" style="padding-left: 0.2em; padding-right: 0.4em;" title="left"><!-- &#8592; --></span>
-<span class="keyboard symbols" style="padding-left: 0.4em; padding-right: 0.2em;" title="right"><!-- &#8594; --></span>
+<span class="keyboard symbols" style="padding-left: 0.2em; padding-right: 0.4em; " title="left"><!-- &#8592; --></span>
+<span class="keyboard symbols" style="padding-left: 0.4em; padding-right: 0.2em; " title="right"><!-- &#8594; --></span>
 <span class="keyboard symbols" title="up"><!-- &#8593; --></span>
 <span class="keyboard symbols" title="down"><!-- &#8595; --></span>
 </td>
 <td>
-pan <span class="fade" style="font-size: 80%">(only when zoomed-in)</span>
+pan <span class="fade" style="font-size: 0.8em">(only when zoomed-in)</span>
 </td>
 </tr>
 </tbody></table>

@@ -94,7 +94,7 @@ animation-delay: 1s;
 .notes-highlight,
 a#epb3sldrzr-link-notesref
 {
-border: 4px solid #ff00ff;
+border: 0.12em solid #ff00ff;
 }
 </style><script>
 //<![CDATA[
@@ -103,7 +103,8 @@ function setupAnimations()
 var html = document.documentElement;
 if (html.id == "epb3sldrzr-NavDoc")
 {
-var elem = querySelectorZ("#epb3sldrzr-logo");
+//		var elem = querySelectorZ("#epb3sldrzr-logo");
+var elem = document.getElementById("epb3sldrzr-logo");
 elem.classList.add("fadeIn");
 elem.classList.add("epb3sldrzr-animated");
 }
@@ -111,4 +112,4 @@ elem.classList.add("epb3sldrzr-animated");
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
 //]]>
-</script></head><body class="epb3sldrzr-NOTES" epub:type="bodymatter"><div id="epb3sldrzr-body-NOTES"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root-NOTES"><h1 id="epb3sldrzr-title-NOTES">Example <span id="epb3sldrzr-subtitle-NOTES">(2/2)</span></h1><p><a href="slide_07.xhtml" id="epb3sldrzr-link-noteback">Back</a></p><section id="epb3sldrzr-content-NOTES"><!--SOUP--><p>Slide notes are displayed separately, can be linked from the host slide.</p></section></div></div></body></html>
+</script></head><body epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Example <span id="epb3sldrzr-subtitle">(2/2)</span></h1><p><a href="slide_07.xhtml" id="epb3sldrzr-link-noteback">Back</a></p><section id="epb3sldrzr-content"><!--SOUP--><p>Slide notes are displayed separately, can be linked from the host slide.</p></section></div></div></body></html>

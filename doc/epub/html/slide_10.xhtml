@@ -56,7 +56,8 @@ function setupAnimations()
 var html = document.documentElement;
 if (html.id == "epb3sldrzr-NavDoc")
 {
-var elem = querySelectorZ("#epb3sldrzr-logo");
+//		var elem = querySelectorZ("#epb3sldrzr-logo");
+var elem = document.getElementById("epb3sldrzr-logo");
 elem.classList.add("fadeIn");
 elem.classList.add("epb3sldrzr-animated");
 }
@@ -64,9 +65,9 @@ elem.classList.add("epb3sldrzr-animated");
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
 //]]>
-</script></head><body class="epb3sldrzr-SLIDE" epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Incrementals</h1><section id="epb3sldrzr-content"><!--SOUP--><div class="boxed">
+</script></head><body epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Incrementals</h1><section id="epb3sldrzr-content"><!--SOUP--><div class="boxed" style="margin-bottom: 1em;">
 <h3>Example:</h3>
-<p class="code" style="font-size: 70%;">
+<p class="code" style="font-size: 0.7em;">
 &lt;ul class="<span class="code pale-red">auto</span> <span class="code pale-blue">incremental</span>" <span class="code pale-green">data-incremental-delay</span>="200"&gt;
 <br/>
 <span class="auto incremental" data-incremental-delay="200">
@@ -85,7 +86,7 @@ children revealed in sequence
 </li>
 <li>
 CSS class '<span class="code pale-red">auto</span>' on wrapper element or child item
-⇒ automatic progression
+<br/>⇒ automatic progression
 </li>
 <li>
 Attribute '<span class="code pale-green">data-incremental-delay</span>'

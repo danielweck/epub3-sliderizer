@@ -56,7 +56,8 @@ function setupAnimations()
 var html = document.documentElement;
 if (html.id == "epb3sldrzr-NavDoc")
 {
-var elem = querySelectorZ("#epb3sldrzr-logo");
+//		var elem = querySelectorZ("#epb3sldrzr-logo");
+var elem = document.getElementById("epb3sldrzr-logo");
 elem.classList.add("fadeIn");
 elem.classList.add("epb3sldrzr-animated");
 }
@@ -64,21 +65,21 @@ elem.classList.add("epb3sldrzr-animated");
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
 //]]>
-</script></head><body class="epb3sldrzr-SLIDE" epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Tips: <span id="epb3sldrzr-subtitle">text size</span></h1><section id="epb3sldrzr-content"><!--SOUP--><div class="incremental auto">
-<div class="boxed">
+</script></head><body epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Tips: <span id="epb3sldrzr-subtitle">text size</span></h1><section id="epb3sldrzr-content"><!--SOUP--><div class="incremental auto">
+<div class="boxed" style="margin-bottom: 1em;">
 <h3>Gestures <span class="fade">(touch)</span></h3>
-<p style="line-height: 1.7em;">
-<span class="symbols pale-greenx" style="padding-top: 0; padding-left: 0.2em;padding-right: 0;" title="two-finger tap"> <!-- &#9205; --></span>
-<span class="code" style="padding-right: 2em;">
+<p>
+<span class="symbols pale-greenx" title="two-finger tap"> <!-- &#9205; --></span>
+<span class="code">
 [hold]
 </span>
 cycle font sizes
-<span class="fade" style="font-size: 80%">(repeat multiple times)</span>
+<span class="fade" style="font-size: 0.8em">(repeat multiple times)</span>
 </p>
 </div>
-<div class="boxed">
+<div class="boxed" style="margin-bottom: 1em;">
 <h3>Keyboard</h3>
-<p style="line-height: 1.7em;">
+<p>
 <span class="keyboard " title="zero">0</span>    reset font size
 <br/>
 <span class="keyboard " title="1">1</span>
@@ -98,5 +99,5 @@ cycle font sizes
 <br/>
 when the text font is enlarged ⇒ the slides <strong>reflow</strong> and <strong>scroll</strong>
 </p><p style="text-align: right;">
-<span class="fade" style="font-size: 80%;"><em>Note:</em> the font size is stored as a cookie.</span>
+<span class="fade" style="font-size: 0.8em;"><em>Note:</em> the font size is stored as a cookie.</span>
 </p></div></section></div></div></body></html>
