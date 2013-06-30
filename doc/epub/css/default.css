@@ -1081,14 +1081,17 @@ Slide content
 
 */
 
-#epb3sldrzr-content > *:not(.spread)
+#epb3sldrzr-content > *:not(img):not(.spread)
 {
 	padding-left: 40px;
 	padding-left: 4rem;
 	
 	padding-right: 40px;
 	padding-right: 4rem;
+}
 
+#epb3sldrzr-content > *:not(.spread)
+{
 	margin-top: 20px;
 	margin-top: 2rem;
 }
