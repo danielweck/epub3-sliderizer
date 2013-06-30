@@ -2543,6 +2543,12 @@ function readyFirst()
 }
 
 // ----------
+// IE 9 F12
+
+if (!window.console) window.console = {};
+if (!window.console.log) window.console.log = function () { };
+
+// ----------
 
 //window.onload = readyFirst;
 document.addEventListener("DOMContentLoaded", function(e) { readyFirst(); }, false);
