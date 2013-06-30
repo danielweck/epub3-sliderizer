@@ -933,14 +933,17 @@ Slide content
 
 */
 
-#epb3sldrzr-content > *:not(.spread)
+#epb3sldrzr-content > *:not(img):not(.spread)
 {
 	padding-left: FONT_SIZEpx;
 	padding-left: FONT_SIZErem;
 	
 	padding-right: FONT_SIZEpx;
 	padding-right: FONT_SIZErem;
+}
 
+#epb3sldrzr-content > *:not(.spread)
+{
 	margin-top: FONT_SIZE_HALFpx;
 	margin-top: FONT_SIZE_HALFrem;
 }
