@@ -74,13 +74,20 @@ column-gap: 1em;
 column-fill: balanced;
 
 }
-html.opera ul#bs
+html.opera ul#bs,
+html.IE9 ul#bs
 {
+
+-webkit-column-count: auto;
+-moz-column-count: auto;
+-ms-column-count: auto;
 -o-column-count: auto;
 column-count: auto;
+
 vertical-align: top;
 }
-html.opera ul#bs &gt; li
+html.opera ul#bs &gt; li,
+html.IE9 ul#bs &gt; li
 {
 /*
 float: left;
@@ -137,7 +144,7 @@ Firefox <span class="fade">(Gecko)</span>
 Opera <span class="fade">(Presto)</span>
 </li>
 <li>
-IE 10+ <span class="fade">(Trident)</span>
+IE 9+ <span class="fade">(Trident)</span>
 </li>
 </ul>
 </li>

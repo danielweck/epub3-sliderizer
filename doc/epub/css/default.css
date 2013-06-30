@@ -1049,14 +1049,21 @@ html#epb3sldrzr-NavDoc ol > li:hover:before
 }
 
 
-html#epb3sldrzr-NavDoc.opera ol
+html#epb3sldrzr-NavDoc.opera ol,
+html#epb3sldrzr-NavDoc.IE9 ol
 {
-	-o-column-count: auto;
-	column-count: auto;
+	
+-webkit-column-count: auto;
+-moz-column-count: auto;
+-ms-column-count: auto;
+-o-column-count: auto;
+column-count: auto;
+
 	vertical-align: top;
 }	
 
-html#epb3sldrzr-NavDoc.opera ol > li
+html#epb3sldrzr-NavDoc.opera ol > li,
+html#epb3sldrzr-NavDoc.IE9 ol > li
 {
 	/*
 	float: left;

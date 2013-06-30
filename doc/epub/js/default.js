@@ -2470,6 +2470,17 @@ function readyFirst()
 	if (Epub3Sliderizer.IE)
 	{
 		document.documentElement.classList.add("IE");
+		
+		var ua = navigator.userAgent;
+		var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+		if (re.exec(ua) != null)
+		{
+			var ver = parseFloat( RegExp.$1 );
+			if (ver <= 9.0)
+			{
+				document.documentElement.classList.add("IE9");
+			}
+		}
 	}
 	if (Epub3Sliderizer.mobile)
 	{
