@@ -97,8 +97,7 @@ _CONTENT
 <a
 	id="FMOGH"
 	href="https://github.com/danielweck/epub3-sliderizer/"
-	class="spread"
-	style="float: right; border: none;">
+	class="spread">
 	<img
 		src="assets/forkme.png"
 		alt="Fork me on GitHub"
@@ -163,6 +162,24 @@ assets/EPUB3-Sliderizer.png
 
 // --------------------------------------------
 _CSS_STYLE
+
+
+a#FMOGH:link,
+a#FMOGH:visited,
+a#FMOGH:hover,
+a#FMOGH:active
+{
+	float: right;
+
+	text-decoration: none;
+	border: none;
+}
+
+a#FMOGH > img
+{
+	border: none;
+}
+
 
 html:not(.mobile) body:not(.epb3sldrzr-epubReadingSystem) .incremental > *
 {
@@ -1201,7 +1218,7 @@ Slideshows made with EPUB3-Sliderizer seem to play fine in:
 			Opera <span class="fade">(Presto)</span>
 		</li>
 		<li>
-			IE 10+ <span class="fade">(Trident)</span>
+			IE 9+ <span class="fade">(Trident)</span>
 		</li>
 	</ul>
 </li>
@@ -1251,15 +1268,16 @@ ul#bs
 }
 
 
-html.opera ul#bs
+html.opera ul#bs,
+html.IE9 ul#bs
 {
-	-o-column-count: auto;
-	column-count: auto;
+	-PREFIXED_PROPERTY-column-count: auto;
 	
 	vertical-align: top;
 }	
 
-html.opera ul#bs > li
+html.opera ul#bs > li,
+html.IE9 ul#bs > li
 {
 	/*
 	float: left;
