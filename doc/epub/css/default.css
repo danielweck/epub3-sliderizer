@@ -371,6 +371,8 @@ box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 {
 	font-weight: 400;
 	font-family: InconsolataMedium, monospace;
+	
+	font-size: 0.95em;
 }
 
 
@@ -1020,28 +1022,28 @@ column-rule: 0.12em dotted #eeeeee;
 
 }
 
-html#epb3sldrzr-NavDoc ol li a:link,
-html#epb3sldrzr-NavDoc ol li a:hover,
-html#epb3sldrzr-NavDoc ol li a:visited,
-html#epb3sldrzr-NavDoc ol li a:active
+html#epb3sldrzr-NavDoc ol > li a:link,
+html#epb3sldrzr-NavDoc ol > li a:hover,
+html#epb3sldrzr-NavDoc ol > li a:visited,
+html#epb3sldrzr-NavDoc ol > li a:active
 {
 	border-bottom: none;
 }
 	
-html#epb3sldrzr-NavDoc ol li
+html#epb3sldrzr-NavDoc ol > li
 {
 	font-weight: 900;
 	
 	padding-bottom: 0.3em;
 }
 
-html#epb3sldrzr-NavDoc ol li:before
+html#epb3sldrzr-NavDoc ol > li:before
 {
 	color: #ffffff;
 	background-color: #8AC007;
 }
 
-html#epb3sldrzr-NavDoc ol li:hover:before
+html#epb3sldrzr-NavDoc ol > li:hover:before
 {
 	background-color: #FF0033;
 }
@@ -1051,18 +1053,21 @@ html#epb3sldrzr-NavDoc.opera ol
 {
 	-o-column-count: auto;
 	column-count: auto;
+	vertical-align: top;
 }	
 
-html#epb3sldrzr-NavDoc.opera ol li
+html#epb3sldrzr-NavDoc.opera ol > li
 {
 	/*
 	float: left;
 	display: inline;
 	*/
 
-	/* white-space: nowrap; */	
+	white-space: nowrap;
 	display: inline-block;
+	
 	width:50%;
+	vertical-align: top;
 }
 
 
@@ -1119,9 +1124,9 @@ box-shadow: 2px 2px 4px rgb(200, 200, 200);
 	padding-left: 2rem;
 }
 
-div.boxed > p,
-div.boxed > ul,
-div.boxed > ol,
+div.boxed > p:not(.nopad),
+div.boxed > ul:not(.nopad),
+div.boxed > ol:not(.nopad),
 div.boxed > div:not(.nopad)
 {
 	padding-top: 20px;
