@@ -277,6 +277,8 @@ div.paper
 {
 	font-weight: 400;
 	font-family: InconsolataMedium, monospace;
+	
+	font-size: 0.95em;
 }
 
 
@@ -872,28 +874,28 @@ html#epb3sldrzr-NavDoc ol
 	-PREFIXED_PROPERTY-column-rule: 0.12em dotted #eeeeee;
 }
 
-html#epb3sldrzr-NavDoc ol li a:link,
-html#epb3sldrzr-NavDoc ol li a:hover,
-html#epb3sldrzr-NavDoc ol li a:visited,
-html#epb3sldrzr-NavDoc ol li a:active
+html#epb3sldrzr-NavDoc ol > li a:link,
+html#epb3sldrzr-NavDoc ol > li a:hover,
+html#epb3sldrzr-NavDoc ol > li a:visited,
+html#epb3sldrzr-NavDoc ol > li a:active
 {
 	border-bottom: none;
 }
 	
-html#epb3sldrzr-NavDoc ol li
+html#epb3sldrzr-NavDoc ol > li
 {
 	font-weight: 900;
 	
 	padding-bottom: 0.3em;
 }
 
-html#epb3sldrzr-NavDoc ol li:before
+html#epb3sldrzr-NavDoc ol > li:before
 {
 	color: #ffffff;
 	background-color: #8AC007;
 }
 
-html#epb3sldrzr-NavDoc ol li:hover:before
+html#epb3sldrzr-NavDoc ol > li:hover:before
 {
 	background-color: #FF0033;
 }
@@ -903,18 +905,21 @@ html#epb3sldrzr-NavDoc.opera ol
 {
 	-o-column-count: auto;
 	column-count: auto;
+	vertical-align: top;
 }	
 
-html#epb3sldrzr-NavDoc.opera ol li
+html#epb3sldrzr-NavDoc.opera ol > li
 {
 	/*
 	float: left;
 	display: inline;
 	*/
 
-	/* white-space: nowrap; */	
+	white-space: nowrap;
 	display: inline-block;
+	
 	width:50%;
+	vertical-align: top;
 }
 
 
@@ -965,9 +970,9 @@ div.boxed > div
 	padding-left: FONT_SIZE_HALFrem;
 }
 
-div.boxed > p,
-div.boxed > ul,
-div.boxed > ol,
+div.boxed > p:not(.nopad),
+div.boxed > ul:not(.nopad),
+div.boxed > ol:not(.nopad),
 div.boxed > div:not(.nopad)
 {
 	padding-top: FONT_SIZE_HALFpx;
