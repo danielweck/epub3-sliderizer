@@ -286,9 +286,9 @@ _CONTENT
 
 <div class="incremental auto">
 
-<div class="boxed" style="margin-bottom: 1em;">
+<div class="boxed" style="margin-bottom: 0.6em;">
 
-<h3>Swipe gestures <span class="fade">(touch or mouse)</span></h3>
+<h3>Swipe gestures</h3>
 
 <div class="nopad">
 <table class="spaceLined">
@@ -313,7 +313,7 @@ previous / next incremental item
 
 </div>
 
-<div class="boxed"  style="margin-bottom: 1em;">
+<div class="boxed"  style="margin-bottom: 0.6em;">
 
 <h3>Keyboard</h3>
 
@@ -321,8 +321,8 @@ previous / next incremental item
 <table class="spaceLined">
 <tr>
 <td style="width: 30%;  padding-top: 0.2em">
-<span class="keyboard symbols" title="left"  style="padding-left: 0.2em; padding-right: 0.4em;">&#xf0d9;<!-- &#8592; --></span>
-<span class="keyboard symbols" title="right" style="padding-left: 0.4em; padding-right: 0.2em; ">&#xf0da;<!-- &#8594; --></span> 
+<span class="keyboard symbols" title="left"  style="padding-left: 0.2em; padding-right: 0.4em;">&#xf0d9;</span>
+<span class="keyboard symbols" title="right" style="padding-left: 0.4em; padding-right: 0.2em; ">&#xf0da;</span> 
 </td>
 <td>
 previous / next slide
@@ -330,8 +330,8 @@ previous / next slide
 </tr>
 <tr>
 <td style="width: 30%">
-<span class="keyboard symbols" title="up">&#xf0d8;<!-- &#8593; --></span>
-<span class="keyboard symbols" title="down">&#xf0d7;<!-- &#8595; --></span> 
+<span class="keyboard symbols" title="up">&#xf0d8;</span>
+<span class="keyboard symbols" title="down">&#xf0d7;</span> 
 </td>
 <td>
 previous / next incremental item
@@ -360,8 +360,45 @@ slides menu <span class="fade">(table of contents)</span>
 
 </div>
 
-<p>...or use the controls below<sup class="fade">*</sup> (hidden after 5s, tap to show again)
-<br><span class="fade" style="font-size: 0.8em">* not displayed in e-book readers</span>
+
+<div class="boxed"  style="margin-bottom: 0;">
+
+<h3>Buttons</h3>
+
+<div class="nopad">
+<table class="spaceLined">
+<tr>
+<td style="width: 30%;  padding-top: 0.2em">
+<span class="symbols" title="left"><span style="font-size: 90%;">&#xf0a8;</span></span>
+<span class="symbols" title="right"><span style="font-size: 90%;">&#xf0a9;</span></span>
+</td>
+<td>
+previous / next slide
+</td>
+</tr>
+
+<tr>
+<td style="width: 30%; padding-bottom: 0.2em">
+<span class="symbols"><span style="font-size: 80%;">&#xf0ca;</span></span>
+</td>
+<td>
+slides menu <span class="fade">(table of contents)</span>
+</td>
+</tr>
+</table>
+</div>
+
+</div>
+
+
+<p style="text-align: right; font-size: 80%;">
+(display button panel with 
+<span class="keyboard " title="C" style="padding-left: 0.4em; padding-right: 0.4em;">c</span>
+or <span class="code">[tap]</span> / <span class="code">[click]</span>
+<!-- span class="symbols pale-greenx" title="tap">&#xf0a6;</span -->
+)
+</span>
+
 
 </div>
 
@@ -409,14 +446,14 @@ _CONTENT
 
 <div class="boxed"  style="margin-bottom: 1em;">
 
-<h3>Gestures <span class="fade">(touch or mouse)</span></h3>
+<h3>Gestures</h3>
 
 
 <div class="nopad">
 <table class="spaceLined">
 <tr>
 <td style="width: 5%">
-<span class="symbols pale-greenx" title="double tap">&#xf140; <!-- &#128261; --></span> 
+<span class="symbols pale-greenx" title="double tap">&#xf140;</span> 
 </td>
 <td style="width: 25%">
 <span class="code">
@@ -444,7 +481,7 @@ pan <span style="font-size: 0.8em" class="fade">(only when zoomed-in)</span>
 
 <tr>
 <td style="width: 5%;">
-<span class="symbols pale-bluex" title="pinch">&#xf066;<!-- &#xf066; --></span> 
+<span class="symbols pale-bluex" title="pinch">&#xf066;</span> 
 </td>
 <td style="width: 25%;">
 <span class="code">
@@ -519,10 +556,10 @@ reset zoom
 <tr>
 <td style="width: 30%">
 
-<span class="keyboard symbols" title="left" style="padding-left: 0.2em; padding-right: 0.4em; ">&#xf0d9;<!-- &#8592; --></span>
-<span class="keyboard symbols" title="right"  style="padding-left: 0.4em; padding-right: 0.2em; ">&#xf0da;<!-- &#8594; --></span> 
-<span class="keyboard symbols" title="up">&#xf0d8;<!-- &#8593; --></span>
-<span class="keyboard symbols" title="down">&#xf0d7;<!-- &#8595; --></span> 
+<span class="keyboard symbols" title="left" style="padding-left: 0.2em; padding-right: 0.4em; ">&#xf0d9;</span>
+<span class="keyboard symbols" title="right"  style="padding-left: 0.4em; padding-right: 0.2em; ">&#xf0da;</span> 
+<span class="keyboard symbols" title="up">&#xf0d8;</span>
+<span class="keyboard symbols" title="down">&#xf0d7;</span> 
 
 </td>
 <td style="padding-bottom: 0.2em">
@@ -556,28 +593,6 @@ _CONTENT
 
 <div class="incremental auto">
 
-<p style="margin-bottom: 1em; text-alignx: right;">
-<span class="fade" style="font-size: 0.8em;"><em>Note:</em> the font size is stored as a cookie.</span>
-
-
-<div class="boxed" style="margin-bottom: 1em;">
-
-<h3>Gestures <span class="fade">(touch)</span></h3>
-
-<p>
-<span class="symbols pale-greenx" title="two-finger tap">&#xf08d; <!-- &#9205; --></span> 
-
-<span class="code">
-[hold]
-</span>
- cycle font sizes
- <span style="font-size: 0.8em" class="fade">(repeat multiple times)</span>
-
-</p>
-
-</div>
-
-
 <div class="boxed" style="margin-bottom: 1em;">
 
 <h3>Keyboard</h3>
@@ -600,12 +615,40 @@ _CONTENT
 
 </div>
 
+
+<div class="boxed"  style="margin-bottom: 0;">
+
+<h3>Buttons</h3>
+
 <p>
-<em>Accessibility:</em>
-<br>
-when the text font is enlarged &#8658; the slides <strong>reflow</strong> and <strong>scroll</strong>
+<span class="symbols pale-greenx" title="text size">&#xf00e;</span> 
+&#8658;
+cycle font sizes
 
 </div>
+
+
+<p style="text-align: right; font-size: 80%; margin-bottom: 3em;">
+(display button panel with 
+<span class="keyboard " title="C" style="padding-left: 0.4em; padding-right: 0.4em;">c</span>
+or <span class="code">[tap]</span> / <span class="code">[click]</span>
+<!-- span class="symbols pale-greenx" title="tap">&#xf0a6;</span -->
+)
+</span>
+
+<div class="paper" style="padding: 0.5em;">
+<p>
+Accessibility: the slides <strong>reflow</strong> and <strong>scroll</strong>
+when the text font is enlarged.
+</p>
+</div>
+
+<p style="text-align: right;">
+<span class="fade" style="font-size: 0.8em;"><em>Note:</em> the font size is stored as a cookie.</span>
+
+
+</div>
+
 
 
 // #########################################################
@@ -1290,3 +1333,52 @@ html.IE9 ul#bs > li
 	width:45%;
 	vertical-align: top;
 }
+
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+E-reader compatibility
+
+// --------------------------------------------
+_CONTENT
+
+<p>
+Slideshows made with EPUB3-Sliderizer are supported by:
+
+<ul class="incremental auto" id="bs" style="list-style-type:none;  clear: both;">
+<li>
+	<strong>iOS</strong>
+	<ul>
+		<li>
+			iBooks
+		</li>
+		<li>
+			Kobo
+		</li>
+	</ul>
+</li>
+<li>
+	<strong>Mac OS X, Windows</strong>
+	<ul>
+		<li>
+			Readium <span class="fade">(Chrome extension)</span>
+		</li>
+		<li>
+			Azardi? <span class="fade">(untested)</span>
+		</li>
+	</ul>
+</li>
+<li>
+	<strong>Android, Linux</strong>
+	<ul>
+		<li>
+			? <span class="fade">(untested)</span>
+		</li>
+	</ul>
+</li>
+</ul>

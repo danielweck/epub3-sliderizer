@@ -167,21 +167,53 @@ var Epub3Sliderizer = {
 	// && navigator.userAgent.match(/AppleWebKit/)
 };
 
+
 // ----------
 
-Epub3Sliderizer.ensureControlsVisible = function()
+Epub3Sliderizer.cycleFontSizes = function()
+{	
+	if (this.defaultFontSize)
+	{
+		var fontSizeIncrease = 5.0;
+
+		var size = Math.round(parseFloat(document.body.style.fontSize));
+		
+		var fontSizeIncreaseFactor = (size - this.defaultFontSize) / fontSizeIncrease;
+
+		console.log("fontSizeIncreaseFactor: " + fontSizeIncreaseFactor);
+		fontSizeIncreaseFactor ++;
+		
+		if (fontSizeIncreaseFactor > 9)
+		{
+			fontSizeIncreaseFactor = 0;
+		}
+
+		document.body.style.fontSize = (this.defaultFontSize + fontSizeIncrease*fontSizeIncreaseFactor) + "px";
+	
+	    setCookie(this.cookieFontSize, document.body.style.fontSize);
+	}
+}
+
+// ----------
+
+Epub3Sliderizer.toggleControlsPanel = function()
 {
-	//var controls = querySelectorZ("#epb3sldrzr-controls");
 	var controls = document.getElementById("epb3sldrzr-controls");
 
 	if (!controls.style.display || controls.style.display == "none")
 	{
 		controls.style.display = "block";
 
+		/*
 		setTimeout(function()
 		{
 			controls.style.display = "none";
 		}, 5000);
+		*/
+	}
+	else
+	{
+		controls.style.display = "none";
 	}
 }
 
@@ -505,9 +537,13 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 			this.toggleZoom(0,0);
 		}
 	}
+	else if (keyboardEvent.keyCode == 67) // C
+	{
+		this.toggleControlsPanel();
+	}
 	else if (keyboardEvent.keyCode >= 48 && keyboardEvent.keyCode <= 57) // 0,1,2,3..,9
 	{
-		if (this.defaultFontSize && this.defaultFontSize != "")
+		if (this.defaultFontSize)
 		{
 			var factor = keyboardEvent.keyCode-48;
 			document.body.style.fontSize = (this.defaultFontSize + fontSizeIncrease*factor) + "px";
@@ -637,8 +673,6 @@ Epub3Sliderizer.initTouch = function()
 	
 	var that = this;
 
-	var fontSizeIncrease = 5;
-	var fontSizeIncreaseFactor = 0;
 	
 	var scrolling = false;
 	
@@ -920,7 +954,6 @@ Epub3Sliderizer.initTouch = function()
 			return;
 		}
 
-		//var scroll = querySelectorZ("div#epb3sldrzr-root");
 		var scroll = document.getElementById("epb3sldrzr-root");
 		
 		var target = hammerEvent.target;
@@ -1016,6 +1049,11 @@ Epub3Sliderizer.initTouch = function()
 				var target = hammerEvent.target;
 				while (target)
 				{
+					if (target == this.bodyRoot)
+					{
+						break;
+					}
+					
 					var name = target.nodeName.toLowerCase();
 					if (name === "p" || name === "img" || name === "video" || name === "svg" || name === "td" || name === "div" || name === "h1" || name === "h2" || name === "h3" || name === "h4" || name === "li" || name === "ul" || name === "ol")
 					{
@@ -1034,44 +1072,10 @@ Epub3Sliderizer.initTouch = function()
 			}
 		}
 	}
-	
-	
-	function onHold(hammerEvent)
-	{
-		if (hammerEvent.gesture)
-		{
-			if (this.defaultFontSize && this.defaultFontSize != "")
-			{
-				if (fontSizeIncreaseFactor > 9)
-				{
-					fontSizeIncreaseFactor = 0;
-				}
-
-				if (document.body.style.fontSize == this.defaultFontSize && fontSizeIncreaseFactor == 0)
-				{
-					fontSizeIncreaseFactor ++;
-				}
-
-				console.log("fontSizeIncreaseFactor: " + fontSizeIncreaseFactor);
-
-				document.body.style.fontSize = (this.defaultFontSize + fontSizeIncrease*fontSizeIncreaseFactor) + "px";
-
-				fontSizeIncreaseFactor ++;
-				
-			    setCookie(this.cookieFontSize, document.body.style.fontSize);
-			}
-		}
-		
-	}
-	
-	this.hammer.on("hold",
-		onHold.bind(this)
-	);
-
 
 	function onTap(hammerEvent)
 	{
-		this.ensureControlsVisible();
+		this.toggleControlsPanel();
 		
 		if (hammerEvent.gesture)
 		{
@@ -1079,12 +1083,21 @@ Epub3Sliderizer.initTouch = function()
 		}
 	}
 	
-	this.hammer.on("tap",
-		onTap.bind(this)
+	
+	/*
+	function onHold(hammerEvent)
+	{
+		if (hammerEvent.gesture)
+		{
+		}
+		
+	}
+	
+	this.hammer.on("hold",
+		onHold.bind(this)
 	);
-	
-	
-	
+	*/
+
 	
 	
 	
@@ -1103,6 +1116,12 @@ Epub3Sliderizer.initTouch = function()
 	hammer.on("doubletap",
 		onDoubleTap.bind(this)
 	);
+
+	hammer.on("tap",
+		onTap.bind(this)
+	);
+	
+	
 	
 	
 	document.addEventListener('touchstart', function(e)
@@ -1466,7 +1485,6 @@ Epub3Sliderizer.initLinks = function()
 
 	var that = this;
 
-	//var nav = querySelectorZ("html#epb3sldrzr-NavDoc");
 	var nav = document.getElementById("epb3sldrzr-NavDoc");
 	if (typeof nav != "undefined" && nav != null && nav)
 	{
@@ -1531,7 +1549,6 @@ Epub3Sliderizer.initLinks = function()
 	);
 
 
-	//var controls = querySelectorZ("#epb3sldrzr-controls");
 	var controls = document.getElementById("epb3sldrzr-controls");
 		
 	var anchor = controls; //this.bodyRoot
@@ -1583,7 +1600,6 @@ Epub3Sliderizer.initLinks = function()
 		
 	if (this.epub != "")
 	{
-		//var nav = querySelectorZ("html#epb3sldrzr-NavDoc");
 		var nav = document.getElementById("epb3sldrzr-NavDoc");
 		if (typeof nav != "undefined" && nav != null && nav)
 		{
@@ -1683,7 +1699,6 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate, auto)
 		return;
 	}
 
-	//var scroll = querySelectorZ("div#epb3sldrzr-root");
 	var scroll = document.getElementById("epb3sldrzr-root");
 	
 	var fontSize = Math.round(parseFloat(document.body.style.fontSize));
@@ -2160,7 +2175,6 @@ Epub3Sliderizer.init = function()
 			a.innerHTML = this.epubReadingSystem.name + '_' + this.epubReadingSystem.version;
 		}
 
-		//var controls = querySelectorZ("#epb3sldrzr-controls");
 		var controls = document.getElementById("epb3sldrzr-controls");
 		var anchor = controls; //this.bodyRoot
 		
@@ -2208,7 +2222,7 @@ Epub3Sliderizer.init = function()
 		
 		this.initLinks();
 		
-		this.ensureControlsVisible();
+		//this.toggleControlsPanel();
 
 		window.onkeyup = this.onKeyboard.bind(this);
 	
@@ -2413,13 +2427,24 @@ function readyDelayed()
 
 function readyFirst()
 {
-	//Epub3Sliderizer.bodyRoot = querySelectorZ("#epb3sldrzr-body"); //document.body
 	Epub3Sliderizer.bodyRoot = document.getElementById("epb3sldrzr-body");
 	
 	var controls = document.createElement('div');
 	controls.id = "epb3sldrzr-controls";	
 	Epub3Sliderizer.bodyRoot.insertBefore(controls, Epub3Sliderizer.bodyRoot.children[0]);
-	
+
+	var aa = document.createElement('a');
+	aa.id = "epb3sldrzr-link-textsize";
+	aa.title = "Text font size";
+	aa.href = "javascript:Epub3Sliderizer.cycleFontSizes();";
+	if (controls.children.length == 0)
+	{
+		controls.appendChild(aa);
+	}
+	else
+	{
+		controls.insertBefore(aa, anchor.children[0]);
+	}
 	
 	
 	
