@@ -220,7 +220,10 @@ Epub3Sliderizer.toggleControlsPanel = function()
 	}
 	else
 	{
-		controls.style.display = "none";
+		setTimeout(function()
+		{
+			controls.style.display = "none";
+		}, 300);
 	}
 }
 
