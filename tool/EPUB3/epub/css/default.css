@@ -152,7 +152,7 @@ to
 
 _PREFIXED_::selection
 {
-	background:#0066FF;
+	background-color:#0066FF;
 	color:#fff;
 	text-shadow:none;
 }
@@ -269,7 +269,7 @@ span.symbols
 
 div.paper
 {
-	background: white;
+	background-color: white;
 	-PREFIXED_PROPERTY-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
 
@@ -384,22 +384,22 @@ body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body
 	visibility: hidden;
 }
 
-body div#epb3sldrzr-body
+div#epb3sldrzr-body
 {
 	background-color:white;
 }
 
-html.reflow body div#epb3sldrzr-body
+html.reflow div#epb3sldrzr-body
 {
 	font-size: 0.6em;
 }
 
-html.reflow body img
+html.reflow img:not(.full)
 {
 	-PREFIXED_PROPERTY-transform: scale(0.6);
 }
 
-html:not(.reflow) body div#epb3sldrzr-body
+html:not(.reflow) div#epb3sldrzr-body
 {
 	display:block;
 
@@ -445,7 +445,7 @@ div#epb3sldrzr-root
 	-webkit-overflow-scrolling: touch;
 }
 
-html:not(.reflow) body div#epb3sldrzr-root
+html:not(.reflow) div#epb3sldrzr-root
 {
 	overflow:auto;
 
@@ -569,8 +569,7 @@ h1#epb3sldrzr-title
 	text-shadow: 0.06em 0.06em 0.11em rgba(255, 255, 255, 1), 0 0 0 rgba(0, 0, 0, 0.5); /* 2px 2px 4px white; */
 
 	background-color:#efefef;
-	
-	background: rgb(238,238,238);
+	background-color: rgb(238,238,238);
 }
 
 html#epb3sldrzr-NavDoc h1#epb3sldrzr-title
@@ -671,6 +670,11 @@ a#epb3sldrzr-link-reflow:before
 {
 	font-family: 'FontAwesome';
 	font-size: 1.1em;
+}
+
+a#epb3sldrzr-link-textsize
+{
+	margin-left: 1em;
 }
 
 a#epb3sldrzr-link-textsize:before
@@ -874,12 +878,12 @@ div#epb3sldrzr-controls
 	width: 100%;
 }
 
-html:not(.reflow) body div#epb3sldrzr-controls
+html:not(.reflow) div#epb3sldrzr-controls
 {
 	position:absolute;
 }
 
-html.reflow body div#epb3sldrzr-controls
+html.reflow div#epb3sldrzr-controls
 {
 	position: fixed;
 }
@@ -1083,7 +1087,7 @@ Slide content
 	padding-right: FONT_SIZErem;
 }
 
-#epb3sldrzr-content > *:not(.spread)
+#epb3sldrzr-content > *:not(img):not(.spread)
 {
 	margin-top: FONT_SIZE_HALFpx;
 	margin-top: FONT_SIZE_HALFrem;
@@ -1149,7 +1153,7 @@ div.boxed.framed > h3
 	
 	float: right;
 	
-	background: white;
+	background-color: white;
 	color: #CC3300;
 	
 	font-weight: 400;
