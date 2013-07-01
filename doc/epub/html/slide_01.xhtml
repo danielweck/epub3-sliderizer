@@ -82,11 +82,9 @@ html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
 display: none;
 }
-#logo
+#logoWrapper
 {
 float: right;
-width: 300px;
-height: 125px;
 
 -webkit-transform: rotate(45deg);
 -moz-transform: rotate(45deg);
@@ -94,6 +92,11 @@ height: 125px;
 -o-transform: rotate(45deg);
 transform: rotate(45deg);
 
+}
+#logo
+{
+width: 300px;
+height: 125px;
 }
 h1#epb3sldrzr-title
 {
@@ -190,7 +193,9 @@ thanks to a bespoke slide flippin' engine™
 </p></div>
 <div class="boxed epb3sldrzr-animated bounceInDown" id="boox">
 <div>
+<div id="logoWrapper">
 <img alt="Logo" id="logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/>
+</div>
 <ul>
 <li>
 <strong>See</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/data.txt" target="_blank">input file</a> for this slidedeck

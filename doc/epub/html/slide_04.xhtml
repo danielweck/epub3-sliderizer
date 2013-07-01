@@ -66,7 +66,7 @@ elem.classList.add("epb3sldrzr-animated");
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
 //]]>
 </script></head><body epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Tips: <span id="epb3sldrzr-subtitle">text size</span></h1><section id="epb3sldrzr-content"><!--SOUP--><div class="incremental auto">
-<div class="boxed" style="margin-bottom: 1em;">
+<div class="boxed" style="margin-bottom: 0.6em;">
 <h3>Keyboard</h3>
 <p>
 <span class="keyboard " title="zero">0</span>    reset font size
@@ -81,6 +81,9 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 <span class="keyboard " title="8">8</span>
 <span class="keyboard " title="9">9</span>
    increase font size
+<br/>
+<span class="keyboard " title="R">r</span>    toggle reflow/fixed-ratio rendering
+<br/>
 </p>
 </div>
 <div class="boxed" style="margin-bottom: 0;">
@@ -89,8 +92,12 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 <span class="symbols pale-greenx" title="text size"></span>
 ⇒
 cycle font sizes
+<br/>
+<span class="symbols pale-greenx" title="text size"></span>
+⇒
+toggle reflow/fixed-ratio rendering
 </p></div>
-<p style="text-align: right; font-size: 80%; margin-bottom: 3em;">
+<p style="text-align: right; font-size: 80%; margin-bottom: 1em;">
 (display button panel with
 <span class="keyboard " style="padding-left: 0.4em; padding-right: 0.4em;" title="C">c</span>
 or <span class="code">[tap]</span> / <span class="code">[click]</span>
@@ -98,11 +105,12 @@ or <span class="code">[tap]</span> / <span class="code">[click]</span>
 )
 
 </p><div class="paper" style="padding: 0.5em;">
-<p>
-Accessibility: the slides <strong>reflow</strong> and <strong>scroll</strong>
-when the text font is enlarged.
+<p style="font-size: 0.8em;">
+Accessibility: in fixed-ratio mode (default), slide content <strong>reflows</strong> and <strong>scrolls</strong>
+when the text is enlarged. In reflow mode, a slide behaves like a regular web page
+(text magnification and scrolling is controlled by the web browser itself).
 </p>
 </div>
 <p style="text-align: right;">
-<span class="fade" style="font-size: 0.8em;"><em>Note:</em> the font size is stored as a cookie.</span>
+<span class="fade" style="font-size: 0.8em;"><em>Note:</em> the settings are stored as cookies.</span>
 </p></div></section></div></div></body></html>
