@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_15" lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8"/><meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/><meta content="EPUB EPUB3 HTML5 Sliderizer slideshow slide deck e-book ebook" name="keywords"/><title>(15/15) EPUB3 Sliderizer / E-reader compatibility</title><link href="../img/favicon.ico" rel="shortcut icon"/><meta content="width=1290, height=1000" name="viewport"/><link href="../css/FontAwesome.css" rel="stylesheet" type="text/css"/><link href="../css/default.css" rel="stylesheet" type="text/css"/><script src="../js/classList.js"> </script><script src="../js/screenfull.js"> </script><script src="../js/hammer.min.js"> </script><script src="../js/hammer.fakemultitouch.js"> </script><script src="../js/hammer.showtouches.js"> </script><script src="../js/jquery-2.0.2.min.js"> </script><script src="../js/jquery.blockUI.js"> </script><script src="../js/jquery.mousewheel.js"> </script><script src="../js/default.js"> </script><link href="./slide_14.xhtml" rel="prev"/><style type="text/css">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_15" lang="en-US" xml:lang="en-US" xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="UTF-8"/><meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/><meta content="EPUB EPUB3 HTML5 Sliderizer slideshow slide deck e-book ebook" name="keywords"/><title>(15/16) EPUB3 Sliderizer / Browser compatibility</title><link href="../img/favicon.ico" rel="shortcut icon"/><meta content="width=1290, height=1000" name="viewport"/><link href="../css/FontAwesome.css" rel="stylesheet" type="text/css"/><link href="../css/default.css" rel="stylesheet" type="text/css"/><script src="../js/classList.js"> </script><script src="../js/screenfull.js"> </script><script src="../js/hammer.min.js"> </script><script src="../js/hammer.fakemultitouch.js"> </script><script src="../js/hammer.showtouches.js"> </script><script src="../js/jquery-2.0.2.min.js"> </script><script src="../js/jquery.blockUI.js"> </script><script src="../js/jquery.mousewheel.js"> </script><script src="../js/default.js"> </script><link href="./slide_14.xhtml" rel="prev"/><link href="./slide_16.xhtml" rel="next"/><style type="text/css">
 body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
 {
 
@@ -49,6 +49,55 @@ background: #ff00ff;
 {
 background: #FF0033;
 }
+</style><style type="text/css">
+ul#bs
+{
+
+-webkit-column-count: 2;
+-moz-column-count: 2;
+-ms-column-count: 2;
+-o-column-count: 2;
+column-count: 2;
+
+
+-webkit-column-gap: 1em;
+-moz-column-gap: 1em;
+-ms-column-gap: 1em;
+-o-column-gap: 1em;
+column-gap: 1em;
+
+
+-webkit-column-fill: balanced;
+-moz-column-fill: balanced;
+-ms-column-fill: balanced;
+-o-column-fill: balanced;
+column-fill: balanced;
+
+}
+html.opera ul#bs,
+html.IE9 ul#bs
+{
+
+-webkit-column-count: auto;
+-moz-column-count: auto;
+-ms-column-count: auto;
+-o-column-count: auto;
+column-count: auto;
+
+vertical-align: top;
+}
+html.opera ul#bs &gt; li,
+html.IE9 ul#bs &gt; li
+{
+/*
+float: left;
+display: inline;
+*/
+white-space: nowrap;
+display: inline-block;
+width:45%;
+vertical-align: top;
+}
 </style><script>
 //<![CDATA[
 function setupAnimations()
@@ -65,37 +114,70 @@ elem.classList.add("epb3sldrzr-animated");
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
 //]]>
-</script></head><body epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">E-reader compatibility</h1><section id="epb3sldrzr-content"><!--SOUP--><p>
-Slideshows made with EPUB3-Sliderizer are supported by:
+</script></head><body epub:type="bodymatter"><div id="epb3sldrzr-body"><img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/><div id="epb3sldrzr-root"><h1 id="epb3sldrzr-title">Browser compatibility</h1><section id="epb3sldrzr-content"><!--SOUP--><p>
+Slideshows made with EPUB3-Sliderizer seem to play fine in:
 </p><ul class="incremental auto" id="bs" style="list-style-type:none;  clear: both;">
+<li>
+<strong>Mac OS X</strong>
+<ul>
+<li>
+Safari, Chrome <span class="fade">(WebKit)</span>
+</li>
+<li>
+Firefox <span class="fade">(Gecko)</span>
+</li>
+<li>
+Opera <span class="fade">(Presto)</span>
+</li>
+</ul>
+</li>
+<li>
+<strong>Windows</strong>
+<ul>
+<li>
+Chrome <span class="fade">(WebKit)</span>
+</li>
+<li>
+Firefox <span class="fade">(Gecko)</span>
+</li>
+<li>
+Opera <span class="fade">(Presto)</span>
+</li>
+<li>
+IE 9+ <span class="fade">(Trident)</span>
+</li>
+</ul>
+</li>
 <li>
 <strong>iOS</strong>
 <ul>
 <li>
-iBooks
-</li>
-<li>
-Kobo
+Safari <span class="fade">(WebKit)</span>
 </li>
 </ul>
 </li>
 <li>
-<strong>Mac OS X, Windows</strong>
+<strong>Android</strong>
 <ul>
 <li>
-Readium <span class="fade">(Chrome extension)</span>
+Chrome, Doplhin <span class="fade">(WebKit)</span>
 </li>
 <li>
-Azardi? <span class="fade">(untested)</span>
+Firefox <span class="fade">(Gecko)</span>
+</li>
+<li>
+Opera <span class="fade">(Presto, WebKit)</span>
 </li>
 </ul>
 </li>
 <li>
-<strong>Android, Linux</strong>
+<strong>Linux</strong>
 <ul>
 <li>
-? <span class="fade">(untested)</span>
+Firefox <span class="fade">(Gecko)</span>
 </li>
 </ul>
 </li>
-</ul></section></div></div></body></html>
+</ul>
+<p style="clear: both;">
+<em>Note:</em> on Android ⇒ broken fonts, inconsistent viewport resizing</p></section></div></div></body></html>
