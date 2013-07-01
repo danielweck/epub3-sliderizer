@@ -497,6 +497,13 @@ html.reflow div#epb3sldrzr-body
 html.reflow img:not(.full):not(.nozoom)
 {
 	
+-webkit-transform-origin: 50% 50%;
+-moz-transform-origin: 50% 50%;
+-ms-transform-origin: 50% 50%;
+-o-transform-origin: 50% 50%;
+transform-origin: 50% 50%;
+
+	
 -webkit-transform: scale(0.6);
 -moz-transform: scale(0.6);
 -ms-transform: scale(0.6);
