@@ -179,7 +179,30 @@ Epub3Sliderizer.updateFontSize = function(size)
 
 // ----------
 
-Epub3Sliderizer.cycleFontSizes = function()
+Epub3Sliderizer.decreaseFontSize = function()
+{
+	if (this.defaultFontSize)
+	{
+		var fontSizeIncrease = 5.0;
+
+		var size = Math.round(parseFloat(document.body.style.fontSize));
+		
+		var fontSizeIncreaseFactor = (size - this.defaultFontSize) / fontSizeIncrease;
+
+		fontSizeIncreaseFactor --;
+		
+		if (fontSizeIncreaseFactor < 0)
+		{
+			fontSizeIncreaseFactor = 0;
+		}
+
+		this.updateFontSize(this.defaultFontSize + fontSizeIncrease*fontSizeIncreaseFactor);
+	}	
+}
+
+// ----------
+
+Epub3Sliderizer.increaseFontSize = function()
 {	
 	if (this.defaultFontSize)
 	{
@@ -189,12 +212,11 @@ Epub3Sliderizer.cycleFontSizes = function()
 		
 		var fontSizeIncreaseFactor = (size - this.defaultFontSize) / fontSizeIncrease;
 
-		console.log("fontSizeIncreaseFactor: " + fontSizeIncreaseFactor);
 		fontSizeIncreaseFactor ++;
 		
 		if (fontSizeIncreaseFactor > 9)
 		{
-			fontSizeIncreaseFactor = 0;
+			fontSizeIncreaseFactor = 9;
 		}
 
 		this.updateFontSize(this.defaultFontSize + fontSizeIncrease*fontSizeIncreaseFactor);
@@ -220,10 +242,14 @@ Epub3Sliderizer.toggleControlsPanel = function()
 	}
 	else
 	{
+		controls.style.display = "none";
+		
+		/*
 		setTimeout(function()
 		{
 			controls.style.display = "none";
 		}, 600);
+		*/
 	}
 }
 
@@ -550,8 +576,6 @@ Epub3Sliderizer.toggleReflow = function()
 		var size = Math.round(parseFloat(document.body.style.fontSize));
 		
 		var fontSizeIncreaseFactor = (size - this.defaultFontSize) / fontSizeIncrease;
-
-		console.log("fontSizeIncreaseFactor: " + fontSizeIncreaseFactor);
 	
 		this.updateFontSize(this.defaultFontSize + fontSizeIncrease*fontSizeIncreaseFactor);
 	}
@@ -2641,9 +2665,9 @@ function readyFirst()
 	Epub3Sliderizer.bodyRoot.insertBefore(controls, Epub3Sliderizer.bodyRoot.children[0]);
 
 	var aa = document.createElement('a');
-	aa.id = "epb3sldrzr-link-textsize";
-	aa.title = "Text font size";
-	aa.href = "javascript:Epub3Sliderizer.cycleFontSizes();";
+	aa.id = "epb3sldrzr-link-textsize-plus";
+	aa.title = "Increase font size";
+	aa.href = "javascript:Epub3Sliderizer.increaseFontSize();";
 	if (controls.children.length == 0)
 	{
 		controls.appendChild(aa);
@@ -2651,6 +2675,19 @@ function readyFirst()
 	else
 	{
 		controls.insertBefore(aa, controls.children[0]);
+	}
+
+	var aaa = document.createElement('a');
+	aaa.id = "epb3sldrzr-link-textsize-minus";
+	aaa.title = "Descrease font size";
+	aaa.href = "javascript:Epub3Sliderizer.decreaseFontSize();";
+	if (controls.children.length == 0)
+	{
+		controls.appendChild(aaa);
+	}
+	else
+	{
+		controls.insertBefore(aaa, controls.children[0]);
 	}
 	
 
