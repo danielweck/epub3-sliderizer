@@ -394,7 +394,7 @@ html.reflow div#epb3sldrzr-body
 	font-size: 0.6em;
 }
 
-html.reflow img:not(.full)
+html.reflow img:not(.full):not(.nozoom)
 {
 	-PREFIXED_PROPERTY-transform: scale(0.6);
 }
@@ -665,21 +665,27 @@ a#epb3sldrzr-link-toc:before,
 a#epb3sldrzr-link-next:before,
 a#epb3sldrzr-link-previous:before,
 a#epb3sldrzr-link-epub:before,
-a#epb3sldrzr-link-textsize:before,
+a#epb3sldrzr-link-textsize-plus:before,
+a#epb3sldrzr-link-textsize-minus:before,
 a#epb3sldrzr-link-reflow:before
 {
 	font-family: 'FontAwesome';
 	font-size: 1.1em;
 }
 
-a#epb3sldrzr-link-textsize
+a#epb3sldrzr-link-textsize-minus
 {
 	margin-left: 1em;
 }
 
-a#epb3sldrzr-link-textsize:before
+a#epb3sldrzr-link-textsize-plus:before
 {
 	content: "\f00e";
+}
+
+a#epb3sldrzr-link-textsize-minus:before
+{
+	content: "\f010";
 }
 
 a#epb3sldrzr-link-reflow:before
@@ -689,7 +695,7 @@ a#epb3sldrzr-link-reflow:before
 
 a#epb3sldrzr-link-epub:before
 {
-	content: "\f02d";
+	content: "\f0ed";
 }
 
 a#epb3sldrzr-link-toc:before
@@ -721,7 +727,8 @@ a#epb3sldrzr-link-previous,
 a#epb3sldrzr-link-next,
 a#epb3sldrzr-link-toc,
 a#epb3sldrzr-link-epub,
-a#epb3sldrzr-link-textsize,
+a#epb3sldrzr-link-textsize-plus,
+a#epb3sldrzr-link-textsize-minus,
 a#epb3sldrzr-link-reflow,
 a#epb3sldrzr-link-epubReadingSystem
 {
@@ -762,9 +769,12 @@ a#epb3sldrzr-link-toc:active,
 a#epb3sldrzr-link-epub:link,
 a#epb3sldrzr-link-epub:visited,
 a#epb3sldrzr-link-epub:active,
-a#epb3sldrzr-link-textsize:link,
-a#epb3sldrzr-link-textsize:visited,
-a#epb3sldrzr-link-textsize:active,
+a#epb3sldrzr-link-textsize-minus:link,
+a#epb3sldrzr-link-textsize-minus:visited,
+a#epb3sldrzr-link-textsize-minus:active,
+a#epb3sldrzr-link-textsize-plus:link,
+a#epb3sldrzr-link-textsize-plus:visited,
+a#epb3sldrzr-link-textsize-plus:active,
 a#epb3sldrzr-link-reflow:link,
 a#epb3sldrzr-link-reflow:visited,
 a#epb3sldrzr-link-reflow:active
@@ -782,7 +792,8 @@ a#epb3sldrzr-link-next:hover,
 a#epb3sldrzr-link-toc:hover,
 a#epb3sldrzr-link-epub:hover,
 a#epb3sldrzr-link-epubReadingSystem:hover,
-a#epb3sldrzr-link-textsize:hover,
+a#epb3sldrzr-link-textsize-minus:hover,
+a#epb3sldrzr-link-textsize-plus:hover,
 a#epb3sldrzr-link-reflow:hover
 {
 	background-color:#003399;
@@ -806,7 +817,8 @@ a#epb3sldrzr-link-toc:hover
 	color:white;
 }
 
-a#epb3sldrzr-link-textsize,
+a#epb3sldrzr-link-textsize-minus,
+a#epb3sldrzr-link-textsize-plus,
 a#epb3sldrzr-link-reflow
 {
 	padding-top: 0.2em;
@@ -820,9 +832,12 @@ a#epb3sldrzr-link-reflow
 }
 
 
-a#epb3sldrzr-link-textsize:link,
-a#epb3sldrzr-link-textsize:visited,
-a#epb3sldrzr-link-textsize:active,
+a#epb3sldrzr-link-textsize-plus:link,
+a#epb3sldrzr-link-textsize-plus:visited,
+a#epb3sldrzr-link-textsize-plus:active,
+a#epb3sldrzr-link-textsize-minus:link,
+a#epb3sldrzr-link-textsize-minus:visited,
+a#epb3sldrzr-link-textsize-minus:active,
 a#epb3sldrzr-link-reflow:link,
 a#epb3sldrzr-link-reflow:visited,
 a#epb3sldrzr-link-reflow:active
@@ -830,7 +845,8 @@ a#epb3sldrzr-link-reflow:active
 	color: #666666;
 }
 
-a#epb3sldrzr-link-textsize:hover,
+a#epb3sldrzr-link-textsize-plus:hover,
+a#epb3sldrzr-link-textsize-minus:hover,
 a#epb3sldrzr-link-reflow:hover
 {
 	background-color:#333333;
@@ -847,7 +863,7 @@ div#epb3sldrzr-controls
 {
 	-PREFIXED_PROPERTY-box-shadow: 0 0 FONT_SIZE_HALFpx rgba(0, 0, 0, 1);
 	
-	border: 0.2em solid #8AC007;
+	border: 0.2em solid #CC3300; /* #8AC007 */
 	
 	border-top-left-radius: FONT_SIZE_HALFpx;
 	border-top-left-radius: FONT_SIZE_HALFrem;
@@ -901,7 +917,7 @@ a#epb3sldrzr-link-toc,
 a#epb3sldrzr-link-epubReadingSystem
 {
 	float: left;
-	margin-left: 1em;
+	margin-left: 0.5em;
 }
 
 
@@ -916,7 +932,7 @@ a#epb3sldrzr-link-notesref
 a#epb3sldrzr-link-next
 {
 	float: right;
-	margin-right: 1em;
+	margin-right: 0.5em;
 }
 
 a#epb3sldrzr-link-previous
