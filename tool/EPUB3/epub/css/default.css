@@ -396,6 +396,7 @@ html.reflow div#epb3sldrzr-body
 
 html.reflow img:not(.full):not(.nozoom)
 {
+	-PREFIXED_PROPERTY-transform-origin: 50% 50%;
 	-PREFIXED_PROPERTY-transform: scale(0.6);
 }
 
