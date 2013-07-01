@@ -156,9 +156,11 @@ var Epub3Sliderizer = {
 	bodyRoot: null,
 	transforms: new Array(),
 	totalZoom: 1,
-	defaultFontSize: null,
 	pauseEvents: false,
+	defaultFontSize: null,
+	reflow: false,
 	cookieFontSize: "Epub3Sliderizer_FontSize",
+	cookieReflow: "Epub3Sliderizer_Reflow",
 	firefox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
 	android: navigator.userAgent.toLowerCase().indexOf('android') > -1,
 	opera: (typeof window.opera != "undefined") || navigator.userAgent.toLowerCase().indexOf(' opr/') >= 0,
@@ -167,6 +169,13 @@ var Epub3Sliderizer = {
 	// && navigator.userAgent.match(/AppleWebKit/)
 };
 
+// ----------
+
+Epub3Sliderizer.updateFontSize = function(size)
+{
+	document.body.style.fontSize = Math.round(size) + "px";
+    setCookie(this.cookieFontSize, document.body.style.fontSize);
+}
 
 // ----------
 
@@ -188,9 +197,7 @@ Epub3Sliderizer.cycleFontSizes = function()
 			fontSizeIncreaseFactor = 0;
 		}
 
-		document.body.style.fontSize = (this.defaultFontSize + fontSizeIncrease*fontSizeIncreaseFactor) + "px";
-	
-	    setCookie(this.cookieFontSize, document.body.style.fontSize);
+		this.updateFontSize(this.defaultFontSize + fontSizeIncrease*fontSizeIncreaseFactor);
 	}
 }
 
@@ -465,10 +472,10 @@ Epub3Sliderizer.zoomTo = function(element)
 	var rect = element.getBoundingClientRect();
 	var rectX = rect.left + document.body.scrollLeft;
 	var rectY = rect.top + document.body.scrollTop;
-	var rectFit = this.getRectFit(rect.width, rect.height);
+	var rectFit = this.getRectFit(rect.width, rect.height, false);
 	
 	var rectBody = document.body.getBoundingClientRect();
-//	var bodyFit = this.getElementFit(rectBody.width, rectBody.height);
+//	var bodyFit = this.getElementFit(rectBody.width, rectBody.height, true);
 
 	var rotation = 0;
 	var zoom = rectFit.ratio;
@@ -503,6 +510,74 @@ Epub3Sliderizer.zoomTo = function(element)
 
 // ----------
 
+Epub3Sliderizer.toggleReflow = function()
+{
+	if (this.defaultFontSize)
+	{
+		var fontSizeIncrease = 5.0;
+
+		var size = Math.round(parseFloat(document.body.style.fontSize));
+		
+		var fontSizeIncreaseFactor = (size - this.defaultFontSize) / fontSizeIncrease;
+
+		console.log("fontSizeIncreaseFactor: " + fontSizeIncreaseFactor);
+	
+		this.updateFontSize(this.defaultFontSize + fontSizeIncrease*fontSizeIncreaseFactor);
+	}
+	
+	if (this.reflow)
+	{	
+		this.reflow = false;
+		document.documentElement.classList.remove("reflow");
+
+		var viewport = querySelectorZ("head > meta[name=viewport]");
+		if (typeof viewport != 'undefined')
+		{
+			viewport.removeAttribute("content");
+			viewport.setAttribute('content', this.viewportBackup);
+		}
+		
+		this.onResize();
+	}
+	else
+	{
+		this.reflow = true;
+		document.documentElement.classList.add("reflow");
+		
+		this.resetOnResizeTransform();
+
+		var viewport = querySelectorZ("head > meta[name=viewport]");
+		if (typeof viewport != 'undefined')
+		{
+			this.viewportBackup = viewport.getAttribute("content");
+			
+			viewport.removeAttribute("content");
+			viewport.setAttribute('content',
+				'width=device-width'
+				+ ',user-scalable=yes'
+				/*
+				+ ',initial-scale='
+				+ '1'
+				+ ',minimum-scale='
+				+ '0.5'
+				+ ',maximum-scale=4'
+				*/
+				);
+		}
+	}
+
+	/* INFINITE LOOP!
+	setTimeout(function()
+	{
+		window.location.reload(true);
+	}, 100);
+	*/
+	
+	setCookie(this.cookieReflow, this.reflow ? "TRUE" : "FALSE");
+}
+
+// ----------
+
 //http://www.sceneonthe.net/unicode.htm
 //http://www.w3.org/2002/09/tests/keys.html
 Epub3Sliderizer.onKeyboard = function(keyboardEvent)
@@ -525,30 +600,39 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 
 	var fontSizeIncrease = 5;
 
-	if (keyboardEvent.keyCode == 90) // Z
+	if (!this.reflow && keyboardEvent.keyCode == 90) // Z
 	{
+		keyboardEvent.preventDefault();
 		var rectBody = document.body.getBoundingClientRect();
 		this.toggleZoom(rectBody.left,rectBody.top );
 	}
-	else if (keyboardEvent.keyCode == 27) // ESC
+	else if (!this.reflow && keyboardEvent.keyCode == 27) // ESC
 	{
 		if (this.totalZoom != 1)
 		{
+			keyboardEvent.preventDefault();
 			this.toggleZoom(0,0);
 		}
 	}
 	else if (keyboardEvent.keyCode == 67) // C
 	{
+		keyboardEvent.preventDefault();
 		this.toggleControlsPanel();
+	}
+	else if (keyboardEvent.keyCode == 82) // R
+	{
+		keyboardEvent.preventDefault();
+		this.toggleReflow();
 	}
 	else if (keyboardEvent.keyCode >= 48 && keyboardEvent.keyCode <= 57) // 0,1,2,3..,9
 	{
 		if (this.defaultFontSize)
 		{
-			var factor = keyboardEvent.keyCode-48;
-			document.body.style.fontSize = (this.defaultFontSize + fontSizeIncrease*factor) + "px";
-
-		    setCookie(this.cookieFontSize, document.body.style.fontSize);
+			keyboardEvent.preventDefault();
+			
+			var fontSizeIncreaseFactor = keyboardEvent.keyCode-48;
+			
+			this.updateFontSize(this.defaultFontSize + fontSizeIncrease*fontSizeIncreaseFactor);
 		}
 	}
 	/*
@@ -575,7 +659,7 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 		}
 	}
 	*/
-	else if (this.totalZoom != 1)
+	else if (!this.reflow && this.totalZoom != 1)
 	{
 		var offset = 100;
 	
@@ -765,6 +849,11 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onTransform(hammerEvent)
 	{
+		if (this.reflow)
+		{
+			return;
+		}
+		
 		if (scrolling)
 		{
 			return;
@@ -804,6 +893,11 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onTransformEnd(hammerEvent)
 	{
+		if (this.reflow)
+		{
+			return;
+		}
+		
 		if (scrolling)
 		{
 			return;
@@ -821,6 +915,11 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onTransformStart(hammerEvent)
 	{
+		if (this.reflow)
+		{
+			return;
+		}
+		
 		if (scrolling)
 		{
 			return;
@@ -858,6 +957,11 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onDragEnd(hammerEvent)
 	{
+		if (this.reflow)
+		{
+			return;
+		}
+		
 		if (scrolling)
 		{
 			return;
@@ -880,6 +984,11 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onDrag(hammerEvent)
 	{
+		if (this.reflow)
+		{
+			return;
+		}
+		
 		if (scrolling)
 		{
 			return;
@@ -932,6 +1041,11 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onDragStart(hammerEvent)
 	{
+		if (this.reflow)
+		{
+			return;
+		}
+		
 		firstDrag = true;
 		
 		if (hammerEvent.gesture)
@@ -1030,6 +1144,11 @@ Epub3Sliderizer.initTouch = function()
 
 	function onDoubleTap(hammerEvent)
 	{
+		if (this.reflow)
+		{
+			return;
+		}
+		
 		if (hammerEvent.gesture)
 		{	
 			hammerEvent.gesture.preventDefault();
@@ -1126,6 +1245,11 @@ Epub3Sliderizer.initTouch = function()
 	
 	document.addEventListener('touchstart', function(e)
 	{
+		if (that.reflow)
+		{
+			return;
+		}
+		
 		var t2 = e.timeStamp;
 		var t1 = document.documentElement.getAttribute('data-touchStart') || t2;
 		var dt = t2 - t1;
@@ -1150,7 +1274,7 @@ Epub3Sliderizer.initTouch = function()
 
 Epub3Sliderizer.resetOnResizeTransform = function()
 {
-	if (!this.isEpubReadingSystem())
+	if (!this.reflow && !this.isEpubReadingSystem())
 	{
 		return;
 	}
@@ -1182,18 +1306,18 @@ Epub3Sliderizer.resetResize = function()
 
 // ----------
 
-Epub3Sliderizer.getElementFit = function(element)
+Epub3Sliderizer.getElementFit = function(element, fitWidth)
 {
-	return this.getRectFit(element.clientWidth, element.clientHeight);
+	return this.getRectFit(element.clientWidth, element.clientHeight, fitWidth);
 }
 
 // ----------
 
-Epub3Sliderizer.getRectFit = function(w, h)
+Epub3Sliderizer.getRectFit = function(w, h, fitWidth)
 {
 	var sx = w / window.innerWidth;
 	var sy = h / window.innerHeight;
-	var ratio = 1.0 / Math.max(sx, sy);
+	var ratio = fitWidth ? 1.0 / sx : 1.0 / Math.max(sx, sy);
 
 	var newWidth = w * ratio;
 	var offsetX = 0;
@@ -1226,7 +1350,7 @@ Epub3Sliderizer.getRectFit = function(w, h)
 
 Epub3Sliderizer.onResize = function()
 {
-	if (this.isEpubReadingSystem())
+	if (this.isEpubReadingSystem() || this.reflow)
 	{
 		return;
 	}
@@ -1254,7 +1378,7 @@ Epub3Sliderizer.onResize = function()
 	document.body.style.msTransformOrigin = transformOrigin;
 	document.body.style.transformOrigin = transformOrigin;
 	
-	var bodyFit = this.getElementFit(document.body);
+	var bodyFit = this.getElementFit(document.body, this.fitWidth);
 	var ratio = bodyFit.ratio;
 	var offsetX = bodyFit.offsetX;
 	var offsetY = bodyFit.offsetY;
@@ -1312,7 +1436,7 @@ Epub3Sliderizer.onResize = function()
 
 Epub3Sliderizer.onOrientationChange = function()
 {
-	if (this.isEpubReadingSystem())
+	if (this.isEpubReadingSystem() || this.reflow)
 	{
 		return;
 	}
@@ -2263,11 +2387,26 @@ Epub3Sliderizer.init = function()
 			this.resetResize();
 		}
 
+		var reflow = getCookie(Epub3Sliderizer.cookieReflow);
+		console.log("reflow (COOKIE): " + reflow);
+		
+		if (reflow != null && reflow == "TRUE")
+		{
+			this.toggleReflow();
+		}
+
 		this.initMediaOverlays();
 
 		if (!this.basicMode)
 		{
-			this.initSlideTransition();
+			if (this.reflow)
+			{
+				this.bodyRoot.style.visibility = "visible";
+			}
+			else
+			{
+				this.initSlideTransition();
+			}
 
 			var that = this;
 			setTimeout(function()
@@ -2287,7 +2426,9 @@ Epub3Sliderizer.init = function()
 
 		//$(document).ready(function()
 		//{
-	
+
+		var that = this;
+			
 		(function($)
 		{
 			if (typeof $(window).mousewheel == "undefined")
@@ -2302,6 +2443,11 @@ Epub3Sliderizer.init = function()
 
 			$(window).mousewheel(function (event, delta, deltaX, deltaY)
 			{
+				if (that.reflow)
+				{
+					return;
+				}
+				
 				deltaY = -deltaY;
 		
 				var parents = $(event.target).parents();
@@ -2359,7 +2505,7 @@ Epub3Sliderizer.init = function()
 				var up = deltaY < 0 && deltaY < deltaX;
 				var down = deltaY > 0 && deltaY > deltaX;
 		
-				if (this.totalZoom == 1)
+				if (that.totalZoom == 1)
 				{
 					if (false && // Interferes! :(
 						(
@@ -2443,9 +2589,22 @@ function readyFirst()
 	}
 	else
 	{
-		controls.insertBefore(aa, anchor.children[0]);
+		controls.insertBefore(aa, controls.children[0]);
 	}
 	
+
+	var a = document.createElement('a');
+	a.id = "epb3sldrzr-link-reflow";
+	a.title = "Toggle reflow";
+	a.href = "javascript:Epub3Sliderizer.toggleReflow();";
+	if (controls.children.length == 0)
+	{
+		controls.appendChild(a);
+	}
+	else
+	{
+		controls.insertBefore(a, controls.children[0]);
+	}
 	
 	
 	if (document.defaultView && document.defaultView.getComputedStyle)

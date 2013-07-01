@@ -221,8 +221,8 @@ img.full
 	top:0;
 	left:0;
 
-	width:VIEWPORT_WIDTHpx;
-	height:VIEWPORT_HEIGHTpx;
+	width: 100%;
+	height: 100%;
 
 	z-index:0;
 }
@@ -320,8 +320,13 @@ html
 	*/
 }
 
-html:not(.basic) body:not(.epb3sldrzr-epubReadingSystem),
-html.basic body.epb3sldrzr-epubReadingSystem
+html.reflow
+{
+	background-color: white;
+}
+
+html:not(.basic):not(.reflow) body:not(.epb3sldrzr-epubReadingSystem),
+html:not(.reflow).basic body.epb3sldrzr-epubReadingSystem
 {
 	-webkit-font-smoothing: subpixel-antialiased;
 	
@@ -334,17 +339,6 @@ body
 	-webkit-text-size-adjust:none;
 	*/
 	
-	background-color: black;
-	
-	display:block;
-
-	position:absolute;
-
-	width:VIEWPORT_WIDTHpx;
-	height:VIEWPORT_HEIGHTpx;
-
-	overflow:hidden;
-
 	font-size: FONT_SIZEpx;
 	font-size: FONT_SIZErem;
 	
@@ -353,6 +347,30 @@ body
 
 	border-right: 0.08em solid transparent;
 	border-left: 0.08em solid transparent;
+}
+
+html.reflow body
+{
+	/*
+	font-size: FONT_SIZE_HALFpx;
+	font-size: FONT_SIZE_HALFrem;
+	*/
+	
+	background-color:white;
+}
+
+html:not(.reflow) body
+{
+	background-color: black;
+
+	display:block;
+
+	position:absolute;
+
+	width:VIEWPORT_WIDTHpx;
+	height:VIEWPORT_HEIGHTpx;
+
+	overflow:hidden;
 }
 
 html:not(.static):not(.basic) body.epb3sldrzr-epubReadingSystem
@@ -368,6 +386,21 @@ body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body
 
 body div#epb3sldrzr-body
 {
+	background-color:white;
+}
+
+html.reflow body div#epb3sldrzr-body
+{
+	font-size: 0.6em;
+}
+
+html.reflow body img
+{
+	-PREFIXED_PROPERTY-transform: scale(0.6);
+}
+
+html:not(.reflow) body div#epb3sldrzr-body
+{
 	display:block;
 
 	position:absolute;
@@ -376,16 +409,13 @@ body div#epb3sldrzr-body
 
 	width:100%;
 	height:100%;
-
-	overflow:hidden;
 	
-	background-color:white;
+	overflow:hidden;
 }
 
 
-
-body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body,
-html.basic body.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body
+html:not(.reflow) body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body,
+html:not(.reflow).basic body.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body
 {
 	border-radius: FONT_SIZE_HALFpx;
 	border-radius: FONT_SIZE_HALFrem;
@@ -395,7 +425,7 @@ html.basic body.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body
 	*/
 }
 
-html.static body.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body
+html:not(.reflow).static body.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body
 {
 	border-radius: FONT_SIZEpx;
 	border-radius: FONT_SIZErem;
@@ -412,6 +442,13 @@ body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body.epb3sldrzr-animated
 
 div#epb3sldrzr-root
 {
+	-webkit-overflow-scrolling: touch;
+}
+
+html:not(.reflow) body div#epb3sldrzr-root
+{
+	overflow:auto;
+
 	display:block;
 
 	position:absolute;
@@ -422,12 +459,7 @@ div#epb3sldrzr-root
 	height:100%;
 	
 	z-index:5;
-
-	overflow:auto;
-
-	-webkit-overflow-scrolling: touch;
 }
-
 
 /*
 ==============================================================================
@@ -577,23 +609,48 @@ Logo
 
 img#epb3sldrzr-logo
 {
-	position:absolute;
 	z-index:10;
 }
 
-html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
+html.reflow img#epb3sldrzr-logo
+{
+	position:fixed;
+}
+
+html:not(.reflow) img#epb3sldrzr-logo
+{
+	position:absolute;
+}
+
+html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+	width: 200px;
+	height: 83px;
+}
+
+
+html.reflow#epb3sldrzr-NavDoc img#epb3sldrzr-logo
+{
+	bottom: 0px;
+	left: 0px;
+}
+
+html:not(.reflow)#epb3sldrzr-NavDoc img#epb3sldrzr-logo
 {
 	bottom: 30px;
 	left: 50px;
 }
 
-html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+html.reflow:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+	top: 0px;
+	right: 0px;
+}
+
+html:not(.reflow):not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
 	top: 10px;
 	right: 25px;
-
-	width: 200px;
-	height: 83px;
 }
 
 
@@ -609,7 +666,8 @@ a#epb3sldrzr-link-toc:before,
 a#epb3sldrzr-link-next:before,
 a#epb3sldrzr-link-previous:before,
 a#epb3sldrzr-link-epub:before,
-a#epb3sldrzr-link-textsize:before
+a#epb3sldrzr-link-textsize:before,
+a#epb3sldrzr-link-reflow:before
 {
 	font-family: 'FontAwesome';
 	font-size: 1.1em;
@@ -618,6 +676,11 @@ a#epb3sldrzr-link-textsize:before
 a#epb3sldrzr-link-textsize:before
 {
 	content: "\f00e";
+}
+
+a#epb3sldrzr-link-reflow:before
+{
+	content: "\f15c";
 }
 
 a#epb3sldrzr-link-epub:before
@@ -655,6 +718,7 @@ a#epb3sldrzr-link-next,
 a#epb3sldrzr-link-toc,
 a#epb3sldrzr-link-epub,
 a#epb3sldrzr-link-textsize,
+a#epb3sldrzr-link-reflow,
 a#epb3sldrzr-link-epubReadingSystem
 {
 	font-weight: 400;
@@ -696,7 +760,10 @@ a#epb3sldrzr-link-epub:visited,
 a#epb3sldrzr-link-epub:active,
 a#epb3sldrzr-link-textsize:link,
 a#epb3sldrzr-link-textsize:visited,
-a#epb3sldrzr-link-textsize:active
+a#epb3sldrzr-link-textsize:active,
+a#epb3sldrzr-link-reflow:link,
+a#epb3sldrzr-link-reflow:visited,
+a#epb3sldrzr-link-reflow:active
 {
 	color:#3D6AA2;
 
@@ -711,7 +778,8 @@ a#epb3sldrzr-link-next:hover,
 a#epb3sldrzr-link-toc:hover,
 a#epb3sldrzr-link-epub:hover,
 a#epb3sldrzr-link-epubReadingSystem:hover,
-a#epb3sldrzr-link-textsize:hover
+a#epb3sldrzr-link-textsize:hover,
+a#epb3sldrzr-link-reflow:hover
 {
 	background-color:#003399;
 	color:white;
@@ -734,21 +802,32 @@ a#epb3sldrzr-link-toc:hover
 	color:white;
 }
 
-a#epb3sldrzr-link-textsize
+a#epb3sldrzr-link-textsize,
+a#epb3sldrzr-link-reflow
 {
 	padding-top: 0.2em;
 	padding-bottom: 0.2em;
 }
 
+a#epb3sldrzr-link-reflow
+{
+	padding-left: 0.2em;
+	padding-right: 0.2em;
+}
+
 
 a#epb3sldrzr-link-textsize:link,
 a#epb3sldrzr-link-textsize:visited,
-a#epb3sldrzr-link-textsize:active
+a#epb3sldrzr-link-textsize:active,
+a#epb3sldrzr-link-reflow:link,
+a#epb3sldrzr-link-reflow:visited,
+a#epb3sldrzr-link-reflow:active
 {
 	color: #666666;
 }
 
-a#epb3sldrzr-link-textsize:hover
+a#epb3sldrzr-link-textsize:hover,
+a#epb3sldrzr-link-reflow:hover
 {
 	background-color:#333333;
 	color:white;
@@ -775,12 +854,6 @@ div#epb3sldrzr-controls
 	text-align: center;
 	vertical-align: middle;
 	
-	position:absolute;
-	z-index:20;
-
-	left: 0px;
-	bottom:0px;
-	width: 100%;
 	
 	padding-top: 0.2em;
 	padding-bottom: 0.1em;
@@ -794,6 +867,21 @@ div#epb3sldrzr-controls
 	background-color: white;
 	
 	display: none;
+	
+	z-index:20;
+	left: 0px;
+	bottom:0px;
+	width: 100%;
+}
+
+html:not(.reflow) body div#epb3sldrzr-controls
+{
+	position:absolute;
+}
+
+html.reflow body div#epb3sldrzr-controls
+{
+	position: fixed;
 }
 
 a#epb3sldrzr-link-epub

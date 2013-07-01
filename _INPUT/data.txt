@@ -137,10 +137,12 @@ _CONTENT
 		id="boox">
 
 		<div>
+		<div id="logoWrapper">
 			<img
 				id="logo"
 				src="assets/EPUB3-Sliderizer.png"
 				alt="Logo"/>
+				</div>
 			<ul>
 				<li>
 					<strong>See</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/data.txt" target="_blank">input file</a> for this slidedeck
@@ -197,14 +199,17 @@ html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 	display: none;
 }
 
-#logo
+#logoWrapper
 {
 	float: right;
 	
+	-PREFIXED_PROPERTY-transform: rotate(45deg);
+}
+
+#logo
+{
 	width: 300px;
 	height: 125px;
-	
-	-PREFIXED_PROPERTY-transform: rotate(45deg);
 }
 
 h1#epb3sldrzr-title
@@ -593,7 +598,7 @@ _CONTENT
 
 <div class="incremental auto">
 
-<div class="boxed" style="margin-bottom: 1em;">
+<div class="boxed" style="margin-bottom: 0.6em;">
 
 <h3>Keyboard</h3>
 
@@ -611,6 +616,9 @@ _CONTENT
 <span class="keyboard " title="8">8</span>
 <span class="keyboard " title="9">9</span>
 &nbsp;&nbsp;&nbsp;increase font size
+<br>
+<span class="keyboard " title="R">r</span> &nbsp;&nbsp;&nbsp;toggle reflow/fixed-ratio rendering
+<br>
 </p>
 
 </div>
@@ -624,11 +632,14 @@ _CONTENT
 <span class="symbols pale-greenx" title="text size">&#xf00e;</span> 
 &#8658;
 cycle font sizes
-
+<br>
+<span class="symbols pale-greenx" title="text size">&#xf15c;</span> 
+&#8658;
+toggle reflow/fixed-ratio rendering
 </div>
 
 
-<p style="text-align: right; font-size: 80%; margin-bottom: 3em;">
+<p style="text-align: right; font-size: 80%; margin-bottom: 1em;">
 (display button panel with 
 <span class="keyboard " title="C" style="padding-left: 0.4em; padding-right: 0.4em;">c</span>
 or <span class="code">[tap]</span> / <span class="code">[click]</span>
@@ -637,14 +648,15 @@ or <span class="code">[tap]</span> / <span class="code">[click]</span>
 </span>
 
 <div class="paper" style="padding: 0.5em;">
-<p>
-Accessibility: the slides <strong>reflow</strong> and <strong>scroll</strong>
-when the text font is enlarged.
+<p style="font-size: 0.8em;">
+Accessibility: in fixed-ratio mode (default), slide content <strong>reflows</strong> and <strong>scrolls</strong>
+when the text is enlarged. In reflow mode, a slide behaves like a regular web page
+(text magnification and scrolling is controlled by the web browser itself).
 </p>
 </div>
 
 <p style="text-align: right;">
-<span class="fade" style="font-size: 0.8em;"><em>Note:</em> the font size is stored as a cookie.</span>
+<span class="fade" style="font-size: 0.8em;"><em>Note:</em> the settings are stored as cookies.</span>
 
 
 </div>
@@ -670,14 +682,14 @@ _CONTENT
 
 <li style="margin-bottom: 1.5em;">
 
-<img src="assets/HTML5.png" class="epb3sldrzr-animated bounceInRight animated-logos" alt="HTML5">
+<div class="epb3sldrzr-animated bounceInRight"><img src="assets/HTML5.png" class="animated-logos" alt="HTML5"></div>
 
 <strong>HTML5</strong> interactive slide deck for live presentations
 <br>&#8658; online viewing / browsing
 
 <li>
 
-<img src="assets/EPUB.png" class="epb3sldrzr-animated bounceInRight animated-logos later" alt="EPUB3">
+<div class="epb3sldrzr-animated bounceInRight later"><img src="assets/EPUB.png" class="animated-logos" alt="EPUB3"></div>
 
 <strong>EPUB3</strong> e-book for offline reading
 <br>&#8658; re-distributable single file archive
@@ -727,13 +739,13 @@ img.animated-logos
 	height: 125px;
 }
 
-body:not(.epb3sldrzr-epubReadingSystem) img.animated-logos.epb3sldrzr-animated
+body:not(.epb3sldrzr-epubReadingSystem) div.epb3sldrzr-animated
 {	
 	-PREFIXED_PROPERTY-animation-duration: 1s;
 	-PREFIXED_PROPERTY-animation-delay: 0s;
 }
 
-body:not(.epb3sldrzr-epubReadingSystem) img.animated-logos.later.epb3sldrzr-animated
+body:not(.epb3sldrzr-epubReadingSystem) div.later.epb3sldrzr-animated
 {	
 	-PREFIXED_PROPERTY-animation-delay: 0.1s;
 }
