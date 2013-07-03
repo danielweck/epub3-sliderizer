@@ -1,5 +1,6 @@
 package danielweck.epub3.sliderizer;
 
+import java.io.File;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
@@ -52,7 +53,10 @@ public final class XHTML {
 		ArrayList<String> array = Epub3FileSet.splitPaths(paths);
 		for (String path : array) {
 
-			String ref = destFolder + "/" + path;
+			String ref = path;
+			if (destFolder != null && !destFolder.equals(".")) {
+				ref = destFolder + "/" + path;
+			}
 			if (alreadyAddedHeadLinks.contains(ref)) {
 				continue;
 			}
@@ -79,7 +83,10 @@ public final class XHTML {
 		ArrayList<String> array = Epub3FileSet.splitPaths(paths);
 		for (String path : array) {
 
-			String ref = destFolder + "/" + path;
+			String ref = path;
+			if (destFolder != null && !destFolder.equals(".")) {
+				ref = destFolder + "/" + path;
+			}
 			if (alreadyAddedHeadScripts.contains(ref)) {
 				continue;
 			}
@@ -212,9 +219,26 @@ public final class XHTML {
 				"stylesheet", "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
 
 		if (!slideShow.importedConverted) {
-			create_HeadLinks(Epub3FileSet.CSS_DEFAULT, document, elementHead,
-					"stylesheet", "text/css", PATH_PREFIX
-							+ Epub3FileSet.FOLDER_CSS);
+
+			if (false) {
+				Element elementStyle = document.createElement("style");
+				elementHead.appendChild(elementStyle);
+				elementStyle.setAttribute("type", "text/css");
+				elementStyle.appendChild(document.createTextNode("\n"));
+				File cssFile = new File(pathEpubFolder, Epub3FileSet.FOLDER_CSS
+						+ "/" + Epub3FileSet.CSS_DEFAULT);
+				StringBuilder strBuilder = XmlDocument.readFileLines(cssFile);
+				String css = Epub3FileSet.processCssStyle(slideShow,
+						strBuilder.toString());
+				css = css.replaceAll("url\\('", "url('" + PATH_PREFIX
+						+ Epub3FileSet.FOLDER_CSS + "/");
+				elementStyle.appendChild(document.createTextNode(css));
+				elementStyle.appendChild(document.createTextNode("\n"));
+			} else {
+				create_HeadLinks(Epub3FileSet.CSS_DEFAULT, document,
+						elementHead, "stylesheet", "text/css", PATH_PREFIX
+								+ Epub3FileSet.FOLDER_CSS);
+			}
 		}
 
 		create_HeadLinks(slideShow.FILES_CSS, document, elementHead,
@@ -381,7 +405,8 @@ public final class XHTML {
 		elementHtml.appendChild(elementBody_);
 		elementBody_.setAttributeNS("http://www.idpf.org/2007/ops",
 				"epub:type", "bodymatter");
-		
+		//elementBody_.setAttribute("class", "epb3sldrzr-epubReadingSystem");
+
 		Element elementBody = null;
 		if (false && notes) {
 			elementBody = elementBody_;

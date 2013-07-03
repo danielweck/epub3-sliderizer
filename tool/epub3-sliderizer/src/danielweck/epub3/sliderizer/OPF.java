@@ -520,7 +520,12 @@ public final class OPF {
 		ArrayList<String> array = Epub3FileSet.splitPaths(paths);
 		for (String path : array) {
 
-			String ref = destFolder + "/" + path;
+			String ref = path;
+			if (destFolder != null && !destFolder.equals("."))
+			{
+				ref = destFolder + "/" + path;
+			}
+			
 			if (alreadyAddedManifestItem.contains(ref)) {
 				continue;
 			}

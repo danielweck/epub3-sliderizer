@@ -872,14 +872,14 @@ _CONTENT
 \	_NOTES</span>
 <br>
 	<span class="pale-greenx">
-	&lt;p&gt;Slide notes are displayed separately, can be <span class="notes-highlight">linked</span> from the host slide</span>
+	&lt;p&gt;Slide notes are displayed separately, can be <span class="notesref-highlight">linked</span> from the host slide</span>
 </p>
 </div>
 
 // --------------------------------------------
 _CSS_STYLE
 
-body:not(.epb3sldrzr-epubReadingSystem) .notes-highlight,
+body:not(.epb3sldrzr-epubReadingSystem) .notesref-highlight,
 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-notesref
 {
 	-webkit-backface-visibility: hidden;
@@ -893,7 +893,7 @@ body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-notesref
 	-PREFIXED_PROPERTY-animation-delay: 1s;
 }
 
-.notes-highlight,
+.notesref-highlight,
 a#epb3sldrzr-link-notesref
 {
 	border: 0.4rem solid #ff00ff;
@@ -1361,10 +1361,10 @@ Slideshows made with EPUB3-Sliderizer seem to play fine in:
 	</ul>
 </li>
 <li>
-	<strong>iOS</strong>
+	<strong>iOS</strong> <span class="fade">(WebKit)</span>
 	<ul>
 		<li>
-			Safari <span class="fade">(WebKit)</span>
+			Safari
 		</li>
 	</ul>
 </li>
@@ -1392,8 +1392,12 @@ Slideshows made with EPUB3-Sliderizer seem to play fine in:
 </li>
 </ul>
 
+
+<div class="incremental auto">
 <p style="clear: both;">
-<em>Note:</em> on Android &#8658; broken fonts, inconsistent viewport resizing
+<em>Note:</em> on Android &#8658; inconsistent viewport scaling, fonts support
+</p>
+</div>
 
 // --------------------------------------------
 _CSS_STYLE
@@ -1443,11 +1447,11 @@ E-reader compatibility
 _CONTENT
 
 <p>
-Slideshows made with EPUB3-Sliderizer are supported by:
+Slideshow e-books made with EPUB3-Sliderizer can be viewed with:
 
 <ul class="incremental auto" id="bs" style="list-style-type:none;  clear: both;">
 <li>
-	<strong>iOS</strong>
+	<strong>iOS</strong> <span class="fade">(WebKit)</span>
 	<ul>
 		<li>
 			iBooks
@@ -1461,19 +1465,26 @@ Slideshows made with EPUB3-Sliderizer are supported by:
 	<strong>Mac OS X, Windows</strong>
 	<ul>
 		<li>
-			Readium <span class="fade">(Chrome extension)</span>
+			Readium Chrome extension <span class="fade">(WebKit)</span>
 		</li>
 		<li>
-			Azardi? <span class="fade">(untested)</span>
+			Azardi <span class="fade">(Gecko)</span>
 		</li>
-	</ul>
-</li>
-<li>
-	<strong>Android, Linux</strong>
-	<ul>
 		<li>
-			? <span class="fade">(untested)</span>
+			Readium.js <span class="fade">(cross-browser)</span> <em>early unstable software!</em>
 		</li>
 	</ul>
-</li>
+</li>	
 </ul>
+
+<div class="incremental auto">
+<p>
+Not working:
+<br>
+Google Play Books <span class="fade">(mangles original HTML and CSS, no Javascript)</span>,
+BlueFire <span class="fade">(breaks layout)</span>,
+GitDen <span class="fade">(crashes)</span>.
+<br>
+Untested: Nook, Kindle, Aldiko, FBReader, Lektz, Laputa, Cool Reader, Moon+ Reader, iReader, CopperReader, etc.
+</p>
+</div>

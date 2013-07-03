@@ -2,6 +2,14 @@
 
 root=$(pwd)
 
+#DATA_file="${root}/_INPUT/Romain/slides.html"
+#DATA_file="${root}/_INPUT/book_UNZIPPED.epub/OEBPS/content.opf"
+
+#DATA_file="${root}/_INPUT/DAISY/data.txt"
+
+DATA_file="${root}/_INPUT/data.txt"
+
+
 rm -r ./_OUTPUT
 mkdir ./_OUTPUT
 cp -r ./tool/readium ./_OUTPUT/
@@ -27,15 +35,6 @@ javac -classpath ".:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" "${root}/
 
 fi
 
-#DATA_file="${root}/_INPUT/Romain/slides.html"
-#DATA_file="${root}/_INPUT/book_UNZIPPED.epub/OEBPS/content.opf"
-
-#DATA_file="${root}/_INPUT/DAISY/data.txt"
-#EPUB_FILENAME="DAISY_AGM_June-2013"
-
-DATA_file="${root}/_INPUT/data.txt"
-EPUB_FILENAME="EPUB3-Sliderizer"
-
 DATA_url="file://${DATA_file}"
 
 EPUB_FOLDER="${root}/_OUTPUT/content/EPUB3/epub"
@@ -47,24 +46,10 @@ echo ${EPUB_FOLDER}
 java -classpath "${root}/tool/epub3-sliderizer/bin/:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" Main ${DATA_url} ${EPUB_FOLDER} VERBOSE_min
 
 
-
 open ${EPUB_FOLDER}
 #exit
 
 
 cd ${root}
 
-EPUB_FOLDER="${root}/_OUTPUT/content/EPUB3/"
-
-find "${EPUB_FOLDER}" -name ".DS_Store" -depth -exec rm {} \;
-
-#for x in `find ./$@ -name ".DS_Store" -print`
-#   do
-#     rm -f $x
-#   done
-
-java -jar "${root}/tool/epubcheck/epubcheck.jar" "${EPUB_FOLDER}" -mode exp -save
-
-mv "${root}/_OUTPUT/content/EPUB3.epub" "${root}/_OUTPUT/content/${EPUB_FILENAME}.epub"
-
-#open "${root}/_OUTPUT/content/"
+./pack-epub.sh

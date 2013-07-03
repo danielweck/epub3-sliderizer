@@ -221,8 +221,12 @@ img.full
 	top:0;
 	left:0;
 
-	width: 100%;
-	height: 100%;
+	/*
+	width:100%;
+	height:100%;
+	*/
+	width:VIEWPORT_WIDTHpx;
+	height:VIEWPORT_HEIGHTpx;
 
 	z-index:0;
 }
@@ -408,8 +412,12 @@ html:not(.reflow) div#epb3sldrzr-body
 	top:0;
 	left:0;
 
+	/*
 	width:100%;
 	height:100%;
+	*/
+	width:VIEWPORT_WIDTHpx;
+	height:VIEWPORT_HEIGHTpx;
 	
 	overflow:hidden;
 }
@@ -456,8 +464,12 @@ html:not(.reflow) div#epb3sldrzr-root
 	top:0;
 	left:0;
 
+	/*
 	width:100%;
 	height:100%;
+	*/
+	width:VIEWPORT_WIDTHpx;
+	height:VIEWPORT_HEIGHTpx;
 	
 	z-index:5;
 }
