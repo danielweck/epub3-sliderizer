@@ -209,36 +209,29 @@ public final class XHTML {
 					);
 		}
 
-		// create_HeadLinks(Epub3FileSet.CSS_ANIMATE, document, elementHead,
-		// "stylesheet", "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
-
-		// create_HeadLinks(Epub3FileSet.CSS_JQUERY_UI, document, elementHead,
-		// "stylesheet", "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
-
-		create_HeadLinks(Epub3FileSet.CSS_FONT_AWESOME, document, elementHead,
-				"stylesheet", "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
-
 		if (!slideShow.importedConverted) {
 
-			if (false) {
-				Element elementStyle = document.createElement("style");
-				elementHead.appendChild(elementStyle);
-				elementStyle.setAttribute("type", "text/css");
-				elementStyle.appendChild(document.createTextNode("\n"));
-				File cssFile = new File(pathEpubFolder, Epub3FileSet.FOLDER_CSS
-						+ "/" + Epub3FileSet.CSS_DEFAULT);
-				StringBuilder strBuilder = XmlDocument.readFileLines(cssFile);
-				String css = Epub3FileSet.processCssStyle(slideShow,
-						strBuilder.toString());
-				css = css.replaceAll("url\\('", "url('" + PATH_PREFIX
-						+ Epub3FileSet.FOLDER_CSS + "/");
-				elementStyle.appendChild(document.createTextNode(css));
-				elementStyle.appendChild(document.createTextNode("\n"));
-			} else {
-				create_HeadLinks(Epub3FileSet.CSS_DEFAULT, document,
-						elementHead, "stylesheet", "text/css", PATH_PREFIX
-								+ Epub3FileSet.FOLDER_CSS);
+			for (int k = 0; k < Epub3FileSet.CSS_FILENAMES.length; k++) {
+				String filename = Epub3FileSet.CSS_FILENAMES[k][0];
+				//String id = Epub3FileSet.CSS_FILENAMES[k][1];
+
+				create_HeadLinks(filename, document, elementHead, "stylesheet",
+						"text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
 			}
+
+			// Element elementStyle = document.createElement("style");
+			// elementHead.appendChild(elementStyle);
+			// elementStyle.setAttribute("type", "text/css");
+			// elementStyle.appendChild(document.createTextNode("\n"));
+			// File cssFile = new File(pathEpubFolder, Epub3FileSet.FOLDER_CSS
+			// + "/" + Epub3FileSet.CSS_DEFAULT);
+			// StringBuilder strBuilder = XmlDocument.readFileLines(cssFile);
+			// String css = Epub3FileSet.processCssStyle(slideShow,
+			// strBuilder.toString());
+			// css = css.replaceAll("url\\('", "url('" + PATH_PREFIX
+			// + Epub3FileSet.FOLDER_CSS + "/");
+			// elementStyle.appendChild(document.createTextNode(css));
+			// elementStyle.appendChild(document.createTextNode("\n"));
 		}
 
 		create_HeadLinks(slideShow.FILES_CSS, document, elementHead,
@@ -253,65 +246,23 @@ public final class XHTML {
 		}
 
 		if (slideShow.importedConverted) {
-			create_HeadLinks(Epub3FileSet.CSS_DEFAULT, document, elementHead,
-					"stylesheet", "text/css", PATH_PREFIX
-							+ Epub3FileSet.FOLDER_CSS);
+
+			for (int k = 0; k < Epub3FileSet.CSS_FILENAMES.length; k++) {
+				String filename = Epub3FileSet.CSS_FILENAMES[k][0];
+				//String id = Epub3FileSet.CSS_FILENAMES[k][1];
+
+				create_HeadLinks(filename, document, elementHead, "stylesheet",
+						"text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
+			}
 		}
 
-		create_HeadScripts(Epub3FileSet.JS_CLASSLIST, document, elementHead,
-				null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
+		for (int k = 0; k < Epub3FileSet.JS_FILENAMES.length; k++) {
+			String filename = Epub3FileSet.JS_FILENAMES[k][0];
+			//String id = Epub3FileSet.JS_FILENAMES[k][1];
 
-		create_HeadScripts(Epub3FileSet.JS_SCREENFULL, document, elementHead,
-				null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
-
-		create_HeadScripts(Epub3FileSet.JS_HAMMER, document, elementHead, null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
-
-		create_HeadScripts(Epub3FileSet.JS_HAMMER_FAKEMULTITOUCH, document,
-				elementHead, null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
-
-		create_HeadScripts(Epub3FileSet.JS_HAMMER_SHOWTOUCHES, document,
-				elementHead, null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
-
-		create_HeadScripts(Epub3FileSet.JS_JQUERY, document, elementHead, null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
-
-		// create_HeadScripts(Epub3FileSet.JS_JQUERY_UI, document, elementHead,
-		// null, // "text/javascript",
-		// PATH_PREFIX + Epub3FileSet.FOLDER_JS);
-
-		create_HeadScripts(Epub3FileSet.JS_JQUERY_BLOCKUI, document,
-				elementHead, null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
-
-		create_HeadScripts(Epub3FileSet.JS_JQUERY_MOUSEWHEEL, document,
-				elementHead, null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
-
-		create_HeadScripts(Epub3FileSet.JS_DEFAULT, document, elementHead,
-				null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.FOLDER_JS);
-
-		// create_HeadScripts(Epub3FileSet.JS_SCROLLFIX_NAME, document,
-		// elementHead, null, // "text/javascript",
-		// PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
-		//
-		// create_HeadScripts(Epub3FileSet.JS_iSCROLL_NAME, document,
-		// elementHead, null, // "text/javascript",
-		// PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
-		//
-		// create_HeadScripts(Epub3FileSet.JS_HISTORY_NAME, document,
-		// elementHead,
-		// null, // "text/javascript",
-		// PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
-		//
-		// create_HeadScripts(Epub3FileSet.JS_JSON_NAME, document, elementHead,
-		// null, // "text/javascript",
-		// PATH_PREFIX + Epub3FileSet.JS_FOLDER_NAME);
+			create_HeadScripts(filename, document, elementHead, null, // "text/javascript",
+					PATH_PREFIX + Epub3FileSet.FOLDER_JS);
+		}
 
 		create_HeadScripts(slideShow.FILES_JS, document, elementHead, null, // "text/javascript",
 				PATH_PREFIX + Epub3FileSet.FOLDER_JS + "/"
@@ -405,7 +356,7 @@ public final class XHTML {
 		elementHtml.appendChild(elementBody_);
 		elementBody_.setAttributeNS("http://www.idpf.org/2007/ops",
 				"epub:type", "bodymatter");
-		//elementBody_.setAttribute("class", "epb3sldrzr-epubReadingSystem");
+		// elementBody_.setAttribute("class", "epb3sldrzr-epubReadingSystem");
 
 		Element elementBody = null;
 		if (false && notes) {
@@ -414,19 +365,7 @@ public final class XHTML {
 			elementBody = document.createElement("div");
 			elementBody.setAttribute("id", "epb3sldrzr-body");
 			elementBody_.appendChild(elementBody);
-		}
-
-		if (// !notes &&
-		slideShow.LOGO != null) {
-			String relativeDestinationPath = PATH_PREFIX
-					+ Epub3FileSet.FOLDER_IMG + "/"
-					+ Epub3FileSet.FOLDER_CUSTOM + '/' + slideShow.LOGO;
-
-			Element elementImg = document.createElement("img");
-			elementBody.appendChild(elementImg);
-			elementImg.setAttribute("id", "epb3sldrzr-logo");
-			elementImg.setAttribute("alt", "");
-			elementImg.setAttribute("src", relativeDestinationPath);
+			//elementBody_.appendChild(document.createTextNode("TEST"));
 		}
 
 		Element elementDiv = null;
@@ -436,6 +375,19 @@ public final class XHTML {
 			elementDiv = document.createElement("div");
 			elementBody.appendChild(elementDiv);
 			elementDiv.setAttribute("id", "epb3sldrzr-root");
+		}
+
+		if (// !notes &&
+		slideShow.LOGO != null) {
+			String relativeDestinationPath = PATH_PREFIX
+					+ Epub3FileSet.FOLDER_IMG + "/"
+					+ Epub3FileSet.FOLDER_CUSTOM + '/' + slideShow.LOGO;
+
+			Element elementImg = document.createElement("img");
+			elementDiv.appendChild(elementImg);//elementBody
+			elementImg.setAttribute("id", "epb3sldrzr-logo");
+			elementImg.setAttribute("alt", "");
+			elementImg.setAttribute("src", relativeDestinationPath);
 		}
 
 		Element elementH1 = document.createElement("h1");

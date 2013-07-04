@@ -1,5 +1,6 @@
 package danielweck.epub3.sliderizer;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.xml.XMLConstants;
@@ -206,146 +207,29 @@ public final class OPF {
 						+ (slideShow.FAVICON.equals("favicon.ico") ? "" : "/"
 								+ Epub3FileSet.FOLDER_CUSTOM), null);
 
-		create_ManifestItem(Epub3FileSet.JS_DEFAULT, document, elementManifest,
-				"js-default", false, Epub3FileSet.FOLDER_JS, null);
+		for (int i = 0; i < Epub3FileSet.JS_FILENAMES.length; i++) {
+			String filename = Epub3FileSet.JS_FILENAMES[i][0];
+			String id = Epub3FileSet.JS_FILENAMES[i][1];
 
-		create_ManifestItem(Epub3FileSet.JS_SCREENFULL, document,
-				elementManifest, "js-screenfull", false,
-				Epub3FileSet.FOLDER_JS, null);
+			create_ManifestItem(filename, document, elementManifest, id, false,
+					Epub3FileSet.FOLDER_JS, null);
+		}
 
-		create_ManifestItem(Epub3FileSet.JS_CLASSLIST, document,
-				elementManifest, "js-classList", false, Epub3FileSet.FOLDER_JS,
-				null);
+		for (int i = 0; i < Epub3FileSet.FONT_FILENAMES.length; i++) {
+			String filename = Epub3FileSet.FONT_FILENAMES[i][0];
+			String id = Epub3FileSet.FONT_FILENAMES[i][1];
 
-		create_ManifestItem(Epub3FileSet.JS_JQUERY, document, elementManifest,
-				"js-jquery", false, Epub3FileSet.FOLDER_JS, null);
-		//
-		// create_ManifestItem(Epub3FileSet.JS_JQUERY_UI, document,
-		// elementManifest, "js-jquery-ui", false, Epub3FileSet.FOLDER_JS,
-		// null);
+			create_ManifestItem(filename, document, elementManifest, id, false,
+					Epub3FileSet.FOLDER_CSS, null);
+		}
 
-		create_ManifestItem(Epub3FileSet.JS_JQUERY_BLOCKUI, document,
-				elementManifest, "js-jquery-blockui", false,
-				Epub3FileSet.FOLDER_JS, null);
+		for (int i = 0; i < Epub3FileSet.CSS_FILENAMES.length; i++) {
+			String filename = Epub3FileSet.CSS_FILENAMES[i][0];
+			String id = Epub3FileSet.CSS_FILENAMES[i][1];
 
-		create_ManifestItem(Epub3FileSet.JS_JQUERY_MOUSEWHEEL, document,
-				elementManifest, "js-jquery-mousewheel", false,
-				Epub3FileSet.FOLDER_JS, null);
-
-		create_ManifestItem(Epub3FileSet.JS_HAMMER, document, elementManifest,
-				"js-hammer", false, Epub3FileSet.FOLDER_JS, null);
-
-		create_ManifestItem(Epub3FileSet.JS_HAMMER_FAKEMULTITOUCH, document,
-				elementManifest, "js-hammer-fakemultitouch", false,
-				Epub3FileSet.FOLDER_JS, null);
-
-		create_ManifestItem(Epub3FileSet.JS_HAMMER_SHOWTOUCHES, document,
-				elementManifest, "js-hammer-showtouches", false,
-				Epub3FileSet.FOLDER_JS, null);
-
-		// create_ManifestItem(Epub3FileSet.JS_SCROLLFIX_NAME, document,
-		// elementManifest, "js-scrollFix", false,
-		// Epub3FileSet.JS_FOLDER_NAME, null);
-		//
-		// create_ManifestItem(Epub3FileSet.JS_iSCROLL_NAME, document,
-		// elementManifest, "js-iScroll", false,
-		// Epub3FileSet.JS_FOLDER_NAME, null);
-
-		// create_ManifestItem(Epub3FileSet.JS_FIREBUG_NAME, document,
-		// elementManifest, "js-firebug", false,
-		// Epub3FileSet.JS_FOLDER_NAME, null);
-
-		// create_ManifestItem(Epub3FileSet.JS_HISTORY_NAME, document,
-		// elementManifest, "js-history", false,
-		// Epub3FileSet.JS_FOLDER_NAME, null);
-		//
-		// create_ManifestItem(Epub3FileSet.JS_JSON_NAME, document,
-		// elementManifest, "js-json", false,
-		// Epub3FileSet.JS_FOLDER_NAME, null);
-
-		// create_ManifestItem(Epub3FileSet.FONT_ENTYPO_WOFF, document,
-		// elementManifest, "font-entypo-woff", false,
-		// Epub3FileSet.FOLDER_CSS, null);
-		//
-		create_ManifestItem(Epub3FileSet.FONT_AWESOME_WOFF, document,
-				elementManifest, "font-awesome-woff", false,
-				Epub3FileSet.FOLDER_CSS, null);
-		//
-		// create_ManifestItem(Epub3FileSet.FONT_ENTYPO_TTF, document,
-		// elementManifest, "font-entypo-ttf", false,
-		// Epub3FileSet.FOLDER_CSS, null);
-
-		create_ManifestItem(Epub3FileSet.FONT_INCONSOLATA_WOFF, document,
-				elementManifest, "font-inconsolata-woff", false,
-				Epub3FileSet.FOLDER_CSS, null);
-		//
-		// create_ManifestItem(Epub3FileSet.FONT_INCONSOLATA_TTF, document,
-		// elementManifest, "font-inconsolata-ttf", false,
-		// Epub3FileSet.FOLDER_CSS, null);
-
-		create_ManifestItem(Epub3FileSet.FONT_LATO_400_WOFF, document,
-				elementManifest, "font-lato-400-woff", false,
-				Epub3FileSet.FOLDER_CSS, null);
-
-		// create_ManifestItem(Epub3FileSet.FONT_LATO_400_TTF, document,
-		// elementManifest, "font-lato-400-ttf", false,
-		// Epub3FileSet.FOLDER_CSS, null);
-
-		create_ManifestItem(Epub3FileSet.FONT_LATO_900_WOFF, document,
-				elementManifest, "font-lato-900-woff", false,
-				Epub3FileSet.FOLDER_CSS, null);
-
-		// create_ManifestItem(Epub3FileSet.FONT_LATO_900_TTF, document,
-		// elementManifest, "font-lato-900-ttf", false,
-		// Epub3FileSet.FOLDER_CSS, null);
-
-		create_ManifestItem(Epub3FileSet.FONT_NEUTON_400_WOFF, document,
-				elementManifest, "font-neuton-400-woff", false,
-				Epub3FileSet.FOLDER_CSS, null);
-		//
-		// create_ManifestItem(Epub3FileSet.FONT_NEUTON_400_TTF, document,
-		// elementManifest, "font-neuton-400-ttf", false,
-		// Epub3FileSet.FOLDER_CSS, null);
-
-		create_ManifestItem(Epub3FileSet.FONT_NEUTON_700_WOFF, document,
-				elementManifest, "font-neuton-700-woff", false,
-				Epub3FileSet.FOLDER_CSS, null);
-		//
-		// create_ManifestItem(Epub3FileSet.FONT_NEUTON_700_TTF, document,
-		// elementManifest, "font-neuton-700-ttf", false,
-		// Epub3FileSet.FOLDER_CSS, null);
-
-		create_ManifestItem(Epub3FileSet.FONT_ARVO_400_WOFF, document,
-				elementManifest, "font-arvo-400-woff", false,
-				Epub3FileSet.FOLDER_CSS, null);
-		//
-		// create_ManifestItem(Epub3FileSet.FONT_ARVO_400_TTF, document,
-		// elementManifest, "font-arvo-400-ttf", false,
-		// Epub3FileSet.FOLDER_CSS, null);
-
-		create_ManifestItem(Epub3FileSet.FONT_ARVO_700_WOFF, document,
-				elementManifest, "font-arvo-700-woff", false,
-				Epub3FileSet.FOLDER_CSS, null);
-		//
-		// create_ManifestItem(Epub3FileSet.FONT_ARVO_700_TTF, document,
-		// elementManifest, "font-arvo-700-ttf", false,
-		// Epub3FileSet.FOLDER_CSS, null);
-
-		create_ManifestItem(Epub3FileSet.CSS_DEFAULT, document,
-				elementManifest, "css-default", false, Epub3FileSet.FOLDER_CSS,
-				null);
-
-		create_ManifestItem(Epub3FileSet.CSS_FONT_AWESOME, document,
-				elementManifest, "css-font-awesome", false,
-				Epub3FileSet.FOLDER_CSS, null);
-		//
-		// create_ManifestItem(Epub3FileSet.CSS_ANIMATE, document,
-		// elementManifest, "css-animate", false,
-		// Epub3FileSet.FOLDER_CSS, null);
-
-		// create_ManifestItem(Epub3FileSet.CSS_JQUERY_UI, document,
-		// elementManifest, "css-jquery-ui", false,
-		// Epub3FileSet.FOLDER_CSS, null);
+			create_ManifestItem(filename, document, elementManifest, id, false,
+					Epub3FileSet.FOLDER_CSS, null);
+		}
 
 		create_ManifestItem(slideShow.LOGO, document, elementManifest, "logo",
 				false, Epub3FileSet.FOLDER_IMG + "/"
@@ -521,11 +405,10 @@ public final class OPF {
 		for (String path : array) {
 
 			String ref = path;
-			if (destFolder != null && !destFolder.equals("."))
-			{
+			if (destFolder != null && !destFolder.equals(".")) {
 				ref = destFolder + "/" + path;
 			}
-			
+
 			if (alreadyAddedManifestItem.contains(ref)) {
 				continue;
 			}

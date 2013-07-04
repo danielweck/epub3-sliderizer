@@ -184,7 +184,7 @@ a#FMOGH > img
 }
 
 
-html:not(.mobile) body:not(.epb3sldrzr-epubReadingSystem) .incremental > *
+body:not(.mobile):not(.epb3sldrzr-epubReadingSystem) .incremental > *
 {
 	-PREFIXED_PROPERTY-transition: opacity 200ms ease-in-out 0ms !important;
 }
@@ -1030,7 +1030,7 @@ _JS_SCRIPT
 
 function setupAnimatedLogo()
 {
-	var html = document.documentElement;
+//	var html = document.documentElement;
 //	var elem = querySelectorZ("#epb3sldrzr-logo");
 	var elem = document.getElementById("epb3sldrzr-logo");
 	elem.classList.add("bounceInLeft");
@@ -1302,7 +1302,7 @@ _JS_SCRIPT
 
 function setupAnimatedLogo()
 {
-	var html = document.documentElement;
+//	var html = document.documentElement;
 //	var elem = querySelectorZ("#epb3sldrzr-logo");
 	var elem = document.getElementById("epb3sldrzr-logo");
 	elem.classList.add("bounceInUp");
@@ -1410,16 +1410,16 @@ ul#bs
 }
 
 
-html.opera ul#bs,
-html.IE9 ul#bs
+body.opera ul#bs,
+body.IE9 ul#bs
 {
 	-PREFIXED_PROPERTY-column-count: auto;
 	
 	vertical-align: top;
 }	
 
-html.opera ul#bs > li,
-html.IE9 ul#bs > li
+body.opera ul#bs > li,
+body.IE9 ul#bs > li
 {
 	/*
 	float: left;

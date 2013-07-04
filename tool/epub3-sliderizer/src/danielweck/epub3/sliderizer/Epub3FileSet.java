@@ -24,61 +24,34 @@ public final class Epub3FileSet {
 
 	final static String FOLDER_CUSTOM = "custom";
 
-	final static String FONT_AWESOME_WOFF = "FontAwesome.woff";
+	final static String[][] FONT_FILENAMES = new String[][] {
+			new String[] { "FontAwesome.woff", "font-awesome-woff" },
+			new String[] { "Inconsolata.woff", "font-inconsolata-woff" },
+			new String[] { "Lato_400.woff", "font-lato-400-woff" },
+			new String[] { "Lato_900.woff", "font-lato-900-woff" },
+			new String[] { "Neuton_400.woff", "font-neuton-400-woff" },
+			new String[] { "Neuton_700.woff", "font-neuton-700-woff" },
+			new String[] { "Arvo_400.woff", "font-arvo-400-woff" },
+			new String[] { "Arvo_700.woff", "font-arvo-700-woff" } };
 
-	// final static String FONT_ENTYPO_WOFF = "Entypo.woff";
-	// final static String FONT_ENTYPO_TTF = "Entypo.ttf";
+	final static String[][] CSS_FILENAMES = new String[][] {
+			new String[] { "FontAwesome.css", "css-font-awesome" },
+			new String[] { "fonts.css", "css-fonts" },
+			new String[] { "struct.css", "css-struct" },
+			new String[] { "incrementals.css", "css-incrementals" },
+			new String[] { "default.css", "css-default" } };
 
-	final static String FONT_NEUTON_400_WOFF = "Neuton_400.woff";
-	// final static String FONT_NEUTON_400_TTF = "Neuton_400.ttf";
-	final static String FONT_NEUTON_700_WOFF = "Neuton_700.woff";
-	// final static String FONT_NEUTON_700_TTF = "Neuton_700.ttf";
-
-	final static String FONT_ARVO_400_WOFF = "Arvo_400.woff";
-	// final static String FONT_ARVO_400_TTF = "Arvo_400.ttf";
-	final static String FONT_ARVO_700_WOFF = "Arvo_700.woff";
-	// final static String FONT_ARVO_700_TTF = "Arvo_700.ttf";
-
-	final static String FONT_LATO_400_WOFF = "Lato_400.woff";
-	// final static String FONT_LATO_400_TTF = "Lato_400.ttf";
-	final static String FONT_LATO_900_WOFF = "Lato_900.woff";
-	// final static String FONT_LATO_900_TTF = "Lato_900.ttf";
-
-	/*
-	 * final static String FONT_ROBOTO_BLACK_WOFF = "Roboto-Black.woff"; final
-	 * static String FONT_ROBOTO_BLACK_TTF = "Roboto-Black.ttf"; final static
-	 * String FONT_ROBOTO_MEDIUM_WOFF = "Roboto-Medium.woff"; final static
-	 * String FONT_ROBOTO_MEDIUM_TTF = "Roboto-Medium.ttf";
-	 */
-
-	final static String FONT_INCONSOLATA_WOFF = "Inconsolata.woff";
-	// final static String FONT_INCONSOLATA_TTF = "Inconsolata.ttf";
-
-	final static String CSS_DEFAULT = "default.css";
-	// final static String CSS_ANIMATE = "animate.css";
-
-	final static String CSS_FONT_AWESOME = "FontAwesome.css";
-
-	// final static String CSS_JQUERY_UI = "jquery-ui-1.10.3.custom.css";
-	// final static String JS_JQUERY_UI = "jquery-ui-1.10.3.custom.min.js";
-
-	final static String JS_DEFAULT = "default.js";
-	final static String JS_SCREENFULL = "screenfull.js";
-	final static String JS_CLASSLIST = "classList.js";
-
-	final static String JS_JQUERY = "jquery-2.0.2.min.js";
-	final static String JS_JQUERY_MOUSEWHEEL = "jquery.mousewheel.js";
-	final static String JS_JQUERY_BLOCKUI = "jquery.blockUI.js";
-
-	final static String JS_HAMMER = "hammer.min.js";
-	final static String JS_HAMMER_FAKEMULTITOUCH = "hammer.fakemultitouch.js";
-	final static String JS_HAMMER_SHOWTOUCHES = "hammer.showtouches.js";
-
-	// final static String JS_SCROLLFIX_NAME = "scrollFix.js";
-	// final static String JS_iSCROLL_NAME = "iscroll-lite-min.js";
-	// final static String JS_FIREBUG_NAME = "firebug-lite.js";
-	// final static String JS_HISTORY_NAME = "history.js";
-	// final static String JS_JSON_NAME = "json2.js";
+	final static String[][] JS_FILENAMES = new String[][] {
+			new String[] { "classList.js", "js-classList" },
+			new String[] { "screenfull.js", "js-screenfull" },
+			new String[] { "hammer.min.js", "js-hammer" },
+			new String[] { "hammer.fakemultitouch.js",
+					"js-hammer-fakemultitouch" },
+			new String[] { "hammer.showtouches.js", "js-hammer-showtouches" },
+			new String[] { "jquery-2.0.2.min.js", "js-jquery" },
+			new String[] { "jquery.mousewheel.js", "js-jquery-mousewheel" },
+			new String[] { "jquery.blockUI.js", "js-jquery-blockUI" },
+			new String[] { "default.js", "js-default" } };
 
 	private final static String CSS_PREFIXED = "_PREFIXED_";
 	private final static String CSS_PREFIXED_PROP = "-PREFIXED_PROPERTY-";
@@ -351,32 +324,13 @@ public final class Epub3FileSet {
 			throw new FileNotFoundException(pathEpubFolder);
 		}
 
-		processCssFile(slideShow, new File(pathEpubFolder,
-				Epub3FileSet.FOLDER_CSS + "/" + Epub3FileSet.CSS_DEFAULT),
-				verbosity);
+		for (int i = 0; i < Epub3FileSet.CSS_FILENAMES.length; i++) {
+			String filename = Epub3FileSet.CSS_FILENAMES[i][0];
+			// String id = Epub3FileSet.CSS_FILENAMES_IDS[i][1];
 
-		/*
-		 * handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS,
-		 * Epub3FileSet.FONT_ENTYPO_WOFF, verbosity);
-		 * 
-		 * handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS,
-		 * Epub3FileSet.FONT_INCONSOLATA_WOFF, verbosity);
-		 * 
-		 * handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS,
-		 * Epub3FileSet.FONT_INCONSOLATA_TTF, verbosity);
-		 * 
-		 * handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS,
-		 * Epub3FileSet.FONT_ROBOTO_BLACK_WOFF, verbosity);
-		 * 
-		 * handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS,
-		 * Epub3FileSet.FONT_ROBOTO_BLACK_TTF, verbosity);
-		 * 
-		 * handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS,
-		 * Epub3FileSet.FONT_ROBOTO_MEDIUM_WOFF, verbosity);
-		 * 
-		 * handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS,
-		 * Epub3FileSet.FONT_ROBOTO_MEDIUM_TTF, verbosity);
-		 */
+			processCssFile(slideShow, new File(pathEpubFolder,
+					Epub3FileSet.FOLDER_CSS + "/" + filename), verbosity);
+		}
 
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.LOGO, verbosity);
