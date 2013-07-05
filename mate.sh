@@ -1,1 +1,1 @@
-mate tool/EPUB3/epub/css/fonts.css tool/EPUB3/epub/css/struct.css tool/EPUB3/epub/css/incrementals.css tool/EPUB3/epub/css/default.css tool/EPUB3/epub/js/default.js _INPUT/data.txt
+mate tool/EPUB3/epub/css/fonts.css tool/EPUB3/epub/css/struct.css tool/EPUB3/epub/css/incrementals.css tool/EPUB3/epub/css/animations.css tool/EPUB3/epub/css/controls.css tool/EPUB3/epub/css/default.css tool/EPUB3/epub/css/navdoc.css tool/EPUB3/epub/js/default.js _INPUT/data.txt

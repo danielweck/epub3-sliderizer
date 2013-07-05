@@ -34,12 +34,16 @@ public final class Epub3FileSet {
 			new String[] { "Arvo_400.woff", "font-arvo-400-woff" },
 			new String[] { "Arvo_700.woff", "font-arvo-700-woff" } };
 
+	final static String NAVDOC_CSS = "navdoc.css";
 	final static String[][] CSS_FILENAMES = new String[][] {
 			new String[] { "FontAwesome.css", "css-font-awesome" },
 			new String[] { "fonts.css", "css-fonts" },
 			new String[] { "struct.css", "css-struct" },
 			new String[] { "incrementals.css", "css-incrementals" },
-			new String[] { "default.css", "css-default" } };
+			new String[] { "animations.css", "css-animations" },
+			new String[] { "controls.css", "css-controls" },
+			new String[] { "default.css", "css-default" },
+			new String[] { NAVDOC_CSS, "css-navdoc" } };
 
 	final static String[][] JS_FILENAMES = new String[][] {
 			new String[] { "classList.js", "js-classList" },

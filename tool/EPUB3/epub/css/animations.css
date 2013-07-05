@@ -1,0 +1,250 @@
+@charset "utf-8";
+
+
+body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body.epb3sldrzr-animated
+{
+	-PREFIXED_PROPERTY-animation-duration: 0.5s;
+	-PREFIXED_PROPERTY-animation-delay: 0s;
+}
+
+body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animated
+{
+	-PREFIXED_PROPERTY-animation-duration: 1s;
+	-PREFIXED_PROPERTY-animation-fill-mode: both;
+}
+
+body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animated
+{
+	/* 
+	HW acceleration
+	
+	-webkit-transform:translate3d(0,0,0);
+	-webkit-transform: translateZ(0);
+	
+	-webkit-transform-style: preserve-3d;
+	*/
+	
+	 /* 
+	 animate.css 
+	-PREFIXED_PROPERTY-backface-visibility: visible !important;
+	 */
+	 
+	-PREFIXED_PROPERTY-backface-visibility: hidden;
+}
+
+body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animated:not(.epb3sldrzr-animateStart),
+body:not(.epb3sldrzr-epubReadingSystem) .animated:not(.epb3sldrzr-animateStart)
+{
+	visibility: hidden;
+}
+
+.epb3sldrzr-animated:not(.epb3sldrzr-animateStart),
+.animated:not(.epb3sldrzr-animateStart)
+{
+	-PREFIXED_PROPERTY-animation-iteration-count: 0;
+}
+
+body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animateStart
+{
+	visibility: visible !important;
+	
+	-PREFIXED_PROPERTY-animation-iteration-count: 1;
+}
+
+/*
+body:not(.epb3sldrzr-epubReadingSystem).opera .epb3sldrzr-animated:not(#epb3sldrzr-body)
+{
+	animation-iteration-count: 1 !important;
+	-o-animation-iteration-count: 1 !important;
+}
+*/
+
+_PREFIXED_@keyframes bounceInDown
+{
+	0% {
+		opacity: 0;
+		-PREFIXED_PROPERTY-transform: translateY(-1000px);
+	}
+	
+	60% {
+		opacity: 1;
+		-PREFIXED_PROPERTY-transform: translateY(30px);
+	}
+	
+	80% {
+		-PREFIXED_PROPERTY-transform: translateY(-10px);
+	}
+	
+	100% {
+		-PREFIXED_PROPERTY-transform: translateY(0);
+	}
+}
+
+.bounceInDown
+{
+	-PREFIXED_PROPERTY-animation-name: bounceInDown;
+}
+
+
+_PREFIXED_@keyframes bounceInUp
+{
+	0% {
+		opacity: 0;
+		-PREFIXED_PROPERTY-transform: translateY(1000px);
+	}
+	
+	60% {
+		opacity: 1;
+		-PREFIXED_PROPERTY-transform: translateY(-30px);
+	}
+	
+	80% {
+		-PREFIXED_PROPERTY-transform: translateY(10px);
+	}
+	
+	100% {
+		-PREFIXED_PROPERTY-transform: translateY(0);
+	}
+}
+
+.bounceInUp
+{
+	-PREFIXED_PROPERTY-animation-name: bounceInUp;
+}
+
+_PREFIXED_@keyframes bounceInRight
+{
+	0% {
+		opacity: 0;
+		-PREFIXED_PROPERTY-transform: translateX(1000px);
+	}
+	
+	60% {
+		opacity: 1;
+		-PREFIXED_PROPERTY-transform: translateX(-30px);
+	}
+	
+	80% {
+		-PREFIXED_PROPERTY-transform: translateX(10px);
+	}
+	
+	100% {
+		-PREFIXED_PROPERTY-transform: translateX(0);
+	}
+}
+
+.bounceInRight
+{
+	-PREFIXED_PROPERTY-animation-name: bounceInRight;
+}
+
+_PREFIXED_@keyframes bounceInLeft
+{
+	0% {
+		opacity: 0;
+		-PREFIXED_PROPERTY-transform: translateX(-1000px);
+	}
+	
+	60% {
+		opacity: 1;
+		-PREFIXED_PROPERTY-transform: translateX(30px);
+	}
+	
+	80% {
+		-PREFIXED_PROPERTY-transform: translateX(-10px);
+	}
+	
+	100% {
+		-PREFIXED_PROPERTY-transform: translateX(0);
+	}
+}
+
+.bounceInLeft
+{
+	-PREFIXED_PROPERTY-animation-name: bounceInLeft;
+}
+
+
+_PREFIXED_@keyframes fadeInLeftBig
+{
+	0% {
+		opacity: 0;
+		-PREFIXED_PROPERTY-transform: translateX(-1000px);
+	}
+	
+	100% {
+		opacity: 1;
+		-PREFIXED_PROPERTY-transform: translateX(0);
+	}
+}
+
+.fadeInLeftBig
+{
+	-PREFIXED_PROPERTY-animation-name: fadeInLeftBig;
+}
+
+_PREFIXED_@keyframes fadeInRightBig
+{
+	0% {
+		opacity: 0;
+		-PREFIXED_PROPERTY-transform: translateX(1000px);
+	}
+	
+	100% {
+		opacity: 1;
+		-PREFIXED_PROPERTY-transform: translateX(0);
+	}
+}
+
+.fadeInRightBig
+{
+	-PREFIXED_PROPERTY-animation-name: fadeInRightBig;
+}
+
+_PREFIXED_@keyframes enterInLeft
+{
+	0% {
+		-PREFIXED_PROPERTY-transform: translateX(-500px);
+	}
+	
+	100% {
+		-PREFIXED_PROPERTY-transform: translateX(0);
+	}
+}
+
+.enterInLeft
+{
+	-PREFIXED_PROPERTY-animation-name: enterInLeft;
+}
+
+_PREFIXED_@keyframes enterInRight
+{
+	0% {
+		-PREFIXED_PROPERTY-transform: translateX(500px);
+	}
+	
+	100% {
+		-PREFIXED_PROPERTY-transform: translateX(0);
+	}
+}
+
+.enterInRight
+{
+	-PREFIXED_PROPERTY-animation-name: enterInRight;
+}
+
+_PREFIXED_@keyframes fadeIn
+{
+	0% {
+		opacity: 0;
+	}
+	
+	100% {
+		opacity: 1;
+	}
+}
+
+.fadeIn
+{
+	-PREFIXED_PROPERTY-animation-name: fadeIn;
+}

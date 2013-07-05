@@ -304,6 +304,13 @@ Epub3Sliderizer.updateFontSize = function(size)
 
 // ----------
 
+Epub3Sliderizer.resetFontSize = function()
+{
+	this.updateFontSize(this.defaultFontSize);
+}
+
+// ----------
+
 Epub3Sliderizer.decreaseFontSize = function()
 {
 	if (this.defaultFontSize)
@@ -447,7 +454,14 @@ Epub3Sliderizer.urlParams = function(includeNewFrom)
 
 	if (includeNewFrom && this.thisFilename != null)
 	{
-		params += ("from=" + encodeURIComponent(this.thisFilename) + "&");
+		var noext = this.thisFilename;
+		var i = noext.indexOf('.');
+		if (i >= 0)
+		{
+			noext = noext.substring(0, i);
+		}
+		
+		params += ("from=" + encodeURIComponent(noext) + "&");
 	}
 	
 	return params;
@@ -2233,7 +2247,7 @@ Epub3Sliderizer.initSlideTransition = function()
 
 	var animate = !this.opera; //&& !this.IE;
 	if (animate
-	//	&& !this.mobile
+		&& !this.mobile
 	)
 	{
 		if (!this.reverse)
@@ -2822,6 +2836,19 @@ function readyFirst()
 	else
 	{
 		controls.insertBefore(aa, controls.children[0]);
+	}
+
+	var az = document.createElement('a');
+	az.id = "epb3sldrzr-link-textsize-reset";
+	az.title = "Reset font size";
+	az.href = "javascript:Epub3Sliderizer.resetFontSize();";
+	if (controls.children.length == 0)
+	{
+		controls.appendChild(az);
+	}
+	else
+	{
+		controls.insertBefore(az, controls.children[0]);
 	}
 
 	var aaa = document.createElement('a');

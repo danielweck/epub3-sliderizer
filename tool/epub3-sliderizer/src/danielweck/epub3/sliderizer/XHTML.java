@@ -213,10 +213,13 @@ public final class XHTML {
 
 			for (int k = 0; k < Epub3FileSet.CSS_FILENAMES.length; k++) {
 				String filename = Epub3FileSet.CSS_FILENAMES[k][0];
-				//String id = Epub3FileSet.CSS_FILENAMES[k][1];
+				// String id = Epub3FileSet.CSS_FILENAMES[k][1];
 
-				create_HeadLinks(filename, document, elementHead, "stylesheet",
-						"text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
+				if (!filename.equals(Epub3FileSet.NAVDOC_CSS) || slide == null) {
+					create_HeadLinks(filename, document, elementHead,
+							"stylesheet", "text/css", PATH_PREFIX
+									+ Epub3FileSet.FOLDER_CSS);
+				}
 			}
 
 			// Element elementStyle = document.createElement("style");
@@ -249,16 +252,19 @@ public final class XHTML {
 
 			for (int k = 0; k < Epub3FileSet.CSS_FILENAMES.length; k++) {
 				String filename = Epub3FileSet.CSS_FILENAMES[k][0];
-				//String id = Epub3FileSet.CSS_FILENAMES[k][1];
-
-				create_HeadLinks(filename, document, elementHead, "stylesheet",
-						"text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
+				// String id = Epub3FileSet.CSS_FILENAMES[k][1];
+				
+				if (!filename.equals(Epub3FileSet.NAVDOC_CSS) || slide == null) {
+					create_HeadLinks(filename, document, elementHead,
+							"stylesheet", "text/css", PATH_PREFIX
+									+ Epub3FileSet.FOLDER_CSS);
+				}
 			}
 		}
 
 		for (int k = 0; k < Epub3FileSet.JS_FILENAMES.length; k++) {
 			String filename = Epub3FileSet.JS_FILENAMES[k][0];
-			//String id = Epub3FileSet.JS_FILENAMES[k][1];
+			// String id = Epub3FileSet.JS_FILENAMES[k][1];
 
 			create_HeadScripts(filename, document, elementHead, null, // "text/javascript",
 					PATH_PREFIX + Epub3FileSet.FOLDER_JS);
@@ -365,7 +371,7 @@ public final class XHTML {
 			elementBody = document.createElement("div");
 			elementBody.setAttribute("id", "epb3sldrzr-body");
 			elementBody_.appendChild(elementBody);
-			//elementBody_.appendChild(document.createTextNode("TEST"));
+			// elementBody_.appendChild(document.createTextNode("TEST"));
 		}
 
 		Element elementDiv = null;
@@ -384,7 +390,7 @@ public final class XHTML {
 					+ Epub3FileSet.FOLDER_CUSTOM + '/' + slideShow.LOGO;
 
 			Element elementImg = document.createElement("img");
-			elementDiv.appendChild(elementImg);//elementBody
+			elementDiv.appendChild(elementImg);// elementBody
 			elementImg.setAttribute("id", "epb3sldrzr-logo");
 			elementImg.setAttribute("alt", "");
 			elementImg.setAttribute("src", relativeDestinationPath);

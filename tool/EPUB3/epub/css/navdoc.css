@@ -1,0 +1,80 @@
+@charset "utf-8";
+
+/* 
+
+div#epb3sldrzr-root
+{
+	overflow: visible !important;
+	overflow-x: scroll !important;
+	overflow-y: visible !important;
+}
+
+min-width: 110%;
+
+-PREFIXED_PROPERTY-column-width: 15em;
+
+
+	white-space: no-wrap;
+
+*/
+
+ol
+{
+	margin: 0;
+	padding: 0;
+	
+	-PREFIXED_PROPERTY-column-count: 2;
+	-PREFIXED_PROPERTY-column-gap: 1em;
+	-PREFIXED_PROPERTY-column-fill: auto;
+	-PREFIXED_PROPERTY-column-rule: 0.12em dotted #eeeeee;
+}
+
+ol > li a:link,
+ol > li a:hover,
+ol > li a:visited,
+ol > li a:active
+{
+	border-bottom: none;
+}
+	
+ol > li
+{
+	font-weight: 900;
+	
+	padding-bottom: 0.3em;
+}
+
+ol > li:before
+{
+	color: #ffffff;
+	background-color: #8AC007;
+}
+
+ol > li:hover:before
+{
+	background-color: #FF0033;
+}
+
+
+body.opera ol,
+body.IE9 ol
+{
+	-PREFIXED_PROPERTY-column-count: auto;
+	vertical-align: top;
+}	
+
+body.opera ol > li,
+body.IE9 ol > li
+{
+	/*
+	float: left;
+	display: inline;
+	*/
+
+	white-space: nowrap;
+	display: inline-block;
+	
+	width:50%;
+	vertical-align: top;
+}
+
