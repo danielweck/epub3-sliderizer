@@ -163,14 +163,9 @@ a#epb3sldrzr-link-reflow:hover
 	text-decoration:none;
 }
 
-
-body.mobile a#epb3sldrzr-link-noteback,
-body.mobile a#epb3sldrzr-link-notesref,
 body.mobile a#epb3sldrzr-link-previous,
 body.mobile a#epb3sldrzr-link-next,
 body.mobile a#epb3sldrzr-link-toc,
-body.mobile a#epb3sldrzr-link-epub,
-body.mobile a#epb3sldrzr-link-epubReadingSystem,
 body.mobile a#epb3sldrzr-link-textsize-minus,
 body.mobile a#epb3sldrzr-link-textsize-reset,
 body.mobile a#epb3sldrzr-link-textsize-plus,
