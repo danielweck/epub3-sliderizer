@@ -8,6 +8,52 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
+
+function getUrlQueryParam(name)
+{
+	var urlQueryParams = window.urlQueryParams
+	|| (function()
+	{
+//		alert("window.location.search: " + window.location.search);
+	
+		var urlQueryParams_ = {};
+		
+		var regexp = /\??([^=^&^\?]+)(?:=([^&]*))?&?/gi;
+		
+		var match;
+		while (match = regexp.exec(window.location.search))
+		{
+//			alert(typeof match + " // " + match.length + " /// [" + match + "]");
+			
+			if (!match || match.length < 3)
+			{
+				break;
+			}
+			
+			urlQueryParams_[decodeURIComponent(match[1])] = typeof match[2] == "undefined" || match[2] === "" ? null : decodeURIComponent(match[2]);
+		}
+		
+//		console.log(urlQueryParams_);
+		
+		return window.urlQueryParams = urlQueryParams_;
+	})();
+	
+	if (typeof urlQueryParams[name] != "undefined")
+	{
+		var value = urlQueryParams[name];
+	
+//		alert(name + " == " + urlQueryParams[name] + " // " + value);
+		
+		return value == null ? "" : value;
+	}
+	else
+	{
+		return null;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 // https://github.com/documentcloud/underscore/blob/master/underscore.js
 //
 // Returns a function, that, as long as it continues to be invoked, will not
@@ -211,6 +257,7 @@ function setCookie(name, value)
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 var Epub3Sliderizer = {
+	onResizeThrottled: null,
 	epubReadingSystem: null,
 	readium: false,
 	kobo: false, //DELAYED !! typeof window.KOBO_TAG != 'undefined', //typeof window.nextKoboSpan != 'undefined' || 
@@ -220,13 +267,15 @@ var Epub3Sliderizer = {
 	staticMode: false,
 	authorMode: false,
 	basicMode: false,
+	epubMode: false,
 	prev: "",
 	next: "",
 	toc: "../nav.xhtml",
 	epub: "",
 	reverse: false,
 	thisFilename: null,
-	thisHash: null,
+	from: null,
+	hash: null,
 	incrementals: null,
 	increment: -1,
 	bodyRoot: null,
@@ -375,33 +424,30 @@ Epub3Sliderizer.isEpubReadingSystem = function()
 
 // ----------
 
-Epub3Sliderizer.urlParams = function(hash)
+Epub3Sliderizer.urlParams = function(includeNewFrom)
 {
 	var params = "?";
 	
-	if (window.location.search)
+	if (this.staticMode)
 	{
-		if (window.location.search.indexOf("static") >= 0)
-		{
-			params += "static&"
-		}
-		if (window.location.search.indexOf("author") >= 0)
-		{
-			params += "author&"
-		}
-		if (window.location.search.indexOf("basic") >= 0)
-		{
-			params += "basic&"
-		}
-		if (window.location.search.indexOf("epub") >= 0)
-		{
-			params += "epub&"
-		}
+		params += "static&"
+	}
+	if (this.authorMode)
+	{
+		params += "author&"
+	}
+	if (this.basicMode)
+	{
+		params += "basic&"
+	}
+	if (this.epubMode)
+	{
+		params += "epub&"
 	}
 
-	if (hash && this.thisFilename != null)
+	if (includeNewFrom && this.thisFilename != null)
 	{
-		params += ("#" + this.thisFilename);
+		params += ("from=" + encodeURIComponent(this.thisFilename) + "&");
 	}
 	
 	return params;
@@ -416,7 +462,7 @@ Epub3Sliderizer.reloadSlide = function(mode)
 		return;
 	}
 	
-	window.location = this.thisFilename + "?"+mode;
+	window.location = this.thisFilename + "?" + mode + "&" + (this.from != null ? "from=" + encodeURIComponent(this.from) + "&" : "");
 }
 
 // ----------
@@ -550,6 +596,20 @@ Epub3Sliderizer.pan = function(x, y)
 
 // ----------
 
+Epub3Sliderizer.resetTransforms = function()
+{
+	if (this.transforms)
+	{
+		this.transforms.length = 0;
+	}
+	else
+	{
+		this.transforms = new Array();
+	}
+}
+
+// ----------
+
 Epub3Sliderizer.toggleZoom = function(x, y)
 {
 	this.transition(true, 500);
@@ -562,7 +622,7 @@ Epub3Sliderizer.toggleZoom = function(x, y)
 	{
 		this.totalZoom = 2;
 
-		this.transforms = new Array();
+		this.resetTransforms();
 		this.transforms.push({
 			rotation: 0,
 			zoom: this.totalZoom,
@@ -622,7 +682,7 @@ Epub3Sliderizer.zoomTo = function(element)
 	
 	this.transition(true, 500);
 
-	this.transforms = new Array();
+	this.resetTransforms();
 	this.transforms.push({
 		rotation: rotation,
 		zoom: zoom,
@@ -1038,7 +1098,8 @@ Epub3Sliderizer.initTouch = function()
 //					this.bodyRoot.style.opacity = this.totalZoom;
 				}
 				
-				this.onResize();
+				this.onResizeThrottled();
+//				this.onResize();
 			}
 		}
 	}
@@ -1187,7 +1248,8 @@ Epub3Sliderizer.initTouch = function()
 				transY: this.totalZoom == 1 ? 0 : hammerEvent.gesture.center.pageY - dragYStart
 			});
 
-			this.onResize();
+			this.onResizeThrottled();
+			//this.onResize();
 		}
 	}
 	
@@ -1263,7 +1325,7 @@ Epub3Sliderizer.initTouch = function()
 	);
 	
 	this.hammer.on("drag",
-		throttle(onDrag.bind(this), 150, false)
+		onDrag.bind(this)
 	);
 	
 	this.hammer.on("transformstart",
@@ -1275,7 +1337,7 @@ Epub3Sliderizer.initTouch = function()
 	);
 	
 	this.hammer.on("transform",
-		throttle(onTransform.bind(this), 150, false)
+		onTransform.bind(this)
 	);
 	
 	this.hammer.on("swipeleft",
@@ -1444,7 +1506,7 @@ Epub3Sliderizer.resetOnResizeTransform = function()
 	}
 
 	this.totalZoom = 1;
-	this.transforms = new Array();
+	this.resetTransforms();
 	
 	this.bodyRoot.style.MozTransformOrigin = null;
 	this.bodyRoot.style.WebkitTransformOrigin = null;
@@ -1463,9 +1525,10 @@ Epub3Sliderizer.resetOnResizeTransform = function()
 Epub3Sliderizer.resetResize = function()
 {
 	this.totalZoom = 1;
-	this.transforms = new Array();
+	this.resetTransforms();
 	
-	this.onResize();
+	this.onResizeThrottled();
+	//this.onResize();
 }
 
 // ----------
@@ -1714,7 +1777,7 @@ Epub3Sliderizer.initReverse = function()
 	}
 
 	var thisRank = getRank(this.thisFilename);
-	var prevRank = getRank(this.thisHash);
+	var prevRank = this.from == null ? 0 : getRank(this.from);
 	
 	/*
 	console.log("RANK this: " + thisRank);
@@ -2248,17 +2311,18 @@ Epub3Sliderizer.initIncrementals = function()
 Epub3Sliderizer.initLocation = function()
 {
 	if (!window.location || typeof window.location == "undefined"
-	|| !window.location.href || typeof window.location.href == "undefined"
-	|| typeof window.location.href == "")
+	|| !window.location.href || typeof window.location.href == "undefined")
 	{
 		return;
 	}
 
 	console.log("window.location: " + window.location);
 	console.log("window.location.href: " + window.location.href);
+	console.log("window.location.search: " + window.location.search);
 
 	var i = window.location.href.lastIndexOf('/');
 
+	var from = null;
 	var hash = null;
 	var thisFilename = null;
 
@@ -2272,7 +2336,8 @@ Epub3Sliderizer.initLocation = function()
 	if (thisFilename == null)
 	{
 		this.thisFilename = thisFilename;
-		this.thisHash = hash;
+		this.from = from;
+		this.hash = hash;
 		return;
 	}
 
@@ -2281,6 +2346,14 @@ Epub3Sliderizer.initLocation = function()
 	{
 		i = 9999;
 	}
+	else
+	{
+		if (i < thisFilename.length-1)
+		{
+			hash = thisFilename.substring(i+1, thisFilename.length);
+		}
+	}
+	
 	var ii = thisFilename.indexOf('?');
 	if (ii < 0)
 	{
@@ -2297,18 +2370,26 @@ Epub3Sliderizer.initLocation = function()
 
 	if (i >= 0 && i < 9999)
 	{
-		if (i < thisFilename.length-1)
-		{
-			hash = thisFilename.substring(i+1, thisFilename.length);
-		}
 		thisFilename = thisFilename.substring(0, i);
 	}
 
 	this.thisFilename = thisFilename;
-	this.thisHash = hash;
+	
+	this.hash = hash;
+	if (this.hash != null && this.hash === "")
+	{
+		this.hash = null;
+	}
+	
+	this.from = getUrlQueryParam("from");
+	if (this.from != null && this.from === "")
+	{
+		this.from = null;
+	}
 
-	console.log("THIS: " + thisFilename);
-	console.log("HASH: " + hash);
+	console.log("THIS: " + this.thisFilename);
+	console.log("FROM: " + this.from);
+	console.log("HASH: " + this.hash);
 }
 
 // ----------
@@ -2327,9 +2408,8 @@ Epub3Sliderizer.init = function()
 		this.epubReadingSystem = navigator.epubReadingSystem;
 	}
 	else
-	{
-		if (!this.basicMode && !this.staticMode && !this.authorMode
-			&& window.location.search && window.location.search.indexOf("epub") >= 0)
+	{	
+		if (!this.basicMode && !this.staticMode && !this.authorMode && this.epubMode)
 		//if (window.location.href.indexOf("static") >= 0)
 		{
 			fakeEpubReadingSystem = true;
@@ -2508,7 +2588,7 @@ Epub3Sliderizer.init = function()
 		}
 		else
 		{
-			window.onresize = throttle(this.resetResize.bind(this), 150, false);
+			window.onresize = this.resetResize.bind(this);
 			this.resetResize();
 		}
 
@@ -2722,6 +2802,8 @@ function readyFirst()
 	*/
 	
 	
+	Epub3Sliderizer.onResizeThrottled = throttle(Epub3Sliderizer.onResize, 100, false).bind(Epub3Sliderizer);
+	
 	
 	Epub3Sliderizer.bodyRoot = document.getElementById("epb3sldrzr-body");
 	
@@ -2834,23 +2916,25 @@ function readyFirst()
 	{
 		document.body.classList.add("mobile");
 	}
-
-	if (window.location.search && window.location.search.indexOf("static") >= 0)
-	//if (window.location.href.indexOf("static") >= 0)
+	
+	if (getUrlQueryParam("epub") != null)
+	{
+		Epub3Sliderizer.epubMode = true;
+	}
+	
+	if (getUrlQueryParam("static") != null)
 	{
 		Epub3Sliderizer.staticMode = true;
 		document.body.classList.add("static");
 	}
-	else if (window.location.search && window.location.search.indexOf("author") >= 0)
-	//if (window.location.href.indexOf("static") >= 0)
+	else if (getUrlQueryParam("author") != null)
 	{
 		Epub3Sliderizer.authorMode = true;
 		document.body.classList.add("author");
 	}
 	else if (Epub3Sliderizer.android ||
-		(window.location.search && window.location.search.indexOf("basic") >= 0)
+		(getUrlQueryParam("basic") != null)
 	)
-	//if (window.location.href.indexOf("static") >= 0)
 	{
 		Epub3Sliderizer.basicMode = true;
 		document.body.classList.add("basic");
