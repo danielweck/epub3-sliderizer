@@ -9,6 +9,126 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+function getUrlQueryParam(name)
+{
+	var urlQueryParams = window.urlQueryParams
+	|| (function()
+	{
+//		alert("window.location.search: " + window.location.search);
+	
+		var urlQueryParams_ = {};
+		
+		var regexp = /\??([^=^&^\?]+)(?:=([^&]*))?&?/gi;
+		
+		var match;
+		while (match = regexp.exec(window.location.search))
+		{
+//			alert(typeof match + " // " + match.length + " /// [" + match + "]");
+			
+			if (!match || match.length < 3)
+			{
+				break;
+			}
+			
+			urlQueryParams_[decodeURIComponent(match[1])] = typeof match[2] == "undefined" || match[2] === "" ? null : decodeURIComponent(match[2]);
+		}
+		
+//		console.log(urlQueryParams_);
+		
+		return window.urlQueryParams = urlQueryParams_;
+	})();
+	
+	if (typeof urlQueryParams[name] != "undefined")
+	{
+		var value = urlQueryParams[name];
+	
+//		alert(name + " == " + urlQueryParams[name] + " // " + value);
+		
+		return value == null ? "" : value;
+	}
+	else
+	{
+		return null;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+// https://github.com/documentcloud/underscore/blob/master/underscore.js
+//
+// Returns a function, that, as long as it continues to be invoked, will not
+// be triggered. The function will be called after it stops being called for
+// N milliseconds. If `immediate` is passed, trigger the function on the
+// leading edge, instead of the trailing.
+function debounce(func, wait, immediate)
+{
+	var result;
+	var timeout = null;
+	
+	return function()
+	{
+		var context = this, args = arguments;
+		var later = function()
+		{
+			timeout = null;
+			if (!immediate)
+			{
+				result = func.apply(context, args);
+			}
+		};
+		
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow)
+		{
+			result = func.apply(context, args);
+		}
+		return result;
+	};
+}
+//
+// Returns a function, that, when invoked, will only be triggered at most once
+// during a given window of time.
+function throttle(func, wait, immediate)
+{
+	var context, args, result;
+	var timeout = null;
+	var previous = 0;
+	var later = function()
+	{
+		previous = new Date;
+		timeout = null;
+		result = func.apply(context, args);
+	};
+    
+	return function()
+	{
+		var now = new Date;
+		if (!previous && immediate === false) previous = now;
+		var remaining = wait - (now - previous);
+		context = this;
+		args = arguments;
+		
+		if (remaining <= 0)
+		{
+			clearTimeout(timeout);
+			timeout = null;
+			previous = now;
+			result = func.apply(context, args);
+		}
+		else if (!timeout)
+		{
+			timeout = setTimeout(later, remaining);
+		}
+		
+		return result;
+	};
+}
+  
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
 if (!Function.prototype.bind)
 {
 	Function.prototype.bind = function (oThis)
@@ -137,6 +257,7 @@ function setCookie(name, value)
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 var Epub3Sliderizer = {
+	onResizeThrottled: null,
 	epubReadingSystem: null,
 	readium: false,
 	kobo: false, //DELAYED !! typeof window.KOBO_TAG != 'undefined', //typeof window.nextKoboSpan != 'undefined' || 
@@ -146,13 +267,15 @@ var Epub3Sliderizer = {
 	staticMode: false,
 	authorMode: false,
 	basicMode: false,
+	epubMode: false,
 	prev: "",
 	next: "",
 	toc: "../nav.xhtml",
 	epub: "",
 	reverse: false,
 	thisFilename: null,
-	thisHash: null,
+	from: null,
+	hash: null,
 	incrementals: null,
 	increment: -1,
 	bodyRoot: null,
@@ -177,6 +300,13 @@ Epub3Sliderizer.updateFontSize = function(size)
 {
 	document.body.style.fontSize = Math.round(size) + "px";
     setCookie(this.cookieFontSize, document.body.style.fontSize);
+}
+
+// ----------
+
+Epub3Sliderizer.resetFontSize = function()
+{
+	this.updateFontSize(this.defaultFontSize);
 }
 
 // ----------
@@ -301,33 +431,37 @@ Epub3Sliderizer.isEpubReadingSystem = function()
 
 // ----------
 
-Epub3Sliderizer.urlParams = function(hash)
+Epub3Sliderizer.urlParams = function(includeNewFrom)
 {
 	var params = "?";
 	
-	if (window.location.search)
+	if (this.staticMode)
 	{
-		if (window.location.search.indexOf("static") >= 0)
-		{
-			params += "static&"
-		}
-		if (window.location.search.indexOf("author") >= 0)
-		{
-			params += "author&"
-		}
-		if (window.location.search.indexOf("basic") >= 0)
-		{
-			params += "basic&"
-		}
-		if (window.location.search.indexOf("epub") >= 0)
-		{
-			params += "epub&"
-		}
+		params += "static&"
+	}
+	if (this.authorMode)
+	{
+		params += "author&"
+	}
+	if (this.basicMode)
+	{
+		params += "basic&"
+	}
+	if (this.epubMode)
+	{
+		params += "epub&"
 	}
 
-	if (hash && this.thisFilename != null)
+	if (includeNewFrom && this.thisFilename != null)
 	{
-		params += ("#" + this.thisFilename);
+		var noext = this.thisFilename;
+		var i = noext.indexOf('.');
+		if (i >= 0)
+		{
+			noext = noext.substring(0, i);
+		}
+		
+		params += ("from=" + encodeURIComponent(noext) + "&");
 	}
 	
 	return params;
@@ -342,7 +476,7 @@ Epub3Sliderizer.reloadSlide = function(mode)
 		return;
 	}
 	
-	window.location = this.thisFilename + "?"+mode;
+	window.location = this.thisFilename + "?" + mode + "&" + (this.from != null ? "from=" + encodeURIComponent(this.from) + "&" : "");
 }
 
 // ----------
@@ -426,31 +560,30 @@ Epub3Sliderizer.gotoNext = function()
 
 // ----------
 
-Epub3Sliderizer.transition = function(on)
+Epub3Sliderizer.transition = function(on, milliseconds)
 {
-	var milliseconds = 500;
-	
 	if (on)
 	{
 		if (!this.basicMode && !this.opera)
 		{
 			var transition = "all "+milliseconds+"ms ease-in-out";
-			document.body.style.MozTransition = transition;
-			document.body.style.WebkitTransition = transition;
-			document.body.style.OTransition = transition;
-			document.body.style.msTransition = transition;
-			document.body.style.transition = transition;
+			this.bodyRoot.style.MozTransition = transition;
+			this.bodyRoot.style.WebkitTransition = transition;
+			this.bodyRoot.style.OTransition = transition;
+			this.bodyRoot.style.msTransition = transition;
+			this.bodyRoot.style.transition = transition;
 		}
 	}
 	else
 	{
+		var that = this;
 		setTimeout(function()
 		{
-			document.body.style.MozTransition = null;
-			document.body.style.WebkitTransition = null;
-			document.body.style.OTransition = null;
-			document.body.style.msTransition = null;
-			document.body.style.transition = null;
+			that.bodyRoot.style.MozTransition = null;
+			that.bodyRoot.style.WebkitTransition = null;
+			that.bodyRoot.style.OTransition = null;
+			that.bodyRoot.style.msTransition = null;
+			that.bodyRoot.style.transition = null;
 		}, milliseconds + 10);
 	}
 }
@@ -459,7 +592,7 @@ Epub3Sliderizer.transition = function(on)
 
 Epub3Sliderizer.pan = function(x, y)
 {
-	this.transition(true);
+	this.transition(true, 500);
 	
 	this.transforms.push({
 		rotation: 0,
@@ -472,14 +605,28 @@ Epub3Sliderizer.pan = function(x, y)
 
 	this.onResize();
 
-	this.transition(false);
+	this.transition(false, 500);
+}
+
+// ----------
+
+Epub3Sliderizer.resetTransforms = function()
+{
+	if (this.transforms)
+	{
+		this.transforms.length = 0;
+	}
+	else
+	{
+		this.transforms = new Array();
+	}
 }
 
 // ----------
 
 Epub3Sliderizer.toggleZoom = function(x, y)
 {
-	this.transition(true);
+	this.transition(true, 500);
 
 	if (this.totalZoom != 1)
 	{
@@ -489,7 +636,7 @@ Epub3Sliderizer.toggleZoom = function(x, y)
 	{
 		this.totalZoom = 2;
 
-		this.transforms = new Array();
+		this.resetTransforms();
 		this.transforms.push({
 			rotation: 0,
 			zoom: this.totalZoom,
@@ -502,7 +649,7 @@ Epub3Sliderizer.toggleZoom = function(x, y)
 		this.onResize();
 	}
 
-	this.transition(false);
+	this.transition(false, 500);
 }
 
 
@@ -512,9 +659,11 @@ Epub3Sliderizer.zoomTo = function(element)
 {
 	if (this.totalZoom != 1)
 	{
-		this.transition(true);
+		this.transition(true, 500);
+		
 		this.resetResize();
-		this.transition(false);
+		
+		this.transition(false, 500);
 		return;
 	}
 	
@@ -529,11 +678,11 @@ Epub3Sliderizer.zoomTo = function(element)
 	element.style.border = "4px solid #ff00ff";
 	
 	var rect = element.getBoundingClientRect();
-	var rectX = rect.left + document.body.scrollLeft;
-	var rectY = rect.top + document.body.scrollTop;
+	var rectX = rect.left + this.bodyRoot.scrollLeft;
+	var rectY = rect.top + this.bodyRoot.scrollTop;
 	var rectFit = this.getRectFit(rect.width, rect.height, false);
 	
-	var rectBody = document.body.getBoundingClientRect();
+	var rectBody = this.bodyRoot.getBoundingClientRect();
 //	var bodyFit = this.getElementFit(rectBody.width, rectBody.height, true);
 
 	var rotation = 0;
@@ -545,9 +694,9 @@ Epub3Sliderizer.zoomTo = function(element)
 
 	this.totalZoom = zoom;
 	
-	this.transition(true);
+	this.transition(true, 500);
 
-	this.transforms = new Array();
+	this.resetTransforms();
 	this.transforms.push({
 		rotation: rotation,
 		zoom: zoom,
@@ -559,7 +708,7 @@ Epub3Sliderizer.zoomTo = function(element)
 
 	this.onResize();
 
-	this.transition(false);
+	this.transition(false, 500);
 	
 	setTimeout(function()
 	{
@@ -585,7 +734,7 @@ Epub3Sliderizer.toggleReflow = function()
 	if (this.reflow)
 	{	
 		this.reflow = false;
-		document.documentElement.classList.remove("reflow");
+		document.body.classList.remove("reflow");
 
 		var viewport = querySelectorZ("head > meta[name=viewport]");
 		if (typeof viewport != 'undefined')
@@ -599,7 +748,7 @@ Epub3Sliderizer.toggleReflow = function()
 	else
 	{
 		this.reflow = true;
-		document.documentElement.classList.add("reflow");
+		document.body.classList.add("reflow");
 		
 		this.resetOnResizeTransform();
 
@@ -660,8 +809,8 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 	if (!this.reflow && keyboardEvent.keyCode == 90) // Z
 	{
 		keyboardEvent.preventDefault();
-		var rectBody = document.body.getBoundingClientRect();
-		this.toggleZoom(rectBody.left,rectBody.top );
+		var rectBody = this.bodyRoot.getBoundingClientRect();
+		this.toggleZoom(rectBody.left,rectBody.top);
 	}
 	else if (!this.reflow && keyboardEvent.keyCode == 27) // ESC
 	{
@@ -904,7 +1053,7 @@ Epub3Sliderizer.initTouch = function()
 	
 	function resetTransform()
 	{
-		document.body.style.opacity = "1";
+		that.bodyRoot.style.opacity = "1";
 		
 		var b = that.totalZoom <= 1 || that.totalZoom >= 18;
 		
@@ -960,10 +1109,11 @@ Epub3Sliderizer.initTouch = function()
 
 				if (this.totalZoom < 1)
 				{
-//					document.body.style.opacity = this.totalZoom;
+//					this.bodyRoot.style.opacity = this.totalZoom;
 				}
 				
-				this.onResize();
+				this.onResizeThrottled();
+//				this.onResize();
 			}
 		}
 	}
@@ -982,11 +1132,11 @@ Epub3Sliderizer.initTouch = function()
 
 		if (this.totalZoom <= 1)
 		{
-			this.transition(true);
+			this.transition(true, 500);
 		
 			resetTransform();
 			
-			this.transition(false);
+			this.transition(false, 500);
 		}
 	}
 	
@@ -1050,11 +1200,11 @@ Epub3Sliderizer.initTouch = function()
 		{
 			setTimeout(function()
 			{
-				that.transition(true);
+				that.transition(true, 500);
 		
 				resetTransform();
 			
-				that.transition(false);
+				that.transition(false, 500);
 			}, 100);
 		}
 	}
@@ -1090,9 +1240,9 @@ Epub3Sliderizer.initTouch = function()
 					return;
 				}
 				
-				opacity = 1 - (off / window.innerWidth); //document.body.clientWidth
+				opacity = 1 - (off / window.innerWidth); //this.bodyRoot.clientWidth
 				
-//				document.body.style.opacity = opacity;
+//				this.bodyRoot.style.opacity = opacity;
 			}
 			
 			//$("h1#epb3sldrzr-title").html(this.totalZoom + " - " + opacity);
@@ -1112,7 +1262,8 @@ Epub3Sliderizer.initTouch = function()
 				transY: this.totalZoom == 1 ? 0 : hammerEvent.gesture.center.pageY - dragYStart
 			});
 
-			this.onResize();
+			this.onResizeThrottled();
+			//this.onResize();
 		}
 	}
 	
@@ -1233,9 +1384,11 @@ Epub3Sliderizer.initTouch = function()
 
 			if (this.totalZoom != 1)
 			{
-				this.transition(true);
+				this.transition(true, 500);
+				
 				this.resetResize();
-				this.transition(false);
+				
+				this.transition(false, 500);
 				//this.toggleZoom(hammerEvent.gesture.center.pageX, hammerEvent.gesture.center.pageY);
 			}
 			else
@@ -1367,28 +1520,29 @@ Epub3Sliderizer.resetOnResizeTransform = function()
 	}
 
 	this.totalZoom = 1;
-	this.transforms = new Array();
+	this.resetTransforms();
 	
-	document.body.style.MozTransformOrigin = null;
-	document.body.style.WebkitTransformOrigin = null;
-	document.body.style.OTransformOrigin = null;
-	document.body.style.msTransformOrigin = null;
-	document.body.style.transformOrigin = null;
+	this.bodyRoot.style.MozTransformOrigin = null;
+	this.bodyRoot.style.WebkitTransformOrigin = null;
+	this.bodyRoot.style.OTransformOrigin = null;
+	this.bodyRoot.style.msTransformOrigin = null;
+	this.bodyRoot.style.transformOrigin = null;
 
-	document.body.style.MozTransform = null;
-	document.body.style.WebkitTransform = null;
-	document.body.style.OTransform = null;
-	document.body.style.msTransform = null;
-	document.body.style.transform = null;
+	this.bodyRoot.style.MozTransform = null;
+	this.bodyRoot.style.WebkitTransform = null;
+	this.bodyRoot.style.OTransform = null;
+	this.bodyRoot.style.msTransform = null;
+	this.bodyRoot.style.transform = null;
 }
 
 
 Epub3Sliderizer.resetResize = function()
 {
 	this.totalZoom = 1;
-	this.transforms = new Array();
+	this.resetTransforms();
 	
-	this.onResize();
+	this.onResizeThrottled();
+	//this.onResize();
 }
 
 // ----------
@@ -1442,30 +1596,15 @@ Epub3Sliderizer.onResize = function()
 		return;
 	}
 
-	/*
-	console.log("*** 1");	
-	console.log(document.body.clientWidth);
-	console.log(document.body.clientHeight);
-	console.log("--- 2");	
-	console.log(window.innerWidth);
-	console.log(window.innerHeight);
-	console.log("--- 3");
-	*/
-
-	/*
-	console.log("window.innerWidth: "  + window.innerWidth);
-	console.log("window.innerHeight: "  + window.innerHeight);
-	*/
-	
 	var transformOrigin = "0px 0px";
 	
-	document.body.style.MozTransformOrigin = transformOrigin;
-	document.body.style.WebkitTransformOrigin = transformOrigin;
-	document.body.style.OTransformOrigin = transformOrigin;
-	document.body.style.msTransformOrigin = transformOrigin;
-	document.body.style.transformOrigin = transformOrigin;
+	this.bodyRoot.style.MozTransformOrigin = transformOrigin;
+	this.bodyRoot.style.WebkitTransformOrigin = transformOrigin;
+	this.bodyRoot.style.OTransformOrigin = transformOrigin;
+	this.bodyRoot.style.msTransformOrigin = transformOrigin;
+	this.bodyRoot.style.transformOrigin = transformOrigin;
 	
-	var bodyFit = this.getElementFit(document.body, this.fitWidth);
+	var bodyFit = this.getElementFit(this.bodyRoot, this.fitWidth);
 	var ratio = bodyFit.ratio;
 	var offsetX = bodyFit.offsetX;
 	var offsetY = bodyFit.offsetY;
@@ -1479,44 +1618,38 @@ Epub3Sliderizer.onResize = function()
 	for (var i = this.transforms.length-1; i >= 0; i--)
 	{
 		var transform = this.transforms[i];
-
-		transformCSS += " translate"+(is3D?"3d":"")+"(" + transform.left + "px," + transform.top + "px"+(is3D?", 0":"")+") ";
 		
 		if (transform.rotation != 0)
 		{
-			transformCSS += " rotate"+(is3D?"3d":"")+"(" + (is3D? "0,0,1,":"") + transform.rotation + "deg) ";
-		}
-
-		transformCSS += " translate"+(is3D?"3d":"")+"(" + -transform.left + "px," + -transform.top + "px"+(is3D?", 0":"")+") ";
+			transformCSS += " translate"+(is3D?"3d":"")+"(" + transform.left + "px," + transform.top + "px"+(is3D?", 0":"")+") ";
 		
-
+			transformCSS += " rotate"+(is3D?"3d":"")+"(" + (is3D? "0,0,1,":"") + transform.rotation + "deg) ";
+			
+			transformCSS += " translate"+(is3D?"3d":"")+"(" + -transform.left + "px," + -transform.top + "px"+(is3D?", 0":"")+") ";
+		}
 
 		transformCSS += " translate"+(is3D?"3d":"")+"(" + transform.transX + "px," + transform.transY + "px"+(is3D?", 0":"")+") ";
 
-
-
-		transformCSS += " translate"+(is3D?"3d":"")+"(" + transform.left + "px," + transform.top + "px"+(is3D?", 0":"")+") ";
-
 		if (transform.zoom != 1)
 		{
+			transformCSS += " translate"+(is3D?"3d":"")+"(" + transform.left + "px," + transform.top + "px"+(is3D?", 0":"")+") ";
+			
 			transformCSS += " scale"+(is3D?"3d":"")+"(" + transform.zoom + (is3D? "," + transform.zoom + ",1":"") + ") ";
-		}		
 
-		transformCSS += " translate"+(is3D?"3d":"")+"(" + -transform.left + "px," + -transform.top + "px"+(is3D?", 0":"")+") ";
-
+			transformCSS += " translate"+(is3D?"3d":"")+"(" + -transform.left + "px," + -transform.top + "px"+(is3D?", 0":"")+") ";
+		}
 	}
-	
 	
 	transformCSS += " translate"+(is3D?"3d":"")+"(" + offsetX  + "px," + offsetY + "px"+(is3D?", 0":"")+") "
 	
 	transformCSS += " scale"+(is3D?"3d":"")+"(" + ratio + (is3D? "," + ratio + ",1":"") + ") ";
 	
 	
-	document.body.style.MozTransform = transformCSS;
-	document.body.style.WebkitTransform = transformCSS;
-	document.body.style.OTransform = transformCSS;
-	document.body.style.msTransform = transformCSS;
-	document.body.style.transform = transformCSS;
+	this.bodyRoot.style.MozTransform = transformCSS;
+	this.bodyRoot.style.WebkitTransform = transformCSS;
+	this.bodyRoot.style.OTransform = transformCSS;
+	this.bodyRoot.style.msTransform = transformCSS;
+	this.bodyRoot.style.transform = transformCSS;
 }
 
 // ----------
@@ -1531,12 +1664,12 @@ Epub3Sliderizer.onOrientationChange = function()
 	var viewport = querySelectorZ("head > meta[name=viewport]");
 	if (typeof viewport != 'undefined')
 	{
-		var sx = document.body.clientWidth / window.innerWidth;
-		var sy = document.body.clientHeight / window.innerHeight;
+		var sx = this.bodyRoot.clientWidth / window.innerWidth;
+		var sy = this.bodyRoot.clientHeight / window.innerHeight;
 		var ratio = 1.0 / Math.max(sx, sy);
 
-		var adjustedWidth = document.body.clientWidth * ratio;
-		var adjustedHeight = document.body.clientHeight * ratio;
+		var adjustedWidth = this.bodyRoot.clientWidth * ratio;
+		var adjustedHeight = this.bodyRoot.clientHeight * ratio;
 
 		var rounded = Math.round( ratio * 1000000.0 ) / 1000000.0;
 
@@ -1545,19 +1678,6 @@ Epub3Sliderizer.onOrientationChange = function()
 		var height = Math.round( Math.round( adjustedHeight * 1000000.0 ) / 1000000.0
 		// - (this.staticMode ? 0 : 300)
 	 	);
-
-
-		/*
-		console.log("### a");	
-		console.log(document.body.clientWidth);
-		console.log(document.body.clientHeight);
-		console.log("--- b");	
-		console.log(window.innerWidth);
-		console.log(window.innerHeight);
-		console.log("=== c");	
-		console.log(width);
-		console.log(height);
-		*/
 
 		var content = viewport.getAttribute('content');
 		console.log(content);
@@ -1671,7 +1791,7 @@ Epub3Sliderizer.initReverse = function()
 	}
 
 	var thisRank = getRank(this.thisFilename);
-	var prevRank = getRank(this.thisHash);
+	var prevRank = this.from == null ? 0 : getRank(this.from);
 	
 	/*
 	console.log("RANK this: " + thisRank);
@@ -1702,7 +1822,7 @@ Epub3Sliderizer.initLinks = function()
 		this.toc = "html/" + this.toc;
 
 		Array.prototype.forEach.call(
-			querySelectorAllZ("body #epb3sldrzr-content a"),
+			querySelectorAllZ("#epb3sldrzr-content a"),
 			function(link)
 			{
 				if (typeof link.attributes == 'undefined'
@@ -1722,7 +1842,7 @@ Epub3Sliderizer.initLinks = function()
 		);
 	}
 	
-	//	var links = Array.prototype.slice.call(querySelectorAllZ("html > head > link"));
+	//	var links = Array.prototype.slice.call(querySelectorAllZ("head > link"));
 	//	if (typeof links != 'undefined')
 	//	{		
 	//		for (var i = 0; i < links.length; i++) { links[i] }
@@ -1823,8 +1943,7 @@ Epub3Sliderizer.initLinks = function()
 
 			this.bodyRoot.insertBefore(a, this.bodyRoot.children[0]);
 		}
-	}	
-	
+	}
 }
 
 
@@ -2100,7 +2219,7 @@ Epub3Sliderizer.initAnimations = function()
 	var that = this;
 	
 	Array.prototype.forEach.call(
-		document.body.querySelectorAllZ(".epb3sldrzr-animated"),
+		this.bodyRoot.querySelectorAllZ(".epb3sldrzr-animated"),
 		function(elem)
 		{
 //			elem.classList.remove("epb3sldrzr-animated");
@@ -2128,16 +2247,18 @@ Epub3Sliderizer.initSlideTransition = function()
 
 	var animate = !this.opera; //&& !this.IE;
 	if (animate
-	//	&& !this.mobile
+		&& !this.mobile
 	)
 	{
 		if (!this.reverse)
 		{
-			this.bodyRoot.classList.add("enterInRight");
+			//this.bodyRoot.classList.add("enterInRight");
+			this.bodyRoot.classList.add("fadeIn");
 		}
 		else
 		{
-			this.bodyRoot.classList.add("enterInLeft");
+			//this.bodyRoot.classList.add("enterInLeft");
+			this.bodyRoot.classList.add("fadeIn");
 		}
 	
 		this.bodyRoot.classList.add("epb3sldrzr-animated");
@@ -2204,17 +2325,18 @@ Epub3Sliderizer.initIncrementals = function()
 Epub3Sliderizer.initLocation = function()
 {
 	if (!window.location || typeof window.location == "undefined"
-	|| !window.location.href || typeof window.location.href == "undefined"
-	|| typeof window.location.href == "")
+	|| !window.location.href || typeof window.location.href == "undefined")
 	{
 		return;
 	}
 
 	console.log("window.location: " + window.location);
 	console.log("window.location.href: " + window.location.href);
+	console.log("window.location.search: " + window.location.search);
 
 	var i = window.location.href.lastIndexOf('/');
 
+	var from = null;
 	var hash = null;
 	var thisFilename = null;
 
@@ -2228,7 +2350,8 @@ Epub3Sliderizer.initLocation = function()
 	if (thisFilename == null)
 	{
 		this.thisFilename = thisFilename;
-		this.thisHash = hash;
+		this.from = from;
+		this.hash = hash;
 		return;
 	}
 
@@ -2237,6 +2360,14 @@ Epub3Sliderizer.initLocation = function()
 	{
 		i = 9999;
 	}
+	else
+	{
+		if (i < thisFilename.length-1)
+		{
+			hash = thisFilename.substring(i+1, thisFilename.length);
+		}
+	}
+	
 	var ii = thisFilename.indexOf('?');
 	if (ii < 0)
 	{
@@ -2253,18 +2384,26 @@ Epub3Sliderizer.initLocation = function()
 
 	if (i >= 0 && i < 9999)
 	{
-		if (i < thisFilename.length-1)
-		{
-			hash = thisFilename.substring(i+1, thisFilename.length);
-		}
 		thisFilename = thisFilename.substring(0, i);
 	}
 
 	this.thisFilename = thisFilename;
-	this.thisHash = hash;
+	
+	this.hash = hash;
+	if (this.hash != null && this.hash === "")
+	{
+		this.hash = null;
+	}
+	
+	this.from = getUrlQueryParam("from");
+	if (this.from != null && this.from === "")
+	{
+		this.from = null;
+	}
 
-	console.log("THIS: " + thisFilename);
-	console.log("HASH: " + hash);
+	console.log("THIS: " + this.thisFilename);
+	console.log("FROM: " + this.from);
+	console.log("HASH: " + this.hash);
 }
 
 // ----------
@@ -2283,9 +2422,8 @@ Epub3Sliderizer.init = function()
 		this.epubReadingSystem = navigator.epubReadingSystem;
 	}
 	else
-	{
-		if (!this.basicMode && !this.staticMode && !this.authorMode
-			&& window.location.search && window.location.search.indexOf("epub") >= 0)
+	{	
+		if (!this.basicMode && !this.staticMode && !this.authorMode && this.epubMode)
 		//if (window.location.href.indexOf("static") >= 0)
 		{
 			fakeEpubReadingSystem = true;
@@ -2305,7 +2443,7 @@ Epub3Sliderizer.init = function()
 	TOO SLOW! :(
 	(despite CSS HW acceleration)
 	
-	var scroll = querySelectorZ("div#epb3sldrzr-root");
+	var scroll = document.getElementById("epb3sldrzr-root");
 
 	if (scroll.offsetHeight < scroll.scrollHeight)
 	{
@@ -2447,7 +2585,7 @@ Epub3Sliderizer.init = function()
 	
 			delete Hammer.defaults.stop_browser_behavior.userSelect;
 	
-			this.hammer = Hammer(document.body,
+			this.hammer = Hammer(this.bodyRoot,
 				{
 					prevent_default: false,
 					css_hacks: false,
@@ -2678,6 +2816,8 @@ function readyFirst()
 	*/
 	
 	
+	Epub3Sliderizer.onResizeThrottled = throttle(Epub3Sliderizer.onResize, 100, false).bind(Epub3Sliderizer);
+	
 	
 	Epub3Sliderizer.bodyRoot = document.getElementById("epb3sldrzr-body");
 	
@@ -2696,6 +2836,19 @@ function readyFirst()
 	else
 	{
 		controls.insertBefore(aa, controls.children[0]);
+	}
+
+	var az = document.createElement('a');
+	az.id = "epb3sldrzr-link-textsize-reset";
+	az.title = "Reset font size";
+	az.href = "javascript:Epub3Sliderizer.resetFontSize();";
+	if (controls.children.length == 0)
+	{
+		controls.appendChild(az);
+	}
+	else
+	{
+		controls.insertBefore(az, controls.children[0]);
 	}
 
 	var aaa = document.createElement('a');
@@ -2764,16 +2917,16 @@ function readyFirst()
 		
 	if (Epub3Sliderizer.opera)
 	{
-		document.documentElement.classList.add("opera");
+		document.body.classList.add("opera");
 	}
 	if (Epub3Sliderizer.firefox)
 	{
-		document.documentElement.classList.add("firefox");
+		document.body.classList.add("firefox");
 	}
 
 	if (Epub3Sliderizer.IE)
 	{
-		document.documentElement.classList.add("IE");
+		document.body.classList.add("IE");
 		
 		var ua = navigator.userAgent;
 		var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
@@ -2782,34 +2935,36 @@ function readyFirst()
 			var ver = parseFloat( RegExp.$1 );
 			if (ver <= 9.0)
 			{
-				document.documentElement.classList.add("IE9");
+				document.body.classList.add("IE9");
 			}
 		}
 	}
 	if (Epub3Sliderizer.mobile)
 	{
-		document.documentElement.classList.add("mobile");
+		document.body.classList.add("mobile");
 	}
-
-	if (window.location.search && window.location.search.indexOf("static") >= 0)
-	//if (window.location.href.indexOf("static") >= 0)
+	
+	if (getUrlQueryParam("epub") != null)
+	{
+		Epub3Sliderizer.epubMode = true;
+	}
+	
+	if (getUrlQueryParam("static") != null)
 	{
 		Epub3Sliderizer.staticMode = true;
-		document.documentElement.classList.add("static");
+		document.body.classList.add("static");
 	}
-	else if (window.location.search && window.location.search.indexOf("author") >= 0)
-	//if (window.location.href.indexOf("static") >= 0)
+	else if (getUrlQueryParam("author") != null)
 	{
 		Epub3Sliderizer.authorMode = true;
-		document.documentElement.classList.add("author");
+		document.body.classList.add("author");
 	}
 	else if (Epub3Sliderizer.android ||
-		(window.location.search && window.location.search.indexOf("basic") >= 0)
+		(getUrlQueryParam("basic") != null)
 	)
-	//if (window.location.href.indexOf("static") >= 0)
 	{
 		Epub3Sliderizer.basicMode = true;
-		document.documentElement.classList.add("basic");
+		document.body.classList.add("basic");
 	}
 
 	if (Epub3Sliderizer.staticMode)
