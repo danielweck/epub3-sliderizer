@@ -38,11 +38,11 @@ column-count: 2;
 column-gap: 1em;
 
 	
--webkit-column-fill: auto;
--moz-column-fill: auto;
--ms-column-fill: auto;
--o-column-fill: auto;
-column-fill: auto;
+-webkit-column-fill: balance;
+-moz-column-fill: balance;
+-ms-column-fill: balance;
+-o-column-fill: balance;
+column-fill: balance;
 
 	
 -webkit-column-rule: 0.12em dotted #eeeeee;

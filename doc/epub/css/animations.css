@@ -106,16 +106,16 @@ body:not(.epb3sldrzr-epubReadingSystem).opera .epb3sldrzr-animated:not(#epb3sldr
 {
 	0% {
 		opacity: 0;
-		-webkit-transform: translateY(-1000px);
+		-webkit-transform: translateY(1000px);
 	}
 	
 	60% {
 		opacity: 1;
-		-webkit-transform: translateY(30px);
+		-webkit-transform: translateY(40px);
 	}
 	
 	80% {
-		-webkit-transform: translateY(-10px);
+		-webkit-transform: translateY(-20px);
 	}
 	
 	100% {
@@ -126,16 +126,16 @@ body:not(.epb3sldrzr-epubReadingSystem).opera .epb3sldrzr-animated:not(#epb3sldr
 {
 	0% {
 		opacity: 0;
-		-moz-transform: translateY(-1000px);
+		-moz-transform: translateY(1000px);
 	}
 	
 	60% {
 		opacity: 1;
-		-moz-transform: translateY(30px);
+		-moz-transform: translateY(40px);
 	}
 	
 	80% {
-		-moz-transform: translateY(-10px);
+		-moz-transform: translateY(-20px);
 	}
 	
 	100% {
@@ -146,16 +146,16 @@ body:not(.epb3sldrzr-epubReadingSystem).opera .epb3sldrzr-animated:not(#epb3sldr
 {
 	0% {
 		opacity: 0;
-		-ms-transform: translateY(-1000px);
+		-ms-transform: translateY(1000px);
 	}
 	
 	60% {
 		opacity: 1;
-		-ms-transform: translateY(30px);
+		-ms-transform: translateY(40px);
 	}
 	
 	80% {
-		-ms-transform: translateY(-10px);
+		-ms-transform: translateY(-20px);
 	}
 	
 	100% {
@@ -166,16 +166,16 @@ body:not(.epb3sldrzr-epubReadingSystem).opera .epb3sldrzr-animated:not(#epb3sldr
 {
 	0% {
 		opacity: 0;
-		-o-transform: translateY(-1000px);
+		-o-transform: translateY(1000px);
 	}
 	
 	60% {
 		opacity: 1;
-		-o-transform: translateY(30px);
+		-o-transform: translateY(40px);
 	}
 	
 	80% {
-		-o-transform: translateY(-10px);
+		-o-transform: translateY(-20px);
 	}
 	
 	100% {
@@ -186,16 +186,16 @@ body:not(.epb3sldrzr-epubReadingSystem).opera .epb3sldrzr-animated:not(#epb3sldr
 {
 	0% {
 		opacity: 0;
-		transform: translateY(-1000px);
+		transform: translateY(1000px);
 	}
 	
 	60% {
 		opacity: 1;
-		transform: translateY(30px);
+		transform: translateY(40px);
 	}
 	
 	80% {
-		transform: translateY(-10px);
+		transform: translateY(-20px);
 	}
 	
 	100% {
@@ -226,11 +226,11 @@ animation-name: bounceInDown;
 	
 	60% {
 		opacity: 1;
-		-webkit-transform: translateY(-30px);
+		-webkit-transform: translateY(-40px);
 	}
 	
 	80% {
-		-webkit-transform: translateY(10px);
+		-webkit-transform: translateY(20px);
 	}
 	
 	100% {
@@ -246,11 +246,11 @@ animation-name: bounceInDown;
 	
 	60% {
 		opacity: 1;
-		-moz-transform: translateY(-30px);
+		-moz-transform: translateY(-40px);
 	}
 	
 	80% {
-		-moz-transform: translateY(10px);
+		-moz-transform: translateY(20px);
 	}
 	
 	100% {
@@ -266,11 +266,11 @@ animation-name: bounceInDown;
 	
 	60% {
 		opacity: 1;
-		-ms-transform: translateY(-30px);
+		-ms-transform: translateY(-40px);
 	}
 	
 	80% {
-		-ms-transform: translateY(10px);
+		-ms-transform: translateY(20px);
 	}
 	
 	100% {
@@ -286,11 +286,11 @@ animation-name: bounceInDown;
 	
 	60% {
 		opacity: 1;
-		-o-transform: translateY(-30px);
+		-o-transform: translateY(-40px);
 	}
 	
 	80% {
-		-o-transform: translateY(10px);
+		-o-transform: translateY(20px);
 	}
 	
 	100% {
@@ -306,11 +306,11 @@ animation-name: bounceInDown;
 	
 	60% {
 		opacity: 1;
-		transform: translateY(-30px);
+		transform: translateY(-40px);
 	}
 	
 	80% {
-		transform: translateY(10px);
+		transform: translateY(20px);
 	}
 	
 	100% {
@@ -335,16 +335,16 @@ animation-name: bounceInUp;
 {
 	0% {
 		opacity: 0;
-		-webkit-transform: translateX(1000px);
+		-webkit-transform: translateX(1290px);
 	}
 	
 	60% {
 		opacity: 1;
-		-webkit-transform: translateX(-30px);
+		-webkit-transform: translateX(-40px);
 	}
 	
 	80% {
-		-webkit-transform: translateX(10px);
+		-webkit-transform: translateX(20px);
 	}
 	
 	100% {
@@ -355,16 +355,16 @@ animation-name: bounceInUp;
 {
 	0% {
 		opacity: 0;
-		-moz-transform: translateX(1000px);
+		-moz-transform: translateX(1290px);
 	}
 	
 	60% {
 		opacity: 1;
-		-moz-transform: translateX(-30px);
+		-moz-transform: translateX(-40px);
 	}
 	
 	80% {
-		-moz-transform: translateX(10px);
+		-moz-transform: translateX(20px);
 	}
 	
 	100% {
@@ -375,16 +375,16 @@ animation-name: bounceInUp;
 {
 	0% {
 		opacity: 0;
-		-ms-transform: translateX(1000px);
+		-ms-transform: translateX(1290px);
 	}
 	
 	60% {
 		opacity: 1;
-		-ms-transform: translateX(-30px);
+		-ms-transform: translateX(-40px);
 	}
 	
 	80% {
-		-ms-transform: translateX(10px);
+		-ms-transform: translateX(20px);
 	}
 	
 	100% {
@@ -395,16 +395,16 @@ animation-name: bounceInUp;
 {
 	0% {
 		opacity: 0;
-		-o-transform: translateX(1000px);
+		-o-transform: translateX(1290px);
 	}
 	
 	60% {
 		opacity: 1;
-		-o-transform: translateX(-30px);
+		-o-transform: translateX(-40px);
 	}
 	
 	80% {
-		-o-transform: translateX(10px);
+		-o-transform: translateX(20px);
 	}
 	
 	100% {
@@ -415,16 +415,16 @@ animation-name: bounceInUp;
 {
 	0% {
 		opacity: 0;
-		transform: translateX(1000px);
+		transform: translateX(1290px);
 	}
 	
 	60% {
 		opacity: 1;
-		transform: translateX(-30px);
+		transform: translateX(-40px);
 	}
 	
 	80% {
-		transform: translateX(10px);
+		transform: translateX(20px);
 	}
 	
 	100% {
@@ -449,16 +449,16 @@ animation-name: bounceInRight;
 {
 	0% {
 		opacity: 0;
-		-webkit-transform: translateX(-1000px);
+		-webkit-transform: translateX(-1290px);
 	}
 	
 	60% {
 		opacity: 1;
-		-webkit-transform: translateX(30px);
+		-webkit-transform: translateX(40px);
 	}
 	
 	80% {
-		-webkit-transform: translateX(-10px);
+		-webkit-transform: translateX(-20px);
 	}
 	
 	100% {
@@ -469,16 +469,16 @@ animation-name: bounceInRight;
 {
 	0% {
 		opacity: 0;
-		-moz-transform: translateX(-1000px);
+		-moz-transform: translateX(-1290px);
 	}
 	
 	60% {
 		opacity: 1;
-		-moz-transform: translateX(30px);
+		-moz-transform: translateX(40px);
 	}
 	
 	80% {
-		-moz-transform: translateX(-10px);
+		-moz-transform: translateX(-20px);
 	}
 	
 	100% {
@@ -489,16 +489,16 @@ animation-name: bounceInRight;
 {
 	0% {
 		opacity: 0;
-		-ms-transform: translateX(-1000px);
+		-ms-transform: translateX(-1290px);
 	}
 	
 	60% {
 		opacity: 1;
-		-ms-transform: translateX(30px);
+		-ms-transform: translateX(40px);
 	}
 	
 	80% {
-		-ms-transform: translateX(-10px);
+		-ms-transform: translateX(-20px);
 	}
 	
 	100% {
@@ -509,16 +509,16 @@ animation-name: bounceInRight;
 {
 	0% {
 		opacity: 0;
-		-o-transform: translateX(-1000px);
+		-o-transform: translateX(-1290px);
 	}
 	
 	60% {
 		opacity: 1;
-		-o-transform: translateX(30px);
+		-o-transform: translateX(40px);
 	}
 	
 	80% {
-		-o-transform: translateX(-10px);
+		-o-transform: translateX(-20px);
 	}
 	
 	100% {
@@ -529,16 +529,16 @@ animation-name: bounceInRight;
 {
 	0% {
 		opacity: 0;
-		transform: translateX(-1000px);
+		transform: translateX(-1290px);
 	}
 	
 	60% {
 		opacity: 1;
-		transform: translateX(30px);
+		transform: translateX(40px);
 	}
 	
 	80% {
-		transform: translateX(-10px);
+		transform: translateX(-20px);
 	}
 	
 	100% {
@@ -564,7 +564,7 @@ animation-name: bounceInLeft;
 {
 	0% {
 		opacity: 0;
-		-webkit-transform: translateX(-1000px);
+		-webkit-transform: translateX(-1290px);
 	}
 	
 	100% {
@@ -576,7 +576,7 @@ animation-name: bounceInLeft;
 {
 	0% {
 		opacity: 0;
-		-moz-transform: translateX(-1000px);
+		-moz-transform: translateX(-1290px);
 	}
 	
 	100% {
@@ -588,7 +588,7 @@ animation-name: bounceInLeft;
 {
 	0% {
 		opacity: 0;
-		-ms-transform: translateX(-1000px);
+		-ms-transform: translateX(-1290px);
 	}
 	
 	100% {
@@ -600,7 +600,7 @@ animation-name: bounceInLeft;
 {
 	0% {
 		opacity: 0;
-		-o-transform: translateX(-1000px);
+		-o-transform: translateX(-1290px);
 	}
 	
 	100% {
@@ -612,7 +612,7 @@ animation-name: bounceInLeft;
 {
 	0% {
 		opacity: 0;
-		transform: translateX(-1000px);
+		transform: translateX(-1290px);
 	}
 	
 	100% {
@@ -638,7 +638,7 @@ animation-name: fadeInLeftBig;
 {
 	0% {
 		opacity: 0;
-		-webkit-transform: translateX(1000px);
+		-webkit-transform: translateX(1290px);
 	}
 	
 	100% {
@@ -650,7 +650,7 @@ animation-name: fadeInLeftBig;
 {
 	0% {
 		opacity: 0;
-		-moz-transform: translateX(1000px);
+		-moz-transform: translateX(1290px);
 	}
 	
 	100% {
@@ -662,7 +662,7 @@ animation-name: fadeInLeftBig;
 {
 	0% {
 		opacity: 0;
-		-ms-transform: translateX(1000px);
+		-ms-transform: translateX(1290px);
 	}
 	
 	100% {
@@ -674,7 +674,7 @@ animation-name: fadeInLeftBig;
 {
 	0% {
 		opacity: 0;
-		-o-transform: translateX(1000px);
+		-o-transform: translateX(1290px);
 	}
 	
 	100% {
@@ -686,7 +686,7 @@ animation-name: fadeInLeftBig;
 {
 	0% {
 		opacity: 0;
-		transform: translateX(1000px);
+		transform: translateX(1290px);
 	}
 	
 	100% {
@@ -711,7 +711,7 @@ animation-name: fadeInRightBig;
 @-webkit-keyframes enterInLeft
 {
 	0% {
-		-webkit-transform: translateX(-500px);
+		-webkit-transform: translateX(-1290px);
 	}
 	
 	100% {
@@ -721,7 +721,7 @@ animation-name: fadeInRightBig;
 @-moz-keyframes enterInLeft
 {
 	0% {
-		-moz-transform: translateX(-500px);
+		-moz-transform: translateX(-1290px);
 	}
 	
 	100% {
@@ -731,7 +731,7 @@ animation-name: fadeInRightBig;
 @-ms-keyframes enterInLeft
 {
 	0% {
-		-ms-transform: translateX(-500px);
+		-ms-transform: translateX(-1290px);
 	}
 	
 	100% {
@@ -741,7 +741,7 @@ animation-name: fadeInRightBig;
 @-o-keyframes enterInLeft
 {
 	0% {
-		-o-transform: translateX(-500px);
+		-o-transform: translateX(-1290px);
 	}
 	
 	100% {
@@ -751,7 +751,7 @@ animation-name: fadeInRightBig;
 @keyframes enterInLeft
 {
 	0% {
-		transform: translateX(-500px);
+		transform: translateX(-1290px);
 	}
 	
 	100% {
@@ -775,7 +775,7 @@ animation-name: enterInLeft;
 @-webkit-keyframes enterInRight
 {
 	0% {
-		-webkit-transform: translateX(500px);
+		-webkit-transform: translateX(1290px);
 	}
 	
 	100% {
@@ -785,7 +785,7 @@ animation-name: enterInLeft;
 @-moz-keyframes enterInRight
 {
 	0% {
-		-moz-transform: translateX(500px);
+		-moz-transform: translateX(1290px);
 	}
 	
 	100% {
@@ -795,7 +795,7 @@ animation-name: enterInLeft;
 @-ms-keyframes enterInRight
 {
 	0% {
-		-ms-transform: translateX(500px);
+		-ms-transform: translateX(1290px);
 	}
 	
 	100% {
@@ -805,7 +805,7 @@ animation-name: enterInLeft;
 @-o-keyframes enterInRight
 {
 	0% {
-		-o-transform: translateX(500px);
+		-o-transform: translateX(1290px);
 	}
 	
 	100% {
@@ -815,7 +815,7 @@ animation-name: enterInLeft;
 @keyframes enterInRight
 {
 	0% {
-		transform: translateX(500px);
+		transform: translateX(1290px);
 	}
 	
 	100% {
