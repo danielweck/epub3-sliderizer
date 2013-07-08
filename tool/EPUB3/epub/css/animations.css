@@ -63,16 +63,16 @@ _PREFIXED_@keyframes bounceInDown
 {
 	0% {
 		opacity: 0;
-		-PREFIXED_PROPERTY-transform: translateY(-1000px);
+		-PREFIXED_PROPERTY-transform: translateY(VIEWPORT_HEIGHTpx);
 	}
 	
 	60% {
 		opacity: 1;
-		-PREFIXED_PROPERTY-transform: translateY(30px);
+		-PREFIXED_PROPERTY-transform: translateY(FONT_SIZEpx);
 	}
 	
 	80% {
-		-PREFIXED_PROPERTY-transform: translateY(-10px);
+		-PREFIXED_PROPERTY-transform: translateY(-FONT_SIZE_HALFpx);
 	}
 	
 	100% {
@@ -90,16 +90,16 @@ _PREFIXED_@keyframes bounceInUp
 {
 	0% {
 		opacity: 0;
-		-PREFIXED_PROPERTY-transform: translateY(1000px);
+		-PREFIXED_PROPERTY-transform: translateY(VIEWPORT_HEIGHTpx);
 	}
 	
 	60% {
 		opacity: 1;
-		-PREFIXED_PROPERTY-transform: translateY(-30px);
+		-PREFIXED_PROPERTY-transform: translateY(-FONT_SIZEpx);
 	}
 	
 	80% {
-		-PREFIXED_PROPERTY-transform: translateY(10px);
+		-PREFIXED_PROPERTY-transform: translateY(FONT_SIZE_HALFpx);
 	}
 	
 	100% {
@@ -116,16 +116,16 @@ _PREFIXED_@keyframes bounceInRight
 {
 	0% {
 		opacity: 0;
-		-PREFIXED_PROPERTY-transform: translateX(1000px);
+		-PREFIXED_PROPERTY-transform: translateX(VIEWPORT_WIDTHpx);
 	}
 	
 	60% {
 		opacity: 1;
-		-PREFIXED_PROPERTY-transform: translateX(-30px);
+		-PREFIXED_PROPERTY-transform: translateX(-FONT_SIZEpx);
 	}
 	
 	80% {
-		-PREFIXED_PROPERTY-transform: translateX(10px);
+		-PREFIXED_PROPERTY-transform: translateX(FONT_SIZE_HALFpx);
 	}
 	
 	100% {
@@ -142,16 +142,16 @@ _PREFIXED_@keyframes bounceInLeft
 {
 	0% {
 		opacity: 0;
-		-PREFIXED_PROPERTY-transform: translateX(-1000px);
+		-PREFIXED_PROPERTY-transform: translateX(-VIEWPORT_WIDTHpx);
 	}
 	
 	60% {
 		opacity: 1;
-		-PREFIXED_PROPERTY-transform: translateX(30px);
+		-PREFIXED_PROPERTY-transform: translateX(FONT_SIZEpx);
 	}
 	
 	80% {
-		-PREFIXED_PROPERTY-transform: translateX(-10px);
+		-PREFIXED_PROPERTY-transform: translateX(-FONT_SIZE_HALFpx);
 	}
 	
 	100% {
@@ -169,7 +169,7 @@ _PREFIXED_@keyframes fadeInLeftBig
 {
 	0% {
 		opacity: 0;
-		-PREFIXED_PROPERTY-transform: translateX(-1000px);
+		-PREFIXED_PROPERTY-transform: translateX(-VIEWPORT_WIDTHpx);
 	}
 	
 	100% {
@@ -187,7 +187,7 @@ _PREFIXED_@keyframes fadeInRightBig
 {
 	0% {
 		opacity: 0;
-		-PREFIXED_PROPERTY-transform: translateX(1000px);
+		-PREFIXED_PROPERTY-transform: translateX(VIEWPORT_WIDTHpx);
 	}
 	
 	100% {
@@ -204,7 +204,7 @@ _PREFIXED_@keyframes fadeInRightBig
 _PREFIXED_@keyframes enterInLeft
 {
 	0% {
-		-PREFIXED_PROPERTY-transform: translateX(-500px);
+		-PREFIXED_PROPERTY-transform: translateX(-VIEWPORT_WIDTHpx);
 	}
 	
 	100% {
@@ -220,7 +220,7 @@ _PREFIXED_@keyframes enterInLeft
 _PREFIXED_@keyframes enterInRight
 {
 	0% {
-		-PREFIXED_PROPERTY-transform: translateX(500px);
+		-PREFIXED_PROPERTY-transform: translateX(VIEWPORT_WIDTHpx);
 	}
 	
 	100% {

@@ -25,7 +25,7 @@ ol
 	
 	-PREFIXED_PROPERTY-column-count: 2;
 	-PREFIXED_PROPERTY-column-gap: 1em;
-	-PREFIXED_PROPERTY-column-fill: auto;
+	-PREFIXED_PROPERTY-column-fill: balance;
 	-PREFIXED_PROPERTY-column-rule: 0.12em dotted #eeeeee;
 }
 
