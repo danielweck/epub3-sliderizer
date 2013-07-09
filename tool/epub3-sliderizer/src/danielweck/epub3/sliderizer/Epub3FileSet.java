@@ -46,6 +46,7 @@ public final class Epub3FileSet {
 			new String[] { NAVDOC_CSS, "css-navdoc" } };
 
 	final static String[][] JS_FILENAMES = new String[][] {
+			new String[] { "addEventListener.js", "js-addEventListener" },
 			new String[] { "classList.js", "js-classList" },
 			new String[] { "screenfull.js", "js-screenfull" },
 			new String[] { "hammer.min.js", "js-hammer" },

@@ -6,11 +6,14 @@
 /* jshint devel: true */
 /* jshint jquery: true */
 
-/* jshint globalstrict: true */
-"use strict";
+/*
+jsZZhint globalstrict: true
+"usZZe strict";
+*/
 
 
 // REQUIRES:
+// addEventListener.js
 // screenfull.js
 // classList.js
 // hammer.js + fakemultitouch + showtouches
@@ -32,6 +35,15 @@ if (!window.console.log)
 {
 	window.console.log = function () { };
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+!String.prototype.trim &&
+(String.prototype.trim = function()
+{
+	return this.replace(/^\s+|\s+$/g, '');
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2865,7 +2877,7 @@ function readyFirst()
 	*/
 	
 	
-	Epub3Sliderizer.onResizeThrottled = throttle(Epub3Sliderizer.onResize, 100, false).bind(Epub3Sliderizer);
+	Epub3Sliderizer.onResizeThrottled = throttle(Epub3Sliderizer.onResize, 60, false).bind(Epub3Sliderizer);
 	
 	
 	Epub3Sliderizer.bodyRoot = document.getElementById("epb3sldrzr-body");
