@@ -4,6 +4,9 @@
 
 cp _OUTPUT/content/EPUB3-Sliderizer.epub .
 cp -r _OUTPUT/content/EPUB3/* doc/
+
+git status
+
 git commit -a -m "www up"
 git push
 
