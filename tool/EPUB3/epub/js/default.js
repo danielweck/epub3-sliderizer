@@ -1,4 +1,14 @@
+/* global Hammer: false */
+/* global escape: false */
+/* global unescape: false */
+
+/* jshint browser: true */
+/* jshint devel: true */
+/* jshint jquery: true */
+
+/* jshint globalstrict: true */
 "use strict";
+
 
 // REQUIRES:
 // screenfull.js
@@ -13,16 +23,23 @@
 // ----------
 // IE 9 F12
 
-if (!window.console) window.console = {};
-if (!window.console.log) window.console.log = function () { };
+if (!window.console)
+{
+	window.console = {};
+}
+
+if (!window.console.log)
+{
+	window.console.log = function () { };
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 function getUrlQueryParam(name)
 {
-	var urlQueryParams = window.urlQueryParams
-	|| (function()
+	var urlQueryParams = window.urlQueryParams ||
+	(function()
 	{
 		var urlQueryParams_ = {};
 		
@@ -62,6 +79,8 @@ function getUrlQueryParam(name)
 // be triggered. The function will be called after it stops being called for
 // N milliseconds. If `immediate` is passed, trigger the function on the
 // leading edge, instead of the trailing.
+
+/* jshint unused: false */
 function debounce(func, wait, immediate)
 {
 	var result;
@@ -99,15 +118,18 @@ function throttle(func, wait, immediate)
 	var previous = 0;
 	var later = function()
 	{
-		previous = new Date;
+		previous = new Date();
 		timeout = null;
 		result = func.apply(context, args);
 	};
-    
+
 	return function()
 	{
-		var now = new Date;
-		if (!previous && immediate === false) previous = now;
+		var now = new Date();
+		if (!previous && immediate === false)
+		{
+			previous = now;
+		}
 		var remaining = wait - (now - previous);
 		context = this;
 		args = arguments;
@@ -127,43 +149,47 @@ function throttle(func, wait, immediate)
 		return result;
 	};
 }
-  
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 if (!Function.prototype.bind)
 {
-	Function.prototype.bind = function (oThis)
+	Function.prototype.bind = function (that)
 	{
 		if (typeof this !== "function")
 		{
 			// closest thing possible to the ECMAScript 5 internal IsCallable function
 			throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
 		}
- 
-		var aArgs =
-			Array.prototype.slice.call(arguments, 1), 
-			fToBind = this, 
-			fNOP = function () {},
-			fBound = function ()
-			{
-				return fToBind.apply(
-					//this instanceof fNOP && oThis ? this : oThis,
-					this instanceof fNOP ? this : oThis || window,
-					aArgs.concat(Array.prototype.slice.call(arguments))
-					);
-			};
- 
-			fNOP.prototype = this.prototype;
-			fBound.prototype = new fNOP();
- 
-			return fBound;
+
+		var functionToBind = this;
+		 
+		var args = Array.prototype.slice.call(arguments, 1);
+
+		var Function_NOP = function () {};
+		Function_NOP.prototype = this.prototype;
+		
+		var Function_BOUND = function ()
+		{
+			return functionToBind.apply(
+				
+				//this instanceof Function_NOP && that ? this : that,
+				this instanceof Function_NOP ? this : that || window,
+				
+				args.concat(Array.prototype.slice.call(arguments))
+				);
+		};
+		Function_BOUND.prototype = new Function_NOP();
+		
+		return Function_BOUND;
 	};
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+/* jshint unused: false */
 function STACK_TRACE(obj)
 {
 	if (obj)
@@ -198,62 +224,62 @@ var querySelectorAllZ = (HTMLElement.prototype.querySelectorAllZ = function(sele
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /*\
 |*|
-|*|  :: cookies.js ::
+|*|	:: cookies.js ::
 |*|
-|*|  A complete cookies reader/writer framework with full unicode support.
+|*|	A complete cookies reader/writer framework with full unicode support.
 |*|
-|*|  https://developer.mozilla.org/en-US/docs/DOM/document.cookie
+|*|	https://developer.mozilla.org/en-US/docs/DOM/document.cookie
 |*|
-|*|  This framework is released under the GNU Public License, version 3 or later.
-|*|  http://www.gnu.org/licenses/gpl-3.0-standalone.html
+|*|	This framework is released under the GNU Public License, version 3 or later.
+|*|	http://www.gnu.org/licenses/gpl-3.0-standalone.html
 |*|
-|*|  Syntaxes:
+|*|	Syntaxes:
 |*|
-|*|  * docCookies.setItem(name, value[, end[, path[, domain[, secure]]]])
-|*|  * docCookies.getItem(name)
-|*|  * docCookies.removeItem(name[, path])
-|*|  * docCookies.hasItem(name)
-|*|  * docCookies.keys()
+|*|	* docCookies.setItem(name, value[, end[, path[, domain[, secure]]]])
+|*|	* docCookies.getItem(name)
+|*|	* docCookies.removeItem(name[, path])
+|*|	* docCookies.hasItem(name)
+|*|	* docCookies.keys()
 |*|
 \*/
 
 var docCookies = {
-  getItem: function (sKey) {
-    return unescape(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + escape(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
-  },
-  setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
-    if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
-    var sExpires = "";
-    if (vEnd) {
-      switch (vEnd.constructor) {
-        case Number:
-          sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + vEnd;
-          break;
-        case String:
-          sExpires = "; expires=" + vEnd;
-          break;
-        case Date:
-          sExpires = "; expires=" + vEnd.toGMTString();
-          break;
-      }
-    }
-    document.cookie = escape(sKey) + "=" + escape(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
+	getItem: function (sKey) {
+	return unescape(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + escape(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+	},
+	setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+	if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
+	var sExpires = "";
+	if (vEnd) {
+		switch (vEnd.constructor) {
+		case Number:
+			sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + vEnd;
+			break;
+		case String:
+			sExpires = "; expires=" + vEnd;
+			break;
+		case Date:
+			sExpires = "; expires=" + vEnd.toGMTString();
+			break;
+		}
+	}
+	document.cookie = escape(sKey) + "=" + escape(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
 
-    return true;
-  },
-  removeItem: function (sKey, sPath) {
-    if (!sKey || !this.hasItem(sKey)) { return false; }
-    document.cookie = escape(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sPath ? "; path=" + sPath : "");
-    return true;
-  },
-  hasItem: function (sKey) {
-    return (new RegExp("(?:^|;\\s*)" + escape(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
-  },
-  keys: /* optional method: you can safely remove it! */ function () {
-    var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
-    for (var nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = unescape(aKeys[nIdx]); }
-    return aKeys;
-  }
+	return true;
+	},
+	removeItem: function (sKey, sPath) {
+	if (!sKey || !this.hasItem(sKey)) { return false; }
+	document.cookie = escape(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sPath ? "; path=" + sPath : "");
+	return true;
+	},
+	hasItem: function (sKey) {
+	return (new RegExp("(?:^|;\\s*)" + escape(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+	},
+	keys: /* optional method: you can safely remove it! */ function () {
+	var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+	for (var nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = unescape(aKeys[nIdx]); }
+	return aKeys;
+	}
 };
 
 function getCookie(name)
@@ -279,6 +305,13 @@ function setCookie(name, value)
 //####################################################################################################
 
 (function(undefined) {
+
+/* jshint scripturl: true */
+/* jshint validthis: true */
+
+/* jshint strict: true */
+/* jshint -W034 */
+"use strict";
 
 var UNDEF = typeof undefined;
 
@@ -310,7 +343,7 @@ var Epub3Sliderizer = {
 	incrementals: null,
 	increment: -1,
 	bodyRoot: null,
-	transforms: new Array(),
+	transforms: [],
 	totalZoom: 1,
 	pauseEvents: false,
 	defaultFontSize: null,
@@ -330,15 +363,15 @@ var Epub3Sliderizer = {
 Epub3Sliderizer.updateFontSize = function(size)
 {
 	document.body.style.fontSize = Math.round(size) + "px";
-    setCookie(this.cookieFontSize, document.body.style.fontSize);
-}
+	setCookie(this.cookieFontSize, document.body.style.fontSize);
+};
 
 // ----------
 
 Epub3Sliderizer.resetFontSize = function()
 {
 	this.updateFontSize(this.defaultFontSize);
-}
+};
 
 // ----------
 
@@ -361,7 +394,7 @@ Epub3Sliderizer.decreaseFontSize = function()
 
 		this.updateFontSize(this.defaultFontSize + fontSizeIncrease*fontSizeIncreaseFactor);
 	}	
-}
+};
 
 // ----------
 
@@ -384,7 +417,7 @@ Epub3Sliderizer.increaseFontSize = function()
 
 		this.updateFontSize(this.defaultFontSize + fontSizeIncrease*fontSizeIncreaseFactor);
 	}
-}
+};
 
 // ----------
 
@@ -414,7 +447,7 @@ Epub3Sliderizer.toggleControlsPanel = function()
 		}, 600);
 		*/
 	}
-}
+};
 
 // ----------
 
@@ -451,14 +484,14 @@ Epub3Sliderizer.AUTHORize = function(selector)
 		elems.selectable();
 	}
 	*/
-}
+};
 
 // ----------
 
 Epub3Sliderizer.isEpubReadingSystem = function()
 {
 	return this.epubReadingSystem !== null || this.readium || this.kobo || this.ibooks || this.playbooks || this.azardi;
-}
+};
 
 // ----------
 
@@ -468,19 +501,19 @@ Epub3Sliderizer.urlParams = function(includeNewFrom)
 	
 	if (this.staticMode)
 	{
-		params += "static&"
+		params += "static&";
 	}
 	if (this.authorMode)
 	{
-		params += "author&"
+		params += "author&";
 	}
 	if (this.basicMode)
 	{
-		params += "basic&"
+		params += "basic&";
 	}
 	if (this.epubMode)
 	{
-		params += "epub&"
+		params += "epub&";
 	}
 
 	if (includeNewFrom && this.thisFilename !== null)
@@ -496,7 +529,7 @@ Epub3Sliderizer.urlParams = function(includeNewFrom)
 	}
 	
 	return params;
-}
+};
 
 // ----------
 
@@ -508,7 +541,7 @@ Epub3Sliderizer.reloadSlide = function(mode)
 	}
 	
 	window.location = this.thisFilename + "?" + mode + "&" + (this.from !== null ? "from=" + encodeURIComponent(this.from) + "&" : "");
-}
+};
 
 // ----------
 
@@ -525,7 +558,7 @@ Epub3Sliderizer.gotoToc = function()
 	}
 	
 	window.location = this.toc + this.urlParams(true);
-}
+};
 
 // ----------
 
@@ -539,7 +572,7 @@ Epub3Sliderizer.gotoNext_ = function()
 	{
 		this.gotoNext();
 	}
-}
+};
 
 // ----------
 
@@ -553,7 +586,7 @@ Epub3Sliderizer.gotoPrevious_ = function()
 	{
 		this.gotoPrevious();
 	}
-}
+};
 
 // ----------
 
@@ -570,7 +603,7 @@ Epub3Sliderizer.gotoPrevious = function()
 	}
 	
 	window.location = this.prev + this.urlParams(true);
-}
+};
 
 // ----------
 
@@ -587,7 +620,7 @@ Epub3Sliderizer.gotoNext = function()
 	}
 	
 	window.location = this.next + this.urlParams(true);
-}
+};
 
 // ----------
 
@@ -617,7 +650,7 @@ Epub3Sliderizer.transition = function(on, milliseconds)
 			that.bodyRoot.style.transition = null;
 		}, milliseconds + 10);
 	}
-}
+};
 
 // ----------
 
@@ -637,7 +670,7 @@ Epub3Sliderizer.pan = function(x, y)
 	this.onResize();
 
 	this.transition(false, 500);
-}
+};
 
 // ----------
 
@@ -649,9 +682,9 @@ Epub3Sliderizer.resetTransforms = function()
 	}
 	else
 	{
-		this.transforms = new Array();
+		this.transforms = [];
 	}
-}
+};
 
 // ----------
 
@@ -681,7 +714,7 @@ Epub3Sliderizer.toggleZoom = function(x, y)
 	}
 
 	this.transition(false, 500);
-}
+};
 
 
 // ----------
@@ -709,8 +742,8 @@ Epub3Sliderizer.zoomTo = function(element)
 	element.style.border = "4px solid #ff00ff";
 	
 	var rect = element.getBoundingClientRect();
-	var rectX = rect.left + this.bodyRoot.scrollLeft;
-	var rectY = rect.top + this.bodyRoot.scrollTop;
+	var rectX = rect.left + document.documentElement.scrollLeft;
+	var rectY = rect.top + document.documentElement.scrollTop;
 	var rectFit = this.getRectFit(rect.width, rect.height, false);
 	
 	var rectBody = this.bodyRoot.getBoundingClientRect();
@@ -745,7 +778,7 @@ Epub3Sliderizer.zoomTo = function(element)
 	{
 		element.style.border = border;
 	}, 500);
-}
+};
 
 // ----------
 
@@ -761,13 +794,13 @@ Epub3Sliderizer.toggleReflow = function()
 	
 		this.updateFontSize(this.defaultFontSize + fontSizeIncrease*fontSizeIncreaseFactor);
 	}
-	
+
+	var viewport = querySelectorZ("head > meta[name=viewport]");	
 	if (this.reflow)
 	{	
 		this.reflow = false;
 		document.body.classList.remove("reflow");
 
-		var viewport = querySelectorZ("head > meta[name=viewport]");
 		if (viewport !== null)
 		{
 			viewport.removeAttribute("content");
@@ -783,15 +816,14 @@ Epub3Sliderizer.toggleReflow = function()
 		
 		this.resetOnResizeTransform();
 
-		var viewport = querySelectorZ("head > meta[name=viewport]");
 		if (viewport !== null)
 		{
 			this.viewportBackup = viewport.getAttribute("content");
 			
 			viewport.removeAttribute("content");
 			viewport.setAttribute('content',
-				'width=device-width'
-				+ ',user-scalable=yes'
+				'width=device-width' +
+				',user-scalable=yes'
 				/*
 				+ ',initial-scale='
 				+ '1'
@@ -811,7 +843,7 @@ Epub3Sliderizer.toggleReflow = function()
 	*/
 	
 	setCookie(this.cookieReflow, this.reflow ? "TRUE" : "FALSE");
-}
+};
 
 // ----------
 
@@ -826,10 +858,10 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 	
 	
 	// Filter out keyboard shortcuts
-	if (keyboardEvent.altKey
-	|| keyboardEvent.ctrlKey
-	|| keyboardEvent.metaKey
-	|| keyboardEvent.shiftKey)
+	if (keyboardEvent.altKey ||
+		keyboardEvent.ctrlKey ||
+		keyboardEvent.metaKey ||
+		keyboardEvent.shiftKey)
 	{
 		return;
 	}
@@ -912,32 +944,32 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 			keyboardEvent.preventDefault();
 			this.pan(-offset, 0);
 		}
-		else if (keyboardEvent.keyCode === 38 // up arrow
-			|| keyboardEvent.keyCode === 33 // page up
+		else if (keyboardEvent.keyCode === 38 || // up arrow
+			keyboardEvent.keyCode === 33 // page up
 		)
 		{
 			keyboardEvent.preventDefault();
 			this.pan(0, offset);
 		}
-		else if (keyboardEvent.keyCode === 40 // down arrow
-			|| keyboardEvent.keyCode === 34 // page down
+		else if (keyboardEvent.keyCode === 40 || // down arrow
+			keyboardEvent.keyCode === 34 // page down
 		)
 		{
 			keyboardEvent.preventDefault();
 			this.pan(0, -offset);
 		}
 	}
-	else if (keyboardEvent.keyCode === 37 // left arrow
-	//|| keyboardEvent.keyCode === 38 // up arrow
-	|| keyboardEvent.keyCode === 33 // page up
+	else if (keyboardEvent.keyCode === 37 || // left arrow
+		// keyboardEvent.keyCode === 38 // up arrow
+		keyboardEvent.keyCode === 33 // page up
 	)
 	{
 		keyboardEvent.preventDefault();
 		this.gotoPrevious();
 	}
-	else if (keyboardEvent.keyCode === 39 // right arrow
-	//|| keyboardEvent.keyCode === 40 // down arrow
-	|| keyboardEvent.keyCode === 34 // page down
+	else if (keyboardEvent.keyCode === 39 || // right arrow
+		// keyboardEvent.keyCode === 40 // down arrow
+		keyboardEvent.keyCode === 34 // page down
 	)
 	{
 		keyboardEvent.preventDefault();
@@ -976,7 +1008,7 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 			this.gotoToc();
 		}
 	}
-}
+};
 
 // ----------
 
@@ -1138,10 +1170,12 @@ Epub3Sliderizer.initTouch = function()
 					transY: (hammerEvent.gesture.center.pageY - dragYStart) * hammerEvent.gesture.scale
 				});
 
+				/*
 				if (this.totalZoom < 1)
 				{
-//					this.bodyRoot.style.opacity = this.totalZoom;
+					this.bodyRoot.style.opacity = this.totalZoom;
 				}
+				*/
 				
 				this.onResizeThrottled();
 //				this.onResize();
@@ -1336,23 +1370,25 @@ Epub3Sliderizer.initTouch = function()
 			{
 				if (scroll.offsetHeight < scroll.scrollHeight)
 				{
-					if (scroll.scrollTop <= 0
-							&& hammerEvent.gesture && hammerEvent.gesture.direction === "down")
+					if (scroll.scrollTop <= 0 &&
+						hammerEvent.gesture && hammerEvent.gesture.direction === "down")
 					{
-						;
+						var nop1 = null;
 					}
-					else if (scroll.scrollTop >= (scroll.scrollHeight - scroll.offsetHeight)
-							&& hammerEvent.gesture && hammerEvent.gesture.direction === "up")
+					else if (scroll.scrollTop >= (scroll.scrollHeight - scroll.offsetHeight) &&
+							hammerEvent.gesture && hammerEvent.gesture.direction === "up")
 					{
-						;
+						var nop2 = null;
 					}
 					else
 					{
 						scrolling = true;
+						/*
 						if (hammerEvent.gesture)
 						{
-							//hammerEvent.gesture.stopPropagation();
+							hammerEvent.gesture.stopPropagation();
 						}
+						*/
 						return;
 					}
 				}
@@ -1497,7 +1533,7 @@ Epub3Sliderizer.initTouch = function()
 	
 	
 	
-	var hammer = Hammer(document.documentElement,
+	var hammer = new Hammer(document.documentElement,
 		{
 			prevent_default: true,
 			css_hacks: false
@@ -1539,7 +1575,7 @@ Epub3Sliderizer.initTouch = function()
 		
 		e.preventDefault();
 	}, true );
-}
+};
 
 // ----------
 
@@ -1564,7 +1600,7 @@ Epub3Sliderizer.resetOnResizeTransform = function()
 	this.bodyRoot.style.OTransform = null;
 	this.bodyRoot.style.msTransform = null;
 	this.bodyRoot.style.transform = null;
-}
+};
 
 
 Epub3Sliderizer.resetResize = function()
@@ -1574,14 +1610,14 @@ Epub3Sliderizer.resetResize = function()
 	
 	this.onResizeThrottled();
 	//this.onResize();
-}
+};
 
 // ----------
 
 Epub3Sliderizer.getElementFit = function(element, fitWidth)
 {
 	return this.getRectFit(element.clientWidth, element.clientHeight, fitWidth);
-}
+};
 
 // ----------
 
@@ -1610,7 +1646,7 @@ Epub3Sliderizer.getRectFit = function(w, h, fitWidth)
 	offsetY = Math.round(offsetY);
 
 	return { "ratio": ratio, "offsetX": offsetX, "offsetY": offsetY };
-}
+};
 
 // ----------
 
@@ -1671,7 +1707,7 @@ Epub3Sliderizer.onResize = function()
 		}
 	}
 	
-	transformCSS += " translate"+(is3D?"3d":"")+"(" + offsetX  + "px," + offsetY + "px"+(is3D?", 0":"")+") "
+	transformCSS += " translate"+(is3D?"3d":"")+"(" + offsetX	+ "px," + offsetY + "px"+(is3D?", 0":"")+") ";
 	
 	transformCSS += " scale"+(is3D?"3d":"")+"(" + ratio + (is3D? "," + ratio + ",1":"") + ") ";
 	
@@ -1681,7 +1717,7 @@ Epub3Sliderizer.onResize = function()
 	this.bodyRoot.style.OTransform = transformCSS;
 	this.bodyRoot.style.msTransform = transformCSS;
 	this.bodyRoot.style.transform = transformCSS;
-}
+};
 
 // ----------
 
@@ -1708,7 +1744,7 @@ Epub3Sliderizer.onOrientationChange = function()
 		
 		var height = Math.round( Math.round( adjustedHeight * 1000000.0 ) / 1000000.0
 		// - (this.staticMode ? 0 : 300)
-	 	);
+		);
 
 		var content = viewport.getAttribute('content');
 		console.log(content);
@@ -1722,13 +1758,13 @@ Epub3Sliderizer.onOrientationChange = function()
 
 			viewport.removeAttribute("content");
 			viewport.setAttribute('content',
-				content
-				+ ',user-scalable=no'
-				+ ',initial-scale='
-				+ '1' //rounded
-				+ ',minimum-scale='
-				+ '1' //rounded
-				+ ',maximum-scale=1' //2
+				content +
+				',user-scalable=no' +
+				',initial-scale=' +
+				'1' + //rounded
+				',minimum-scale=' +
+				'1' + //rounded
+				',maximum-scale=1' //2
 				);
 		}
 	}
@@ -1738,7 +1774,7 @@ Epub3Sliderizer.onOrientationChange = function()
 	{
 		that.resetResize();
 	}, 20);
-}
+};
 
 // ----------
 
@@ -1834,7 +1870,7 @@ Epub3Sliderizer.initReverse = function()
 		this.reverse = true;
 		//document.body.classList.add("epb3sldrzr-reverse");
 	}
-}
+};
 
 // ----------
 
@@ -1856,8 +1892,8 @@ Epub3Sliderizer.initLinks = function()
 			querySelectorAllZ("#epb3sldrzr-content a"),
 			function(link)
 			{
-				if (link.attributes.length <= 0
-					|| !isDefinedAndNotNull(link.attributes['href'])
+				if (link.attributes.length <= 0 ||
+					!isDefinedAndNotNull(link.getAttribute('href'))
 				)
 				{
 					return;
@@ -1882,16 +1918,16 @@ Epub3Sliderizer.initLinks = function()
 		querySelectorAllZ("head > link"),
 		function(link)
 		{
-			if (link.attributes.length <= 0
-				|| !isDefinedAndNotNull(link.attributes['href'])
-				|| !isDefinedAndNotNull(link.attributes['rel'])
+			if (link.attributes.length <= 0 ||
+				!isDefinedAndNotNull(link.getAttribute('href')) ||
+				!isDefinedAndNotNull(link.getAttribute('rel'))
 			)
 			{
 				return;
 			}
 
-			var href = link.attributes['href'].nodeValue;
-			var rel = link.attributes['rel'].nodeValue;
+			var href = link.getAttribute('href');
+			var rel = link.getAttribute('rel');
 			if (rel === "prev")
 			{
 				that.prev = href;
@@ -1929,42 +1965,38 @@ Epub3Sliderizer.initLinks = function()
 
 	if (this.prev !== "")
 	{
-		var a = document.createElement('a');
-		a.id = "epb3sldrzr-link-previous";
-		a.title = "Previous slide";	
-		a.href = "javascript:Epub3Sliderizer.gotoPrevious_();";
+		var a1 = document.createElement('a');
+		a1.id = "epb3sldrzr-link-previous";
+		a1.title = "Previous slide";	
+		a1.href = "javascript:Epub3Sliderizer.gotoPrevious_();";
 
-		anchor.insertBefore(a, anchor.children[0]);
+		anchor.insertBefore(a1, anchor.children[0]);
 	}
 	
 		
 	if (this.next !== "")
 	{
-		var a = document.createElement('a');
-		a.id = "epb3sldrzr-link-next";
-		a.title = "Next slide";
-		a.href = "javascript:Epub3Sliderizer.gotoNext_();";
+		var a2 = document.createElement('a');
+		a2.id = "epb3sldrzr-link-next";
+		a2.title = "Next slide";
+		a2.href = "javascript:Epub3Sliderizer.gotoNext_();";
 
-		anchor.insertBefore(a, anchor.children[0]);
+		anchor.insertBefore(a2, anchor.children[0]);
 	}
 
 		
 		
 		
-	if (this.epub !== "")
+	if (nav !== null && this.epub !== "")
 	{
-		var nav = document.getElementById("epb3sldrzr-NavDoc");
-		if (nav !== null)
-		{
-			var a = document.createElement('a');
-			a.id = "epb3sldrzr-link-epub";
-			a.title = "Download EPUB file";
-			a.href = this.epub;
+		var a3 = document.createElement('a');
+		a3.id = "epb3sldrzr-link-epub";
+		a3.title = "Download EPUB file";
+		a3.href = this.epub;
 
-			this.bodyRoot.insertBefore(a, this.bodyRoot.children[0]);
-		}
+		this.bodyRoot.insertBefore(a3, this.bodyRoot.children[0]);
 	}
-}
+};
 
 
 // ----------
@@ -1990,13 +2022,13 @@ Epub3Sliderizer.reAnimateElement = function(elem)
 			}
 		}
 	}
-}
+};
 
 // ----------
 
 Epub3Sliderizer.reAnimateAll = function(element)
 {
-	var list = new Array();
+	var list = [];
 	
 	var that = this;
 	
@@ -2019,7 +2051,7 @@ Epub3Sliderizer.reAnimateAll = function(element)
 			}
 		}
 	);
-}
+};
 
 // ----------
 
@@ -2089,10 +2121,13 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate, auto)
 				elem.removeAttribute("aria-activedescendant");
 				
 				
-				if (enableAuto && (i === that.increment + 1)
-					&& (auto
-						|| elem.classList.contains("auto")
-						|| (that.increment === 0 && elem.parentNode.classList.contains("auto")))
+				if (enableAuto &&
+					(i === that.increment + 1) &&
+					(
+					auto ||
+					elem.classList.contains("auto") ||
+					(that.increment === 0 && elem.parentNode.classList.contains("auto"))
+					)
 				)
 				{
 					var delay = elem.parentNode.getAttribute('data-incremental-delay') || 500;
@@ -2169,7 +2204,7 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate, auto)
 			}
 		}
 	);
-}
+};
 
 // ----------
 
@@ -2183,7 +2218,7 @@ Epub3Sliderizer.lastIncremental = function()
 	this.increment = this.incrementals.length - 1;
 
 	this.invalidateIncremental(false, false, false);
-}
+};
 
 // ----------
 
@@ -2197,7 +2232,7 @@ Epub3Sliderizer.firstIncremental = function()
 	this.increment = 0;
 	
 	this.invalidateIncremental(true, false, false);
-}
+};
 
 // ----------
 
@@ -2223,7 +2258,7 @@ Epub3Sliderizer.nextIncremental = function(backward)
 	this.increment = (backward ? (this.increment - 1) : (this.increment + 1));
 	
 	this.invalidateIncremental(!backward, !backward, false);
-}
+};
 
 // ----------
 
@@ -2252,7 +2287,7 @@ Epub3Sliderizer.initAnimations = function()
 			}
 		}
 	);
-}
+};
 
 // ----------
 
@@ -2264,8 +2299,8 @@ Epub3Sliderizer.initSlideTransition = function()
 	}
 
 	var animate = !this.opera; //&& !this.IE;
-	if (animate
-		&& !this.mobile
+	if (animate &&
+		!this.mobile
 	)
 	{
 		if (!this.reverse)
@@ -2284,17 +2319,18 @@ Epub3Sliderizer.initSlideTransition = function()
 		this.bodyRoot.classList.add("epb3sldrzr-animateStart");
 		
 
-
+		/*
 		if (this.firefox || this.opera)
 		{
-	//		this.reAnimateElement(this.bodyRoot);
+			this.reAnimateElement(this.bodyRoot);
 		}
+		*/
 	}
 	else
 	{
 		this.bodyRoot.style.visibility = "visible";
 	}
-}
+};
 
 // ----------
 
@@ -2314,7 +2350,7 @@ Epub3Sliderizer.initMediaOverlays = function()
 			elem.classList.add("-epub-media-overlay-active");
 		}
 	);
-}
+};
 
 // ----------
 
@@ -2335,15 +2371,15 @@ Epub3Sliderizer.initIncrementals = function()
 	{
 		this.firstIncremental();
 	}
-}
+};
 
 
 // ----------
 
 Epub3Sliderizer.initLocation = function()
 {
-	if (!isDefinedAndNotNull(window.location)
-	|| !isDefinedAndNotNull(window.location.href))
+	if (!isDefinedAndNotNull(window.location) ||
+	!isDefinedAndNotNull(window.location.href))
 	{
 		return;
 	}
@@ -2422,12 +2458,14 @@ Epub3Sliderizer.initLocation = function()
 	console.log("THIS: " + this.thisFilename);
 	console.log("FROM: " + this.from);
 	console.log("HASH: " + this.hash);
-}
+};
 
 // ----------
 
 Epub3Sliderizer.init = function()
 {
+	var that = this;
+			
 	console.log("Epub3Sliderizer");
 	console.log(window.navigator.userAgent);	
 
@@ -2567,7 +2605,7 @@ Epub3Sliderizer.init = function()
 		this.bodyRoot.style.visibility = "visible";
 
 		if (this.authorMode)
-	    {
+		{
 			this.AUTHORize(".epb3sldrzr-author");
 		}
 	}
@@ -2602,7 +2640,7 @@ Epub3Sliderizer.init = function()
 	
 			delete Hammer.defaults.stop_browser_behavior.userSelect;
 	
-			this.hammer = Hammer(this.bodyRoot,
+			this.hammer = new Hammer(this.bodyRoot,
 				{
 					prevent_default: false,
 					css_hacks: false,
@@ -2644,7 +2682,6 @@ Epub3Sliderizer.init = function()
 				this.initSlideTransition();
 			}
 
-			var that = this;
 			setTimeout(function()
 			{
 				that.initIncrementals();
@@ -2660,135 +2697,133 @@ Epub3Sliderizer.init = function()
 		if (isDefinedAndNotNull($))
 		{
 
-		//$(document).ready(function()
-		//{
+			//$(document).ready(function()
+			//{
 
-		if (isDefinedAndNotNull($(window).mousewheel))
-		{
-			return;
-		}
-
-		if (!navigator.userAgent.match(/Macintosh/))
-		{
-			return;
-		}
-
-		var that = this;
-		
-		$(window).mousewheel(function (event, delta, deltaX, deltaY)
-		{
-			if (that.reflow)
+			if (isDefinedAndNotNull($(window).mousewheel))
 			{
 				return;
 			}
-			
-			deltaY = -deltaY;
-	
-			var parents = $(event.target).parents();
-	
-			var canScrollLeft = false;
-			var canScrollRight = false;
-	
-			var canScrollUp = false;
-			var canScrollDown = false;
-			
-			var scrollableX = false;
-			var scrollableY = false;
-	
-			var func = function()
-			{
-				var elem = $(this)[0];
 
-				scrollableX = scrollableX || elem.scrollLeft !== 0;
-				scrollableY = scrollableY || elem.scrollTop !== 0;
-
-				canScrollLeft = canScrollLeft || deltaX < 0 && (elem.scrollLeft + deltaX) > 0;
-		
-				canScrollUp = canScrollUp || deltaY < 0 && (elem.scrollTop + deltaY) > 0;
-		
-				canScrollRight = canScrollRight || deltaX > 0 && (elem.scrollLeft + deltaX) < (elem.scrollWidth - elem.offsetWidth);
-		
-				canScrollDown = canScrollDown || deltaY > 0 && (elem.scrollTop + deltaY) < (elem.scrollHeight - elem.offsetHeight);
-			};
-	
-			$(event.target).each(func);
-			parents.each(func);
-	
-			var hasScroll = canScrollLeft || canScrollUp || canScrollRight || canScrollDown;
-	
-			if (!hasScroll)
+			if (!navigator.userAgent.match(/Macintosh/))
 			{
-				event.preventDefault();
-				event.stopPropagation();
+				return;
 			}
 
-			/*
-			console.log("deltaX: "+deltaX);
-			console.log("deltaY: "+deltaY);
-	
-			console.log("canScrollLeft: "+canScrollLeft);
-			console.log("canScrollRight: "+canScrollRight);
-	
-			console.log("canScrollUp: "+canScrollUp);
-			console.log("canScrollDown: "+canScrollDown);
-			*/
-	
-	
-			var left = deltaX < 0 && deltaX < deltaY;
-			var right = deltaX > 0 && deltaX > deltaY;
-			var up = deltaY < 0 && deltaY < deltaX;
-			var down = deltaY > 0 && deltaY > deltaX;
-	
-			if (that.totalZoom === 1)
+			$(window).mousewheel(function (event, delta, deltaX, deltaY)
 			{
-				if (false && // Interferes! :(
-					(
-						scrollableX && (up || down)
-						|| scrollableY && (left || right)
-						|| !scrollableY && !scrollableX
-					)
-					&&
-					(Math.abs(deltaX) > 40 || Math.abs(deltaY) > 40)
-				)
+				if (that.reflow)
 				{
-					if (!that.pauseEvents)
+					return;
+				}
+			
+				deltaY = -deltaY;
+	
+				var parents = $(event.target).parents();
+	
+				var canScrollLeft = false;
+				var canScrollRight = false;
+	
+				var canScrollUp = false;
+				var canScrollDown = false;
+			
+				var scrollableX = false;
+				var scrollableY = false;
+	
+				var func = function()
+				{
+					var elem = $(this)[0];
+
+					scrollableX = scrollableX || elem.scrollLeft !== 0;
+					scrollableY = scrollableY || elem.scrollTop !== 0;
+
+					canScrollLeft = canScrollLeft || deltaX < 0 && (elem.scrollLeft + deltaX) > 0;
+		
+					canScrollUp = canScrollUp || deltaY < 0 && (elem.scrollTop + deltaY) > 0;
+		
+					canScrollRight = canScrollRight || deltaX > 0 && (elem.scrollLeft + deltaX) < (elem.scrollWidth - elem.offsetWidth);
+		
+					canScrollDown = canScrollDown || deltaY > 0 && (elem.scrollTop + deltaY) < (elem.scrollHeight - elem.offsetHeight);
+				};
+	
+				$(event.target).each(func);
+				parents.each(func);
+	
+				var hasScroll = canScrollLeft || canScrollUp || canScrollRight || canScrollDown;
+	
+				if (!hasScroll)
+				{
+					event.preventDefault();
+					event.stopPropagation();
+				}
+
+				/*
+				console.log("deltaX: "+deltaX);
+				console.log("deltaY: "+deltaY);
+	
+				console.log("canScrollLeft: "+canScrollLeft);
+				console.log("canScrollRight: "+canScrollRight);
+	
+				console.log("canScrollUp: "+canScrollUp);
+				console.log("canScrollDown: "+canScrollDown);
+				*/
+	
+	
+				var left = deltaX < 0 && deltaX < deltaY;
+				var right = deltaX > 0 && deltaX > deltaY;
+				var up = deltaY < 0 && deltaY < deltaX;
+				var down = deltaY > 0 && deltaY > deltaX;
+	
+				if (that.totalZoom === 1)
+				{
+					if (false && // Interferes! :(
+						(
+							scrollableX && (up || down) ||
+							scrollableY && (left || right) ||
+							!scrollableY && !scrollableX
+						) &&
+						(Math.abs(deltaX) > 40 || Math.abs(deltaY) > 40)
+					)
 					{
-						that.pauseEvents = true;
-						setTimeout(function()
+						if (!that.pauseEvents)
 						{
-							that.pauseEvents = false;
-						}, 1000);
+							that.pauseEvents = true;
+							setTimeout(function()
+							{
+								that.pauseEvents = false;
+							}, 1000);
 					
-						if (left)
-						{
-							that.gotoPrevious();
-						}
-						else if (right)
-						{
-							that.gotoNext();
-						}
-						else if (up)
-						{
-							that.nextIncremental(true);
-						}
-						else if (down)
-						{
-							that.nextIncremental(false);
+							if (left)
+							{
+								that.gotoPrevious();
+							}
+							else if (right)
+							{
+								that.gotoNext();
+							}
+							else if (up)
+							{
+								that.nextIncremental(true);
+							}
+							else if (down)
+							{
+								that.nextIncremental(false);
+							}
 						}
 					}
 				}
-			}
-			else
-			{
-				//TODO: pan
-			}
-		});
+				/*
+				else
+				{
+					//TODO: pan
+				}
+				*/
+			});
 
-		//});
-
+			//});
 		}
 	}
-}
+};
 
 // ----------
 
@@ -2810,21 +2845,21 @@ function readyFirst()
 	var obj = window;
 	var str = "";
 	for (var prop in obj) {
-	  if (true || obj.hasOwnProperty(prop)) {
-		  if (prop.toLowerCase().indexOf("kobo") >= 0
-		  	|| prop.toLowerCase().indexOf("ibooks") >= 0
-		  	|| prop.toLowerCase().indexOf("google") >= 0
-		  	|| prop.toLowerCase().indexOf("edition") >= 0
-		  	|| prop.toLowerCase().indexOf("book") >= 0
-		  	|| prop.toLowerCase().indexOf("page") >= 0
+		if (true || obj.hasOwnProperty(prop)) {
+			if (prop.toLowerCase().indexOf("kobo") >= 0
+				|| prop.toLowerCase().indexOf("ibooks") >= 0
+				|| prop.toLowerCase().indexOf("google") >= 0
+				|| prop.toLowerCase().indexOf("edition") >= 0
+				|| prop.toLowerCase().indexOf("book") >= 0
+				|| prop.toLowerCase().indexOf("page") >= 0
 			|| prop.toLowerCase().indexOf("epub") >= 0
 			|| prop.toLowerCase().indexOf("azardi") >= 0
 			|| prop.toLowerCase().indexOf("igp") >= 0
 		)
-		  {
-			  str += ("\n" + prop);
-		  }
-	  }
+			{
+				str += ("\n" + prop);
+			}
+		}
 	}
 	alert(str);
 	*/
@@ -2919,7 +2954,7 @@ function readyFirst()
 				}
 				else
 				{
-				    setCookie(Epub3Sliderizer.cookieFontSize, document.body.style.fontSize);
+					setCookie(Epub3Sliderizer.cookieFontSize, document.body.style.fontSize);
 				}
 			}
 		}
@@ -2943,7 +2978,7 @@ function readyFirst()
 		document.body.classList.add("IE");
 		
 		var ua = navigator.userAgent;
-		var re  = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+		var re	= new RegExp("MSIE ([0-9]{1,}[\\.0-9]{0,})");
 		if (re.exec(ua) !== null)
 		{
 			var ver = parseFloat( RegExp.$1 );
@@ -2995,8 +3030,7 @@ function readyFirst()
 					$.blockUI.defaults.overlayCSS.cursor = "default";
 					$.blockUI({ message: null, css: { border: "none", cursor: "default" } });
 				}
-			}
-			, 0);
+			}, 0);
 	}
 	else if (Epub3Sliderizer.basicMode)
 	{
