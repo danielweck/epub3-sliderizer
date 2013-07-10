@@ -6,12 +6,6 @@
 /* jshint devel: true */
 /* jshint jquery: true */
 
-/*
-jsZZhint globalstrict: true
-"usZZe strict";
-*/
-
-
 // REQUIRES:
 // addEventListener.js
 // screenfull.js
@@ -23,65 +17,246 @@ jsZZhint globalstrict: true
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
-// ----------
-// IE 9 F12
 
-if (!window.console)
-{
-	window.console = {};
-}
-
-if (!window.console.log)
-{
-	window.console.log = function () { };
-}
+var host = {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-!String.prototype.trim &&
-(String.prototype.trim = function()
+(function()
 {
-	return this.replace(/^\s+|\s+$/g, '');
-});
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-function getUrlQueryParam(name)
-{
-	var urlQueryParams = window.urlQueryParams ||
-	(function()
+/* jshint strict: true */
+/* jshint -W034 */
+	"use strict";
+	
+	if(window.performance)
 	{
-		var urlQueryParams_ = {};
-		
-		var regexp = /\??([^=^&^\?]+)(?:=([^&]*))?&?/gi;
-		
-		var match;
-		while (match = regexp.exec(window.location.search))
+		if (window.performance.now)
 		{
-			if (!match || match.length < 3)
-			{
-				break;
-			}
-			
-			urlQueryParams_[decodeURIComponent(match[1])] = match[2] === "" ? null : decodeURIComponent(match[2]);
+			return;
 		}
 		
-		return window.urlQueryParams = urlQueryParams_;
-	})();
-	
-	if (typeof urlQueryParams[name] === "undefined")
-	{
-		return null;
+		var vendors = ['webkitNow', 'mozNow', 'msNow', 'oNow'];
+		
+		for (var i = 0; i < vendors.length; i++)
+		{
+			var now = window.performance[vendors[i]];
+			if(now)
+			{
+				window.performance.now = now;
+				return;
+			}
+		}
 	}
 	else
 	{
-		var value = urlQueryParams[name];
+		window.performance = {};
 		
-		return value === null ? "" : value;
 	}
-}
+	
+	if(Date.now)
+	{
+		window.performance.now = function()
+		{
+			return Date.now();
+		};
+		return;
+	}
+	
+	window.performance.now = function()
+	{
+		return +(new Date());
+	};
+})();
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+// USAGE
+// (function animloop(){
+//   window.requestAnimationFrame(animloop);
+//   render();
+// })();
+
+(function(now)
+{
+/* jshint strict: true */
+/* jshint -W034 */
+	"use strict";
+
+    var ios6 = /iP(ad|hone|od).*OS 6/.test(window.navigator.userAgent);
+
+	var vendors = ['webkit', 'moz', 'ms', 'o'];
+		
+	var requestAnimationFrame = window.requestAnimationFrame;
+	for(var i = 0; i < vendors.length && !requestAnimationFrame; i++)
+	{
+		requestAnimationFrame = window[vendors[i] + 'RequestAnimationFrame'];
+	}
+		
+		
+	var cancelAnimationFrame =
+		window.cancelAnimationFrame ||
+		window.cancelRequestAnimationFrame;
+	for(var j = 0; j < vendors.length && !cancelAnimationFrame; j++)
+	{
+		cancelAnimationFrame = window[vendors[j] + 'CancelAnimationFrame'] ||
+								window[vendors[j] + 'CancelRequestAnimationFrame'];
+	}
+		
+	if (!ios6 && requestAnimationFrame && cancelAnimationFrame)
+	{
+		window.requestAnimationFrame = requestAnimationFrame;
+		window.cancelAnimationFrame = cancelAnimationFrame;
+	}
+	else
+	{
+		var queue = [],
+			processing = [],
+			id = 0,
+			interval;
+
+		window.requestAnimationFrame = function(callback)
+		{
+			queue.push([++id, callback]);
+			
+			if (!interval)
+			{
+				interval = setInterval(function()
+				{
+					if (queue.length)
+					{
+						var time = now();
+						
+						var temp = processing;
+						processing = queue;
+						queue = temp;
+						
+						while (processing.length)
+						{
+							processing.shift()[1](time);
+						}
+					}
+					else
+					{
+						clearInterval(interval);
+						interval = undefined;
+					}
+				}, 1000 / 60);  // 60 FPS, 16.67ms
+			}
+			
+			return id;
+		};
+		
+		window.cancelAnimationFrame = function(requestId)
+		{
+			var i;
+			
+			for (i = 0; i < queue.length; i++)
+			{
+				if (queue[i][0] === requestId)
+				{
+					queue.splice(i, 1);
+					return;
+				}
+			}
+			
+			for (i = 0; i < processing.length; i++)
+			{
+				if (processing[i][0] === requestId)
+				{
+					processing.splice(i, 1);
+					return;
+				}
+			}
+		};
+	}
+})(window.performance.now);
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+(function()
+{
+/* jshint strict: true */
+/* jshint -W034 */
+	"use strict";
+	
+	if (!window.console)
+	{
+		window.console = {};
+	}
+
+	if (!window.console.log)
+	{
+		window.console.log = function () { };
+	}
+	
+})();
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+(function()
+{
+/* jshint strict: true */
+/* jshint -W034 */
+	"use strict";
+	
+	/* jshint unused: false */
+	var v = !String.prototype.trim &&
+	(String.prototype.trim = function()
+	{
+		return this.replace(/^\s+|\s+$/g, '');
+	});
+	
+})();
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+(function(hozt)
+{
+/* jshint strict: true */
+/* jshint -W034 */
+	"use strict";
+	
+	hozt.getUrlQueryParam = function(name)
+	{
+		var urlQueryParams = hozt.urlQueryParams ||
+		(function()
+		{
+			var urlQueryParams_ = {};
+		
+			var regexp = /\??([^=^&^\?]+)(?:=([^&]*))?&?/gi;
+		
+			var match;
+			while ((match = regexp.exec(window.location.search)) !== null)
+			{
+				if (!match || match.length < 3)
+				{
+					break;
+				}
+			
+				urlQueryParams_[decodeURIComponent(match[1])] = match[2] === "" ? null : decodeURIComponent(match[2]);
+			}
+		
+			hozt.urlQueryParams = urlQueryParams_;
+			return urlQueryParams_;
+		})();
+	
+		if (typeof urlQueryParams[name] === "undefined")
+		{
+			return null;
+		}
+		else
+		{
+			var value = urlQueryParams[name];
+		
+			return value === null ? "" : value;
+		}
+	};
+	
+})(host);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,145 +267,178 @@ function getUrlQueryParam(name)
 // N milliseconds. If `immediate` is passed, trigger the function on the
 // leading edge, instead of the trailing.
 
-/* jshint unused: false */
-function debounce(func, wait, immediate)
+(function(hozt)
 {
-	var result;
-	var timeout = null;
+/* jshint strict: true */
+/* jshint -W034 */
+	"use strict";
 	
-	return function()
+	/* jshint unused: false */
+	hozt.debounce = function(func, wait, immediate)
 	{
-		var context = this, args = arguments;
-		var later = function()
+		var result;
+		var timeout = null;
+	
+		return function()
 		{
-			timeout = null;
-			if (!immediate)
+			var context = this, args = arguments;
+			var later = function()
+			{
+				timeout = null;
+				if (!immediate)
+				{
+					result = func.apply(context, args);
+				}
+			};
+		
+			var callNow = immediate && !timeout;
+			clearTimeout(timeout);
+			timeout = setTimeout(later, wait);
+			if (callNow)
 			{
 				result = func.apply(context, args);
 			}
+			return result;
 		};
-		
-		var callNow = immediate && !timeout;
-		clearTimeout(timeout);
-		timeout = setTimeout(later, wait);
-		if (callNow)
-		{
-			result = func.apply(context, args);
-		}
-		return result;
-	};
-}
-//
-// Returns a function, that, when invoked, will only be triggered at most once
-// during a given window of time.
-function throttle(func, wait, immediate)
-{
-	var context, args, result;
-	var timeout = null;
-	var previous = 0;
-	var later = function()
-	{
-		previous = new Date();
-		timeout = null;
-		result = func.apply(context, args);
 	};
 
-	return function()
+
+	// Returns a function, that, when invoked, will only be triggered at most once
+	// during a given window of time.
+	hozt.throttle = function(func, wait, immediate)
 	{
-		var now = new Date();
-		if (!previous && immediate === false)
+		var context, args, result;
+		var timeout = null;
+		var previous = 0;
+		var later = function()
 		{
-			previous = now;
-		}
-		var remaining = wait - (now - previous);
-		context = this;
-		args = arguments;
-		
-		if (remaining <= 0)
-		{
-			clearTimeout(timeout);
+			previous = new Date();
 			timeout = null;
-			previous = now;
 			result = func.apply(context, args);
-		}
-		else if (!timeout)
-		{
-			timeout = setTimeout(later, remaining);
-		}
-		
-		return result;
-	};
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-if (!Function.prototype.bind)
-{
-	Function.prototype.bind = function (that)
-	{
-		if (typeof this !== "function")
-		{
-			// closest thing possible to the ECMAScript 5 internal IsCallable function
-			throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
-		}
-
-		var functionToBind = this;
-		 
-		var args = Array.prototype.slice.call(arguments, 1);
-
-		var Function_NOP = function () {};
-		Function_NOP.prototype = this.prototype;
-		
-		var Function_BOUND = function ()
-		{
-			return functionToBind.apply(
-				
-				//this instanceof Function_NOP && that ? this : that,
-				this instanceof Function_NOP ? this : that || window,
-				
-				args.concat(Array.prototype.slice.call(arguments))
-				);
 		};
-		Function_BOUND.prototype = new Function_NOP();
+
+		return function()
+		{
+			var now = new Date();
+			if (!previous && immediate === false)
+			{
+				previous = now;
+			}
+			var remaining = wait - (now - previous);
+			context = this;
+			args = arguments;
 		
-		return Function_BOUND;
+			if (remaining <= 0)
+			{
+				clearTimeout(timeout);
+				timeout = null;
+				previous = now;
+				result = func.apply(context, args);
+			}
+			else if (!timeout)
+			{
+				timeout = setTimeout(later, remaining);
+			}
+		
+			return result;
+		};
 	};
-}
+	
+})(host);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-/* jshint unused: false */
-function STACK_TRACE(obj)
+(function()
 {
-	if (obj)
+/* jshint strict: true */
+/* jshint -W034 */
+	"use strict";
+	
+	if (!Function.prototype.bind)
 	{
-		console.log(obj);
+		Function.prototype.bind = function(that)
+		{
+			if (typeof this !== "function")
+			{
+				// closest thing possible to the ECMAScript 5 internal IsCallable function
+				throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+			}
+
+			var functionToBind = this;
+		 
+			var args = Array.prototype.slice.call(arguments, 1);
+
+			var Function_NOP = function () {};
+			Function_NOP.prototype = this.prototype;
+		
+			var Function_BOUND = function ()
+			{
+				return functionToBind.apply(
+				
+					//this instanceof Function_NOP && that ? this : that,
+					this instanceof Function_NOP ? this : that || window,
+				
+					args.concat(Array.prototype.slice.call(arguments))
+					);
+			};
+			Function_BOUND.prototype = new Function_NOP();
+		
+			return Function_BOUND;
+		};
 	}
 	
-	try
-	{
-		throw new Error("STACK TRACE DEBUG");
-	}
-	catch(ex)
-	{
-		console.log(ex.stack);
-	}
-}
+})();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-var querySelectorZ = (HTMLElement.prototype.querySelectorZ = function(selector)
+(function(hozt)
 {
-	return this.querySelector(selector);
-}).bind(document);
+/* jshint strict: true */
+/* jshint -W034 */
+	"use strict";
+	
+	/* jshint unused: false */
+	hozt.STACK_TRACE = function(obj)
+	{
+		if (obj)
+		{
+			console.log(obj);
+		}
+	
+		try
+		{
+			throw new Error("STACK TRACE DEBUG");
+		}
+		catch(ex)
+		{
+			console.log(ex.stack);
+		}
+	};
+	
+})(host);
 
-var querySelectorAllZ = (HTMLElement.prototype.querySelectorAllZ = function(selector)
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+(function(hozt)
 {
-	return this.querySelectorAll(selector);
-}).bind(document);
+/* jshint strict: true */
+/* jshint -W034 */
+	"use strict";
+	
+	hozt.querySelectorZ = (HTMLElement.prototype.querySelectorZ = function(selector)
+	{
+		return this.querySelector(selector);
+	}).bind(document);
+
+	hozt.querySelectorAllZ = (HTMLElement.prototype.querySelectorAllZ = function(selector)
+	{
+		return this.querySelectorAll(selector);
+	}).bind(document);
+
+})(host);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -255,71 +463,78 @@ var querySelectorAllZ = (HTMLElement.prototype.querySelectorAllZ = function(sele
 |*|
 \*/
 
-var docCookies = {
-	getItem: function (sKey) {
-	return unescape(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + escape(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
-	},
-	setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
-	if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
-	var sExpires = "";
-	if (vEnd) {
-		switch (vEnd.constructor) {
-		case Number:
-			sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + vEnd;
-			break;
-		case String:
-			sExpires = "; expires=" + vEnd;
-			break;
-		case Date:
-			sExpires = "; expires=" + vEnd.toGMTString();
-			break;
-		}
-	}
-	document.cookie = escape(sKey) + "=" + escape(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
-
-	return true;
-	},
-	removeItem: function (sKey, sPath) {
-	if (!sKey || !this.hasItem(sKey)) { return false; }
-	document.cookie = escape(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sPath ? "; path=" + sPath : "");
-	return true;
-	},
-	hasItem: function (sKey) {
-	return (new RegExp("(?:^|;\\s*)" + escape(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
-	},
-	keys: /* optional method: you can safely remove it! */ function () {
-	var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
-	for (var nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = unescape(aKeys[nIdx]); }
-	return aKeys;
-	}
-};
-
-function getCookie(name)
+(function(hozt)
 {
-	return docCookies.getItem(name);
-}
-
-function setCookie(name, value)
-{	
-	if (docCookies.hasItem(name))
-	{
-		docCookies.removeItem(name, "");
-		docCookies.removeItem(name, "/");
-	}
-
-	var date = new Date();
-	date.setDate(date.getDate() + 365);
+/* jshint strict: true */
+/* jshint -W034 */
+	"use strict";
 	
-	docCookies.setItem(name, value, date.toUTCString(), "/");
-}
+	var docCookies = {
+		getItem: function (sKey) {
+		return unescape(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + escape(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+		},
+		setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+		if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
+		var sExpires = "";
+		if (vEnd) {
+			switch (vEnd.constructor) {
+			case Number:
+				sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + vEnd;
+				break;
+			case String:
+				sExpires = "; expires=" + vEnd;
+				break;
+			case Date:
+				sExpires = "; expires=" + vEnd.toGMTString();
+				break;
+			}
+		}
+		document.cookie = escape(sKey) + "=" + escape(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
+
+		return true;
+		},
+		removeItem: function (sKey, sPath) {
+		if (!sKey || !this.hasItem(sKey)) { return false; }
+		document.cookie = escape(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sPath ? "; path=" + sPath : "");
+		return true;
+		},
+		hasItem: function (sKey) {
+		return (new RegExp("(?:^|;\\s*)" + escape(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+		},
+		keys: /* optional method: you can safely remove it! */ function () {
+		var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+		for (var nIdx = 0; nIdx < aKeys.length; nIdx++) { aKeys[nIdx] = unescape(aKeys[nIdx]); }
+		return aKeys;
+		}
+	};
+
+	hozt.getCookie = function(name)
+	{
+		return docCookies.getItem(name);
+	};
+
+	hozt.setCookie = function(name, value)
+	{	
+		if (docCookies.hasItem(name))
+		{
+			docCookies.removeItem(name, "");
+			docCookies.removeItem(name, "/");
+		}
+
+		var date = new Date();
+		date.setDate(date.getDate() + 365);
+	
+		docCookies.setItem(name, value, date.toUTCString(), "/");
+	};
+
+})(host);
 
 //####################################################################################################
 //####################################################################################################
 
-(function(undefined) {
+(function(STACK_TRACE, querySelectorZ, querySelectorAllZ, getUrlQueryParam, throttle, debounce, getCookie, setCookie, undefined) {
 
 /* jshint scripturl: true */
-/* jshint validthis: true */
 
 /* jshint strict: true */
 /* jshint -W034 */
@@ -758,7 +973,7 @@ Epub3Sliderizer.zoomTo = function(element)
 	var rectY = rect.top + document.documentElement.scrollTop;
 	var rectFit = this.getRectFit(rect.width, rect.height, false);
 	
-	var rectBody = this.bodyRoot.getBoundingClientRect();
+//	var rectBody = this.bodyRoot.getBoundingClientRect();
 //	var bodyFit = this.getElementFit(rectBody.width, rectBody.height, true);
 
 	var rotation = 0;
@@ -1040,9 +1255,14 @@ Epub3Sliderizer.initTouch = function()
 
 	
 	var scrolling = false;
-	
-	function onSwipeLeft(hammerEvent)
+
+	function onSwipeLeft(
+		/* jshint unused: false */
+		hammerEvent
+	)
 	{
+		/* jshint validthis: true */
+	
 		if (this.reflow)
 		{
 			return;
@@ -1056,8 +1276,13 @@ Epub3Sliderizer.initTouch = function()
 		this.gotoNext();
 	}
 	
-	function onSwipeRight(hammerEvent)
+	function onSwipeRight(
+		/* jshint unused: false */
+		hammerEvent
+	)
 	{
+		/* jshint validthis: true */
+		
 		if (this.reflow)
 		{
 			return;
@@ -1071,8 +1296,13 @@ Epub3Sliderizer.initTouch = function()
 		this.gotoPrevious();
 	}
 	
-	function onSwipeUp(hammerEvent)
+	function onSwipeUp(
+		/* jshint unused: false */
+		hammerEvent
+	)
 	{
+		/* jshint validthis: true */
+		
 		if (this.reflow)
 		{
 			return;
@@ -1092,8 +1322,13 @@ Epub3Sliderizer.initTouch = function()
 		this.nextIncremental(true);
 	}
 	
-	function onSwipeDown(hammerEvent)
+	function onSwipeDown(
+		/* jshint unused: false */
+		hammerEvent
+	)
 	{
+		/* jshint validthis: true */
+		
 		if (this.reflow)
 		{
 			return;
@@ -1150,6 +1385,8 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onTransform(hammerEvent)
 	{
+		/* jshint validthis: true */
+		
 		if (this.reflow)
 		{
 			return;
@@ -1195,8 +1432,13 @@ Epub3Sliderizer.initTouch = function()
 		}
 	}
 	
-	function onTransformEnd(hammerEvent)
+	function onTransformEnd(
+		/* jshint unused: false */
+		hammerEvent
+	)
 	{
+		/* jshint validthis: true */
+		
 		if (this.reflow)
 		{
 			return;
@@ -1219,6 +1461,8 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onTransformStart(hammerEvent)
 	{
+		/* jshint validthis: true */
+		
 		if (this.reflow)
 		{
 			return;
@@ -1259,8 +1503,13 @@ Epub3Sliderizer.initTouch = function()
 	
 	var firstDrag = true;
 	
-	function onDragEnd(hammerEvent)
+	function onDragEnd(
+		/* jshint unused: false */
+		hammerEvent
+	)
 	{
+		/* jshint validthis: true */
+		
 		if (this.reflow)
 		{
 			return;
@@ -1288,6 +1537,8 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onDrag(hammerEvent)
 	{
+		/* jshint validthis: true */
+		
 		if (this.reflow)
 		{
 			return;
@@ -1346,6 +1597,8 @@ Epub3Sliderizer.initTouch = function()
 	
 	function onDragStart(hammerEvent)
 	{
+		/* jshint validthis: true */
+		
 		if (this.reflow)
 		{
 			return;
@@ -1385,11 +1638,13 @@ Epub3Sliderizer.initTouch = function()
 					if (scroll.scrollTop <= 0 &&
 						hammerEvent.gesture && hammerEvent.gesture.direction === "down")
 					{
+						/* jshint unused: false */
 						var nop1 = null;
 					}
 					else if (scroll.scrollTop >= (scroll.scrollHeight - scroll.offsetHeight) &&
 							hammerEvent.gesture && hammerEvent.gesture.direction === "up")
 					{
+						/* jshint unused: false */
 						var nop2 = null;
 					}
 					else
@@ -1451,6 +1706,8 @@ Epub3Sliderizer.initTouch = function()
 
 	function onDoubleTap(hammerEvent)
 	{
+		/* jshint validthis: true */
+		
 		if (this.reflow)
 		{
 			return;
@@ -1503,6 +1760,8 @@ Epub3Sliderizer.initTouch = function()
 
 	function onTap(hammerEvent)
 	{
+		/* jshint validthis: true */
+		
 		if (hammerEvent.gesture)
 		{
 			var controls = document.getElementById("epb3sldrzr-controls");
@@ -1743,6 +2002,7 @@ Epub3Sliderizer.onOrientationChange = function()
 	var viewport = querySelectorZ("head > meta[name=viewport]");
 	if (viewport !== null)
 	{
+		/*
 		var sx = this.bodyRoot.clientWidth / window.innerWidth;
 		var sy = this.bodyRoot.clientHeight / window.innerHeight;
 		var ratio = 1.0 / Math.max(sx, sy);
@@ -1757,6 +2017,7 @@ Epub3Sliderizer.onOrientationChange = function()
 		var height = Math.round( Math.round( adjustedHeight * 1000000.0 ) / 1000000.0
 		// - (this.staticMode ? 0 : 300)
 		);
+		*/
 
 		var content = viewport.getAttribute('content');
 		console.log(content);
@@ -2174,7 +2435,25 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate, auto)
 						{
 							if (target.offsetHeight < target.scrollHeight)
 							{
-								var toScroll = elem.offsetTop - target.offsetTop;
+								var totalTop_Elem = 0;
+								var totalTop_Target = 0;
+								
+								var target_ = elem;
+								while (target_)
+								{
+									totalTop_Elem += target_.offsetTop;
+									target_ = target_.offsetParent;
+								}
+								
+								target_ = target;
+								while (target_)
+								{
+									totalTop_Target += target_.offsetTop;
+									target_ = target_.offsetParent;
+								}
+								
+								//var toScroll = elem.offsetTop - target.offsetTop;
+								var toScroll = totalTop_Elem - totalTop_Target;
 							
 								if (topAlign)
 								{
@@ -2182,16 +2461,16 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate, auto)
 								}
 								else
 								{
-									toScroll = toScroll - (target.offsetHeight - elem.offsetHeight) / (center ? 2 : 1);
+									toScroll = 0.0 + toScroll - (target.offsetHeight - elem.offsetHeight) / (center ? 2 : 1);
 
-									if (toScroll > 0)
+									if (toScroll > 0.0)
 									{
 										target.scrollTop = toScroll;
 									}
 								}
-
-								break;
 							}
+
+							break;
 						}
 
 						target = target.parentNode;
@@ -3068,7 +3347,7 @@ window.Epub3Sliderizer = Epub3Sliderizer;
 // ----------
 
 //window.onload = readyFirst;
-document.addEventListener("DOMContentLoaded", function(e) { readyFirst(); }, false);
+document.addEventListener("DOMContentLoaded", function() { readyFirst(); }, false);
 
 // ----------
 
@@ -3085,9 +3364,9 @@ document.addEventListener("DOMContentLoaded", function(e) { readyFirst(); }, fal
 // window.addEventListener("load", function () { setTimeout(readyDelayed, 200); }, false);
 // 
 // // With the modern document "DOMContentLoaded" event:
-document.addEventListener("DOMContentLoaded", function(e) { setTimeout(readyDelayed, 200); }, false);
+document.addEventListener("DOMContentLoaded", function() { setTimeout(readyDelayed, 200); }, false);
 
-})();
+})(host.STACK_TRACE, host.querySelectorZ, host.querySelectorAllZ, host.getUrlQueryParam, host.throttle, host.debounce, host.getCookie, host.setCookie);
 
 //####################################################################################################
 //####################################################################################################

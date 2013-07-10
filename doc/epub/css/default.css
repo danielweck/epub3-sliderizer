@@ -460,7 +460,14 @@ Slide content
 
 */
 
-#epb3sldrzr-content > *:not(img):not(.spread)
+#epb3sldrzr-anim-overflow
+{
+	position: relative;
+	overflow: hidden; 
+}
+
+#epb3sldrzr-content > *:not(img):not(.spread):not(#epb3sldrzr-anim-overflow),
+#epb3sldrzr-content > #epb3sldrzr-anim-overflow > *:not(img):not(.spread)
 {
 	padding-left: 40px;
 	padding-left: 4rem;
@@ -469,7 +476,8 @@ Slide content
 	padding-right: 4rem;
 }
 
-#epb3sldrzr-content > *:not(img):not(.spread)
+#epb3sldrzr-content > *:not(img):not(.spread):not(#epb3sldrzr-anim-overflow),
+#epb3sldrzr-content > #epb3sldrzr-anim-overflow > *:not(img):not(.spread)
 {
 	margin-top: 20px;
 	margin-top: 2rem;
