@@ -67,6 +67,7 @@ public final class SlideShow extends Fielder {
 	public String FONT_SIZE = "40";
 
 	public String FAVICON = "favicon.ico";
+	public String TOUCHICON = null;
 
 	public String LOGO = null;
 
@@ -110,7 +111,14 @@ public final class SlideShow extends Fielder {
 					allReferences_IMG.add(str);
 				}
 			}
-
+			
+			array = Epub3FileSet.splitPaths(this.TOUCHICON);
+			for (String str : array) {
+				if (!allReferences_IMG.contains(str)) {
+					allReferences_IMG.add(str);
+				}
+			}
+			
 			array = Epub3FileSet.splitPaths(this.COVER);
 			for (String str : array) {
 				if (!allReferences_IMG.contains(str)) {

@@ -339,6 +339,9 @@ public final class Epub3FileSet {
 
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.LOGO, verbosity);
+		
+		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
+				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.TOUCHICON, verbosity);
 
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.COVER, verbosity);

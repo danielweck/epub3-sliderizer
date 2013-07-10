@@ -1,6 +1,5 @@
 package danielweck.epub3.sliderizer;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.xml.XMLConstants;
@@ -233,6 +232,10 @@ public final class OPF {
 
 		create_ManifestItem(slideShow.LOGO, document, elementManifest, "logo",
 				false, Epub3FileSet.FOLDER_IMG + "/"
+						+ Epub3FileSet.FOLDER_CUSTOM, null);
+
+		create_ManifestItem(slideShow.TOUCHICON, document, elementManifest,
+				"touchicon", false, Epub3FileSet.FOLDER_IMG + "/"
 						+ Epub3FileSet.FOLDER_CUSTOM, null);
 
 		create_ManifestItem(slideShow.FILES_CSS, document, elementManifest,

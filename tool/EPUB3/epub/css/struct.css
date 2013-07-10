@@ -12,6 +12,9 @@
 
 html
 {
+	width:100%;
+	height:100%;
+	
 	font-size: 62.5%;
 	/* 1.4rem == 14px */
 	
@@ -46,6 +49,12 @@ body
 	font-weight: 400;
 	font-family: Lato, Tahoma, verdana, arial, sans-serif;
 
+	position: relative;
+
+	left: 0;
+	top: 0;
+	width:100%;
+	height:100%;
 }
 
 body:not(.reflow)
@@ -53,12 +62,6 @@ body:not(.reflow)
 	background-color: black;
 	
 	overflow:hidden;
-
-	position: absolute;
-	left: 0;
-	top: 0;
-	width:100%;
-	height:100%;
 }
 
 body.reflow
@@ -150,6 +153,7 @@ body:not(.reflow) div#epb3sldrzr-root
 
 	width:100%;
 	height:100%;
+	position: static;
 
 	display:block;
 

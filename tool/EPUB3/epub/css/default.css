@@ -360,7 +360,14 @@ Slide content
 
 */
 
-#epb3sldrzr-content > *:not(img):not(.spread)
+#epb3sldrzr-anim-overflow
+{
+	position: relative;
+	overflow: hidden; 
+}
+
+#epb3sldrzr-content > *:not(img):not(.spread):not(#epb3sldrzr-anim-overflow),
+#epb3sldrzr-content > #epb3sldrzr-anim-overflow > *:not(img):not(.spread)
 {
 	padding-left: FONT_SIZEpx;
 	padding-left: FONT_SIZErem;
@@ -369,7 +376,8 @@ Slide content
 	padding-right: FONT_SIZErem;
 }
 
-#epb3sldrzr-content > *:not(img):not(.spread)
+#epb3sldrzr-content > *:not(img):not(.spread):not(#epb3sldrzr-anim-overflow),
+#epb3sldrzr-content > #epb3sldrzr-anim-overflow > *:not(img):not(.spread)
 {
 	margin-top: FONT_SIZE_HALFpx;
 	margin-top: FONT_SIZE_HALFrem;

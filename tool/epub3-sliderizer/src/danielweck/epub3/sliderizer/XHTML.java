@@ -1,6 +1,5 @@
 package danielweck.epub3.sliderizer;
 
-import java.io.File;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
@@ -196,6 +195,10 @@ public final class XHTML {
 						+ (slideShow.FAVICON.equals("favicon.ico") ? "" : "/"
 								+ Epub3FileSet.FOLDER_CUSTOM));
 
+		create_HeadLinks(slideShow.TOUCHICON, document, elementHead,
+				"apple-touch-icon", null, PATH_PREFIX + Epub3FileSet.FOLDER_IMG
+						+ "/" + Epub3FileSet.FOLDER_CUSTOM);
+
 		if (// !notes &&
 		slideShow.VIEWPORT_WIDTH != null && slideShow.VIEWPORT_HEIGHT != null) {
 			Element elementMeta2 = document.createElement("meta");
@@ -253,7 +256,7 @@ public final class XHTML {
 			for (int k = 0; k < Epub3FileSet.CSS_FILENAMES.length; k++) {
 				String filename = Epub3FileSet.CSS_FILENAMES[k][0];
 				// String id = Epub3FileSet.CSS_FILENAMES[k][1];
-				
+
 				if (!filename.equals(Epub3FileSet.NAVDOC_CSS) || slide == null) {
 					create_HeadLinks(filename, document, elementHead,
 							"stylesheet", "text/css", PATH_PREFIX
@@ -430,7 +433,13 @@ public final class XHTML {
 		elementDiv.appendChild(elementSection);
 		elementSection.setAttribute("id", "epb3sldrzr-content");
 
-		return elementSection;
+		// return elementSection;
+
+		Element divAnimOverflow = document.createElement("div");
+		elementSection.appendChild(divAnimOverflow);
+		divAnimOverflow.setAttribute("id", "epb3sldrzr-anim-overflow");
+
+		return divAnimOverflow;
 	}
 
 	private static void fixRelativeReferences(Element element,

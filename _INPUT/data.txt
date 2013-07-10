@@ -11,6 +11,10 @@ _LOGO
 assets/EPUB3-Sliderizer.png
 
 // --------------------------------------------
+_TOUCHICON
+assets/TouchIcon.png
+
+// --------------------------------------------
 _COVER
 assets/EPUB.png
 
@@ -72,7 +76,6 @@ function setupAnimations()
 	var html = document.documentElement;
 	if (html.id == "epb3sldrzr-NavDoc")
 	{
-//		var elem = querySelectorZ("#epb3sldrzr-logo");
 		var elem = document.getElementById("epb3sldrzr-logo");
 		elem.classList.add("fadeIn");
 		elem.classList.add("epb3sldrzr-animated");
@@ -93,7 +96,7 @@ Intro
 
 // --------------------------------------------
 _CONTENT
- 
+
 <a
 	id="FMOGH"
 	href="https://github.com/danielweck/epub3-sliderizer/"
@@ -107,55 +110,51 @@ _CONTENT
 
 <h1 id="title" class="spread">EPUB3-Sliderizer</h1>
 
-	<div
-		class="auto incremental"
-		data-incremental-delay="100">
-		
-		<p>
-		a tool that creates slideshow presentations for
+<div
+	class="auto incremental"
+	data-incremental-delay="100">
+	
+	<p>
+	a tool that creates slideshow presentations for
 
-		<p>
-		<span class="pale-red">web-browsers</span> and <span class="pale-blue">e-book readers</span>
+	<p>
+	<span class="pale-red">web-browsers</span> and <span class="pale-blue">e-book readers</span>
 
-		<p>
-		by converting a simple input format (single text file)
+	<p>
+	by converting a simple input format (single text file)
 
-		<p>
-		to a pre-paginated / fixed-layout EPUB 3 <span class="code"><em>.epub</em></span> e-book
+	<p>
+	to a pre-paginated / fixed-layout EPUB 3 <span class="code"><em>.epub</em></span> e-book
 
-		<p>
-		that can also be viewed in modern HTML5 web browsers
+	<p>
+	that can also be viewed in modern HTML5 web browsers
 
-		<p>
-		thanks to a bespoke slide flippin' engine&#8482;
+	<p>
+	thanks to a bespoke slide flippin' engine&#8482;
 
-	</div>
+</div>
 
+<div
+	class="boxed epb3sldrzr-animated bounceInDown"
+	id="boox">
 
-
-	<div
-		class="boxed epb3sldrzr-animated bounceInDown"
-		id="boox">
-
-		<div>
+	<div>
 		<div id="logoWrapper">
 			<img
 				id="logo"
 				src="assets/EPUB3-Sliderizer.png"
 				alt="Logo"/>
-				</div>
-			<ul>
-				<li>
-					<strong>See</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/data.txt" target="_blank">input file</a> for this slidedeck
-				</li>
-				<li>
-					<strong>Grab</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/" target="_blank">open-source code</a> from GitHub <i class="icon-github" style="font-size: 1.5em"></i> 
-				</li>
-			</ul>
 		</div>
+		<ul>
+			<li>
+				<strong>See</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/data.txt" target="_blank">input file</a> for this slidedeck
+			</li>
+			<li>
+				<strong>Grab</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/" target="_blank">open-source code</a> from GitHub <i class="icon-github" style="font-size: 1.5em"></i> 
+			</li>
+		</ul>
 	</div>
 </div>
-
 
 // --------------------------------------------
 _FILES_IMG
@@ -166,6 +165,10 @@ assets/EPUB3-Sliderizer.png
 // --------------------------------------------
 _CSS_STYLE
 
+#epb3sldrzr-anim-overflow
+{
+	padding-bottom: 0.5em;
+}
 
 a#FMOGH:link,
 a#FMOGH:visited,
@@ -255,7 +258,7 @@ _JS_SCRIPT
 
 function setupLogoAnimation()
 {
-	var elem = document.body.querySelectorZ("img#epb3sldrzr-logo");
+	var elem = document.getElementById("epb3sldrzr-logo");
 	elem.classList.add("fadeIn");
 	elem.classList.add("epb3sldrzr-animated");
 }
@@ -1030,8 +1033,6 @@ _JS_SCRIPT
 
 function setupAnimatedLogo()
 {
-//	var html = document.documentElement;
-//	var elem = querySelectorZ("#epb3sldrzr-logo");
 	var elem = document.getElementById("epb3sldrzr-logo");
 	elem.classList.add("bounceInLeft");
 	elem.classList.add("epb3sldrzr-animated");
@@ -1302,8 +1303,6 @@ _JS_SCRIPT
 
 function setupAnimatedLogo()
 {
-//	var html = document.documentElement;
-//	var elem = querySelectorZ("#epb3sldrzr-logo");
 	var elem = document.getElementById("epb3sldrzr-logo");
 	elem.classList.add("bounceInUp");
 	elem.classList.add("epb3sldrzr-animated");

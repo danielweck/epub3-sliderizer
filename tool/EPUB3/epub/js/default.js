@@ -2435,7 +2435,25 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate, auto)
 						{
 							if (target.offsetHeight < target.scrollHeight)
 							{
-								var toScroll = elem.offsetTop - target.offsetTop;
+								var totalTop_Elem = 0;
+								var totalTop_Target = 0;
+								
+								var target_ = elem;
+								while (target_)
+								{
+									totalTop_Elem += target_.offsetTop;
+									target_ = target_.offsetParent;
+								}
+								
+								target_ = target;
+								while (target_)
+								{
+									totalTop_Target += target_.offsetTop;
+									target_ = target_.offsetParent;
+								}
+								
+								//var toScroll = elem.offsetTop - target.offsetTop;
+								var toScroll = totalTop_Elem - totalTop_Target;
 							
 								if (topAlign)
 								{
@@ -2443,16 +2461,16 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate, auto)
 								}
 								else
 								{
-									toScroll = toScroll - (target.offsetHeight - elem.offsetHeight) / (center ? 2 : 1);
+									toScroll = 0.0 + toScroll - (target.offsetHeight - elem.offsetHeight) / (center ? 2 : 1);
 
-									if (toScroll > 0)
+									if (toScroll > 0.0)
 									{
 										target.scrollTop = toScroll;
 									}
 								}
-
-								break;
 							}
+
+							break;
 						}
 
 						target = target.parentNode;
