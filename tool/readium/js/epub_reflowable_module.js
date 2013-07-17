@@ -993,79 +993,28 @@ EpubReflowable.ReflowableElementInfo = Backbone.Model.extend({
     //  "PUBLIC" METHODS (THE API)                                                          //
     // ------------------------------------------------------------------------------------ //
 
-    initializeContentDocument : function (epubContentDocument, epubCFIs, currSpinePosition, readiumFlowingContent, linkClickHandler, handlerContext, keydownHandler, bindings) {
+    initializeContentDocument : function (epubContentDocument, readiumFlowingContent, linkClickHandler, handlerContext, keydownHandler, bindings) {
 
         var triggers;
-        var lastPageElementId = this.injectCFIElements(
-            epubContentDocument, 
-            epubCFIs, 
-            currSpinePosition
-            );
 
         // this.applyBindings( readiumFlowingContent, epubContentDocument );
-        this.applySwitches( epubContentDocument, readiumFlowingContent ); 
-        // this.injectMathJax(epubContentDocument);
+        this.applySwitches(epubContentDocument); 
+        this.injectMathJax(epubContentDocument);
         this.injectLinkHandler(epubContentDocument, linkClickHandler, handlerContext);
         triggers = this.parseTriggers(epubContentDocument);
         this.applyTriggers(epubContentDocument, triggers);
-        $(epubContentDocument).attr('title');//, Acc.page + ' - ' + Acc.title);
+        $(epubContentDocument).attr('title');
 
         this.injectKeydownHandler(
             readiumFlowingContent, 
             keydownHandler, 
             handlerContext
         );
-
-        return lastPageElementId;
     },
 
     // ------------------------------------------------------------------------------------ //
     //  PRIVATE HELPERS                                                                     //
     // ------------------------------------------------------------------------------------ //
-
-    injectCFIElements : function (epubContentDocument, epubCFIs, currSpinePosition) {
-
-        var that = this;
-        var contentDocument;
-        var epubCFIs;
-        var lastPageElementId;
-
-        // Get the content document (assumes a reflowable publication)
-        contentDocument = epubContentDocument;
-
-        // TODO: Could check to make sure the document returned from the iframe has the same name as the 
-        //   content document specified by the href returned by the CFI.
-
-        // Inject elements for all the CFIs that reference this content document
-        epubCFIs = epubCFIs; // What is this about? 
-        _.each(epubCFIs, function (cfi, key) {
-
-            if (cfi.contentDocSpinePos === currSpinePosition) {
-
-                try {
-					that.epubCFI.injectElement(
-                        key,
-                        contentDocument.parentNode,
-                        cfi.payload,
-                        ["cfi-marker", "audiError"],
-                        [],
-                        ["MathJax_Message"]);
-
-                    if (cfi.type === "last-page") {
-                        lastPageElementId = $(cfi.payload).attr("id");
-                    }
-                } 
-                catch (e) {
-
-                    console.log("Could not inject CFI");
-                    console.log(e);
-                }
-            }
-        });
-
-        // This will be undefined unless there is a "last-page" element injected into the page
-        return lastPageElementId;
-    },
 
     // // REFACTORING CANDIDATE: It looks like this could go on the package document itself
     // getBindings: function (packageDocument) {
@@ -1115,6 +1064,7 @@ EpubReflowable.ReflowableElementInfo = Backbone.Model.extend({
     // },
 
     applyTriggers: function (epubContentDocument, triggers) {
+
         for(var i = 0 ; i < triggers.length; i++) {
             triggers[i].subscribe(epubContentDocument.parentNode);
         }
@@ -1123,10 +1073,10 @@ EpubReflowable.ReflowableElementInfo = Backbone.Model.extend({
     // Description: For reflowable content we only add what is in the body tag.
     //   Lots of times the triggers are in the head of the dom
     parseTriggers: function (epubContentDocument) {
+
         var triggers = [];
-        $('trigger', epubContentDocument.parentNode).each(function() {
-            
-            triggers.push(new EpubReflowable.Trigger(epubContentDocument.parentNode) );
+        $('trigger', epubContentDocument.parentNode).each(function(index, triggerElement) {
+            triggers.push(new EpubReflowable.Trigger(triggerElement) );
         });
         
         return triggers;
@@ -1134,13 +1084,13 @@ EpubReflowable.ReflowableElementInfo = Backbone.Model.extend({
 
     // Description: Parse the epub "switch" tags and hide
     //   cases that are not supported
-    applySwitches: function (epubContentDocument, readiumFlowingContent) {
+    applySwitches: function (epubContentDocument) {
 
         // helper method, returns true if a given case node
         // is supported, false otherwise
         var isSupported = function(caseNode) {
 
-            var ns = caseNode.attributes["required-namespace"];
+            var ns = $(caseNode).attr("required-namespace");
             if(!ns) {
                 // the namespace was not specified, that should
                 // never happen, we don't support it then
@@ -1153,40 +1103,41 @@ EpubReflowable.ReflowableElementInfo = Backbone.Model.extend({
             return _.include(supportedNamespaces, ns);
         };
 
-        $('switch', epubContentDocument.parentNode).each(function(ind) {
+        $('switch', epubContentDocument.parentNode).each(function(index, switchElement) {
             
-            // keep track of whether or now we found one
+            // keep track of whether or not we found one
             var found = false;
 
-            $('case', readiumFlowingContent).each(function() {
+            $('case', switchElement).each(function(index, caseElement) {
 
-                if( !found && isSupported(readiumFlowingContent) ) {
+                if (!found && isSupported(caseElement)) {
                     found = true; // we found the node, don't remove it
                 }
                 else {
-                    $(readiumFlowingContent).remove(); // remove the node from the dom
+                    $(caseElement).remove(); // remove the node from the dom
                 }
             });
 
-            if(found) {
+            if (found) {
                 // if we found a supported case, remove the default
-                $('default', readiumFlowingContent).remove();
+                $('default', switchElement).remove();
             }
         })
     },
 
-    // inject mathML parsing code into an iframe
-    injectMathJax: function (epubContentDocument) {
+    // Description: Inject mathML parsing code into the content document iframe
+    injectMathJax : function (epubContentDocument) {
 
-        var doc, script, head;
-        doc = epubContentDocument.parentNode;
-        head = doc.getElementsByTagName("head")[0];
-        // if the content doc is SVG there is no head, and thus
+        var script;
+        var head;
+        head = $("head", epubContentDocument)[0];
+        
+        // Rationale: If the content doc is SVG there is no head, and thus
         // mathjax will not be required
-        if(head) {
-            script = doc.createElement("script");
+        if (head) {
+            script = document.createElement("script");
             script.type = "text/javascript";
-            script.src = MathJax.Hub.config.root+"/MathJax.js?config=readium-iframe";
+            script.src = "https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
             head.appendChild(script);
         }
     },
@@ -1198,9 +1149,9 @@ EpubReflowable.ReflowableElementInfo = Backbone.Model.extend({
         });
     },
 
-    injectKeydownHandler : function (readiumFlowingContent, keydownHandler, handlerContext) {
+    injectKeydownHandler : function (epubContentDocument, keydownHandler, handlerContext) {
 
-        $(readiumFlowingContent).contents().keydown(function (e) {
+        $(epubContentDocument).on("keydown", function (e) {
             keydownHandler.call(handlerContext, e);
         });
     }
@@ -1468,9 +1419,7 @@ EpubReflowable.ReflowablePageNumberLogic = Backbone.Model.extend({
     
 EpubReflowable.ReflowablePaginator = Backbone.Model.extend({
 
-    initialize: function (options) {
-        // make sure we have proper vendor prefixed props for when we need them
-    },
+    initialize: function (options) {},
 
     // ------------------------------------------------------------------------------------ //
     //  "PUBLIC" METHODS (THE API)                                                          //
@@ -1578,8 +1527,11 @@ EpubReflowable.ReflowablePaginator = Backbone.Model.extend({
         else if (margin === 4) {
             isTwoUp ? (width = 0.77) : (width = 0.60); 
         }
-        else {
+        else if (margin === 5) {
             isTwoUp ? (width = 0.70) : (width = 0.50); 
+        }
+        else {
+            isTwoUp ? (width = 1.0) : (width = 0.95);
         }
         
         return Math.floor( flowingWrapperWidth * width );
@@ -1637,13 +1589,13 @@ EpubReflowable.ReflowablePaginator = Backbone.Model.extend({
 
                 if (ppd === "rtl") {
 
-                    firstPageOffset = -(2 * (this.page_width + this.gap_width));
+                    firstPageOffset = -(this.page_width + this.gap_width);
                     $reflowableIframe.css("margin-left", firstPageOffset + "px");
                 }
                 // Left-to-right pagination
                 else {
 
-                    firstPageOffset = this.page_width + (this.gap_width * 2);
+                    firstPageOffset = this.page_width + (this.gap_width * 2) - this.padding_width;
                     $reflowableIframe.css("margin-left", firstPageOffset + "px");
                 }
 
@@ -1662,6 +1614,10 @@ EpubReflowable.ReflowablePaginator = Backbone.Model.extend({
         }
     },
 
+    // REFACTORING CANDIDATE: There is a very important assumption encoded in this method: That the direct parent of the "flowingWrapper"
+    //   element will be the "reader" element in the DOM in which EPUB content is being displayed. The height and width of this parent are
+    //   used to paginate the reflowable content document. This assumption should be made clearer - in fact, this whole model needs to get
+    //   refactored at some point. 
     adjustIframeColumns : function (offsetDir, epubContentDocument, readiumFlowingContent, flowingWrapper, isTwoUp, firstPageOffset, currentPages, ppd, currentMargin ) {
 
         var prop_dir = offsetDir;
@@ -1754,7 +1710,7 @@ EpubReflowable.Trigger.prototype.execute = function(dom) {
 };
     EpubReflowable.ReflowablePaginationView = Backbone.View.extend({
 
-    el : "<div class='flowing-wrapper clearfix' style='display:block;margin-left:auto;margin-right:auto;position:relative'> \
+    el : "<div class='flowing-wrapper clearfix' style='display:block;margin-left:auto;margin-right:auto;position:relative;overflow:hidden;'> \
             <iframe scrolling='no' \
                     frameborder='0' \
                     height='100%' \
@@ -1782,12 +1738,7 @@ EpubReflowable.Trigger.prototype.execute = function(dom) {
         // Initialize custom style views
         this.spineDivider = new EpubReflowable.ReflowableSpineDividerView();
         this.$el.append(this.spineDivider.render());
-
-        this.customizer = new EpubReflowable.ReflowableCustomizer({
-            parentElement : this.getFlowingWrapper(),
-            readiumFlowingContent : this.getReadiumFlowingContent(),
-            spineDividerStyleView : this.spineDivider
-        });
+        this.customizer;
 
 		this.annotations;
         this.cfi = new EpubCFIModule();
@@ -1848,7 +1799,7 @@ EpubReflowable.Trigger.prototype.execute = function(dom) {
             }
 
             var borderElement;
-			var lastPageElementId = that.initializeContentDocument();
+			that.initializeContentDocument();
 
 			// Rationale: The content document must be paginated in order for the subsequent "go to page" methods
 			//   to have access to the number of pages in the content document.
@@ -1861,9 +1812,6 @@ EpubReflowable.Trigger.prototype.execute = function(dom) {
 			//   case where Readium is re-opening the book, from the library view. 
 			if (hashFragmentId) {
                 that.showPageByElementId(hashFragmentId);
-            }
-            else if (lastPageElementId) {
-                that.showPageByElementId(lastPageElementId);
             }
             else {
 
@@ -1880,6 +1828,13 @@ EpubReflowable.Trigger.prototype.execute = function(dom) {
                 saveCallback : undefined,
                 callbackContext : undefined,
                 contentDocumentDOM : that.getEpubContentDocument().parentNode
+            });
+
+            that.customizer = new EpubReflowable.ReflowableCustomizer({
+                parentElement : that.getFlowingWrapper(),
+                readiumFlowingContent : that.getReadiumFlowingContent(),
+                spineDividerStyleView : that.spineDivider,
+                epubContentDocument : that.getEpubContentDocument()
             });
 
             that.trigger("contentDocumentLoaded", that.el);
@@ -1912,6 +1867,7 @@ EpubReflowable.Trigger.prototype.execute = function(dom) {
         this.showCurrentPages();
     },
 
+    // TODO: Check to see if it's a character offset CFI. If it is, inject it and keep track of the injection.
     showPageByCFI : function (CFI) {
 
         var $rangeTargetElements;
@@ -1921,11 +1877,23 @@ EpubReflowable.Trigger.prototype.execute = function(dom) {
 
             // Check if it's a CFI range type
             if (new RegExp(/.+,.+,.+/).test(CFI)) {
-                $rangeTargetElements = this.cfi.getRangeTargetElements(CFI, $(this.getEpubContentDocument()).parent()[0]);
+                $rangeTargetElements = this.cfi.getRangeTargetElements(
+                    CFI, 
+                    $(this.getEpubContentDocument()).parent()[0],
+                    [],
+                    [],
+                    ["MathJax_Message"]
+                );
                 targetElement = $rangeTargetElements[0];
             }
             else {
-                $standardTargetElement = this.cfi.getTargetElement(CFI, $(this.getEpubContentDocument()).parent()[0]);
+                $standardTargetElement = this.cfi.getTargetElement(
+                    CFI,
+                    $(this.getEpubContentDocument()).parent()[0],
+                    [],
+                    [],
+                    ["MathJax_Message"]
+                );
                 targetElement = $standardTargetElement[0];
             }
         }
@@ -1934,7 +1902,12 @@ EpubReflowable.Trigger.prototype.execute = function(dom) {
             throw error;
         }
 
-        this.showPageByElement(targetElement);
+        if (targetElement.nodeType === Node.TEXT_NODE) {
+            this.showPageByElement($(targetElement).parent()[0])
+        }
+        else {
+            this.showPageByElement(targetElement);
+        }
     },
 
     showPageByElementId : function (elementId) {
@@ -2119,7 +2092,7 @@ EpubReflowable.Trigger.prototype.execute = function(dom) {
 			this.spineItemModel.get("pageProgressionDirection"),
 			this.viewerModel.get("currentMargin"),
 			this.viewerModel.get("fontSize")
-			);
+		);
 
 		this.pages.set("numberOfPages", pageInfo[0]);
         this.viewerModel.get("syntheticLayout") ? this.spineDivider.show() : this.spineDivider.hide();
@@ -2130,18 +2103,14 @@ EpubReflowable.Trigger.prototype.execute = function(dom) {
 
 	initializeContentDocument : function () {
 
-		var elementId = this.reflowableLayout.initializeContentDocument(
-			this.getEpubContentDocument(), 
-			this.epubCFIs, 
-			this.spineItemModel.get("spine_index"), 
+		this.reflowableLayout.initializeContentDocument(
+			this.getEpubContentDocument(),
 			this.getReadiumFlowingContent(), 
 			this.linkClickHandler, 
 			this, 
 			this.keydownHandler,
             this.bindings
-			);
-
-		return elementId;
+		);
 	},
 
     showPageByElement : function (element) {
@@ -2165,10 +2134,17 @@ EpubReflowable.Trigger.prototype.execute = function(dom) {
 
     showCurrentPages : function () {
 
-        var that = this;
+        var currentPageNumber;
         this.hideContent();
-        that.moveViewportToPage(that.pages.get("currentPages")[0]);
-        that.showContent();
+        currentPageNumber = this.reflowablePaginator.accountForOffset(
+            this.getReadiumFlowingContent(),
+            this.viewerModel.get("syntheticLayout"),
+            this.spineItemModel.get("firstPageIsOffset"),
+            this.pages.get("currentPages"),
+            this.spineItemModel.get("pageProgressionDirection")
+        );
+        this.moveViewportToPage(currentPageNumber);
+        this.showContent();
         this.trigger("displayedContentChanged");
     },
 
@@ -2241,6 +2217,9 @@ EpubReflowable.Trigger.prototype.execute = function(dom) {
         else if (customProperty === "reflowable-page-theme") {
             this.get("customTheme").setCurrentStyle(styleNameOrCSS);
         }
+        else if (customProperty === "alt-style-tag") {
+            this.get("customTheme").setAlternateStyleTag(styleNameOrCSS, this.get("epubContentDocument"));
+        }
     }
 
     // ----- PRIVATE HELPERS -------------------------------------------------------------------
@@ -2297,7 +2276,7 @@ EpubReflowable.Trigger.prototype.execute = function(dom) {
 
         var defaultCSS;
         if (defaultName === "box-shadow") {
-            return this.addRequiredPositionCSS({ "-webkit-box-shadow" : "0 0 5px 5px rgba(80, 80, 80, 0.5)" });
+            return this.addRequiredPositionCSS({ "box-shadow" : "0 0 5px 5px rgba(80, 80, 80, 0.5)" });
         }
         else if (defaultName == "none") {
             return this.addRequiredPositionCSS({});
@@ -2396,7 +2375,7 @@ EpubReflowable.Trigger.prototype.execute = function(dom) {
                 "width" : "1px",
                 "height" : "93%",
                 "top" : "3%",
-                "-webkit-box-shadow" : "0 0 5px 5px rgba(80, 80, 80, 0.5)" 
+                "box-shadow" : "0 0 5px 5px rgba(80, 80, 80, 0.5)" 
             });
         }
         else if (defaultName === "none") {
@@ -2459,6 +2438,19 @@ EpubReflowable.ReflowableCustomTheme = Backbone.Model.extend({
         }
     },
 
+    // Description: Activates a style set for the ePub, based on the currently selected theme. At present, 
+    //   only the day-night alternate tags are available as an option.  
+    setAlternateStyleTag : function (themeName, epubContentDocument) {
+
+        var selector = new EpubReflowable.AlternateStyleTagSelector();        
+        if (themeName === "night") {
+            selector.activateAlternateStyleSet(["night"], epubContentDocument);
+        }
+        else if (themeName === "day" || themeName === "none") {
+            selector.activateAlternateStyleSet(["day"], epubContentDocument);
+        }
+    },
+
     // ------ PRIVATE HELPERS --------------------------------------------------------------
 
     renderCurrentStyle : function () {
@@ -2506,26 +2498,6 @@ EpubReflowable.ReflowableCustomTheme = Backbone.Model.extend({
 
         return $("body", this.get("iframeElement").contentDocument)[0];
     }
-
-    // Description: Activates a style set for the ePub, based on the currently selected theme. At present, 
-    //   only the day-night alternate tags are available as an option.  
-    // activateEPubStyle : function (bookDom, currentTheme) {
-
-    //     var selector;
-        
-    //     // Apply night theme for the book; nothing will be applied if the ePub's style sheets do not contain a style
-    //     // set with the 'night' tag
-    //     if (currentTheme === "night-theme") {
-
-    //         selector = new EpubReflowable.AlternateStyleTagSelector;
-    //         bookDom = selector.activateAlternateStyleSet(["night"], bookDom);
-    //     }
-    //     else {
-
-    //         selector = new EpubReflowable.AlternateStyleTagSelector;
-    //         bookDom = selector.activateAlternateStyleSet([""], bookDom);
-    //     }
-    // }
 });
 
     var reflowableView = new EpubReflowable.ReflowablePaginationView({

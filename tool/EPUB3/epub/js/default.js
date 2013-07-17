@@ -40,10 +40,9 @@ var host = {};
 		
 		for (var i = 0; i < vendors.length; i++)
 		{
-			var now = window.performance[vendors[i]];
-			if(now)
+			if (vendors[i] in window.performance)
 			{
-				window.performance.now = now;
+				window.performance.now = window.performance[vendors[i]];
 				return;
 			}
 		}

@@ -41,6 +41,9 @@ var SimpleReadiumJs = function (elementToBindReaderTo, viewerPreferences, packag
         render : function () { 
             return epubViewer.render(); 
         },
+        showFirstPage : function (callback, callbackContext) {
+            return epubViewer.showFirstPage(callback, callbackContext);
+        },
         showSpineItem : function (spineIndex, callback, callbackContext) { 
             return epubViewer.showSpineItem(spineIndex, callback, callbackContext); 
         },
@@ -85,6 +88,10 @@ var SimpleReadiumJs = function (elementToBindReaderTo, viewerPreferences, packag
         },
         resizeContent : function () { 
             return epubViewer.resizeContent(); 
+        },
+        customize : function (customElement, styleNameOrCSSObject) {
+            epubViewer.customize(customElement, styleNameOrCSSObject);
+            return this;
         }
     };
 };

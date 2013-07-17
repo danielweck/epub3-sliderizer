@@ -78,7 +78,7 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
             viewerSettings, 
             annotations, 
             bindings
-            );
+        );
 
         var pagesViewInfo = {
             pagesView : view, 
@@ -292,6 +292,19 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
         }
     },
 
+    // Description: Finds the first spine index in the primary reading order
+    getFirstSpineIndex : function () {
+
+        var foundSpineItem = _.find(this.get("spine"), function (spineItem, index) { 
+
+            if (spineItem.linear) {
+                return true;
+            }
+        });
+
+        return foundSpineItem.spineIndex;
+    },
+
     // ------------------------------------------------------------------------------------ //
     //  "PRIVATE" HELPERS                                                                   //
     // ------------------------------------------------------------------------------------ //
@@ -470,9 +483,9 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
         var that = this;
         this.packageDocumentDOM = options.packageDocumentDOM;
         this.reader = new EpubReader.EpubReader({
-            spineInfo : options.spineInfo,
-            viewerSettings : options.viewerSettings,
-            parentElement : options.readerElement,
+            spineInfo : $.extend(true, {}, options.spineInfo),
+            viewerSettings : $.extend(true, {}, options.viewerSettings),
+            parentElement : $(options.readerElement),
             renderStrategy : options.renderStrategy
         });
         // Rationale: Propagate the loaded event after all the content documents are loaded
@@ -519,6 +532,14 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
             }
             
             that.$el.css("opacity", "1");
+            callback.call(callbackContext);
+        }, this);
+    },
+
+    showFirstPage : function (callback, callbackContext) {
+
+        var firstSpineIndexInReadingOrder = this.reader.getFirstSpineIndex();
+        this.showSpineItem(firstSpineIndexInReadingOrder, function () {
             callback.call(callbackContext);
         }, this);
     },
@@ -690,7 +711,7 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
 
         // Page set events
         if (this.canHandlePageSetEvent(eventName)) {
-            this.reader.removeEventHandler(eventName, callback, callbackContext);
+            this.reader.removeEventHandler(eventName);
         }
         // Reader events
         else {
@@ -771,6 +792,9 @@ var EpubReaderModule = function(readerBoundElement, epubSpineInfo, viewerSetting
 
         render : function () {
             return epubReaderView.render();
+        },
+        showFirstPage : function (callback, callbackContext) {
+            return epubReaderView.showFirstPage(callback, callbackContext);
         },
         showSpineItem : function (spineIndex, callback, callbackContext) {
             return epubReaderView.showSpineItem(spineIndex, callback, callbackContext);
