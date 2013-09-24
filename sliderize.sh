@@ -17,6 +17,23 @@ mkdir ./_OUTPUT/content
 cp -r ./tool/EPUB3 ./_OUTPUT/content/
 mv ./_OUTPUT/readium/index.html ./_OUTPUT/content/
 
+
+bin="${root}/tool/epub3-sliderizer/bin/"
+
+if [ -f ${bin} ]; then
+
+echo "Build directory found: ${bin}"
+
+else
+
+echo "MKDIR: ${bin}"
+
+mkdir "${bin}"
+
+fi
+
+
+
 cd ./tool/epub3-sliderizer/
 
 pwd
@@ -31,7 +48,7 @@ else
 
 echo "Compiling: ${class}"
 
-javac -classpath ".:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" "${root}/tool/epub3-sliderizer/src/Main.java" -d "${root}/tool/epub3-sliderizer/bin/" -sourcepath "${root}/tool/epub3-sliderizer/src" #-verbose
+javac -classpath ".:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" "${root}/tool/epub3-sliderizer/src/Main.java" -d "${bin}" -sourcepath "${root}/tool/epub3-sliderizer/src" #-verbose
 
 fi
 
@@ -43,7 +60,7 @@ echo "EPUB3-Sliderization in progress..."
 echo ${DATA_file}
 echo ${EPUB_FOLDER}
 
-java -classpath "${root}/tool/epub3-sliderizer/bin/:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" Main ${DATA_url} ${EPUB_FOLDER} VERBOSE_min
+java -classpath "${bin}:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" Main ${DATA_url} ${EPUB_FOLDER} VERBOSE_min
 
 
 open ${EPUB_FOLDER}
