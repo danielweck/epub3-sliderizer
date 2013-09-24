@@ -1,5 +1,6 @@
 package danielweck.epub3.sliderizer;
 
+import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
@@ -13,11 +14,14 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import danielweck.VoidPrintStream;
 import danielweck.epub3.sliderizer.model.Slide;
 import danielweck.epub3.sliderizer.model.SlideShow;
 import danielweck.xml.XmlDocument;
 
 public final class XHTML {
+
+	static VoidPrintStream m_VoidPrintStream = new VoidPrintStream();
 
 	public static String getFileName(int i) {
 		// String nStr = String.format("0\1", n);
@@ -483,7 +487,9 @@ public final class XHTML {
 								|| attrName.equals("href") || attrName
 									.equals("src"))) {
 
-					System.out.println("###### " + attrVal);
+					if (verbosity > 0) {
+						System.out.println("###### " + attrVal);
+					}
 
 					for (String path : allReferences_IMG) {
 						if (attrVal.indexOf(path) >= 0) {
@@ -524,13 +530,25 @@ public final class XHTML {
 		String wrappedContent = "<wrapper xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:epub=\"http://www.idpf.org/2007/ops\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns:m=\"http://www.w3.org/1998/Math/MathML\">"
 				+ content + "</wrapper>";
 
+		//PrintStream sysOut = System.out;
+		PrintStream sysErr = System.err;
+
+		//System.setOut(m_VoidPrintStream);
+		System.setErr(m_VoidPrintStream);
+		
 		boolean xmlSuccess = false;
 		Document documentFragment = null;
-		try {
+		try {			
 			documentFragment = XmlDocument.parse(wrappedContent);
 			xmlSuccess = true;
 		} catch (Exception ex) {
-			// ex.printStackTrace();
+			System.setErr(sysErr);
+			//ex.printStackTrace();
+		}
+		finally
+		{
+			//System.setOut(sysOut);
+			System.setErr(sysErr);
 		}
 
 		boolean soupedUp = false;

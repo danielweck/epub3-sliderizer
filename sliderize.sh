@@ -1,5 +1,10 @@
 #!/bin/sh
 
+#VERBOSITY="VERBOSE_min"
+#VERBOSITY="VERBOSE_medium"
+#VERBOSITY="VERBOSE_max"
+VERBOSITY=""
+
 root=$(pwd)
 
 #DATA_file="${root}/_INPUT/Romain/slides.html"
@@ -60,7 +65,7 @@ echo "EPUB3-Sliderization in progress..."
 echo ${DATA_file}
 echo ${EPUB_FOLDER}
 
-java -classpath "${bin}:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" Main ${DATA_url} ${EPUB_FOLDER} VERBOSE_min
+java -classpath "${bin}:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" Main ${DATA_url} ${EPUB_FOLDER} ${VERBOSITY}
 
 
 open ${EPUB_FOLDER}
