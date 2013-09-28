@@ -7,6 +7,8 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
+import danielweck.epub3.sliderizer.XHTML;
+
 public abstract class Fielder {
 
 	private final static Map<Class<? extends Fielder>, Map<String, String>> Fields = new HashMap<Class<? extends Fielder>, Map<String, String>>();
@@ -94,23 +96,26 @@ public abstract class Fielder {
 	static final String COMMENT_PREFIX = "// ";
 
 	protected static String nextLine(BufferedReader bufferedReader,
-			int verbosity) throws IOException {
+			int verbosity, boolean preserveWhitespace) throws IOException {
 		// Windows CR LF "\r\n"
 		// (0Dh 0Ah for DOS, 0Dh for older Macs, 0Ah for Unix/Linux)
 
 		String nextLine = null;
 		while ((nextLine = bufferedReader.readLine()) != null) {
-			nextLine = nextLine.trim();
+			if (!preserveWhitespace) {
+				nextLine = nextLine.trim();
 
-			if (nextLine.length() == 0) {
-				continue;
+				if (nextLine.length() == 0) {
+					continue;
+				}
 			}
 
 			if (verbosity > 0) {
 				System.out.println("LINE: " + nextLine);
 			}
 
-			if (nextLine.startsWith(COMMENT_PREFIX)) {
+			if (// !preserveWhitespace &&
+			nextLine.startsWith(COMMENT_PREFIX)) {
 				continue;
 			}
 
@@ -152,15 +157,17 @@ public abstract class Fielder {
 
 		Map<String, String> fields = fielder.getFields();
 
+		boolean preserveWhitespace = false;
+
 		String currentFieldName = null;
 		String line = null;
 		StringBuilder lines = new StringBuilder();
 		while (true) {
-			line = nextLine(bufferedReader, verbosity);
+			line = nextLine(bufferedReader, verbosity, preserveWhitespace);
 
 			String found = null;
 			boolean special = false;
-			if (line != null) {
+			if (line != null && line.length() > 0) {
 				for (Map.Entry<String, String> field : fields.entrySet()) {
 					String fieldName = field.getKey();
 					if (fieldEqual(line, fieldName)) {
@@ -175,6 +182,8 @@ public abstract class Fielder {
 			}
 
 			if (line == null || found != null || special) {
+				preserveWhitespace = false;
+
 				if (currentFieldName != null && lines.length() > 0) {
 					fielder.getClass().getDeclaredField(currentFieldName)
 							.set(fielder, lines.toString());
@@ -190,10 +199,17 @@ public abstract class Fielder {
 					break;
 				}
 			} else {
+				if (currentFieldName != null
+						&& currentFieldName.equals(Slide.FIELD_CONTENT)
+						&& (line.equals(XHTML.MARKDOWN) || line
+								.equals(XHTML.MARKDOWN_SRC))) {
+					preserveWhitespace = true;
+				}
+
 				if (lines.length() > 0) {
 					lines.append('\n');
 				}
-				if (line.charAt(0) == '\\') {
+				if (line.length() > 0 && line.charAt(0) == '\\') {
 					if (line.length() > 1) {
 						lines.append(line.substring(1));
 					}

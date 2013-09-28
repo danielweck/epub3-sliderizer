@@ -14,6 +14,7 @@ public final class Slide extends Fielder {
 	public String SUBTITLE = null;
 
 	public String CONTENT = "<p style=\"text-align: center;\">\nDEFAULT <br> CONTENT\n</p>";
+	public static String FIELD_CONTENT = "CONTENT";
 
 	public String FILES_IMG = null;
 	public String FILES_CSS = null;

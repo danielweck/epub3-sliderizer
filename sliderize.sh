@@ -65,7 +65,7 @@ echo "EPUB3-Sliderization in progress..."
 echo ${DATA_file}
 echo ${EPUB_FOLDER}
 
-java -classpath "${bin}:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" Main ${DATA_url} ${EPUB_FOLDER} ${VERBOSITY}
+java -classpath "${root}/tool/epub3-sliderizer/lib/asm-all-4.1.jar:${root}/tool/epub3-sliderizer/lib/parboiled-core-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/parboiled-java-1.1.6.jar:${bin}:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar:${root}/tool/epub3-sliderizer/lib/pegdown-1.4.1.jar" Main ${DATA_url} ${EPUB_FOLDER} ${VERBOSITY}
 
 
 open ${EPUB_FOLDER}

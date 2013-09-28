@@ -14,6 +14,8 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import org.pegdown.PegDownProcessor;
+
 import danielweck.VoidPrintStream;
 import danielweck.epub3.sliderizer.model.Slide;
 import danielweck.epub3.sliderizer.model.SlideShow;
@@ -519,6 +521,10 @@ public final class XHTML {
 		}
 	}
 
+	final static PegDownProcessor m_PegDownProcessor = new PegDownProcessor();
+	public final static String MARKDOWN = "MARKDOWN";
+	public final static String MARKDOWN_SRC = "MARKDOWN_SRC";
+
 	static void create_Content(Element elementSection, Document document,
 			String content, SlideShow slideShow, Slide slide,
 			String pathEpubFolder, int verbosity) throws Exception {
@@ -527,27 +533,40 @@ public final class XHTML {
 			return;
 		}
 
+		if (content.indexOf(MARKDOWN_SRC) == 0) {
+			content = "<pre>"
+					+ content.substring(MARKDOWN_SRC.length())
+							.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+							+ "</pre>";
+		} else if (content.indexOf(MARKDOWN) == 0) {
+			content = content.substring(MARKDOWN.length());
+
+			try {
+				content = m_PegDownProcessor.markdownToHtml(content);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+
 		String wrappedContent = "<wrapper xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:epub=\"http://www.idpf.org/2007/ops\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns:m=\"http://www.w3.org/1998/Math/MathML\">"
 				+ content + "</wrapper>";
 
-		//PrintStream sysOut = System.out;
+		// PrintStream sysOut = System.out;
 		PrintStream sysErr = System.err;
 
-		//System.setOut(m_VoidPrintStream);
+		// System.setOut(m_VoidPrintStream);
 		System.setErr(m_VoidPrintStream);
-		
+
 		boolean xmlSuccess = false;
 		Document documentFragment = null;
-		try {			
+		try {
 			documentFragment = XmlDocument.parse(wrappedContent);
 			xmlSuccess = true;
 		} catch (Exception ex) {
 			System.setErr(sysErr);
-			//ex.printStackTrace();
-		}
-		finally
-		{
-			//System.setOut(sysOut);
+			// ex.printStackTrace();
+		} finally {
+			// System.setOut(sysOut);
 			System.setErr(sysErr);
 		}
 
