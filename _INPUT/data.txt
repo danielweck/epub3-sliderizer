@@ -3266,10 +3266,7 @@ Slideshow e-books made with EPUB3-Sliderizer can be viewed with:
 	<strong>iOS</strong> <span class="fade">(WebKit)</span>
 	<ul>
 		<li>
-			iBooks
-		</li>
-		<li>
-			Kobo
+			iBooks, Kobo
 		</li>
 	</ul>
 </li>
@@ -3277,13 +3274,13 @@ Slideshow e-books made with EPUB3-Sliderizer can be viewed with:
 	<strong>Mac OS X, Windows</strong>
 	<ul>
 		<li>
-			Readium Chrome extension <span class="fade">(WebKit)</span>
+			Readium-Chrome, Readium-SDK <span class="fade">(WebKit)</span>, Readium.js
 		</li>
 		<li>
 			Azardi <span class="fade">(Gecko)</span>
 		</li>
 		<li>
-			Readium.js <span class="fade">(cross-browser)</span> <em>early unstable software!</em>
+			Calibre <span class="fade">(Webkit)</span>
 		</li>
 	</ul>
 </li>	
