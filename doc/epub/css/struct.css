@@ -21,7 +21,9 @@ html
 	width:100%;
 	height:100%;
 	
+	/* rem unit NOT WORKING ON embedded WebKit / WebView */
 	font-size: 62.5%;
+	
 	/* 1.4rem == 14px */
 	
 	background-color: black;
@@ -56,7 +58,10 @@ body
 	*/
 
 	font-size: 40px;
-	font-size: 4rem;
+	
+	/* NOT WORKING ON embedded WebKit / WebView */
+	/* font-size: 4rem; */
+	
 	
 	font-weight: 400;
 	font-family: Lato, Tahoma, verdana, arial, sans-serif;
