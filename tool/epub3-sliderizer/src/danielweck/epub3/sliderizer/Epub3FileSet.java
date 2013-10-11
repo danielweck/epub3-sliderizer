@@ -49,13 +49,12 @@ public final class Epub3FileSet {
 			new String[] { "addEventListener.js", "js-addEventListener" },
 			new String[] { "classList.js", "js-classList" },
 			new String[] { "screenfull.js", "js-screenfull" },
-			new String[] { "hammer.min.js", "js-hammer" },
-			new String[] { "hammer.fakemultitouch.js",
-					"js-hammer-fakemultitouch" },
-			new String[] { "hammer.showtouches.js", "js-hammer-showtouches" },
+			//new String[] { "hammer.min.js", "js-hammer" },
+			//new String[] { "hammer.fakemultitouch.js", "js-hammer-fakemultitouch" },
+			//new String[] { "hammer.showtouches.js", "js-hammer-showtouches" },
 			new String[] { "jquery-2.0.2.min.js", "js-jquery" },
-			new String[] { "jquery.mousewheel.js", "js-jquery-mousewheel" },
-			new String[] { "jquery.blockUI.js", "js-jquery-blockUI" },
+			//new String[] { "jquery.mousewheel.js", "js-jquery-mousewheel" },
+			//new String[] { "jquery.blockUI.js", "js-jquery-blockUI" },
 			new String[] { "default.js", "js-default" } };
 
 	private final static String CSS_PREFIXED = "_PREFIXED_";

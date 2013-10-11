@@ -546,6 +546,24 @@ function isDefinedAndNotNull(obj)
 	return typeof obj !== UNDEF && obj !== null;
 }
 
+// ----------
+
+function loadScript(that, src)
+{
+	var head = document.head ? document.head : document.getElementsByTagName('head')[0];
+	var script = document.createElement('script');
+	script.setAttribute("type", 'text/javascript');
+	src = "js/" + src;
+	if (that.prev && that.prev !== "")
+	{
+		src = "../" + src;
+	}
+	script.setAttribute("src", src);
+	head.appendChild(script);
+}
+
+// ----------
+
 var Epub3Sliderizer = {
 	onResizeThrottled: null,
 	epubReadingSystem: null,
@@ -2222,38 +2240,40 @@ Epub3Sliderizer.initLinks = function()
 
 
 	var aa = document.createElement('a');
-	aa.id = "epb3sldrzr-link-toc";
-	aa.title = "Slide menu";
-	aa.href = "javascript:Epub3Sliderizer.gotoToc();";
-
-	if (anchor.children.length === 0)
+	if (anchor.childNodes.length === 0)
 	{
 		anchor.appendChild(aa);
 	}
 	else
 	{
-		anchor.insertBefore(aa, anchor.children[0]);
+		anchor.insertBefore(aa, anchor.childNodes[0]);
 	}
+	aa.id = "epb3sldrzr-link-toc";
+	aa.setAttribute("id", aa.id);
+	aa.setAttribute("title", "Slide menu");
+	aa.setAttribute("href", "javascript:Epub3Sliderizer.gotoToc();");
 
 	if (this.prev !== "")
 	{
 		var a1 = document.createElement('a');
+		anchor.insertBefore(a1, anchor.childNodes[0]);
+		
 		a1.id = "epb3sldrzr-link-previous";
-		a1.title = "Previous slide";	
-		a1.href = "javascript:Epub3Sliderizer.gotoPrevious_();";
-
-		anchor.insertBefore(a1, anchor.children[0]);
+		a1.setAttribute("id", a1.id);
+		a1.setAttribute("title", "Previous slide");
+		a1.setAttribute("href", "javascript:Epub3Sliderizer.gotoPrevious_();");
 	}
 	
 		
 	if (this.next !== "")
 	{
 		var a2 = document.createElement('a');
-		a2.id = "epb3sldrzr-link-next";
-		a2.title = "Next slide";
-		a2.href = "javascript:Epub3Sliderizer.gotoNext_();";
+		anchor.insertBefore(a2, anchor.childNodes[0]);
 
-		anchor.insertBefore(a2, anchor.children[0]);
+		a2.id = "epb3sldrzr-link-next";
+		a2.setAttribute("id", a2.id);
+		a2.setAttribute("title", "Next slide");
+		a2.setAttribute("href", "javascript:Epub3Sliderizer.gotoNext_();");
 	}
 
 		
@@ -2262,11 +2282,12 @@ Epub3Sliderizer.initLinks = function()
 	if (nav !== null && this.epub !== "")
 	{
 		var a3 = document.createElement('a');
+		this.bodyRoot.insertBefore(a3, this.bodyRoot.childNodes[0]);
+		
 		a3.id = "epb3sldrzr-link-epub";
-		a3.title = "Download EPUB file";
-		a3.href = this.epub;
-
-		this.bodyRoot.insertBefore(a3, this.bodyRoot.children[0]);
+		a3.setAttribute("id", a3.id);
+		a3.setAttribute("title", "Download EPUB file");
+		a3.setAttribute("href", this.epub);
 	}
 };
 
@@ -2808,8 +2829,46 @@ Epub3Sliderizer.init = function()
 	aa_.style.left="0px";
 	aa_.style.zIndex="1000";
 
-	this.bodyRoot.insertBefore(aa_, this.bodyRoot.children[0]);
+	this.bodyRoot.insertBefore(aa_, this.bodyRoot.childNodes[0]);
 	*/
+
+	
+	
+	if (document.defaultView && document.defaultView.getComputedStyle)
+	{
+		var style = document.defaultView.getComputedStyle(document.body,null);
+		if (style)
+		{
+			var fontSize = style.getPropertyValue("font-size");
+			
+			if (fontSize && fontSize !== "")
+			{
+				console.log("fontSize (COMPUTED): " + fontSize);
+
+				var size = Math.round(parseFloat(fontSize));
+				Epub3Sliderizer.defaultFontSize = size;
+				
+				if (!this.isEpubReadingSystem())
+				{
+					document.body.style.fontSize = fontSize;
+	//				console.log(document.body.style.fontSize);
+				
+					fontSize = getCookie(Epub3Sliderizer.cookieFontSize);
+					console.log("fontSize (COOKIE): " + fontSize);
+				
+					if (fontSize !== null && fontSize !== "")
+					{
+						document.body.style.fontSize = fontSize;
+					}
+					else
+					{
+						setCookie(Epub3Sliderizer.cookieFontSize, document.body.style.fontSize);
+					}
+				}
+			}
+		}
+	}
+
 
 	if (this.isEpubReadingSystem())
 	{
@@ -2820,59 +2879,68 @@ Epub3Sliderizer.init = function()
 
 		document.body.classList.add("epb3sldrzr-epubReadingSystem");
 
-		var a = document.createElement('a');
-		a.id = "epb3sldrzr-link-epubReadingSystem";
-		a.title = "EPUB Reading System info";
-		
-		if (this.epubReadingSystem === null)
+		var controls = document.getElementById("epb3sldrzr-controls");
+		var anchor = controls; //this.bodyRoot
+
+		if (!anchor)
 		{
-			if (this.readium)
+			console.error("cannot find #epb3sldrzr-controls");
+		}
+		else
+		{
+			var a = document.createElement('a');
+
+			if (anchor.childNodes.length === 0)
 			{
-				a.href = "javascript:window.alert('Readium')";
-				a.innerHTML = "Readium";
-			}
-			else if (this.kobo)
-			{
-				a.href = "javascript:window.alert('Kobo')";
-				a.innerHTML = "Kobo";
-			}
-			else if (this.ibooks)
-			{
-				a.href = "javascript:window.alert('iBooks')";
-				a.innerHTML = "iBooks";
-			}
-			else if (this.playbooks)
-			{
-				a.href = "javascript:window.alert('Google Play Books')";
-				a.innerHTML = "Google Play Books";
-			}
-			else if (this.azardi)
-			{
-				a.href = "javascript:window.alert('Azardi')";
-				a.innerHTML = "Azardi";
+				anchor.appendChild(a);
 			}
 			else
 			{
-				a.href = "javascript:window.alert('??')";
-				a.innerHTML = "??";
+				anchor.insertBefore(a, anchor.childNodes[0]);
 			}
-		}
-		else
-		{
-			a.href = "javascript:window.alert(window.Epub3Sliderizer.epubReadingSystem.name + '_' + window.Epub3Sliderizer.epubReadingSystem.version)";
-			a.innerHTML = this.epubReadingSystem.name + '_' + this.epubReadingSystem.version;
-		}
-
-		var controls = document.getElementById("epb3sldrzr-controls");
-		var anchor = controls; //this.bodyRoot
 		
-		if (anchor.children.length === 0)
-		{
-			anchor.appendChild(a);
-		}
-		else
-		{
-			anchor.insertBefore(a, anchor.children[0]);
+			a.id = "epb3sldrzr-link-epubReadingSystem";
+			a.setAttribute("id", a.id);
+			a.setAttribute("title", "EPUB Reading System info");
+		
+			if (this.epubReadingSystem === null)
+			{
+				if (this.readium)
+				{
+					a.setAttribute("href", "javascript:window.alert('Readium')");
+					a.innerHTML = "Readium";
+				}
+				else if (this.kobo)
+				{
+					a.setAttribute("href", "javascript:window.alert('Kobo')");
+					a.innerHTML = "Kobo";
+				}
+				else if (this.ibooks)
+				{
+					a.setAttribute("href", "javascript:window.alert('iBooks')");
+					a.innerHTML = "iBooks";
+				}
+				else if (this.playbooks)
+				{
+					a.setAttribute("href", "javascript:window.alert('Google Play Books')");
+					a.innerHTML = "Google Play Books";
+				}
+				else if (this.azardi)
+				{
+					a.setAttribute("href", "javascript:window.alert('Azardi')");
+					a.innerHTML = "Azardi";
+				}
+				else
+				{
+					a.setAttribute("href", "javascript:window.alert('??')");
+					a.innerHTML = "??";
+				}
+			}
+			else
+			{
+				a.setAttribute("href", "javascript:window.alert(window.Epub3Sliderizer.epubReadingSystem.name + '_' + window.Epub3Sliderizer.epubReadingSystem.version)");
+				a.innerHTML = this.epubReadingSystem.name + '_' + this.epubReadingSystem.version;
+			}
 		}
 
 		this.bodyRoot.style.visibility = "visible";
@@ -2913,32 +2981,43 @@ Epub3Sliderizer.init = function()
 		//this.toggleControlsPanel();
 
 		window.onkeyup = this.onKeyboard.bind(this);
-	
-		if (isDefinedAndNotNull(Hammer))
-		{
-			if (!this.mobile)
+		
+		loadScript(that, 'hammer.min.js');
+		window.setTimeout(
+			function()
 			{
-				if (false && isDefinedAndNotNull(Hammer.plugins.showTouches))
-				{
-					Hammer.plugins.showTouches();
-				}
-				if (isDefinedAndNotNull(Hammer.plugins.fakeMultitouch))
-				{
-					Hammer.plugins.fakeMultitouch();
-				}
-			}
+				loadScript(that, 'hammer.fakemultitouch.js');
+				loadScript(that, 'hammer.showtouches.js');
+				window.setTimeout(
+					function()
+					{
+						if (isDefinedAndNotNull(Hammer))
+						{
+							if (!that.mobile)
+							{
+								if (false && isDefinedAndNotNull(Hammer.plugins.showTouches))
+								{
+									Hammer.plugins.showTouches();
+								}
+								if (isDefinedAndNotNull(Hammer.plugins.fakeMultitouch))
+								{
+									Hammer.plugins.fakeMultitouch();
+								}
+							}
 	
-			delete Hammer.defaults.stop_browser_behavior.userSelect;
+							delete Hammer.defaults.stop_browser_behavior.userSelect;
 	
-			this.hammer = new Hammer(this.bodyRoot,
-				{
-					prevent_default: false,
-					css_hacks: false,
-					swipe_velocity: 1
-				});
-		}
+							that.hammer = new Hammer(that.bodyRoot,
+								{
+									prevent_default: false,
+									css_hacks: false,
+									swipe_velocity: 1
+								});
+						}
 	
-		this.initTouch();
+						that.initTouch();
+					}, 100);
+			}, 100);
 	
 		if (isDefinedAndNotNull(window.orientation))
 		{
@@ -2986,131 +3065,131 @@ Epub3Sliderizer.init = function()
 		
 		if (isDefinedAndNotNull($))
 		{
-
-			//$(document).ready(function()
-			//{
-
-			if (isDefinedAndNotNull($(window).mousewheel))
-			{
-				return;
-			}
-
-			if (!navigator.userAgent.match(/Macintosh/))
-			{
-				return;
-			}
-
-			$(window).mousewheel(function (event, delta, deltaX, deltaY)
-			{
-				if (that.reflow)
+			loadScript(that, 'jquery.mousewheel.js');
+			window.setTimeout(
+				function()
 				{
-					return;
-				}
-			
-				deltaY = -deltaY;
-	
-				var parents = $(event.target).parents();
-	
-				var canScrollLeft = false;
-				var canScrollRight = false;
-	
-				var canScrollUp = false;
-				var canScrollDown = false;
-			
-				var scrollableX = false;
-				var scrollableY = false;
-	
-				var func = function()
-				{
-					var elem = $(this)[0];
-
-					scrollableX = scrollableX || elem.scrollLeft !== 0;
-					scrollableY = scrollableY || elem.scrollTop !== 0;
-
-					canScrollLeft = canScrollLeft || deltaX < 0 && (elem.scrollLeft + deltaX) > 0;
-		
-					canScrollUp = canScrollUp || deltaY < 0 && (elem.scrollTop + deltaY) > 0;
-		
-					canScrollRight = canScrollRight || deltaX > 0 && (elem.scrollLeft + deltaX) < (elem.scrollWidth - elem.offsetWidth);
-		
-					canScrollDown = canScrollDown || deltaY > 0 && (elem.scrollTop + deltaY) < (elem.scrollHeight - elem.offsetHeight);
-				};
-	
-				$(event.target).each(func);
-				parents.each(func);
-	
-				var hasScroll = canScrollLeft || canScrollUp || canScrollRight || canScrollDown;
-	
-				if (!hasScroll)
-				{
-					event.preventDefault();
-					event.stopPropagation();
-				}
-
-				/*
-				console.log("deltaX: "+deltaX);
-				console.log("deltaY: "+deltaY);
-	
-				console.log("canScrollLeft: "+canScrollLeft);
-				console.log("canScrollRight: "+canScrollRight);
-	
-				console.log("canScrollUp: "+canScrollUp);
-				console.log("canScrollDown: "+canScrollDown);
-				*/
-	
-	
-				var left = deltaX < 0 && deltaX < deltaY;
-				var right = deltaX > 0 && deltaX > deltaY;
-				var up = deltaY < 0 && deltaY < deltaX;
-				var down = deltaY > 0 && deltaY > deltaX;
-	
-				if (that.totalZoom === 1)
-				{
-					if (false && // Interferes! :(
-						(
-							scrollableX && (up || down) ||
-							scrollableY && (left || right) ||
-							!scrollableY && !scrollableX
-						) &&
-						(Math.abs(deltaX) > 40 || Math.abs(deltaY) > 40)
-					)
+					if (!isDefinedAndNotNull($(window).mousewheel))
 					{
-						if (!that.pauseEvents)
+						return;
+					}
+
+					if (!navigator.userAgent.match(/Macintosh/))
+					{
+						return;
+					}
+
+					$(window).mousewheel(function (event, delta, deltaX, deltaY)
+					{
+						if (that.reflow)
 						{
-							that.pauseEvents = true;
-							setTimeout(function()
+							return;
+						}
+			
+						deltaY = -deltaY;
+	
+						var parents = $(event.target).parents();
+	
+						var canScrollLeft = false;
+						var canScrollRight = false;
+	
+						var canScrollUp = false;
+						var canScrollDown = false;
+			
+						var scrollableX = false;
+						var scrollableY = false;
+	
+						var func = function()
+						{
+							var elem = $(this)[0];
+
+							scrollableX = scrollableX || elem.scrollLeft !== 0;
+							scrollableY = scrollableY || elem.scrollTop !== 0;
+
+							canScrollLeft = canScrollLeft || deltaX < 0 && (elem.scrollLeft + deltaX) > 0;
+		
+							canScrollUp = canScrollUp || deltaY < 0 && (elem.scrollTop + deltaY) > 0;
+		
+							canScrollRight = canScrollRight || deltaX > 0 && (elem.scrollLeft + deltaX) < (elem.scrollWidth - elem.offsetWidth);
+		
+							canScrollDown = canScrollDown || deltaY > 0 && (elem.scrollTop + deltaY) < (elem.scrollHeight - elem.offsetHeight);
+						};
+	
+						$(event.target).each(func);
+						parents.each(func);
+	
+						var hasScroll = canScrollLeft || canScrollUp || canScrollRight || canScrollDown;
+	
+						if (!hasScroll)
+						{
+							//console.log("MOUSE WHEEL SCROLL");
+							event.preventDefault();
+							event.stopPropagation();
+						}
+
+						/*
+						console.log("deltaX: "+deltaX);
+						console.log("deltaY: "+deltaY);
+	
+						console.log("canScrollLeft: "+canScrollLeft);
+						console.log("canScrollRight: "+canScrollRight);
+	
+						console.log("canScrollUp: "+canScrollUp);
+						console.log("canScrollDown: "+canScrollDown);
+						*/
+	
+	
+						var left = deltaX < 0 && deltaX < deltaY;
+						var right = deltaX > 0 && deltaX > deltaY;
+						var up = deltaY < 0 && deltaY < deltaX;
+						var down = deltaY > 0 && deltaY > deltaX;
+	
+						if (that.totalZoom === 1)
+						{
+							if (false && // Interferes! :(
+								(
+									scrollableX && (up || down) ||
+									scrollableY && (left || right) ||
+									!scrollableY && !scrollableX
+								) &&
+								(Math.abs(deltaX) > 40 || Math.abs(deltaY) > 40)
+							)
 							{
-								that.pauseEvents = false;
-							}, 1000);
+								if (!that.pauseEvents)
+								{
+									that.pauseEvents = true;
+									setTimeout(function()
+									{
+										that.pauseEvents = false;
+									}, 1000);
 					
-							if (left)
-							{
-								that.gotoPrevious();
-							}
-							else if (right)
-							{
-								that.gotoNext();
-							}
-							else if (up)
-							{
-								that.nextIncremental(true);
-							}
-							else if (down)
-							{
-								that.nextIncremental(false);
+									if (left)
+									{
+										that.gotoPrevious();
+									}
+									else if (right)
+									{
+										that.gotoNext();
+									}
+									else if (up)
+									{
+										that.nextIncremental(true);
+									}
+									else if (down)
+									{
+										that.nextIncremental(false);
+									}
+								}
 							}
 						}
-					}
-				}
-				/*
-				else
-				{
-					//TODO: pan
-				}
-				*/
-			});
-
-			//});
+						/*
+						else
+						{
+							//TODO: pan
+						}
+						*/
+					});
+				}, 100);
 		}
 	}
 };
@@ -3161,96 +3240,76 @@ function readyFirst()
 	Epub3Sliderizer.bodyRoot = document.getElementById("epb3sldrzr-body");
 	
 	var controls = document.createElement('div');
-	controls.id = "epb3sldrzr-controls";	
-	Epub3Sliderizer.bodyRoot.insertBefore(controls, Epub3Sliderizer.bodyRoot.children[0]);
+	Epub3Sliderizer.bodyRoot.insertBefore(controls, Epub3Sliderizer.bodyRoot.childNodes[0]);
+	
+	controls.id = "epb3sldrzr-controls";
+	controls.setAttribute("id", controls.id);
+	//$(controls).attr("id", controls.id);
 
 	var aa = document.createElement('a');
-	aa.id = "epb3sldrzr-link-textsize-plus";
-	aa.title = "Increase font size";
-	aa.href = "javascript:Epub3Sliderizer.increaseFontSize();";
-	if (controls.children.length === 0)
+	if (controls.childNodes.length === 0)
 	{
 		controls.appendChild(aa);
 	}
 	else
 	{
-		controls.insertBefore(aa, controls.children[0]);
+		controls.insertBefore(aa, controls.childNodes[0]);
 	}
+	aa.id = "epb3sldrzr-link-textsize-plus";
+	aa.setAttribute("id", aa.id);
+	aa.setAttribute("title", "Increase font size");
+	aa.setAttribute("href", "javascript:Epub3Sliderizer.increaseFontSize();");
 
 	var az = document.createElement('a');
-	az.id = "epb3sldrzr-link-textsize-reset";
-	az.title = "Reset font size";
-	az.href = "javascript:Epub3Sliderizer.resetFontSize();";
-	if (controls.children.length === 0)
+	if (controls.childNodes.length === 0)
 	{
 		controls.appendChild(az);
 	}
 	else
 	{
-		controls.insertBefore(az, controls.children[0]);
+		controls.insertBefore(az, controls.childNodes[0]);
 	}
-
+	az.id = "epb3sldrzr-link-textsize-reset";
+	az.setAttribute("id", az.id);
+	az.setAttribute("title", "Reset font size");
+	az.setAttribute("href", "javascript:Epub3Sliderizer.resetFontSize();");
+	
 	var aaa = document.createElement('a');
-	aaa.id = "epb3sldrzr-link-textsize-minus";
-	aaa.title = "Descrease font size";
-	aaa.href = "javascript:Epub3Sliderizer.decreaseFontSize();";
-	if (controls.children.length === 0)
+	if (controls.childNodes.length === 0)
 	{
 		controls.appendChild(aaa);
 	}
 	else
 	{
-		controls.insertBefore(aaa, controls.children[0]);
+		controls.insertBefore(aaa, controls.childNodes[0]);
 	}
-	
+	aaa.id = "epb3sldrzr-link-textsize-minus";
+	aaa.setAttribute("id", aaa.id);
+	aaa.setAttribute("title", "Descrease font size");
+	aaa.setAttribute("href", "javascript:Epub3Sliderizer.decreaseFontSize();");
 
 	var a = document.createElement('a');
-	a.id = "epb3sldrzr-link-reflow";
-	a.title = "Toggle reflow";
-	a.href = "javascript:Epub3Sliderizer.toggleReflow();";
-	if (controls.children.length === 0)
+	if (controls.childNodes.length === 0)
 	{
 		controls.appendChild(a);
 	}
 	else
 	{
-		controls.insertBefore(a, controls.children[0]);
+		controls.insertBefore(a, controls.childNodes[0]);
 	}
+	a.id = "epb3sldrzr-link-reflow";
+	a.setAttribute("id", a.id);
+	a.setAttribute("title", "Toggle reflow");
+	a.setAttribute("href", "javascript:Epub3Sliderizer.toggleReflow();");
 	
-	
-	if (document.defaultView && document.defaultView.getComputedStyle)
+	try
 	{
-		var style = document.defaultView.getComputedStyle(document.body,null);
-		if (style)
-		{
-			var fontSize = style.getPropertyValue("font-size");
-			
-			if (fontSize && fontSize !== "")
-			{
-				console.log("fontSize (COMPUTED): " + fontSize);
-
-				var size = Math.round(parseFloat(fontSize));
-				Epub3Sliderizer.defaultFontSize = size;
-				
-				document.body.style.fontSize = fontSize;
-//				console.log(document.body.style.fontSize);
-				
-				fontSize = getCookie(Epub3Sliderizer.cookieFontSize);
-				console.log("fontSize (COOKIE): " + fontSize);
-				
-				if (fontSize !== null && fontSize !== "")
-				{
-					document.body.style.fontSize = fontSize;
-				}
-				else
-				{
-					setCookie(Epub3Sliderizer.cookieFontSize, document.body.style.fontSize);
-				}
-			}
-		}
+		Epub3Sliderizer.readium = isDefinedAndNotNull(window.parent.Readium);
 	}
-
-	Epub3Sliderizer.readium = isDefinedAndNotNull(window.parent.Readium);
+	catch(e)
+	{
+		console.error(e);
+	}
 	Epub3Sliderizer.ibooks = isDefinedAndNotNull(window.iBooks);
 	Epub3Sliderizer.playbooks = isDefinedAndNotNull(window.editions);
 
@@ -3308,19 +3367,21 @@ function readyFirst()
 
 	if (Epub3Sliderizer.staticMode)
 	{
+		loadScript(Epub3Sliderizer, 'jquery.blockUI.js');
+		
 		window.setTimeout(
 			function()
 			{
 				Epub3Sliderizer.init();
 
-				if (isDefinedAndNotNull($))
+				if (isDefinedAndNotNull($) && isDefinedAndNotNull($.blockUI))
 				{
 					//$.blockUI.defaults.css = { cursor: "default" };
 					$.blockUI.defaults.overlayCSS.opacity = 0;
 					$.blockUI.defaults.overlayCSS.cursor = "default";
 					$.blockUI({ message: null, css: { border: "none", cursor: "default" } });
 				}
-			}, 0);
+			}, 100);
 	}
 	else if (Epub3Sliderizer.basicMode)
 	{
