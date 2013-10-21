@@ -52,7 +52,10 @@ public final class Main {
 
 			String pathEpubFolder = args[1];
 
-			Epub3FileSet.create(slideShow, pathEpubFolder, verbosity);
+			// TODO: yuck yuck yuck!!
+			slideShow.pathEpubFolder = pathEpubFolder;
+			
+			Epub3FileSet.create(uriDataFile, slideShow, pathEpubFolder, verbosity);
 
 		} catch (Exception ex) {
 			throw ex;

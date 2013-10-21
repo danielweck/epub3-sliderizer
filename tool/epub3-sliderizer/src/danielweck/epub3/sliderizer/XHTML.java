@@ -1,5 +1,7 @@
 package danielweck.epub3.sliderizer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import org.pegdown.PegDownProcessor;
+
+import com.github.mustachejava.MustacheFactory;
 
 import danielweck.VoidPrintStream;
 import danielweck.epub3.sliderizer.model.Slide;
@@ -37,12 +41,22 @@ public final class XHTML {
 		return getFileName(i).replace(".xhtml", "_NOTES.xhtml");
 	}
 
-	public static void createAll(SlideShow slideShow, String pathEpubFolder,
-			int verbosity) throws Exception {
+	public static void createAll(MustacheFactory mustacheFactory,
+			File template_Slide, File template_SlideNotes, SlideShow slideShow,
+			String pathEpubFolder, int verbosity) throws Exception {
+
+		if (template_Slide != null && !template_Slide.exists()) {
+			throw new FileNotFoundException(template_Slide.getAbsolutePath());
+		}
+		if (template_SlideNotes != null && !template_SlideNotes.exists()) {
+			throw new FileNotFoundException(
+					template_SlideNotes.getAbsolutePath());
+		}
 
 		int n = slideShow.slides.size();
 		for (int i = 0; i < n; i++) {
-			XHTML.create(slideShow, i, pathEpubFolder, verbosity);
+			XHTML.create(mustacheFactory, template_Slide, template_SlideNotes,
+					slideShow, i, pathEpubFolder, verbosity);
 		}
 	}
 
@@ -161,14 +175,12 @@ public final class XHTML {
 		elementMeta = document.createElement("meta");
 		elementHead.appendChild(elementMeta);
 		elementMeta.setAttribute("name", "description");
-		elementMeta.setAttribute("content", Epub3FileSet.THIS);
+		elementMeta.setAttribute("content", Epub3FileSet.GENERATOR);
 
 		elementMeta = document.createElement("meta");
 		elementHead.appendChild(elementMeta);
 		elementMeta.setAttribute("name", "keywords");
-		elementMeta
-				.setAttribute("content",
-						"EPUB EPUB3 HTML5 Sliderizer slideshow slide deck e-book ebook");
+		elementMeta.setAttribute("content", Epub3FileSet.KEYWORDS);
 
 		String title = slide == null ? slideShow.TITLE : slide.TITLE;
 		if (title == null || title.isEmpty()) {
@@ -196,10 +208,7 @@ public final class XHTML {
 		elementTitle.appendChild(document.createTextNode(htmlTitle));
 
 		create_HeadLinks(slideShow.FAVICON, document, elementHead,
-				"shortcut icon", null, PATH_PREFIX
-						+ Epub3FileSet.FOLDER_IMG
-						+ (slideShow.FAVICON.equals("favicon.ico") ? "" : "/"
-								+ Epub3FileSet.FOLDER_CUSTOM));
+				"shortcut icon", null, PATH_PREFIX + slideShow.FAVICON_FOLDER());
 
 		create_HeadLinks(slideShow.TOUCHICON, document, elementHead,
 				"apple-touch-icon", null, PATH_PREFIX + Epub3FileSet.FOLDER_IMG
@@ -220,15 +229,17 @@ public final class XHTML {
 
 		if (!slideShow.importedConverted) {
 
-			for (int k = 0; k < Epub3FileSet.CSS_FILENAMES.length; k++) {
-				String filename = Epub3FileSet.CSS_FILENAMES[k][0];
+			for (int k = 0; k < Epub3FileSet.CSSs.length; k++) {
+				String filename = Epub3FileSet.CSSs[k].FILE;
 				// String id = Epub3FileSet.CSS_FILENAMES[k][1];
 
-				if (!filename.equals(Epub3FileSet.NAVDOC_CSS) || slide == null) {
-					create_HeadLinks(filename, document, elementHead,
-							"stylesheet", "text/css", PATH_PREFIX
-									+ Epub3FileSet.FOLDER_CSS);
-				}
+				create_HeadLinks(filename, document, elementHead, "stylesheet",
+						"text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
+			}
+			if (slide == null) {
+				create_HeadLinks(Epub3FileSet.CSS_NAVDOC.FILE, document,
+						elementHead, "stylesheet", "text/css", PATH_PREFIX
+								+ Epub3FileSet.FOLDER_CSS);
 			}
 
 			// Element elementStyle = document.createElement("style");
@@ -259,20 +270,22 @@ public final class XHTML {
 
 		if (slideShow.importedConverted) {
 
-			for (int k = 0; k < Epub3FileSet.CSS_FILENAMES.length; k++) {
-				String filename = Epub3FileSet.CSS_FILENAMES[k][0];
+			for (int k = 0; k < Epub3FileSet.CSSs.length; k++) {
+				String filename = Epub3FileSet.CSSs[k].FILE;
 				// String id = Epub3FileSet.CSS_FILENAMES[k][1];
 
-				if (!filename.equals(Epub3FileSet.NAVDOC_CSS) || slide == null) {
-					create_HeadLinks(filename, document, elementHead,
-							"stylesheet", "text/css", PATH_PREFIX
-									+ Epub3FileSet.FOLDER_CSS);
-				}
+				create_HeadLinks(filename, document, elementHead, "stylesheet",
+						"text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
+			}
+			if (slide == null) {
+				create_HeadLinks(Epub3FileSet.CSS_NAVDOC.FILE, document,
+						elementHead, "stylesheet", "text/css", PATH_PREFIX
+								+ Epub3FileSet.FOLDER_CSS);
 			}
 		}
 
-		for (int k = 0; k < Epub3FileSet.JS_FILENAMES.length; k++) {
-			String filename = Epub3FileSet.JS_FILENAMES[k][0];
+		for (int k = 0; k < Epub3FileSet.JSs.length; k++) {
+			String filename = Epub3FileSet.JSs[k].FILE;
 			// String id = Epub3FileSet.JS_FILENAMES[k][1];
 
 			create_HeadScripts(filename, document, elementHead, null, // "text/javascript",
@@ -293,9 +306,8 @@ public final class XHTML {
 			create_HeadLinks(XHTML.getFileName(1), document, elementHead,
 					"next", null, Epub3FileSet.FOLDER_HTML);
 
-			create_HeadLinks(slideShow.FILE_EPUB != null ? slideShow.FILE_EPUB
-					: "EPUB3.epub", document, elementHead, "epub", null,
-					"../..");
+			create_HeadLinks(slideShow.EPUB_FILE(), document, elementHead,
+					"epub", null, "../..");
 		} else if (!notes) {
 
 			String prev = "../" + NavDoc.getFileName();
@@ -525,9 +537,47 @@ public final class XHTML {
 	public final static String MARKDOWN = "MARKDOWN";
 	public final static String MARKDOWN_SRC = "MARKDOWN_SRC";
 
-	static void create_Content(Element elementSection, Document document,
-			String content, SlideShow slideShow, Slide slide,
-			String pathEpubFolder, int verbosity) throws Exception {
+	public static String massage(String content, SlideShow slideShow,
+			Slide slide, String pathEpubFolder, int verbosity) throws Exception {
+
+		if (content == null) {
+			return null;
+		}
+
+		Document document = XmlDocument.create();
+		Element rootElement = document.createElementNS(
+				"http://www.w3.org/1999/xhtml", "html");
+		document.appendChild(rootElement);
+
+		rootElement.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
+				XMLConstants.XMLNS_ATTRIBUTE + ":epub",
+				"http://www.idpf.org/2007/ops");
+
+		rootElement.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
+				XMLConstants.XMLNS_ATTRIBUTE + ":m",
+				"http://www.w3.org/1998/Math/MathML");
+
+		rootElement.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
+				XMLConstants.XMLNS_ATTRIBUTE + ":svg",
+				"http://www.w3.org/2000/svg");
+
+		rootElement
+				.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
+						XMLConstants.XMLNS_ATTRIBUTE + ":"
+								+ XMLConstants.XML_NS_PREFIX,
+						XMLConstants.XML_NS_URI);
+
+		XHTML.create_Content(rootElement, document, content, slideShow, slide,
+				pathEpubFolder, -1);
+
+		return XmlDocument.toString(rootElement, -1)
+				.replaceAll("<\\?xml[^>]*\\?>", "")
+				.replaceAll("<html[^>]*>", "").replaceAll("</html>", "");
+	}
+
+	public static void create_Content(Element elementSection,
+			Document document, String content, SlideShow slideShow,
+			Slide slide, String pathEpubFolder, int verbosity) throws Exception {
 
 		if (content == null) {
 			return;
@@ -536,8 +586,8 @@ public final class XHTML {
 		if (content.indexOf(MARKDOWN_SRC) == 0) {
 			content = "<pre>"
 					+ content.substring(MARKDOWN_SRC.length())
-							.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-							+ "</pre>";
+							.replace("&", "&amp;").replace("<", "&lt;")
+							.replace(">", "&gt;") + "</pre>";
 		} else if (content.indexOf(MARKDOWN) == 0) {
 			content = content.substring(MARKDOWN.length());
 
@@ -657,8 +707,9 @@ public final class XHTML {
 				+ Epub3FileSet.FOLDER_HTML + "/" + fileName, verbosity);
 	}
 
-	private static void create(SlideShow slideShow, int i,
-			String pathEpubFolder, int verbosity) throws Exception {
+	private static void create(MustacheFactory mustacheFactory,
+			File template_Slide, File template_SlideNotes, SlideShow slideShow,
+			int i, String pathEpubFolder, int verbosity) throws Exception {
 
 		Slide slide = slideShow.slides.get(i);
 		i++;

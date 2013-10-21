@@ -125,7 +125,7 @@ public class DZSlidesImporter {
 				continue;
 			}
 
-			Slide slide = new Slide();
+			Slide slide = new Slide(slideShow);
 			slideShow.slides.add(slide);
 
 			title = fetchHeading(section);

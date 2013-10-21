@@ -7,7 +7,12 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.util.ArrayList;
+
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.MustacheFactory;
 
 import danielweck.epub3.sliderizer.model.Slide;
 import danielweck.epub3.sliderizer.model.SlideShow;
@@ -15,16 +20,34 @@ import danielweck.xml.XmlDocument;
 
 public final class Epub3FileSet {
 
-	public final static String THIS = "EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer";
+	public final static class FileId {
+		String FILE;
+		String ID;
 
-	final static String FOLDER_HTML = "html";
-	final static String FOLDER_JS = "js";
-	final static String FOLDER_IMG = "img";
-	final static String FOLDER_CSS = "css";
+		public FileId(String file, String id) {
+			FILE = file;
+			ID = id;
+		}
+	}
 
-	final static String FOLDER_CUSTOM = "custom";
+	public final static String FIRST_SLIDE_FILENAME = XHTML.getFileName(1); 
+	
+	public final static String GENERATOR = "EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer";
+	public final static String KEYWORDS = "EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook";
 
-	final static String[][] FONT_FILENAMES = new String[][] {
+	public final static String FOLDER_TEMPLATES = "templates";
+	public final static String TEMPLATE_NAV = "nav.xhtml.mustache";
+	public final static String TEMPLATE_SLIDE = "slide.xhtml.mustache";
+	public final static String TEMPLATE_SLIDE_NOTES = "slide_NOTES.xhtml.mustache";
+
+	public final static String FOLDER_HTML = "html";
+	public final static String FOLDER_JS = "js";
+	public final static String FOLDER_IMG = "img";
+	public final static String FOLDER_CSS = "css";
+
+	public final static String FOLDER_CUSTOM = "custom";
+
+	public final static String[][] FONT_FILENAMES = new String[][] {
 			new String[] { "FontAwesome.woff", "font-awesome-woff" },
 			new String[] { "Inconsolata.woff", "font-inconsolata-woff" },
 			new String[] { "Lato_400.woff", "font-lato-400-woff" },
@@ -34,28 +57,30 @@ public final class Epub3FileSet {
 			new String[] { "Arvo_400.woff", "font-arvo-400-woff" },
 			new String[] { "Arvo_700.woff", "font-arvo-700-woff" } };
 
-	final static String NAVDOC_CSS = "navdoc.css";
-	final static String[][] CSS_FILENAMES = new String[][] {
-			new String[] { "FontAwesome.css", "css-font-awesome" },
-			new String[] { "fonts.css", "css-fonts" },
-			new String[] { "struct.css", "css-struct" },
-			new String[] { "incrementals.css", "css-incrementals" },
-			new String[] { "animations.css", "css-animations" },
-			new String[] { "controls.css", "css-controls" },
-			new String[] { "default.css", "css-default" },
-			new String[] { NAVDOC_CSS, "css-navdoc" } };
+	public final static FileId CSS_NAVDOC = new FileId("navdoc.css",
+			"css-navdoc");
+	public final static FileId[] CSSs = new FileId[] {
+			new FileId("FontAwesome.css", "css-font-awesome"),
+			new FileId("fonts.css", "css-fonts"),
+			new FileId("struct.css", "css-struct"),
+			new FileId("incrementals.css", "css-incrementals"),
+			new FileId("animations.css", "css-animations"),
+			new FileId("controls.css", "css-controls"),
+			new FileId("default.css", "css-default") };
 
-	final static String[][] JS_FILENAMES = new String[][] {
-			new String[] { "addEventListener.js", "js-addEventListener" },
-			new String[] { "classList.js", "js-classList" },
-			new String[] { "screenfull.js", "js-screenfull" },
-			//new String[] { "hammer.min.js", "js-hammer" },
-			//new String[] { "hammer.fakemultitouch.js", "js-hammer-fakemultitouch" },
-			//new String[] { "hammer.showtouches.js", "js-hammer-showtouches" },
-			new String[] { "jquery-2.0.2.min.js", "js-jquery" },
-			//new String[] { "jquery.mousewheel.js", "js-jquery-mousewheel" },
-			//new String[] { "jquery.blockUI.js", "js-jquery-blockUI" },
-			new String[] { "default.js", "js-default" } };
+	public final static FileId[] JSs = new FileId[] {
+			new FileId("addEventListener.js", "js-addEventListener"),
+			new FileId("classList.js", "js-classList"),
+			new FileId("screenfull.js", "js-screenfull"),
+			// new FileId( "hammer.min.js", "js-hammer" ),
+			// new FileId( "hammer.fakemultitouch.js",
+			// "js-hammer-fakemultitouch" ),
+			// new FileId( "hammer.showtouches.js", "js-hammer-showtouches"
+			// ),
+			new FileId("jquery-2.0.2.min.js", "js-jquery"),
+			// new FileId( "jquery.mousewheel.js", "js-jquery-mousewheel" ),
+			// new FileId( "jquery.blockUI.js", "js-jquery-blockUI" ),
+			new FileId("default.js", "js-default") };
 
 	private final static String CSS_PREFIXED = "_PREFIXED_";
 	private final static String CSS_PREFIXED_PROP = "-PREFIXED_PROPERTY-";
@@ -320,16 +345,71 @@ public final class Epub3FileSet {
 		}
 	}
 
-	public static void create(SlideShow slideShow, String pathEpubFolder,
-			int verbosity) throws Exception {
+	public static void create(String uriDataFile, SlideShow slideShow,
+			String pathEpubFolder, int verbosity) throws Exception {
 
 		File epubFolder = new File(pathEpubFolder);
 		if (!epubFolder.isDirectory()) {
 			throw new FileNotFoundException(pathEpubFolder);
 		}
 
-		for (int i = 0; i < Epub3FileSet.CSS_FILENAMES.length; i++) {
-			String filename = Epub3FileSet.CSS_FILENAMES[i][0];
+		URI uri = new URI(uriDataFile);
+		if (!uri.getScheme().equalsIgnoreCase("file")) {
+			throw new MalformedURLException(uriDataFile);
+		}
+
+		File file = new File(uri);
+		if (!file.exists()) {
+			throw new FileNotFoundException(uriDataFile);
+		}
+
+		File template_Nav = null;
+		File template_Slide = null;
+		File template_SlideNotes = null;
+
+		MustacheFactory mustacheFactory = null;
+
+		File templateDir = new File(file.getParent(), FOLDER_TEMPLATES);
+		if (templateDir.isDirectory()) {
+			if (verbosity > 0) {
+				System.out.println(" ");
+				System.out.println("}}}}} FOUND TEMPLATE DIRECTORY: "
+						+ templateDir.getAbsolutePath());
+			}
+			mustacheFactory = new DefaultMustacheFactory(templateDir);
+
+			File navTemplateFile = new File(templateDir, TEMPLATE_NAV);
+			if (file.exists()) {
+				if (verbosity > 0) {
+					System.out.println(" ");
+					System.out.println("}}}}} FOUND TEMPLATE [NAV DOC]: "
+							+ navTemplateFile.getAbsolutePath());
+				}
+				template_Nav = navTemplateFile;
+			}
+			File slideTemplateFile = new File(templateDir, TEMPLATE_SLIDE);
+			if (file.exists()) {
+				if (verbosity > 0) {
+					System.out.println(" ");
+					System.out.println("}}}}} FOUND TEMPLATE [SLIDE]: "
+							+ slideTemplateFile.getAbsolutePath());
+				}
+				template_Slide = slideTemplateFile;
+			}
+			File slideNotesTemplateFile = new File(templateDir,
+					TEMPLATE_SLIDE_NOTES);
+			if (file.exists()) {
+				if (verbosity > 0) {
+					System.out.println(" ");
+					System.out.println("}}}}} FOUND TEMPLATE [SLIDE NOTES]: "
+							+ slideNotesTemplateFile.getAbsolutePath());
+				}
+				template_SlideNotes = slideNotesTemplateFile;
+			}
+		}
+
+		for (int i = 0; i < Epub3FileSet.CSSs.length; i++) {
+			String filename = Epub3FileSet.CSSs[i].FILE;
 			// String id = Epub3FileSet.CSS_FILENAMES_IDS[i][1];
 
 			processCssFile(slideShow, new File(pathEpubFolder,
@@ -338,7 +418,7 @@ public final class Epub3FileSet {
 
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.LOGO, verbosity);
-		
+
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.TOUCHICON, verbosity);
 
@@ -373,9 +453,11 @@ public final class Epub3FileSet {
 
 		NCX.create(slideShow, pathEpubFolder, verbosity);
 
-		NavDoc.create(slideShow, pathEpubFolder, verbosity);
+		NavDoc.create(mustacheFactory, template_Nav, slideShow, pathEpubFolder,
+				verbosity);
 
-		XHTML.createAll(slideShow, pathEpubFolder, verbosity);
+		XHTML.createAll(mustacheFactory, template_Slide, template_SlideNotes,
+				slideShow, pathEpubFolder, verbosity);
 
 		OPF.create(slideShow, pathEpubFolder, verbosity);
 	}

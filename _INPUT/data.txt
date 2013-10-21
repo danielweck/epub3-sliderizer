@@ -84,11 +84,35 @@ function setupAnimations()
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
 
+// --------------------------------------------
+_FILES_CSS
+assets/empty.css
+assets/empty.css
+
+// --------------------------------------------
+_FILES_JS
+assets/empty.js
+assets/empty.js
+
+// --------------------------------------------
+_NOTES
+
+<p>Testing...
 
 // #########################################################
 // #########################################################
 // #########################################################
 -SLIDE
+
+// --------------------------------------------
+_FILES_CSS
+assets/empty.css
+assets/empty2.css
+
+// --------------------------------------------
+_FILES_JS
+assets/empty.js
+assets/empty2.js
 
 // --------------------------------------------
 _TITLE
@@ -902,6 +926,7 @@ a#epb3sldrzr-link-notesref
 	border: 0.4rem solid #ff00ff;
 }
 
+// --------------------------------------------
 _NOTES
 
 <p>Slide notes are displayed separately, can be linked from the host slide.

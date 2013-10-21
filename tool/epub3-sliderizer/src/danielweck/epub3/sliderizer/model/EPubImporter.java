@@ -169,7 +169,7 @@ public final class EPubImporter {
 
 				Document xhtmlDocument = XmlDocument.parse(xhtmlFile);
 
-				Slide slide = new Slide();
+				Slide slide = new Slide(slideShow);
 
 				list = xhtmlDocument.getElementsByTagNameNS(
 						"http://www.w3.org/2000/svg", "svg");

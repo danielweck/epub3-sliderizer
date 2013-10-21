@@ -7,5 +7,7 @@
 	<classpathentry kind="lib" path="lib/parboiled-core-1.1.6.jar"/>
 	<classpathentry kind="lib" path="lib/parboiled-java-1.1.6.jar"/>
 	<classpathentry kind="lib" path="lib/pegdown-1.4.1.jar"/>
+	<classpathentry kind="lib" path="lib/guava-15.0.jar"/>
+	<classpathentry kind="lib" path="lib/mustache-compiler-0.8.13.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

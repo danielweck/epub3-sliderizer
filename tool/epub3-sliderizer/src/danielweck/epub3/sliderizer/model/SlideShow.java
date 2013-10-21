@@ -15,9 +15,29 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;
 
+import javax.xml.XMLConstants;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import danielweck.epub3.sliderizer.Epub3FileSet;
+import danielweck.epub3.sliderizer.XHTML;
+import danielweck.xml.XmlDocument;
 
 public final class SlideShow extends Fielder {
+
+	// Forwards for Mustache context
+	public final static String GENERATOR = Epub3FileSet.GENERATOR;
+	public final static String KEYWORDS = Epub3FileSet.KEYWORDS;
+	public final static String FOLDER_IMG = Epub3FileSet.FOLDER_IMG;
+	public final static String FOLDER_CSS = Epub3FileSet.FOLDER_CSS;
+	public final static String FOLDER_JS = Epub3FileSet.FOLDER_JS;
+	public final static String FOLDER_HTML = Epub3FileSet.FOLDER_HTML;
+	public final static String FOLDER_CUSTOM = Epub3FileSet.FOLDER_CUSTOM;
+	public final static Epub3FileSet.FileId[] CSSs = Epub3FileSet.CSSs;
+	public final static Epub3FileSet.FileId CSS_NAVDOC = Epub3FileSet.CSS_NAVDOC;
+	public final static Epub3FileSet.FileId[] JSs = Epub3FileSet.JSs;
+	public final static String FIRST_SLIDE_FILENAME = Epub3FileSet.FIRST_SLIDE_FILENAME;
 
 	SlideShow() throws Exception {
 
@@ -50,7 +70,7 @@ public final class SlideShow extends Fielder {
 	public String DESCRIPTION = null;
 	public String SUBJECT = null;
 
-	public String CREATOR = Epub3FileSet.THIS;
+	public String CREATOR = Epub3FileSet.GENERATOR;
 	public String PUBLISHER = null;
 
 	public String IDENTIFIER = "DEFAULT-UID";
@@ -67,6 +87,17 @@ public final class SlideShow extends Fielder {
 	public String FONT_SIZE = "40";
 
 	public String FAVICON = "favicon.ico";
+
+	public String FAVICON_FOLDER() {
+		return FOLDER_IMG
+				+ (this.FAVICON.equals("favicon.ico") ? "" : "/"
+						+ FOLDER_CUSTOM);
+	}
+
+	public String EPUB_FILE() {
+		return FILE_EPUB != null ? FILE_EPUB : "EPUB3.epub";
+	}
+
 	public String TOUCHICON = null;
 
 	public String LOGO = null;
@@ -77,16 +108,86 @@ public final class SlideShow extends Fielder {
 	public String FILES_JS = null;
 
 	public String FILE_EPUB = null;
-	
+
 	public String CSS_STYLE = null;
 	public String JS_SCRIPT = null;
 
+	// TODO: yucky yuck
+	public String pathEpubFolder = null;
+
 	public String NOTES = null;
+
+	public String NOTES_XHTML() throws Exception {
+
+		if (NOTES == null) {
+			return null;
+		}
+
+		return XHTML.massage(NOTES, this, null, pathEpubFolder, -1);
+	}
 
 	public final ArrayList<Slide> slides = new ArrayList<Slide>();
 
+	private ArrayList<String> _xCSSs = null;
+
+	public ArrayList<String> xCSSs() {
+
+		if (FILES_CSS == null) {
+			return null;
+		}
+		if (_xCSSs != null) {
+			return _xCSSs;
+		}
+
+		ArrayList<String> array = Epub3FileSet.splitPaths(FILES_CSS);
+
+		_xCSSs = new ArrayList<String>(array.size());
+
+		for (String path : array) {
+
+			if (_xCSSs.contains(path)) {
+				continue;
+			}
+			_xCSSs.add(path);
+		}
+
+		if (_xCSSs.size() == 0) {
+			_xCSSs = null;
+		}
+		return _xCSSs;
+	}
+
+	private ArrayList<String> _xJSs = null;
+
+	public ArrayList<String> xJSs() {
+
+		if (FILES_JS == null) {
+			return null;
+		}
+		if (_xJSs != null) {
+			return _xJSs;
+		}
+
+		ArrayList<String> array = Epub3FileSet.splitPaths(FILES_JS);
+
+		_xJSs = new ArrayList<String>(array.size());
+
+		for (String path : array) {
+
+			if (_xJSs.contains(path)) {
+				continue;
+			}
+			_xJSs.add(path);
+		}
+
+		if (_xJSs.size() == 0) {
+			_xJSs = null;
+		}
+		return _xJSs;
+	}
+
 	public void setDimensions(int width, int height) {
-		
+
 		int originalWidth = Integer.parseInt(VIEWPORT_WIDTH);
 		float ratio = originalWidth / (float) width;
 
@@ -111,14 +212,14 @@ public final class SlideShow extends Fielder {
 					allReferences_IMG.add(str);
 				}
 			}
-			
+
 			array = Epub3FileSet.splitPaths(this.TOUCHICON);
 			for (String str : array) {
 				if (!allReferences_IMG.contains(str)) {
 					allReferences_IMG.add(str);
 				}
 			}
-			
+
 			array = Epub3FileSet.splitPaths(this.COVER);
 			for (String str : array) {
 				if (!allReferences_IMG.contains(str)) {
@@ -161,7 +262,7 @@ public final class SlideShow extends Fielder {
 		boolean isSlideMarker = line.equals(Slide.SLIDE_MARKER);
 		while (isSlideMarker) {
 
-			Slide slide = Slide.parse(bufferedReader, verbosity);
+			Slide slide = Slide.parse(this, bufferedReader, verbosity);
 			slides.add(slide);
 
 			if ((isSlideMarker = bufferedReader.ready())) {

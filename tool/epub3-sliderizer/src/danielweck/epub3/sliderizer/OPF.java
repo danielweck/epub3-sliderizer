@@ -59,7 +59,7 @@ public final class OPF {
 		Element elementMeta_ = document.createElement("meta");
 		elementMetadata.appendChild(elementMeta_);
 		elementMeta_.setAttribute("property", "dcterms:contributor");
-		elementMeta_.appendChild(document.createTextNode(Epub3FileSet.THIS));
+		elementMeta_.appendChild(document.createTextNode(Epub3FileSet.GENERATOR));
 
 		if (slideShow.DATE != null) {
 			Element elementMeta = document.createElement("meta");
@@ -206,9 +206,9 @@ public final class OPF {
 						+ (slideShow.FAVICON.equals("favicon.ico") ? "" : "/"
 								+ Epub3FileSet.FOLDER_CUSTOM), null);
 
-		for (int i = 0; i < Epub3FileSet.JS_FILENAMES.length; i++) {
-			String filename = Epub3FileSet.JS_FILENAMES[i][0];
-			String id = Epub3FileSet.JS_FILENAMES[i][1];
+		for (int i = 0; i < Epub3FileSet.JSs.length; i++) {
+			String filename = Epub3FileSet.JSs[i].FILE;
+			String id = Epub3FileSet.JSs[i].ID;
 
 			create_ManifestItem(filename, document, elementManifest, id, false,
 					Epub3FileSet.FOLDER_JS, null);
@@ -222,9 +222,9 @@ public final class OPF {
 					Epub3FileSet.FOLDER_CSS, null);
 		}
 
-		for (int i = 0; i < Epub3FileSet.CSS_FILENAMES.length; i++) {
-			String filename = Epub3FileSet.CSS_FILENAMES[i][0];
-			String id = Epub3FileSet.CSS_FILENAMES[i][1];
+		for (int i = 0; i < Epub3FileSet.CSSs.length; i++) {
+			String filename = Epub3FileSet.CSSs[i].FILE;
+			String id = Epub3FileSet.CSSs[i].ID;
 
 			create_ManifestItem(filename, document, elementManifest, id, false,
 					Epub3FileSet.FOLDER_CSS, null);
