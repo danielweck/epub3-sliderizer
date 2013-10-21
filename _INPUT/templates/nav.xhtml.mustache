@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:epub="http://www.idpf.org/2007/ops"
+    xmlns:m="http://www.w3.org/1998/Math/MathML"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    id="epb3sldrzr-NavDoc"
+    lang="{{{LANGUAGE}}}"
+    xml:lang="{{{LANGUAGE}}}">
+    <head>
+        <meta charset="UTF-8"/>
+
+        <meta content="{{{GENERATOR}}}" name="description"/>
+        <meta content="{{{KEYWORDS}}}" name="keywords"/>
+        
+        <title>(0/{{{slides.size}}}) {{{TITLE}}}{{#SUBTITLE}} - {{{SUBTITLE}}}{{/SUBTITLE}}</title>
+        
+        <link href="{{{FAVICON_FOLDER}}}/{{{FAVICON}}}" rel="shortcut icon"/>
+        
+        {{#TOUCHICON}}
+        <link href="{{{FOLDER_IMG}}}/{{{FOLDER_CUSTOM}}}/{{{TOUCHICON}}}" rel="apple-touch-icon"/>
+        {{/TOUCHICON}}
+        
+        {{#VIEWPORT_WIDTH}}
+        {{#VIEWPORT_HEIGHT}}
+        <meta content="width={{{VIEWPORT_WIDTH}}}, height={{{VIEWPORT_HEIGHT}}}" name="viewport"/>
+        {{/VIEWPORT_HEIGHT}}
+        {{/VIEWPORT_WIDTH}}
+        
+        {{#CSSs}}
+        <link href="{{{FOLDER_CSS}}}/{{{FILE}}}" rel="stylesheet" type="text/css"/>
+        {{/CSSs}}
+        
+        <link href="{{{FOLDER_CSS}}}/{{{CSS_NAVDOC.FILE}}}" rel="stylesheet" type="text/css"/>
+        
+        {{#xCSSs}}
+        <link href="{{{FOLDER_CSS}}}/{{{FOLDER_CUSTOM}}}/{{{.}}}" rel="stylesheet" type="text/css"/>
+        {{/xCSSs}}
+        
+        {{#JSs}}
+        <script src="{{{FOLDER_JS}}}/{{{FILE}}}"> </script>
+        {{/JSs}}
+        
+        {{#xJSs}}
+        <link href="{{{FOLDER_JS}}}/{{{FOLDER_CUSTOM}}}/{{{.}}}" rel="stylesheet" type="text/css"/>
+        {{/xJSs}}
+        
+        <link href="{{{FOLDER_HTML}}}/{{{FIRST_SLIDE_FILENAME}}}" rel="next"/>
+        
+        <link href="../../{{{EPUB_FILE}}}" rel="epub"/>
+
+        {{#CSS_STYLE}}
+        <style type="text/css">
+        {{{CSS_STYLE}}}
+        </style>
+        {{/CSS_STYLE}}
+
+        {{#JS_SCRIPT}}
+        <script>
+        //<![CDATA[
+        {{{JS_SCRIPT}}}
+        //]]>
+        </script>
+        {{/JS_SCRIPT}}
+</head>
+<body epub:type="bodymatter">
+    <div id="epb3sldrzr-body">
+        <div id="epb3sldrzr-root">
+
+            {{#LOGO}}
+            <img id="epb3sldrzr-logo"
+                 src="{{{FOLDER_IMG}}}/{{{FOLDER_CUSTOM}}}/{{{LOGO}}}"
+                 alt=""/>
+            {{/LOGO}}
+
+            <h1 id="epb3sldrzr-title">{{{TITLE}}}{{#SUBTITLE}}<br/> <span id="epb3sldrzr-subtitle">{{{SUBTITLE}}}</span>{{/SUBTITLE}}</h1>
+
+            <section id="epb3sldrzr-content">
+                <div id="epb3sldrzr-anim-overflow">
+                    
+                    <nav epub:type="toc"
+                         id="epb3sldrzr-toc">
+                        <ol>
+                            {{#slides}}
+                            <li epub:type="chapter">
+                                {{{#slide?}}}<a href="{{{FOLDER_HTML}}}/{{{SLIDE_FILENAME}}}">{{{TITLE}}}{{#SUBTITLE?}} <span>{{{SUBTITLE}}}</span>{{/SUBTITLE?}}</a>{{{/slide?}}}
+                            </li>
+                            {{/slides}}
+                        </ol>    
+                    </nav>
+                    
+                    <nav epub:type="page-list"
+                         id="epb3sldrzr-pageList">
+                         <ol>
+                             {{#slides}}
+                             <li epub:type="pagebreak">
+                                 <a href="{{{FOLDER_HTML}}}/{{{SLIDE_FILENAME}}}#epb3sldrzr-title">{{{SLIDE_NUMBER}}}</a>
+                             </li>
+                             {{/slides}}
+                         </ol>
+                     </nav>
+                 </div>
+
+                 {{#NOTES}}
+                 <div id="epb3sldrzr-notes">
+                     {{{NOTES_XHTML}}}
+                 </div>
+                 {{/NOTES}}
+             </section>
+         </div>
+     </div>
+</body>
+</html>
