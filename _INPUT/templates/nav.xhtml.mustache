@@ -13,7 +13,7 @@
         <meta content="{{{GENERATOR}}}" name="description"/>
         <meta content="{{{KEYWORDS}}}" name="keywords"/>
         
-        <title>(0/{{{slides.size}}}) {{{TITLE}}}{{#SUBTITLE}} - {{{SUBTITLE}}}{{/SUBTITLE}}</title>
+        <title>(0/{{{slides.size}}}) {{TITLE}}{{#SUBTITLE}} - {{SUBTITLE}}{{/SUBTITLE}}</title>
         
         <link href="{{{FAVICON_FOLDER}}}/{{{FAVICON}}}" rel="shortcut icon"/>
         
@@ -51,7 +51,7 @@
 
         {{#CSS_STYLE}}
         <style type="text/css">
-        {{{CSS_STYLE}}}
+        {{{CSS_STYLING}}}
         </style>
         {{/CSS_STYLE}}
 
@@ -73,7 +73,7 @@
                  alt=""/>
             {{/LOGO}}
 
-            <h1 id="epb3sldrzr-title">{{{TITLE}}}{{#SUBTITLE}}<br/> <span id="epb3sldrzr-subtitle">{{{SUBTITLE}}}</span>{{/SUBTITLE}}</h1>
+            <h1 id="epb3sldrzr-title">{{TITLE}}{{#SUBTITLE}}<br/> <span id="epb3sldrzr-subtitle">{{SUBTITLE}}</span>{{/SUBTITLE}}</h1>
 
             <section id="epb3sldrzr-content">
                 <div id="epb3sldrzr-anim-overflow">
@@ -83,7 +83,7 @@
                         <ol>
                             {{#slides}}
                             <li epub:type="chapter">
-                                {{{#slide?}}}<a href="{{{FOLDER_HTML}}}/{{{SLIDE_FILENAME}}}">{{{TITLE}}}{{#SUBTITLE?}} <span>{{{SUBTITLE}}}</span>{{/SUBTITLE?}}</a>{{{/slide?}}}
+                                {{{#slide}}}<a href="{{{FOLDER_HTML}}}/{{{SLIDE_FILENAME}}}">{{TITLE}}{{#SUBTITLE}} <span>{{SUBTITLE}}</span>{{/SUBTITLE}}</a>{{{/slide}}}
                             </li>
                             {{/slides}}
                         </ol>    
@@ -102,9 +102,9 @@
                  </div>
 
                  {{#NOTES}}
-                 <div id="epb3sldrzr-notes">
+                 <aside id="epb3sldrzr-notes" epub:type="footnote">
                      {{{NOTES_XHTML}}}
-                 </div>
+                 </aside>
                  {{/NOTES}}
              </section>
          </div>

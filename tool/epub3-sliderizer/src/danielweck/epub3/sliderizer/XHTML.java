@@ -3,6 +3,7 @@ package danielweck.epub3.sliderizer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.io.StringWriter;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ import org.w3c.dom.NodeList;
 
 import org.pegdown.PegDownProcessor;
 
+import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 
 import danielweck.VoidPrintStream;
@@ -53,10 +55,53 @@ public final class XHTML {
 					template_SlideNotes.getAbsolutePath());
 		}
 
+		Mustache mustacheSlide = null;
+		if (template_Slide != null) {
+			try {
+				Mustache mustache = mustacheFactory
+						.compile(Epub3FileSet.TEMPLATE_SLIDE);
+				mustacheSlide = mustache;
+			} catch (Exception ex) {
+				System.out.println(" ");
+				System.out.println("}}}}} INVALID MUSTACHE TEMPLATE!!!! "
+						+ template_Slide.getAbsolutePath());
+				ex.printStackTrace();
+			}
+		}
+
+		Mustache mustacheSlideNotes = null;
+		if (template_SlideNotes != null) {
+			try {
+				Mustache mustache = mustacheFactory
+						.compile(Epub3FileSet.TEMPLATE_SLIDE_NOTES);
+				mustacheSlideNotes = mustache;
+			} catch (Exception ex) {
+				System.out.println(" ");
+				System.out.println("}}}}} INVALID MUSTACHE TEMPLATE!!!! "
+						+ template_SlideNotes.getAbsolutePath());
+				ex.printStackTrace();
+			}
+		}
+
+		if (mustacheSlide != null) {
+			if (verbosity > 0) {
+				System.out.println(" ");
+				System.out.println("}}}}} MUSTACHE TEMPLATE OK [SLIDE]: "
+						+ template_Slide.getAbsolutePath());
+			}
+		}
+		if (mustacheSlideNotes != null) {
+			if (verbosity > 0) {
+				System.out.println(" ");
+				System.out.println("}}}}} MUSTACHE TEMPLATE OK [SLIDE NOTES]: "
+						+ template_SlideNotes.getAbsolutePath());
+			}
+		}
+
 		int n = slideShow.slides.size();
 		for (int i = 0; i < n; i++) {
-			XHTML.create(mustacheFactory, template_Slide, template_SlideNotes,
-					slideShow, i, pathEpubFolder, verbosity);
+			XHTML.create(mustacheSlide, mustacheSlideNotes, slideShow, i,
+					pathEpubFolder, verbosity);
 		}
 	}
 
@@ -321,6 +366,9 @@ public final class XHTML {
 
 				create_HeadLinks(next, document, elementHead, "next", null, ".");
 			}
+
+			create_HeadLinks(slideShow.EPUB_FILE(), document, elementHead,
+					"epub", null, "../../..");
 		}
 
 		if (slideShow.CSS_STYLE != null) {
@@ -707,43 +755,63 @@ public final class XHTML {
 				+ Epub3FileSet.FOLDER_HTML + "/" + fileName, verbosity);
 	}
 
-	private static void create(MustacheFactory mustacheFactory,
-			File template_Slide, File template_SlideNotes, SlideShow slideShow,
-			int i, String pathEpubFolder, int verbosity) throws Exception {
+	private static void create(Mustache mustacheSlide,
+			Mustache mustacheSlideNotes, SlideShow slideShow, int i,
+			String pathEpubFolder, int verbosity) throws Exception {
 
 		Slide slide = slideShow.slides.get(i);
 		i++;
+		Document document = null;
 
-		Document document = XmlDocument.create();
+		if (mustacheSlide != null) {
+			StringWriter stringWriter = new StringWriter();
+			try {
+				mustacheSlide.execute(stringWriter, slide);
+			} catch (Exception ex) {
+				stringWriter = null;
+				System.out.println(" ");
+				System.out.println("}}}}} MUSTACHE TEMPLATE ERROR!!!! (SLIDE)");
+				ex.printStackTrace();
+			}
+			if (stringWriter != null) {
+				stringWriter.flush();
+				String src = stringWriter.toString();
+				document = XmlDocument.parse(src);
+			}
+		}
 
-		Element elementSection = create_Boilerplate(document, slide, slideShow,
-				pathEpubFolder, verbosity, false);
+		if (document == null) {
+			document = XmlDocument.create();
 
-		create_Content(elementSection, document, slide.CONTENT, slideShow,
-				slide, pathEpubFolder, verbosity);
+			Element elementSection = create_Boilerplate(document, slide,
+					slideShow, pathEpubFolder, verbosity, false);
 
-		if (slide.NOTES != null) {
-			create_Notes(slide.NOTES, slideShow, slide, i, pathEpubFolder,
-					verbosity);
-
-			Element elementNotesRef = document.createElement("a");
-			elementSection.appendChild(elementNotesRef);
-			elementNotesRef.appendChild(document.createTextNode("Notes"));
-			elementNotesRef.setAttribute("id", "epb3sldrzr-link-notesref");
-			elementNotesRef.setAttributeNS("http://www.idpf.org/2007/ops",
-					"epub:type", "noteref");
-
-			// elementNotesRef.setAttribute("href", "#epb3sldrzr-notes");
-			elementNotesRef.setAttribute("href", getFileName_Notes(i));
-
-			Element elementNotes = document.createElement("aside");
-			elementSection.getParentNode().appendChild(elementNotes);
-			elementNotes.setAttribute("id", "epb3sldrzr-notes");
-			elementNotes.setAttributeNS("http://www.idpf.org/2007/ops",
-					"epub:type", "footnote");
-
-			create_Content(elementNotes, document, slide.NOTES, slideShow,
+			create_Content(elementSection, document, slide.CONTENT, slideShow,
 					slide, pathEpubFolder, verbosity);
+
+			if (slide.NOTES != null) {
+				create_Notes(slide.NOTES, slideShow, slide, i, pathEpubFolder,
+						verbosity);
+
+				Element elementNotesRef = document.createElement("a");
+				elementSection.appendChild(elementNotesRef);
+				elementNotesRef.appendChild(document.createTextNode("Notes"));
+				elementNotesRef.setAttribute("id", "epb3sldrzr-link-notesref");
+				elementNotesRef.setAttributeNS("http://www.idpf.org/2007/ops",
+						"epub:type", "noteref");
+
+				// elementNotesRef.setAttribute("href", "#epb3sldrzr-notes");
+				elementNotesRef.setAttribute("href", getFileName_Notes(i));
+
+				Element elementNotes = document.createElement("aside");
+				elementSection.getParentNode().appendChild(elementNotes);
+				elementNotes.setAttribute("id", "epb3sldrzr-notes");
+				elementNotes.setAttributeNS("http://www.idpf.org/2007/ops",
+						"epub:type", "footnote");
+
+				create_Content(elementNotes, document, slide.NOTES, slideShow,
+						slide, pathEpubFolder, verbosity);
+			}
 		}
 
 		String fileName = XHTML.getFileName(i);

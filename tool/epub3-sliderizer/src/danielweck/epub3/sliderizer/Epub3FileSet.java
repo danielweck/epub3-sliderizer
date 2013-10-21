@@ -30,8 +30,6 @@ public final class Epub3FileSet {
 		}
 	}
 
-	public final static String FIRST_SLIDE_FILENAME = XHTML.getFileName(1);
-
 	public final static String GENERATOR = "EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer";
 	public final static String KEYWORDS = "EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook";
 

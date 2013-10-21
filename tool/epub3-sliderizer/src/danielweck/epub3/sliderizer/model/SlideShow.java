@@ -37,7 +37,7 @@ public final class SlideShow extends Fielder {
 	public final static Epub3FileSet.FileId[] CSSs = Epub3FileSet.CSSs;
 	public final static Epub3FileSet.FileId CSS_NAVDOC = Epub3FileSet.CSS_NAVDOC;
 	public final static Epub3FileSet.FileId[] JSs = Epub3FileSet.JSs;
-	public final static String FIRST_SLIDE_FILENAME = Epub3FileSet.FIRST_SLIDE_FILENAME;
+	public final static String FIRST_SLIDE_FILENAME = XHTML.getFileName(1);
 
 	SlideShow() throws Exception {
 
@@ -104,9 +104,6 @@ public final class SlideShow extends Fielder {
 
 	public String COVER = null;
 
-	public String FILES_CSS = null;
-	public String FILES_JS = null;
-
 	public String FILE_EPUB = null;
 
 	public String CSS_STYLE = null;
@@ -133,6 +130,8 @@ public final class SlideShow extends Fielder {
 
 	public final ArrayList<Slide> slides = new ArrayList<Slide>();
 
+	public String FILES_CSS = null;
+	
 	private ArrayList<String> _xCSSs = null;
 
 	public ArrayList<String> xCSSs() {
@@ -161,6 +160,8 @@ public final class SlideShow extends Fielder {
 		}
 		return _xCSSs;
 	}
+
+	public String FILES_JS = null;
 
 	private ArrayList<String> _xJSs = null;
 

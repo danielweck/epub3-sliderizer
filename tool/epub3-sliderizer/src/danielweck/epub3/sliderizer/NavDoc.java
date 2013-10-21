@@ -65,7 +65,6 @@ public final class NavDoc {
 			{
 				stringWriter.flush();
 				String src = stringWriter.toString();
-System.out.println(src);
 				document = XmlDocument.parse(src);
 			}
 		}

@@ -1,8 +1,10 @@
 package danielweck.epub3.sliderizer.model;
 
 import java.io.BufferedReader;
+import java.util.ArrayList;
 
 import danielweck.epub3.sliderizer.Epub3FileSet;
+import danielweck.epub3.sliderizer.NavDoc;
 import danielweck.epub3.sliderizer.XHTML;
 
 public final class Slide extends Fielder {
@@ -25,6 +27,28 @@ public final class Slide extends Fielder {
 		return XHTML.getFileName(SLIDE_NUMBER());
 	}
 
+	public String SLIDE_FILENAME_NOTES() {
+		return XHTML.getFileName_Notes(SLIDE_NUMBER());
+	}
+
+	
+	public String PREV_SLIDE_FILENAME() {
+		String prev = "../" + NavDoc.getFileName();
+		int i = SLIDE_NUMBER();
+		if (i > 1) {
+			prev = XHTML.getFileName(i - 1);
+		}
+		return prev;
+	}
+
+	public String NEXT_SLIDE_FILENAME() {
+		int i = SLIDE_NUMBER();
+		if (i < slideShow.slides.size()) {
+			return XHTML.getFileName(i + 1);
+		}
+		return null;
+	}
+
 	public boolean containsSVG = false;
 	public boolean containsMATHML = false;
 
@@ -45,8 +69,78 @@ public final class Slide extends Fielder {
 	}
 
 	public String FILES_IMG = null;
+
 	public String FILES_CSS = null;
+
+	private ArrayList<String> _xCSSs = null;
+
+	public ArrayList<String> xCSSs() {
+
+		if (FILES_CSS == null) {
+			return null;
+		}
+		if (_xCSSs != null) {
+			return _xCSSs;
+		}
+
+		ArrayList<String> slideShowCSSs = slideShow.xCSSs();
+		if (slideShowCSSs == null) {
+			slideShowCSSs = new ArrayList<String>(0);
+		}
+
+		ArrayList<String> array = Epub3FileSet.splitPaths(FILES_CSS);
+
+		_xCSSs = new ArrayList<String>(array.size());
+
+		for (String path : array) {
+
+			if (_xCSSs.contains(path) || slideShowCSSs.contains(path)) {
+				continue;
+			}
+			_xCSSs.add(path);
+		}
+
+		if (_xCSSs.size() == 0) {
+			_xCSSs = null;
+		}
+		return _xCSSs;
+	}
+
 	public String FILES_JS = null;
+
+	private ArrayList<String> _xJSs = null;
+
+	public ArrayList<String> xJSs() {
+
+		if (FILES_JS == null) {
+			return null;
+		}
+		if (_xJSs != null) {
+			return _xJSs;
+		}
+
+		ArrayList<String> slideShowJSs = slideShow.xJSs();
+		if (slideShowJSs == null) {
+			slideShowJSs = new ArrayList<String>(0);
+		}
+
+		ArrayList<String> array = Epub3FileSet.splitPaths(FILES_JS);
+
+		_xJSs = new ArrayList<String>(array.size());
+
+		for (String path : array) {
+
+			if (_xJSs.contains(path) || slideShowJSs.contains(path)) {
+				continue;
+			}
+			_xJSs.add(path);
+		}
+
+		if (_xJSs.size() == 0) {
+			_xJSs = null;
+		}
+		return _xJSs;
+	}
 
 	public String CSS_STYLE = null;
 
