@@ -67,6 +67,8 @@ echo ${EPUB_FOLDER}
 
 java -classpath "${root}/tool/epub3-sliderizer/lib/guava-15.0.jar:${root}/tool/epub3-sliderizer/lib/mustache-compiler-0.8.13.jar:${root}/tool/epub3-sliderizer/lib/asm-all-4.1.jar:${root}/tool/epub3-sliderizer/lib/parboiled-core-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/parboiled-java-1.1.6.jar:${bin}:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar:${root}/tool/epub3-sliderizer/lib/pegdown-1.4.1.jar" Main ${DATA_url} ${EPUB_FOLDER} ${VERBOSITY}
 
+exit
+
 open ${EPUB_FOLDER}
 #exit
 

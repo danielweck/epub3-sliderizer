@@ -30,8 +30,8 @@ public final class Epub3FileSet {
 		}
 	}
 
-	public final static String FIRST_SLIDE_FILENAME = XHTML.getFileName(1); 
-	
+	public final static String FIRST_SLIDE_FILENAME = XHTML.getFileName(1);
+
 	public final static String GENERATOR = "EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer";
 	public final static String KEYWORDS = "EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook";
 
@@ -87,7 +87,7 @@ public final class Epub3FileSet {
 	private final static String[] CSS_PREFIXES = new String[] { "webkit",
 			"moz", "ms", "o" };
 
-	private static void processCssFile(SlideShow slideShow, File cssFile,
+	public static void processCssFile(SlideShow slideShow, File cssFile,
 			int verbosity) throws Exception {
 		if (!cssFile.exists()) {
 			throw new FileNotFoundException(cssFile.getAbsolutePath());
@@ -415,6 +415,10 @@ public final class Epub3FileSet {
 			processCssFile(slideShow, new File(pathEpubFolder,
 					Epub3FileSet.FOLDER_CSS + "/" + filename), verbosity);
 		}
+
+		processCssFile(slideShow, new File(pathEpubFolder,
+				Epub3FileSet.FOLDER_CSS + "/" + Epub3FileSet.CSS_NAVDOC.FILE),
+				verbosity);
 
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.LOGO, verbosity);

@@ -2,6 +2,7 @@ package danielweck.epub3.sliderizer.model;
 
 import java.io.BufferedReader;
 
+import danielweck.epub3.sliderizer.Epub3FileSet;
 import danielweck.epub3.sliderizer.XHTML;
 
 public final class Slide extends Fielder {
@@ -48,6 +49,11 @@ public final class Slide extends Fielder {
 	public String FILES_JS = null;
 
 	public String CSS_STYLE = null;
+
+	public String CSS_STYLING() throws Exception {
+		return Epub3FileSet.processCssStyle(slideShow, CSS_STYLE);
+	}
+
 	public String JS_SCRIPT = null;
 
 	public String NOTES = null;

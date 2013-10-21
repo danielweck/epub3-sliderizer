@@ -1,5 +1,6 @@
 package danielweck.epub3.sliderizer;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.xml.XMLConstants;
@@ -59,7 +60,8 @@ public final class OPF {
 		Element elementMeta_ = document.createElement("meta");
 		elementMetadata.appendChild(elementMeta_);
 		elementMeta_.setAttribute("property", "dcterms:contributor");
-		elementMeta_.appendChild(document.createTextNode(Epub3FileSet.GENERATOR));
+		elementMeta_.appendChild(document
+				.createTextNode(Epub3FileSet.GENERATOR));
 
 		if (slideShow.DATE != null) {
 			Element elementMeta = document.createElement("meta");
@@ -229,6 +231,10 @@ public final class OPF {
 			create_ManifestItem(filename, document, elementManifest, id, false,
 					Epub3FileSet.FOLDER_CSS, null);
 		}
+
+		Epub3FileSet.processCssFile(slideShow, new File(pathEpubFolder,
+				Epub3FileSet.FOLDER_CSS + "/" + Epub3FileSet.CSS_NAVDOC.FILE),
+				verbosity);
 
 		create_ManifestItem(slideShow.LOGO, document, elementManifest, "logo",
 				false, Epub3FileSet.FOLDER_IMG + "/"
