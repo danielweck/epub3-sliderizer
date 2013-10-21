@@ -5,13 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.StringWriter;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
-import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
 
-import danielweck.epub3.sliderizer.model.Slide;
 import danielweck.epub3.sliderizer.model.SlideShow;
 import danielweck.xml.XmlDocument;
 

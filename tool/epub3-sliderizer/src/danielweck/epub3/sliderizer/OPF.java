@@ -338,16 +338,16 @@ public final class OPF {
 			elementItemRef.setAttribute("idref", id);
 			elementItemRef.setAttribute("properties", left ? "page-spread-left"
 					: "page-spread-right");
-
-			if (false && slide.NOTES != null) {
-				elementItemRef = document.createElement("itemref");
-				elementSpine.appendChild(elementItemRef);
-				elementItemRef.setAttribute("idref",
-						id.replaceAll("page_", "page_Notes"));
-				elementItemRef.setAttribute("properties",
-						"rendition:layout-reflowable");
-				elementItemRef.setAttribute("linear", "no");
-			}
+			//
+			// if (false && slide.NOTES != null) {
+			// elementItemRef = document.createElement("itemref");
+			// elementSpine.appendChild(elementItemRef);
+			// elementItemRef.setAttribute("idref",
+			// id.replaceAll("page_", "page_Notes"));
+			// elementItemRef.setAttribute("properties",
+			// "rendition:layout-reflowable");
+			// elementItemRef.setAttribute("linear", "no");
+			// }
 
 			left = !left;
 		}

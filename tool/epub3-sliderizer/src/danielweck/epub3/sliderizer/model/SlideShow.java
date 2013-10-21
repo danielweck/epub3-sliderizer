@@ -15,14 +15,8 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;
 
-import javax.xml.XMLConstants;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 import danielweck.epub3.sliderizer.Epub3FileSet;
 import danielweck.epub3.sliderizer.XHTML;
-import danielweck.xml.XmlDocument;
 
 public final class SlideShow extends Fielder {
 
@@ -131,7 +125,7 @@ public final class SlideShow extends Fielder {
 	public final ArrayList<Slide> slides = new ArrayList<Slide>();
 
 	public String FILES_CSS = null;
-	
+
 	private ArrayList<String> _xCSSs = null;
 
 	public ArrayList<String> xCSSs() {

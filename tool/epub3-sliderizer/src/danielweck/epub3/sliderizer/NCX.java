@@ -75,7 +75,7 @@ public final class NCX {
 		Element elementText = document.createElement("text");
 		elementNavLabel.appendChild(elementText);
 		elementText.appendChild(document.createTextNode("List of slides"));
-		
+
 		int i = 0;
 		int playOrder = 0;
 		for (Slide slide : slideShow.slides) {
@@ -99,8 +99,8 @@ public final class NCX {
 
 			Element elementContent = document.createElement("content");
 			elementNavPoint.appendChild(elementContent);
-			elementContent.setAttribute("src", Epub3FileSet.FOLDER_HTML
-					+ "/" + XHTML.getFileName(i));
+			elementContent.setAttribute("src", Epub3FileSet.FOLDER_HTML + "/"
+					+ XHTML.getFileName(i));
 
 			Element elementPageTarget = document.createElement("pageTarget");
 			elementPageList.appendChild(elementPageTarget);
@@ -118,8 +118,8 @@ public final class NCX {
 
 			elementContent = document.createElement("content");
 			elementPageTarget.appendChild(elementContent);
-			elementContent.setAttribute("src", Epub3FileSet.FOLDER_HTML
-					+ "/" + XHTML.getFileName(i) + "#epb3sldrzr-title");
+			elementContent.setAttribute("src", Epub3FileSet.FOLDER_HTML + "/"
+					+ XHTML.getFileName(i) + "#epb3sldrzr-title");
 		}
 
 		XmlDocument.save(document, pathEpubFolder + '/' + getFileName(),

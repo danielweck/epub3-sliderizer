@@ -31,7 +31,6 @@ public final class Slide extends Fielder {
 		return XHTML.getFileName_Notes(SLIDE_NUMBER());
 	}
 
-	
 	public String PREV_SLIDE_FILENAME() {
 		String prev = "../" + NavDoc.getFileName();
 		int i = SLIDE_NUMBER();

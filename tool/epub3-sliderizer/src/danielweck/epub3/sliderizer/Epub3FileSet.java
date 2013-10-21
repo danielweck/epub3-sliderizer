@@ -368,6 +368,10 @@ public final class Epub3FileSet {
 		MustacheFactory mustacheFactory = null;
 
 		File templateDir = new File(file.getParent(), FOLDER_TEMPLATES);
+		if (!templateDir.isDirectory()) {
+			String toolDir = new File(Epub3FileSet.class.getClassLoader().getResource("").getPath()).getParent();
+			templateDir = new File(toolDir, FOLDER_TEMPLATES);
+		}
 		if (templateDir.isDirectory()) {
 			if (verbosity > 0) {
 				System.out.println(" ");

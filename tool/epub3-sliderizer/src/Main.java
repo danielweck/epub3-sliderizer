@@ -40,7 +40,6 @@ public final class Main {
 
 		long timeNS = System.nanoTime(); // System.currentTimeMillis()
 		try {
-
 			String uriDataFile = args[0];
 
 			SlideShow slideShow = SlideShow.parse(uriDataFile, verbosity);
@@ -54,8 +53,9 @@ public final class Main {
 
 			// TODO: yuck yuck yuck!!
 			slideShow.pathEpubFolder = pathEpubFolder;
-			
-			Epub3FileSet.create(uriDataFile, slideShow, pathEpubFolder, verbosity);
+
+			Epub3FileSet.create(uriDataFile, slideShow, pathEpubFolder,
+					verbosity);
 
 		} catch (Exception ex) {
 			throw ex;

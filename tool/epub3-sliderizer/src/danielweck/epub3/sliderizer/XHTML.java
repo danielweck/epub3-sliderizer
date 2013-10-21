@@ -11,13 +11,12 @@ import javax.xml.XMLConstants;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Entities.EscapeMode;
+import org.pegdown.PegDownProcessor;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import org.pegdown.PegDownProcessor;
 
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
