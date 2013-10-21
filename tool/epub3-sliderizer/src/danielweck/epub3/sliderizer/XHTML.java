@@ -105,408 +105,417 @@ public final class XHTML {
 		}
 	}
 
-	private static ArrayList<String> alreadyAddedHeadLinks = new ArrayList<String>();
-
-	private static void create_HeadLinks(String paths, Document document,
-			Element elementHead, String linkRel, String linkType,
-			String destFolder) {
-		if (paths == null) {
-			return;
-		}
-
-		ArrayList<String> array = Epub3FileSet.splitPaths(paths);
-		for (String path : array) {
-
-			String ref = path;
-			if (destFolder != null && !destFolder.equals(".")) {
-				ref = destFolder + "/" + path;
-			}
-			if (alreadyAddedHeadLinks.contains(ref)) {
-				continue;
-			}
-			alreadyAddedHeadLinks.add(ref);
-
-			Element elementLink = document.createElement("link");
-			elementHead.appendChild(elementLink);
-			elementLink.setAttribute("rel", linkRel);
-			elementLink.setAttribute("href", ref);
-			if (linkType != null) {
-				elementLink.setAttribute("type", linkType);
-			}
-		}
-	}
-
-	private static ArrayList<String> alreadyAddedHeadScripts = new ArrayList<String>();
-
-	private static void create_HeadScripts(String paths, Document document,
-			Element elementHead, String linkType, String destFolder) {
-		if (paths == null) {
-			return;
-		}
-
-		ArrayList<String> array = Epub3FileSet.splitPaths(paths);
-		for (String path : array) {
-
-			String ref = path;
-			if (destFolder != null && !destFolder.equals(".")) {
-				ref = destFolder + "/" + path;
-			}
-			if (alreadyAddedHeadScripts.contains(ref)) {
-				continue;
-			}
-			alreadyAddedHeadScripts.add(ref);
-
-			Element elementScript = document.createElement("script");
-			elementHead.appendChild(elementScript);
-			elementScript.setAttribute("src", ref);
-			elementScript.appendChild(document.createTextNode(" "));
-
-			if (linkType != null) {
-				elementScript.setAttribute("type", linkType);
-			}
-		}
-	}
-
-	static Element create_Boilerplate(Document document, Slide slide,
-			SlideShow slideShow, String pathEpubFolder, int verbosity,
-			boolean notes) throws Exception {
-
-		int i = slide == null ? -1 : slideShow.slides.indexOf(slide) + 1;
-
-		alreadyAddedHeadScripts.clear();
-		alreadyAddedHeadLinks.clear();
-
-		String PATH_PREFIX = slide == null ? "" : "../";
-
-		Element elementHtml = document.createElementNS(
-				"http://www.w3.org/1999/xhtml", "html");
-		document.appendChild(elementHtml);
-		if (slide == null) {
-			elementHtml.setAttribute("id", "epb3sldrzr-NavDoc");
-		} else {
-			elementHtml.setAttribute("id", "epb3sldrzr-Slide"
-					+ (notes ? "Notes" : "") + "_" + i);
-		}
-
-		elementHtml.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
-				XMLConstants.XMLNS_ATTRIBUTE + ":epub",
-				"http://www.idpf.org/2007/ops");
-
-		elementHtml.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
-				XMLConstants.XMLNS_ATTRIBUTE + ":m",
-				"http://www.w3.org/1998/Math/MathML");
-
-		elementHtml.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
-				XMLConstants.XMLNS_ATTRIBUTE + ":svg",
-				"http://www.w3.org/2000/svg");
-
-		elementHtml
-				.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
-						XMLConstants.XMLNS_ATTRIBUTE + ":"
-								+ XMLConstants.XML_NS_PREFIX,
-						XMLConstants.XML_NS_URI);
-
-		elementHtml.setAttributeNS(XMLConstants.XML_NS_URI,
-				XMLConstants.XML_NS_PREFIX + ":lang", slideShow.LANGUAGE);
-		elementHtml.setAttribute("lang", slideShow.LANGUAGE);
-
-		Element elementHead = document.createElement("head");
-		elementHtml.appendChild(elementHead);
-
-		Element elementMeta = document.createElement("meta");
-		elementHead.appendChild(elementMeta);
-		elementMeta.setAttribute("charset", "UTF-8");
-
-		elementMeta = document.createElement("meta");
-		elementHead.appendChild(elementMeta);
-		elementMeta.setAttribute("name", "description");
-		elementMeta.setAttribute("content", Epub3FileSet.GENERATOR);
-
-		elementMeta = document.createElement("meta");
-		elementHead.appendChild(elementMeta);
-		elementMeta.setAttribute("name", "keywords");
-		elementMeta.setAttribute("content", Epub3FileSet.KEYWORDS);
-
-		String title = slide == null ? slideShow.TITLE : slide.TITLE;
-		if (title == null || title.isEmpty()) {
-			title = "NO TITLE!";
-		}
-
-		String subtitle = slide == null ? slideShow.SUBTITLE : slide.SUBTITLE;
-
-		String htmlTitle = (slideShow.TITLE != null ? slideShow.TITLE : "")
-				+ (slideShow.SUBTITLE != null ? " - " + slideShow.SUBTITLE : "")
-				+ (slide == null ? ""
-						: " / "
-								+ (slide.TITLE != null ? slide.TITLE : "")
-								+ (slide.SUBTITLE != null ? " - "
-										+ slide.SUBTITLE : ""));
-		if (notes) {
-			htmlTitle = htmlTitle + " (NOTES)";
-		}
-
-		htmlTitle = "(" + (i == -1 ? 0 : i) + "/" + slideShow.slides.size()
-				+ ") " + htmlTitle;
-
-		Element elementTitle = document.createElement("title");
-		elementHead.appendChild(elementTitle);
-		elementTitle.appendChild(document.createTextNode(htmlTitle));
-
-		create_HeadLinks(slideShow.FAVICON, document, elementHead,
-				"shortcut icon", null, PATH_PREFIX + slideShow.FAVICON_FOLDER());
-
-		create_HeadLinks(slideShow.TOUCHICON, document, elementHead,
-				"apple-touch-icon", null, PATH_PREFIX + Epub3FileSet.FOLDER_IMG
-						+ "/" + Epub3FileSet.FOLDER_CUSTOM);
-
-		if (// !notes &&
-		slideShow.VIEWPORT_WIDTH != null && slideShow.VIEWPORT_HEIGHT != null) {
-			Element elementMeta2 = document.createElement("meta");
-			elementHead.appendChild(elementMeta2);
-			elementMeta2.setAttribute("name", "viewport");
-			elementMeta2.setAttribute("content", "width="
-					+ slideShow.VIEWPORT_WIDTH + ", height="
-					+ slideShow.VIEWPORT_HEIGHT
-			// +
-			// ", user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"
-					);
-		}
-
-		if (!slideShow.importedConverted) {
-
-			for (int k = 0; k < Epub3FileSet.CSSs.length; k++) {
-				String filename = Epub3FileSet.CSSs[k].FILE;
-				// String id = Epub3FileSet.CSS_FILENAMES[k][1];
-
-				create_HeadLinks(filename, document, elementHead, "stylesheet",
-						"text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
-			}
-			if (slide == null) {
-				create_HeadLinks(Epub3FileSet.CSS_NAVDOC.FILE, document,
-						elementHead, "stylesheet", "text/css", PATH_PREFIX
-								+ Epub3FileSet.FOLDER_CSS);
-			}
-
-			// Element elementStyle = document.createElement("style");
-			// elementHead.appendChild(elementStyle);
-			// elementStyle.setAttribute("type", "text/css");
-			// elementStyle.appendChild(document.createTextNode("\n"));
-			// File cssFile = new File(pathEpubFolder, Epub3FileSet.FOLDER_CSS
-			// + "/" + Epub3FileSet.CSS_DEFAULT);
-			// StringBuilder strBuilder = XmlDocument.readFileLines(cssFile);
-			// String css = Epub3FileSet.processCssStyle(slideShow,
-			// strBuilder.toString());
-			// css = css.replaceAll("url\\('", "url('" + PATH_PREFIX
-			// + Epub3FileSet.FOLDER_CSS + "/");
-			// elementStyle.appendChild(document.createTextNode(css));
-			// elementStyle.appendChild(document.createTextNode("\n"));
-		}
-
-		create_HeadLinks(slideShow.FILES_CSS, document, elementHead,
-				"stylesheet", "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS
-						+ "/" + Epub3FileSet.FOLDER_CUSTOM);
-
-		if (slide != null) {
-			create_HeadLinks(slide.FILES_CSS, document, elementHead,
-					"stylesheet", "text/css", PATH_PREFIX
-							+ Epub3FileSet.FOLDER_CSS + "/"
-							+ Epub3FileSet.FOLDER_CUSTOM);
-		}
-
-		if (slideShow.importedConverted) {
-
-			for (int k = 0; k < Epub3FileSet.CSSs.length; k++) {
-				String filename = Epub3FileSet.CSSs[k].FILE;
-				// String id = Epub3FileSet.CSS_FILENAMES[k][1];
-
-				create_HeadLinks(filename, document, elementHead, "stylesheet",
-						"text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
-			}
-			if (slide == null) {
-				create_HeadLinks(Epub3FileSet.CSS_NAVDOC.FILE, document,
-						elementHead, "stylesheet", "text/css", PATH_PREFIX
-								+ Epub3FileSet.FOLDER_CSS);
-			}
-		}
-
-		for (int k = 0; k < Epub3FileSet.JSs.length; k++) {
-			String filename = Epub3FileSet.JSs[k].FILE;
-			// String id = Epub3FileSet.JS_FILENAMES[k][1];
-
-			create_HeadScripts(filename, document, elementHead, null, // "text/javascript",
-					PATH_PREFIX + Epub3FileSet.FOLDER_JS);
-		}
-
-		create_HeadScripts(slideShow.FILES_JS, document, elementHead, null, // "text/javascript",
-				PATH_PREFIX + Epub3FileSet.FOLDER_JS + "/"
-						+ Epub3FileSet.FOLDER_CUSTOM);
-
-		if (slide != null) {
-			create_HeadScripts(slide.FILES_JS, document, elementHead, null, // "text/javascript",
-					PATH_PREFIX + Epub3FileSet.FOLDER_JS + "/"
-							+ Epub3FileSet.FOLDER_CUSTOM);
-		}
-
-		if (slide == null) {
-			create_HeadLinks(XHTML.getFileName(1), document, elementHead,
-					"next", null, Epub3FileSet.FOLDER_HTML);
-
-			create_HeadLinks(slideShow.EPUB_FILE(), document, elementHead,
-					"epub", null, "../..");
-		} else if (!notes) {
-
-			String prev = "../" + NavDoc.getFileName();
-			if (i > 1) {
-				prev = XHTML.getFileName(i - 1);
-			}
-			create_HeadLinks(prev, document, elementHead, "prev", null, ".");
-
-			if (i < slideShow.slides.size()) {
-				String next = XHTML.getFileName(i + 1);
-
-				create_HeadLinks(next, document, elementHead, "next", null, ".");
-			}
-
-			create_HeadLinks(slideShow.EPUB_FILE(), document, elementHead,
-					"epub", null, "../../..");
-		}
-
-		if (slideShow.CSS_STYLE != null) {
-			Element elementStyle = document.createElement("style");
-			elementHead.appendChild(elementStyle);
-			elementStyle.setAttribute("type", "text/css");
-			elementStyle.appendChild(document.createTextNode("\n"));
-			String css = Epub3FileSet.processCssStyle(slideShow,
-					slideShow.CSS_STYLE);
-			elementStyle.appendChild(document.createTextNode(css));
-			elementStyle.appendChild(document.createTextNode("\n"));
-		}
-
-		if (slide != null && slide.CSS_STYLE != null) {
-			Element elementStyle = document.createElement("style");
-			elementHead.appendChild(elementStyle);
-			elementStyle.setAttribute("type", "text/css");
-			elementStyle.appendChild(document.createTextNode("\n"));
-			String css = Epub3FileSet.processCssStyle(slideShow,
-					slide.CSS_STYLE);
-			elementStyle.appendChild(document.createTextNode(css));
-			elementStyle.appendChild(document.createTextNode("\n"));
-		}
-
-		if (slideShow.importedConverted) {
-			Element elementStyle = document.createElement("style");
-			elementHead.appendChild(elementStyle);
-			elementStyle.setAttribute("type", "text/css");
-			elementStyle.appendChild(document.createTextNode("\n"));
-
-			String css = "\n\nh1#epb3sldrzr-title\n{\nposition: absolute; left: 0; top: 0; right: 0; display: none; \n}\n\n";
-			css += "\n\ndiv#epb3sldrzr-root{overflow:hidden;}\n\n";
-
-			elementStyle.appendChild(document.createTextNode(css));
-			elementStyle.appendChild(document.createTextNode("\n"));
-		}
-
-		if (slideShow.JS_SCRIPT != null) {
-			Element elementScript = document.createElement("script");
-			elementHead.appendChild(elementScript);
-			// elementScript.setAttribute("type", "text/javascript");
-			elementScript.appendChild(document.createTextNode("\n//"));
-			elementScript.appendChild(document.createCDATASection("\n"
-					+ slideShow.JS_SCRIPT + "\n//"));
-			elementScript.appendChild(document.createTextNode("\n"));
-		}
-
-		if (slide != null && slide.JS_SCRIPT != null) {
-
-			Element elementScript = document.createElement("script");
-			elementHead.appendChild(elementScript);
-			// elementScript.setAttribute("type", "text/javascript");
-			elementScript.appendChild(document.createTextNode("\n//"));
-			elementScript.appendChild(document.createCDATASection("\n"
-					+ slide.JS_SCRIPT + "\n//"));
-			elementScript.appendChild(document.createTextNode("\n"));
-		}
-
-		Element elementBody_ = document.createElement("body");
-		elementHtml.appendChild(elementBody_);
-		elementBody_.setAttributeNS("http://www.idpf.org/2007/ops",
-				"epub:type", "bodymatter");
-		// elementBody_.setAttribute("class", "epb3sldrzr-epubReadingSystem");
-
-		Element elementBody = null;
-		if (false && notes) {
-			elementBody = elementBody_;
-		} else {
-			elementBody = document.createElement("div");
-			elementBody.setAttribute("id", "epb3sldrzr-body");
-			elementBody_.appendChild(elementBody);
-			// elementBody_.appendChild(document.createTextNode("TEST"));
-		}
-
-		Element elementDiv = null;
-		if (false && notes) {
-			elementDiv = elementBody_;
-		} else {
-			elementDiv = document.createElement("div");
-			elementBody.appendChild(elementDiv);
-			elementDiv.setAttribute("id", "epb3sldrzr-root");
-		}
-
-		if (// !notes &&
-		slideShow.LOGO != null) {
-			String relativeDestinationPath = PATH_PREFIX
-					+ Epub3FileSet.FOLDER_IMG + "/"
-					+ Epub3FileSet.FOLDER_CUSTOM + '/' + slideShow.LOGO;
-
-			Element elementImg = document.createElement("img");
-			elementDiv.appendChild(elementImg);// elementBody
-			elementImg.setAttribute("id", "epb3sldrzr-logo");
-			elementImg.setAttribute("alt", "");
-			elementImg.setAttribute("src", relativeDestinationPath);
-		}
-
-		Element elementH1 = document.createElement("h1");
-		elementH1.setAttribute("id", "epb3sldrzr-title");
-		elementDiv.appendChild(elementH1);
-		elementH1.appendChild(document.createTextNode(title));
-
-		if (subtitle != null) {
-			if (slide == null
-			// || notes
-			) {
-				Element elementLineBreak = document.createElement("br");
-				elementH1.appendChild(elementLineBreak);
-			}
-			Element elementSpan = document.createElement("span");
-			elementH1.appendChild(document.createTextNode(" "));
-			elementH1.appendChild(elementSpan);
-			elementSpan.setAttribute("id", "epb3sldrzr-subtitle");
-			// elementSpan.setAttribute("class", "fade smaller");
-			elementSpan.appendChild(document.createTextNode(subtitle));
-		}
-
-		if (notes) {
-			Element elementA = document.createElement("a");
-			elementA.setAttribute("href", XHTML.getFileName(i));
-			elementA.setAttribute("id", "epb3sldrzr-link-noteback");
-			elementA.appendChild(document.createTextNode("Back"));
-			Element elementP = document.createElement("p");
-			elementP.appendChild(elementA);
-			elementDiv.appendChild(elementP);
-		}
-
-		Element elementSection = document.createElement("section");
-		elementDiv.appendChild(elementSection);
-		elementSection.setAttribute("id", "epb3sldrzr-content");
-
-		// return elementSection;
-
-		Element divAnimOverflow = document.createElement("div");
-		elementSection.appendChild(divAnimOverflow);
-		divAnimOverflow.setAttribute("id", "epb3sldrzr-anim-overflow");
-
-		return divAnimOverflow;
-	}
+	// private static ArrayList<String> alreadyAddedHeadLinks = new
+	// ArrayList<String>();
+	//
+	// private static void create_HeadLinks(String paths, Document document,
+	// Element elementHead, String linkRel, String linkType,
+	// String destFolder) {
+	// if (paths == null) {
+	// return;
+	// }
+	//
+	// ArrayList<String> array = Epub3FileSet.splitPaths(paths);
+	// for (String path : array) {
+	//
+	// String ref = path;
+	// if (destFolder != null && !destFolder.equals(".")) {
+	// ref = destFolder + "/" + path;
+	// }
+	// if (alreadyAddedHeadLinks.contains(ref)) {
+	// continue;
+	// }
+	// alreadyAddedHeadLinks.add(ref);
+	//
+	// Element elementLink = document.createElement("link");
+	// elementHead.appendChild(elementLink);
+	// elementLink.setAttribute("rel", linkRel);
+	// elementLink.setAttribute("href", ref);
+	// if (linkType != null) {
+	// elementLink.setAttribute("type", linkType);
+	// }
+	// }
+	// }
+
+	// private static ArrayList<String> alreadyAddedHeadScripts = new
+	// ArrayList<String>();
+
+	//
+	// private static void create_HeadScripts(String paths, Document document,
+	// Element elementHead, String linkType, String destFolder) {
+	// if (paths == null) {
+	// return;
+	// }
+	//
+	// ArrayList<String> array = Epub3FileSet.splitPaths(paths);
+	// for (String path : array) {
+	//
+	// String ref = path;
+	// if (destFolder != null && !destFolder.equals(".")) {
+	// ref = destFolder + "/" + path;
+	// }
+	// if (alreadyAddedHeadScripts.contains(ref)) {
+	// continue;
+	// }
+	// alreadyAddedHeadScripts.add(ref);
+	//
+	// Element elementScript = document.createElement("script");
+	// elementHead.appendChild(elementScript);
+	// elementScript.setAttribute("src", ref);
+	// elementScript.appendChild(document.createTextNode(" "));
+	//
+	// if (linkType != null) {
+	// elementScript.setAttribute("type", linkType);
+	// }
+	// }
+	// }
+
+	//
+	// static Element create_Boilerplate(Document document, Slide slide,
+	// SlideShow slideShow, String pathEpubFolder, int verbosity,
+	// boolean notes) throws Exception {
+	//
+	// int i = slide == null ? -1 : slideShow.slides.indexOf(slide) + 1;
+	//
+	// alreadyAddedHeadScripts.clear();
+	// alreadyAddedHeadLinks.clear();
+	//
+	// String PATH_PREFIX = slide == null ? "" : "../";
+	//
+	// Element elementHtml = document.createElementNS(
+	// "http://www.w3.org/1999/xhtml", "html");
+	// document.appendChild(elementHtml);
+	// if (slide == null) {
+	// elementHtml.setAttribute("id", "epb3sldrzr-NavDoc");
+	// } else {
+	// elementHtml.setAttribute("id", "epb3sldrzr-Slide"
+	// + (notes ? "Notes" : "") + "_" + i);
+	// }
+	//
+	// elementHtml.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
+	// XMLConstants.XMLNS_ATTRIBUTE + ":epub",
+	// "http://www.idpf.org/2007/ops");
+	//
+	// elementHtml.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
+	// XMLConstants.XMLNS_ATTRIBUTE + ":m",
+	// "http://www.w3.org/1998/Math/MathML");
+	//
+	// elementHtml.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
+	// XMLConstants.XMLNS_ATTRIBUTE + ":svg",
+	// "http://www.w3.org/2000/svg");
+	//
+	// elementHtml
+	// .setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
+	// XMLConstants.XMLNS_ATTRIBUTE + ":"
+	// + XMLConstants.XML_NS_PREFIX,
+	// XMLConstants.XML_NS_URI);
+	//
+	// elementHtml.setAttributeNS(XMLConstants.XML_NS_URI,
+	// XMLConstants.XML_NS_PREFIX + ":lang", slideShow.LANGUAGE);
+	// elementHtml.setAttribute("lang", slideShow.LANGUAGE);
+	//
+	// Element elementHead = document.createElement("head");
+	// elementHtml.appendChild(elementHead);
+	//
+	// Element elementMeta = document.createElement("meta");
+	// elementHead.appendChild(elementMeta);
+	// elementMeta.setAttribute("charset", "UTF-8");
+	//
+	// elementMeta = document.createElement("meta");
+	// elementHead.appendChild(elementMeta);
+	// elementMeta.setAttribute("name", "description");
+	// elementMeta.setAttribute("content", Epub3FileSet.GENERATOR);
+	//
+	// elementMeta = document.createElement("meta");
+	// elementHead.appendChild(elementMeta);
+	// elementMeta.setAttribute("name", "keywords");
+	// elementMeta.setAttribute("content", Epub3FileSet.KEYWORDS);
+	//
+	// String title = slide == null ? slideShow.TITLE : slide.TITLE;
+	// if (title == null || title.isEmpty()) {
+	// title = "NO TITLE!";
+	// }
+	//
+	// String subtitle = slide == null ? slideShow.SUBTITLE : slide.SUBTITLE;
+	//
+	// String htmlTitle = (slideShow.TITLE != null ? slideShow.TITLE : "")
+	// + (slideShow.SUBTITLE != null ? " - " + slideShow.SUBTITLE : "")
+	// + (slide == null ? ""
+	// : " / "
+	// + (slide.TITLE != null ? slide.TITLE : "")
+	// + (slide.SUBTITLE != null ? " - "
+	// + slide.SUBTITLE : ""));
+	// if (notes) {
+	// htmlTitle = htmlTitle + " (NOTES)";
+	// }
+	//
+	// htmlTitle = "(" + (i == -1 ? 0 : i) + "/" + slideShow.slides.size()
+	// + ") " + htmlTitle;
+	//
+	// Element elementTitle = document.createElement("title");
+	// elementHead.appendChild(elementTitle);
+	// elementTitle.appendChild(document.createTextNode(htmlTitle));
+	//
+	// create_HeadLinks(slideShow.FAVICON, document, elementHead,
+	// "shortcut icon", null, PATH_PREFIX + slideShow.FAVICON_FOLDER());
+	//
+	// create_HeadLinks(slideShow.TOUCHICON, document, elementHead,
+	// "apple-touch-icon", null, PATH_PREFIX + Epub3FileSet.FOLDER_IMG
+	// + "/" + Epub3FileSet.FOLDER_CUSTOM);
+	//
+	// if (// !notes &&
+	// slideShow.VIEWPORT_WIDTH != null && slideShow.VIEWPORT_HEIGHT != null) {
+	// Element elementMeta2 = document.createElement("meta");
+	// elementHead.appendChild(elementMeta2);
+	// elementMeta2.setAttribute("name", "viewport");
+	// elementMeta2.setAttribute("content", "width="
+	// + slideShow.VIEWPORT_WIDTH + ", height="
+	// + slideShow.VIEWPORT_HEIGHT
+	// // +
+	// //
+	// ", user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1"
+	// );
+	// }
+	//
+	// if (!slideShow.importedConverted) {
+	//
+	// for (int k = 0; k < Epub3FileSet.CSSs.length; k++) {
+	// String filename = Epub3FileSet.CSSs[k].FILE;
+	// // String id = Epub3FileSet.CSS_FILENAMES[k][1];
+	//
+	// create_HeadLinks(filename, document, elementHead, "stylesheet",
+	// "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
+	// }
+	// if (slide == null) {
+	// create_HeadLinks(Epub3FileSet.CSS_NAVDOC.FILE, document,
+	// elementHead, "stylesheet", "text/css", PATH_PREFIX
+	// + Epub3FileSet.FOLDER_CSS);
+	// }
+	//
+	// // Element elementStyle = document.createElement("style");
+	// // elementHead.appendChild(elementStyle);
+	// // elementStyle.setAttribute("type", "text/css");
+	// // elementStyle.appendChild(document.createTextNode("\n"));
+	// // File cssFile = new File(pathEpubFolder, Epub3FileSet.FOLDER_CSS
+	// // + "/" + Epub3FileSet.CSS_DEFAULT);
+	// // StringBuilder strBuilder = XmlDocument.readFileLines(cssFile);
+	// // String css = Epub3FileSet.processCssStyle(slideShow,
+	// // strBuilder.toString());
+	// // css = css.replaceAll("url\\('", "url('" + PATH_PREFIX
+	// // + Epub3FileSet.FOLDER_CSS + "/");
+	// // elementStyle.appendChild(document.createTextNode(css));
+	// // elementStyle.appendChild(document.createTextNode("\n"));
+	// }
+	//
+	// create_HeadLinks(slideShow.FILES_CSS, document, elementHead,
+	// "stylesheet", "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS
+	// + "/" + Epub3FileSet.FOLDER_CUSTOM);
+	//
+	// if (slide != null) {
+	// create_HeadLinks(slide.FILES_CSS, document, elementHead,
+	// "stylesheet", "text/css", PATH_PREFIX
+	// + Epub3FileSet.FOLDER_CSS + "/"
+	// + Epub3FileSet.FOLDER_CUSTOM);
+	// }
+	//
+	// if (slideShow.importedConverted) {
+	//
+	// for (int k = 0; k < Epub3FileSet.CSSs.length; k++) {
+	// String filename = Epub3FileSet.CSSs[k].FILE;
+	// // String id = Epub3FileSet.CSS_FILENAMES[k][1];
+	//
+	// create_HeadLinks(filename, document, elementHead, "stylesheet",
+	// "text/css", PATH_PREFIX + Epub3FileSet.FOLDER_CSS);
+	// }
+	// if (slide == null) {
+	// create_HeadLinks(Epub3FileSet.CSS_NAVDOC.FILE, document,
+	// elementHead, "stylesheet", "text/css", PATH_PREFIX
+	// + Epub3FileSet.FOLDER_CSS);
+	// }
+	// }
+	//
+	// for (int k = 0; k < Epub3FileSet.JSs.length; k++) {
+	// String filename = Epub3FileSet.JSs[k].FILE;
+	// // String id = Epub3FileSet.JS_FILENAMES[k][1];
+	//
+	// create_HeadScripts(filename, document, elementHead, null, //
+	// "text/javascript",
+	// PATH_PREFIX + Epub3FileSet.FOLDER_JS);
+	// }
+	//
+	// create_HeadScripts(slideShow.FILES_JS, document, elementHead, null, //
+	// "text/javascript",
+	// PATH_PREFIX + Epub3FileSet.FOLDER_JS + "/"
+	// + Epub3FileSet.FOLDER_CUSTOM);
+	//
+	// if (slide != null) {
+	// create_HeadScripts(slide.FILES_JS, document, elementHead, null, //
+	// "text/javascript",
+	// PATH_PREFIX + Epub3FileSet.FOLDER_JS + "/"
+	// + Epub3FileSet.FOLDER_CUSTOM);
+	// }
+	//
+	// if (slide == null) {
+	// create_HeadLinks(XHTML.getFileName(1), document, elementHead,
+	// "next", null, Epub3FileSet.FOLDER_HTML);
+	//
+	// create_HeadLinks(slideShow.EPUB_FILE(), document, elementHead,
+	// "epub", null, "../..");
+	// } else if (!notes) {
+	//
+	// String prev = "../" + NavDoc.getFileName();
+	// if (i > 1) {
+	// prev = XHTML.getFileName(i - 1);
+	// }
+	// create_HeadLinks(prev, document, elementHead, "prev", null, ".");
+	//
+	// if (i < slideShow.slides.size()) {
+	// String next = XHTML.getFileName(i + 1);
+	//
+	// create_HeadLinks(next, document, elementHead, "next", null, ".");
+	// }
+	//
+	// create_HeadLinks(slideShow.EPUB_FILE(), document, elementHead,
+	// "epub", null, "../../..");
+	// }
+	//
+	// if (slideShow.CSS_STYLE != null) {
+	// Element elementStyle = document.createElement("style");
+	// elementHead.appendChild(elementStyle);
+	// elementStyle.setAttribute("type", "text/css");
+	// elementStyle.appendChild(document.createTextNode("\n"));
+	// String css = Epub3FileSet.processCssStyle(slideShow,
+	// slideShow.CSS_STYLE);
+	// elementStyle.appendChild(document.createTextNode(css));
+	// elementStyle.appendChild(document.createTextNode("\n"));
+	// }
+	//
+	// if (slide != null && slide.CSS_STYLE != null) {
+	// Element elementStyle = document.createElement("style");
+	// elementHead.appendChild(elementStyle);
+	// elementStyle.setAttribute("type", "text/css");
+	// elementStyle.appendChild(document.createTextNode("\n"));
+	// String css = Epub3FileSet.processCssStyle(slideShow,
+	// slide.CSS_STYLE);
+	// elementStyle.appendChild(document.createTextNode(css));
+	// elementStyle.appendChild(document.createTextNode("\n"));
+	// }
+	//
+	// if (slideShow.importedConverted) {
+	// Element elementStyle = document.createElement("style");
+	// elementHead.appendChild(elementStyle);
+	// elementStyle.setAttribute("type", "text/css");
+	// elementStyle.appendChild(document.createTextNode("\n"));
+	//
+	// String css =
+	// "\n\nh1#epb3sldrzr-title\n{\nposition: absolute; left: 0; top: 0; right: 0; display: none; \n}\n\n";
+	// css += "\n\ndiv#epb3sldrzr-root{overflow:hidden;}\n\n";
+	//
+	// elementStyle.appendChild(document.createTextNode(css));
+	// elementStyle.appendChild(document.createTextNode("\n"));
+	// }
+	//
+	// if (slideShow.JS_SCRIPT != null) {
+	// Element elementScript = document.createElement("script");
+	// elementHead.appendChild(elementScript);
+	// // elementScript.setAttribute("type", "text/javascript");
+	// elementScript.appendChild(document.createTextNode("\n//"));
+	// elementScript.appendChild(document.createCDATASection("\n"
+	// + slideShow.JS_SCRIPT + "\n//"));
+	// elementScript.appendChild(document.createTextNode("\n"));
+	// }
+	//
+	// if (slide != null && slide.JS_SCRIPT != null) {
+	//
+	// Element elementScript = document.createElement("script");
+	// elementHead.appendChild(elementScript);
+	// // elementScript.setAttribute("type", "text/javascript");
+	// elementScript.appendChild(document.createTextNode("\n//"));
+	// elementScript.appendChild(document.createCDATASection("\n"
+	// + slide.JS_SCRIPT + "\n//"));
+	// elementScript.appendChild(document.createTextNode("\n"));
+	// }
+	//
+	// Element elementBody_ = document.createElement("body");
+	// elementHtml.appendChild(elementBody_);
+	// elementBody_.setAttributeNS("http://www.idpf.org/2007/ops",
+	// "epub:type", "bodymatter");
+	// // elementBody_.setAttribute("class", "epb3sldrzr-epubReadingSystem");
+	//
+	// Element elementBody = null;
+	// if (false && notes) {
+	// elementBody = elementBody_;
+	// } else {
+	// elementBody = document.createElement("div");
+	// elementBody.setAttribute("id", "epb3sldrzr-body");
+	// elementBody_.appendChild(elementBody);
+	// // elementBody_.appendChild(document.createTextNode("TEST"));
+	// }
+	//
+	// Element elementDiv = null;
+	// if (false && notes) {
+	// elementDiv = elementBody_;
+	// } else {
+	// elementDiv = document.createElement("div");
+	// elementBody.appendChild(elementDiv);
+	// elementDiv.setAttribute("id", "epb3sldrzr-root");
+	// }
+	//
+	// if (// !notes &&
+	// slideShow.LOGO != null) {
+	// String relativeDestinationPath = PATH_PREFIX
+	// + Epub3FileSet.FOLDER_IMG + "/"
+	// + Epub3FileSet.FOLDER_CUSTOM + '/' + slideShow.LOGO;
+	//
+	// Element elementImg = document.createElement("img");
+	// elementDiv.appendChild(elementImg);// elementBody
+	// elementImg.setAttribute("id", "epb3sldrzr-logo");
+	// elementImg.setAttribute("alt", "");
+	// elementImg.setAttribute("src", relativeDestinationPath);
+	// }
+	//
+	// Element elementH1 = document.createElement("h1");
+	// elementH1.setAttribute("id", "epb3sldrzr-title");
+	// elementDiv.appendChild(elementH1);
+	// elementH1.appendChild(document.createTextNode(title));
+	//
+	// if (subtitle != null) {
+	// if (slide == null
+	// // || notes
+	// ) {
+	// Element elementLineBreak = document.createElement("br");
+	// elementH1.appendChild(elementLineBreak);
+	// }
+	// Element elementSpan = document.createElement("span");
+	// elementH1.appendChild(document.createTextNode(" "));
+	// elementH1.appendChild(elementSpan);
+	// elementSpan.setAttribute("id", "epb3sldrzr-subtitle");
+	// // elementSpan.setAttribute("class", "fade smaller");
+	// elementSpan.appendChild(document.createTextNode(subtitle));
+	// }
+	//
+	// if (notes) {
+	// Element elementA = document.createElement("a");
+	// elementA.setAttribute("href", XHTML.getFileName(i));
+	// elementA.setAttribute("id", "epb3sldrzr-link-noteback");
+	// elementA.appendChild(document.createTextNode("Back"));
+	// Element elementP = document.createElement("p");
+	// elementP.appendChild(elementA);
+	// elementDiv.appendChild(elementP);
+	// }
+	//
+	// Element elementSection = document.createElement("section");
+	// elementDiv.appendChild(elementSection);
+	// elementSection.setAttribute("id", "epb3sldrzr-content");
+	//
+	// // return elementSection;
+	//
+	// Element divAnimOverflow = document.createElement("div");
+	// elementSection.appendChild(divAnimOverflow);
+	// divAnimOverflow.setAttribute("id", "epb3sldrzr-anim-overflow");
+	//
+	// return divAnimOverflow;
+	// }
 
 	private static void fixRelativeReferences(Element element,
 			Document document, String content, SlideShow slideShow,
@@ -738,22 +747,23 @@ public final class XHTML {
 		}
 	}
 
-	private static void create_Notes(String notes, SlideShow slideShow,
-			Slide slide, int i, String pathEpubFolder, int verbosity)
-			throws Exception {
-
-		Document document = XmlDocument.create();
-
-		Element elementSection = create_Boilerplate(document, slide, slideShow,
-				pathEpubFolder, verbosity, true);
-
-		create_Content(elementSection, document, notes, slideShow, slide,
-				pathEpubFolder, verbosity);
-
-		String fileName = XHTML.getFileName_Notes(i);
-		XmlDocument.save(document, pathEpubFolder + "/"
-				+ Epub3FileSet.FOLDER_HTML + "/" + fileName, verbosity);
-	}
+	//
+	// private static void create_Notes(String notes, SlideShow slideShow,
+	// Slide slide, int i, String pathEpubFolder, int verbosity)
+	// throws Exception {
+	//
+	// Document document = XmlDocument.create();
+	//
+	// Element elementSection = create_Boilerplate(document, slide, slideShow,
+	// pathEpubFolder, verbosity, true);
+	//
+	// create_Content(elementSection, document, notes, slideShow, slide,
+	// pathEpubFolder, verbosity);
+	//
+	// String fileName = XHTML.getFileName_Notes(i);
+	// XmlDocument.save(document, pathEpubFolder + "/"
+	// + Epub3FileSet.FOLDER_HTML + "/" + fileName, verbosity);
+	// }
 
 	private static void create(Mustache mustacheSlide,
 			Mustache mustacheSlideNotes, SlideShow slideShow, int i,
@@ -761,6 +771,42 @@ public final class XHTML {
 
 		Slide slide = slideShow.slides.get(i);
 		i++;
+
+		if (slide.NOTES != null) {
+			Document documentNotes = null;
+
+			if (mustacheSlideNotes != null) {
+				StringWriter stringWriter = new StringWriter();
+				try {
+					mustacheSlideNotes.execute(stringWriter, slide);
+				} catch (Exception ex) {
+					stringWriter = null;
+					System.out.println(" ");
+					System.out
+							.println("}}}}} MUSTACHE TEMPLATE ERROR!!!! (SLIDE NOTES)");
+					ex.printStackTrace();
+				}
+				if (stringWriter != null) {
+					stringWriter.flush();
+					String src = stringWriter.toString();
+					documentNotes = XmlDocument.parse(src);
+				}
+
+				String fileName = XHTML.getFileName_Notes(i);
+				XmlDocument.save(documentNotes, pathEpubFolder + "/"
+						+ Epub3FileSet.FOLDER_HTML + "/" + fileName, verbosity);
+			}
+
+			if (documentNotes == null) {
+				throw new FileNotFoundException(Epub3FileSet.FOLDER_TEMPLATES
+						+ "/" + Epub3FileSet.TEMPLATE_SLIDE_NOTES);
+
+				// create_Notes(slide.NOTES, slideShow, slide, i,
+				// pathEpubFolder,
+				// verbosity);
+			}
+		}
+
 		Document document = null;
 
 		if (mustacheSlide != null) {
@@ -781,37 +827,39 @@ public final class XHTML {
 		}
 
 		if (document == null) {
-			document = XmlDocument.create();
-
-			Element elementSection = create_Boilerplate(document, slide,
-					slideShow, pathEpubFolder, verbosity, false);
-
-			create_Content(elementSection, document, slide.CONTENT, slideShow,
-					slide, pathEpubFolder, verbosity);
-
-			if (slide.NOTES != null) {
-				create_Notes(slide.NOTES, slideShow, slide, i, pathEpubFolder,
-						verbosity);
-
-				Element elementNotesRef = document.createElement("a");
-				elementSection.appendChild(elementNotesRef);
-				elementNotesRef.appendChild(document.createTextNode("Notes"));
-				elementNotesRef.setAttribute("id", "epb3sldrzr-link-notesref");
-				elementNotesRef.setAttributeNS("http://www.idpf.org/2007/ops",
-						"epub:type", "noteref");
-
-				// elementNotesRef.setAttribute("href", "#epb3sldrzr-notes");
-				elementNotesRef.setAttribute("href", getFileName_Notes(i));
-
-				Element elementNotes = document.createElement("aside");
-				elementSection.getParentNode().appendChild(elementNotes);
-				elementNotes.setAttribute("id", "epb3sldrzr-notes");
-				elementNotes.setAttributeNS("http://www.idpf.org/2007/ops",
-						"epub:type", "footnote");
-
-				create_Content(elementNotes, document, slide.NOTES, slideShow,
-						slide, pathEpubFolder, verbosity);
-			}
+			throw new FileNotFoundException(Epub3FileSet.FOLDER_TEMPLATES + "/"
+					+ Epub3FileSet.TEMPLATE_SLIDE);
+			//
+			// document = XmlDocument.create();
+			//
+			// Element elementSection = create_Boilerplate(document, slide,
+			// slideShow, pathEpubFolder, verbosity, false);
+			//
+			// create_Content(elementSection, document, slide.CONTENT,
+			// slideShow,
+			// slide, pathEpubFolder, verbosity);
+			//
+			// if (slide.NOTES != null) {
+			//
+			// Element elementNotesRef = document.createElement("a");
+			// elementSection.appendChild(elementNotesRef);
+			// elementNotesRef.appendChild(document.createTextNode("Notes"));
+			// elementNotesRef.setAttribute("id", "epb3sldrzr-link-notesref");
+			// elementNotesRef.setAttributeNS("http://www.idpf.org/2007/ops",
+			// "epub:type", "noteref");
+			//
+			// // elementNotesRef.setAttribute("href", "#epb3sldrzr-notes");
+			// elementNotesRef.setAttribute("href", getFileName_Notes(i));
+			//
+			// Element elementNotes = document.createElement("aside");
+			// elementSection.getParentNode().appendChild(elementNotes);
+			// elementNotes.setAttribute("id", "epb3sldrzr-notes");
+			// elementNotes.setAttributeNS("http://www.idpf.org/2007/ops",
+			// "epub:type", "footnote");
+			//
+			// create_Content(elementNotes, document, slide.NOTES, slideShow,
+			// slide, pathEpubFolder, verbosity);
+			// }
 		}
 
 		String fileName = XHTML.getFileName(i);
