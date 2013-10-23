@@ -232,9 +232,8 @@ public final class OPF {
 					Epub3FileSet.FOLDER_CSS, null);
 		}
 
-		Epub3FileSet.processCssFile(slideShow, new File(pathEpubFolder,
-				Epub3FileSet.FOLDER_CSS + "/" + Epub3FileSet.CSS_NAVDOC.FILE),
-				verbosity);
+		create_ManifestItem(Epub3FileSet.CSS_NAVDOC.FILE, document, elementManifest,
+					Epub3FileSet.CSS_NAVDOC.ID, false, Epub3FileSet.FOLDER_CSS, null);
 
 		create_ManifestItem(slideShow.LOGO, document, elementManifest, "logo",
 				false, Epub3FileSet.FOLDER_IMG + "/"

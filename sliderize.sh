@@ -43,7 +43,7 @@ cd ./tool/epub3-sliderizer/
 
 pwd
 
-class="./bin/Main.class"
+class="./bin/Main.clazz"
 
 if [ -f ${class} ]; then
 
@@ -53,7 +53,7 @@ else
 
 echo "Compiling: ${class}"
 
-javac -classpath ".:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" "${root}/tool/epub3-sliderizer/src/Main.java" -d "${bin}" -sourcepath "${root}/tool/epub3-sliderizer/src" #-verbose
+javac -classpath ".:${root}/tool/epub3-sliderizer/lib/guava-15.0.jar:${root}/tool/epub3-sliderizer/lib/mustache-compiler-0.8.13.jar:${root}/tool/epub3-sliderizer/lib/asm-all-4.1.jar:${root}/tool/epub3-sliderizer/lib/parboiled-core-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/parboiled-java-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/pegdown-1.4.1.jar:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" "${root}/tool/epub3-sliderizer/src/Main.java" -d "${bin}" -sourcepath "${root}/tool/epub3-sliderizer/src" #-verbose
 
 fi
 
@@ -65,11 +65,7 @@ echo "EPUB3-Sliderization in progress..."
 echo ${DATA_file}
 echo ${EPUB_FOLDER}
 
-java -classpath "${root}/tool/epub3-sliderizer/lib/guava-15.0.jar:${root}/tool/epub3-sliderizer/lib/mustache-compiler-0.8.13.jar:${root}/tool/epub3-sliderizer/lib/asm-all-4.1.jar:${root}/tool/epub3-sliderizer/lib/parboiled-core-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/parboiled-java-1.1.6.jar:${bin}:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar:${root}/tool/epub3-sliderizer/lib/pegdown-1.4.1.jar" Main ${DATA_url} ${EPUB_FOLDER} ${VERBOSITY}
-
-#########################
-exit
-#########################
+java -classpath "${root}/tool/epub3-sliderizer/lib/guava-15.0.jar:${root}/tool/epub3-sliderizer/lib/mustache-compiler-0.8.13.jar:${root}/tool/epub3-sliderizer/lib/asm-all-4.1.jar:${root}/tool/epub3-sliderizer/lib/parboiled-core-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/parboiled-java-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/pegdown-1.4.1.jar:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar:${bin}" Main ${DATA_url} ${EPUB_FOLDER} ${VERBOSITY}
 
 open ${EPUB_FOLDER}
 #exit
