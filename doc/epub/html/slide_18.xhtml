@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
             <section id="epb3sldrzr-content">
                 <div id="epb3sldrzr-anim-overflow">
                     <!--SOUP--><p>
-Slideshow e-books made with EPUB3-Sliderizer can be viewed with:
+Slideshows made with EPUB3-Sliderizer have been tested with:
 </p><ul class="incremental auto" id="bs" style="list-style-type:none;  clear: both;">
 <li>
 <strong>iOS</strong> <span class="fade">(WebKit)</span>
@@ -136,7 +136,16 @@ iBooks, Kobo
 <strong>Mac OS X, Windows</strong>
 <ul>
 <li>
-Readium-Chrome, Readium-SDK <span class="fade">(WebKit)</span>, Readium.js
+Readium.js <span class="fade">(cross-browser)</span>
+</li>
+<li>
+Readium (Chrome extension) <span class="fade">(WebKit)</span>
+</li>
+<li>
+Readium-SDK <span class="fade">(WebKit + Gecko/Trident?)</span>
+</li>
+<li>
+iBooks <span class="fade">(WebKit)</span> (OSX 10.9+ aka "Mavericks")
 </li>
 <li>
 Azardi <span class="fade">(Gecko)</span>
@@ -151,11 +160,8 @@ Calibre <span class="fade">(Webkit)</span>
 <p>
 Not working:
 <br/>
-Google Play Books <span class="fade">(mangles original HTML and CSS, no Javascript)</span>,
-BlueFire <span class="fade">(breaks layout)</span>,
-GitDen <span class="fade">(crashes)</span>.
-<br/>
-Untested: Nook, Kindle, Aldiko, FBReader, Lektz, Laputa, Cool Reader, Moon+ Reader, iReader, CopperReader, etc.
+Google Play Books <span class="fade">(no Javascript, destroys original HTML + CSS)</span>,
+BlueFire <span class="fade">(breaks layout)</span> (many others untested ...)
 </p>
 </div>
 
