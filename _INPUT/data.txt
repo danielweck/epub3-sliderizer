@@ -148,14 +148,13 @@ _CONTENT
 	by converting a simple input format (single text file)
 
 	<p>
-	to a pre-paginated / fixed-layout EPUB 3 <!-- span class="code"><em>.epub</em></span --> e-book
+	to a pre-paginated EPUB 3 e-book (fixed-layout)
 
 	<p>
-	that can also be viewed in modern HTML5 web browsers
+	that can also be viewed in HTML5 web browsers
 
 	<p>
-	(accessibility bonus: reflowable presentation switch!)
-
+	(accessibility FTW: fixed-layout &#8596; reflowable toggle)
 </div>
 
 <div
@@ -3232,7 +3231,9 @@ Slideshows made with EPUB3-Sliderizer seem to play fine in:
 
 <div class="incremental auto">
 <p style="clear: both;">
-<em>Note:</em> on Android &#8658; inconsistent viewport scaling, fonts support
+<em>Note:</em>
+<br/>
+on Android &#8658; inconsistent viewport scaling, broken fonts
 </p>
 </div>
 
@@ -3284,7 +3285,7 @@ E-reader compatibility
 _CONTENT
 
 <p>
-Slideshow e-books made with EPUB3-Sliderizer can be viewed with:
+Slideshows made with EPUB3-Sliderizer have been tested with:
 
 <ul class="incremental auto" id="bs" style="list-style-type:none;  clear: both;">
 <li>
@@ -3299,7 +3300,16 @@ Slideshow e-books made with EPUB3-Sliderizer can be viewed with:
 	<strong>Mac OS X, Windows</strong>
 	<ul>
 		<li>
-			Readium-Chrome, Readium-SDK <span class="fade">(WebKit)</span>, Readium.js
+			Readium.js <span class="fade">(cross-browser)</span>
+		</li>
+		<li>
+			Readium (Chrome extension) <span class="fade">(WebKit)</span>
+		</li>
+		<li>
+			Readium-SDK <span class="fade">(WebKit + Gecko/Trident?)</span>
+		</li>
+		<li>
+			iBooks <span class="fade">(WebKit)</span> (OSX 10.9+ aka "Mavericks")
 		</li>
 		<li>
 			Azardi <span class="fade">(Gecko)</span>
@@ -3315,10 +3325,7 @@ Slideshow e-books made with EPUB3-Sliderizer can be viewed with:
 <p>
 Not working:
 <br>
-Google Play Books <span class="fade">(mangles original HTML and CSS, no Javascript)</span>,
-BlueFire <span class="fade">(breaks layout)</span>,
-GitDen <span class="fade">(crashes)</span>.
-<br>
-Untested: Nook, Kindle, Aldiko, FBReader, Lektz, Laputa, Cool Reader, Moon+ Reader, iReader, CopperReader, etc.
+Google Play Books <span class="fade">(no Javascript, destroys original HTML + CSS)</span>,
+BlueFire <span class="fade">(breaks layout)</span> (many others untested ...)
 </p>
 </div>
