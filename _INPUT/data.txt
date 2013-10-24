@@ -27,44 +27,44 @@ _CSS_STYLE
 
 body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
 {
-	-PREFIXED_PROPERTY-animation-duration: 1s;
-	-PREFIXED_PROPERTY-animation-delay: 0s;
+    -PREFIXED_PROPERTY-animation-duration: 1s;
+    -PREFIXED_PROPERTY-animation-delay: 0s;
 }
 
 html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
 {
-	width: 200px;
-	height: 84px;
+    width: 200px;
+    height: 84px;
 }
 
 html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
-	opacity: 0.4;
+    opacity: 0.4;
 }
 
 .pale-red
 {
-	background: rgba(255, 0, 0, 0.2);
+    background: rgba(255, 0, 0, 0.2);
 }
 .pale-green
 {
-	background: rgba(0, 255, 0, 0.2);
+    background: rgba(0, 255, 0, 0.2);
 }
 .pale-blue
 {
-	background: rgba(0, 0, 255, 0.2);
+    background: rgba(0, 0, 255, 0.2);
 }
 .pale-grey
 {
-	background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.2);
 }
 .magenta
 {
-	background: #ff00ff;
+    background: #ff00ff;
 }
 .red
 {
-	background: #FF0033;
+    background: #FF0033;
 }
 
 
@@ -73,13 +73,13 @@ _JS_SCRIPT
 
 function setupAnimations()
 {
-	var html = document.documentElement;
-	if (html.id == "epb3sldrzr-NavDoc")
-	{
-		var elem = document.getElementById("epb3sldrzr-logo");
-		elem.classList.add("fadeIn");
-		elem.classList.add("epb3sldrzr-animated");
-	}
+    var html = document.documentElement;
+    if (html.id == "epb3sldrzr-NavDoc")
+    {
+        var elem = document.getElementById("epb3sldrzr-logo");
+        elem.classList.add("fadeIn");
+        elem.classList.add("epb3sldrzr-animated");
+    }
 }
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
@@ -122,61 +122,61 @@ Intro
 _CONTENT
 
 <a
-	id="FMOGH"
-	href="https://github.com/danielweck/epub3-sliderizer/"
-	class="spread">
-	<img
-		class="nozoom"
-		src="assets/forkme.png"
-		alt="Fork me on GitHub"
-		style="width: 200px; height: 200px;">
+    id="FMOGH"
+    href="https://github.com/danielweck/epub3-sliderizer/"
+    class="spread">
+    <img
+        class="nozoom"
+        src="assets/forkme.png"
+        alt="Fork me on GitHub"
+        style="width: 200px; height: 200px;">
 </a>
 
 <h1 id="title" class="spread">EPUB3-Sliderizer</h1>
 
 <div
-	class="auto incremental"
-	data-incremental-delay="100">
-	
-	<p>
-	a tool that creates slideshow presentations for
+    class="auto incremental"
+    data-incremental-delay="100">
+    
+    <p>
+    a tool that creates slideshow presentations for
 
-	<p>
-	<span class="pale-red">web-browsers</span> and <span class="pale-blue">e-book readers</span>
+    <p>
+    <span class="pale-red">web-browsers</span> and <span class="pale-blue">e-book readers</span>
 
-	<p>
-	by converting a simple input format (single text file)
+    <p>
+    by converting a simple input format (single text file)
 
-	<p>
-	to a pre-paginated EPUB 3 e-book (fixed-layout)
+    <p>
+    to a pre-paginated EPUB 3 e-book (fixed-layout)
 
-	<p>
-	that can also be viewed in HTML5 web browsers
+    <p>
+    that can also be viewed in HTML5 web browsers
 
-	<p>
-	(accessibility FTW: fixed-layout &#8596; reflowable toggle)
+    <p>
+    (+ accessibility switch: fixed-layout &#8596; reflowable)
 </div>
 
 <div
-	class="boxed epb3sldrzr-animated bounceInDown"
-	id="boox">
+    class="boxed epb3sldrzr-animated bounceInDown"
+    id="boox">
 
-	<div>
-		<div id="logoWrapper">
-			<img
-				id="logo"
-				src="assets/EPUB3-Sliderizer.png"
-				alt="Logo"/>
-		</div>
-		<ul>
-			<li>
-				<strong>See</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/data.txt" target="_blank">input file</a> for this slidedeck
-			</li>
-			<li>
-				<strong>Grab</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/" target="_blank">open-source code</a> from GitHub <i class="icon-github" style="font-size: 1.5em"></i> 
-			</li>
-		</ul>
-	</div>
+    <div>
+        <div id="logoWrapper">
+            <img
+                id="logo"
+                src="assets/EPUB3-Sliderizer.png"
+                alt="Logo"/>
+        </div>
+        <ul>
+            <li>
+                <strong>See</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/data.txt" target="_blank">input file</a> for this slidedeck
+            </li>
+            <li>
+                <strong>Grab</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/" target="_blank">open-source code</a> from GitHub <i class="icon-github" style="font-size: 1.5em"></i> 
+            </li>
+        </ul>
+    </div>
 </div>
 
 // --------------------------------------------
@@ -190,7 +190,7 @@ _CSS_STYLE
 
 #epb3sldrzr-anim-overflow
 {
-	padding-bottom: 0.5em;
+    padding-bottom: 0.5em;
 }
 
 a#FMOGH:link,
@@ -198,81 +198,81 @@ a#FMOGH:visited,
 a#FMOGH:hover,
 a#FMOGH:active
 {
-	float: right;
+    float: right;
 
-	text-decoration: none;
-	border: none;
+    text-decoration: none;
+    border: none;
 }
 
 a#FMOGH > img
 {
-	border: none;
+    border: none;
 }
 
 
 body:not(.mobile):not(.epb3sldrzr-epubReadingSystem) .incremental > *
 {
-	-PREFIXED_PROPERTY-transition: opacity 200ms ease-in-out 0ms !important;
+    -PREFIXED_PROPERTY-transition: opacity 200ms ease-in-out 0ms !important;
 }
 
 #epb3sldrzr-content
 {
-	margin-left: FONT_SIZEpx;
-	margin-left: FONT_SIZErem;
+    margin-left: FONT_SIZEpx;
+    margin-left: FONT_SIZErem;
 }
 
 html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
-	display: none;
+    display: none;
 }
 
 #logoWrapper
 {
-	float: right;
-	
-	-PREFIXED_PROPERTY-transform: rotate(45deg);
+    float: right;
+    
+    -PREFIXED_PROPERTY-transform: rotate(45deg);
 }
 
 #logo
 {
-	width: 300px;
-	height: 125px;
+    width: 300px;
+    height: 125px;
 }
 
 h1#epb3sldrzr-title
 {
-	display: none;
+    display: none;
 }
 
 #title
 {
-	font-size: 1.6em;
+    font-size: 1.6em;
 
-	padding-top: FONT_SIZEpx;
-	padding-top: FONT_SIZErem;
+    padding-top: FONT_SIZEpx;
+    padding-top: FONT_SIZErem;
 
-	margin-bottom: 1em;
-	
-	margin-left: FONT_SIZEpx;
-	margin-left: FONT_SIZErem;
+    margin-bottom: 1em;
+    
+    margin-left: FONT_SIZEpx;
+    margin-left: FONT_SIZErem;
 
-	border-bottom: 0.14em solid #8AC007;
+    border-bottom: 0.14em solid #8AC007;
 }
 
 div.incremental > p
 {
-	margin-bottom: 0.2em;
-	
-	font-weight: 400;
-	font-family: Arvo, Lato, Tahoma, verdana, arial, sans-serif;
+    margin-bottom: 0.2em;
+    
+    font-weight: 400;
+    font-family: Arvo, Lato, Tahoma, verdana, arial, sans-serif;
 }
 
 #boox
 {
-	padding-top: 1.5em;
-	
-	-PREFIXED_PROPERTY-animation-duration: 1s;
-	-PREFIXED_PROPERTY-animation-delay: 1s;
+    padding-top: 1.5em;
+    
+    -PREFIXED_PROPERTY-animation-duration: 1s;
+    -PREFIXED_PROPERTY-animation-delay: 1s;
 }
 
 
@@ -281,20 +281,20 @@ _JS_SCRIPT
 
 function setupLogoAnimation()
 {
-	var elem = document.getElementById("epb3sldrzr-logo");
-	elem.classList.add("fadeIn");
-	elem.classList.add("epb3sldrzr-animated");
+    var elem = document.getElementById("epb3sldrzr-logo");
+    elem.classList.add("fadeIn");
+    elem.classList.add("epb3sldrzr-animated");
 }
 document.addEventListener("DOMContentLoaded", function(e) { setupLogoAnimation(); }, false);
 
 /*
 function setupLogo()
 {
-	if (Epub3Sliderizer.authorMode)
-	{
-//		Epub3Sliderizer.AUTHORize("img#epb3sldrzr-logo");
-//		Epub3Sliderizer.AUTHORize("#FMOGH");
-	}
+    if (Epub3Sliderizer.authorMode)
+    {
+//        Epub3Sliderizer.AUTHORize("img#epb3sldrzr-logo");
+//        Epub3Sliderizer.AUTHORize("#FMOGH");
+    }
 }
 document.addEventListener("DOMContentLoaded", function(e) { setTimeout(setupLogo, 1000); }, false);
 */
@@ -437,25 +437,25 @@ or <span class="code">[tap]</span> / <span class="code">[click]</span>
 // --------------------------------------------
 _CSS_STYLE
 
-/* 		
+/*         
 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-previous,
 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-next,
 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc,
 .glowButt
 {
-	-webkit-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 
-	opacity: 1;
+    opacity: 1;
 
-	-PREFIXED_PROPERTY-animation-name: onoff;
-	-PREFIXED_PROPERTY-animation-timing-function: linear;
-	-PREFIXED_PROPERTY-animation-duration: 1.8s;
-	-PREFIXED_PROPERTY-animation-iteration-count: infinite;
-	-PREFIXED_PROPERTY-animation-delay: 1s;
+    -PREFIXED_PROPERTY-animation-name: onoff;
+    -PREFIXED_PROPERTY-animation-timing-function: linear;
+    -PREFIXED_PROPERTY-animation-duration: 1.8s;
+    -PREFIXED_PROPERTY-animation-iteration-count: infinite;
+    -PREFIXED_PROPERTY-animation-delay: 1s;
 }
 */
-/* 		
-	border: 4px solid #ff00ff;
+/*         
+    border: 4px solid #ff00ff;
 */
 
 // #########################################################
@@ -703,7 +703,7 @@ Why EPUB3?
 _CONTENT
 
 
-<div class="incremental auto">
+<div class="incremental auto" style="margin-top: 1.5em;">
 
 <ul style="list-style-type: none; margin-bottom: 1em;">
 
@@ -726,7 +726,7 @@ _CONTENT
 <p style="margin-left: 5em; margin-bottom: 1em;">
 EPUB3 is a structured container for web documents.
 <br>
-unzip <span class="code">[ebook.epub]</span> &#8658; access the files inside
+unzip <span class="code">ebook.epub</span> to access internal files
 <br>
 <span class="fade" style="font-size: 0.8em">(HTML, CSS, Javscript, SVG, MathML, images, fonts, etc.)</span>
 
@@ -735,7 +735,7 @@ unzip <span class="code">[ebook.epub]</span> &#8658; access the files inside
 <p>
 EPUB3-Sliderizer generates a <strong>single</strong> fileset,
 <br>
-which delivers <strong>both</strong> the <em>web</em> and <em>e-book</em> functions.
+which supports <strong>both</strong> <em>web</em> and <em>e-book</em> presentations.
 
 </div>
 
@@ -751,30 +751,30 @@ _CSS_STYLE
 /*
 div#epb3sldrzr-root
 {
-	overflow: hidden;
+    overflow: hidden;
 }
 */
 
 img.animated-logos
 {
-	margin-right: 1em;
+    margin-right: 1em;
 
-	clear: both;
-	float: left;
+    clear: both;
+    float: left;
 
-	width: 125px;
-	height: 125px;
+    width: 125px;
+    height: 125px;
 }
 
 body:not(.epb3sldrzr-epubReadingSystem) div.epb3sldrzr-animated
-{	
-	-PREFIXED_PROPERTY-animation-duration: 1s;
-	-PREFIXED_PROPERTY-animation-delay: 0s;
+{    
+    -PREFIXED_PROPERTY-animation-duration: 1s;
+    -PREFIXED_PROPERTY-animation-delay: 0s;
 }
 
 body:not(.epb3sldrzr-epubReadingSystem) div.later.epb3sldrzr-animated
-{	
-	-PREFIXED_PROPERTY-animation-delay: 0.1s;
+{    
+    -PREFIXED_PROPERTY-animation-delay: 0.1s;
 }
 
 
@@ -800,51 +800,51 @@ _CONTENT
 <h3>slideshow-data.txt</h3>
 
 <p class="code" style="font-size: 0.75em;">
-	<span class="pale-blue">
-\	_TITLE</span>
+    <span class="pale-blue">
+\    _TITLE</span>
 <br>
-	<span class="pale-greenx">
-	The slideshow title</span>
+    <span class="pale-greenx">
+    The slideshow title</span>
 <br>
-	<span class="pale-blue">
-\	_CREATOR</span>
+    <span class="pale-blue">
+\    _CREATOR</span>
 <br>
-	<span class="pale-greenx">
-	My name / organisation</span>
+    <span class="pale-greenx">
+    My name / organisation</span>
 <br>
-	<span class="pale-blue">
-\	_COVER</span>
+    <span class="pale-blue">
+\    _COVER</span>
 <br>
-	<span class="pale-greenx">
-	assets/cover-image.png</span>
-<br>
-<br>
-	<span class="pale-blue">
-\	_CSS_STYLE</span>
-<br>
-	<span class="pale-greenx">
-	.myClass { color: red; }</span>
-<br>
-	<span class="pale-blue">
-\	_FILES_CSS</span>
-<br>
-	<span class="pale-greenx">
-	assets/my-styles.css</span>
+    <span class="pale-greenx">
+    assets/cover-image.png</span>
 <br>
 <br>
-	<span class="pale-blue">
-\	_JS_SCRIPT</span>
+    <span class="pale-blue">
+\    _CSS_STYLE</span>
 <br>
-	<span class="pale-greenx">
-	document.addEventListener("DOMContentLoaded",
-	<br>
-	function(e) { alert("hello!"); }, false);</span>
+    <span class="pale-greenx">
+    .myClass { color: red; }</span>
 <br>
-	<span class="pale-blue">
-\	_FILES_JS</span>
+    <span class="pale-blue">
+\    _FILES_CSS</span>
 <br>
-	<span class="pale-greenx">
-	assets/my-scripts.js</span>
+    <span class="pale-greenx">
+    assets/my-styles.css</span>
+<br>
+<br>
+    <span class="pale-blue">
+\    _JS_SCRIPT</span>
+<br>
+    <span class="pale-greenx">
+    document.addEventListener("DOMContentLoaded",
+    <br>
+    function(e) { alert("hello!"); }, false);</span>
+<br>
+    <span class="pale-blue">
+\    _FILES_JS</span>
+<br>
+    <span class="pale-greenx">
+    assets/my-scripts.js</span>
 </p>
 </div>
 
@@ -869,36 +869,36 @@ _CONTENT
 <h3>slideshow-data.txt</h3>
 
 <p class="code" style="font-size: 0.74em;">
-	<span class="pale-red">
-\	-SLIDE</span>
+    <span class="pale-red">
+\    -SLIDE</span>
 <br>
-	<span class="pale-blue">
-\	_TITLE</span>
+    <span class="pale-blue">
+\    _TITLE</span>
 <br>
-	<span class="pale-greenx">
-	The slide title</span>
+    <span class="pale-greenx">
+    The slide title</span>
 <br>
-	<span class="pale-blue">
-\	_CONTENT</span>
+    <span class="pale-blue">
+\    _CONTENT</span>
 <br>
-	<span class="pale-greenx">
-	&lt;img src="assets/me.jpeg"&gt;<br>&lt;ol&gt;<br>&lt;li&gt;bullet point 1<br>&lt;li&gt;bullet point 2<br>&lt;!-- look ma, no closing tags! (automatically converts to HTML5 XML) --&gt;</span>
+    <span class="pale-greenx">
+    &lt;img src="assets/me.jpeg"&gt;<br>&lt;ol&gt;<br>&lt;li&gt;bullet point 1<br>&lt;li&gt;bullet point 2<br>&lt;!-- look ma, no closing tags! (automatically converts to HTML5 XML) --&gt;</span>
 <br>
-	<span class="pale-blue">
-\	_FILES_IMG</span>
+    <span class="pale-blue">
+\    _FILES_IMG</span>
 <br>
-	<span class="pale-greenx">
-	assets/me.jpeg</span>
+    <span class="pale-greenx">
+    assets/me.jpeg</span>
 <br>
 <br>
-	<span class="pale-green">
-\	// (line comment)</span>
+    <span class="pale-green">
+\    // (line comment)</span>
 <br>
-	<span class="pale-blue">
-\	_NOTES</span>
+    <span class="pale-blue">
+\    _NOTES</span>
 <br>
-	<span class="pale-greenx">
-	&lt;p&gt;Slide notes are displayed separately, can be <span class="notesref-highlight">linked</span> from the host slide</span>
+    <span class="pale-greenx">
+    &lt;p&gt;Slide notes are displayed separately, can be <span style="color: #ff00ff;">linked</span> from the host slide</span>
 </p>
 </div>
 
@@ -908,27 +908,27 @@ _CSS_STYLE
 body:not(.epb3sldrzr-epubReadingSystem) .notesref-highlight,
 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-notesref
 {
-	-webkit-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 
-	opacity: 1;
+    opacity: 1;
 
-	-PREFIXED_PROPERTY-animation-name: onoff;
-	-PREFIXED_PROPERTY-animation-timing-function: linear;
-	-PREFIXED_PROPERTY-animation-duration: 1.8s;
-	-PREFIXED_PROPERTY-animation-iteration-count: infinite;
-	-PREFIXED_PROPERTY-animation-delay: 1s;
+    -PREFIXED_PROPERTY-animation-name: onoff;
+    -PREFIXED_PROPERTY-animation-timing-function: linear;
+    -PREFIXED_PROPERTY-animation-duration: 1.8s;
+    -PREFIXED_PROPERTY-animation-iteration-count: infinite;
+    -PREFIXED_PROPERTY-animation-delay: 1s;
 }
 
-.notesref-highlight,
 a#epb3sldrzr-link-notesref
 {
-	border: 0.4rem solid #ff00ff;
+	background-color: #ff00ff;
+	color: black !important;
 }
 
 // --------------------------------------------
 _NOTES
 
-<p>Slide notes are displayed separately, can be linked from the host slide.
+<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.
 
 // #########################################################
 // #########################################################
@@ -954,30 +954,30 @@ _CONTENT
 <h3>Special <span style="color: #333333;">property syntax...</span></h3>
 
 <p class="code" style="font-size: 0.8em;">
-	<span class="pale-green">
-	-PREFIXED_PROPERTY-</span><span class="pale-greenx">box-sizing: border-box;</span>
+    <span class="pale-green">
+    -PREFIXED_PROPERTY-</span><span class="pale-greenx">box-sizing: border-box;</span>
 </p>
 </div>
 
 <div class="boxed" style="margin-bottom: 1em;">
 
-<h3 style="color: #333333;">...generates vendors prefixes:</h3>
+<h3 style="color: #333333;">&#8658; vendors prefixes:</h3>
 
 <p class="code" style="font-size: 0.8em;">
-	<span class="pale-green">
-	-webkit-</span><span class="pale-greenx">box-sizing: border-box;</span>
+    <span class="pale-green">
+    -webkit-</span><span class="pale-greenx">box-sizing: border-box;</span>
 <br>
-	<span class="pale-green">
-	-moz-</span><span class="pale-greenx">box-sizing: border-box;</span>
+    <span class="pale-green">
+    -moz-</span><span class="pale-greenx">box-sizing: border-box;</span>
 <br>
-	<span class="pale-green">
-	-ms-</span><span class="pale-greenx">box-sizing: border-box;</span>
+    <span class="pale-green">
+    -ms-</span><span class="pale-greenx">box-sizing: border-box;</span>
 <br>
-	<span class="pale-green">
-	-o-</span><span class="pale-greenx">box-sizing: border-box;</span>
+    <span class="pale-green">
+    -o-</span><span class="pale-greenx">box-sizing: border-box;</span>
 <br>
-	<span class="pale-greenx">
-	box-sizing: border-box;</span>
+    <span class="pale-greenx">
+    box-sizing: border-box;</span>
 </p>
 </div>
 
@@ -986,11 +986,11 @@ _CONTENT
 <h3 style="color: #333333;">These are supported too:</h3>
 
 <p class="code" style="font-size: 0.8em;">
-	<span class="pale-green">
-	_PREFIXED_</span><span class="pale-greenx">::selection { ... }</span>
+    <span class="pale-green">
+    _PREFIXED_</span><span class="pale-greenx">::selection { ... }</span>
 <br>
-	<span class="pale-green">
-	_PREFIXED_</span><span class="pale-greenx">@keyframes animation-name { ... }</span>
+    <span class="pale-green">
+    _PREFIXED_</span><span class="pale-greenx">@keyframes animation-name { ... }</span>
 </p>
 </div>
 
@@ -1018,9 +1018,10 @@ _CONTENT
 
 MARKDOWN
 
-When the first line of text for the '<span class="pale-blue">_CONTENT</span>' field of a slide is "<span class="pale-green">MARKDOWN</span>", the slide content is parsed assuming Markdown syntax, instead of "real" (X)HTML markup. For example, the content shown below is actually authored using Markdown.
+Not keen on editing XHTML markup by hand? Use "<span class="pale-green">MARKDOWN</span>" as the first line
+of a slide's '<span class="pale-blue">_CONTENT</span>' field, and type away:
 
-(see this page: <a href="http://daringfireball.net/projects/markdown/syntax" title="Markdown syntax page">http://daringfireball.net/projects/markdown/syntax</a>)
+(see <a href="http://daringfireball.net/projects/markdown/syntax" title="Markdown syntax page">http://daringfireball.net/projects/markdown/syntax</a>)
 
 <hr>
 
@@ -1291,14 +1292,14 @@ adding additional levels of `>`:
 Blockquotes can contain other Markdown elements, including headers, lists,
 and code blocks:
 
-	> ## This is a header.
-	> 
-	> 1.   This is the first list item.
-	> 2.   This is the second list item.
-	> 
-	> Here's some example code:
-	> 
-	>     return shell_exec("echo $input | $markdown_script");
+    > ## This is a header.
+    > 
+    > 1.   This is the first list item.
+    > 2.   This is the second list item.
+    > 
+    > Here's some example code:
+    > 
+    >     return shell_exec("echo $input | $markdown_script");
 
 Any decent text editor should make email-style quoting easy. For
 example, with BBEdit, you can make a selection and choose Increase
@@ -1606,9 +1607,9 @@ That is:
 
 The following three link definitions are equivalent:
 
-	[foo]: http://example.com/  "Optional Title Here"
-	[foo]: http://example.com/  'Optional Title Here'
-	[foo]: http://example.com/  (Optional Title Here)
+    [foo]: http://example.com/  "Optional Title Here"
+    [foo]: http://example.com/  'Optional Title Here'
+    [foo]: http://example.com/  (Optional Title Here)
 
 **Note:** There is a known bug in Markdown.pl 1.0.1 which prevents
 single quotes from being used to delimit link titles.
@@ -1630,8 +1631,8 @@ Link definition names may consist of letters, numbers, spaces, and
 punctuation -- but they are *not* case sensitive. E.g. these two
 links:
 
-	[link text][a]
-	[link text][A]
+    [link text][a]
+    [link text][A]
 
 are equivalent.
 
@@ -1640,20 +1641,20 @@ link, in which case the link text itself is used as the name.
 Just use an empty set of square brackets -- e.g., to link the word
 "Google" to the google.com web site, you could simply write:
 
-	[Google][]
+    [Google][]
 
 And then define the link:
 
-	[Google]: http://google.com/
+    [Google]: http://google.com/
 
 Because link names may contain spaces, this shortcut even works for
 multiple words in the link text:
 
-	Visit [Daring Fireball][] for more information.
+    Visit [Daring Fireball][] for more information.
 
 And then define the link:
-	
-	[Daring Fireball]: http://daringfireball.net/
+    
+    [Daring Fireball]: http://daringfireball.net/
 
 Link definitions can be placed anywhere in your Markdown document. I
 tend to put them immediately after each paragraph in which they're
@@ -1775,15 +1776,15 @@ The backtick delimiters surrounding a code span may include spaces --
 one after the opening, one before the closing. This allows you to place
 literal backtick characters at the beginning or end of a code span:
 
-	A single backtick in a code span: `` ` ``
-	
-	A backtick-delimited string in a code span: `` `foo` ``
+    A single backtick in a code span: `` ` ``
+    
+    A backtick-delimited string in a code span: `` `foo` ``
 
 will produce:
 
-	<p>A single backtick in a code span: <code>`</code></p>
-	
-	<p>A backtick-delimited string in a code span: <code>`foo`</code></p>
+    <p>A single backtick in a code span: <code>`</code></p>
+    
+    <p>A backtick-delimited string in a code span: <code>`foo`</code></p>
 
 With a code span, ampersands and angle brackets are encoded as HTML
 entities automatically, which makes it easy to include example HTML
@@ -1901,8 +1902,8 @@ Markdown provides backslash escapes for the following characters:
     []  square brackets
     ()  parentheses
     #   hash mark
-	+	plus sign
-	-	minus sign (hyphen)
+    +    plus sign
+    -    minus sign (hyphen)
     .   dot
     !   exclamation mark
 
@@ -2196,14 +2197,14 @@ adding additional levels of `>`:
 Blockquotes can contain other Markdown elements, including headers, lists,
 and code blocks:
 
-	> ## This is a header.
-	> 
-	> 1.   This is the first list item.
-	> 2.   This is the second list item.
-	> 
-	> Here's some example code:
-	> 
-	>     return shell_exec("echo $input | $markdown_script");
+    > ## This is a header.
+    > 
+    > 1.   This is the first list item.
+    > 2.   This is the second list item.
+    > 
+    > Here's some example code:
+    > 
+    >     return shell_exec("echo $input | $markdown_script");
 
 Any decent text editor should make email-style quoting easy. For
 example, with BBEdit, you can make a selection and choose Increase
@@ -2511,9 +2512,9 @@ That is:
 
 The following three link definitions are equivalent:
 
-	[foo]: http://example.com/  "Optional Title Here"
-	[foo]: http://example.com/  'Optional Title Here'
-	[foo]: http://example.com/  (Optional Title Here)
+    [foo]: http://example.com/  "Optional Title Here"
+    [foo]: http://example.com/  'Optional Title Here'
+    [foo]: http://example.com/  (Optional Title Here)
 
 **Note:** There is a known bug in Markdown.pl 1.0.1 which prevents
 single quotes from being used to delimit link titles.
@@ -2535,8 +2536,8 @@ Link definition names may consist of letters, numbers, spaces, and
 punctuation -- but they are *not* case sensitive. E.g. these two
 links:
 
-	[link text][a]
-	[link text][A]
+    [link text][a]
+    [link text][A]
 
 are equivalent.
 
@@ -2545,20 +2546,20 @@ link, in which case the link text itself is used as the name.
 Just use an empty set of square brackets -- e.g., to link the word
 "Google" to the google.com web site, you could simply write:
 
-	[Google][]
+    [Google][]
 
 And then define the link:
 
-	[Google]: http://google.com/
+    [Google]: http://google.com/
 
 Because link names may contain spaces, this shortcut even works for
 multiple words in the link text:
 
-	Visit [Daring Fireball][] for more information.
+    Visit [Daring Fireball][] for more information.
 
 And then define the link:
-	
-	[Daring Fireball]: http://daringfireball.net/
+    
+    [Daring Fireball]: http://daringfireball.net/
 
 Link definitions can be placed anywhere in your Markdown document. I
 tend to put them immediately after each paragraph in which they're
@@ -2680,15 +2681,15 @@ The backtick delimiters surrounding a code span may include spaces --
 one after the opening, one before the closing. This allows you to place
 literal backtick characters at the beginning or end of a code span:
 
-	A single backtick in a code span: `` ` ``
-	
-	A backtick-delimited string in a code span: `` `foo` ``
+    A single backtick in a code span: `` ` ``
+    
+    A backtick-delimited string in a code span: `` `foo` ``
 
 will produce:
 
-	<p>A single backtick in a code span: <code>`</code></p>
-	
-	<p>A backtick-delimited string in a code span: <code>`foo`</code></p>
+    <p>A single backtick in a code span: <code>`</code></p>
+    
+    <p>A backtick-delimited string in a code span: <code>`foo`</code></p>
 
 With a code span, ampersands and angle brackets are encoded as HTML
 entities automatically, which makes it easy to include example HTML
@@ -2806,8 +2807,8 @@ Markdown provides backslash escapes for the following characters:
     []  square brackets
     ()  parentheses
     #   hash mark
-	+	plus sign
-	-	minus sign (hyphen)
+    +    plus sign
+    -    minus sign (hyphen)
     .   dot
     !   exclamation mark
 
@@ -2834,18 +2835,18 @@ EPUB3-Sliderizer supports <a href="http://daneden.me/animate">Animate.css</a> <s
 <h3>Example:</h3>
 
 <p class="code" style="font-size: 0.8em;">
-	<span class="pale-blue">
-\	_CONTENT</span>
+    <span class="pale-blue">
+\    _CONTENT</span>
 <br>
-	<span class="pale-greenx">&lt;img src="assets/logo.png"</span>
-	<br>
-	<span class="pale-greenx">class="</span><span class="pale-red">epb3sldrzr-animated</span><span class="pale-greenx"> </span><span class="magenta">bounceInLeft</span><span class="pale-greenx"> </span><span class="pale-green">my-logo</span><span class="pale-greenx">"&gt;</span>
+    <span class="pale-greenx">&lt;img src="assets/logo.png"</span>
+    <br>
+    <span class="pale-greenx">class="</span><span class="pale-red">epb3sldrzr-animated</span><span class="pale-greenx"> </span><span class="magenta">bounceInLeft</span><span class="pale-greenx"> </span><span class="pale-green">my-logo</span><span class="pale-greenx">"&gt;</span>
 <br>
 <br>
-	<span class="pale-blue">
-\	_CSS_STYLE</span>
+    <span class="pale-blue">
+\    _CSS_STYLE</span>
 <br>
-	<span class="pale-greenx">img.</span><span class="pale-green">my-logo</span><span class="pale-greenx"> {<br>-PREFIXED_PROPERTY-animation-duration: 1.5s;<br>-PREFIXED_PROPERTY-animation-delay: 1s;<br>-PREFIXED_PROPERTY-animation-iteration-count: infinite; }</span>
+    <span class="pale-greenx">img.</span><span class="pale-green">my-logo</span><span class="pale-greenx"> {<br>-PREFIXED_PROPERTY-animation-duration: 1.5s;<br>-PREFIXED_PROPERTY-animation-delay: 1s;<br>-PREFIXED_PROPERTY-animation-iteration-count: infinite; }</span>
 </p>
 </div>
 
@@ -2859,10 +2860,10 @@ _CSS_STYLE
 
 body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
 {
-	-PREFIXED_PROPERTY-animation-duration: 1.5s;
-	-PREFIXED_PROPERTY-animation-delay: 1s;
+    -PREFIXED_PROPERTY-animation-duration: 1.5s;
+    -PREFIXED_PROPERTY-animation-delay: 1s;
 
-	-PREFIXED_PROPERTY-animation-iteration-count: infinite;
+    -PREFIXED_PROPERTY-animation-iteration-count: infinite;
 }
 
 // --------------------------------------------
@@ -2870,9 +2871,9 @@ _JS_SCRIPT
 
 function setupAnimatedLogo()
 {
-	var elem = document.getElementById("epb3sldrzr-logo");
-	elem.classList.add("bounceInLeft");
-	elem.classList.add("epb3sldrzr-animated");
+    var elem = document.getElementById("epb3sldrzr-logo");
+    elem.classList.add("bounceInLeft");
+    elem.classList.add("epb3sldrzr-animated");
 }
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimatedLogo(); }, false);
@@ -2939,7 +2940,7 @@ Attribute '<span class="code pale-green">data-incremental-delay</span>'
 
 // --------------------------------------------
 _TITLE
-Slide scroll
+Content scroll
 
 // --------------------------------------------
 _CONTENT
@@ -2992,13 +2993,112 @@ assets/kitten.jpg
 
 // --------------------------------------------
 _TITLE
-Media Overlays
+Styling, templates
 
 // --------------------------------------------
 _CONTENT
 
-<h3>&nbsp;&nbsp;&nbsp;&nbsp;TODO
+<ul id="yo" class="incremental auto">
+<li>The default CSS rules can be overridden on a <strong>per-slide</strong> basis,
+or for the <strong>entire slideshow</strong>.
 
+<li>The CSS code can be specified inside the <code>data.txt</code> syntax,
+or authored in external <code>files.css</code>.
+
+<li>The <strong>XHTML</strong> structure can be customised using <code><a href="http://mustache.github.io">{{Mustache}}</a></code> templates.
+
+// --------------------------------------------
+_CSS_STYLE
+
+html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+    display: none;
+}
+
+a:link
+{
+    color:#0066FF;
+}
+a:visited
+{
+    color:#0066FF;
+}
+a:hover
+{
+    color:white;
+    text-decoration:none;
+}
+a:active
+{
+    color:#white;
+}
+
+ul#yo
+{
+    margin-left: 2em;
+	
+    padding-left: 1em;
+    text-indent: -1.3em;
+
+    font-family: Arvo, Lato, Tahoma, verdana, arial, sans-serif;
+    font-size: 1.2em;
+    
+    color: #99CC99;
+    
+    list-style: none;
+}
+
+ul#yo li
+{
+    margin-bottom: 1.2em;
+}
+
+ul#yo li:before
+{
+    content: '\2605 \020';
+
+/*	margin: 0 0 1em 0; */
+	margin-right: 0;
+	
+    text-shadow: 0 0 0.08em rgba(255, 255, 255, 0.9);
+    color: #66FF66;
+}
+
+h1#epb3sldrzr-title
+{
+    margin-bottom: 0.85em;
+    
+    color: #FFCC33;
+    
+    background-color: transparent;
+    background: transparent;
+    
+    text-shadow: none;
+    
+    filter: none;
+    filter: 0;
+    
+    font-family: Neuton, serif;
+    
+    font-size: 200%;
+
+	text-align: right;
+	margin-right: 2em;
+    -PREFIXED_PROPERTY-transform: rotate(8deg);
+
+    text-shadow: 0.06em 0.06em 0.11em rgba(0, 0, 0, 1);
+}
+
+#epb3sldrzr-body
+{
+    background-color: #333333 !important;
+}
+
+#epb3sldrzr-root
+{
+    border-bottom: 0.6em solid black;
+    border-top: 0.6em solid black;
+}
 
 // #########################################################
 // #########################################################
@@ -3032,54 +3132,54 @@ _CSS_STYLE
 
 html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
-	opacity: 1;
+    opacity: 1;
 }
 
 #fatty
 {
-	margin-top: 3em !important;
+    margin-top: 3em !important;
 
-	/* margin: auto !important; */
-	
-	font-family: Neuton, serif;
-	
-	text-align: center;
-	font-size: 1.7em;
-	
-	color: rgba(0,0,0,0.7);
-	color: #333333;
+    /* margin: auto !important; */
+    
+    font-family: Neuton, serif;
+    
+    text-align: center;
+    font-size: 1.7em;
+    
+    color: rgba(0,0,0,0.7);
+    color: #333333;
 
 
-	text-shadow: 0 0 0.08em rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 0.08em rgba(255, 255, 255, 0.9);
 }
 
 h1#epb3sldrzr-title
 {
-	color:white;
+    color:white;
 
-	text-shadow: 0.06em 0.06em 0.11em rgba(0, 0, 0, 0.5);
+    text-shadow: 0.06em 0.06em 0.11em rgba(0, 0, 0, 0.5);
 
-	background-color: transparent;
-	background: transparent;
-	
-	filter: none;
-	filter: 0;
+    background-color: transparent;
+    background: transparent;
+    
+    filter: none;
+    filter: 0;
 }
 
 #epb3sldrzr-body
 {
-	-PREFIXED_PROPERTY-background-repeat:no-repeat;
-	-PREFIXED_PROPERTY-background-clip:border-box;
-	-PREFIXED_PROPERTY-background-origin:padding-box;
-	-PREFIXED_PROPERTY-background-size:auto;
-	-PREFIXED_PROPERTY-background-position:center;
-	-PREFIXED_PROPERTY-background-attachment:scroll;
-	-PREFIXED_PROPERTY-background-image:url(../img/custom/assets/wall.jpg);
-	
-	-PREFIXED_PROPERTY-background-size: 100%;
-	-PREFIXED_PROPERTY-background-size: cover;
-	
-	background-color: #333333;
+    -PREFIXED_PROPERTY-background-repeat:no-repeat;
+    -PREFIXED_PROPERTY-background-clip:border-box;
+    -PREFIXED_PROPERTY-background-origin:padding-box;
+    -PREFIXED_PROPERTY-background-size:auto;
+    -PREFIXED_PROPERTY-background-position:center;
+    -PREFIXED_PROPERTY-background-attachment:scroll;
+    -PREFIXED_PROPERTY-background-image:url(../img/custom/assets/wall.jpg);
+    
+    -PREFIXED_PROPERTY-background-size: 100%;
+    -PREFIXED_PROPERTY-background-size: cover;
+    
+    background-color: #333333;
 }
 
 // #########################################################
@@ -3089,7 +3189,7 @@ h1#epb3sldrzr-title
 
 // --------------------------------------------
 _TITLE
-Custom views
+Parameters
 
 // --------------------------------------------
 _CONTENT
@@ -3098,19 +3198,19 @@ _CONTENT
 
 <p style="margin-bottom: 1em;">
 EPUB3-Sliderizer supports a "basic" mode that skips the eye candy stuff
-(&#8658; transitions and animations).
+(transitions and animations).
 
 <p style="margin-bottom: 1em;">
-For example, <a href="javascript:Epub3Sliderizer.reloadSlide('basic');">click here</a> to reload this slide without the fussy gloss,
+&#8658; <a href="javascript:Epub3Sliderizer.reloadSlide('basic');">click here</a> to reload this slide without the fussy gloss,
 or simply pass the '<span class="code pale-green">basic</span>' parameter in the address bar ("URL query").
 <br>e.g. <span class="code pale-blue">http://dummy.org/epub/slide.xhtml?basic</span>
 
 <p style="margin-bottom: 1em;">
-To restore the full-featured view: remove the address parameters,
-or try now by <a href="javascript:Epub3Sliderizer.reloadSlide('');">clicking here</a>.
+To restore the full-featured view: remove the URL parameters,
+or <a href="javascript:Epub3Sliderizer.reloadSlide('');">click here</a>.
 
 <p style="margin-bottom: 1em;">
-To check how a slide would look (and behave) as a single page within an <em>e-book reader</em>,
+To see how a slide would look (and behave) as a single page within an e-book reader,
 use the '<span class="code pale-green">epub</span>' parameter.
 Try now by <a href="javascript:Epub3Sliderizer.reloadSlide('epub');">clicking here</a>.
 
@@ -3129,10 +3229,10 @@ _CSS_STYLE
 
 body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
 {
-	-PREFIXED_PROPERTY-animation-duration: 1.5s;
-	-PREFIXED_PROPERTY-animation-delay: 1s;
+    -PREFIXED_PROPERTY-animation-duration: 1.5s;
+    -PREFIXED_PROPERTY-animation-delay: 1s;
 
-	-PREFIXED_PROPERTY-animation-iteration-count: infinite;
+    -PREFIXED_PROPERTY-animation-iteration-count: infinite;
 }
 
 // --------------------------------------------
@@ -3140,9 +3240,9 @@ _JS_SCRIPT
 
 function setupAnimatedLogo()
 {
-	var elem = document.getElementById("epb3sldrzr-logo");
-	elem.classList.add("bounceInUp");
-	elem.classList.add("epb3sldrzr-animated");
+    var elem = document.getElementById("epb3sldrzr-logo");
+    elem.classList.add("bounceInUp");
+    elem.classList.add("epb3sldrzr-animated");
 }
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimatedLogo(); }, false);
@@ -3156,7 +3256,7 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimatedLogo();
 
 // --------------------------------------------
 _TITLE
-Browser compatibility
+Web browsers
 
 // --------------------------------------------
 _CONTENT
@@ -3166,65 +3266,65 @@ Slideshows made with EPUB3-Sliderizer seem to play fine in:
 
 <ul class="incremental auto" id="bs" style="list-style-type:none;  clear: both;">
 <li>
-	<strong>Mac OS X</strong>
-	<ul>
-		<li>
-			Safari, Chrome <span class="fade">(WebKit)</span>
-		</li>
-		<li>
-			Firefox <span class="fade">(Gecko)</span>
-		</li>
-		<li>
-			Opera <span class="fade">(Presto)</span>
-		</li>
-	</ul>
+    <strong>Mac OS X</strong>
+    <ul>
+        <li>
+            Safari, Chrome <span class="fade">(WebKit)</span>
+        </li>
+        <li>
+            Firefox <span class="fade">(Gecko)</span>
+        </li>
+        <li>
+            Opera <span class="fade">(Presto)</span>
+        </li>
+    </ul>
 </li>
 <li>
-	<strong>Windows</strong>
-	<ul>
-		<li>
-			Chrome <span class="fade">(WebKit)</span>
-		</li>
-		<li>
-			Firefox <span class="fade">(Gecko)</span>
-		</li>
-		<li>
-			Opera <span class="fade">(Presto)</span>
-		</li>
-		<li>
-			IE 9+ <span class="fade">(Trident)</span>
-		</li>
-	</ul>
+    <strong>Windows</strong>
+    <ul>
+        <li>
+            Chrome <span class="fade">(WebKit)</span>
+        </li>
+        <li>
+            Firefox <span class="fade">(Gecko)</span>
+        </li>
+        <li>
+            Opera <span class="fade">(Presto)</span>
+        </li>
+        <li>
+            IE 9+ <span class="fade">(Trident)</span>
+        </li>
+    </ul>
 </li>
 <li>
-	<strong>iOS</strong> <span class="fade">(WebKit)</span>
-	<ul>
-		<li>
-			Safari
-		</li>
-	</ul>
+    <strong>iOS</strong> <span class="fade">(WebKit)</span>
+    <ul>
+        <li>
+            Safari
+        </li>
+    </ul>
 </li>
 <li>
-	<strong>Android</strong>
-	<ul>
-		<li>
-			Chrome, Doplhin <span class="fade">(WebKit)</span>
-		</li>
-		<li>
-			Firefox <span class="fade">(Gecko)</span>
-		</li>
-		<li>
-			Opera <span class="fade">(Presto, WebKit)</span>
-		</li>
-	</ul>
+    <strong>Android</strong>
+    <ul>
+        <li>
+            Chrome, Doplhin <span class="fade">(WebKit)</span>
+        </li>
+        <li>
+            Firefox <span class="fade">(Gecko)</span>
+        </li>
+        <li>
+            Opera <span class="fade">(Presto, WebKit)</span>
+        </li>
+    </ul>
 </li>
 <li>
-	<strong>Linux</strong>
-	<ul>
-		<li>
-			Firefox <span class="fade">(Gecko)</span>
-		</li>
-	</ul>
+    <strong>Linux</strong>
+    <ul>
+        <li>
+            Firefox <span class="fade">(Gecko)</span>
+        </li>
+    </ul>
 </li>
 </ul>
 
@@ -3242,33 +3342,33 @@ _CSS_STYLE
 
 ul#bs
 {
-	-PREFIXED_PROPERTY-column-count: 2;
-	-PREFIXED_PROPERTY-column-gap: 1em;
-	-PREFIXED_PROPERTY-column-fill: balanced;
+    -PREFIXED_PROPERTY-column-count: 2;
+    -PREFIXED_PROPERTY-column-gap: 1em;
+    -PREFIXED_PROPERTY-column-fill: balanced;
 }
 
 
 body.opera ul#bs,
 body.IE9 ul#bs
 {
-	-PREFIXED_PROPERTY-column-count: auto;
-	
-	vertical-align: top;
-}	
+    -PREFIXED_PROPERTY-column-count: auto;
+    
+    vertical-align: top;
+}    
 
 body.opera ul#bs > li,
 body.IE9 ul#bs > li
 {
-	/*
-	float: left;
-	display: inline;
-	*/
-	
-	white-space: nowrap;
-	display: inline-block;
-	
-	width:45%;
-	vertical-align: top;
+    /*
+    float: left;
+    display: inline;
+    */
+    
+    white-space: nowrap;
+    display: inline-block;
+    
+    width:45%;
+    vertical-align: top;
 }
 
 
@@ -3279,7 +3379,7 @@ body.IE9 ul#bs > li
 
 // --------------------------------------------
 _TITLE
-E-reader compatibility
+E-readers
 
 // --------------------------------------------
 _CONTENT
@@ -3289,36 +3389,36 @@ Slideshows made with EPUB3-Sliderizer have been tested with:
 
 <ul class="incremental auto" id="bs" style="list-style-type:none;  clear: both;">
 <li>
-	<strong>iOS</strong> <span class="fade">(WebKit)</span>
-	<ul>
-		<li>
-			iBooks, Kobo
-		</li>
-	</ul>
+    <strong>iOS</strong> <span class="fade">(WebKit)</span>
+    <ul>
+        <li>
+            iBooks, Kobo
+        </li>
+    </ul>
 </li>
 <li>
-	<strong>Mac OS X, Windows</strong>
-	<ul>
-		<li>
-			Readium.js <span class="fade">(cross-browser)</span>
-		</li>
-		<li>
-			Readium (Chrome extension) <span class="fade">(WebKit)</span>
-		</li>
-		<li>
-			Readium-SDK <span class="fade">(WebKit + Gecko/Trident?)</span>
-		</li>
-		<li>
-			iBooks <span class="fade">(WebKit)</span> (OSX 10.9+ aka "Mavericks")
-		</li>
-		<li>
-			Azardi <span class="fade">(Gecko)</span>
-		</li>
-		<li>
-			Calibre <span class="fade">(Webkit)</span>
-		</li>
-	</ul>
-</li>	
+    <strong>Mac OS X, Windows</strong>
+    <ul>
+        <li>
+            Readium.js <span class="fade">(cross-browser)</span>
+        </li>
+        <li>
+            Readium (Chrome extension) <span class="fade">(WebKit)</span>
+        </li>
+        <li>
+            Readium-SDK <span class="fade">(WebKit + Gecko/Trident?)</span>
+        </li>
+        <li>
+            iBooks <span class="fade">(WebKit)</span> (OSX 10.9+ aka "Mavericks")
+        </li>
+        <li>
+            Azardi <span class="fade">(Gecko)</span>
+        </li>
+        <li>
+            Calibre <span class="fade">(Webkit)</span>
+        </li>
+    </ul>
+</li>    
 </ul>
 
 <div class="incremental auto">
