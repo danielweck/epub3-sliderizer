@@ -63,7 +63,13 @@ a#epb3sldrzr-link-noteback,
 a#epb3sldrzr-link-notesref,
 a#epb3sldrzr-link-epubReadingSystem
 {
-	text-transform:uppercase;
+	text-transform: uppercase;
+}
+
+a#epb3sldrzr-link-noteback
+{
+	border-bottom: 1px dotted blue;
+	color: blue;
 }
 
 a#epb3sldrzr-link-noteback,

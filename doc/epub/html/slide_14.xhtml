@@ -5,7 +5,7 @@
         <meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/>
         <meta content="EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook" name="keywords"/>
         
-        <title>(14/18) EPUB3 Sliderizer / Media Overlays</title>
+        <title>(14/18) EPUB3 Sliderizer / Styling, templates</title>
         
         <link href="../img/favicon.ico" rel="shortcut icon"/>
         
@@ -92,6 +92,82 @@ background: #FF0033;
 }
         </style>
 
+        <style type="text/css">
+        html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+display: none;
+}
+a:link
+{
+color:#0066FF;
+}
+a:visited
+{
+color:#0066FF;
+}
+a:hover
+{
+color:white;
+text-decoration:none;
+}
+a:active
+{
+color:#white;
+}
+ul#yo
+{
+margin-left: 2em;
+padding-left: 1em;
+text-indent: -1.3em;
+font-family: Arvo, Lato, Tahoma, verdana, arial, sans-serif;
+font-size: 1.2em;
+color: #99CC99;
+list-style: none;
+}
+ul#yo li
+{
+margin-bottom: 1.2em;
+}
+ul#yo li:before
+{
+content: '\2605 \020';
+/*	margin: 0 0 1em 0; */
+margin-right: 0;
+text-shadow: 0 0 0.08em rgba(255, 255, 255, 0.9);
+color: #66FF66;
+}
+h1#epb3sldrzr-title
+{
+margin-bottom: 0.85em;
+color: #FFCC33;
+background-color: transparent;
+background: transparent;
+text-shadow: none;
+filter: none;
+filter: 0;
+font-family: Neuton, serif;
+font-size: 200%;
+text-align: right;
+margin-right: 2em;
+
+-webkit-transform: rotate(8deg);
+-moz-transform: rotate(8deg);
+-ms-transform: rotate(8deg);
+-o-transform: rotate(8deg);
+transform: rotate(8deg);
+
+text-shadow: 0.06em 0.06em 0.11em rgba(0, 0, 0, 1);
+}
+#epb3sldrzr-body
+{
+background-color: #333333 !important;
+}
+#epb3sldrzr-root
+{
+border-bottom: 0.6em solid black;
+border-top: 0.6em solid black;
+}
+        </style>
 
         <script>
         //<![CDATA[
@@ -117,11 +193,16 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 
             <img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/>
 
-            <h1 id="epb3sldrzr-title">Media Overlays</h1>
+            <h1 id="epb3sldrzr-title">Styling, templates</h1>
 
             <section id="epb3sldrzr-content">
                 <div id="epb3sldrzr-anim-overflow">
-                    <!--SOUP--><h3>    TODO</h3>
+                    <!--SOUP--><ul class="incremental auto" id="yo">
+<li>The default CSS rules can be overridden on a <strong>per-slide</strong> basis,
+or for the <strong>entire slideshow</strong>.
+</li><li>The CSS code can be specified inside the <code>data.txt</code> syntax,
+or authored in external <code>files.css</code>.
+</li><li>The <strong>XHTML</strong> structure can be customised using <code><a href="http://mustache.github.io">{{Mustache}}</a></code> templates.</li></ul>
 
                 </div>
 
