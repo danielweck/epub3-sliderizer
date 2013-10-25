@@ -91,20 +91,24 @@ body.IE9 ol
 column-count: auto;
 
 	vertical-align: top;
-}	
+}
 
 body.opera ol > li,
 body.IE9 ol > li
 {
-	/*
+    width: 50%;
+	vertical-align: top;
+}
+
+body.opera ol > li
+{
 	float: left;
 	display: inline;
-	*/
+}
 
+body.IE9 ol > li
+{
 	white-space: nowrap;
 	display: inline-block;
-	
-	width:50%;
-	vertical-align: top;
 }
 
