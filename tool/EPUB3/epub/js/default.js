@@ -2348,6 +2348,30 @@ Epub3Sliderizer.reAnimateAll = function(element)
 
 // ----------
 
+Epub3Sliderizer.checkIncrementalAncestorChain = function(element, active)
+{
+	var parent = element.parentNode;
+	while (parent)
+	{
+		if (parent.classList && parent.classList.contains("incremental"))
+		{
+			if (active)
+			{
+				parent.setAttribute("incremental-active", "true");
+			}
+			else
+			{
+console.error("REMOVE");
+				parent.removeAttribute("incremental-active");
+			}
+		}
+		
+		parent = parent.parentNode;
+	}
+}
+
+// ----------
+
 Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate, auto)
 {
 	if (this.isEpubReadingSystem())
@@ -2387,15 +2411,19 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate, auto)
 			if (i < that.increment)
 			{
 				elem.parentNode.setAttribute("incremental-active", "true");
+				that.checkIncrementalAncestorChain(elem.parentNode, true);
+				
 				elem.removeAttribute("aria-selected");
 				elem.setAttribute("aria-activedescendant", "true");
 			}
 			else if (i > that.increment)
 			{
+				var thatInc = that.incrementals[that.increment];
+				
 				var found = false;
 				for (var j = 0; j < elem.parentNode.childNodes.length; j++)
 				{
-					if (elem.parentNode.childNodes[j] === that.incrementals[that.increment])
+					if (elem.parentNode.childNodes[j] === thatInc)
 					{
 						found = true;
 						break;
@@ -2403,42 +2431,96 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate, auto)
 				}
 				if (!found)
 				{
-					elem.parentNode.removeAttribute("incremental-active");
+					var incParent = thatInc.parentNode;
+					while (incParent)
+					{
+						if (incParent === elem.parentNode)
+						{
+							found = true;
+							break;
+						}
+						
+						incParent = incParent.parentNode;
+					}
+					
+					if (!found)
+					{
+						elem.parentNode.removeAttribute("incremental-active");
+					}
+					//that.checkIncrementalAncestorChain(elem.parentNode, false);
 				}
 				else
 				{
 					elem.parentNode.setAttribute("incremental-active", "true");
+					that.checkIncrementalAncestorChain(elem.parentNode, true);
 				}
 				
 				elem.removeAttribute("aria-selected");
 				elem.removeAttribute("aria-activedescendant");
 				
-				
-				if (enableAuto &&
-					(i === that.increment + 1) &&
-					(
-					auto ||
-					elem.classList.contains("auto") ||
-					(that.increment === 0 && elem.parentNode.classList.contains("auto"))
-					)
-				)
+				if (enableAuto && (i === that.increment + 1))
 				{
-					var delay = elem.parentNode.getAttribute('data-incremental-delay') || 500;
-	
-					var current = i;
-					setTimeout(function()
+					var incAdjusted = -1; //that.increment;
+					for (var j = 0; j < elem.parentNode.childNodes.length; j++)
 					{
-						if (current === that.increment + 1)
+						var child = elem.parentNode.childNodes[j];
+						if (child.nodeType != 1)
 						{
-							that.increment += 1;
-							that.invalidateIncremental(enableAuto, reanimate, true);
+							continue;
 						}
-					}, delay);
+					
+						if (child === elem)
+						{
+							break;
+						}
+					
+						incAdjusted++;
+					}
+
+					var goAuto =  elem.classList.contains("auto") || (incAdjusted === 0 && elem.parentNode.classList.contains("auto"));
+					
+					if (auto || goAuto)
+					{
+						var cancel = false;	
+						if (!goAuto)
+						{
+							//auto from previous timeout...do we have to break the progression?
+						
+							var par = elem.parentNode;
+							while (par)
+							{
+								if (par.classList && par.classList.contains("incremental"))
+								{
+									cancel = !par.classList.contains("auto");
+									break;
+								}
+							
+								par = par.parentNode;
+							}
+						}
+					
+						if (!cancel)
+						{
+							var delay = elem.parentNode.getAttribute('data-incremental-delay') || 500;
+	
+							var current = i;
+							setTimeout(function()
+							{
+								if (current === that.increment + 1)
+								{
+									that.increment += 1;
+									that.invalidateIncremental(enableAuto, reanimate, true);
+								}
+							}, delay);
+						}
+					}
 				}
 			}
 			else if (i === that.increment)
 			{				
 				elem.parentNode.setAttribute("incremental-active", "true");
+				that.checkIncrementalAncestorChain(elem.parentNode, true);
+				
 				elem.setAttribute("aria-selected", "true");
 				elem.removeAttribute("aria-activedescendant");
 

@@ -2895,18 +2895,41 @@ _CONTENT
 
 <h3>Example:</h3>
 
+<div>
+<ul class="incremental auto" data-incremental-delay="200"> 
+    <li> 1 </li>
+    <li> 2 </li>
+    <li>
+		<ul class="incremental auto" data-incremental-delay="400">
+	        <li> A </li>
+	        <li> B </li>
+    	</ul>
+	</li>
+</ul>
+</div>
+
 <p class="code" style="font-size: 0.8em;">
 
 &lt;ul class="<span class="code pale-blue">incremental</span> <span class="code pale-red">auto</span>" <span class="code pale-green">data-incremental-delay</span>="200"&gt;
 <br>
 
-<span class="auto incremental" data-incremental-delay="200">
+<span class="autox incremental" data-incremental-delay="200">
 
 <span style="font-weight: 900" class="code pale-grey">&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt; <strong>1</strong> &lt;/li&gt;<br></span>
 
 <span style="font-weight: 900" class="code pale-grey">&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt; <strong>2</strong> &lt;/li&gt;<br></span>
 
-<span style="font-weight: 900" class="code pale-grey">&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt; <strong>3</strong> &lt;/li&gt;<br></span>
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;ul class="<span class="code pale-blue">incremental</span> <span class="code pale-red">auto</span>" <span class="code pale-green">data-incremental-delay</span>="400"&gt;<br></span>
+
+<span class="autox incremental" data-incremental-delay="400">
+
+<span style="font-weight: 900" class="code pale-grey">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt; <strong>A</strong> &lt;/li&gt;<br></span>
+<span style="font-weight: 900" class="code pale-grey">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt; <strong>B</strong> &lt;/li&gt;<br></span>
+
+</span>
+
+<span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;&lt;/li&gt;<br></span>
+
 </span>
 
 &lt;/ul&gt;
@@ -2917,18 +2940,13 @@ _CONTENT
 
 <ul class="auto incremental" data-incremental-delay="200">
 <li>
-CSS class '<span class="code pale-blue">incremental</span>' on wrapper element
-<br>&#8658;
-children revealed in sequence
+CSS class '<span class="code pale-blue">incremental</span>' on element &#8658; children progression
 </li>
 <li>
-CSS class '<span class="code pale-red">auto</span>' on wrapper element or child item
-<br>&#8658; automatic progression
+CSS class '<span class="code pale-red">auto</span>' on element or child &#8658; automatic reveal
 </li>
 <li>
-Attribute '<span class="code pale-green">data-incremental-delay</span>'
-<br>
-&#8658; custom milliseconds offset <span class="fade">(default: 500ms)</span>
+Attribute '<span class="code pale-green">data-incremental-delay</span>' &#8658; time offset <span class="fade">(500ms default)</span>
 </li>
 </ul>
 
@@ -3002,8 +3020,8 @@ _CONTENT
 <li>The default CSS rules can be overridden on a <strong>per-slide</strong> basis,
 or for the <strong>entire slideshow</strong>.
 
-<li>The CSS code can be specified inside the <code>data.txt</code> syntax,
-or authored in external <code>files.css</code>.
+<li>The CSS can be authored in <code>data.txt</code> (the master file),
+or in external <code>files.css</code>.
 
 <li>The <strong>XHTML</strong> structure can be customised using <code><a href="http://mustache.github.io">{{Mustache}}</a></code> templates.
 
