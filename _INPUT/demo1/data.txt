@@ -1,6 +1,6 @@
 // --------------------------------------------
 _TITLE
-EPUB3 Media Overlays
+EPUB3 Sliderizer Demo1
 
 // --------------------------------------------
 _CREATOR
@@ -24,7 +24,7 @@ cover.jpg
 
 // --------------------------------------------
 _FILE_EPUB
-EPUB3-MediaOverlays-Sample.epub
+EPUB3-Sliderizer_Demo1.epub
 
 // --------------------------------------------
 _CSS_STYLE

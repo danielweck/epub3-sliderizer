@@ -11,7 +11,7 @@ root=$(pwd)
 #DATA_file="${root}/_INPUT/book_UNZIPPED.epub/OEBPS/content.opf"
 
 DATA_file="${root}/_INPUT/doc/data.txt"
-#DATA_file="${root}/_INPUT/demo1/data.txt"
+DATA_file="${root}/_INPUT/demo1/data.txt"
 
 
 rm -r ./_OUTPUT
