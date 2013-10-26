@@ -232,8 +232,9 @@ public final class OPF {
 					Epub3FileSet.FOLDER_CSS, null);
 		}
 
-		create_ManifestItem(Epub3FileSet.CSS_NAVDOC.FILE, document, elementManifest,
-					Epub3FileSet.CSS_NAVDOC.ID, false, Epub3FileSet.FOLDER_CSS, null);
+		create_ManifestItem(Epub3FileSet.CSS_NAVDOC.FILE, document,
+				elementManifest, Epub3FileSet.CSS_NAVDOC.ID, false,
+				Epub3FileSet.FOLDER_CSS, null);
 
 		create_ManifestItem(slideShow.LOGO, document, elementManifest, "logo",
 				false, Epub3FileSet.FOLDER_IMG + "/"
@@ -249,6 +250,10 @@ public final class OPF {
 
 		create_ManifestItem(slideShow.FILES_JS, document, elementManifest,
 				"js", true, Epub3FileSet.FOLDER_JS + "/"
+						+ Epub3FileSet.FOLDER_CUSTOM, null);
+
+		create_ManifestItem(slideShow.FILES_IMG, document, elementManifest,
+				"img", true, Epub3FileSet.FOLDER_IMG + "/"
 						+ Epub3FileSet.FOLDER_CUSTOM, null);
 
 		Element elementSpine = document.createElement("spine");

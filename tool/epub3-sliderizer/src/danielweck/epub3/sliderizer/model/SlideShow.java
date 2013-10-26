@@ -124,6 +124,8 @@ public final class SlideShow extends Fielder {
 
 	public final ArrayList<Slide> slides = new ArrayList<Slide>();
 
+	public String FILES_IMG = null;
+
 	public String FILES_CSS = null;
 
 	private ArrayList<String> _xCSSs = null;
@@ -221,6 +223,13 @@ public final class SlideShow extends Fielder {
 			}
 
 			array = Epub3FileSet.splitPaths(this.COVER);
+			for (String str : array) {
+				if (!allReferences_IMG.contains(str)) {
+					allReferences_IMG.add(str);
+				}
+			}
+
+			array = Epub3FileSet.splitPaths(this.FILES_IMG);
 			for (String str : array) {
 				if (!allReferences_IMG.contains(str)) {
 					allReferences_IMG.add(str);

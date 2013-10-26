@@ -308,6 +308,11 @@ public final class Epub3FileSet {
 		if (file.exists()) {
 			Epub3FileSet.copyFile(fullSourcePath, fullDestinationPath,
 					verbosity);
+			// System.out.println(" ");
+			// System.out.println("^^^^^^^ FILE: " + fullSourcePath);
+		} else if (verbosity > 0) {
+			System.out.println(" ");
+			System.out.println("^^^^^^^ Cannot find file: " + fullSourcePath);
 		}
 	}
 
@@ -369,7 +374,8 @@ public final class Epub3FileSet {
 
 		File templateDir = new File(file.getParent(), FOLDER_TEMPLATES);
 		if (!templateDir.isDirectory()) {
-			String toolDir = new File(Epub3FileSet.class.getClassLoader().getResource("").getPath()).getParent();
+			String toolDir = new File(Epub3FileSet.class.getClassLoader()
+					.getResource("").getPath()).getParent();
 			templateDir = new File(toolDir, FOLDER_TEMPLATES);
 		}
 		if (templateDir.isDirectory()) {
@@ -442,6 +448,9 @@ public final class Epub3FileSet {
 
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_JS + "/"
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_JS, verbosity);
+		
+		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
+				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_IMG, verbosity);
 
 		for (Slide slide : slideShow.slides) {
 
