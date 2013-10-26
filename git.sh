@@ -3,7 +3,7 @@
 #git checkout gh-pages
 
 target="doc"
-target="demo1"
+#target="demo1"
 
 cp _OUTPUT/content/*.epub .
 
@@ -25,4 +25,4 @@ echo "${root}"
 git commit -a -m "${root} up"
 git push
 
-#git checkout master
+git checkout master
