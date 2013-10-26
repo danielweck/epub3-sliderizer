@@ -160,14 +160,14 @@ _CONTENT
     <div id="t1"><span class="text">Jiggle</span></div>
     <div id="t2"><span class="text">Zebra!</span></div>
 
-    <img id="o1" src="_1.png" alt="animal 1"/>
+    <img id="o1" src="zebra.png" alt="animal 1"/>
 </div>
 
 // --------------------------------------------
 _FILES_IMG
 
 left.jpg
-_1.png
+zebra.png
 
 // --------------------------------------------
 _CSS_STYLE
@@ -225,14 +225,14 @@ _CONTENT
     <div id="t1"><span class="text">Wiggle</span></div>
     <div id="t2"><span class="text">Elephant!</span></div>
 
-    <img id="o2" src="_2.png" alt="animal 2"/>
+    <img id="o2" src="elephant.png" alt="animal 2"/>
 </div>
 
 // --------------------------------------------
 _FILES_IMG
 
 right.jpg
-_2.png
+elephant.png
 
 // --------------------------------------------
 _CSS_STYLE
