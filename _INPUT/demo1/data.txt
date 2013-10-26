@@ -29,16 +29,6 @@ EPUB3-MediaOverlays-Sample.epub
 // --------------------------------------------
 _CSS_STYLE
 
-html:not(#epb3sldrzr-NavDoc) #epb3sldrzr-anim-overflow
-{
-	height: 100%;
-}
-
-html:not(#epb3sldrzr-NavDoc) #epb3sldrzr-content
-{
-	height: 100%;
-}
-
 html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
     display: none;
@@ -57,19 +47,19 @@ body:not(.static):not(.basic).epb3sldrzr-epubReadingSystem
 
 p, div
 {
-padding: 0 !important;
-margin: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 .text
 {
-font-family: 'FingerPaint';
-font-size: 240%;
-color: white;
-text-shadow: 0 0 10px black;
+    font-family: 'FingerPaint';
+    font-size: 240%;
+    color: white;
+    text-shadow: 0 0 10px black;
 
-padding: 0.2em !important;
-border-radius: 1em;
+    padding: 0.2em !important;
+    border-radius: 1em;
 }
 
 div[aria-selected] span
@@ -133,9 +123,15 @@ img[aria-selected]
 	-PREFIXED_PROPERTY-animation-iteration-count: 2;
 }
 
+/*
+body:not(.epb3sldrzr-epubReadingSystem) .incremental.fade-active[incremental-active] > img,
+body:not(.epb3sldrzr-epubReadingSystem) .incremental.fade-active > *[aria-selected] ~ img,
+body.basic.epb3sldrzr-epubReadingSystem .incremental.fade-active[incremental-active] > img,
+body.basic.epb3sldrzr-epubReadingSystem .incremental.fade-active > *[aria-selected] ~ img
+*/
 img
 {
-	-PREFIXED_PROPERTY-user-drag: none;
+	opacity: 1 !important;
 }
 
 // --------------------------------------------
@@ -161,8 +157,8 @@ Zebra
 _CONTENT
 
 <div class="incremental fade-active auto" data-incremental-delay="1000">
-    <div id="t1"><span class="text">Hello...</span></div>
-    <div id="t2"><span class="text">Mr Zebra!</span></div>
+    <div id="t1"><span class="text">Jiggle</span></div>
+    <div id="t2"><span class="text">Zebra!</span></div>
 
     <img id="o1" src="_1.png" alt="animal 1"/>
 </div>
@@ -178,31 +174,24 @@ _CSS_STYLE
 
 #t1
 {
--PREFIXED_PROPERTY-transform: rotate(5deg);
-margin-left: 0.6em !important;
-margin-top: 1.5em !important;
+    -PREFIXED_PROPERTY-transform: rotate(5deg);
+    margin-left: 0.6em !important;
+    margin-top: 1.5em !important;
 }
 
 #t2
 {
--PREFIXED_PROPERTY-transform: rotate(-5deg);
-margin-top: 1em !important;
-margin-left: 3.5em !important;
+    -PREFIXED_PROPERTY-transform: rotate(-5deg);
+    margin-top: -1em !important;
+    margin-left: 3.5em !important;
 }
 
 #o1
 {
-position: absolute;
-left: 240px;
-top: 420px;
+    margin-top: 2.2em;
+    margin-left: 8em;
+    margin-bottom: 3em;
 }
-
-/*
-body.reflow #epb3sldrzr-body
-{
-height: 200%;
-}
-*/
 
 #epb3sldrzr-body
 {
@@ -233,8 +222,8 @@ Elephant
 _CONTENT
 
 <div class="incremental fade-active auto" data-incremental-delay="1000">
-    <div id="t1"><span class="text">Hello...</span></div>
-    <div id="t2"><span class="text">Mr Elephant!</span></div>
+    <div id="t1"><span class="text">Wiggle</span></div>
+    <div id="t2"><span class="text">Elephant!</span></div>
 
     <img id="o2" src="_2.png" alt="animal 2"/>
 </div>
@@ -250,23 +239,23 @@ _CSS_STYLE
 
 #t1
 {
--PREFIXED_PROPERTY-transform: rotate(5deg);
-margin-left: 0.6em !important;
-margin-top: 1.5em !important;
+    -PREFIXED_PROPERTY-transform: rotate(-5deg);
+    margin-left: 0.6em !important;
+    margin-top: 1.5em !important;
 }
 
 #t2
 {
--PREFIXED_PROPERTY-transform: rotate(-5deg);
-margin-top: 1em !important;
-margin-left: 1em !important;
+    -PREFIXED_PROPERTY-transform: rotate(5deg);
+    margin-top: 0.6em !important;
+    margin-left: 3em !important;
 }
 
 #o2
 {
-position: absolute;
-left: 260px;
-top: 430px;
+    margin-top: 2.2em;
+    margin-left: 2.6em;
+    margin-bottom: 3em;
 }
 
 #epb3sldrzr-body
