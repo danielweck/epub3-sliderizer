@@ -22,7 +22,7 @@ git status
 root=$(pwd)
 echo "${root}"
 
-git commit -a -m "${root} up"
+git commit -a -m "${target} up"
 git push
 
 git checkout master
