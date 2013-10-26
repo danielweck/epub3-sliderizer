@@ -2,7 +2,6 @@
 
 root=$(pwd)
 
-#EPUB_FILENAME="DAISY_AGM_June-2013"
 EPUB_FILENAME="EPUB3-Sliderizer"
 
 EPUB_FOLDER="${root}/_OUTPUT/content/EPUB3/"

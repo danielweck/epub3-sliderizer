@@ -1,0 +1,291 @@
+// --------------------------------------------
+_TITLE
+EPUB3 Media Overlays
+
+// --------------------------------------------
+_CREATOR
+Daniel Weck
+
+// --------------------------------------------
+_VIEWPORT_WIDTH
+728
+
+// --------------------------------------------
+_VIEWPORT_HEIGHT
+960
+
+// --------------------------------------------
+_TOUCHICON
+TouchIcon.png
+
+// --------------------------------------------
+_COVER
+cover.jpg
+
+// --------------------------------------------
+_FILE_EPUB
+EPUB3-MediaOverlays-Sample.epub
+
+// --------------------------------------------
+_CSS_STYLE
+
+html:not(#epb3sldrzr-NavDoc) #epb3sldrzr-anim-overflow
+{
+	height: 100%;
+}
+
+html:not(#epb3sldrzr-NavDoc) #epb3sldrzr-content
+{
+	height: 100%;
+}
+
+html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+    display: none;
+}
+
+html:not(#epb3sldrzr-NavDoc) h1#epb3sldrzr-title
+{
+    display: none;
+}
+
+body:not(.static):not(.basic).epb3sldrzr-epubReadingSystem
+{
+	border-right: none;
+	border-left: none;
+}
+
+@font-face
+{
+	font-family: 'FingerPaint';
+	src: url('../css/custom/FingerPaint.woff') format('woff')
+	/* url('../css/custom/FingerPaint.ttf') format('truetype') */
+	;
+	font-weight: normal; /* 400 */
+	font-style: normal;
+}
+
+p, div
+{
+padding: 0 !important;
+margin: 0 !important;
+}
+
+.text
+{
+font-family: 'FingerPaint';
+font-size: 240%;
+color: white;
+text-shadow: 0 0 10px black;
+
+padding: 0.2em !important;
+border-radius: 1em;
+}
+
+div[aria-selected] span
+{
+    background-color: rgba(100,0,0,0.7);
+}
+
+_PREFIXED_@keyframes bounce
+{
+    0%
+    {
+        -PREFIXED_PROPERTY-transform: translateX(0);
+        -PREFIXED_PROPERTY-transform: translateY(0);
+        
+        -PREFIXED_PROPERTY-transform: scale(1);
+        -PREFIXED_PROPERTY-transform: rotate(0);
+    }
+	20%
+    {
+        -PREFIXED_PROPERTY-transform: translateY(50px);
+    }
+	40%
+    {
+        -PREFIXED_PROPERTY-transform: translateY(-100px);
+    }
+	50%
+    {
+        -PREFIXED_PROPERTY-transform: translateY(0);
+        
+        -PREFIXED_PROPERTY-transform: rotate(-5deg);
+    }
+	60%
+    {
+        -PREFIXED_PROPERTY-transform: translateY(-50px);
+    }
+    80%
+    {
+        -PREFIXED_PROPERTY-transform: translateY(0);
+        
+        -PREFIXED_PROPERTY-transform: rotate(5deg);
+    }
+    100%
+    {
+        -PREFIXED_PROPERTY-transform: translateX(0);
+        -PREFIXED_PROPERTY-transform: translateY(0);
+        
+        -PREFIXED_PROPERTY-transform: scale(1);
+        -PREFIXED_PROPERTY-transform: rotate(0);
+    }
+}
+
+img[aria-selected]
+{
+	-PREFIXED_PROPERTY-animation-name: bounce;
+    
+	-PREFIXED_PROPERTY-backface-visibility: hidden;
+	-PREFIXED_PROPERTY-animation-delay: 0s;
+	-PREFIXED_PROPERTY-animation-duration: 2s;
+	-PREFIXED_PROPERTY-animation-fill-mode: both;
+    -PREFIXED_PROPERTY-animation-timing-function: ease-in-out;
+	-PREFIXED_PROPERTY-animation-iteration-count: 2;
+}
+
+img
+{
+	-PREFIXED_PROPERTY-user-drag: none;
+}
+
+// --------------------------------------------
+_FILES_CSS
+
+FingerPaint.woff
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Zebra
+
+// --------------------------------------------
+_CONTENT
+
+<div class="incremental fade-active auto" data-incremental-delay="1000">
+    <div id="t1"><span class="text">Hello...</span></div>
+    <div id="t2"><span class="text">Mr Zebra!</span></div>
+
+    <img id="o1" src="_1.png" alt="animal 1"/>
+</div>
+
+// --------------------------------------------
+_FILES_IMG
+
+left.jpg
+_1.png
+
+// --------------------------------------------
+_CSS_STYLE
+
+#t1
+{
+-PREFIXED_PROPERTY-transform: rotate(5deg);
+margin-left: 0.6em !important;
+margin-top: 1.5em !important;
+}
+
+#t2
+{
+-PREFIXED_PROPERTY-transform: rotate(-5deg);
+margin-top: 1em !important;
+margin-left: 3.5em !important;
+}
+
+#o1
+{
+position: absolute;
+left: 240px;
+top: 420px;
+}
+
+/*
+body.reflow #epb3sldrzr-body
+{
+height: 200%;
+}
+*/
+
+#epb3sldrzr-body
+{
+    -PREFIXED_PROPERTY-background-repeat:no-repeat;
+    -PREFIXED_PROPERTY-background-clip:border-box;
+    -PREFIXED_PROPERTY-background-origin:padding-box;
+    -PREFIXED_PROPERTY-background-size:auto;
+    -PREFIXED_PROPERTY-background-position:center;
+    -PREFIXED_PROPERTY-background-attachment:scroll;
+    -PREFIXED_PROPERTY-background-image:url(../img/custom/left.jpg);
+    
+    -PREFIXED_PROPERTY-background-size: 100%;
+    -PREFIXED_PROPERTY-background-size: cover;
+    
+    background-color: #333333;
+}
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Elephant
+
+// --------------------------------------------
+_CONTENT
+
+<div class="incremental fade-active auto" data-incremental-delay="1000">
+    <div id="t1"><span class="text">Hello...</span></div>
+    <div id="t2"><span class="text">Mr Elephant!</span></div>
+
+    <img id="o2" src="_2.png" alt="animal 2"/>
+</div>
+
+// --------------------------------------------
+_FILES_IMG
+
+right.jpg
+_2.png
+
+// --------------------------------------------
+_CSS_STYLE
+
+#t1
+{
+-PREFIXED_PROPERTY-transform: rotate(5deg);
+margin-left: 0.6em !important;
+margin-top: 1.5em !important;
+}
+
+#t2
+{
+-PREFIXED_PROPERTY-transform: rotate(-5deg);
+margin-top: 1em !important;
+margin-left: 1em !important;
+}
+
+#o2
+{
+position: absolute;
+left: 260px;
+top: 430px;
+}
+
+#epb3sldrzr-body
+{
+    -PREFIXED_PROPERTY-background-repeat:no-repeat;
+    -PREFIXED_PROPERTY-background-clip:border-box;
+    -PREFIXED_PROPERTY-background-origin:padding-box;
+    -PREFIXED_PROPERTY-background-size:auto;
+    -PREFIXED_PROPERTY-background-position:center;
+    -PREFIXED_PROPERTY-background-attachment:scroll;
+    -PREFIXED_PROPERTY-background-image:url(../img/custom/right.jpg);
+    
+    -PREFIXED_PROPERTY-background-size: 100%;
+    -PREFIXED_PROPERTY-background-size: cover;
+    
+    background-color: #333333;
+}
