@@ -2460,6 +2460,8 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate, auto)
                 
                 if (enableAuto && (i === that.increment + 1))
                 {
+                    var previousSiblingWasAuto = true;
+                                                
                     var incAdjusted = -1; //that.increment;
                     for (var j = 0; j < elem.parentNode.childNodes.length; j++)
                     {
@@ -2468,7 +2470,12 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate, auto)
                         {
                             continue;
                         }
-                    
+                        
+                        if (child.classList && child.classList.contains("auto"))
+                        {
+                            previousSiblingWasAuto = true;
+                        }
+                        
                         if (child === elem)
                         {
                             break;
@@ -2496,6 +2503,11 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate, auto)
                                 }
                             
                                 par = par.parentNode;
+                            }
+                            
+                            if (cancel && previousSiblingWasAuto)
+                            {
+                                cancel = false;
                             }
                         }
                     
