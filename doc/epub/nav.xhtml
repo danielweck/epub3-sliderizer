@@ -5,13 +5,13 @@
         <meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/>
         <meta content="EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook" name="keywords"/>
         
-        <title>(0/18) EPUB3 Sliderizer</title>
+        <title>(0/2) EPUB3 Media Overlays</title>
         
         <link href="img/favicon.ico" rel="shortcut icon"/>
         
-        <link href="img/custom/assets/TouchIcon.png" rel="apple-touch-icon"/>
+        <link href="img/custom/TouchIcon.png" rel="apple-touch-icon"/>
         
-        <meta content="width=1290, height=1000" name="viewport"/>
+        <meta content="width=728, height=960" name="viewport"/>
         
         <link href="css/FontAwesome.css" rel="stylesheet" type="text/css"/>
         <link href="css/fonts.css" rel="stylesheet" type="text/css"/>
@@ -23,7 +23,7 @@
         
         <link href="css/navdoc.css" rel="stylesheet" type="text/css"/>
         
-        <link href="css/custom/assets/empty.css" rel="stylesheet" type="text/css"/>
+        <link href="css/custom/fonts.css" rel="stylesheet" type="text/css"/>
         
         <script src="js/addEventListener.js"> </script>
         <script src="js/classList.js"> </script>
@@ -31,21 +31,255 @@
         <script src="js/jquery-2.0.2.min.js"> </script>
         <script src="js/default.js"> </script>
         
-        <link href="js/custom/assets/empty.js" rel="script" type="text/javascript"/>
         
         <link href="html/slide_01.xhtml" rel="next"/>
         
-        <link href="../../EPUB3-Sliderizer.epub" rel="epub"/>
+        <link href="../../EPUB3-MediaOverlays-Sample.epub" rel="epub"/>
 
         <style type="text/css">
-        body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
+        html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+display: none;
+}
+html:not(#epb3sldrzr-NavDoc) h1#epb3sldrzr-title
+{
+display: none;
+}
+body:not(.static):not(.basic).epb3sldrzr-epubReadingSystem
+{
+border-right: none;
+border-left: none;
+}
+p, div
+{
+padding: 0 !important;
+margin: 0 !important;
+}
+.text
+{
+font-family: 'FingerPaint';
+font-size: 240%;
+color: white;
+text-shadow: 0 0 10px black;
+padding: 0.2em !important;
+border-radius: 1em;
+}
+div[aria-selected] span
+{
+background-color: rgba(100,0,0,0.7);
+}
+
+@-webkit-keyframes bounce
+{
+0%
+{
+-webkit-transform: translateX(0);
+-webkit-transform: translateY(0);
+-webkit-transform: scale(1);
+-webkit-transform: rotate(0);
+}
+20%
+{
+-webkit-transform: translateY(50px);
+}
+40%
+{
+-webkit-transform: translateY(-100px);
+}
+50%
+{
+-webkit-transform: translateY(0);
+-webkit-transform: rotate(-5deg);
+}
+60%
+{
+-webkit-transform: translateY(-50px);
+}
+80%
+{
+-webkit-transform: translateY(0);
+-webkit-transform: rotate(5deg);
+}
+100%
+{
+-webkit-transform: translateX(0);
+-webkit-transform: translateY(0);
+-webkit-transform: scale(1);
+-webkit-transform: rotate(0);
+}
+}
+@-moz-keyframes bounce
+{
+0%
+{
+-moz-transform: translateX(0);
+-moz-transform: translateY(0);
+-moz-transform: scale(1);
+-moz-transform: rotate(0);
+}
+20%
+{
+-moz-transform: translateY(50px);
+}
+40%
+{
+-moz-transform: translateY(-100px);
+}
+50%
+{
+-moz-transform: translateY(0);
+-moz-transform: rotate(-5deg);
+}
+60%
+{
+-moz-transform: translateY(-50px);
+}
+80%
+{
+-moz-transform: translateY(0);
+-moz-transform: rotate(5deg);
+}
+100%
+{
+-moz-transform: translateX(0);
+-moz-transform: translateY(0);
+-moz-transform: scale(1);
+-moz-transform: rotate(0);
+}
+}
+@-ms-keyframes bounce
+{
+0%
+{
+-ms-transform: translateX(0);
+-ms-transform: translateY(0);
+-ms-transform: scale(1);
+-ms-transform: rotate(0);
+}
+20%
+{
+-ms-transform: translateY(50px);
+}
+40%
+{
+-ms-transform: translateY(-100px);
+}
+50%
+{
+-ms-transform: translateY(0);
+-ms-transform: rotate(-5deg);
+}
+60%
+{
+-ms-transform: translateY(-50px);
+}
+80%
+{
+-ms-transform: translateY(0);
+-ms-transform: rotate(5deg);
+}
+100%
+{
+-ms-transform: translateX(0);
+-ms-transform: translateY(0);
+-ms-transform: scale(1);
+-ms-transform: rotate(0);
+}
+}
+@-o-keyframes bounce
+{
+0%
+{
+-o-transform: translateX(0);
+-o-transform: translateY(0);
+-o-transform: scale(1);
+-o-transform: rotate(0);
+}
+20%
+{
+-o-transform: translateY(50px);
+}
+40%
+{
+-o-transform: translateY(-100px);
+}
+50%
+{
+-o-transform: translateY(0);
+-o-transform: rotate(-5deg);
+}
+60%
+{
+-o-transform: translateY(-50px);
+}
+80%
+{
+-o-transform: translateY(0);
+-o-transform: rotate(5deg);
+}
+100%
+{
+-o-transform: translateX(0);
+-o-transform: translateY(0);
+-o-transform: scale(1);
+-o-transform: rotate(0);
+}
+}
+@keyframes bounce
+{
+0%
+{
+transform: translateX(0);
+transform: translateY(0);
+transform: scale(1);
+transform: rotate(0);
+}
+20%
+{
+transform: translateY(50px);
+}
+40%
+{
+transform: translateY(-100px);
+}
+50%
+{
+transform: translateY(0);
+transform: rotate(-5deg);
+}
+60%
+{
+transform: translateY(-50px);
+}
+80%
+{
+transform: translateY(0);
+transform: rotate(5deg);
+}
+100%
+{
+transform: translateX(0);
+transform: translateY(0);
+transform: scale(1);
+transform: rotate(0);
+}
+}
+
+img[aria-selected]
 {
 
--webkit-animation-duration: 1s;
--moz-animation-duration: 1s;
--ms-animation-duration: 1s;
--o-animation-duration: 1s;
-animation-duration: 1s;
+-webkit-animation-name: bounce;
+-moz-animation-name: bounce;
+-ms-animation-name: bounce;
+-o-animation-name: bounce;
+animation-name: bounce;
+
+
+-webkit-backface-visibility: hidden;
+-moz-backface-visibility: hidden;
+-ms-backface-visibility: hidden;
+-o-backface-visibility: hidden;
+backface-visibility: hidden;
 
 
 -webkit-animation-delay: 0s;
@@ -54,66 +288,54 @@ animation-duration: 1s;
 -o-animation-delay: 0s;
 animation-delay: 0s;
 
+
+-webkit-animation-duration: 2s;
+-moz-animation-duration: 2s;
+-ms-animation-duration: 2s;
+-o-animation-duration: 2s;
+animation-duration: 2s;
+
+
+-webkit-animation-fill-mode: both;
+-moz-animation-fill-mode: both;
+-ms-animation-fill-mode: both;
+-o-animation-fill-mode: both;
+animation-fill-mode: both;
+
+
+-webkit-animation-timing-function: ease-in-out;
+-moz-animation-timing-function: ease-in-out;
+-ms-animation-timing-function: ease-in-out;
+-o-animation-timing-function: ease-in-out;
+animation-timing-function: ease-in-out;
+
+
+-webkit-animation-iteration-count: 2;
+-moz-animation-iteration-count: 2;
+-ms-animation-iteration-count: 2;
+-o-animation-iteration-count: 2;
+animation-iteration-count: 2;
+
 }
-html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
+/*
+body:not(.epb3sldrzr-epubReadingSystem) .incremental.fade-active[incremental-active] &gt; img,
+body:not(.epb3sldrzr-epubReadingSystem) .incremental.fade-active &gt; *[aria-selected] ~ img,
+body.basic.epb3sldrzr-epubReadingSystem .incremental.fade-active[incremental-active] &gt; img,
+body.basic.epb3sldrzr-epubReadingSystem .incremental.fade-active &gt; *[aria-selected] ~ img
+*/
+img
 {
-width: 200px;
-height: 84px;
-}
-html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
-{
-opacity: 0.4;
-}
-.pale-red
-{
-background: rgba(255, 0, 0, 0.2);
-}
-.pale-green
-{
-background: rgba(0, 255, 0, 0.2);
-}
-.pale-blue
-{
-background: rgba(0, 0, 255, 0.2);
-}
-.pale-grey
-{
-background: rgba(0, 0, 0, 0.2);
-}
-.magenta
-{
-background: #ff00ff;
-}
-.red
-{
-background: #FF0033;
+opacity: 1 !important;
 }
         </style>
 
-        <script>
-        //<![CDATA[
-        function setupAnimations()
-{
-var html = document.documentElement;
-if (html.id == "epb3sldrzr-NavDoc")
-{
-var elem = document.getElementById("epb3sldrzr-logo");
-elem.classList.add("fadeIn");
-elem.classList.add("epb3sldrzr-animated");
-}
-}
-//setTimeout(setupAnimations, 100);
-document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
-        //]]>
-        </script>
 </head>
 <body epub:type="bodymatter">
     <div id="epb3sldrzr-body">
         <div id="epb3sldrzr-root">
 
-            <img alt="" id="epb3sldrzr-logo" src="img/custom/assets/EPUB3-Sliderizer.png"/>
 
-            <h1 id="epb3sldrzr-title">EPUB3 Sliderizer</h1>
+            <h1 id="epb3sldrzr-title">EPUB3 Media Overlays</h1>
 
             <section id="epb3sldrzr-content">
                 <div id="epb3sldrzr-anim-overflow">
@@ -121,58 +343,10 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
                     <nav epub:type="toc" id="epb3sldrzr-toc">
                         <ol>
                             <li epub:type="chapter">
-                                <a href="html/slide_01.xhtml">Intro</a>
+                                <a href="html/slide_01.xhtml">Zebra</a>
                             </li>
                             <li epub:type="chapter">
-                                <a href="html/slide_02.xhtml">Tips: <span>navigation</span></a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_03.xhtml">Tips: <span>zoom &amp; pan</span></a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_04.xhtml">Tips: <span>text size</span></a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_05.xhtml">Why EPUB3?</a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_06.xhtml">Example <span>(1/2)</span></a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_07.xhtml">Example <span>(2/2)</span></a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_08.xhtml">CSS <span>prefixes</span></a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_09.xhtml">Markdown <span>(1/2)</span></a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_10.xhtml">Markdown <span>(2/2)</span></a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_11.xhtml">Animations</a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_12.xhtml">Incrementals</a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_13.xhtml">Content scroll</a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_14.xhtml">Styling, templates</a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_15.xhtml">Picture slides</a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_16.xhtml">Parameters</a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_17.xhtml">Web browsers</a>
-                            </li>
-                            <li epub:type="chapter">
-                                <a href="html/slide_18.xhtml">E-readers</a>
+                                <a href="html/slide_02.xhtml">Elephant</a>
                             </li>
                         </ol>    
                     </nav>
@@ -185,61 +359,10 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
                              <li epub:type="pagebreak">
                                  <a href="html/slide_02.xhtml#epb3sldrzr-title">2</a>
                              </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_03.xhtml#epb3sldrzr-title">3</a>
-                             </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_04.xhtml#epb3sldrzr-title">4</a>
-                             </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_05.xhtml#epb3sldrzr-title">5</a>
-                             </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_06.xhtml#epb3sldrzr-title">6</a>
-                             </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_07.xhtml#epb3sldrzr-title">7</a>
-                             </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_08.xhtml#epb3sldrzr-title">8</a>
-                             </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_09.xhtml#epb3sldrzr-title">9</a>
-                             </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_10.xhtml#epb3sldrzr-title">10</a>
-                             </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_11.xhtml#epb3sldrzr-title">11</a>
-                             </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_12.xhtml#epb3sldrzr-title">12</a>
-                             </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_13.xhtml#epb3sldrzr-title">13</a>
-                             </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_14.xhtml#epb3sldrzr-title">14</a>
-                             </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_15.xhtml#epb3sldrzr-title">15</a>
-                             </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_16.xhtml#epb3sldrzr-title">16</a>
-                             </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_17.xhtml#epb3sldrzr-title">17</a>
-                             </li>
-                             <li epub:type="pagebreak">
-                                 <a href="html/slide_18.xhtml#epb3sldrzr-title">18</a>
-                             </li>
                          </ol>
                      </nav>
                  </div>
 
-                 <aside epub:type="footnote" id="epb3sldrzr-notes">
-                     <!--SOUP--><p>Testing...</p>
-                 </aside>
              </section>
          </div>
      </div>

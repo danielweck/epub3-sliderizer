@@ -190,8 +190,8 @@ img.full
     width:100%;
     height:100%;
     */
-    width:1290px;
-    height:1000px;
+    width:728px;
+    height:960px;
 
     z-index:0;
 }
@@ -463,7 +463,7 @@ Slide content
 #epb3sldrzr-anim-overflow
 {
     position: relative;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 #epb3sldrzr-content > *:not(img):not(.spread):not(#epb3sldrzr-anim-overflow),
