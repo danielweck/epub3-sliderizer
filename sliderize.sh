@@ -11,7 +11,10 @@ root=$(pwd)
 #DATA_file="${root}/_INPUT/book_UNZIPPED.epub/OEBPS/content.opf"
 
 DATA_file="${root}/_INPUT/doc/data.txt"
-DATA_file="${root}/_INPUT/demo1/data.txt"
+EPUB_FILENAME="EPUB3-Sliderizer"
+
+#DATA_file="${root}/_INPUT/demo1/data.txt"
+#EPUB_FILENAME="EPUB3-Sliderizer_Demo1"
 
 
 rm -r ./_OUTPUT
@@ -73,3 +76,5 @@ java -classpath "${root}/tool/epub3-sliderizer/lib/guava-15.0.jar:${root}/tool/e
 cd ${root}
 
 ./pack-epub.sh
+
+mv "${root}/_OUTPUT/content/EPUB3-Sliderizer.epub" "${root}/_OUTPUT/content/${EPUB_FILENAME}.epub"
