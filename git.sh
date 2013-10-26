@@ -2,20 +2,27 @@
 
 #git checkout gh-pages
 
-cp _OUTPUT/content/EPUB3-Sliderizer.epub .
+target="doc"
+target="demo1"
 
-cp -r _OUTPUT/content/EPUB3/* doc/
+cp _OUTPUT/content/*.epub .
 
-git status --short doc
+cp -r _OUTPUT/content/EPUB3/* ${target}
 
-git ls-files --exclude-standard --others doc | xargs git add
+git status
 
-git status --short doc
+git status --short ${target}
+
+git ls-files --exclude-standard --others ${target} | xargs git add
+
+git status --short ${target}
+
+git status
 
 root=$(pwd)
 echo "${root}"
 
-git commit -a -m "www up"
+git commit -a -m "${root} up"
 git push
 
-git checkout master
+#git checkout master
