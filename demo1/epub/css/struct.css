@@ -90,7 +90,7 @@ body:not(.reflow)
 {
 	background-color: black;
 	
-	overflow:hidden;
+	/* overflow:hidden; */
 }
 
 body.reflow
