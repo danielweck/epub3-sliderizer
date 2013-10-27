@@ -1,5 +1,15 @@
 #!/bin/sh
 
+TARGET="doc"
+if [ "$#" -eq 0 ]
+then
+    echo "No script arguments."
+else
+    echo "Script arguments: ${#}"
+    echo "Script argument #1 (TARGET): ${1}"
+    TARGET=${1}
+fi
+
 #VERBOSITY="VERBOSE_min"
 #VERBOSITY="VERBOSE_medium"
 #VERBOSITY="VERBOSE_max"
@@ -7,19 +17,26 @@ VERBOSITY="VERBOSE_min"
 
 root=$(pwd)
 
-#DATA_file="${root}/_INPUT/Romain/slides.html"
-#DATA_file="${root}/_INPUT/book_UNZIPPED.epub/OEBPS/content.opf"
+DATA_file="${root}/_INPUT/${TARGET}/data.txt"
+if [ -f ${DATA_file} ]
+then
+    echo "Data file found: ${DATA_file}"
+else
+    echo "Data file not found! ${DATA_file}"
+    exit
+fi
 
-DATA_file="${root}/_INPUT/doc/data.txt"
 EPUB_FILENAME="EPUB3-Sliderizer"
-
-#DATA_file="${root}/_INPUT/demo1/data.txt"
-#EPUB_FILENAME="EPUB3-Sliderizer_Demo1"
+if [ "${TARGET}" != "doc" ]
+then
+    EPUB_FILENAME="EPUB3-Sliderizer_${TARGET}"
+fi
+echo "EPUB file: ${EPUB_FILENAME}"
 
 
 rm -r ./_OUTPUT
 mkdir ./_OUTPUT
-cp -r ./tool/readium ./_OUTPUT/
+#cp -r ./tool/readium ./_OUTPUT/
 mkdir ./_OUTPUT/content
 cp -r ./tool/EPUB3 ./_OUTPUT/content/
 #mv ./_OUTPUT/readium/index.html ./_OUTPUT/content/
