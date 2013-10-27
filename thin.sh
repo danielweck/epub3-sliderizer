@@ -2,7 +2,7 @@
 
 # killall thin
 
-thin -c _OUTPUT/ -p 3000 -A file start &
+thin -c _OUTPUT/ -p 3000 -a localhost -A file start &
 
 open http://localhost:3000/content/EPUB3/epub/nav.xhtml
 

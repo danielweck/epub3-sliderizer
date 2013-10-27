@@ -2047,8 +2047,9 @@ Epub3Sliderizer.onOrientationChange = function()
             console.log("VIEWPORT");
 
             viewport.removeAttribute("content");
+
             viewport.setAttribute('content',
-                content +
+                'width=device-width' +
                 ',user-scalable=no' +
                 ',initial-scale=' +
                 '1' + //rounded
@@ -2056,6 +2057,16 @@ Epub3Sliderizer.onOrientationChange = function()
                 '1' + //rounded
                 ',maximum-scale=1' //2
                 );
+                 
+            // viewport.setAttribute('content',
+            //     content +
+            //     ',user-scalable=no' +
+            //     ',initial-scale=' +
+            //     '1' + //rounded
+            //     ',minimum-scale=' +
+            //     '1' + //rounded
+            //     ',maximum-scale=1' //2
+            //     );
         }
     }
 
