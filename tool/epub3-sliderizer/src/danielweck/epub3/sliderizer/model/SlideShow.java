@@ -82,6 +82,12 @@ public final class SlideShow extends Fielder {
 
 	public String FAVICON = "favicon.ico";
 
+	public String MO_NARRATOR = null;
+	public String MO_DUR = null;
+	public String MO_ACTIVE = null;
+	public String MO_PLAYBACK_ACTIVE = null;
+	public String MO_AUDIO_FILES = null;
+
 	public String FAVICON_FOLDER() {
 		return FOLDER_IMG
 				+ (this.FAVICON.equals("favicon.ico") ? "" : "/"

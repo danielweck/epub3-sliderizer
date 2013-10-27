@@ -69,6 +69,9 @@ public final class Slide extends Fielder {
 
 	public String FILES_IMG = null;
 
+	public String MO_DUR = null;
+	public String MO_SMIL = null;
+
 	public String FILES_CSS = null;
 
 	private ArrayList<String> _xCSSs = null;
@@ -160,10 +163,6 @@ public final class Slide extends Fielder {
 		return XHTML.massage(NOTES, slideShow, this, slideShow.pathEpubFolder,
 				-1);
 	}
-
-	// String MO_AUDIO = null;
-	// String MO_DURATION = null;
-	// String MO_SMIL = null;
 
 	public void toString(Appendable appendable, int i) throws Exception {
 

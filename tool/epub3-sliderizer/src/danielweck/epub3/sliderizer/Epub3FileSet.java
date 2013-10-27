@@ -39,6 +39,7 @@ public final class Epub3FileSet {
 	public final static String TEMPLATE_SLIDE_NOTES = "slide_NOTES.xhtml.mustache";
 
 	public final static String FOLDER_HTML = "html";
+	public final static String FOLDER_MO = "mo";
 	public final static String FOLDER_JS = "js";
 	public final static String FOLDER_IMG = "img";
 	public final static String FOLDER_CSS = "css";
@@ -293,7 +294,7 @@ public final class Epub3FileSet {
 		return style;
 	}
 
-	private static void handleFile(SlideShow slideShow, String pathEpubFolder,
+	public static void handleFile(SlideShow slideShow, String pathEpubFolder,
 			String destFolder, String path, int verbosity) throws Exception {
 		if (path == null) {
 			return;
@@ -337,7 +338,7 @@ public final class Epub3FileSet {
 		return array;
 	}
 
-	private static void handleFiles(SlideShow slideShow, String pathEpubFolder,
+	public static void handleFiles(SlideShow slideShow, String pathEpubFolder,
 			String destFolder, String paths, int verbosity) throws Exception {
 		if (paths == null) {
 			return;

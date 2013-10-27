@@ -1,6 +1,5 @@
 package danielweck.epub3.sliderizer;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.xml.XMLConstants;
@@ -62,6 +61,37 @@ public final class OPF {
 		elementMeta_.setAttribute("property", "dcterms:contributor");
 		elementMeta_.appendChild(document
 				.createTextNode(Epub3FileSet.GENERATOR));
+
+		if (slideShow.MO_DUR != null) {
+			Element elementMeta = document.createElement("meta");
+			elementMetadata.appendChild(elementMeta);
+			elementMeta.setAttribute("property", "media:duration");
+			elementMeta.appendChild(document.createTextNode(slideShow.MO_DUR));
+		}
+
+		if (slideShow.MO_ACTIVE != null) {
+			Element elementMeta = document.createElement("meta");
+			elementMetadata.appendChild(elementMeta);
+			elementMeta.setAttribute("property", "media:active-class");
+			elementMeta.appendChild(document
+					.createTextNode(slideShow.MO_ACTIVE));
+		}
+
+		if (slideShow.MO_PLAYBACK_ACTIVE != null) {
+			Element elementMeta = document.createElement("meta");
+			elementMetadata.appendChild(elementMeta);
+			elementMeta.setAttribute("property", "media:playback-active-class");
+			elementMeta.appendChild(document
+					.createTextNode(slideShow.MO_PLAYBACK_ACTIVE));
+		}
+
+		if (slideShow.MO_NARRATOR != null) {
+			Element elementMeta = document.createElement("meta");
+			elementMetadata.appendChild(elementMeta);
+			elementMeta.setAttribute("property", "media:narrator");
+			elementMeta.appendChild(document
+					.createTextNode(slideShow.MO_NARRATOR));
+		}
 
 		if (slideShow.DATE != null) {
 			Element elementMeta = document.createElement("meta");
@@ -270,7 +300,15 @@ public final class OPF {
 		elementItemRef.setAttribute("idref", "nav");
 		elementItemRef.setAttribute("properties", "page-spread-right");
 
-		// int totalMODuration = 0;
+		if (slideShow.MO_AUDIO_FILES != null) {
+			create_ManifestItem(slideShow.MO_AUDIO_FILES, document,
+					elementManifest, "mo-audio", true, Epub3FileSet.FOLDER_MO,
+					null);
+			Epub3FileSet
+					.handleFiles(slideShow, pathEpubFolder,
+							Epub3FileSet.FOLDER_MO, slideShow.MO_AUDIO_FILES,
+							verbosity);
+		}
 
 		boolean left = true;
 		int n = 0;
@@ -280,10 +318,34 @@ public final class OPF {
 			String nStr = n <= 9 ? "0" + n : "" + n;
 			String id = "page_" + nStr;
 
-			create_ManifestItem(XHTML.getFileName(n), document,
+			String htmlFileName = XHTML.getFileName(n);
+
+			Element elementItem = create_ManifestItem(htmlFileName, document,
 					elementManifest, id, false, Epub3FileSet.FOLDER_HTML,
 					"scripted" + (slide.containsSVG ? " svg" : "")
 							+ (slide.containsMATHML ? " math" : ""));
+
+			String smilId = id + "_mo";
+
+			if (slide.MO_SMIL != null) {
+				String smilFile = id + ".smil";
+
+				elementItem.setAttribute("media-overlay", smilId);
+
+				create_ManifestItem(smilFile, document, elementManifest,
+						smilId, false, Epub3FileSet.FOLDER_MO, null);
+
+				createSMIL(htmlFileName, pathEpubFolder, smilFile, slideShow,
+						slide, verbosity);
+			}
+
+			if (slide.MO_DUR != null) {
+				Element elementMeta7 = document.createElement("meta");
+				elementMetadata.appendChild(elementMeta7);
+				elementMeta7.setAttribute("property", "media:duration");
+				elementMeta7.setAttribute("refines", "#" + smilId);
+				elementMeta7.appendChild(document.createTextNode(slide.MO_DUR));
+			}
 
 			if (slide.NOTES != null) {
 				create_ManifestItem(XHTML.getFileName_Notes(n), document,
@@ -302,40 +364,6 @@ public final class OPF {
 			create_ManifestItem(slide.FILES_IMG, document, elementManifest,
 					"img", true, Epub3FileSet.FOLDER_IMG + "/"
 							+ Epub3FileSet.FOLDER_CUSTOM, null);
-
-			//
-			// if (slide.MO_SYNC != null) {
-			// elementItem.setAttribute("media-overlay", "smil_" + nStr);
-			//
-			// elementItem = document.createElement("item");
-			// elementManifest.appendChild(elementItem);
-			// elementItem.setAttribute("id", "smil_" + nStr);
-			// String smilFile = "s" + nStr + ".smil";
-			// createSMIL(pathEpubFolder, smilFile, n, slide);
-			// elementItem.setAttribute("href", "mo/" + smilFile);
-			// elementItem.setAttribute("media-type", "application/smil+xml");
-			// }
-			//
-			// if (slide.MO_AUDIO != null) {
-			// elementItem = document.createElement("item");
-			// elementManifest.appendChild(elementItem);
-			// elementItem.setAttribute("id", "audio_" + nStr);
-			// // TODO: copy audio file
-			// String audioFile = "a" + nStr + "(" + slide.MO_AUDIO + ").mp3";
-			// elementItem.setAttribute("href", "mo/" + audioFile);
-			// elementItem.setAttribute("media-type", "audio/mpeg");
-			// }
-			//
-			// if (slide.MO_DURATION != null) {
-			// Element elementMeta1 = document.createElement("meta");
-			// elementMetadata.appendChild(elementMeta1);
-			// elementMeta1.setAttribute("property", "media:duration");
-			// elementMeta1.setAttribute("refines", "#smil_" + nStr);
-			// elementMeta1.appendChild(document
-			// .createTextNode(slide.MO_DURATION));
-			//
-			// totalMODuration += 1000; // TODO
-			// }
 
 			elementItemRef = document.createElement("itemref");
 			elementSpine.appendChild(elementItemRef);
@@ -356,63 +384,111 @@ public final class OPF {
 			left = !left;
 		}
 
-		// if (totalMODuration > 0) {
-		// Element elementMeta6 = document.createElement("meta");
-		// elementMetadata.appendChild(elementMeta6);
-		// elementMeta6.setAttribute("property", "media:duration");
-		// elementMeta6.appendChild(document.createTextNode("0:0:0.000")); //
-		// TODO:
-		// // format
-		// // totalMODuration
-		// // (milliseconds)
-		// }
-
 		XmlDocument.save(document, pathEpubFolder + '/' + getFileName(),
 				verbosity);
 	}
 
-	//
-	// private void createSMIL(String pathEpubFolder, String fileName, int n,
-	// Slide slide) throws Exception {
-	//
-	// // String nStr = String.format("0\1", n);
-	// String nStr = n <= 9 ? "0" + n : "" + n;
-	//
-	// Document document = XmlDocument.create();
-	//
-	// Element elementSmil = document.createElementNS(
-	// "http://www.w3.org/ns/SMIL", "smil");
-	// document.appendChild(elementSmil);
-	//
-	// elementSmil.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
-	// XMLConstants.XMLNS_ATTRIBUTE + ":epub",
-	// "http://www.idpf.org/2007/ops");
-	//
-	// elementSmil.setAttribute("version", "3.0");
-	//
-	// Element elementBody = document.createElement("body");
-	// elementSmil.appendChild(elementBody);
-	//
-	// Element elementSeq = document.createElement("seq");
-	// elementBody.appendChild(elementSeq);
-	// elementSeq.setAttributeNS("http://www.idpf.org/2007/ops",
-	// "epub:textref", "../"+Epub3FileSet.HTML_FOLDER_NAME+"/p" + nStr +
-	// ".xhtml#body");
-	//
-	// // TODO: par + text/audio
-	//
-	// XmlDocument.save(document, pathEpubFolder + "/mo/" + fileName,
-	// verbosity);
-	// }
+	private static void createSMIL(String htmlFileName, String pathEpubFolder,
+			String smilFile, SlideShow slideShow, Slide slide, int verbosity)
+			throws Exception {
+
+		if (slide.MO_SMIL == null) {
+			return;
+		}
+
+		Document document = XmlDocument.create();
+
+		Element elementSmil = document.createElementNS(
+				"http://www.w3.org/ns/SMIL", "smil");
+		document.appendChild(elementSmil);
+
+		elementSmil.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI,
+				XMLConstants.XMLNS_ATTRIBUTE + ":epub",
+				"http://www.idpf.org/2007/ops");
+
+		elementSmil.setAttribute("version", "3.0");
+
+		Element elementBody = document.createElement("body");
+		elementSmil.appendChild(elementBody);
+
+		// elementSeq.setAttributeNS("http://www.idpf.org/2007/ops",
+		// "epub:textref", "../" + Epub3FileSet.HTML_FOLDER_NAME + "/p"
+		// + nStr + ".xhtml#body");
+
+		final String MARK_TEXT = "TXT ";
+		final String MARK_AUDIO = "AUDIO ";
+		final String MARK_BEGIN = "BEGIN ";
+		final String MARK_END = "END ";
+
+		String currentText = null;
+		String currentAudio = null;
+		String currentBegin = "0";
+		String currentEnd = null;
+
+		// ArrayList<String> array = Epub3FileSet.splitPaths(slide.MO_SMIL);
+		String[] array = slide.MO_SMIL.split("\n");
+		for (int i = 0; i < array.length; i++) {
+			String line = array[i];
+			if (line.trim().isEmpty()) {
+				continue;
+			}
+
+			if (line.startsWith(MARK_AUDIO)) {
+				currentAudio = line.substring(MARK_AUDIO.length(),
+						line.length());
+			}
+			if (line.startsWith(MARK_TEXT)) {
+				currentText = line.substring(MARK_TEXT.length(), line.length());
+			}
+			if (line.startsWith(MARK_BEGIN)) {
+				currentBegin = line.substring(MARK_BEGIN.length(),
+						line.length());
+			}
+			if (line.startsWith(MARK_END)) {
+				currentEnd = line.substring(MARK_END.length(), line.length());
+			}
+
+			if (currentText != null && currentAudio != null
+					&& currentBegin != null && currentEnd != null) {
+				Element elementPar = document.createElement("par");
+				elementBody.appendChild(elementPar);
+
+				Element elementText = document.createElement("text");
+				elementPar.appendChild(elementText);
+
+				Element elementAudio = document.createElement("audio");
+				elementPar.appendChild(elementAudio);
+
+				elementText.setAttribute("src", "../"
+						+ Epub3FileSet.FOLDER_HTML + '/' + htmlFileName
+						+ currentText);
+
+				elementAudio.setAttribute("src", currentAudio);
+
+				elementAudio.setAttribute("clipBegin", currentBegin);
+				elementAudio.setAttribute("clipEnd", currentEnd);
+
+				currentText = null;
+				currentBegin = currentEnd;
+				currentEnd = null;
+				// currentAudio = null;
+			}
+		}
+
+		XmlDocument.save(document, pathEpubFolder + '/'
+				+ Epub3FileSet.FOLDER_MO + '/' + smilFile, verbosity);
+	}
 
 	private static ArrayList<String> alreadyAddedManifestItem = new ArrayList<String>();
 
-	private static void create_ManifestItem(String paths, Document document,
+	private static Element create_ManifestItem(String paths, Document document,
 			Element elementManifest, String id, boolean idPrefixOnly,
 			String destFolder, String properties) {
 		if (paths == null) {
-			return;
+			return null;
 		}
+
+		Element elementItem = null;
 
 		ArrayList<String> array = Epub3FileSet.splitPaths(paths);
 		for (String path : array) {
@@ -427,7 +503,7 @@ public final class OPF {
 			}
 			alreadyAddedManifestItem.add(ref);
 
-			Element elementItem = document.createElement("item");
+			elementItem = document.createElement("item");
 			elementManifest.appendChild(elementItem);
 			elementItem.setAttribute("id", id == null ? getNextID(null)
 					: (idPrefixOnly ? getNextID(id) : id));
@@ -439,6 +515,8 @@ public final class OPF {
 				elementItem.setAttribute("properties", properties);
 			}
 		}
+
+		return elementItem;
 	}
 
 	private static int nNextID = 0;
