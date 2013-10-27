@@ -1,28 +1,34 @@
 #!/bin/sh
 
-#git checkout gh-pages
 
-target="doc"
-#target="demo1"
+TARGET="doc"
+if [ "$#" -eq 0 ]
+then
+    echo "No script arguments."
+else
+    echo "Script arguments: ${#}"
+    echo "Script argument #1 (TARGET): ${1}"
+    TARGET=${1}
+fi
 
 cp _OUTPUT/content/*.epub .
 
-cp -r _OUTPUT/content/EPUB3/* ${target}
+cp -r _OUTPUT/content/EPUB3/* ${TARGET}
 
 git status
 
-git status --short ${target}
+git status --short ${TARGET}
 
-git ls-files --exclude-standard --others ${target} | xargs git add
-
-git status --short ${target}
+git ls-files --exclude-standard --others ${TARGET} | xargs git add
 
 git status
+
+git status --short ${TARGET}
 
 root=$(pwd)
 echo "${root}"
 
-git commit -a -m "${target} up"
+git commit -a -m "${TARGET} up"
 git push
 
 git checkout master
