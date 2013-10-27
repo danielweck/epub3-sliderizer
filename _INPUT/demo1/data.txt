@@ -24,7 +24,27 @@ cover.jpg
 
 // --------------------------------------------
 _FILE_EPUB
-EPUB3-Sliderizer_Demo1.epub
+EPUB3-Sliderizer_demo1.epub
+
+// --------------------------------------------
+_MO_NARRATOR
+
+Public Domain Sound Effects
+
+// --------------------------------------------
+_MO_DUR
+
+00:00:10.094
+
+// --------------------------------------------
+_MO_ACTIVE
+
+-epub-media-overlay-active
+
+// --------------------------------------------
+_MO_PLAYBACK_ACTIVE
+
+-epub-media-overlay-playing
 
 // --------------------------------------------
 _CSS_STYLE
@@ -65,6 +85,16 @@ p, div
 div[aria-selected] span
 {
     background-color: rgba(100,0,0,0.7);
+}
+
+:not(img).-epub-media-overlay-active
+{
+    background-color: rgba(100,0,0,0.7);
+}
+
+img.-epub-media-overlay-active
+{
+    background-color: transparent;
 }
 
 _PREFIXED_@keyframes bounce
@@ -111,7 +141,8 @@ _PREFIXED_@keyframes bounce
     }
 }
 
-img[aria-selected]
+img[aria-selected],
+img.-epub-media-overlay-active
 {
 	-PREFIXED_PROPERTY-animation-name: bounce;
     
@@ -157,11 +188,36 @@ Zebra
 _CONTENT
 
 <div class="incremental fade-active auto" data-incremental-delay="1000">
-    <div id="t1"><span class="text">Jiggle</span></div>
-    <div id="t2"><span class="text">Zebra!</span></div>
+    <div id="t1"><span class="text" id="txt1">Jiggle</span></div>
+    <div id="t2"><span class="text" id="txt2">Zebra!</span></div>
 
     <img id="o1" src="zebra.png" alt="animal 1"/>
 </div>
+
+// --------------------------------------------
+_MO_DUR
+
+00:00:04.610
+
+// --------------------------------------------
+_MO_AUDIO_FILES
+
+mo.mp3
+
+// --------------------------------------------
+_MO_SMIL
+
+#t1
+0
+01.048
+
+#t2
+01.048
+02.979
+
+#01
+02.979
+04.610
 
 // --------------------------------------------
 _FILES_IMG
@@ -222,11 +278,36 @@ Elephant
 _CONTENT
 
 <div class="incremental fade-active auto" data-incremental-delay="1000">
-    <div id="t1"><span class="text">Wiggle</span></div>
-    <div id="t2"><span class="text">Elephant!</span></div>
+    <div id="t1"><span class="text" id="txt1">Wiggle</span></div>
+    <div id="t2"><span class="text" id="txt2">Elephant!</span></div>
 
     <img id="o2" src="elephant.png" alt="animal 2"/>
 </div>
+
+// --------------------------------------------
+_MO_DUR
+
+00:00:05.484
+
+// --------------------------------------------
+_MO_AUDIO_FILES
+
+mo.mp3
+
+// --------------------------------------------
+_MO_SMIL
+
+#t1
+04.610
+06.750
+
+#t2
+06.750
+08.053
+
+#02
+08.053
+10.094
 
 // --------------------------------------------
 _FILES_IMG
