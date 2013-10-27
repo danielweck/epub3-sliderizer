@@ -34,7 +34,7 @@
         
         <link href="html/slide_01.xhtml" rel="next"/>
         
-        <link href="../../EPUB3-Sliderizer_Demo1.epub" rel="epub"/>
+        <link href="../../EPUB3-Sliderizer_demo1.epub" rel="epub"/>
 
         <style type="text/css">
         html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
@@ -67,6 +67,14 @@ border-radius: 1em;
 div[aria-selected] span
 {
 background-color: rgba(100,0,0,0.7);
+}
+:not(img).-epub-media-overlay-active
+{
+background-color: rgba(100,0,0,0.7);
+}
+img.-epub-media-overlay-active
+{
+background-color: transparent;
 }
 
 @-webkit-keyframes bounce
@@ -265,7 +273,8 @@ transform: rotate(0);
 }
 }
 
-img[aria-selected]
+img[aria-selected],
+img.-epub-media-overlay-active
 {
 
 -webkit-animation-name: bounce;
