@@ -39,10 +39,12 @@
         <link href="../../../EPUB3-Sliderizer_demo1.epub" rel="epub"/>
 
         <style type="text/css">
-        html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+        /*
+html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
 display: none;
 }
+*/
 html:not(#epb3sldrzr-NavDoc) h1#epb3sldrzr-title
 {
 display: none;
@@ -367,9 +369,46 @@ margin-left: 3.5em !important;
 }
 #o1
 {
-margin-top: 2.2em;
 margin-left: 8em;
-margin-bottom: 3em;
+margin-top: 2.2em;
+
+-webkit-transition-property: top, left;
+-moz-transition-property: top, left;
+-ms-transition-property: top, left;
+-o-transition-property: top, left;
+transition-property: top, left;
+
+
+-webkit-transition-duration: 1s;
+-moz-transition-duration: 1s;
+-ms-transition-duration: 1s;
+-o-transition-duration: 1s;
+transition-duration: 1s;
+
+
+-webkit-transition-timing-function: ease-in;
+-moz-transition-timing-function: ease-in;
+-ms-transition-timing-function: ease-in;
+-o-transition-timing-function: ease-in;
+transition-timing-function: ease-in;
+
+
+-webkit-transition-delay: 0s;
+-moz-transition-delay: 0s;
+-ms-transition-delay: 0s;
+-o-transition-delay: 0s;
+transition-delay: 0s;
+
+position: relative;
+left: -244px;
+top: 361px;
+}
+img#o1[aria-selected],
+img#o1.-epub-media-overlay-active
+{
+position: relative;
+left: -13px;
+top: 2px;
 }
 #epb3sldrzr-body
 {
@@ -447,21 +486,21 @@ background-color: #333333;
         <div id="epb3sldrzr-root">
 
 
-            <h1 id="epb3sldrzr-title">Zebra</h1>
-
             <section id="epb3sldrzr-content">
+
                 <div id="epb3sldrzr-anim-overflow">
-                    <!--XML--><div class="incremental fade-active auto" data-incremental-delay="1000">
+
+                    <h1 id="epb3sldrzr-title">Zebra</h1>
+                
+                    <!--XML--><div class="incremental fade-active auto" data-incremental-delay="1000" id="container">
 <div id="t1"><span class="text" id="txt1">Jiggle</span></div>
-<div id="t2"><span class="text" id="txt2">Zebra!</span></div>
-<img alt="animal 1" id="o1" src="../img/custom/zebra.png"/>
+<div class="epb3sldrzr-author" id="t2"><span class="text" id="txt2">Zebra!</span></div>
+<img alt="Zebra" class="epb3sldrzr-author" id="o1" src="../img/custom/zebra.png"/>
 </div>
 
                 </div>
 
              </section>
-
-             <!-- p><a id="epb3sldrzr-link-noteback" href="SLIDE i">Back</a></p -->
          </div>
      </div>
 </body>

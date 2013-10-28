@@ -460,14 +460,32 @@ Slide content
 
 */
 
-#epb3sldrzr-anim-overflow
+#epb3sldrzr-content
 {
-    position: relative;
+    display: block;
+    
+    position: static;
+    min-height: 100%;
+    
     overflow: hidden;
 }
 
-#epb3sldrzr-content > *:not(img):not(.spread):not(#epb3sldrzr-anim-overflow),
-#epb3sldrzr-content > #epb3sldrzr-anim-overflow > *:not(img):not(.spread)
+#epb3sldrzr-anim-overflow
+{
+    display: block;
+    
+    position: relative;
+
+	min-height:960px;
+    /*
+    min-height: 100%;
+    */
+    
+    overflow: hidden;
+}
+
+#epb3sldrzr-content > *:not(img):not(.spread):not(#epb3sldrzr-anim-overflow):not(#epb3sldrzr-title),
+#epb3sldrzr-content > #epb3sldrzr-anim-overflow > *:not(img):not(.spread):not(#epb3sldrzr-title)
 {
     padding-left: 40px;
     padding-left: 4rem;
@@ -476,8 +494,8 @@ Slide content
     padding-right: 4rem;
 }
 
-#epb3sldrzr-content > *:not(img):not(.spread):not(#epb3sldrzr-anim-overflow),
-#epb3sldrzr-content > #epb3sldrzr-anim-overflow > *:not(img):not(.spread)
+#epb3sldrzr-content > *:not(img):not(.spread):not(#epb3sldrzr-anim-overflow):not(#epb3sldrzr-title),
+#epb3sldrzr-content > #epb3sldrzr-anim-overflow > *:not(img):not(.spread):not(#epb3sldrzr-title)
 {
     margin-top: 20px;
     margin-top: 2rem;
