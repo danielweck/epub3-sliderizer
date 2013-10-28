@@ -701,33 +701,94 @@ Epub3Sliderizer.AUTHORize = function(selector)
     {
         return;
     }
-
-    alert("AUTHOR MODE");
-    
+   
     var elems = $(selector);
-    elems.addClass("ui-widget-content");
-    elems.addClass("epb3sldrzr-author");
     
-    // Mhmmm? ...
-    elems.addClass("epb3sldrzr-author-INIT");
-
-
-    if (isDefinedAndNotNull($(window).draggable))
+    elems.css('cursor', "move");
+    elems.css('border', "2px dotted blue");
+    
+    var onMouseMove = function(e)
     {
-        elems.draggable();
-    }
-
-    if (isDefinedAndNotNull($(window).resizable))
+        //$('.drag')
+        e.data.that
+        .offset(
+        {
+            top: e.pageY + e.data.pos_y - e.data.drg_h,
+            left: e.pageX + e.data.pos_x - e.data.drg_w
+        })
+    };
+    
+    elems.on("dblclick", function(e)
     {
-        elems.resizable();
-    }
+        var $that = $(this);
+        
+        // console.log($that[0].style);
+        //console.log($that[0].style.top);
+        //console.log($that[0].style["top"]);
 
-    /*
-    if (isDefinedAndNotNull($(window).selectable))
+        console.log($that.css("position"));
+        console.log($that.css("top"));
+        console.log($that.css("left"));
+        
+        var pos = $that.css("position");
+        
+        var top = $that.css("top");
+        top = (!top || top === "auto") ? "auto" : Math.floor(parseInt(top)*100.0)/100.0;
+        
+        var left = $that.css("left");
+        left = (!left || left === "auto") ? "auto" : Math.floor(parseInt(left)*100.0)/100.0;
+        
+        alert("COPY+PASTE CSS:\n\n\nposition: "+pos+";\nleft: "+left+"px;\ntop: "+top+"px;\n");
+        
+        e.preventDefault();
+    });
+    
+    elems.on("mousedown", function(e)
     {
-        elems.selectable();
-    }
-    */
+        var $that = $(this);
+        $that.addClass('drag');
+
+        var drg_h = $that.outerHeight();
+        var drg_w = $that.outerWidth();
+        var pos_y = $that.offset().top + drg_h - e.pageY;
+        var pos_x = $that.offset().left + drg_w - e.pageX;
+        
+        $that[0].style.border = "2px solid red";
+        
+        //$that.parents()
+        $($that[0].parentNode)
+        .on("mousemove", {that: $that, drg_h: drg_h, drg_w: drg_w, pos_y: pos_y, pos_x: pos_x}, onMouseMove);
+
+        e.preventDefault();
+    });
+            
+    elems.on("mouseup", function()
+    {
+        var $that = $(this);
+        $that.removeClass('drag');
+        
+        $that[0].style.border = "2px dotted blue";
+        
+        //$that.parents()
+        $($that[0].parentNode)
+        .off("mousemove", onMouseMove);
+    });
+    
+    // elems.addClass("ui-widget-content");
+//     if (isDefinedAndNotNull($(window).draggable))
+//     {
+//         elems.draggable();
+//     }
+//     if (isDefinedAndNotNull($(window).resizable))
+//     {
+//         elems.resizable();
+//     }
+//     /*
+//     if (isDefinedAndNotNull($(window).selectable))
+//     {
+//         elems.selectable();
+//     }
+//     */
 };
 
 // ----------
