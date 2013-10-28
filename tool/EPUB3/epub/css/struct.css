@@ -39,8 +39,8 @@ body:not(.reflow).basic.epb3sldrzr-epubReadingSystem
 	-PREFIXED_PROPERTY-user-select: none;
 }
 
-body:not(.epb3sldrzr-epubReadingSystem):not(.basic):not(.reflow) img,
-body:not(.reflow).basic.epb3sldrzr-epubReadingSystem img
+body:not(.epb3sldrzr-epubReadingSystem):not(.basic):not(.reflow):not(.author) img,
+body:not(.reflow).basic.epb3sldrzr-epubReadingSystem:not(.author) img
 {
 	-PREFIXED_PROPERTY-user-drag: none;
 }

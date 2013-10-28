@@ -54,10 +54,12 @@ _MO_PLAYBACK_ACTIVE
 // --------------------------------------------
 _CSS_STYLE
 
+/*
 html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
     display: none;
 }
+*/
 
 html:not(#epb3sldrzr-NavDoc) h1#epb3sldrzr-title
 {
@@ -192,11 +194,11 @@ Zebra
 // --------------------------------------------
 _CONTENT
 
-<div class="incremental fade-active auto" data-incremental-delay="1000">
+<div id="container" class="incremental fade-active auto" data-incremental-delay="1000">
     <div id="t1"><span class="text" id="txt1">Jiggle</span></div>
-    <div id="t2"><span class="text" id="txt2">Zebra!</span></div>
+    <div class="epb3sldrzr-author" id="t2"><span class="text" id="txt2">Zebra!</span></div>
 
-    <img id="o1" src="zebra.png" alt="animal 1"/>
+    <img class="epb3sldrzr-author" id="o1" src="zebra.png" alt="Zebra"/>
 </div>
 
 // --------------------------------------------
@@ -243,9 +245,25 @@ _CSS_STYLE
 
 #o1
 {
-    margin-top: 2.2em;
     margin-left: 8em;
-    margin-bottom: 3em;
+    margin-top: 2.2em;
+
+    -PREFIXED_PROPERTY-transition-property: top, left;
+    -PREFIXED_PROPERTY-transition-duration: 1s;
+    -PREFIXED_PROPERTY-transition-timing-function: ease-in;
+    -PREFIXED_PROPERTY-transition-delay: 0s;
+
+    position: relative;
+    left: -244px;
+    top: 361px;
+}
+
+img#o1[aria-selected],
+img#o1.-epub-media-overlay-active
+{
+    position: relative;
+    left: -13px;
+    top: 2px;
 }
 
 #epb3sldrzr-body
@@ -280,7 +298,7 @@ _CONTENT
     <div id="t1"><span class="text" id="txt1">Wiggle</span></div>
     <div id="t2"><span class="text" id="txt2">Elephant!</span></div>
 
-    <img id="o2" src="elephant.png" alt="animal 2"/>
+    <img class="epb3sldrzr-author" id="o2" src="elephant.png" alt="Elephant"/>
 </div>
 
 // --------------------------------------------
@@ -331,6 +349,23 @@ _CSS_STYLE
     margin-top: 2.2em;
     margin-left: 2.6em;
     margin-bottom: 3em;
+
+    -PREFIXED_PROPERTY-transition-property: top, left;
+    -PREFIXED_PROPERTY-transition-duration: 1s;
+    -PREFIXED_PROPERTY-transition-timing-function: ease-in;
+    -PREFIXED_PROPERTY-transition-delay: 0s;
+    
+    position: relative;
+    left: 206px;
+    top: 248px;
+}
+
+img#o2[aria-selected],
+img#o2.-epub-media-overlay-active
+{
+    position: relative;
+    left: -2px;
+    top: -5px;
 }
 
 #epb3sldrzr-body
