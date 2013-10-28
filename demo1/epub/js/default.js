@@ -3238,7 +3238,9 @@ Epub3Sliderizer.init = function()
         else
         {
             window.onresize = this.resetResize.bind(this);
-            this.resetResize();
+            
+            //this.resetResize();
+            this.onOrientationChange();
         }
 
         var reflow = getCookie(Epub3Sliderizer.cookieReflow);
