@@ -243,15 +243,18 @@ _CSS_STYLE
     margin-left: 3.5em !important;
 }
 
-#o1
+body:not(.author) #o1
 {
-    margin-left: 8em;
-    margin-top: 2.2em;
-
     -PREFIXED_PROPERTY-transition-property: top, left;
     -PREFIXED_PROPERTY-transition-duration: 1s;
     -PREFIXED_PROPERTY-transition-timing-function: ease-in;
     -PREFIXED_PROPERTY-transition-delay: 0s;
+}
+
+#o1
+{
+    margin-left: 8em;
+    margin-top: 2.2em;
 
     position: relative;
     left: -244px;
@@ -344,16 +347,19 @@ _CSS_STYLE
     margin-left: 3em !important;
 }
 
+body:not(.author) #o2
+{
+    -PREFIXED_PROPERTY-transition-property: top, left;
+    -PREFIXED_PROPERTY-transition-duration: 1s;
+    -PREFIXED_PROPERTY-transition-timing-function: ease-in;
+    -PREFIXED_PROPERTY-transition-delay: 0s;
+}
+
 #o2
 {
     margin-top: 2.2em;
     margin-left: 2.6em;
     margin-bottom: 3em;
-
-    -PREFIXED_PROPERTY-transition-property: top, left;
-    -PREFIXED_PROPERTY-transition-duration: 1s;
-    -PREFIXED_PROPERTY-transition-timing-function: ease-in;
-    -PREFIXED_PROPERTY-transition-delay: 0s;
     
     position: relative;
     left: 206px;
