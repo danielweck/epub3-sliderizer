@@ -109,6 +109,24 @@ public final class SlideShow extends Fielder {
 
 	public String FILE_EPUB = null;
 
+	public String INCREMENTALS = "NO";
+
+	public boolean incrementalsManual() {
+		if (INCREMENTALS == null) {
+			return false;
+		}
+		return INCREMENTALS.equalsIgnoreCase("TRUE")
+				|| INCREMENTALS.equalsIgnoreCase("YES")
+				|| INCREMENTALS.equalsIgnoreCase("1");
+	}
+
+	public boolean incrementalsAuto() {
+		if (INCREMENTALS == null) {
+			return false;
+		}
+		return INCREMENTALS.equalsIgnoreCase("AUTO");
+	}
+
 	public String CSS_STYLE = null;
 
 	public String CSS_STYLING() throws Exception {
@@ -136,7 +154,8 @@ public final class SlideShow extends Fielder {
 	public String FILES_IMG = null;
 
 	public String BACKGROUND_IMG = null;
-	public String BACKGROUND_IMG_SIZE = "contain"; // auto, contain, cover, 100% 100%
+	public String BACKGROUND_IMG_SIZE = "contain"; // auto, contain, cover, 100%
+													// 100%
 
 	public String FILES_CSS = null;
 

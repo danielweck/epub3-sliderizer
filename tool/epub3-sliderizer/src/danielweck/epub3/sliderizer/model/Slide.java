@@ -75,10 +75,38 @@ public final class Slide extends Fielder {
 				|| CONTENT_MIDDLE.equalsIgnoreCase("1");
 	}
 
+	public String INCREMENTALS = null;
+
+	public boolean incrementalsNO() {
+		if (INCREMENTALS == null) {
+			return false;
+		}
+		return INCREMENTALS.equalsIgnoreCase("FALSE")
+				|| INCREMENTALS.equalsIgnoreCase("NO")
+				|| INCREMENTALS.equalsIgnoreCase("0");
+	}
+
+	public boolean incrementalsManual() {
+		if (INCREMENTALS == null) {
+			return false;
+		}
+		return INCREMENTALS.equalsIgnoreCase("TRUE")
+				|| INCREMENTALS.equalsIgnoreCase("YES")
+				|| INCREMENTALS.equalsIgnoreCase("1");
+	}
+
+	public boolean incrementalsAuto() {
+		if (INCREMENTALS == null) {
+			return false;
+		}
+		return INCREMENTALS.equalsIgnoreCase("AUTO");
+	}
+
 	public String FILES_IMG = null;
 
 	public String BACKGROUND_IMG = null;
-	public String BACKGROUND_IMG_SIZE = "contain"; // auto, contain, cover, 100% 100%
+	public String BACKGROUND_IMG_SIZE = "contain"; // auto, contain, cover, 100%
+													// 100%
 
 	public String MO_DUR = null;
 	public String MO_SMIL = null;

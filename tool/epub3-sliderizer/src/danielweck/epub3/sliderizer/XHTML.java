@@ -544,7 +544,57 @@ public final class XHTML {
 	// return divAnimOverflow;
 	// }
 
-	private static void fixRelativeReferences(Element element,
+	private static void injectIncrementals(String increments, Element element,
+			Document document, String content, SlideShow slideShow,
+			Slide slide, String pathEpubFolder, int verbosity) throws Exception {
+		if (slide == null) {
+			return;
+		}
+
+		String name = element.getLocalName();
+		if (name == null) {
+			name = element.getNodeName();
+		}
+
+		if (name.equals("ul") || name.equals("ol")) {
+			Node attrClass = null;
+			NamedNodeMap attrs = element.getAttributes();
+			for (int i = 0; i < attrs.getLength(); i++) {
+
+				Node attr = attrs.item(i);
+
+				String attrName = attr.getLocalName();
+				if (attrName == null) {
+					attrName = attr.getNodeName();
+				}
+
+				if (attrName != null && attrName.equals("class")) {
+					attrClass = attr;
+					break;
+				}
+			}
+			if (attrClass == null) {
+				element.setAttribute("class", increments);
+			} else {
+				String attrVal = attrClass.getNodeValue();
+				attrClass.setNodeValue(attrVal + " " + increments);
+			}
+		}
+
+		NodeList list = element.getChildNodes();
+		for (int j = 0; j < list.getLength(); j++) {
+			Node node = list.item(j);
+
+			if (node.getNodeType() != Node.ELEMENT_NODE) {
+				continue;
+			}
+
+			injectIncrementals(increments, (Element) node, document, content,
+					slideShow, slide, pathEpubFolder, verbosity);
+		}
+	}
+
+	private static void fixImageRelativeReferences(Element element,
 			Document document, String content, SlideShow slideShow,
 			Slide slide, String pathEpubFolder, int verbosity) throws Exception {
 		if (slide == null) {
@@ -642,13 +692,14 @@ public final class XHTML {
 				continue;
 			}
 
-			fixRelativeReferences((Element) node, document, content, slideShow,
-					slide, pathEpubFolder, verbosity);
+			fixImageRelativeReferences((Element) node, document, content,
+					slideShow, slide, pathEpubFolder, verbosity);
 		}
 	}
 
 	final static PegDownProcessor m_PegDownProcessor = new PegDownProcessor();
 	public final static String MARKDOWN = "MARKDOWN";
+	public final static String NOMARKDOWN = "NO-MARKDOWN";
 	public final static String MARKDOWN_SRC = "MARKDOWN_SRC";
 
 	public static String massage(String content, SlideShow slideShow,
@@ -697,6 +748,8 @@ public final class XHTML {
 			return;
 		}
 
+		boolean skipMarkdown = false;
+
 		if (content.indexOf(MARKDOWN_SRC) == 0) {
 			content = "<pre>"
 					+ content.substring(MARKDOWN_SRC.length())
@@ -704,7 +757,12 @@ public final class XHTML {
 							.replace(">", "&gt;") + "</pre>";
 		} else if (content.indexOf(MARKDOWN) == 0) {
 			content = content.substring(MARKDOWN.length());
+		} else if (content.indexOf(NOMARKDOWN) == 0) {
+			content = content.substring(NOMARKDOWN.length());
+			skipMarkdown = true;
+		}
 
+		if (!skipMarkdown) {
 			try {
 				content = m_PegDownProcessor.markdownToHtml(content);
 			} catch (Exception ex) {
@@ -792,8 +850,25 @@ public final class XHTML {
 							+ node.getNodeType());
 				}
 			}
-			fixRelativeReferences(elementSection, document, content, slideShow,
-					slide, pathEpubFolder, verbosity);
+			fixImageRelativeReferences(elementSection, document, content,
+					slideShow, slide, pathEpubFolder, verbosity);
+
+			String increments = "";
+			if (slide.incrementalsAuto()) {
+				increments = "auto incremental";
+			} else if (slide.incrementalsManual()) {
+				increments = "incremental";
+			} else if (slide.incrementalsNO()) {
+				increments = "";
+			} else if (slideShow.incrementalsAuto()) {
+				increments = "auto incremental";
+			} else if (slideShow.incrementalsManual()) {
+				increments = "incremental";
+			}
+			if (increments.length() > 0) {
+				injectIncrementals(increments, elementSection, document,
+						content, slideShow, slide, pathEpubFolder, verbosity);
+			}
 		} else {
 			elementSection.appendChild(document
 					.createComment("XML / SOUP FAIL"));
