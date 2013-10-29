@@ -199,6 +199,8 @@ Zebra
 // --------------------------------------------
 _CONTENT
 
+NO-MARKDOWN
+
 <div id="container" class="incremental fade-active auto" data-incremental-delay="1000">
     <div id="t1" class="epb3sldrzr-author"><span class="text" id="txt1">Jiggle</span></div>
     <div id="t2" class="epb3sldrzr-author"><span class="text" id="txt2">Zebra!</span></div>
@@ -226,14 +228,14 @@ TXT #o1
 END 04.610
 
 // --------------------------------------------
-_FILES_IMG
-
-zebra.png
-
-// --------------------------------------------
 _BACKGROUND_IMG
 
 left.jpg
+
+// --------------------------------------------
+_BACKGROUND_IMG_SIZE
+
+cover
 
 // --------------------------------------------
 _CSS_STYLE
@@ -290,6 +292,8 @@ Elephant
 // --------------------------------------------
 _CONTENT
 
+NO-MARKDOWN
+
 <div class="incremental fade-active auto" data-incremental-delay="1000">
     <div id="t1" class="epb3sldrzr-author"><span class="text" id="txt1">Wiggle</span></div>
     <div id="t2" class="epb3sldrzr-author"><span class="text" id="txt2">Elephant!</span></div>
@@ -318,14 +322,14 @@ TXT #o2
 END 10.094
 
 // --------------------------------------------
-_FILES_IMG
-
-elephant.png
-
-// --------------------------------------------
 _BACKGROUND_IMG
 
 right.jpg
+
+// --------------------------------------------
+_BACKGROUND_IMG_SIZE
+
+cover
 
 // --------------------------------------------
 _CSS_STYLE
