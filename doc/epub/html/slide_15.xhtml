@@ -5,7 +5,7 @@
         <meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/>
         <meta content="EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook" name="keywords"/>
         
-        <title>(15/18) EPUB3 Sliderizer / Picture slides</title>
+        <title>(15/19) EPUB3 Sliderizer / Picture slides</title>
         
         <link href="../img/favicon.ico" rel="shortcut icon"/>
         
@@ -99,17 +99,22 @@ opacity: 1;
 }
 #fatty
 {
+/*
 margin-top: 3em !important;
+*/
 /* margin: auto !important; */
+padding-left: 2em;
+padding-right: 2em;
 font-family: Neuton, serif;
 text-align: center;
-font-size: 1.7em;
+font-size: 2.3em;
 color: rgba(0,0,0,0.7);
 color: #333333;
 text-shadow: 0 0 0.08em rgba(255, 255, 255, 0.9);
 }
 h1#epb3sldrzr-title
 {
+display: none;
 color:white;
 text-shadow: 0.06em 0.06em 0.11em rgba(0, 0, 0, 0.5);
 background-color: transparent;
@@ -147,12 +152,6 @@ background-clip:border-box;
 background-origin:padding-box;
 
     
--webkit-background-size:auto;
--moz-background-size:auto;
--ms-background-size:auto;
--o-background-size:auto;
-background-size:auto;
-
     
 -webkit-background-position:center;
 -moz-background-position:center;
@@ -168,6 +167,7 @@ background-position:center;
 background-attachment:scroll;
 
     
+    
 -webkit-background-image:url(../img/custom/assets/wall.jpg);
 -moz-background-image:url(../img/custom/assets/wall.jpg);
 -ms-background-image:url(../img/custom/assets/wall.jpg);
@@ -176,18 +176,11 @@ background-image:url(../img/custom/assets/wall.jpg);
 
     
     
--webkit-background-size: 100%;
--moz-background-size: 100%;
--ms-background-size: 100%;
--o-background-size: 100%;
-background-size: 100%;
-
-    
--webkit-background-size: cover;
--moz-background-size: cover;
--ms-background-size: cover;
--o-background-size: cover;
-background-size: cover;
+-webkit-background-size:cover;
+-moz-background-size:cover;
+-ms-background-size:cover;
+-o-background-size:cover;
+background-size:cover;
 
     
     background-color: #333333;
@@ -222,17 +215,17 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 
             <section id="epb3sldrzr-content">
 
-                <div id="epb3sldrzr-anim-overflow">
+                <div class="vertical-align-middle" id="epb3sldrzr-anim-overflow">
 
                     <h1 id="epb3sldrzr-title">Picture slides</h1>
-                
-                    <!--SOUP--><!-- img class="full" src="assets/wall.jpg" alt="EPUB3" -->
-<p class="epb3sldrzr-animated fadeIn" id="fatty">
-This slide's background
-<br/>
-is a <strong>full-spread image</strong>.
-<br/>
-The slide content overlays it.</p>
+
+<div class="vertical-middle">
+                    <!--SOUP-->
+<div class="epb3sldrzr-animated fadeIn" id="fatty">
+<p>This slide's background
+</p><p>is a <strong>full-spread image</strong>.
+</p><p>This is a vertically-centered text overlay.</p></div>
+</div>
 
                 </div>
 

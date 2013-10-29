@@ -5,7 +5,7 @@
         <meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/>
         <meta content="EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook" name="keywords"/>
         
-        <title>(9/18) EPUB3 Sliderizer / Markdown - (1/2)</title>
+        <title>(9/19) EPUB3 Sliderizer / Markdown - (1/2)</title>
         
         <link href="../img/favicon.ico" rel="shortcut icon"/>
         
@@ -124,8 +124,9 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
                 <div id="epb3sldrzr-anim-overflow">
 
                     <h1 id="epb3sldrzr-title">Markdown <span id="epb3sldrzr-subtitle">(1/2)</span></h1>
-                
-                    <!--SOUP--><p>Not keen on editing XHTML markup by hand? Use "<span class="pale-green">MARKDOWN</span>" as the first line of a slide's '<span class="pale-blue">_CONTENT</span>' field, and type away:</p><p>(see <a href="http://daringfireball.net/projects/markdown/syntax" title="Markdown syntax page">http://daringfireball.net/projects/markdown/syntax</a>)</p>
+
+
+                    <!--SOUP--><p>By default, slide '<span class="pale-blue">_CONTENT</span>' fields are parsed as Markdown (interspersed with "real" HTML, as allowed by the Markdown syntax). To force HTML/XHTML parsing, use "<span class="pale-green">NO-MARKDOWN</span>" as the first line of a slide's '<span class="pale-blue">_CONTENT</span>' field (this sometimes helps, as Markdown tends to eagerly replace line breaks with paragraphs).</p><p>(see <a href="http://daringfireball.net/projects/markdown/syntax" title="Markdown syntax page">http://daringfireball.net/projects/markdown/syntax</a>)</p>
 <hr/><h1>Markdown: Syntax</h1>
 <ul>
   <li><a href="#overview">Overview</a>
@@ -533,6 +534,7 @@ _   underscore
 .   dot
 !   exclamation mark
 </code></pre>
+
 
                 </div>
 

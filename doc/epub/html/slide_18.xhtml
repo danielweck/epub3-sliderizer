@@ -5,7 +5,7 @@
         <meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/>
         <meta content="EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook" name="keywords"/>
         
-        <title>(18/18) EPUB3 Sliderizer / E-readers</title>
+        <title>(18/19) EPUB3 Sliderizer / Web browsers</title>
         
         <link href="../img/favicon.ico" rel="shortcut icon"/>
         
@@ -35,7 +35,7 @@
         
         <link href="slide_17.xhtml" rel="prev"/>
         
-        <link href="" rel="next"/>
+        <link href="slide_19.xhtml" rel="next"/>
         
         <link href="../../../EPUB3-Sliderizer.epub" rel="epub"/>
 
@@ -92,6 +92,56 @@ background: #FF0033;
 }
         </style>
 
+        <style type="text/css">
+        ul#bs
+{
+
+-webkit-column-count: 2;
+-moz-column-count: 2;
+-ms-column-count: 2;
+-o-column-count: 2;
+column-count: 2;
+
+
+-webkit-column-gap: 1em;
+-moz-column-gap: 1em;
+-ms-column-gap: 1em;
+-o-column-gap: 1em;
+column-gap: 1em;
+
+
+-webkit-column-fill: balanced;
+-moz-column-fill: balanced;
+-ms-column-fill: balanced;
+-o-column-fill: balanced;
+column-fill: balanced;
+
+}
+body.opera ul#bs,
+body.IE9 ul#bs
+{
+
+-webkit-column-count: auto;
+-moz-column-count: auto;
+-ms-column-count: auto;
+-o-column-count: auto;
+column-count: auto;
+
+vertical-align: top;
+}
+body.opera ul#bs &gt; li,
+body.IE9 ul#bs &gt; li
+{
+/*
+float: left;
+display: inline;
+*/
+white-space: nowrap;
+display: inline-block;
+width:45%;
+vertical-align: top;
+}
+        </style>
 
         
 
@@ -123,51 +173,83 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 
                 <div id="epb3sldrzr-anim-overflow">
 
-                    <h1 id="epb3sldrzr-title">E-readers</h1>
-                
-                    <!--SOUP--><p>
-Slideshows made with EPUB3-Sliderizer have been tested with:
+                    <h1 id="epb3sldrzr-title">Web browsers</h1>
+
+
+                    <!--SOUP-->
+<p>
+Slideshows made with EPUB3-Sliderizer seem to play fine in:
 </p><ul class="incremental auto" id="bs" style="list-style-type:none;  clear: both;">
 <li>
-<strong>iOS</strong> <span class="fade">(WebKit)</span>
+<strong>Mac OS X</strong>
 <ul>
 <li>
-iBooks, Kobo
+Safari, Chrome <span class="fade">(WebKit)</span>
+</li>
+<li>
+Firefox <span class="fade">(Gecko)</span>
+</li>
+<li>
+Opera <span class="fade">(Presto)</span>
 </li>
 </ul>
 </li>
 <li>
-<strong>Mac OS X, Windows</strong>
+<strong>Windows</strong>
 <ul>
 <li>
-Readium.js <span class="fade">(cross-browser)</span>
+Chrome <span class="fade">(WebKit)</span>
 </li>
 <li>
-Readium (Chrome extension) <span class="fade">(WebKit)</span>
+Firefox <span class="fade">(Gecko)</span>
 </li>
 <li>
-Readium-SDK <span class="fade">(WebKit + Gecko/Trident?)</span>
+Opera <span class="fade">(Presto)</span>
 </li>
 <li>
-iBooks <span class="fade">(WebKit)</span> (OSX 10.9+ aka "Mavericks")
+IE 9+ <span class="fade">(Trident)</span>
+</li>
+</ul>
 </li>
 <li>
-Azardi <span class="fade">(Gecko)</span>
+<strong>iOS</strong> <span class="fade">(WebKit)</span>
+<ul>
+<li>
+Safari
+</li>
+</ul>
 </li>
 <li>
-Calibre <span class="fade">(Webkit)</span>
+<strong>Android</strong>
+<ul>
+<li>
+Chrome, Doplhin <span class="fade">(WebKit)</span>
+</li>
+<li>
+Firefox <span class="fade">(Gecko)</span>
+</li>
+<li>
+Opera <span class="fade">(Presto, WebKit)</span>
+</li>
+</ul>
+</li>
+<li>
+<strong>Linux</strong>
+<ul>
+<li>
+Firefox <span class="fade">(Gecko)</span>
 </li>
 </ul>
 </li>
 </ul>
 <div class="incremental auto">
-<p>
-Not working:
+<p style="clear: both;">
+<em>Note:</em>
 <br/>
-Google Play Books <span class="fade">(no Javascript, destroys original HTML + CSS)</span>,
-BlueFire <span class="fade">(breaks layout)</span> (many others untested ...)
+on Android ⇒ inconsistent viewport scaling, broken fonts
 </p>
 </div>
+
 
                 </div>
 
