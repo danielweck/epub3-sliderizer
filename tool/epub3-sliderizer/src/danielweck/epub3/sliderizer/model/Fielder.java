@@ -195,15 +195,17 @@ public abstract class Fielder {
 					break;
 				} else if (found != null) {
 					currentFieldName = found;
+					if (currentFieldName.equals(Slide.FIELD_CONTENT)) {
+						preserveWhitespace = true;
+					}
 				} else if (special) {
 					break;
 				}
 			} else {
 				if (currentFieldName != null
 						&& currentFieldName.equals(Slide.FIELD_CONTENT)
-						&& (line.equals(XHTML.MARKDOWN) || line
-								.equals(XHTML.MARKDOWN_SRC))) {
-					preserveWhitespace = true;
+						&& line.equals(XHTML.NOMARKDOWN)) {
+					preserveWhitespace = false;
 				}
 
 				if (lines.length() > 0) {

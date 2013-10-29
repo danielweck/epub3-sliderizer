@@ -121,6 +121,8 @@ Intro
 // --------------------------------------------
 _CONTENT
 
+NO-MARKDOWN
+
 <a
     id="FMOGH"
     href="https://github.com/danielweck/epub3-sliderizer/"
@@ -316,6 +318,8 @@ navigation
 // --------------------------------------------
 _CONTENT
 
+NO-MARKDOWN
+
 <div class="incremental auto">
 
 <div class="boxed" style="margin-bottom: 0.6em;">
@@ -474,6 +478,8 @@ zoom & pan
 // --------------------------------------------
 _CONTENT
 
+NO-MARKDOWN
+
 <div class="incremental auto">
 
 <div class="boxed"  style="margin-bottom: 1em;">
@@ -622,6 +628,7 @@ text size
 // --------------------------------------------
 _CONTENT
 
+NO-MARKDOWN
 
 <div class="incremental auto">
 
@@ -702,6 +709,7 @@ Why EPUB3?
 // --------------------------------------------
 _CONTENT
 
+NO-MARKDOWN
 
 <div class="incremental auto" style="margin-top: 1.5em;">
 
@@ -795,6 +803,8 @@ _SUBTITLE
 // --------------------------------------------
 _CONTENT
 
+NO-MARKDOWN
+
 <div class="boxed framed">
 
 <h3>slideshow-data.txt</h3>
@@ -863,6 +873,8 @@ _SUBTITLE
 
 // --------------------------------------------
 _CONTENT
+
+NO-MARKDOWN
 
 <div class="boxed framed">
 
@@ -946,6 +958,7 @@ prefixes
 // --------------------------------------------
 _CONTENT
 
+NO-MARKDOWN
 
 <div class="incremental auto">
 
@@ -1015,11 +1028,8 @@ _SUBTITLE
 
 // --------------------------------------------
 _CONTENT
-
-MARKDOWN
-
-Not keen on editing XHTML markup by hand? Use "<span class="pale-green">MARKDOWN</span>" as the first line
-of a slide's '<span class="pale-blue">_CONTENT</span>' field, and type away:
+By default, slide '<span class="pale-blue">_CONTENT</span>' fields are parsed as Markdown (interspersed with "real" HTML, as allowed by the Markdown syntax). To force HTML/XHTML parsing, use "<span class="pale-green">NO-MARKDOWN</span>" as the first line
+of a slide's '<span class="pale-blue">_CONTENT</span>' field (this sometimes helps, as Markdown tends to eagerly replace line breaks with paragraphs).
 
 (see <a href="http://daringfireball.net/projects/markdown/syntax" title="Markdown syntax page">http://daringfireball.net/projects/markdown/syntax</a>)
 
@@ -2825,6 +2835,8 @@ Animations
 // --------------------------------------------
 _CONTENT
 
+NO-MARKDOWN
+
 <div class="auto incremental">
 
 <p style="margin-bottom: 1em;">
@@ -2890,6 +2902,7 @@ Incrementals
 // --------------------------------------------
 _CONTENT
 
+NO-MARKDOWN
 
 <div class="boxed" style="margin-bottom: 1em;">
 
@@ -2965,6 +2978,8 @@ Content scroll
 // --------------------------------------------
 _CONTENT
 
+NO-MARKDOWN
+
 <div  class="incrementalx">
 <p>Press <span class="code">[space]</span> or <span class="code">[arrow-down]</span>, or swipe down.
 <br>
@@ -3017,6 +3032,8 @@ Styling, templates
 
 // --------------------------------------------
 _CONTENT
+
+NO-MARKDOWN
 
 <ul id="yo" class="incremental auto">
 <li>The default CSS rules can be overridden on a <strong>per-slide</strong> basis,
@@ -3126,6 +3143,8 @@ Picture slides
 // --------------------------------------------
 _CONTENT
 
+NO-MARKDOWN
+
 <!-- img class="full" src="assets/wall.jpg" alt="EPUB3" -->
 
 <p id="fatty" class="epb3sldrzr-animated fadeIn">
@@ -3191,6 +3210,8 @@ Parameters
 
 // --------------------------------------------
 _CONTENT
+
+NO-MARKDOWN
 
 <div class="incremental auto">
 
@@ -3258,6 +3279,8 @@ Web browsers
 
 // --------------------------------------------
 _CONTENT
+
+NO-MARKDOWN
 
 <p>
 Slideshows made with EPUB3-Sliderizer seem to play fine in:
@@ -3381,6 +3404,8 @@ E-readers
 
 // --------------------------------------------
 _CONTENT
+
+NO-MARKDOWN
 
 <p>
 Slideshows made with EPUB3-Sliderizer have been tested with:

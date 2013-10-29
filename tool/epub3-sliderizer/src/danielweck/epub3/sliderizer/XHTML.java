@@ -673,11 +673,12 @@ public final class XHTML {
 
 						slideShow.addReferences_IMG(attrVal);
 						allReferences_IMG = slideShow.getAllReferences_IMG();
-					}
-					attrVal = "../" + Epub3FileSet.FOLDER_IMG + "/"
-							+ Epub3FileSet.FOLDER_CUSTOM + "/" + attrVal;
 
-					if (attrVal != attr.getNodeValue()) {
+						attrVal = "../" + Epub3FileSet.FOLDER_IMG + "/"
+								+ Epub3FileSet.FOLDER_CUSTOM + "/" + attrVal;
+					}
+
+					if (!attrVal.equals(attr.getNodeValue())) {
 						attr.setNodeValue(attrVal);
 					}
 				}
@@ -755,6 +756,7 @@ public final class XHTML {
 					+ content.substring(MARKDOWN_SRC.length())
 							.replace("&", "&amp;").replace("<", "&lt;")
 							.replace(">", "&gt;") + "</pre>";
+			skipMarkdown = true;
 		} else if (content.indexOf(MARKDOWN) == 0) {
 			content = content.substring(MARKDOWN.length());
 		} else if (content.indexOf(NOMARKDOWN) == 0) {
@@ -853,21 +855,24 @@ public final class XHTML {
 			fixImageRelativeReferences(elementSection, document, content,
 					slideShow, slide, pathEpubFolder, verbosity);
 
-			String increments = "";
-			if (slide.incrementalsAuto()) {
-				increments = "auto incremental";
-			} else if (slide.incrementalsManual()) {
-				increments = "incremental";
-			} else if (slide.incrementalsNO()) {
-				increments = "";
-			} else if (slideShow.incrementalsAuto()) {
-				increments = "auto incremental";
-			} else if (slideShow.incrementalsManual()) {
-				increments = "incremental";
-			}
-			if (increments.length() > 0) {
-				injectIncrementals(increments, elementSection, document,
-						content, slideShow, slide, pathEpubFolder, verbosity);
+			if (slide != null) {
+				String increments = "";
+				if (slide.incrementalsAuto()) {
+					increments = "auto incremental";
+				} else if (slide.incrementalsManual()) {
+					increments = "incremental";
+				} else if (slide.incrementalsNO()) {
+					increments = "";
+				} else if (slideShow.incrementalsAuto()) {
+					increments = "auto incremental";
+				} else if (slideShow.incrementalsManual()) {
+					increments = "incremental";
+				}
+				if (increments.length() > 0) {
+					injectIncrementals(increments, elementSection, document,
+							content, slideShow, slide, pathEpubFolder,
+							verbosity);
+				}
 			}
 		} else {
 			elementSection.appendChild(document
