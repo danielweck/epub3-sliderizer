@@ -1,0 +1,40 @@
+
+{{#slideShow.BACKGROUND_IMG}}
+
+#epb3sldrzr-body
+{
+    -PREFIXED_PROPERTY-background-repeat:no-repeat;
+    -PREFIXED_PROPERTY-background-clip:border-box;
+    -PREFIXED_PROPERTY-background-origin:padding-box;
+    -PREFIXED_PROPERTY-background-size:auto;
+    -PREFIXED_PROPERTY-background-position:center;
+    -PREFIXED_PROPERTY-background-attachment:scroll;
+    -PREFIXED_PROPERTY-background-image:url(../{{{slideShow.FOLDER_IMG}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{slideShow.BACKGROUND_IMG}}});
+    
+    -PREFIXED_PROPERTY-background-size: 100%;
+    -PREFIXED_PROPERTY-background-size: cover;
+    
+    background-color: #333333;
+}
+
+{{/slideShow.BACKGROUND_IMG}}
+
+{{#BACKGROUND_IMG}}
+
+#epb3sldrzr-body
+{
+    -PREFIXED_PROPERTY-background-repeat:no-repeat;
+    -PREFIXED_PROPERTY-background-clip:border-box;
+    -PREFIXED_PROPERTY-background-origin:padding-box;
+    -PREFIXED_PROPERTY-background-size:auto;
+    -PREFIXED_PROPERTY-background-position:center;
+    -PREFIXED_PROPERTY-background-attachment:scroll;
+    -PREFIXED_PROPERTY-background-image:url(../{{{slideShow.FOLDER_IMG}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{BACKGROUND_IMG}}});
+    
+    -PREFIXED_PROPERTY-background-size: 100%;
+    -PREFIXED_PROPERTY-background-size: cover;
+    
+    background-color: #333333;
+}
+
+{{/BACKGROUND_IMG}}
