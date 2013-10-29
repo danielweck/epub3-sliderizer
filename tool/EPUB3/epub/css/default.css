@@ -384,8 +384,42 @@ Slide content
     overflow: hidden;
 }
 
-#epb3sldrzr-content > *:not(img):not(.spread):not(#epb3sldrzr-anim-overflow):not(#epb3sldrzr-title),
-#epb3sldrzr-content > #epb3sldrzr-anim-overflow > *:not(img):not(.spread):not(#epb3sldrzr-title)
+/*
+body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle:before
+{
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    
+    margin-right: -0.25em;
+}
+*/
+
+/*
+white-space: nowrap;
+font-size: 0;
+line-height: 0;
+*/
+
+body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle
+{
+    line-height:VIEWPORT_HEIGHTpx;
+    
+    /* 
+    height:VIEWPORT_HEIGHTpx;
+    height: 100%;
+    */
+}
+
+body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle > .vertical-middle
+{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#epb3sldrzr-content > *:not(img):not(.spread):not(#epb3sldrzr-anim-overflow):not(#epb3sldrzr-title):not(.vertical-middle),
+#epb3sldrzr-content > #epb3sldrzr-anim-overflow > *:not(img):not(.spread):not(#epb3sldrzr-title):not(.vertical-middle)
 {
     padding-left: FONT_SIZEpx;
     padding-left: FONT_SIZErem;
@@ -394,8 +428,8 @@ Slide content
     padding-right: FONT_SIZErem;
 }
 
-#epb3sldrzr-content > *:not(img):not(.spread):not(#epb3sldrzr-anim-overflow):not(#epb3sldrzr-title),
-#epb3sldrzr-content > #epb3sldrzr-anim-overflow > *:not(img):not(.spread):not(#epb3sldrzr-title)
+#epb3sldrzr-content > *:not(img):not(.spread):not(#epb3sldrzr-anim-overflow):not(#epb3sldrzr-title):not(.vertical-middle),
+#epb3sldrzr-content > #epb3sldrzr-anim-overflow > *:not(img):not(.spread):not(#epb3sldrzr-title):not(.vertical-middle)
 {
     margin-top: FONT_SIZE_HALFpx;
     margin-top: FONT_SIZE_HALFrem;

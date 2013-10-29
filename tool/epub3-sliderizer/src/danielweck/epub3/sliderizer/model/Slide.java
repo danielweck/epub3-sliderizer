@@ -67,6 +67,14 @@ public final class Slide extends Fielder {
 				slideShow.pathEpubFolder, -1);
 	}
 
+	public String CONTENT_MIDDLE = "FALSE";
+
+	public boolean CONTENT_MIDDLE_ALIGN() {
+		return CONTENT_MIDDLE.equalsIgnoreCase("TRUE")
+				|| CONTENT_MIDDLE.equalsIgnoreCase("YES")
+				|| CONTENT_MIDDLE.equalsIgnoreCase("1");
+	}
+
 	public String FILES_IMG = null;
 
 	public String BACKGROUND_IMG = null;

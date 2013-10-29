@@ -99,11 +99,13 @@
 
             <section id="epb3sldrzr-content">
 
-                <div id="epb3sldrzr-anim-overflow">
+                <div id="epb3sldrzr-anim-overflow" {{#CONTENT_MIDDLE_ALIGN}}class="vertical-align-middle"{{/CONTENT_MIDDLE_ALIGN}}>
 
                     <h1 id="epb3sldrzr-title">{{TITLE}}{{#SUBTITLE}} <span id="epb3sldrzr-subtitle">{{SUBTITLE}}</span>{{/SUBTITLE}}</h1>
-                
+
+{{#CONTENT_MIDDLE_ALIGN}}<div class="vertical-middle">{{/CONTENT_MIDDLE_ALIGN}}
                     {{{CONTENT_XHTML}}}
+{{#CONTENT_MIDDLE_ALIGN}}</div>{{/CONTENT_MIDDLE_ALIGN}}
 
                     {{#NOTES}}
                     <a id="epb3sldrzr-link-notesref" epub:type="noteref" href="{{{SLIDE_FILENAME_NOTES}}}">Notes</a>
