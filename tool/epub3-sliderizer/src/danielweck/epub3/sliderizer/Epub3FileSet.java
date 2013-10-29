@@ -496,6 +496,7 @@ public final class Epub3FileSet {
 		XHTML.createAll(mustacheFactory, template_Slide, template_SlideNotes,
 				template_BackImgCSS, slideShow, pathEpubFolder, verbosity);
 
+		// MUST EXECUTE AFTER XHTML!! (image references dynamically added when found in content markup)
 		OPF.create(slideShow, pathEpubFolder, verbosity);
 	}
 

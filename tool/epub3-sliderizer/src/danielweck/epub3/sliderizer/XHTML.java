@@ -589,13 +589,43 @@ public final class XHTML {
 						System.out.println("###### " + attrVal);
 					}
 
+					if (attrVal.indexOf("http://") == 0
+							|| attrVal.indexOf("https://") == 0) {
+						continue;
+					}
+
+					boolean found = false;
 					for (String path : allReferences_IMG) {
+
 						if (attrVal.indexOf(path) >= 0) {
+							found = true;
 							attrVal = attrVal.replaceAll(path, "../"
 									+ Epub3FileSet.FOLDER_IMG + "/"
 									+ Epub3FileSet.FOLDER_CUSTOM + "/" + path);
 						}
 					}
+					if (!found) {
+						if (verbosity > 0) {
+							System.out.println("###### ADDING IMAGE: "
+									+ attrVal);
+						}
+
+						Epub3FileSet.handleFile(slideShow, pathEpubFolder,
+								Epub3FileSet.FOLDER_IMG + "/"
+										+ Epub3FileSet.FOLDER_CUSTOM, attrVal,
+								verbosity);
+						if (slide.FILES_IMG == null) {
+							slide.FILES_IMG = "";
+						} else {
+							slide.FILES_IMG += "\n";
+						}
+						slide.FILES_IMG += attrVal;
+
+						slideShow.addReferences_IMG(attrVal);
+						allReferences_IMG = slideShow.getAllReferences_IMG();
+					}
+					attrVal = "../" + Epub3FileSet.FOLDER_IMG + "/"
+							+ Epub3FileSet.FOLDER_CUSTOM + "/" + attrVal;
 
 					if (attrVal != attr.getNodeValue()) {
 						attr.setNodeValue(attrVal);
@@ -933,7 +963,7 @@ public final class XHTML {
 		}
 
 		if (document == null) {
-			throw new FileNotFoundException(Epub3FileSet.FOLDER_TEMPLATES + "/"
+			throw new Exception(Epub3FileSet.FOLDER_TEMPLATES + "/"
 					+ Epub3FileSet.TEMPLATE_SLIDE);
 			//
 			// document = XmlDocument.create();

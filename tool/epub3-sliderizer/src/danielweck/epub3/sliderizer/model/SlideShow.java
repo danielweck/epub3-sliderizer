@@ -136,6 +136,7 @@ public final class SlideShow extends Fielder {
 	public String FILES_IMG = null;
 
 	public String BACKGROUND_IMG = null;
+	public String BACKGROUND_IMG_SIZE = "100%"; // auto, contain, cover, 100%
 
 	public String FILES_CSS = null;
 
@@ -214,60 +215,32 @@ public final class SlideShow extends Fielder {
 
 	private ArrayList<String> allReferences_IMG = null;
 
+	public void addReferences_IMG(String imgs) {
+		if (allReferences_IMG == null) {
+			return;
+		}
+		ArrayList<String> array = Epub3FileSet.splitPaths(imgs);
+		for (String str : array) {
+			if (!allReferences_IMG.contains(str)) {
+				allReferences_IMG.add(str);
+			}
+		}
+	}
+
 	public ArrayList<String> getAllReferences_IMG() {
 
 		if (allReferences_IMG == null) {
 			allReferences_IMG = new ArrayList<String>();
 
-			ArrayList<String> array = Epub3FileSet.splitPaths(this.LOGO);
-			for (String str : array) {
-				if (!allReferences_IMG.contains(str)) {
-					allReferences_IMG.add(str);
-				}
-			}
-
-			array = Epub3FileSet.splitPaths(this.TOUCHICON);
-			for (String str : array) {
-				if (!allReferences_IMG.contains(str)) {
-					allReferences_IMG.add(str);
-				}
-			}
-
-			array = Epub3FileSet.splitPaths(this.COVER);
-			for (String str : array) {
-				if (!allReferences_IMG.contains(str)) {
-					allReferences_IMG.add(str);
-				}
-			}
-
-			array = Epub3FileSet.splitPaths(this.FILES_IMG);
-			for (String str : array) {
-				if (!allReferences_IMG.contains(str)) {
-					allReferences_IMG.add(str);
-				}
-			}
-
-			array = Epub3FileSet.splitPaths(this.BACKGROUND_IMG);
-			for (String str : array) {
-				if (!allReferences_IMG.contains(str)) {
-					allReferences_IMG.add(str);
-				}
-			}
+			addReferences_IMG(this.LOGO);
+			addReferences_IMG(this.TOUCHICON);
+			addReferences_IMG(this.COVER);
+			addReferences_IMG(this.FILES_IMG);
+			addReferences_IMG(this.BACKGROUND_IMG);
 
 			for (Slide slide : slides) {
-				array = Epub3FileSet.splitPaths(slide.FILES_IMG);
-				for (String str : array) {
-					if (!allReferences_IMG.contains(str)) {
-						allReferences_IMG.add(str);
-					}
-				}
-
-				array = Epub3FileSet.splitPaths(slide.BACKGROUND_IMG);
-				for (String str : array) {
-					if (!allReferences_IMG.contains(str)) {
-						allReferences_IMG.add(str);
-					}
-				}
+				addReferences_IMG(slide.FILES_IMG);
+				addReferences_IMG(slide.BACKGROUND_IMG);
 			}
 		}
 
