@@ -286,6 +286,10 @@ public final class OPF {
 				"img", true, Epub3FileSet.FOLDER_IMG + "/"
 						+ Epub3FileSet.FOLDER_CUSTOM, null);
 
+		create_ManifestItem(slideShow.BACKGROUND_IMG, document, elementManifest,
+				"img", true, Epub3FileSet.FOLDER_IMG + "/"
+						+ Epub3FileSet.FOLDER_CUSTOM, null);
+
 		Element elementSpine = document.createElement("spine");
 		elementPackage.appendChild(elementSpine);
 		elementSpine.setAttribute("toc", "ncx");
@@ -362,6 +366,10 @@ public final class OPF {
 							+ Epub3FileSet.FOLDER_CUSTOM, null);
 
 			create_ManifestItem(slide.FILES_IMG, document, elementManifest,
+					"img", true, Epub3FileSet.FOLDER_IMG + "/"
+							+ Epub3FileSet.FOLDER_CUSTOM, null);
+
+			create_ManifestItem(slide.BACKGROUND_IMG, document, elementManifest,
 					"img", true, Epub3FileSet.FOLDER_IMG + "/"
 							+ Epub3FileSet.FOLDER_CUSTOM, null);
 

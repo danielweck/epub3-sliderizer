@@ -20,6 +20,7 @@ import org.w3c.dom.NodeList;
 
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
+import com.google.common.base.Function;
 
 import danielweck.VoidPrintStream;
 import danielweck.epub3.sliderizer.model.Slide;
@@ -43,7 +44,8 @@ public final class XHTML {
 	}
 
 	public static void createAll(MustacheFactory mustacheFactory,
-			File template_Slide, File template_SlideNotes, SlideShow slideShow,
+			File template_Slide, File template_SlideNotes,
+			File template_BackImgCSS, SlideShow slideShow,
 			String pathEpubFolder, int verbosity) throws Exception {
 
 		if (template_Slide != null && !template_Slide.exists()) {
@@ -52,6 +54,10 @@ public final class XHTML {
 		if (template_SlideNotes != null && !template_SlideNotes.exists()) {
 			throw new FileNotFoundException(
 					template_SlideNotes.getAbsolutePath());
+		}
+		if (template_BackImgCSS != null && !template_BackImgCSS.exists()) {
+			throw new FileNotFoundException(
+					template_BackImgCSS.getAbsolutePath());
 		}
 
 		Mustache mustacheSlide = null;
@@ -82,6 +88,20 @@ public final class XHTML {
 			}
 		}
 
+		Mustache mustacheBackImgCss = null;
+		if (template_Slide != null) {
+			try {
+				Mustache mustache = mustacheFactory
+						.compile(Epub3FileSet.TEMPLATE_BACK_IMG_CSS);
+				mustacheBackImgCss = mustache;
+			} catch (Exception ex) {
+				System.out.println(" ");
+				System.out.println("}}}}} INVALID MUSTACHE TEMPLATE!!!! "
+						+ template_BackImgCSS.getAbsolutePath());
+				ex.printStackTrace();
+			}
+		}
+
 		if (mustacheSlide != null) {
 			if (verbosity > 0) {
 				System.out.println(" ");
@@ -96,11 +116,19 @@ public final class XHTML {
 						+ template_SlideNotes.getAbsolutePath());
 			}
 		}
+		if (mustacheBackImgCss != null) {
+			if (verbosity > 0) {
+				System.out.println(" ");
+				System.out
+						.println("}}}}} MUSTACHE TEMPLATE OK [BACKGROUND IMG CSS]: "
+								+ template_BackImgCSS.getAbsolutePath());
+			}
+		}
 
 		int n = slideShow.slides.size();
 		for (int i = 0; i < n; i++) {
-			XHTML.create(mustacheSlide, mustacheSlideNotes, slideShow, i,
-					pathEpubFolder, verbosity);
+			XHTML.create(mustacheSlide, mustacheSlideNotes, mustacheBackImgCss,
+					slideShow, i, pathEpubFolder, verbosity);
 		}
 	}
 
@@ -764,9 +792,88 @@ public final class XHTML {
 	// + Epub3FileSet.FOLDER_HTML + "/" + fileName, verbosity);
 	// }
 
+	private static Mustache _mustacheBackImgCss = null;
+	private static SlideShow _slideShow = null;
+	public final static Function<String, String> backgroundImageCss = new Function<String, String>() {
+		@Override
+		public String apply(String input) {
+			if (_mustacheBackImgCss == null) {
+				return null;
+			}
+			if (_slideShow == null) {
+				return null;
+			}
+
+			int slideNumber = 0;
+			try {
+				slideNumber = Integer.parseInt(input);
+			} catch (Exception ex) {
+				System.err.println(ex.getMessage());
+				ex.printStackTrace();
+				return null;
+			}
+			slideNumber--;
+
+			if (slideNumber < 0 || slideNumber > _slideShow.slides.size() - 1) {
+				System.err.println("!! Invalid slide number #" + slideNumber);
+				return null;
+			}
+
+			Slide slide = _slideShow.slides.get(slideNumber);
+
+			if (_slideShow.BACKGROUND_IMG == null
+					&& slide.BACKGROUND_IMG == null) {
+				return null;
+			}
+
+			// TODO: yuck! Hack (should be handled in Mustache syntax...if then
+			// else).
+			String backup = null;
+			if (slide.BACKGROUND_IMG != null
+					&& _slideShow.BACKGROUND_IMG != null) {
+				backup = _slideShow.BACKGROUND_IMG;
+				_slideShow.BACKGROUND_IMG = null;
+			}
+
+			StringWriter stringWriter = new StringWriter();
+			try {
+				_mustacheBackImgCss.execute(stringWriter, slide);
+			} catch (Exception ex) {
+				stringWriter = null;
+				System.out.println(" ");
+				System.out
+						.println("}}}}} MUSTACHE TEMPLATE ERROR!!!! (BACKGROUND IMG CSS)");
+				ex.printStackTrace();
+			} finally {
+				if (backup != null) {
+					_slideShow.BACKGROUND_IMG = backup;
+				}
+			}
+			if (stringWriter != null) {
+				stringWriter.flush();
+				String css = stringWriter.toString();
+				try {
+					css = Epub3FileSet.processCssStyle(_slideShow, css);
+				} catch (Exception ex) {
+					System.err.println(ex.getMessage());
+					ex.printStackTrace();
+					return null;
+				}
+				return "<style type=\"text/css\">\n" + css + "\n</style>";
+			}
+
+			return null;
+		}
+	};
+
 	private static void create(Mustache mustacheSlide,
-			Mustache mustacheSlideNotes, SlideShow slideShow, int i,
-			String pathEpubFolder, int verbosity) throws Exception {
+			Mustache mustacheSlideNotes, Mustache mustacheBackImgCss,
+			SlideShow slideShow, int i, String pathEpubFolder, int verbosity)
+			throws Exception {
+
+		// TODO: HORRIBLE HACK!!!! (see backgroundImageCss Function above)
+		_slideShow = slideShow;
+		_mustacheBackImgCss = mustacheBackImgCss;
 
 		Slide slide = slideShow.slides.get(i);
 		i++;

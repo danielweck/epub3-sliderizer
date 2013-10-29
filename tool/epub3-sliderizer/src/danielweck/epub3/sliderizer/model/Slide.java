@@ -69,6 +69,8 @@ public final class Slide extends Fielder {
 
 	public String FILES_IMG = null;
 
+	public String BACKGROUND_IMG = null;
+
 	public String MO_DUR = null;
 	public String MO_SMIL = null;
 

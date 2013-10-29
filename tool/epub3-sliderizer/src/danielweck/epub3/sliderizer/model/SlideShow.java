@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;
 
+import com.google.common.base.Function;
+
 import danielweck.epub3.sliderizer.Epub3FileSet;
 import danielweck.epub3.sliderizer.XHTML;
 
@@ -32,6 +34,7 @@ public final class SlideShow extends Fielder {
 	public final static Epub3FileSet.FileId CSS_NAVDOC = Epub3FileSet.CSS_NAVDOC;
 	public final static Epub3FileSet.FileId[] JSs = Epub3FileSet.JSs;
 	public final static String FIRST_SLIDE_FILENAME = XHTML.getFileName(1);
+	public final static Function<String, String> backgroundImageCss = XHTML.backgroundImageCss;
 
 	SlideShow() throws Exception {
 
@@ -131,6 +134,8 @@ public final class SlideShow extends Fielder {
 	public final ArrayList<Slide> slides = new ArrayList<Slide>();
 
 	public String FILES_IMG = null;
+
+	public String BACKGROUND_IMG = null;
 
 	public String FILES_CSS = null;
 
@@ -242,8 +247,22 @@ public final class SlideShow extends Fielder {
 				}
 			}
 
+			array = Epub3FileSet.splitPaths(this.BACKGROUND_IMG);
+			for (String str : array) {
+				if (!allReferences_IMG.contains(str)) {
+					allReferences_IMG.add(str);
+				}
+			}
+
 			for (Slide slide : slides) {
 				array = Epub3FileSet.splitPaths(slide.FILES_IMG);
+				for (String str : array) {
+					if (!allReferences_IMG.contains(str)) {
+						allReferences_IMG.add(str);
+					}
+				}
+
+				array = Epub3FileSet.splitPaths(slide.BACKGROUND_IMG);
 				for (String str : array) {
 					if (!allReferences_IMG.contains(str)) {
 						allReferences_IMG.add(str);

@@ -182,6 +182,11 @@ _FILES_IMG
 
 FingerPaint.woff
 
+// --------------------------------------------
+_BACKGROUND_IMG
+
+cover.jpg
+
 // #########################################################
 // #########################################################
 // #########################################################
@@ -223,8 +228,12 @@ END 04.610
 // --------------------------------------------
 _FILES_IMG
 
-left.jpg
 zebra.png
+
+// --------------------------------------------
+_BACKGROUND_IMG
+
+left.jpg
 
 // --------------------------------------------
 _CSS_STYLE
@@ -269,22 +278,6 @@ img#o1.-epub-media-overlay-active
     top: 2px;
 }
 
-#epb3sldrzr-body
-{
-    -PREFIXED_PROPERTY-background-repeat:no-repeat;
-    -PREFIXED_PROPERTY-background-clip:border-box;
-    -PREFIXED_PROPERTY-background-origin:padding-box;
-    -PREFIXED_PROPERTY-background-size:auto;
-    -PREFIXED_PROPERTY-background-position:center;
-    -PREFIXED_PROPERTY-background-attachment:scroll;
-    -PREFIXED_PROPERTY-background-image:url(../img/custom/left.jpg);
-    
-    -PREFIXED_PROPERTY-background-size: 100%;
-    -PREFIXED_PROPERTY-background-size: cover;
-    
-    background-color: #333333;
-}
-
 // #########################################################
 // #########################################################
 // #########################################################
@@ -327,8 +320,12 @@ END 10.094
 // --------------------------------------------
 _FILES_IMG
 
-right.jpg
 elephant.png
+
+// --------------------------------------------
+_BACKGROUND_IMG
+
+right.jpg
 
 // --------------------------------------------
 _CSS_STYLE
@@ -372,20 +369,4 @@ img#o2.-epub-media-overlay-active
     position: relative;
     left: -2px;
     top: -5px;
-}
-
-#epb3sldrzr-body
-{
-    -PREFIXED_PROPERTY-background-repeat:no-repeat;
-    -PREFIXED_PROPERTY-background-clip:border-box;
-    -PREFIXED_PROPERTY-background-origin:padding-box;
-    -PREFIXED_PROPERTY-background-size:auto;
-    -PREFIXED_PROPERTY-background-position:center;
-    -PREFIXED_PROPERTY-background-attachment:scroll;
-    -PREFIXED_PROPERTY-background-image:url(../img/custom/right.jpg);
-    
-    -PREFIXED_PROPERTY-background-size: 100%;
-    -PREFIXED_PROPERTY-background-size: cover;
-    
-    background-color: #333333;
 }

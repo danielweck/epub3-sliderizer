@@ -37,6 +37,7 @@ public final class Epub3FileSet {
 	public final static String TEMPLATE_NAV = "nav.xhtml.mustache";
 	public final static String TEMPLATE_SLIDE = "slide.xhtml.mustache";
 	public final static String TEMPLATE_SLIDE_NOTES = "slide_NOTES.xhtml.mustache";
+	public final static String TEMPLATE_BACK_IMG_CSS = "background_img.css.mustache";
 
 	public final static String FOLDER_HTML = "html";
 	public final static String FOLDER_MO = "mo";
@@ -370,6 +371,7 @@ public final class Epub3FileSet {
 		File template_Nav = null;
 		File template_Slide = null;
 		File template_SlideNotes = null;
+		File template_BackImgCSS = null;
 
 		MustacheFactory mustacheFactory = null;
 
@@ -415,6 +417,17 @@ public final class Epub3FileSet {
 				}
 				template_SlideNotes = slideNotesTemplateFile;
 			}
+			File backImgCssTemplateFile = new File(templateDir,
+					TEMPLATE_BACK_IMG_CSS);
+			if (file.exists()) {
+				if (verbosity > 0) {
+					System.out.println(" ");
+					System.out
+							.println("}}}}} FOUND TEMPLATE [BACKGROUND IMG CSS]: "
+									+ backImgCssTemplateFile.getAbsolutePath());
+				}
+				template_BackImgCSS = backImgCssTemplateFile;
+			}
 		}
 
 		for (int i = 0; i < Epub3FileSet.CSSs.length; i++) {
@@ -449,14 +462,22 @@ public final class Epub3FileSet {
 
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_JS + "/"
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_JS, verbosity);
-		
+
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_IMG, verbosity);
+
+		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
+				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.BACKGROUND_IMG,
+				verbosity);
 
 		for (Slide slide : slideShow.slides) {
 
 			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG
 					+ "/" + Epub3FileSet.FOLDER_CUSTOM, slide.FILES_IMG,
+					verbosity);
+
+			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG
+					+ "/" + Epub3FileSet.FOLDER_CUSTOM, slide.BACKGROUND_IMG,
 					verbosity);
 
 			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS
@@ -473,7 +494,7 @@ public final class Epub3FileSet {
 				verbosity);
 
 		XHTML.createAll(mustacheFactory, template_Slide, template_SlideNotes,
-				slideShow, pathEpubFolder, verbosity);
+				template_BackImgCSS, slideShow, pathEpubFolder, verbosity);
 
 		OPF.create(slideShow, pathEpubFolder, verbosity);
 	}
