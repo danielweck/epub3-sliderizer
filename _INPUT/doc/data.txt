@@ -2480,7 +2480,7 @@ A simple syntax to build basic <strong><em>talking books</em></strong>
 <p id="txt2">
 Beginner's tip: use an audio editing tool (e.g. Audacity) to mark and export the synchronisation timestamps.
 </p>
-<p id="txt3" style="font-size: 80%">
+<p id="txt3" style="font-size: 80%; margin-top: 1.5em;">
 (requires EPUB3 reading system)
 </p>
 </div>
