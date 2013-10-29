@@ -182,12 +182,6 @@ NO-MARKDOWN
 </div>
 
 // --------------------------------------------
-_FILES_IMG
-
-assets/forkme.png
-assets/EPUB3-Sliderizer.png
-
-// --------------------------------------------
 _CSS_STYLE
 
 #epb3sldrzr-anim-overflow
@@ -748,12 +742,6 @@ which supports <strong>both</strong> <em>web</em> and <em>e-book</em> presentati
 </div>
 
 // --------------------------------------------
-_FILES_IMG
-
-assets/HTML5.png
-
-
-// --------------------------------------------
 _CSS_STYLE
 
 /*
@@ -826,7 +814,7 @@ NO-MARKDOWN
 \    _COVER</span>
 <br>
     <span class="pale-greenx">
-    assets/cover-image.png</span>
+    cover-image.png</span>
 <br>
 <br>
     <span class="pale-blue">
@@ -839,7 +827,7 @@ NO-MARKDOWN
 \    _FILES_CSS</span>
 <br>
     <span class="pale-greenx">
-    assets/my-styles.css</span>
+    my-styles.css</span>
 <br>
 <br>
     <span class="pale-blue">
@@ -854,7 +842,7 @@ NO-MARKDOWN
 \    _FILES_JS</span>
 <br>
     <span class="pale-greenx">
-    assets/my-scripts.js</span>
+    my-scripts.js</span>
 </p>
 </div>
 
@@ -893,15 +881,15 @@ NO-MARKDOWN
     <span class="pale-blue">
 \    _CONTENT</span>
 <br>
-    <span class="pale-greenx">
-    &lt;img src="assets/me.jpeg"&gt;<br>&lt;ol&gt;<br>&lt;li&gt;bullet point 1<br>&lt;li&gt;bullet point 2<br>&lt;!-- look ma, no closing tags! (automatically converts to HTML5 XML) --&gt;</span>
+    <span>
+    &lt;img src="me.jpeg"&gt;<br>&lt;ol&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;bullet point 1<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;bullet point 2<br>&lt;!-- look ma, no closing tags! (automatically converts to HTML5 XML) --&gt;</span>
 <br>
-    <span class="pale-blue">
-\    _FILES_IMG</span>
 <br>
-    <span class="pale-greenx">
-    assets/me.jpeg</span>
+    <span>&lt;!-- <strong>Markdown</strong> syntax is supported --&gt;</span>
 <br>
+    <span>* list item 1 [link](http://url.com)</span>
+<br>
+    <span>* list item 2 **STRONG** _EMPHASIS_</span>
 <br>
     <span class="pale-green">
 \    // (line comment)</span>
@@ -3016,11 +3004,6 @@ class="incremental fade-active" data-incremental-delay="300">
 </li>
 </ol>
 
-// --------------------------------------------
-_FILES_IMG
-assets/kitten.jpg
-
-
 // #########################################################
 // #########################################################
 // #########################################################
@@ -3103,7 +3086,7 @@ ul#yo li:before
 
 h1#epb3sldrzr-title
 {
-    margin-bottom: 0.85em;
+    margin-bottom: 2em;
     
     color: #FFCC33;
     
@@ -3141,18 +3124,19 @@ _TITLE
 Picture slides
 
 // --------------------------------------------
+_CONTENT_MIDDLE
+
+TRUE
+
+// --------------------------------------------
 _CONTENT
 
 NO-MARKDOWN
 
-<!-- img class="full" src="assets/wall.jpg" alt="EPUB3" -->
-
-<p id="fatty" class="epb3sldrzr-animated fadeIn">
-This slide's background
-<br>
-is a <strong>full-spread image</strong>.
-<br>
-The slide content overlays it.
+<div id="fatty" class="epb3sldrzr-animated fadeIn">
+<p>This slide's background
+<p>is a <strong>full-spread image</strong>.
+<p>This is a vertically-centered text overlay.
 
 
 // --------------------------------------------
@@ -3170,14 +3154,19 @@ html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 
 #fatty
 {
+    /* 
     margin-top: 3em !important;
+    */
 
     /* margin: auto !important; */
+
+    padding-left: 2em;
+    padding-right: 2em;
     
     font-family: Neuton, serif;
     
     text-align: center;
-    font-size: 1.7em;
+    font-size: 2.3em;
     
     color: rgba(0,0,0,0.7);
     color: #333333;
@@ -3188,6 +3177,8 @@ html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 
 h1#epb3sldrzr-title
 {
+display: none;
+
     color:white;
 
     text-shadow: 0.06em 0.06em 0.11em rgba(0, 0, 0, 0.5);
