@@ -41,6 +41,14 @@
         <link href="../{{{slideShow.FOLDER_CSS}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{.}}}" rel="stylesheet" type="text/css"/>
         {{/xCSSs}}
         
+        {{#slideShow.xCSSs_FONTS}}
+        <link href="{{{slideShow.FOLDER_FONTS}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{.}}}" rel="stylesheet" type="text/css"/>
+        {{/slideShow.xCSSs_FONTS}}
+        
+        {{#xCSSs_FONTS}}
+        <link href="{{{slideShow.FOLDER_FONTS}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{.}}}" rel="stylesheet" type="text/css"/>
+        {{/xCSSs_FONTS}}
+        
         {{#slideShow.JSs}}
         <script src="../{{{slideShow.FOLDER_JS}}}/{{{FILE}}}"> </script>
         {{/slideShow.JSs}}

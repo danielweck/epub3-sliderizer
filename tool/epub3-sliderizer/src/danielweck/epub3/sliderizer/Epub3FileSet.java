@@ -464,6 +464,10 @@ public final class Epub3FileSet {
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS + "/"
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_CSS, verbosity);
 
+		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_HTML + "/"
+				+ Epub3FileSet.FOLDER_FONTS + "/" + Epub3FileSet.FOLDER_CUSTOM,
+				slideShow.FILES_CSS_FONTS, verbosity);
+
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_JS + "/"
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_JS, verbosity);
 
@@ -494,6 +498,11 @@ public final class Epub3FileSet {
 
 			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS
 					+ "/" + Epub3FileSet.FOLDER_CUSTOM, slide.FILES_CSS,
+					verbosity);
+
+			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_HTML
+					+ "/" + Epub3FileSet.FOLDER_FONTS + "/"
+					+ Epub3FileSet.FOLDER_CUSTOM, slide.FILES_CSS_FONTS,
 					verbosity);
 
 			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_JS + "/"

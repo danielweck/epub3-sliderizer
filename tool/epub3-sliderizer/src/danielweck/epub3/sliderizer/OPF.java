@@ -292,6 +292,11 @@ public final class OPF {
 				"css", true, Epub3FileSet.FOLDER_CSS + "/"
 						+ Epub3FileSet.FOLDER_CUSTOM, null);
 
+		create_ManifestItem(slideShow.FILES_CSS_FONTS, document,
+				elementManifest, "css-fonts", true, Epub3FileSet.FOLDER_HTML
+						+ "/" + Epub3FileSet.FOLDER_FONTS + "/"
+						+ Epub3FileSet.FOLDER_CUSTOM, null);
+
 		create_ManifestItem(slideShow.FILES_JS, document, elementManifest,
 				"js", true, Epub3FileSet.FOLDER_JS + "/"
 						+ Epub3FileSet.FOLDER_CUSTOM, null);
@@ -379,6 +384,11 @@ public final class OPF {
 			create_ManifestItem(slide.FILES_CSS, document, elementManifest,
 					"css", true, Epub3FileSet.FOLDER_CSS + "/"
 							+ Epub3FileSet.FOLDER_CUSTOM, null);
+
+			create_ManifestItem(slide.FILES_CSS_FONTS, document,
+					elementManifest, "css-fonts", true,
+					Epub3FileSet.FOLDER_HTML + "/" + Epub3FileSet.FOLDER_FONTS
+							+ "/" + Epub3FileSet.FOLDER_CUSTOM, null);
 
 			create_ManifestItem(slide.FILES_JS, document, elementManifest,
 					"js", true, Epub3FileSet.FOLDER_JS + "/"

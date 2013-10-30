@@ -120,7 +120,7 @@ public final class Slide extends Fielder {
 	public String MO_SMIL = null;
 
 	public String FILES_FONT = null;
-	
+
 	public String FILES_CSS = null;
 
 	private ArrayList<String> _xCSSs = null;
@@ -155,6 +155,37 @@ public final class Slide extends Fielder {
 			_xCSSs = null;
 		}
 		return _xCSSs;
+	}
+
+	public String FILES_CSS_FONTS = null;
+
+	private ArrayList<String> _xCSSs_FONTS = null;
+
+	public ArrayList<String> xCSSs_FONTS() {
+
+		if (FILES_CSS_FONTS == null) {
+			return null;
+		}
+		if (_xCSSs_FONTS != null) {
+			return _xCSSs_FONTS;
+		}
+
+		ArrayList<String> array = Epub3FileSet.splitPaths(FILES_CSS_FONTS);
+
+		_xCSSs_FONTS = new ArrayList<String>(array.size());
+
+		for (String path : array) {
+
+			if (_xCSSs_FONTS.contains(path)) {
+				continue;
+			}
+			_xCSSs_FONTS.add(path);
+		}
+
+		if (_xCSSs_FONTS.size() == 0) {
+			_xCSSs_FONTS = null;
+		}
+		return _xCSSs_FONTS;
 	}
 
 	public String FILES_JS = null;

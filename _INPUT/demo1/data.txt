@@ -173,7 +173,7 @@ img
 }
 
 // --------------------------------------------
-_FILES_CSS
+_FILES_CSS_FONTS
 
 fonts.css
 
