@@ -39,11 +39,11 @@ Command line:
 * `cd epub3-sliderizer`
 * `./sliderize.sh`
 
-By default, the `sliderize.sh` script behaves as if the `doc` parameter was passed, which results in building the "documentation" project located in `./_INPUT/__doc__/`.
+By default, the `sliderize.sh` script behaves as if the `doc` parameter was passed, which results in building the "documentation" project located in `./_INPUT/doc/`.
 
 The output fileset is _always_ generated in `./_OUTPUT/`. Beware, this folder gets **deleted** everytime the `sliderize.sh` command is executed!!
 
-There is an additional demonstration project in `./_INPUT/__demo1__/`. To build it, simply pass the `demo1` parameter to the `sliderize.sh` command.
+There is an additional demonstration project in `./_INPUT/demo1/`. To build it, simply pass the `demo1` parameter to the `sliderize.sh` command.
 
 If all goes well, the `./_OUTPUT/content/` folder should then contain `EPUB3-Sliderizer.epub` (documentation), or `EPUB3-Sliderizer_demo1.epub` (additional demo). To check the results in your web-browser, open the `./_OUTPUT/content/EPUB3/epub/nav.xhtml` file (drag and drop, or double-click if the XHTML file association is supported on your system).
 
@@ -53,12 +53,11 @@ Make Your Own
 ----------------
 
 * `cd _INPUT`
-* `mkdir **test**`
-* `cd **test**`
-* `touch data.txt` (naming convention for the master source file)
-* edit `data.txt` (+ copy assets in the `test` folder, as needed)
+* `mkdir test`
+* `cd test`
+* edit `data.txt` + provide assets as needed, inside the `test` folder (or subfolders).
 * `cd ..`
-* `./sliderize.sh **test**`
+* `./sliderize.sh test`
 
 Learn by example by exploring the [documentation](https://github.com/danielweck/epub3-sliderizer/tree/master/_INPUT/doc) or the [demo](https://github.com/danielweck/epub3-sliderizer/tree/master/_INPUT/demo1).
 
