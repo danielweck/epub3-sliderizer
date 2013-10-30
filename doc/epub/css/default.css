@@ -328,7 +328,7 @@ html#epb3sldrzr-NavDoc h1#epb3sldrzr-title
     border-bottom: 0.15em solid #CC3300;
 }
 
-body.static.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title
+body:not(.reflow).static.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title
 {
     border-top-left-radius: 40px;
     border-top-left-radius: 4rem;
@@ -337,8 +337,8 @@ body.static.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title
     border-top-right-radius: 4rem;
 }
 
-body:not(.epb3sldrzr-epubReadingSystem) h1#epb3sldrzr-title,
-body.basic.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title
+body:not(.reflow):not(.epb3sldrzr-epubReadingSystem) h1#epb3sldrzr-title,
+body:not(.reflow).basic.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title
 {
     border-top-left-radius: 20px;
     border-top-left-radius: 2rem;

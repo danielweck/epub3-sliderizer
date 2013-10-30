@@ -3619,7 +3619,7 @@ function readyFirst()
     }
     aaa.id = "epb3sldrzr-link-textsize-minus";
     aaa.setAttribute("id", aaa.id);
-    aaa.setAttribute("title", "Descrease font size");
+    aaa.setAttribute("title", "Decrease font size");
     aaa.setAttribute("href", "javascript:Epub3Sliderizer.decreaseFontSize();");
 
     var a = document.createElement('a');
