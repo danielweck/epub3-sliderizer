@@ -13,6 +13,10 @@ Screeshots
 
 ![iBooks iPad](http://danielweck.github.io/epub3-sliderizer/EPUB3-Sliderizer_iBooks.png)
 
+### iBooks (Mac OS X)
+
+![iBooksX](http://danielweck.github.io/epub3-sliderizer/EPUB3-Sliderizer_iBooksX.png)
+
 ### Readium (Chrome Extension)
 
 ![Readium Chrome Extension](http://danielweck.github.io/epub3-sliderizer/EPUB3-Sliderizer_ReadiumChrome.png)
