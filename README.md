@@ -36,13 +36,23 @@ PS: this tool ships with [EPUB-Check 3.0.1](https://github.com/IDPF/epubcheck), 
 Features
 ----------------
 
-EPUB3-Sliderizer is based on the promise of "single file editing", but unlike other HTML slideshow frameworks, EPUB3-Sliderizer generates each slide as a separate XHTML file. This way, the files can be used as "pages" in the context of a pre-paginated e-book (aka "fixed layout"). Furthermore, the actual content can be authored with Markdown, using tag-soup HTML, or with clean XHTML. Your choice.
+EPUB3-Sliderizer is based on the promise of "__single file__ editing", but unlike other HTML slideshow frameworks, EPUB3-Sliderizer generates each slide as a separate XHTML file. This way, the files can be used as "pages" in the context of a __pre-paginated e-book__ (aka "fixed layout"). Furthermore, the actual content can be authored with __Markdown__, using __tag-soup HTML__, or with __clean XHTML__. Your choice.
 
-In an EPUB book created by EPUB3-Sliderizer, each HTML file is capable of "self-rendering" within a web browser (using its own built-in navigation user interface, or "chrome"), delivering a rich "slide deck" viewing experience on both mobile / touch devices and keyboard-driven desktops. Just unzip the EPUB file on the local filesystem, and optionally upload to an HTTP server. The EPUB file itself can be used not only for archiving, but also to offer a "book-like", more static reading experience.
+In an EPUB book created by EPUB3-Sliderizer, each HTML file is capable of "self-rendering" within a web browser (using its own __built-in navigation user interface__, or "chrome"), delivering a rich "slide deck" viewing experience on both __mobile / touch__ devices and __keyboard__-driven desktops. Just unzip the EPUB file on the local filesystem, and optionally upload to an HTTP server. The EPUB file itself can be used not only for archiving, but also to offer a "book-like", more static reading experience.
 
-EPUB3-Sliderizer supports a "reflowable" presentation mode, which makes slide decks accessible to persons who suffer from visual deficiencies. For example, the font size can be increased within the rectangular boundaries of a given slide, creating vertical overflow and scrolling. Alternatively, the visual constraints of a slide's frame can be deactivated entirely, resulting in normal web page rendering (full horizontal stretch, vertical scroll as needed).
+EPUB3-Sliderizer supports a "__reflowable__" presentation mode, which makes slide decks __accessible__ to persons who suffer from visual deficiencies. For example, the font size can be increased within the rectangular boundaries of a given slide, creating vertical content overflow + __scrolling__. Alternatively, the visual constraints of a slide's frame can be deactivated entirely, resulting in __normal web page__ rendering (full horizontal stretch, vertical scroll as needed).
 
-All of this is possible thanks to careful CSS and JavaScript engineering, thus why EPUB3-Sliderizer is a _framework_ (i.e. not a _library_) that requires a strong set of authoring rules. Converting arbitrary HTML web pages to the EPUB3-Sliderizer format is probably possible for simple content types (e.g. bullet points). As a rule of thumb though, slidedecks should be authored using the 'data.txt' master format from the get-go.
+All of this is possible thanks to careful CSS and JavaScript engineering, thus why EPUB3-Sliderizer is a _framework_ (i.e. not just a _library_) which relies on a specific project structure. Converting arbitrary HTML web pages (or even PowerPoint / Keynote assets) to the EPUB3-Sliderizer format is possible for very simple, semantic content types (e.g. basic bullet points), but experience shows that authoring directly in the __'data.txt' master format__ leads to fewer headaches.
+
+Wish List
+----------------
+
+* To author the `data.txt` master file by hand is okay for some, but it would be really nice if there was some kind of __editor__ user interface, such as a web page containing form fields and submit buttons.
+* ...which leads to: __server-side__ execution. Currently EPUB3-Sliderizer relies heavily on local filesystem access, so things would need to be ported to binary blobs / database storage facility (or equivalent abstraction).
+* "1-click" __style templates__ (with a few samples to try)
+* Slide __navigation strip__ (horizontal scrolling list of thumbnails)
+* __2-page spread__ in web browser view (to simulate e-book reading)
+* Dancing ponies?
 
 Quick Start
 ----------------
