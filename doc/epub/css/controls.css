@@ -1,6 +1,8 @@
 @charset "utf-8";
 
 a#epb3sldrzr-link-toc:before,
+a#epb3sldrzr-link-first:before,
+a#epb3sldrzr-link-last:before,
 a#epb3sldrzr-link-next:before,
 a#epb3sldrzr-link-previous:before,
 a#epb3sldrzr-link-epub:before,
@@ -58,6 +60,16 @@ a#epb3sldrzr-link-next:before
 	content: "\f0a9";
 }
 
+a#epb3sldrzr-link-first:before
+{
+	content: "\f100";
+}
+
+a#epb3sldrzr-link-last:before
+{
+	content: "\f101";
+}
+
 
 a#epb3sldrzr-link-noteback,
 a#epb3sldrzr-link-notesref,
@@ -76,6 +88,8 @@ a#epb3sldrzr-link-noteback,
 a#epb3sldrzr-link-notesref,
 a#epb3sldrzr-link-previous,
 a#epb3sldrzr-link-next,
+a#epb3sldrzr-link-first,
+a#epb3sldrzr-link-last,
 a#epb3sldrzr-link-toc,
 a#epb3sldrzr-link-epub,
 a#epb3sldrzr-link-textsize-plus,
@@ -112,6 +126,12 @@ a#epb3sldrzr-link-previous:active,
 a#epb3sldrzr-link-next:link,
 a#epb3sldrzr-link-next:visited,
 a#epb3sldrzr-link-next:active,
+a#epb3sldrzr-link-first:link,
+a#epb3sldrzr-link-first:visited,
+a#epb3sldrzr-link-first:active,
+a#epb3sldrzr-link-last:link,
+a#epb3sldrzr-link-last:visited,
+a#epb3sldrzr-link-last:active,
 a#epb3sldrzr-link-epubReadingSystem:link,
 a#epb3sldrzr-link-epubReadingSystem:visited,
 a#epb3sldrzr-link-epubReadingSystem:active,
@@ -149,6 +169,8 @@ a#epb3sldrzr-link-noteback:hover,
 a#epb3sldrzr-link-notesref:hover,
 a#epb3sldrzr-link-previous:hover,
 a#epb3sldrzr-link-next:hover,
+a#epb3sldrzr-link-first:hover,
+a#epb3sldrzr-link-last:hover,
 a#epb3sldrzr-link-toc:hover,
 a#epb3sldrzr-link-epub:hover,
 a#epb3sldrzr-link-epubReadingSystem:hover,
@@ -171,6 +193,8 @@ a#epb3sldrzr-link-reflow:hover
 
 body.mobile a#epb3sldrzr-link-previous,
 body.mobile a#epb3sldrzr-link-next,
+body.mobile a#epb3sldrzr-link-first,
+body.mobile a#epb3sldrzr-link-last,
 body.mobile a#epb3sldrzr-link-toc,
 body.mobile a#epb3sldrzr-link-textsize-minus,
 body.mobile a#epb3sldrzr-link-textsize-reset,
@@ -315,16 +339,18 @@ a#epb3sldrzr-link-notesref
 	font-size: 0.7em;
 }
 
-a#epb3sldrzr-link-next
-{
-	float: right;
-	margin-right: 0.5em;
-}
-
-a#epb3sldrzr-link-previous
+a#epb3sldrzr-link-first,
+a#epb3sldrzr-link-previous,
+a#epb3sldrzr-link-next,
+a#epb3sldrzr-link-last
 {
 	float: right;
 	margin-right: 0;
+}
+
+a#epb3sldrzr-link-last
+{
+	margin-right: 0.5em;
 }
 
 body:not(.basic).epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-noteback,
