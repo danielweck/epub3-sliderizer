@@ -59,6 +59,11 @@ body
 	
 	font-weight: 400;
 	font-family: Lato, Tahoma, verdana, arial, sans-serif;
+}
+
+body:not(.reflow)
+{
+	background-color: black;
 
 	position: relative;
 
@@ -66,12 +71,7 @@ body
 	top: 0;
 	width:100%;
 	height:100%;
-}
-
-body:not(.reflow)
-{
-	background-color: black;
-	
+    
     overflow:hidden;
 }
 
@@ -91,13 +91,13 @@ body.reflow
 }
 
 
-body
+body:not(.reflow)
 {
 	border-right: 0.08em solid transparent;
 	border-left: 0.08em solid transparent;
 }
 
-body:not(.static):not(.basic).epb3sldrzr-epubReadingSystem
+body:not(.reflow):not(.static):not(.basic).epb3sldrzr-epubReadingSystem
 {
 	border-right: 0.08em solid #aaaaaa;
 	border-left: 0.08em solid #aaaaaa;
