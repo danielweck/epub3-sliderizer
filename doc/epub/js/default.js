@@ -554,10 +554,40 @@ function loadScript(that, src)
     var script = document.createElement('script');
     script.setAttribute("type", 'text/javascript');
     src = "js/" + src;
-    if (that.prev && that.prev !== "")
+    
+    var hasPrev = false;
+    if (!that)
+    {
+        Array.prototype.forEach.call(
+            querySelectorAllZ("head > link"),
+            function(link)
+            {
+                if (link.attributes.length <= 0 ||
+                    !isDefinedAndNotNull(link.getAttribute('href')) ||
+                    !isDefinedAndNotNull(link.getAttribute('rel'))
+                )
+                {
+                    return;
+                }
+
+                var href = link.getAttribute('href');
+                var rel = link.getAttribute('rel');
+                if (rel === "prev" && href !== "")
+                {
+                    hasPrev = true;
+                }
+            }
+        );
+    }
+    else if (that.prev && that.prev !== "")
+    {
+        hasPrev = true;
+    }
+    if (hasPrev)
     {
         src = "../" + src;
     }
+    
     script.setAttribute("src", src);
     head.appendChild(script);
 }
@@ -3446,6 +3476,15 @@ function readyFirst()
     alert(str);
     */
     
+    if (window.Element && Element.prototype.attachEvent && !Element.prototype.addEventListener)
+    {
+        loadScript(undefined, 'addEventListener.js');
+    }
+    
+    if (typeof document !== "undefined" && !("classList" in document.createElement("a")))
+    {
+        loadScript(undefined, 'classList.js');
+    }
     
     Epub3Sliderizer.onResizeThrottled = throttle(Epub3Sliderizer.onResize, 60, false).bind(Epub3Sliderizer);
     

@@ -25,7 +25,6 @@ this.Element && Element.prototype.attachEvent && !Element.prototype.addEventList
 				event.relatedTarget = event.fromElement || null;
 				event.stopImmediatePropagation = function () { immediatePropagation = false; event.cancelBubble = true };
 				event.stopPropagation = function () { event.cancelBubble = true };
-				event.relatedTarget = event.fromElement || null;
 				event.target = event.srcElement || target;
 				event.timeStamp = +new Date;
 
@@ -93,17 +92,19 @@ this.Element && Element.prototype.attachEvent && !Element.prototype.addEventList
 		get: function () {
 			var self = this;
 
-			return function CustomEvent(type, canBubble, cancelable, detail) {
+			return function CustomEvent(type, eventInitDict) {
 				var event = self.document.createEventObject(), key;
 
 				event.type = type;
-				event.returnValue = !cancelable;
-				event.cancelBubble = !canBubble;
-
-				for (key in detail) {
-					event[key] = detail[key];
+				for (key in eventInitDict) {
+					if (key == 'cancelable'){
+						event.returnValue = !eventInitDict.cancelable;
+					} else if (key == 'bubbles'){
+						event.cancelBubble = !eventInitDict.bubbles;
+					} else if (key == 'detail'){
+						event.detail = eventInitDict.detail;
+					}
 				}
-
 				return event;
 			};
 		}
