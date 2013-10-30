@@ -1395,6 +1395,16 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
             this.gotoLast();
         }
     }
+    else if (keyboardEvent.keyCode === 83) // s
+    {
+        keyboardEvent.preventDefault();
+        //TODO this.toggleSlideStrip();
+    }
+    else if (keyboardEvent.keyCode === 84) // t
+    {
+        keyboardEvent.preventDefault();
+        //TODO this.toggleTwoPageSpread();
+    }
 };
 
 // ----------
