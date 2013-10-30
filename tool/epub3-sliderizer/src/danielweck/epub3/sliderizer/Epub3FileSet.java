@@ -69,18 +69,18 @@ public final class Epub3FileSet {
 			new FileId("default.css", "css-default") };
 
 	public final static FileId[] JSs = new FileId[] {
+			new FileId("jquery.min.js", "js-jquery"),
+			new FileId("default.js", "js-default") };
+
+	public final static FileId[] JSs_OPF_ONLY = new FileId[] {
 			new FileId("addEventListener.js", "js-addEventListener"),
 			new FileId("classList.js", "js-classList"),
 			new FileId("screenfull.js", "js-screenfull"),
-			// new FileId( "hammer.min.js", "js-hammer" ),
-			// new FileId( "hammer.fakemultitouch.js",
-			// "js-hammer-fakemultitouch" ),
-			// new FileId( "hammer.showtouches.js", "js-hammer-showtouches"
-			// ),
-			new FileId("jquery-2.0.2.min.js", "js-jquery"),
-			// new FileId( "jquery.mousewheel.js", "js-jquery-mousewheel" ),
-			// new FileId( "jquery.blockUI.js", "js-jquery-blockUI" ),
-			new FileId("default.js", "js-default") };
+			new FileId("hammer.min.js", "js-hammer"),
+			new FileId("hammer.fakemultitouch.js", "js-hammer-fakemultitouch"),
+			new FileId("hammer.showtouches.js", "js-hammer-showtouches"),
+			new FileId("jquery.mousewheel.js", "js-jquery-mousewheel"),
+			new FileId("jquery.blockUI.js", "js-jquery-blockUI") };
 
 	private final static String CSS_PREFIXED = "_PREFIXED_";
 	private final static String CSS_PREFIXED_PROP = "-PREFIXED_PROPERTY-";
@@ -496,7 +496,8 @@ public final class Epub3FileSet {
 		XHTML.createAll(mustacheFactory, template_Slide, template_SlideNotes,
 				template_BackImgCSS, slideShow, pathEpubFolder, verbosity);
 
-		// MUST EXECUTE AFTER XHTML!! (image references dynamically added when found in content markup)
+		// MUST EXECUTE AFTER XHTML!! (image references dynamically added when
+		// found in content markup)
 		OPF.create(slideShow, pathEpubFolder, verbosity);
 	}
 

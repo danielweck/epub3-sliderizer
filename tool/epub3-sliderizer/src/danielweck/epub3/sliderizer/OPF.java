@@ -246,6 +246,14 @@ public final class OPF {
 					Epub3FileSet.FOLDER_JS, null);
 		}
 
+		for (int i = 0; i < Epub3FileSet.JSs_OPF_ONLY.length; i++) {
+			String filename = Epub3FileSet.JSs_OPF_ONLY[i].FILE;
+			String id = Epub3FileSet.JSs_OPF_ONLY[i].ID;
+
+			create_ManifestItem(filename, document, elementManifest, id, false,
+					Epub3FileSet.FOLDER_JS, null);
+		}
+
 		for (int i = 0; i < Epub3FileSet.FONT_FILENAMES.length; i++) {
 			String filename = Epub3FileSet.FONT_FILENAMES[i][0];
 			String id = Epub3FileSet.FONT_FILENAMES[i][1];
@@ -286,8 +294,8 @@ public final class OPF {
 				"img", true, Epub3FileSet.FOLDER_IMG + "/"
 						+ Epub3FileSet.FOLDER_CUSTOM, null);
 
-		create_ManifestItem(slideShow.BACKGROUND_IMG, document, elementManifest,
-				"img", true, Epub3FileSet.FOLDER_IMG + "/"
+		create_ManifestItem(slideShow.BACKGROUND_IMG, document,
+				elementManifest, "img", true, Epub3FileSet.FOLDER_IMG + "/"
 						+ Epub3FileSet.FOLDER_CUSTOM, null);
 
 		Element elementSpine = document.createElement("spine");
@@ -369,8 +377,8 @@ public final class OPF {
 					"img", true, Epub3FileSet.FOLDER_IMG + "/"
 							+ Epub3FileSet.FOLDER_CUSTOM, null);
 
-			create_ManifestItem(slide.BACKGROUND_IMG, document, elementManifest,
-					"img", true, Epub3FileSet.FOLDER_IMG + "/"
+			create_ManifestItem(slide.BACKGROUND_IMG, document,
+					elementManifest, "img", true, Epub3FileSet.FOLDER_IMG + "/"
 							+ Epub3FileSet.FOLDER_CUSTOM, null);
 
 			elementItemRef = document.createElement("itemref");

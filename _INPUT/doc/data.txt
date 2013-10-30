@@ -85,16 +85,6 @@ function setupAnimations()
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
 
 // --------------------------------------------
-_FILES_CSS
-assets/empty.css
-assets/empty.css
-
-// --------------------------------------------
-_FILES_JS
-assets/empty.js
-assets/empty.js
-
-// --------------------------------------------
 _NOTES
 
 <p>Testing...
@@ -128,16 +118,6 @@ _MO_PLAYBACK_ACTIVE
 // #########################################################
 // #########################################################
 -SLIDE
-
-// --------------------------------------------
-_FILES_CSS
-assets/empty.css
-assets/empty2.css
-
-// --------------------------------------------
-_FILES_JS
-assets/empty.js
-assets/empty2.js
 
 // --------------------------------------------
 _TITLE
