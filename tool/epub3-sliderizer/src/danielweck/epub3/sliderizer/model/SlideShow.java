@@ -27,12 +27,14 @@ public final class SlideShow extends Fielder {
 	public final static String GENERATOR = Epub3FileSet.GENERATOR;
 	public final static String KEYWORDS = Epub3FileSet.KEYWORDS;
 	public final static String FOLDER_IMG = Epub3FileSet.FOLDER_IMG;
+	public final static String FOLDER_FONTS = Epub3FileSet.FOLDER_FONTS;
 	public final static String FOLDER_CSS = Epub3FileSet.FOLDER_CSS;
 	public final static String FOLDER_JS = Epub3FileSet.FOLDER_JS;
 	public final static String FOLDER_HTML = Epub3FileSet.FOLDER_HTML;
 	public final static String FOLDER_CUSTOM = Epub3FileSet.FOLDER_CUSTOM;
 	public final static Epub3FileSet.FileId[] CSSs = Epub3FileSet.CSSs;
 	public final static Epub3FileSet.FileId CSS_NAVDOC = Epub3FileSet.CSS_NAVDOC;
+	public final static Epub3FileSet.FileId CSS_FONTS = Epub3FileSet.CSS_FONTS;
 	public final static Epub3FileSet.FileId[] JSs = Epub3FileSet.JSs;
 	public final static String FIRST_SLIDE_FILENAME = XHTML.getFileName(1);
 	public final static String NAV_SLIDE_FILENAME = NavDoc.getFileName();
@@ -158,6 +160,8 @@ public final class SlideShow extends Fielder {
 
 	public final ArrayList<Slide> slides = new ArrayList<Slide>();
 
+	public String FILES_FONT = null;
+	
 	public String FILES_IMG = null;
 
 	public String BACKGROUND_IMG = null;

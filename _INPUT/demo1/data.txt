@@ -178,7 +178,7 @@ _FILES_CSS
 fonts.css
 
 // --------------------------------------------
-_FILES_IMG
+_FILES_FONT
 
 FingerPaint.woff
 

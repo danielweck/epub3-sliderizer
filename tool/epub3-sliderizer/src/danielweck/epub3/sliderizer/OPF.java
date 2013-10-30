@@ -259,7 +259,8 @@ public final class OPF {
 			String id = Epub3FileSet.FONT_FILENAMES[i][1];
 
 			create_ManifestItem(filename, document, elementManifest, id, false,
-					Epub3FileSet.FOLDER_CSS, null);
+					Epub3FileSet.FOLDER_HTML + "/" + Epub3FileSet.FOLDER_FONTS,
+					null);
 		}
 
 		for (int i = 0; i < Epub3FileSet.CSSs.length; i++) {
@@ -273,6 +274,11 @@ public final class OPF {
 		create_ManifestItem(Epub3FileSet.CSS_NAVDOC.FILE, document,
 				elementManifest, Epub3FileSet.CSS_NAVDOC.ID, false,
 				Epub3FileSet.FOLDER_CSS, null);
+
+		create_ManifestItem(Epub3FileSet.CSS_FONTS.FILE, document,
+				elementManifest, Epub3FileSet.CSS_FONTS.ID, false,
+				Epub3FileSet.FOLDER_HTML + "/" + Epub3FileSet.FOLDER_FONTS,
+				null);
 
 		create_ManifestItem(slideShow.LOGO, document, elementManifest, "logo",
 				false, Epub3FileSet.FOLDER_IMG + "/"
@@ -292,6 +298,11 @@ public final class OPF {
 
 		create_ManifestItem(slideShow.FILES_IMG, document, elementManifest,
 				"img", true, Epub3FileSet.FOLDER_IMG + "/"
+						+ Epub3FileSet.FOLDER_CUSTOM, null);
+
+		create_ManifestItem(slideShow.FILES_FONT, document, elementManifest,
+				"font", true, Epub3FileSet.FOLDER_HTML + "/"
+						+ Epub3FileSet.FOLDER_FONTS + "/"
 						+ Epub3FileSet.FOLDER_CUSTOM, null);
 
 		create_ManifestItem(slideShow.BACKGROUND_IMG, document,
@@ -375,6 +386,11 @@ public final class OPF {
 
 			create_ManifestItem(slide.FILES_IMG, document, elementManifest,
 					"img", true, Epub3FileSet.FOLDER_IMG + "/"
+							+ Epub3FileSet.FOLDER_CUSTOM, null);
+
+			create_ManifestItem(slide.FILES_FONT, document, elementManifest,
+					"img", true, Epub3FileSet.FOLDER_HTML + "/"
+							+ Epub3FileSet.FOLDER_FONTS + "/"
 							+ Epub3FileSet.FOLDER_CUSTOM, null);
 
 			create_ManifestItem(slide.BACKGROUND_IMG, document,

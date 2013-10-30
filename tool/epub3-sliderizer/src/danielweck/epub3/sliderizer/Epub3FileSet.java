@@ -39,6 +39,7 @@ public final class Epub3FileSet {
 	public final static String TEMPLATE_SLIDE_NOTES = "slide_NOTES.xhtml.mustache";
 	public final static String TEMPLATE_BACK_IMG_CSS = "background_img.css.mustache";
 
+	public final static String FOLDER_FONTS = "fonts";
 	public final static String FOLDER_HTML = "html";
 	public final static String FOLDER_MO = "mo";
 	public final static String FOLDER_JS = "js";
@@ -59,9 +60,9 @@ public final class Epub3FileSet {
 
 	public final static FileId CSS_NAVDOC = new FileId("navdoc.css",
 			"css-navdoc");
+	public final static FileId CSS_FONTS = new FileId("fonts.css", "css-fonts");
 	public final static FileId[] CSSs = new FileId[] {
 			new FileId("FontAwesome.css", "css-font-awesome"),
-			new FileId("fonts.css", "css-fonts"),
 			new FileId("struct.css", "css-struct"),
 			new FileId("incrementals.css", "css-incrementals"),
 			new FileId("animations.css", "css-animations"),
@@ -441,6 +442,9 @@ public final class Epub3FileSet {
 		processCssFile(slideShow, new File(pathEpubFolder,
 				Epub3FileSet.FOLDER_CSS + "/" + Epub3FileSet.CSS_NAVDOC.FILE),
 				verbosity);
+		processCssFile(slideShow, new File(pathEpubFolder,
+				Epub3FileSet.FOLDER_HTML + "/" + Epub3FileSet.FOLDER_FONTS
+						+ "/" + Epub3FileSet.CSS_FONTS.FILE), verbosity);
 
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.LOGO, verbosity);
@@ -466,6 +470,10 @@ public final class Epub3FileSet {
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_IMG, verbosity);
 
+		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_HTML + "/"
+				+ Epub3FileSet.FOLDER_FONTS + "/" + Epub3FileSet.FOLDER_CUSTOM,
+				slideShow.FILES_FONT, verbosity);
+
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.BACKGROUND_IMG,
 				verbosity);
@@ -475,6 +483,10 @@ public final class Epub3FileSet {
 			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG
 					+ "/" + Epub3FileSet.FOLDER_CUSTOM, slide.FILES_IMG,
 					verbosity);
+
+			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_HTML
+					+ "/" + Epub3FileSet.FOLDER_FONTS + "/"
+					+ Epub3FileSet.FOLDER_CUSTOM, slide.FILES_FONT, verbosity);
 
 			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG
 					+ "/" + Epub3FileSet.FOLDER_CUSTOM, slide.BACKGROUND_IMG,

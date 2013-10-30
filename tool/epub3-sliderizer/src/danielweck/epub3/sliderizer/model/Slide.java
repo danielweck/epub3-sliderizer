@@ -119,6 +119,8 @@ public final class Slide extends Fielder {
 	public String MO_DUR = null;
 	public String MO_SMIL = null;
 
+	public String FILES_FONT = null;
+	
 	public String FILES_CSS = null;
 
 	private ArrayList<String> _xCSSs = null;

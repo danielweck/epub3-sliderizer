@@ -1,8 +1,8 @@
 @font-face
 {
 	font-family: 'FingerPaint';
-	src: url('../../img/custom/FingerPaint.woff') format('woff')
-	/* url('../../img/custom/FingerPaint.ttf') format('truetype') */
+	src: url('../../html/fonts/custom/FingerPaint.woff') format('woff')
+	/* url('../../html/fonts/custom/FingerPaint.ttf') format('truetype') */
 	;
 	font-weight: normal; /* 400 */
 	font-style: normal;
