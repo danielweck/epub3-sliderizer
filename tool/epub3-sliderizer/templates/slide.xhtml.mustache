@@ -50,13 +50,31 @@
         {{#xJSs}}
         <link href="../{{{slideShow.FOLDER_JS}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{.}}}" type="text/javascript" rel="script"/>
         {{/xJSs}}
-        
+
+        {{#NOT_FIRST}}
         <link href="{{{PREV_SLIDE_FILENAME}}}" rel="prev"/>
+        {{/NOT_FIRST}}
         
+        {{#NOT_LAST}}
         <link href="{{{NEXT_SLIDE_FILENAME}}}" rel="next"/>
+        {{/NOT_LAST}}
+
+        <link href="../{{{slideShow.NAV_SLIDE_FILENAME}}}" rel="nav"/>
+
+        {{#NOT_FIRST}}
+        <link href="{{{slideShow.FIRST_SLIDE_FILENAME}}}" rel="first"/>
+        {{/NOT_FIRST}}
         
+        {{#NOT_LAST}}
+        <link href="{{{slideShow.LAST_SLIDE_FILENAME}}}" rel="last"/>
+        {{/NOT_LAST}}
+                
         <link href="../../../{{{slideShow.EPUB_FILE}}}" rel="epub"/>
 
+        {{#NOTES}}
+        <link href="{{{SLIDE_FILENAME_NOTES}}}" rel="notes"/>
+        {{/NOTES}}
+        
         {{#slideShow.CSS_STYLE}}
         <style type="text/css">
         {{{slideShow.CSS_STYLING}}}

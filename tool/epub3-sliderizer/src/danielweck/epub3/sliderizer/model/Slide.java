@@ -19,6 +19,14 @@ public final class Slide extends Fielder {
 		slideShow = ss;
 	}
 
+	public boolean NOT_FIRST() {
+		return SLIDE_NUMBER() > 1;
+	}
+
+	public boolean NOT_LAST() {
+		return SLIDE_NUMBER() < slideShow.slides.size();
+	}
+
 	public int SLIDE_NUMBER() {
 		return slideShow.slides.indexOf(this) + 1;
 	}
