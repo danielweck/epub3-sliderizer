@@ -5,7 +5,7 @@ Simple utility to easily create __EPUB 3__ / __HTML 5__ slidedecks (one output f
 
 [Follow this link to learn more about the tool (live demo)](http://danielweck.github.io/epub3-sliderizer "epub3-sliderizer homepage").
 
-Screeshots
+Screenshots
 ----------------
 
 
