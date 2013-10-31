@@ -65,6 +65,10 @@ public final class Slide extends Fielder {
 	public String CONTENT = "<p style=\"text-align: center;\">\n<br/>\n</p>";
 	public static String FIELD_CONTENT = "CONTENT";
 
+
+	//TODO: MASSIIIIVE HACK!! :(
+	private int _verbosity = -1;
+
 	public String CONTENT_XHTML() throws Exception {
 
 		if (CONTENT == null) {
@@ -72,7 +76,7 @@ public final class Slide extends Fielder {
 		}
 
 		return XHTML.massage(CONTENT, slideShow, this,
-				slideShow.pathEpubFolder, -1);
+				slideShow.pathEpubFolder, _verbosity);
 	}
 
 	public String CONTENT_MIDDLE = "FALSE";
@@ -81,6 +85,18 @@ public final class Slide extends Fielder {
 		return CONTENT_MIDDLE.equalsIgnoreCase("TRUE")
 				|| CONTENT_MIDDLE.equalsIgnoreCase("YES")
 				|| CONTENT_MIDDLE.equalsIgnoreCase("1");
+	}
+
+	public boolean AUTHORize = false;
+
+	public String CONTENT_ORIGINAL() throws Exception {
+
+		if (CONTENT == null) {
+			return null;
+		}
+
+		return CONTENT.replace("&", "&amp;").replace("<", "&lt;")
+				.replace(">", "&gt;");
 	}
 
 	public String INCREMENTALS = null;
@@ -257,6 +273,9 @@ public final class Slide extends Fielder {
 	protected boolean parseSpecial(String line, BufferedReader bufferedReader,
 			int verbosity) throws Exception {
 
+		// HACK!
+		_verbosity = verbosity;
+		
 		if (line.equals(SLIDE_MARKER)) {
 			return true;
 		}
@@ -269,6 +288,9 @@ public final class Slide extends Fielder {
 
 		Slide slide = new Slide(slideShow);
 
+		// HACK!
+		slide._verbosity = verbosity;
+		
 		parseFields(slide, bufferedReader, verbosity);
 
 		return slide;

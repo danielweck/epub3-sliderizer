@@ -12,7 +12,8 @@ fi
 
 #VERBOSITY="VERBOSE_min"
 #VERBOSITY="VERBOSE_medium"
-#VERBOSITY="VERBOSE_max"
+#VERBOSITY="VERBOSE_max" ===> triggers special "author" mode with Markdown EpicEditor
+
 VERBOSITY="VERBOSE_min"
 
 root=$(pwd)
@@ -40,7 +41,11 @@ mkdir ./_OUTPUT
 mkdir ./_OUTPUT/content
 cp -r ./tool/EPUB3 ./_OUTPUT/content/
 #mv ./_OUTPUT/readium/index.html ./_OUTPUT/content/
-
+if [ "${VERBOSITY}" != "VERBOSE_max" ]
+then
+rm -r ./_OUTPUT/content/EPUB3/epub/html/epiceditor/
+rm ./_OUTPUT/content/EPUB3/epub/js/epiceditor.js
+fi
 
 bin="${root}/tool/epub3-sliderizer/bin/"
 

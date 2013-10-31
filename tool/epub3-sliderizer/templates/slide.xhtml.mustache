@@ -117,6 +117,7 @@
 </head>
 <body epub:type="bodymatter">
     <div id="epb3sldrzr-body">
+        
         <div id="epb3sldrzr-root">
 
             {{#slideShow.LOGO}}
@@ -131,7 +132,7 @@
 
                     <h1 id="epb3sldrzr-title">{{TITLE}}{{#SUBTITLE}} <span id="epb3sldrzr-subtitle">{{SUBTITLE}}</span>{{/SUBTITLE}}</h1>
 
-{{#CONTENT_MIDDLE_ALIGN}}<div class="vertical-middle">{{/CONTENT_MIDDLE_ALIGN}}
+{{#CONTENT_MIDDLE_ALIGN}}<div id="epb3sldrzr-vertical-middle" class="vertical-middle">{{/CONTENT_MIDDLE_ALIGN}}
                     {{{CONTENT_XHTML}}}
 {{#CONTENT_MIDDLE_ALIGN}}</div>{{/CONTENT_MIDDLE_ALIGN}}
 
@@ -146,6 +147,14 @@
                 </aside>
                 {{/NOTES}}
              </section>
+
+
+
+             {{#AUTHORize}}
+             <div id="epiceditor">
+             <textarea id="epb3sldrzr-markdown-src">{{{CONTENT_ORIGINAL}}}</textarea>
+             </div>
+             {{/AUTHORize}}
          </div>
      </div>
 </body>

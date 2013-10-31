@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+*,
+*:before,
+*:after
+{
+	line-height: 1.5;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+  background:rgb(41,41,41);
+  color:#ddd;
+
+  font-family:monospace;
+
+font-size: 40px;
+
+font-weight: 400;
+
+
+padding: 1em;
+
+  line-height:1.35em;
+}

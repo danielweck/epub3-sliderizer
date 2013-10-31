@@ -360,6 +360,16 @@ Slide content
 
 */
 
+#epiceditor
+{
+    display: none;
+    
+    position: static;
+    min-height: 100%;
+    
+    overflow: hidden;
+}
+
 #epb3sldrzr-content
 {
     display: block;

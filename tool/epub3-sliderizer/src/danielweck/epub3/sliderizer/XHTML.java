@@ -734,7 +734,7 @@ public final class XHTML {
 						XMLConstants.XML_NS_URI);
 
 		XHTML.create_Content(rootElement, document, content, slideShow, slide,
-				pathEpubFolder, -1);
+				pathEpubFolder, verbosity);
 
 		return XmlDocument.toString(rootElement, -1)
 				.replaceAll("<\\?xml[^>]*\\?>", "")
@@ -765,6 +765,10 @@ public final class XHTML {
 		}
 
 		if (!skipMarkdown) {
+			if (slide != null && verbosity >= 3) {
+				slide.AUTHORize = true;
+			}
+
 			try {
 				content = m_PegDownProcessor.markdownToHtml(content);
 			} catch (Exception ex) {
