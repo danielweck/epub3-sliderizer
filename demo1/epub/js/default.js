@@ -1218,6 +1218,153 @@ Epub3Sliderizer.toggleReflow = function()
 
 // ----------
 
+Epub3Sliderizer.epicEditor = undefined;
+
+Epub3Sliderizer.epicEditorOnKeyboard = function (keyboardEvent)
+{
+    // Filter out keyboard shortcuts
+    if (keyboardEvent.altKey ||
+        keyboardEvent.ctrlKey ||
+        keyboardEvent.metaKey ||
+        keyboardEvent.shiftKey)
+    {
+        return;
+    }
+
+    if (keyboardEvent.keyCode === 27) // ESC
+    {
+        Epub3Sliderizer.toggleEpicEditor();
+        keyboardEvent.preventDefault();
+        return;
+    }
+}
+
+Epub3Sliderizer.toggleEpicEditor = function()
+{
+    var that = this;
+    
+    var epiceditor = document.getElementById("epiceditor");
+    if (!epiceditor)
+    {
+        alert('Author mode is not enabled for this slide.\n\nAre you sure it was edited with Markdown?\n\nOtherwise, check that VERBOSITY="VERBOSE_max" in the sliderize.sh script.');
+        return;
+    }
+
+    function addRemoveOnKey(remove)
+    {
+        var epiceditoriFrame = undefined;
+        // for (var i = 0; i < epiceditor.childNodes.length; i++)
+        // {
+        //     var child = epiceditor.childNodes[i];
+        //     if (child.nodeType != 1)
+        //     {
+        //         continue;
+        //     }
+        //     epiceditoriFrame = child;
+        //     break; // should be IFRAME
+        // }
+        // console.log(epiceditoriFrame);
+        // epiceditoriFrame = epiceditoriFrame.contentDocument || epiceditoriFrame.contentWindow.document;
+        epiceditoriFrame = that.epicEditor.getElement('editor');
+    
+        if (remove)
+        {
+            epiceditoriFrame.removeEventListener('keyup', that.epicEditorOnKeyboard);
+        }
+        else
+        {
+            epiceditoriFrame.addEventListener('keyup', that.epicEditorOnKeyboard);
+        }
+    }
+    
+    var htmlContentBox = document.getElementById("epb3sldrzr-content");
+
+    if (this.epicEditor)
+    {
+        addRemoveOnKey(true);
+        
+        this.epicEditor.save();
+        
+        this.epicEditor.preview();
+        var topDiv = this.epicEditor.getElement('previewer').getElementById("epiceditor-preview");
+        
+        var title = document.getElementById("epb3sldrzr-title");
+        if (title)
+        {
+            title = title.cloneNode(true);
+        }
+        
+        var actualContentAnchor = document.getElementById("epb3sldrzr-vertical-middle") || document.getElementById("epb3sldrzr-anim-overflow");
+        actualContentAnchor.innerHTML = "";
+        
+        if (title)
+        {
+            actualContentAnchor.appendChild(title);
+        }
+        
+        for (var i = 0; i < topDiv.childNodes.length; i++)
+        {
+            var node = topDiv.childNodes[i];
+            node = node.cloneNode(true);
+
+            actualContentAnchor.appendChild(node);
+        }
+        
+        setTimeout(function()
+        {
+            epiceditor.style.display = "none";
+            htmlContentBox.style.display = "block";
+        }, 500);
+        
+        this.epicEditor.unload();
+        this.epicEditor = undefined;
+        
+        return;
+    }
+
+    epiceditor.style.display = "block";
+    
+    htmlContentBox.style.display = "none";
+    
+    var txtArea = document.getElementById('epb3sldrzr-markdown-src');
+
+    var file = document.documentElement.id + ".md";
+    console.log("||| EpicEditor file: " + file);
+    
+    var opts = {
+      textarea: txtArea,
+      button: false,
+      file: {
+        name: file
+      },
+      theme: {
+          base: '/epiceditor.css',
+          preview: '/previewer.css',
+          editor: '/editor.css'
+      }
+    };
+    
+    this.epicEditor = new EpicEditor(opts).load(function()
+    {
+        setTimeout(function()
+        {
+            that.epicEditor.edit();
+            that.epicEditor.focus();
+    
+            addRemoveOnKey(false);
+        }, 500);
+    });
+    
+    // //<div id="epiceditor-preview"></div>
+    // this.epicEditor.on('update', function ()
+    // {
+    //     //var topDiv = this.epicEditor.getElement('previewer').getElementById("epiceditor-preview");
+    //     document.getElementById('epiceditor-preview').innerHTML = this.exportFile(null, 'html');
+    // }).emit('update');
+}
+
+// ----------
+
 //http://www.sceneonthe.net/unicode.htm
 //http://www.w3.org/2002/09/tests/keys.html
 Epub3Sliderizer.onKeyboard = function(keyboardEvent)
@@ -1240,7 +1387,37 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 
     var fontSizeIncrease = 5;
 
-    if (!this.reflow && keyboardEvent.keyCode === 90) // Z
+    if (this.authorMode)
+    {
+        if (keyboardEvent.keyCode === 37 || // left arrow
+        // keyboardEvent.keyCode === 38 // up arrow
+        keyboardEvent.keyCode === 33 // page up
+        )
+        {
+            keyboardEvent.preventDefault();
+            this.gotoPrevious();
+            return;
+        }
+        else if (keyboardEvent.keyCode === 39 || // right arrow
+            // keyboardEvent.keyCode === 40 // down arrow
+            keyboardEvent.keyCode === 34 // page down
+        )
+        {
+            keyboardEvent.preventDefault();
+            this.gotoNext();
+            return;
+        }
+    
+        if (keyboardEvent.keyCode !== 69 && keyboardEvent.keyCode !== 27) // E or ESC
+        {
+            return;
+        }
+        
+        this.toggleEpicEditor();
+
+        keyboardEvent.preventDefault();
+    }
+    else if (!this.reflow && keyboardEvent.keyCode === 90) // Z
     {
         keyboardEvent.preventDefault();
         var rectBody = this.bodyRoot.getBoundingClientRect();
@@ -1356,22 +1533,12 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
         keyboardEvent.preventDefault();
         this.nextIncremental(true);
     }
-    else if (keyboardEvent.keyCode === 35) // end
-    {
-        keyboardEvent.preventDefault();
-        this.gotoNext();
-    }
-    else if (keyboardEvent.keyCode === 36) // home
-    {
-        keyboardEvent.preventDefault();
-        this.gotoPrevious();
-    }
-    else if (keyboardEvent.keyCode === 32) // space
+    else if (keyboardEvent.keyCode === 32) // SPACE
     {
         keyboardEvent.preventDefault();
         this.nextIncremental(false);
     }
-    else if (keyboardEvent.keyCode === 77) // m
+    else if (keyboardEvent.keyCode === 77) // M
     {
         if (this.toc && this.toc !== "")
         {
@@ -1379,7 +1546,7 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
             this.gotoToc();
         }
     }
-    else if (keyboardEvent.keyCode === 70) // f
+    else if (keyboardEvent.keyCode === 70 || keyboardEvent.keyCode === 36) // F or HOME
     {
         if (this.first && this.first !== "")
         {
@@ -1387,13 +1554,23 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
             this.gotoFirst();
         }
     }
-    else if (keyboardEvent.keyCode === 76) // l
+    else if (keyboardEvent.keyCode === 76 || keyboardEvent.keyCode === 35) // L or END
     {
         if (this.last && this.last !== "")
         {
             keyboardEvent.preventDefault();
             this.gotoLast();
         }
+    }
+    else if (keyboardEvent.keyCode === 83) // S
+    {
+        keyboardEvent.preventDefault();
+        //TODO this.toggleSlideStrip();
+    }
+    else if (keyboardEvent.keyCode === 84) // T
+    {
+        keyboardEvent.preventDefault();
+        //TODO this.toggleTwoPageSpread();
     }
 };
 
@@ -3287,6 +3464,12 @@ Epub3Sliderizer.init = function()
 
         if (this.authorMode)
         {
+            this.initReverse();
+        
+            this.initLinks();
+        
+            window.onkeyup = this.onKeyboard.bind(this);
+        
             this.AUTHORize(".epb3sldrzr-author");
         }
     }
@@ -3690,6 +3873,19 @@ function readyFirst()
     {
         Epub3Sliderizer.authorMode = true;
         document.body.classList.add("author");
+
+        loadScript(undefined, 'epiceditor.js');
+        
+        setTimeout(function()
+        {
+            var epicEditor = new EpicEditor();
+            var files = epicEditor.getFiles();
+            for (var file in files)
+            {
+              console.log('||| EpicEditor remove file: ' + file);
+              epicEditor.remove(file);
+            }
+        }, 700);
     }
     else if (Epub3Sliderizer.android ||
         (getUrlQueryParam("basic") !== null)
