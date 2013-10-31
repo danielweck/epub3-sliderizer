@@ -1231,9 +1231,11 @@ Epub3Sliderizer.epicEditorOnKeyboard = function (keyboardEvent)
         return;
     }
 
-    if (keyboardEvent.keyCode === 27) // E or ESC
+    if (keyboardEvent.keyCode === 27) // ESC
     {
         Epub3Sliderizer.toggleEpicEditor();
+        keyboardEvent.preventDefault();
+        return;
     }
 }
 
@@ -1387,6 +1389,25 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 
     if (this.authorMode)
     {
+        if (keyboardEvent.keyCode === 37 || // left arrow
+        // keyboardEvent.keyCode === 38 // up arrow
+        keyboardEvent.keyCode === 33 // page up
+        )
+        {
+            keyboardEvent.preventDefault();
+            this.gotoPrevious();
+            return;
+        }
+        else if (keyboardEvent.keyCode === 39 || // right arrow
+            // keyboardEvent.keyCode === 40 // down arrow
+            keyboardEvent.keyCode === 34 // page down
+        )
+        {
+            keyboardEvent.preventDefault();
+            this.gotoNext();
+            return;
+        }
+    
         if (keyboardEvent.keyCode !== 69 && keyboardEvent.keyCode !== 27) // E or ESC
         {
             return;
@@ -1512,17 +1533,7 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
         keyboardEvent.preventDefault();
         this.nextIncremental(true);
     }
-    else if (keyboardEvent.keyCode === 35) // end
-    {
-        keyboardEvent.preventDefault();
-        this.gotoNext();
-    }
-    else if (keyboardEvent.keyCode === 36) // home
-    {
-        keyboardEvent.preventDefault();
-        this.gotoPrevious();
-    }
-    else if (keyboardEvent.keyCode === 32) // space
+    else if (keyboardEvent.keyCode === 32) // SPACE
     {
         keyboardEvent.preventDefault();
         this.nextIncremental(false);
@@ -1535,7 +1546,7 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
             this.gotoToc();
         }
     }
-    else if (keyboardEvent.keyCode === 70) // F
+    else if (keyboardEvent.keyCode === 70 || keyboardEvent.keyCode === 36) // F or HOME
     {
         if (this.first && this.first !== "")
         {
@@ -1543,7 +1554,7 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
             this.gotoFirst();
         }
     }
-    else if (keyboardEvent.keyCode === 76) // L
+    else if (keyboardEvent.keyCode === 76 || keyboardEvent.keyCode === 35) // L or END
     {
         if (this.last && this.last !== "")
         {
@@ -3453,6 +3464,10 @@ Epub3Sliderizer.init = function()
 
         if (this.authorMode)
         {
+            this.initReverse();
+        
+            this.initLinks();
+        
             window.onkeyup = this.onKeyboard.bind(this);
         
             this.AUTHORize(".epb3sldrzr-author");
