@@ -1166,7 +1166,7 @@ Epub3Sliderizer.toggleReflow = function()
         this.updateFontSize(this.defaultFontSize + fontSizeIncrease*fontSizeIncreaseFactor);
     }
 
-    var viewport = querySelectorZ("head > meta[name=viewport]");    
+    var viewport = querySelectorZ("head > meta[name=viewport]");
     if (this.reflow)
     {    
         this.reflow = false;
@@ -1218,6 +1218,12 @@ Epub3Sliderizer.toggleReflow = function()
 
 // ----------
 
+
+Epub3Sliderizer.ACE = true;
+Epub3Sliderizer.aceEditor = undefined;
+
+// ----------
+
 //http://www.sceneonthe.net/unicode.htm
 //http://www.w3.org/2002/09/tests/keys.html
 Epub3Sliderizer.onKeyboard = function(keyboardEvent)
@@ -1237,19 +1243,34 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
         return;
     }
 
+    var that = this;
 
     var fontSizeIncrease = 5;
 
     if (this.authorMode)
     {
-        var txtArea = document.getElementById('epb3sldrzr-markdown-src');
+        var txtArea = undefined;
+        var txtAreaEditor = undefined;
+        var fetchElems = function()
+        {
+            if (!txtArea)
+            {
+                txtArea = document.getElementById('epb3sldrzr-markdown-src');
+            }
+            if (!txtAreaEditor)
+            {
+                txtAreaEditor = querySelectorZ('.ace_text-input');
+            }
+        };
         
         if (keyboardEvent.keyCode === 37 || // left arrow
         // keyboardEvent.keyCode === 38 // up arrow
         keyboardEvent.keyCode === 33 // page up
         )
         {
-            if (keyboardEvent.target === txtArea)
+            fetchElems();
+            
+            if (keyboardEvent.target === txtArea || keyboardEvent.target === txtAreaEditor)
             {
                 return;
             }
@@ -1262,7 +1283,9 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
             keyboardEvent.keyCode === 34 // page down
         )
         {
-            if (keyboardEvent.target === txtArea)
+            fetchElems();
+            
+            if (keyboardEvent.target === txtArea || keyboardEvent.target === txtAreaEditor)
             {
                 return;
             }
@@ -1276,11 +1299,12 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
             return;
         }
 
-        
-        var content = document.getElementById("epb3sldrzr-content");
+        fetchElems();
+        var root = document.getElementById("epb3sldrzr-root");
+        var divEditor = document.getElementById('epb3sldrzr-markdown-editor');
         var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
         
-        if ($(content).css("display") === "block")
+        if ($(root).css("display") === "block")
         {
         	var options = {
         		link_list:	false,			// render links as references, create link list as appendix
@@ -1329,22 +1353,78 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
             var markdown = reMarker.render(contentWrap);
 
             txtArea.value = markdown; //.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        
-            //console.log(toShow.value);
 
-            setTimeout(function()
+            root.style.display = "none";
+            document.body.style.overflow = "hidden";
+            
+            if (this.ACE)
             {
-                content.style.display = "none";
-                txtArea.style.display = "block";
+                divEditor.style.visibility = "hidden";
+                divEditor.style.display = "block";
                 
+                if (!this.aceEditor)
+                {
+                    this.aceEditor = ace.edit(divEditor);
+                
+                    this.aceEditor.renderer.setShowGutter(false);
+                    this.aceEditor.setHighlightActiveLine(true);
+                    this.aceEditor.setShowPrintMargin(false);
+                
+                    this.aceEditor.getSession().setUseSoftTabs(false);
+                    this.aceEditor.getSession().setTabSize(2);
+                    
+                    this.aceEditor.getSession().setUseWrapMode(false);
+    
+                    this.aceEditor.getSession().setMode("ace/mode/markdown");
+                    this.aceEditor.setTheme("ace/theme/solarized_dark");
+                
+                    this.aceEditor.on('blur', function(e)
+                    {
+                        var src = that.aceEditor.getSession().getValue();
+                        txtArea.value = src;
+                    });
+                }
+
+                fetchElems();
+                
+                divEditor.style.fontSize = '0.6em';
+
                 setTimeout(function()
                 {
-                    txtArea.focus();
-                }, 30);
-            }, 300);
+                    that.aceEditor.getSession().setValue(markdown);
+                    setTimeout(function()
+                    {
+                        divEditor.style.visibility = "visible";
+                        txtAreaEditor.focus();
+                    }, 30);
+
+                    setTimeout(function()
+                    {
+                        that.aceEditor.resize(true);
+                    }, 100);
+                }, 300);
+            }
+            else
+            {
+                setTimeout(function()
+                {
+                    txtArea.style.display = "block";
+
+                    setTimeout(function()
+                    {
+                        txtArea.focus();
+                    }, 30);
+                }, 300);
+            }
         }
         else
         {
+            if (txtAreaEditor)
+            {
+                txtAreaEditor.blur();
+            }
+            txtArea.blur();
+            
             marked.setOptions({
               gfm: false,
               tables: false,
@@ -1372,13 +1452,11 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 
             setTimeout(function()
             {
-                content.style.display = "block";
-                txtArea.style.display = "none";
+                document.body.style.overflow = "auto";
+                root.style.display = "block";
                 
-                setTimeout(function()
-                {
-                    txtArea.blur();
-                }, 30);
+                txtArea.style.display = "none";
+                divEditor.style.display = "none";
             }, 300);
         }
     
@@ -2257,7 +2335,7 @@ Epub3Sliderizer.onResize = function()
     this.bodyRoot.style.msTransformOrigin = transformOrigin;
     this.bodyRoot.style.transformOrigin = transformOrigin;
     
-    var bodyFit = this.getElementFit(this.bodyRoot, this.fitWidth);
+    var bodyFit = this.getElementFit(this.bodyRoot, this.authorMode);
     var ratio = bodyFit.ratio;
     var offsetX = bodyFit.offsetX;
     var offsetY = bodyFit.offsetY;
@@ -3424,18 +3502,35 @@ Epub3Sliderizer.init = function()
         this.bodyRoot.style.visibility = "visible";
     }
     else if (this.staticMode || this.authorMode)
-    {
-        //console.log("STATIC (iframe)");
-        
+    {   
         document.body.classList.add("epb3sldrzr-epubReadingSystem");
         
-        if (isDefinedAndNotNull(window.orientation))
+        if (this.authorMode)
         {
-            this.onOrientationChange();
+            if (isDefinedAndNotNull(window.orientation))
+            {
+                window.onorientationchange = this.onOrientationChange.bind(this);
+                this.onOrientationChange();
+            }
+            else
+            {
+                window.onresize = this.resetResize.bind(this);
+            
+                //this.resetResize();
+                this.onOrientationChange();
+            }
         }
         else
         {
-            this.resetResize();
+            if (isDefinedAndNotNull(window.orientation))
+            {
+                this.onOrientationChange();
+            }
+            else
+            {
+                //this.resetResize();
+                this.onOrientationChange();
+            }
         }
         
         this.bodyRoot.style.visibility = "visible";
@@ -3852,7 +3947,16 @@ function readyFirst()
         Epub3Sliderizer.authorMode = true;
         document.body.classList.add("author");
 
+        if (Epub3Sliderizer.ACE)
+        {
+            loadScript(undefined, 'ace.js');
+            loadScript(undefined, 'mode-markdown.js');
+            loadScript(undefined, 'theme-solarized_dark.js');
+        }
+        
+        //loadScript(undefined, 'klass.js');
         loadScript(undefined, 'reMarked.js');
+        
         loadScript(undefined, 'marked.js');
     }
     else if (Epub3Sliderizer.android ||

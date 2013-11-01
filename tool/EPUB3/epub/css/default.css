@@ -360,9 +360,33 @@ Slide content
 
 */
 
+.epb3sldrzr-markdown
+{
+    /*
+    position: static;
+    min-height: 100%;
+    width: 100%;
+    */
+    
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+	font-size: FONT_SIZEpx;
+    
+    display: none;
+}
+
+#epb3sldrzr-markdown-editor
+{
+}
+
 #epb3sldrzr-markdown-src
 {
-	font-size: FONT_SIZEpx;
     font-family: monospace;
 
     line-height:1.35em;
@@ -371,12 +395,6 @@ Slide content
     color:#ddd;
     
     padding: 0.5em;
-    
-    display: none;
-    
-    position: static;
-    min-height: 100%;
-    width: 100%;
     
     overflow: auto;
 }

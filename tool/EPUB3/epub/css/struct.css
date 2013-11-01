@@ -47,6 +47,7 @@ body:not(.reflow).basic.epb3sldrzr-epubReadingSystem:not(.author) img
 
 body
 {
+    overflow:auto;
 	/*
 	-webkit-text-size-adjust:none;
 	*/
@@ -61,7 +62,7 @@ body
 	font-family: Lato, Tahoma, verdana, arial, sans-serif;
 }
 
-body:not(.reflow)
+body:not(.reflow):not(.author)
 {
 	background-color: black;
 
@@ -71,8 +72,21 @@ body:not(.reflow)
 	top: 0;
 	width:100%;
 	height:100%;
-    
+
     overflow:hidden;
+}
+
+body.author
+{   
+    position: absolute;
+    widthx: 100%;
+    heightx: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    
+	background-color: blue;
 }
 
 body.reflow
@@ -91,13 +105,13 @@ body.reflow
 }
 
 
-body:not(.reflow)
+body:not(.reflow):not(.author)
 {
 	border-right: 0.08em solid transparent;
 	border-left: 0.08em solid transparent;
 }
 
-body:not(.reflow):not(.static):not(.basic).epb3sldrzr-epubReadingSystem
+body:not(.reflow):not(.author):not(.static):not(.basic).epb3sldrzr-epubReadingSystem
 {
 	border-right: 0.08em solid #aaaaaa;
 	border-left: 0.08em solid #aaaaaa;
