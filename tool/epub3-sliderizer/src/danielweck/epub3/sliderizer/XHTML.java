@@ -765,10 +765,6 @@ public final class XHTML {
 		}
 
 		if (!skipMarkdown) {
-			if (slide != null && verbosity >= 3) {
-				slide.AUTHORize = true;
-			}
-
 			try {
 				content = m_PegDownProcessor.markdownToHtml(content);
 			} catch (Exception ex) {

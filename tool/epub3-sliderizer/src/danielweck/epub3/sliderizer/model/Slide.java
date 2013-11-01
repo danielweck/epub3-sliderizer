@@ -65,8 +65,7 @@ public final class Slide extends Fielder {
 	public String CONTENT = "<p style=\"text-align: center;\">\n<br/>\n</p>";
 	public static String FIELD_CONTENT = "CONTENT";
 
-
-	//TODO: MASSIIIIVE HACK!! :(
+	// TODO: MASSIIIIVE HACK!! :(
 	private int _verbosity = -1;
 
 	public String CONTENT_XHTML() throws Exception {
@@ -87,7 +86,11 @@ public final class Slide extends Fielder {
 				|| CONTENT_MIDDLE.equalsIgnoreCase("1");
 	}
 
-	public boolean AUTHORize = false;
+	public boolean AUTHORize() {
+		return CONTENT != null && _verbosity >= 3
+				&& CONTENT.indexOf(XHTML.MARKDOWN_SRC) != 0
+				&& CONTENT.indexOf(XHTML.NOMARKDOWN) != 0;
+	}
 
 	public String CONTENT_ORIGINAL() throws Exception {
 
@@ -275,7 +278,7 @@ public final class Slide extends Fielder {
 
 		// HACK!
 		_verbosity = verbosity;
-		
+
 		if (line.equals(SLIDE_MARKER)) {
 			return true;
 		}
@@ -290,7 +293,7 @@ public final class Slide extends Fielder {
 
 		// HACK!
 		slide._verbosity = verbosity;
-		
+
 		parseFields(slide, bufferedReader, verbosity);
 
 		return slide;

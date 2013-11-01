@@ -81,9 +81,9 @@ public final class Epub3FileSet {
 			new FileId("hammer.fakemultitouch.js", "js-hammer-fakemultitouch"),
 			new FileId("hammer.showtouches.js", "js-hammer-showtouches"),
 			new FileId("jquery.mousewheel.js", "js-jquery-mousewheel"),
-			new FileId("jquery.blockUI.js", "js-jquery-blockUI")
-	// new FileId("epiceditor.js", "js-epiceditor")
-	};
+			new FileId("jquery.blockUI.js", "js-jquery-blockUI"),
+			new FileId("reMarked.js", "js-reMarked"),
+			new FileId("marked.js", "js-marked") };
 
 	private final static String CSS_PREFIXED = "_PREFIXED_";
 	private final static String CSS_PREFIXED_PROP = "-PREFIXED_PROPERTY-";
