@@ -1307,7 +1307,7 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
     			// no output
     			ignore: "script style noscript",
     			// eg: "<tag>some content</tag>"
-    			inline: "", //span sup sub i u b center big
+    			inline: "span sup sub i u b", //span sup sub i u b center big
     			// eg: "\n<tag>\n\tsome content\n</tag>"
     		//	block1: "",
     			// eg: "\n\n<tag>\n\tsome content\n</tag>"
