@@ -120,8 +120,8 @@ Markdown.HookCollection = HookCollection;
 //             mac: 'Command-G|Ctrl-G',
 //         },
         olist: {
-            win: 'Ctrl-L',
-            mac: 'Command-L',
+            win: 'Ctrl-Y',
+            mac: 'Command-Y',
         },
         ulist: {
             win: 'Ctrl-U',
