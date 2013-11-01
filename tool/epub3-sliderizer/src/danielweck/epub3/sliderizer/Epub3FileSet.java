@@ -82,12 +82,13 @@ public final class Epub3FileSet {
 			new FileId("hammer.showtouches.js", "js-hammer-showtouches"),
 			new FileId("jquery.mousewheel.js", "js-jquery-mousewheel"),
 			new FileId("jquery.blockUI.js", "js-jquery-blockUI"),
-			//new FileId("klass.js", "js-klass"),
+			// new FileId("klass.js", "js-klass"),
 			new FileId("reMarked.js", "js-reMarked"),
 			new FileId("marked.js", "js-marked"),
 			new FileId("ace.js", "js-ace"),
 			new FileId("mode-markdown.js", "js-ace-markdown"),
-			new FileId("theme-solarized_dark.js", "js-ace-theme") };
+			new FileId("theme-solarized_dark.js", "js-ace-theme"),
+			new FileId("Markdown.Editor.js", "js-markdown-editor") };
 
 	private final static String CSS_PREFIXED = "_PREFIXED_";
 	private final static String CSS_PREFIXED_PROP = "-PREFIXED_PROPERTY-";

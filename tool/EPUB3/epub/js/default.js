@@ -1366,18 +1366,62 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
                 {
                     this.aceEditor = ace.edit(divEditor);
                 
-                    this.aceEditor.renderer.setShowGutter(false);
+                    this.aceEditor.renderer.setShowGutter(true);
+                    //this.aceEditor.renderer.setPadding(200);
+
+                    this.aceEditor.setDisplayIndentGuides(true);
                     this.aceEditor.setHighlightActiveLine(true);
+                    this.aceEditor.setHighlightSelectedWord(true);
                     this.aceEditor.setShowPrintMargin(false);
-                
-                    this.aceEditor.getSession().setUseSoftTabs(false);
-                    this.aceEditor.getSession().setTabSize(2);
+                    this.aceEditor.setShowInvisibles(false);
+
+                    this.aceEditor.setBehavioursEnabled(true);
+                    this.aceEditor.getSession().setUseWrapMode(true);
                     
-                    this.aceEditor.getSession().setUseWrapMode(false);
+                    this.aceEditor.getSession().setUseSoftTabs(true);
+                    this.aceEditor.getSession().setTabSize(2);
     
                     this.aceEditor.getSession().setMode("ace/mode/markdown");
                     this.aceEditor.setTheme("ace/theme/solarized_dark");
                 
+                    if (this.aceEditor.require == undefined)
+                    {
+                        this.aceEditor.require = ace.require;
+                    }
+                    var markdownEditor = new Markdown.Editor(undefined);
+                        // {
+//                             makeHtml: function(text)
+//                             {
+//                                 marked.setOptions({
+//                                   gfm: false,
+//                                   tables: false,
+//                                   breaks: false,
+//                                   highlight: function (code, lang, callback)
+//                                   {
+//                                       callback(null, code);
+//                                   },
+//                                   pedantic: false,
+//                                   sanitize: false,
+//                                   smartLists: true,
+//                                   smartypants: false,
+//                                   langPrefix: 'lang-'
+//                                 });
+// 
+//                                 marked(text, function (err, content)
+//                                 {
+//                                   if (err)
+//                                   {
+//                                       throw err;
+//                                   }
+//               
+//                                   return content;
+//                                 });
+//                                 
+//                                 return undefined;
+//                             }
+//                         });
+                    markdownEditor.run(this.aceEditor);
+                    
                     this.aceEditor.on('blur', function(e)
                     {
                         var src = that.aceEditor.getSession().getValue();
@@ -3952,6 +3996,8 @@ function readyFirst()
             loadScript(undefined, 'ace.js');
             loadScript(undefined, 'mode-markdown.js');
             loadScript(undefined, 'theme-solarized_dark.js');
+
+            loadScript(undefined, 'Markdown.Editor.js');
         }
         
         //loadScript(undefined, 'klass.js');
