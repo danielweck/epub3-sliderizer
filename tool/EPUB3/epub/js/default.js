@@ -1222,6 +1222,257 @@ Epub3Sliderizer.toggleReflow = function()
 Epub3Sliderizer.ACE = true;
 Epub3Sliderizer.aceEditor = undefined;
 
+Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
+{
+    var that = this;
+    
+    var txtArea = undefined;
+    var txtAreaEditor = undefined;
+    var fetchElems = function()
+    {
+        if (!txtArea)
+        {
+            txtArea = document.getElementById('epb3sldrzr-markdown-src');
+        }
+        if (!txtAreaEditor)
+        {
+            txtAreaEditor = querySelectorZ('.ace_text-input');
+        }
+    };
+    
+    if (keyboardEvent.keyCode === 37 || // left arrow
+    // keyboardEvent.keyCode === 38 // up arrow
+    keyboardEvent.keyCode === 33 // page up
+    )
+    {
+        fetchElems();
+        
+        if (keyboardEvent.target === txtArea || keyboardEvent.target === txtAreaEditor)
+        {
+            return;
+        }
+        keyboardEvent.preventDefault();
+        this.gotoPrevious();
+        return;
+    }
+    else if (keyboardEvent.keyCode === 39 || // right arrow
+        // keyboardEvent.keyCode === 40 // down arrow
+        keyboardEvent.keyCode === 34 // page down
+    )
+    {
+        fetchElems();
+        
+        if (keyboardEvent.target === txtArea || keyboardEvent.target === txtAreaEditor)
+        {
+            return;
+        }
+        keyboardEvent.preventDefault();
+        this.gotoNext();
+        return;
+    }
+
+    if (keyboardEvent.keyCode !== 27) // ESC
+    {
+        return;
+    }
+
+    fetchElems();
+    if (!txtArea)
+    {
+        alert('Author mode is not enabled for this slide.\n\nAre you sure it was edited with Markdown?\n\nIf yes, check that VERBOSITY="VERBOSE_max" in the sliderize.sh script\n(this enables the "author" mode).');
+        return;
+    }
+    
+    var root = document.getElementById("epb3sldrzr-root");
+    var divEditor = document.getElementById('epb3sldrzr-markdown-editor');
+    var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
+    
+    if ($(root).css("display") === "block")
+    {
+    	var options = {
+    		link_list:	false,			// render links as references, create link list as appendix
+    	//  link_near:					// cite links immediately after blocks
+    		h1_setext:	true,			// underline h1 headers
+    		h2_setext:	true,			// underline h2 headers
+    		h_atx_suf:	false,			// header suffix (###)
+    	//	h_compact:	true,			// compact headers (except h1)
+    		gfm_code:	false,			// render code blocks as via ``` delims
+    		li_bullet:	"*-+"[0],		// list item bullet style
+    	//	list_indnt:					// indent top-level lists
+    		hr_char:	"-_*"[0],		// hr style
+    		indnt_str:	["    ","\t","  "][0],	// indentation string
+    		bold_char:	"*_"[0],		// char used for strong
+    		emph_char:	"*_"[1],		// char used for em
+    		gfm_del:	true,			// ~~strikeout~~ for <del>strikeout</del>
+    		gfm_tbls:	false,			// markdown-extra tables
+    		tbl_edges:	false,			// show side edges on tables
+    		hash_lnks:	false,			// anchors w/hash hrefs as links
+    		br_only:	false,			// avoid using "  " as line break indicator
+    		col_pre:	"col ",			// column prefix to use when creating missing headers for tables
+    	//	comp_style: false,			// use getComputedStyle instead of hardcoded tag list to discern block/inline
+		unsup_tags: {				// handling of unsupported tags, defined in terms of desired output style. if not listed, output = outerHTML
+			// no output
+			ignore: "script style noscript",
+			// eg: "<tag>some content</tag>"
+			inline: "span sup sub i u b", //span sup sub i u b center big
+			// eg: "\n<tag>\n\tsome content\n</tag>"
+		//	block1: "",
+			// eg: "\n\n<tag>\n\tsome content\n</tag>"
+			block2: "", //div form fieldset dl header footer address article aside figure hgroup section
+			// eg: "\n<tag>some content</tag>"
+			block1c: "", //dt dd caption legend figcaption output
+			// eg: "\n\n<tag>some content</tag>"
+			block2c: "", //canvas audio video iframe
+		/*	// direct remap of unsuported tags
+			convert: {
+				i: "em",
+				b: "strong"
+			}
+		*/
+	        }
+        };
+        var reMarker = new reMarked(options);
+
+        var markdown = reMarker.render(contentWrap);
+
+        txtArea.value = markdown; //.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+        root.style.display = "none";
+        document.body.style.overflow = "hidden";
+        
+        if (this.ACE)
+        {
+            divEditor.style.visibility = "hidden";
+            divEditor.style.display = "block";
+            
+            if (!this.aceEditor)
+            {
+                this.aceEditor = ace.edit(divEditor);
+            
+                this.aceEditor.renderer.setShowGutter(true);
+                //this.aceEditor.renderer.setPadding(200);
+
+                this.aceEditor.setDisplayIndentGuides(true);
+                this.aceEditor.setHighlightActiveLine(true);
+                this.aceEditor.setHighlightSelectedWord(true);
+                this.aceEditor.setShowPrintMargin(false);
+                this.aceEditor.setShowInvisibles(false);
+
+                this.aceEditor.setBehavioursEnabled(true);
+                this.aceEditor.getSession().setUseWrapMode(true);
+                
+                this.aceEditor.getSession().setUseSoftTabs(true);
+                this.aceEditor.getSession().setTabSize(2);
+
+                this.aceEditor.getSession().setMode("ace/mode/markdown");
+                this.aceEditor.setTheme("ace/theme/solarized_dark");
+            
+                if (this.aceEditor.require == undefined)
+                {
+                    this.aceEditor.require = ace.require;
+                }
+                var markdownEditor = new Markdown.Editor();
+                markdownEditor.run(this.aceEditor);
+                
+                this.aceEditor.on('blur', function(e)
+                {
+                    var src = that.aceEditor.getSession().getValue();
+                    txtArea.value = src;
+                });
+            }
+
+            fetchElems();
+            
+            divEditor.style.fontSize = '0.6em';
+
+            setTimeout(function()
+            {
+                that.aceEditor.getSession().setValue(markdown);
+                setTimeout(function()
+                {
+                    divEditor.style.visibility = "visible";
+                    txtAreaEditor.focus();
+                }, 30);
+
+                setTimeout(function()
+                {
+                    that.aceEditor.resize(true);
+                }, 100);
+            }, 300);
+        }
+        else
+        {
+            setTimeout(function()
+            {
+                txtArea.style.display = "block";
+
+                setTimeout(function()
+                {
+                    txtArea.focus();
+                }, 30);
+            }, 300);
+        }
+    }
+    else
+    {
+        if (txtAreaEditor)
+        {
+            txtAreaEditor.blur();
+        }
+        txtArea.blur();
+        
+        marked.setOptions({
+          gfm: false,
+          tables: false,
+          breaks: false,
+          highlight: function (code, lang, callback)
+          {
+              callback(null, code);
+          },
+          pedantic: false,
+          sanitize: false,
+          smartLists: true,
+          smartypants: false,
+          langPrefix: 'lang-'
+        });
+
+        marked(txtArea.value, function (err, content)
+        {
+          if (err)
+          {
+              throw err;
+          }
+          
+          var cleaned = content.replace(/<hr>/g, "<hr/>");
+          
+          try
+          {
+              contentWrap.innerHTML = cleaned;
+          }
+          catch(ex)
+          {
+              console.error(ex);
+              console.log(cleaned);
+              
+              alert("Oops, invalid XHTML :(\n\n(next message will show Markdown parser result)");
+              alert(cleaned);
+          }
+        });
+
+        setTimeout(function()
+        {
+            document.body.style.overflow = "auto";
+            root.style.display = "block";
+            
+            txtArea.style.display = "none";
+            divEditor.style.display = "none";
+        }, 300);
+    }
+    
+
+    keyboardEvent.preventDefault();
+}
+
 // ----------
 
 //http://www.sceneonthe.net/unicode.htm
@@ -1249,273 +1500,7 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 
     if (this.authorMode)
     {
-        var txtArea = undefined;
-        var txtAreaEditor = undefined;
-        var fetchElems = function()
-        {
-            if (!txtArea)
-            {
-                txtArea = document.getElementById('epb3sldrzr-markdown-src');
-            }
-            if (!txtAreaEditor)
-            {
-                txtAreaEditor = querySelectorZ('.ace_text-input');
-            }
-        };
-        
-        if (keyboardEvent.keyCode === 37 || // left arrow
-        // keyboardEvent.keyCode === 38 // up arrow
-        keyboardEvent.keyCode === 33 // page up
-        )
-        {
-            fetchElems();
-            
-            if (keyboardEvent.target === txtArea || keyboardEvent.target === txtAreaEditor)
-            {
-                return;
-            }
-            keyboardEvent.preventDefault();
-            this.gotoPrevious();
-            return;
-        }
-        else if (keyboardEvent.keyCode === 39 || // right arrow
-            // keyboardEvent.keyCode === 40 // down arrow
-            keyboardEvent.keyCode === 34 // page down
-        )
-        {
-            fetchElems();
-            
-            if (keyboardEvent.target === txtArea || keyboardEvent.target === txtAreaEditor)
-            {
-                return;
-            }
-            keyboardEvent.preventDefault();
-            this.gotoNext();
-            return;
-        }
-    
-        if (keyboardEvent.keyCode !== 27) // ESC
-        {
-            return;
-        }
-
-        fetchElems();
-        var root = document.getElementById("epb3sldrzr-root");
-        var divEditor = document.getElementById('epb3sldrzr-markdown-editor');
-        var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
-        
-        if ($(root).css("display") === "block")
-        {
-        	var options = {
-        		link_list:	false,			// render links as references, create link list as appendix
-        	//  link_near:					// cite links immediately after blocks
-        		h1_setext:	true,			// underline h1 headers
-        		h2_setext:	true,			// underline h2 headers
-        		h_atx_suf:	false,			// header suffix (###)
-        	//	h_compact:	true,			// compact headers (except h1)
-        		gfm_code:	false,			// render code blocks as via ``` delims
-        		li_bullet:	"*-+"[0],		// list item bullet style
-        	//	list_indnt:					// indent top-level lists
-        		hr_char:	"-_*"[0],		// hr style
-        		indnt_str:	["    ","\t","  "][0],	// indentation string
-        		bold_char:	"*_"[0],		// char used for strong
-        		emph_char:	"*_"[1],		// char used for em
-        		gfm_del:	true,			// ~~strikeout~~ for <del>strikeout</del>
-        		gfm_tbls:	false,			// markdown-extra tables
-        		tbl_edges:	false,			// show side edges on tables
-        		hash_lnks:	false,			// anchors w/hash hrefs as links
-        		br_only:	false,			// avoid using "  " as line break indicator
-        		col_pre:	"col ",			// column prefix to use when creating missing headers for tables
-        	//	comp_style: false,			// use getComputedStyle instead of hardcoded tag list to discern block/inline
-    		unsup_tags: {				// handling of unsupported tags, defined in terms of desired output style. if not listed, output = outerHTML
-    			// no output
-    			ignore: "script style noscript",
-    			// eg: "<tag>some content</tag>"
-    			inline: "span sup sub i u b", //span sup sub i u b center big
-    			// eg: "\n<tag>\n\tsome content\n</tag>"
-    		//	block1: "",
-    			// eg: "\n\n<tag>\n\tsome content\n</tag>"
-    			block2: "", //div form fieldset dl header footer address article aside figure hgroup section
-    			// eg: "\n<tag>some content</tag>"
-    			block1c: "", //dt dd caption legend figcaption output
-    			// eg: "\n\n<tag>some content</tag>"
-    			block2c: "", //canvas audio video iframe
-    		/*	// direct remap of unsuported tags
-    			convert: {
-    				i: "em",
-    				b: "strong"
-    			}
-    		*/
-    	        }
-            };
-            var reMarker = new reMarked(options);
-
-            var markdown = reMarker.render(contentWrap);
-
-            txtArea.value = markdown; //.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-            root.style.display = "none";
-            document.body.style.overflow = "hidden";
-            
-            if (this.ACE)
-            {
-                divEditor.style.visibility = "hidden";
-                divEditor.style.display = "block";
-                
-                if (!this.aceEditor)
-                {
-                    this.aceEditor = ace.edit(divEditor);
-                
-                    this.aceEditor.renderer.setShowGutter(true);
-                    //this.aceEditor.renderer.setPadding(200);
-
-                    this.aceEditor.setDisplayIndentGuides(true);
-                    this.aceEditor.setHighlightActiveLine(true);
-                    this.aceEditor.setHighlightSelectedWord(true);
-                    this.aceEditor.setShowPrintMargin(false);
-                    this.aceEditor.setShowInvisibles(false);
-
-                    this.aceEditor.setBehavioursEnabled(true);
-                    this.aceEditor.getSession().setUseWrapMode(true);
-                    
-                    this.aceEditor.getSession().setUseSoftTabs(true);
-                    this.aceEditor.getSession().setTabSize(2);
-    
-                    this.aceEditor.getSession().setMode("ace/mode/markdown");
-                    this.aceEditor.setTheme("ace/theme/solarized_dark");
-                
-                    if (this.aceEditor.require == undefined)
-                    {
-                        this.aceEditor.require = ace.require;
-                    }
-                    var markdownEditor = new Markdown.Editor(undefined);
-                        // {
-//                             makeHtml: function(text)
-//                             {
-//                                 marked.setOptions({
-//                                   gfm: false,
-//                                   tables: false,
-//                                   breaks: false,
-//                                   highlight: function (code, lang, callback)
-//                                   {
-//                                       callback(null, code);
-//                                   },
-//                                   pedantic: false,
-//                                   sanitize: false,
-//                                   smartLists: true,
-//                                   smartypants: false,
-//                                   langPrefix: 'lang-'
-//                                 });
-// 
-//                                 marked(text, function (err, content)
-//                                 {
-//                                   if (err)
-//                                   {
-//                                       throw err;
-//                                   }
-//               
-//                                   return content;
-//                                 });
-//                                 
-//                                 return undefined;
-//                             }
-//                         });
-                    markdownEditor.run(this.aceEditor);
-                    
-                    this.aceEditor.on('blur', function(e)
-                    {
-                        var src = that.aceEditor.getSession().getValue();
-                        txtArea.value = src;
-                    });
-                }
-
-                fetchElems();
-                
-                divEditor.style.fontSize = '0.6em';
-
-                setTimeout(function()
-                {
-                    that.aceEditor.getSession().setValue(markdown);
-                    setTimeout(function()
-                    {
-                        divEditor.style.visibility = "visible";
-                        txtAreaEditor.focus();
-                    }, 30);
-
-                    setTimeout(function()
-                    {
-                        that.aceEditor.resize(true);
-                    }, 100);
-                }, 300);
-            }
-            else
-            {
-                setTimeout(function()
-                {
-                    txtArea.style.display = "block";
-
-                    setTimeout(function()
-                    {
-                        txtArea.focus();
-                    }, 30);
-                }, 300);
-            }
-        }
-        else
-        {
-            if (txtAreaEditor)
-            {
-                txtAreaEditor.blur();
-            }
-            txtArea.blur();
-            
-            marked.setOptions({
-              gfm: false,
-              tables: false,
-              breaks: false,
-              highlight: function (code, lang, callback)
-              {
-                  callback(null, code);
-              },
-              pedantic: false,
-              sanitize: false,
-              smartLists: true,
-              smartypants: false,
-              langPrefix: 'lang-'
-            });
-
-            marked(txtArea.value, function (err, content)
-            {
-              if (err)
-              {
-                  throw err;
-              }
-              
-              contentWrap.innerHTML = content;
-            });
-
-            setTimeout(function()
-            {
-                document.body.style.overflow = "auto";
-                root.style.display = "block";
-                
-                txtArea.style.display = "none";
-                divEditor.style.display = "none";
-            }, 300);
-        }
-    
-        keyboardEvent.preventDefault();
-        
-        //         actualContentAnchor.innerHTML = "";
-        //         
-        //         for (var i = 0; i < topDiv.childNodes.length; i++)
-        //         {
-        //             var node = topDiv.childNodes[i];
-        //             node = node.cloneNode(true);
-        // 
-        //             actualContentAnchor.appendChild(node);
-        //         }
-
+        this.toggleAuthoring(keyboardEvent);
     }
     else if (!this.reflow && keyboardEvent.keyCode === 90) // Z
     {
