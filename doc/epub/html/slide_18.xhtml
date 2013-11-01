@@ -5,7 +5,7 @@
         <meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/>
         <meta content="EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook" name="keywords"/>
         
-        <title>(18/19) EPUB3 Sliderizer / Web browsers</title>
+        <title>(18/20) EPUB3 Sliderizer / Author mode - (experimental)</title>
         
         <link href="../img/favicon.ico" rel="shortcut icon"/>
         
@@ -39,7 +39,7 @@
 
         <link href="slide_01.xhtml" rel="first"/>
         
-        <link href="slide_19.xhtml" rel="last"/>
+        <link href="slide_20.xhtml" rel="last"/>
                 
         <link href="../../../EPUB3-Sliderizer.epub" rel="epub"/>
 
@@ -97,56 +97,6 @@ background: #FF0033;
 }
         </style>
 
-        <style type="text/css">
-        ul#bs
-{
-
--webkit-column-count: 2;
--moz-column-count: 2;
--ms-column-count: 2;
--o-column-count: 2;
-column-count: 2;
-
-
--webkit-column-gap: 1em;
--moz-column-gap: 1em;
--ms-column-gap: 1em;
--o-column-gap: 1em;
-column-gap: 1em;
-
-
--webkit-column-fill: balanced;
--moz-column-fill: balanced;
--ms-column-fill: balanced;
--o-column-fill: balanced;
-column-fill: balanced;
-
-}
-body.opera ul#bs,
-body.IE9 ul#bs
-{
-
--webkit-column-count: auto;
--moz-column-count: auto;
--ms-column-count: auto;
--o-column-count: auto;
-column-count: auto;
-
-vertical-align: top;
-}
-body.opera ul#bs &gt; li,
-body.IE9 ul#bs &gt; li
-{
-/*
-float: left;
-display: inline;
-*/
-white-space: nowrap;
-display: inline-block;
-width:45%;
-vertical-align: top;
-}
-        </style>
 
         
 
@@ -179,82 +129,14 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 
                 <div id="epb3sldrzr-anim-overflow">
 
-                    <h1 id="epb3sldrzr-title">Web browsers</h1>
+                    <h1 id="epb3sldrzr-title">Author mode <span id="epb3sldrzr-subtitle">(experimental)</span></h1>
 
 <div id="epb3sldrzr-content-wrap">
-                    <!--SOUP-->
-<p>
-Slideshows made with EPUB3-Sliderizer seem to play fine in:
-</p><ul class="incremental auto" id="bs" style="list-style-type:none;  clear: both;">
-<li>
-<strong>Mac OS X</strong>
-<ul>
-<li>
-Safari, Chrome <span class="fade">(WebKit)</span>
-</li>
-<li>
-Firefox <span class="fade">(Gecko)</span>
-</li>
-<li>
-Opera <span class="fade">(Presto)</span>
-</li>
-</ul>
-</li>
-<li>
-<strong>Windows</strong>
-<ul>
-<li>
-Chrome <span class="fade">(WebKit)</span>
-</li>
-<li>
-Firefox <span class="fade">(Gecko)</span>
-</li>
-<li>
-Opera <span class="fade">(Presto)</span>
-</li>
-<li>
-IE 9+ <span class="fade">(Trident)</span>
-</li>
-</ul>
-</li>
-<li>
-<strong>iOS</strong> <span class="fade">(WebKit)</span>
-<ul>
-<li>
-Safari
-</li>
-</ul>
-</li>
-<li>
-<strong>Android</strong>
-<ul>
-<li>
-Chrome, Doplhin <span class="fade">(WebKit)</span>
-</li>
-<li>
-Firefox <span class="fade">(Gecko)</span>
-</li>
-<li>
-Opera <span class="fade">(Presto, WebKit)</span>
-</li>
-</ul>
-</li>
-<li>
-<strong>Linux</strong>
-<ul>
-<li>
-Firefox <span class="fade">(Gecko)</span>
-</li>
-</ul>
-</li>
-</ul>
-<div class="incremental auto">
-<p style="clear: both;">
-<em>Note:</em>
-<br/>
-on Android ⇒ inconsistent viewport scaling, broken fonts
-</p>
-</div>
+                    <!--XML--><ol class="auto incremental">
+  <li>Press the <strong>a key</strong> to toggle "author" mode. The slide will expand horizontally, so shrink the window if you need to.</li>
+  <li>Once in "author" mode, press <strong>escape</strong> to switch to the Markdown editor. Note that changes are discarded when the page gets reloaded. To save your modifications, you must copy + paste into the master <code>data.txt</code>.</li>
+  <li>The images and text below can be <em>moved</em> relative to their original position, using the mouse. Double-click on an image to see the CSS style (select + copy the text into the clipboard).</li>
+</ol><p><img alt="HTML5 logo" src="../img/custom/assets/HTML5.png"/> <img alt="EPUB3 logo" src="../img/custom/assets/EPUB.png" title="the EPUB3 logo"/><span class="epb3sldrzr-author" style="position: relative; left: 41px; top: -66px; font-size: 2.5em; background-color: silver;">Move me too!</span></p>
 </div>
 
                 </div>
@@ -263,5 +145,23 @@ on Android ⇒ inconsistent viewport scaling, broken fonts
          </div>
      </div>
 
+     <div class="epb3sldrzr-markdown" id="epb3sldrzr-markdown-editor">
+
+1. Press the __a key__ to toggle "author" mode. The slide will expand horizontally, so shrink the window if you need to.
+2. Once in "author" mode, press **escape** to switch to the Markdown editor. Note that changes are discarded when the page gets reloaded. To save your modifications, you must copy + paste into the master `data.txt`.
+3. The images and text below can be _moved_ relative to their original position, using the mouse. Double-click on an image to see the CSS style (select + copy the text into the clipboard).
+
+![HTML5 logo](assets/HTML5.png "the HTML5 logo") &lt;img src="assets/EPUB.png" alt="EPUB3 logo" title="the EPUB3 logo"/&gt;&lt;span class="epb3sldrzr-author"  style="position: relative; left: 41px; top: -66px; font-size: 2.5em; background-color: silver;"&gt;Move me too!&lt;/span&gt;
+
+</div>
+     <textarea class="epb3sldrzr-markdown" id="epb3sldrzr-markdown-src">
+
+1. Press the __a key__ to toggle "author" mode. The slide will expand horizontally, so shrink the window if you need to.
+2. Once in "author" mode, press **escape** to switch to the Markdown editor. Note that changes are discarded when the page gets reloaded. To save your modifications, you must copy + paste into the master `data.txt`.
+3. The images and text below can be _moved_ relative to their original position, using the mouse. Double-click on an image to see the CSS style (select + copy the text into the clipboard).
+
+![HTML5 logo](assets/HTML5.png "the HTML5 logo") &lt;img src="assets/EPUB.png" alt="EPUB3 logo" title="the EPUB3 logo"/&gt;&lt;span class="epb3sldrzr-author"  style="position: relative; left: 41px; top: -66px; font-size: 2.5em; background-color: silver;"&gt;Move me too!&lt;/span&gt;
+
+</textarea>
 </body>
 </html>
