@@ -460,14 +460,43 @@ Slide content
 
 */
 
-#epiceditor
+.epb3sldrzr-markdown
 {
-    display: none;
-    
+    /*
     position: static;
     min-height: 100%;
+    width: 100%;
+    */
     
-    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+	font-size: 40px;
+    
+    display: none;
+}
+
+#epb3sldrzr-markdown-editor
+{
+}
+
+#epb3sldrzr-markdown-src
+{
+    font-family: monospace;
+
+    line-height:1.35em;
+    
+    background:rgb(41,41,41);
+    color:#ddd;
+    
+    padding: 0.5em;
+    
+    overflow: auto;
 }
 
 #epb3sldrzr-content
@@ -522,29 +551,23 @@ body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle
     */
 }
 
-body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle > .vertical-middle
+body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle > #epb3sldrzr-content-wrap.vertical-middle
 {
     display: inline-block;
     vertical-align: middle;
 }
 
-#epb3sldrzr-content > *:not(img):not(.spread):not(#epb3sldrzr-anim-overflow):not(#epb3sldrzr-title):not(.vertical-middle),
-#epb3sldrzr-content > #epb3sldrzr-anim-overflow > *:not(img):not(.spread):not(#epb3sldrzr-title):not(.vertical-middle)
+#epb3sldrzr-content > #epb3sldrzr-anim-overflow > #epb3sldrzr-content-wrap:not(.vertical-middle) > *:not(img):not(.spread)
 {
     padding-left: 40px;
     padding-left: 4rem;
     
     padding-right: 40px;
     padding-right: 4rem;
-}
 
-#epb3sldrzr-content > *:not(img):not(.spread):not(#epb3sldrzr-anim-overflow):not(#epb3sldrzr-title):not(.vertical-middle),
-#epb3sldrzr-content > #epb3sldrzr-anim-overflow > *:not(img):not(.spread):not(#epb3sldrzr-title):not(.vertical-middle)
-{
     margin-top: 20px;
     margin-top: 2rem;
 }
-
 
 div.boxed > p,
 div.boxed > ul,
