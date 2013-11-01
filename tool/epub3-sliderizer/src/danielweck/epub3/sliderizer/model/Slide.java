@@ -87,9 +87,10 @@ public final class Slide extends Fielder {
 	}
 
 	public boolean AUTHORize() {
-		return CONTENT != null && _verbosity >= 3
+		return CONTENT != null && (_verbosity >= 3
 				&& CONTENT.indexOf(XHTML.MARKDOWN_SRC) != 0
-				&& CONTENT.indexOf(XHTML.NOMARKDOWN) != 0;
+				&& CONTENT.indexOf(XHTML.NOMARKDOWN) != 0)
+                    || CONTENT.indexOf(XHTML.MARKDOWN) == 0;
 	}
 
 	public String CONTENT_ORIGINAL() throws Exception {
@@ -97,8 +98,15 @@ public final class Slide extends Fielder {
 		if (CONTENT == null) {
 			return null;
 		}
-
-		return CONTENT.replace("&", "&amp;").replace("<", "&lt;")
+        String content = CONTENT;
+        if (content.indexOf(XHTML.MARKDOWN) == 0) {
+            content = content.substring(XHTML.MARKDOWN.length());
+        } else if (content.indexOf(XHTML.NOMARKDOWN) == 0) {
+            content = content.substring(XHTML.NOMARKDOWN.length());
+        } else if (content.indexOf(XHTML.MARKDOWN_SRC) == 0) {
+            content = content.substring(XHTML.MARKDOWN_SRC.length());
+        }
+		return content.replace("&", "&amp;").replace("<", "&lt;")
 				.replace(">", "&gt;");
 	}
 

@@ -727,14 +727,14 @@ Epub3Sliderizer.toggleControlsPanel = function()
 
 // ----------
 
-Epub3Sliderizer.AUTHORize = function(selector)
+Epub3Sliderizer.AUTHORize = function()
 {
     if (!isDefinedAndNotNull($))
     {
         return;
     }
    
-    var elems = $(selector);
+    var elems = $("#epb3sldrzr-content-wrap .epb3sldrzr-author, #epb3sldrzr-content-wrap img");
     
     elems.css('cursor', "move");
     elems.css('border', "2px dotted blue");
@@ -787,8 +787,7 @@ Epub3Sliderizer.AUTHORize = function(selector)
         
         $that[0].style.border = "2px solid red";
         
-        //$that.parents()
-        $($that[0].parentNode)
+        $(document.body) //$that[0].parentNode
         .on("mousemove", {that: $that, drg_h: drg_h, drg_w: drg_w, pos_y: pos_y, pos_x: pos_x}, onMouseMove);
 
         e.preventDefault();
@@ -801,8 +800,7 @@ Epub3Sliderizer.AUTHORize = function(selector)
         
         $that[0].style.border = "2px dotted blue";
         
-        //$that.parents()
-        $($that[0].parentNode)
+        $(document.body) //$that[0].parentNode
         .off("mousemove", onMouseMove);
     });
     
@@ -1289,54 +1287,59 @@ Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
     
     if ($(root).css("display") === "block")
     {
-    	var options = {
-    		link_list:	false,			// render links as references, create link list as appendix
-    	//  link_near:					// cite links immediately after blocks
-    		h1_setext:	true,			// underline h1 headers
-    		h2_setext:	true,			// underline h2 headers
-    		h_atx_suf:	false,			// header suffix (###)
-    	//	h_compact:	true,			// compact headers (except h1)
-    		gfm_code:	false,			// render code blocks as via ``` delims
-    		li_bullet:	"*-+"[0],		// list item bullet style
-    	//	list_indnt:					// indent top-level lists
-    		hr_char:	"-_*"[0],		// hr style
-    		indnt_str:	["    ","\t","  "][0],	// indentation string
-    		bold_char:	"*_"[0],		// char used for strong
-    		emph_char:	"*_"[1],		// char used for em
-    		gfm_del:	true,			// ~~strikeout~~ for <del>strikeout</del>
-    		gfm_tbls:	false,			// markdown-extra tables
-    		tbl_edges:	false,			// show side edges on tables
-    		hash_lnks:	false,			// anchors w/hash hrefs as links
-    		br_only:	false,			// avoid using "  " as line break indicator
-    		col_pre:	"col ",			// column prefix to use when creating missing headers for tables
-    	//	comp_style: false,			// use getComputedStyle instead of hardcoded tag list to discern block/inline
-		unsup_tags: {				// handling of unsupported tags, defined in terms of desired output style. if not listed, output = outerHTML
-			// no output
-			ignore: "script style noscript",
-			// eg: "<tag>some content</tag>"
-			inline: "span sup sub i u b", //span sup sub i u b center big
-			// eg: "\n<tag>\n\tsome content\n</tag>"
-		//	block1: "",
-			// eg: "\n\n<tag>\n\tsome content\n</tag>"
-			block2: "", //div form fieldset dl header footer address article aside figure hgroup section
-			// eg: "\n<tag>some content</tag>"
-			block1c: "", //dt dd caption legend figcaption output
-			// eg: "\n\n<tag>some content</tag>"
-			block2c: "", //canvas audio video iframe
-		/*	// direct remap of unsuported tags
-			convert: {
-				i: "em",
-				b: "strong"
-			}
-		*/
-	        }
-        };
-        var reMarker = new reMarked(options);
 
-        var markdown = reMarker.render(contentWrap);
+        var markdown = txtArea.value;
+        
+        //         var options = {
+        //             link_list:    false,            // render links as references, create link list as appendix
+        //         //  link_near:                    // cite links immediately after blocks
+        //             h1_setext:    true,            // underline h1 headers
+        //             h2_setext:    true,            // underline h2 headers
+        //             h_atx_suf:    false,            // header suffix (###)
+        //         //    h_compact:    true,            // compact headers (except h1)
+        //             gfm_code:    false,            // render code blocks as via ``` delims
+        //             li_bullet:    "*-+"[0],        // list item bullet style
+        //         //    list_indnt:                    // indent top-level lists
+        //             hr_char:    "-_*"[0],        // hr style
+        //             indnt_str:    ["    ","\t","  "][0],    // indentation string
+        //             bold_char:    "*_"[0],        // char used for strong
+        //             emph_char:    "*_"[1],        // char used for em
+        //             gfm_del:    true,            // ~~strikeout~~ for <del>strikeout</del>
+        //             gfm_tbls:    false,            // markdown-extra tables
+        //             tbl_edges:    false,            // show side edges on tables
+        //             hash_lnks:    false,            // anchors w/hash hrefs as links
+        //             br_only:    false,            // avoid using "  " as line break indicator
+        //             col_pre:    "col ",            // column prefix to use when creating missing headers for tables
+        //         //    comp_style: false,            // use getComputedStyle instead of hardcoded tag list to discern block/inline
+        // unsup_tags: {                // handling of unsupported tags, defined in terms of desired output style. if not listed, output = outerHTML
+        //     // no output
+        //     ignore: "script style noscript",
+        //     // eg: "<tag>some content</tag>"
+        //     inline: "span sup sub i u b", //span sup sub i u b center big
+        //     // eg: "\n<tag>\n\tsome content\n</tag>"
+        // //    block1: "",
+        //     // eg: "\n\n<tag>\n\tsome content\n</tag>"
+        //     block2: "", //div form fieldset dl header footer address article aside figure hgroup section
+        //     // eg: "\n<tag>some content</tag>"
+        //     block1c: "", //dt dd caption legend figcaption output
+        //     // eg: "\n\n<tag>some content</tag>"
+        //     block2c: "", //canvas audio video iframe
+        // /*    // direct remap of unsuported tags
+        //     convert: {
+        //         i: "em",
+        //         b: "strong"
+        //     }
+        // */
+        //             }
+        //         };
+        //         var reMarker = new reMarked(options);
+        // 
+        //         var markdown = reMarker.render(contentWrap);
+        // 
+        //         txtArea.value = markdown; //.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-        txtArea.value = markdown; //.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
+        window.scrollTo(0, 0);
+        
         root.style.display = "none";
         document.body.style.overflow = "hidden";
         
@@ -1443,7 +1446,11 @@ Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
               throw err;
           }
           
-          var cleaned = content.replace(/<hr>/g, "<hr/>");
+          var cleaned = content.replace(/<hr>/g, "<hr/>").replace(/<br>/g, "<br/>").replace(/<img ([^>]*)([^\/])>/g, "<img $1$2 />");
+
+          // TODO: WORST HACK EVER!! (need to figure-out how to map asset paths...)
+          // We do this just for the demo
+          cleaned = cleaned.replace(/assets\//g, "../img/custom/assets/");
           
           try
           {
@@ -1466,6 +1473,8 @@ Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
             
             txtArea.style.display = "none";
             divEditor.style.display = "none";
+            
+            that.AUTHORize();
         }, 300);
     }
     
@@ -1498,7 +1507,13 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 
     var fontSizeIncrease = 5;
 
-    if (this.authorMode)
+    if (keyboardEvent.keyCode === 65) // A
+    {
+        keyboardEvent.preventDefault();
+        
+        this.reloadSlide(this.authorMode ? "" : "author");
+    }
+    else if (this.authorMode)
     {
         this.toggleAuthoring(keyboardEvent);
     }
@@ -3572,7 +3587,7 @@ Epub3Sliderizer.init = function()
         
             window.onkeyup = this.onKeyboard.bind(this);
         
-            this.AUTHORize(".epb3sldrzr-author");
+            this.AUTHORize();
         }
     }
     else
@@ -3985,8 +4000,7 @@ function readyFirst()
             loadScript(undefined, 'Markdown.Editor.js');
         }
         
-        //loadScript(undefined, 'klass.js');
-        loadScript(undefined, 'reMarked.js');
+        //loadScript(undefined, 'reMarked.js');
         
         loadScript(undefined, 'marked.js');
     }
