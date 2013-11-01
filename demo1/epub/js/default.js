@@ -1166,7 +1166,7 @@ Epub3Sliderizer.toggleReflow = function()
         this.updateFontSize(this.defaultFontSize + fontSizeIncrease*fontSizeIncreaseFactor);
     }
 
-    var viewport = querySelectorZ("head > meta[name=viewport]");    
+    var viewport = querySelectorZ("head > meta[name=viewport]");
     if (this.reflow)
     {    
         this.reflow = false;
@@ -1218,149 +1218,259 @@ Epub3Sliderizer.toggleReflow = function()
 
 // ----------
 
-Epub3Sliderizer.epicEditor = undefined;
 
-Epub3Sliderizer.epicEditorOnKeyboard = function (keyboardEvent)
-{
-    // Filter out keyboard shortcuts
-    if (keyboardEvent.altKey ||
-        keyboardEvent.ctrlKey ||
-        keyboardEvent.metaKey ||
-        keyboardEvent.shiftKey)
-    {
-        return;
-    }
+Epub3Sliderizer.ACE = true;
+Epub3Sliderizer.aceEditor = undefined;
 
-    if (keyboardEvent.keyCode === 27) // ESC
-    {
-        Epub3Sliderizer.toggleEpicEditor();
-        keyboardEvent.preventDefault();
-        return;
-    }
-}
-
-Epub3Sliderizer.toggleEpicEditor = function()
+Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
 {
     var that = this;
     
-    var epiceditor = document.getElementById("epiceditor");
-    if (!epiceditor)
+    var txtArea = undefined;
+    var txtAreaEditor = undefined;
+    var fetchElems = function()
     {
-        alert('Author mode is not enabled for this slide.\n\nAre you sure it was edited with Markdown?\n\nOtherwise, check that VERBOSITY="VERBOSE_max" in the sliderize.sh script.');
+        if (!txtArea)
+        {
+            txtArea = document.getElementById('epb3sldrzr-markdown-src');
+        }
+        if (!txtAreaEditor)
+        {
+            txtAreaEditor = querySelectorZ('.ace_text-input');
+        }
+    };
+    
+    if (keyboardEvent.keyCode === 37 || // left arrow
+    // keyboardEvent.keyCode === 38 // up arrow
+    keyboardEvent.keyCode === 33 // page up
+    )
+    {
+        fetchElems();
+        
+        if (keyboardEvent.target === txtArea || keyboardEvent.target === txtAreaEditor)
+        {
+            return;
+        }
+        keyboardEvent.preventDefault();
+        this.gotoPrevious();
+        return;
+    }
+    else if (keyboardEvent.keyCode === 39 || // right arrow
+        // keyboardEvent.keyCode === 40 // down arrow
+        keyboardEvent.keyCode === 34 // page down
+    )
+    {
+        fetchElems();
+        
+        if (keyboardEvent.target === txtArea || keyboardEvent.target === txtAreaEditor)
+        {
+            return;
+        }
+        keyboardEvent.preventDefault();
+        this.gotoNext();
         return;
     }
 
-    function addRemoveOnKey(remove)
+    if (keyboardEvent.keyCode !== 27) // ESC
     {
-        var epiceditoriFrame = undefined;
-        // for (var i = 0; i < epiceditor.childNodes.length; i++)
-        // {
-        //     var child = epiceditor.childNodes[i];
-        //     if (child.nodeType != 1)
-        //     {
-        //         continue;
-        //     }
-        //     epiceditoriFrame = child;
-        //     break; // should be IFRAME
-        // }
-        // console.log(epiceditoriFrame);
-        // epiceditoriFrame = epiceditoriFrame.contentDocument || epiceditoriFrame.contentWindow.document;
-        epiceditoriFrame = that.epicEditor.getElement('editor');
+        return;
+    }
+
+    fetchElems();
+    if (!txtArea)
+    {
+        alert('Author mode is not enabled for this slide.\n\nAre you sure it was edited with Markdown?\n\nIf yes, check that VERBOSITY="VERBOSE_max" in the sliderize.sh script\n(this enables the "author" mode).');
+        return;
+    }
     
-        if (remove)
+    var root = document.getElementById("epb3sldrzr-root");
+    var divEditor = document.getElementById('epb3sldrzr-markdown-editor');
+    var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
+    
+    if ($(root).css("display") === "block")
+    {
+    	var options = {
+    		link_list:	false,			// render links as references, create link list as appendix
+    	//  link_near:					// cite links immediately after blocks
+    		h1_setext:	true,			// underline h1 headers
+    		h2_setext:	true,			// underline h2 headers
+    		h_atx_suf:	false,			// header suffix (###)
+    	//	h_compact:	true,			// compact headers (except h1)
+    		gfm_code:	false,			// render code blocks as via ``` delims
+    		li_bullet:	"*-+"[0],		// list item bullet style
+    	//	list_indnt:					// indent top-level lists
+    		hr_char:	"-_*"[0],		// hr style
+    		indnt_str:	["    ","\t","  "][0],	// indentation string
+    		bold_char:	"*_"[0],		// char used for strong
+    		emph_char:	"*_"[1],		// char used for em
+    		gfm_del:	true,			// ~~strikeout~~ for <del>strikeout</del>
+    		gfm_tbls:	false,			// markdown-extra tables
+    		tbl_edges:	false,			// show side edges on tables
+    		hash_lnks:	false,			// anchors w/hash hrefs as links
+    		br_only:	false,			// avoid using "  " as line break indicator
+    		col_pre:	"col ",			// column prefix to use when creating missing headers for tables
+    	//	comp_style: false,			// use getComputedStyle instead of hardcoded tag list to discern block/inline
+		unsup_tags: {				// handling of unsupported tags, defined in terms of desired output style. if not listed, output = outerHTML
+			// no output
+			ignore: "script style noscript",
+			// eg: "<tag>some content</tag>"
+			inline: "span sup sub i u b", //span sup sub i u b center big
+			// eg: "\n<tag>\n\tsome content\n</tag>"
+		//	block1: "",
+			// eg: "\n\n<tag>\n\tsome content\n</tag>"
+			block2: "", //div form fieldset dl header footer address article aside figure hgroup section
+			// eg: "\n<tag>some content</tag>"
+			block1c: "", //dt dd caption legend figcaption output
+			// eg: "\n\n<tag>some content</tag>"
+			block2c: "", //canvas audio video iframe
+		/*	// direct remap of unsuported tags
+			convert: {
+				i: "em",
+				b: "strong"
+			}
+		*/
+	        }
+        };
+        var reMarker = new reMarked(options);
+
+        var markdown = reMarker.render(contentWrap);
+
+        txtArea.value = markdown; //.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+        root.style.display = "none";
+        document.body.style.overflow = "hidden";
+        
+        if (this.ACE)
         {
-            epiceditoriFrame.removeEventListener('keyup', that.epicEditorOnKeyboard);
+            divEditor.style.visibility = "hidden";
+            divEditor.style.display = "block";
+            
+            if (!this.aceEditor)
+            {
+                this.aceEditor = ace.edit(divEditor);
+            
+                this.aceEditor.renderer.setShowGutter(true);
+                //this.aceEditor.renderer.setPadding(200);
+
+                this.aceEditor.setDisplayIndentGuides(true);
+                this.aceEditor.setHighlightActiveLine(true);
+                this.aceEditor.setHighlightSelectedWord(true);
+                this.aceEditor.setShowPrintMargin(false);
+                this.aceEditor.setShowInvisibles(false);
+
+                this.aceEditor.setBehavioursEnabled(true);
+                this.aceEditor.getSession().setUseWrapMode(true);
+                
+                this.aceEditor.getSession().setUseSoftTabs(true);
+                this.aceEditor.getSession().setTabSize(2);
+
+                this.aceEditor.getSession().setMode("ace/mode/markdown");
+                this.aceEditor.setTheme("ace/theme/solarized_dark");
+            
+                if (this.aceEditor.require == undefined)
+                {
+                    this.aceEditor.require = ace.require;
+                }
+                var markdownEditor = new Markdown.Editor();
+                markdownEditor.run(this.aceEditor);
+                
+                this.aceEditor.on('blur', function(e)
+                {
+                    var src = that.aceEditor.getSession().getValue();
+                    txtArea.value = src;
+                });
+            }
+
+            fetchElems();
+            
+            divEditor.style.fontSize = '0.6em';
+
+            setTimeout(function()
+            {
+                that.aceEditor.getSession().setValue(markdown);
+                setTimeout(function()
+                {
+                    divEditor.style.visibility = "visible";
+                    txtAreaEditor.focus();
+                }, 30);
+
+                setTimeout(function()
+                {
+                    that.aceEditor.resize(true);
+                }, 100);
+            }, 300);
         }
         else
         {
-            epiceditoriFrame.addEventListener('keyup', that.epicEditorOnKeyboard);
+            setTimeout(function()
+            {
+                txtArea.style.display = "block";
+
+                setTimeout(function()
+                {
+                    txtArea.focus();
+                }, 30);
+            }, 300);
         }
     }
-    
-    var htmlContentBox = document.getElementById("epb3sldrzr-content");
-
-    if (this.epicEditor)
+    else
     {
-        addRemoveOnKey(true);
-        
-        this.epicEditor.save();
-        
-        this.epicEditor.preview();
-        var topDiv = this.epicEditor.getElement('previewer').getElementById("epiceditor-preview");
-        
-        var title = document.getElementById("epb3sldrzr-title");
-        if (title)
+        if (txtAreaEditor)
         {
-            title = title.cloneNode(true);
+            txtAreaEditor.blur();
         }
+        txtArea.blur();
         
-        var actualContentAnchor = document.getElementById("epb3sldrzr-vertical-middle") || document.getElementById("epb3sldrzr-anim-overflow");
-        actualContentAnchor.innerHTML = "";
-        
-        if (title)
-        {
-            actualContentAnchor.appendChild(title);
-        }
-        
-        for (var i = 0; i < topDiv.childNodes.length; i++)
-        {
-            var node = topDiv.childNodes[i];
-            node = node.cloneNode(true);
+        marked.setOptions({
+          gfm: false,
+          tables: false,
+          breaks: false,
+          highlight: function (code, lang, callback)
+          {
+              callback(null, code);
+          },
+          pedantic: false,
+          sanitize: false,
+          smartLists: true,
+          smartypants: false,
+          langPrefix: 'lang-'
+        });
 
-            actualContentAnchor.appendChild(node);
-        }
-        
+        marked(txtArea.value, function (err, content)
+        {
+          if (err)
+          {
+              throw err;
+          }
+          
+          var cleaned = content.replace(/<hr>/g, "<hr/>");
+          
+          try
+          {
+              contentWrap.innerHTML = cleaned;
+          }
+          catch(ex)
+          {
+              console.error(ex);
+              console.log(cleaned);
+              
+              alert("Oops, invalid XHTML :(\n\n(next message will show Markdown parser result)");
+              alert(cleaned);
+          }
+        });
+
         setTimeout(function()
         {
-            epiceditor.style.display = "none";
-            htmlContentBox.style.display = "block";
-        }, 500);
-        
-        this.epicEditor.unload();
-        this.epicEditor = undefined;
-        
-        return;
+            document.body.style.overflow = "auto";
+            root.style.display = "block";
+            
+            txtArea.style.display = "none";
+            divEditor.style.display = "none";
+        }, 300);
     }
+    
 
-    epiceditor.style.display = "block";
-    
-    htmlContentBox.style.display = "none";
-    
-    var txtArea = document.getElementById('epb3sldrzr-markdown-src');
-
-    var file = document.documentElement.id + ".md";
-    console.log("||| EpicEditor file: " + file);
-    
-    var opts = {
-      textarea: txtArea,
-      button: false,
-      file: {
-        name: file
-      },
-      theme: {
-          base: '/epiceditor.css',
-          preview: '/previewer.css',
-          editor: '/editor.css'
-      }
-    };
-    
-    this.epicEditor = new EpicEditor(opts).load(function()
-    {
-        setTimeout(function()
-        {
-            that.epicEditor.edit();
-            that.epicEditor.focus();
-    
-            addRemoveOnKey(false);
-        }, 500);
-    });
-    
-    // //<div id="epiceditor-preview"></div>
-    // this.epicEditor.on('update', function ()
-    // {
-    //     //var topDiv = this.epicEditor.getElement('previewer').getElementById("epiceditor-preview");
-    //     document.getElementById('epiceditor-preview').innerHTML = this.exportFile(null, 'html');
-    // }).emit('update');
+    keyboardEvent.preventDefault();
 }
 
 // ----------
@@ -1384,38 +1494,13 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
         return;
     }
 
+    var that = this;
 
     var fontSizeIncrease = 5;
 
     if (this.authorMode)
     {
-        if (keyboardEvent.keyCode === 37 || // left arrow
-        // keyboardEvent.keyCode === 38 // up arrow
-        keyboardEvent.keyCode === 33 // page up
-        )
-        {
-            keyboardEvent.preventDefault();
-            this.gotoPrevious();
-            return;
-        }
-        else if (keyboardEvent.keyCode === 39 || // right arrow
-            // keyboardEvent.keyCode === 40 // down arrow
-            keyboardEvent.keyCode === 34 // page down
-        )
-        {
-            keyboardEvent.preventDefault();
-            this.gotoNext();
-            return;
-        }
-    
-        if (keyboardEvent.keyCode !== 69 && keyboardEvent.keyCode !== 27) // E or ESC
-        {
-            return;
-        }
-        
-        this.toggleEpicEditor();
-
-        keyboardEvent.preventDefault();
+        this.toggleAuthoring(keyboardEvent);
     }
     else if (!this.reflow && keyboardEvent.keyCode === 90) // Z
     {
@@ -2279,7 +2364,7 @@ Epub3Sliderizer.onResize = function()
     this.bodyRoot.style.msTransformOrigin = transformOrigin;
     this.bodyRoot.style.transformOrigin = transformOrigin;
     
-    var bodyFit = this.getElementFit(this.bodyRoot, this.fitWidth);
+    var bodyFit = this.getElementFit(this.bodyRoot, this.authorMode);
     var ratio = bodyFit.ratio;
     var offsetX = bodyFit.offsetX;
     var offsetY = bodyFit.offsetY;
@@ -3446,18 +3531,35 @@ Epub3Sliderizer.init = function()
         this.bodyRoot.style.visibility = "visible";
     }
     else if (this.staticMode || this.authorMode)
-    {
-        //console.log("STATIC (iframe)");
-        
+    {   
         document.body.classList.add("epb3sldrzr-epubReadingSystem");
         
-        if (isDefinedAndNotNull(window.orientation))
+        if (this.authorMode)
         {
-            this.onOrientationChange();
+            if (isDefinedAndNotNull(window.orientation))
+            {
+                window.onorientationchange = this.onOrientationChange.bind(this);
+                this.onOrientationChange();
+            }
+            else
+            {
+                window.onresize = this.resetResize.bind(this);
+            
+                //this.resetResize();
+                this.onOrientationChange();
+            }
         }
         else
         {
-            this.resetResize();
+            if (isDefinedAndNotNull(window.orientation))
+            {
+                this.onOrientationChange();
+            }
+            else
+            {
+                //this.resetResize();
+                this.onOrientationChange();
+            }
         }
         
         this.bodyRoot.style.visibility = "visible";
@@ -3874,18 +3976,19 @@ function readyFirst()
         Epub3Sliderizer.authorMode = true;
         document.body.classList.add("author");
 
-        loadScript(undefined, 'epiceditor.js');
-        
-        setTimeout(function()
+        if (Epub3Sliderizer.ACE)
         {
-            var epicEditor = new EpicEditor();
-            var files = epicEditor.getFiles();
-            for (var file in files)
-            {
-              console.log('||| EpicEditor remove file: ' + file);
-              epicEditor.remove(file);
-            }
-        }, 700);
+            loadScript(undefined, 'ace.js');
+            loadScript(undefined, 'mode-markdown.js');
+            loadScript(undefined, 'theme-solarized_dark.js');
+
+            loadScript(undefined, 'Markdown.Editor.js');
+        }
+        
+        //loadScript(undefined, 'klass.js');
+        loadScript(undefined, 'reMarked.js');
+        
+        loadScript(undefined, 'marked.js');
     }
     else if (Epub3Sliderizer.android ||
         (getUrlQueryParam("basic") !== null)
