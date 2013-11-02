@@ -1241,8 +1241,20 @@ Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
         }
     };
 
+    var contentEditableActive = this.isContentWrapDescendant(keyboardEvent.target);
+    var contentHasProbablyChanged = contentEditableActive &&
+                                    keyboardEvent.keyCode != 37 && // left arrow
+                                    keyboardEvent.keyCode != 38 && // up arrow
+                                    keyboardEvent.keyCode != 33 && // page up
+                                    keyboardEvent.keyCode != 39 && // right arrow
+                                    keyboardEvent.keyCode != 40 && // down arrow
+                                    keyboardEvent.keyCode != 34 && // page down
+                                    keyboardEvent.keyCode != 27 // ESC
+                                    ;
+    that.AUTHORized = that.AUTHORized || contentHasProbablyChanged;
+
     fetchElems();
-    var editing = keyboardEvent.target === txtArea || keyboardEvent.target === txtAreaEditor || this.isContentWrapDescendant(keyboardEvent.target);
+    var editing = keyboardEvent.target === txtArea || keyboardEvent.target === txtAreaEditor || contentEditableActive;
     
     if (keyboardEvent.keyCode === 37 || // left arrow
     // keyboardEvent.keyCode === 38 // up arrow
@@ -1297,7 +1309,7 @@ Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
         {
             that.AUTHORized = false;
             
-            console.log("Content was moved,\nattempting conversion from HTML to Markdown...");
+            console.log("Content was changed,\nattempting conversion from HTML to Markdown...");
           
             $("img", contentWrap).each(function(index)
             {
