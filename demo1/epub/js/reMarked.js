@@ -30,6 +30,7 @@ reMarked = function(opts) {
 		col_pre:	"col ",			// column prefix to use when creating missing headers for tables
 	//	comp_style: false,			// use getComputedStyle instead of hardcoded tag list to discern block/inline
 		unsup_tags: {				// handling of unsupported tags, defined in terms of desired output style. if not listed, output = outerHTML
+            force_preserve: "", //e.g. img
 			// no output
 			ignore: "script style noscript",
 			// eg: "<tag>some content</tag>"
@@ -179,6 +180,34 @@ reMarked = function(opts) {
 	var lib = {};
 
 	lib.tag = klass({
+
+        mustPreserveAttributes: function()
+        {
+            var attrs = this.e.attributes;
+            if (!attrs) return false;
+            
+            var l = attrs.length;
+            
+            // MUST check for attribute emptyness!
+            // if (l > 0  && this.supportedAttributes.length === 0)
+            // {
+            //     return true;
+            // }
+
+    		for (var attr, i=0; i<l; i++)
+            {
+    			attr = attrs.item(i);
+                var name = attr.nodeName.toLowerCase();
+                if (attr.nodeValue && attr.nodeValue.length > 0 && this.supportedAttributes.indexOf(name) < 0)
+                {
+                    return true;
+                }
+    		}
+            
+            return false;
+        },
+        supportedAttributes: [],
+        
 		wrap: "",
 		lnPfx: "",		// only block
 		lnInd: 0,		// only block
@@ -253,24 +282,67 @@ reMarked = function(opts) {
 
 					var wrap = null;
 
-					if (!lib[name]) {
-						var unsup = cfg.unsup_tags;
+					var unsup = cfg.unsup_tags;
 
-						if (unsup.inline.test(name))
-							name = "tinl";
-						else if (unsup.block2.test(name))
-							name = "tblk";
-						else if (unsup.block1c.test(name))
-							name = "ctblk";
-						else if (unsup.block2c.test(name)) {
+                    var libObj = undefined;
+                    var preserve = false;
+                    if (lib[name])
+                    {
+                        libObj = new lib[name](n, this, this.c.length);
+                        preserve = libObj.mustPreserveAttributes();
+                    }
+
+                    var forcePreserve = unsup.force_preserve.test(name);
+        
+					if (!libObj || preserve || forcePreserve) {
+
+						if (preserve && libObj instanceof lib.tinl || unsup.inline.test(name))
+						{
+                            name = "tinl";
+                        }
+    					else if (preserve && libObj instanceof lib.inl)
+                        {
+    						name = "inl";
+                        }
+						else if (unsup.block2c.test(name))
+                        {
 							name = "ctblk";
 							wrap = ["\n\n", ""];
 						}
+						else if (preserve && libObj instanceof lib.ctblk || unsup.block1c.test(name))
+                        {
+							name = "ctblk";
+                        }
+						else if (preserve && libObj instanceof lib.tblk || unsup.block2.test(name))
+                        {
+							name = "tblk";
+                        }
+                        // Non-tagr!
+                        // else if (preserve && libObj instanceof lib.cblk)
+                        //                         {
+                        //     name = "cblk";
+                        //                         }
+                        // else if (preserve && libObj instanceof lib.blk)
+                        //                         {
+                        //     name = "blk";
+                        //                         }
 						else
-							name = "rawhtml";
+						{
+// console.error(name);
+// console.log(preserve);
+                            name = "rawhtml";
+                        }
 					}
 
-					var node = new lib[name](n, this, this.c.length);
+					var node = undefined;
+                    if (libObj && !preserve && !forcePreserve)
+                    {
+                        node = libObj;
+                    }
+                    else
+                    {
+                        node = new lib[name](n, this, this.c.length);
+                    }
 
 					if (wrap)
 						node.wrap = wrap;
@@ -352,7 +424,7 @@ reMarked = function(opts) {
 
 	lib.cblk = lib.blk.extend({wrap: ["\n", ""]});
 
-		lib.ctblk = lib.cblk.extend({tagr: true});
+	lib.ctblk = lib.cblk.extend({tagr: true});
 
 	lib.inl = lib.tag.extend({
 		rend: function()
@@ -361,298 +433,300 @@ reMarked = function(opts) {
 		}
 	});
 
-		lib.tinl = lib.inl.extend({
-			tagr: true,
-			rend: function()
-			{
-				return otag(this.tag, this.e) + wrap.call(this, this.rendK(), this.wrap) + ctag(this.tag);
-			}
-		});
+	lib.tinl = lib.inl.extend({
+		tagr: true,
+		rend: function()
+		{
+			return otag(this.tag, this.e) + wrap.call(this, this.rendK(), this.wrap) + ctag(this.tag);
+		}
+	});
 
-		lib.p = lib.blk.extend({
-			rendK: function() {
-				return this.supr().replace(/^\s+/gm, "");
-			}
-		});
+	lib.p = lib.blk.extend({
+		rendK: function() {
+			return this.supr().replace(/^\s+/gm, "");
+		}
+	});
 
-		lib.list = lib.blk.extend({
-			expn: false,
-			wrap: [function(){return this.p instanceof lib.li ? "\n" : "\n\n";}, ""]
-		});
+	lib.list = lib.blk.extend({
+		expn: false,
+		wrap: [function(){return this.p instanceof lib.li ? "\n" : "\n\n";}, ""]
+	});
 
-		lib.ul = lib.list.extend({});
+	lib.ul = lib.list.extend({});
 
-		lib.ol = lib.list.extend({});
+	lib.ol = lib.list.extend({});
 
-		lib.li = lib.cblk.extend({
-			wrap: ["\n", function(kids) {
-				return this.p.expn || kids.match(/\n{2}/gm) ? "\n" : "";			// || this.kids.match(\n)
-			}],
-			wrapK: [function() {
-				return this.p.tag == "ul" ? cfg.li_bullet + " " : (this.i + 1) + ".  ";
-			}, ""],
-			rendK: function() {
-				return this.supr().replace(/\n([^\n])/gm, "\n" + cfg.indnt_str + "$1");
-			}
-		});
+	lib.li = lib.cblk.extend({
+		wrap: ["\n", function(kids) {
+			return this.p.expn || kids.match(/\n{2}/gm) ? "\n" : "";			// || this.kids.match(\n)
+		}],
+		wrapK: [function() {
+			return this.p.tag == "ul" ? cfg.li_bullet + " " : (this.i + 1) + ".  ";
+		}, ""],
+		rendK: function() {
+			return this.supr().replace(/\n([^\n])/gm, "\n" + cfg.indnt_str + "$1");
+		}
+	});
 
-		lib.hr = lib.blk.extend({
-			wrap: ["\n\n", rep(cfg.hr_char, 3)]
-		});
+	lib.hr = lib.blk.extend({
+		wrap: ["\n\n", rep(cfg.hr_char, 3)]
+	});
 
-		lib.h = lib.blk.extend({});
+	lib.h = lib.blk.extend({});
 
-		lib.h_setext = lib.h.extend({});
+	lib.h_setext = lib.h.extend({});
 
-			cfg.h1_setext && (lib.h1 = lib.h_setext.extend({
-				wrapK: ["", function(kids) {
-					return "\n" + rep("=", kids.length);
-				}]
-			}));
-
-			cfg.h2_setext && (lib.h2 = lib.h_setext.extend({
-				wrapK: ["", function(kids) {
-					return "\n" + rep("-", kids.length);
-				}]
-			}));
-
-		lib.h_atx = lib.h.extend({
-			wrapK: [
-				function(kids) {
-					return rep("#", this.tag[1]) + " ";
-				},
-				function(kids) {
-					return cfg.h_atx_suf ? " " + rep("#", this.tag[1]) : "";
-				}
-			]
-		});
-			!cfg.h1_setext && (lib.h1 = lib.h_atx.extend({}));
-
-			!cfg.h2_setext && (lib.h2 = lib.h_atx.extend({}));
-
-			lib.h3 = lib.h_atx.extend({});
-
-			lib.h4 = lib.h_atx.extend({});
-
-			lib.h5 = lib.h_atx.extend({});
-
-			lib.h6 = lib.h_atx.extend({});
-
-		lib.a = lib.inl.extend({
-			lnkid: null,
-			rend: function() {
-				var kids = this.rendK(),
-					href = this.e.getAttribute("href"),
-					title = this.e.title ? ' "' + this.e.title + '"' : "";
-
-				if (!href || href == kids || href[0] == "#" && !cfg.hash_lnks)
-					return kids;
-
-				if (cfg.link_list)
-					return "[" + kids + "] [" + (this.lnkid + 1) + "]";
-
-				return "[" + kids + "](" + href + title + ")";
-			}
-		});
-
-		// almost identical to links, maybe merge
-		lib.img = lib.inl.extend({
-			lnkid: null,
-			rend: function() {
-				var kids = this.e.alt,
-					src = this.e.getAttribute("src");
-
-				if (cfg.link_list)
-					return "![" + kids + "] [" + (this.lnkid + 1) + "]";
-
-				var title = this.e.title ? ' "'+ this.e.title + '"' : "";
-
-				return "![" + kids + "](" + src + title + ")";
-			}
-		});
-
-
-		lib.em = lib.inl.extend({wrap: cfg.emph_char});
-
-		lib.del = cfg.gfm_del ? lib.inl.extend({wrap: "~~"}) : lib.tinl.extend();
-
-		lib.br = lib.inl.extend({
-			wrap: ["", function() {
-				var end = cfg.br_only ? "<br>" : "  ";
-				// br in headers output as html
-				return this.p instanceof lib.h ? "<br>" : end + "\n";
+		cfg.h1_setext && (lib.h1 = lib.h_setext.extend({
+			wrapK: ["", function(kids) {
+				return "\n" + rep("=", kids.length);
 			}]
-		});
+		}));
 
-		lib.strong = lib.inl.extend({wrap: rep(cfg.bold_char, 2)});
-
-		lib.blockquote = lib.blk.extend({
-			lnPfx: "> ",
-			rend: function() {
-				return this.supr().replace(/>[ \t]$/gm, ">");
-			}
-		});
-
-		// can render with or without tags
-		lib.pre = lib.blk.extend({
-			tagr: true,
-			wrapK: "\n",
-			lnInd: 0
-		});
-
-		// can morph into inline based on context
-		lib.code = lib.blk.extend({
-			tagr: false,
-			wrap: "",
-			wrapK: function(kids) {
-				return kids.indexOf("`") !== -1 ? "``" : "`";	// esc double backticks
-			},
-			lnInd: 0,
-			init: function(e, p, i) {
-				this.supr(e, p, i);
-
-				if (this.p instanceof lib.pre) {
-					this.p.tagr = false;
-
-					if (cfg.gfm_code) {
-						var cls = this.e.getAttribute("class");
-						cls = (cls || "").split(" ")[0];
-
-						if (cls.indexOf("lang-") === 0)			// marked uses "lang-" prefix now
-							cls = cls.substr(5);
-
-						this.wrapK = ["```" + cls + "\n", "\n```"];
-					}
-					else {
-						this.wrapK = "";
-						this.p.lnInd = 4;
-					}
-				}
-			}
-		});
-
-		lib.table = cfg.gfm_tbls ? lib.blk.extend({
-			cols: [],
-			init: function(e, p, i) {
-				this.supr(e, p, i);
-				this.cols = [];
-			},
-			rend: function() {
-				// run prep on all cells to get max col widths
-				for (var tsec in this.c)
-					for (var row in this.c[tsec].c)
-						for (var cell in this.c[tsec].c[row].c)
-							this.c[tsec].c[row].c[cell].prep();
-
-				return this.supr();
-			}
-		}) : lib.tblk.extend();
-
-		lib.thead = cfg.gfm_tbls ? lib.cblk.extend({
-			wrap: ["\n", function(kids) {
-				var buf = "";
-				for (var i in this.p.cols) {
-					var col = this.p.cols[i],
-						al = col.a[0] == "c" ? ":" : " ",
-						ar = col.a[0] == "r" || col.a[0] == "c" ? ":" : " ";
-
-					buf += (i == 0 && cfg.tbl_edges ? "|" : "") + al + rep("-", col.w) + ar + (i < this.p.cols.length-1 || cfg.tbl_edges ? "|" : "");
-				}
-				return "\n" + trim12(buf);
+		cfg.h2_setext && (lib.h2 = lib.h_setext.extend({
+			wrapK: ["", function(kids) {
+				return "\n" + rep("-", kids.length);
 			}]
-		}) : lib.ctblk.extend();
+		}));
 
-		lib.tbody = cfg.gfm_tbls ? lib.cblk.extend() : lib.ctblk.extend();
-
-		lib.tfoot = cfg.gfm_tbls ? lib.cblk.extend() : lib.ctblk.extend();
-
-		lib.tr = cfg.gfm_tbls ? lib.cblk.extend({
-			wrapK: [cfg.tbl_edges ? "| " : "", cfg.tbl_edges ? " |" : ""],
-		}) : lib.ctblk.extend();
-
-		lib.th = cfg.gfm_tbls ? lib.inl.extend({
-			guts: null,
-			// TODO: DRY?
-			wrap: [function() {
-				var col = this.p.p.p.cols[this.i],
-					spc = this.i == 0 ? "" : " ",
-					pad, fill = col.w - this.guts.length;
-
-				switch (col.a[0]) {
-					case "r": pad = rep(" ", fill); break;
-					case "c": pad = rep(" ", Math.floor(fill/2)); break;
-					default:  pad = "";
-				}
-
-				return spc + pad;
-			}, function() {
-				var col = this.p.p.p.cols[this.i],
-					edg = this.i == this.p.c.length - 1 ? "" : " |",
-					pad, fill = col.w - this.guts.length;
-
-				switch (col.a[0]) {
-					case "r": pad = ""; break;
-					case "c": pad = rep(" ", Math.ceil(fill/2)); break;
-					default:  pad = rep(" ", fill);
-				}
-
-				return pad + edg;
-			}],
-			prep: function() {
-				this.guts = this.rendK();					// pre-render
-				this.rendK = function() {return this.guts};
-
-				var cols = this.p.p.p.cols;
-				if (!cols[this.i])
-					cols[this.i] = {w: null, a: ""};		// width and alignment
-				var col = cols[this.i];
-				col.w = Math.max(col.w || 0, this.guts.length);
-				if (this.e.align)
-					col.a = this.e.align;
+	lib.h_atx = lib.h.extend({
+		wrapK: [
+			function(kids) {
+				return rep("#", this.tag[1]) + " ";
 			},
-		}) : lib.ctblk.extend();
+			function(kids) {
+				return cfg.h_atx_suf ? " " + rep("#", this.tag[1]) : "";
+			}
+		]
+	});
+		!cfg.h1_setext && (lib.h1 = lib.h_atx.extend({}));
 
-			lib.td = lib.th.extend();
+		!cfg.h2_setext && (lib.h2 = lib.h_atx.extend({}));
 
-		lib.txt = lib.inl.extend({
-			initK: function()
-			{
-				this.c = this.e.textContent.split(/^/gm);
-			},
-			rendK: function()
-			{
-				var kids = this.c.join("").replace(/\r/gm, "");
+		lib.h3 = lib.h_atx.extend({});
 
-				// this is strange, cause inside of code, inline should not be processed, but is?
-				if (!(this.p instanceof lib.code || this.p instanceof lib.pre)) {
-					kids = kids
-					.replace(/^\s*#/gm,"\\#")
-					.replace(/\*/gm,"\\*");
-				}
+		lib.h4 = lib.h_atx.extend({});
 
-				if (this.i == 0)
-					kids = kids.replace(/^\n+/, "");
-				if (this.i == this.p.c.length - 1)
-					kids = kids.replace(/\n+$/, "");
+		lib.h5 = lib.h_atx.extend({});
 
+		lib.h6 = lib.h_atx.extend({});
+
+	lib.a = lib.inl.extend({
+        supportedAttributes: ["href", "title"],
+		lnkid: null,
+		rend: function() {
+			var kids = this.rendK(),
+				href = this.e.getAttribute("href"),
+				title = this.e.title ? ' "' + this.e.title + '"' : "";
+
+			if (!href || href == kids || href[0] == "#" && !cfg.hash_lnks)
 				return kids;
-			}
-		});
 
-		lib.rawhtml = lib.blk.extend({
-			initK: function()
-			{
-				this.guts = outerHTML(this.e);
-			},
-			rendK: function()
-			{
-				return this.guts;
-			}
-		});
+			if (cfg.link_list)
+				return "[" + kids + "] [" + (this.lnkid + 1) + "]";
 
-		// compile regexes
-		for (var i in cfg.unsup_tags)
-			cfg.unsup_tags[i] = new RegExp("^(?:" + (i == "inline" ? "a|em|strong|img|code|del|" : "") + cfg.unsup_tags[i].replace(/\s/g, "|") + ")$");
+			return "[" + kids + "](" + href + title + ")";
+		}
+	});
+
+	// almost identical to links, maybe merge
+	lib.img = lib.inl.extend({
+        supportedAttributes: ["src", "alt", "title"],
+		lnkid: null,
+		rend: function() {
+			var kids = this.e.alt,
+				src = this.e.getAttribute("src");
+
+			if (cfg.link_list)
+				return "![" + kids + "] [" + (this.lnkid + 1) + "]";
+
+			var title = this.e.title ? ' "'+ this.e.title + '"' : "";
+
+			return "![" + kids + "](" + src + title + ")";
+		}
+	});
+
+
+	lib.em = lib.inl.extend({wrap: cfg.emph_char});
+
+	lib.del = cfg.gfm_del ? lib.inl.extend({wrap: "~~"}) : lib.tinl.extend();
+
+	lib.br = lib.inl.extend({
+		wrap: ["", function() {
+			var end = cfg.br_only ? "<br>" : "  ";
+			// br in headers output as html
+			return this.p instanceof lib.h ? "<br>" : end + "\n";
+		}]
+	});
+
+	lib.strong = lib.inl.extend({wrap: rep(cfg.bold_char, 2)});
+
+	lib.blockquote = lib.blk.extend({
+		lnPfx: "> ",
+		rend: function() {
+			return this.supr().replace(/>[ \t]$/gm, ">");
+		}
+	});
+
+	// can render with or without tags
+	lib.pre = lib.blk.extend({
+		tagr: true,
+		wrapK: "\n",
+		lnInd: 0
+	});
+
+	// can morph into inline based on context
+	lib.code = lib.blk.extend({
+		tagr: false,
+		wrap: "",
+		wrapK: function(kids) {
+			return kids.indexOf("`") !== -1 ? "``" : "`";	// esc double backticks
+		},
+		lnInd: 0,
+		init: function(e, p, i) {
+			this.supr(e, p, i);
+
+			if (this.p instanceof lib.pre) {
+				this.p.tagr = false;
+
+				if (cfg.gfm_code) {
+					var cls = this.e.getAttribute("class");
+					cls = (cls || "").split(" ")[0];
+
+					if (cls.indexOf("lang-") === 0)			// marked uses "lang-" prefix now
+						cls = cls.substr(5);
+
+					this.wrapK = ["```" + cls + "\n", "\n```"];
+				}
+				else {
+					this.wrapK = "";
+					this.p.lnInd = 4;
+				}
+			}
+		}
+	});
+
+	lib.table = cfg.gfm_tbls ? lib.blk.extend({
+		cols: [],
+		init: function(e, p, i) {
+			this.supr(e, p, i);
+			this.cols = [];
+		},
+		rend: function() {
+			// run prep on all cells to get max col widths
+			for (var tsec in this.c)
+				for (var row in this.c[tsec].c)
+					for (var cell in this.c[tsec].c[row].c)
+						this.c[tsec].c[row].c[cell].prep();
+
+			return this.supr();
+		}
+	}) : lib.tblk.extend();
+
+	lib.thead = cfg.gfm_tbls ? lib.cblk.extend({
+		wrap: ["\n", function(kids) {
+			var buf = "";
+			for (var i in this.p.cols) {
+				var col = this.p.cols[i],
+					al = col.a[0] == "c" ? ":" : " ",
+					ar = col.a[0] == "r" || col.a[0] == "c" ? ":" : " ";
+
+				buf += (i == 0 && cfg.tbl_edges ? "|" : "") + al + rep("-", col.w) + ar + (i < this.p.cols.length-1 || cfg.tbl_edges ? "|" : "");
+			}
+			return "\n" + trim12(buf);
+		}]
+	}) : lib.ctblk.extend();
+
+	lib.tbody = cfg.gfm_tbls ? lib.cblk.extend() : lib.ctblk.extend();
+
+	lib.tfoot = cfg.gfm_tbls ? lib.cblk.extend() : lib.ctblk.extend();
+
+	lib.tr = cfg.gfm_tbls ? lib.cblk.extend({
+		wrapK: [cfg.tbl_edges ? "| " : "", cfg.tbl_edges ? " |" : ""],
+	}) : lib.ctblk.extend();
+
+	lib.th = cfg.gfm_tbls ? lib.inl.extend({
+		guts: null,
+		// TODO: DRY?
+		wrap: [function() {
+			var col = this.p.p.p.cols[this.i],
+				spc = this.i == 0 ? "" : " ",
+				pad, fill = col.w - this.guts.length;
+
+			switch (col.a[0]) {
+				case "r": pad = rep(" ", fill); break;
+				case "c": pad = rep(" ", Math.floor(fill/2)); break;
+				default:  pad = "";
+			}
+
+			return spc + pad;
+		}, function() {
+			var col = this.p.p.p.cols[this.i],
+				edg = this.i == this.p.c.length - 1 ? "" : " |",
+				pad, fill = col.w - this.guts.length;
+
+			switch (col.a[0]) {
+				case "r": pad = ""; break;
+				case "c": pad = rep(" ", Math.ceil(fill/2)); break;
+				default:  pad = rep(" ", fill);
+			}
+
+			return pad + edg;
+		}],
+		prep: function() {
+			this.guts = this.rendK();					// pre-render
+			this.rendK = function() {return this.guts};
+
+			var cols = this.p.p.p.cols;
+			if (!cols[this.i])
+				cols[this.i] = {w: null, a: ""};		// width and alignment
+			var col = cols[this.i];
+			col.w = Math.max(col.w || 0, this.guts.length);
+			if (this.e.align)
+				col.a = this.e.align;
+		},
+	}) : lib.ctblk.extend();
+
+		lib.td = lib.th.extend();
+
+	lib.txt = lib.inl.extend({
+		initK: function()
+		{
+			this.c = this.e.textContent.split(/^/gm);
+		},
+		rendK: function()
+		{
+			var kids = this.c.join("").replace(/\r/gm, "");
+
+			// this is strange, cause inside of code, inline should not be processed, but is?
+			if (!(this.p instanceof lib.code || this.p instanceof lib.pre)) {
+				kids = kids
+				.replace(/^\s*#/gm,"\\#")
+				.replace(/\*/gm,"\\*");
+			}
+
+			if (this.i == 0)
+				kids = kids.replace(/^\n+/, "");
+			if (this.i == this.p.c.length - 1)
+				kids = kids.replace(/\n+$/, "");
+
+			return kids;
+		}
+	});
+
+	lib.rawhtml = lib.blk.extend({
+		initK: function()
+		{
+			this.guts = outerHTML(this.e);
+		},
+		rendK: function()
+		{
+			return this.guts;
+		}
+	});
+
+	// compile regexes
+	for (var i in cfg.unsup_tags)
+		cfg.unsup_tags[i] = new RegExp("^(?:" + (i == "inline" ? "a|em|strong|img|code|del|" : "") + cfg.unsup_tags[i].replace(/\s/g, "|") + ")$");
 };
 
 /*!
