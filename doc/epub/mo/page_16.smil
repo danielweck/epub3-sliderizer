@@ -2,11 +2,11 @@
 <smil xmlns:epub="http://www.idpf.org/2007/ops" version="3.0" xmlns="http://www.w3.org/ns/SMIL">
   <body>
     <par>
-      <text src="../html/slide_16.xhtml#txt1"/>
+      <text src="../html/slide_16.html#txt1"/>
       <audio clipBegin="0" clipEnd="04.855" src="assets/mo.mp3"/>
     </par>
     <par>
-      <text src="../html/slide_16.xhtml#txt2"/>
+      <text src="../html/slide_16.html#txt2"/>
       <audio clipBegin="04.855" clipEnd="11.307" src="assets/mo.mp3"/>
     </par>
   </body>

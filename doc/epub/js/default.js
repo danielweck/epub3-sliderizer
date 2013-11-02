@@ -1223,10 +1223,10 @@ Epub3Sliderizer.toggleReflow = function()
 Epub3Sliderizer.ACE = true;
 Epub3Sliderizer.aceEditor = undefined;
 
-Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
+Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
 {
     var that = this;
-    
+
     var txtArea = undefined;
     var txtAreaEditor = undefined;
     var fetchElems = function()
@@ -1240,15 +1240,16 @@ Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
             txtAreaEditor = querySelectorZ('.ace_text-input');
         }
     };
+
+    fetchElems();
+    var editing = keyboardEvent.target === txtArea || keyboardEvent.target === txtAreaEditor || this.isContentWrapDescendant(keyboardEvent.target);
     
     if (keyboardEvent.keyCode === 37 || // left arrow
     // keyboardEvent.keyCode === 38 // up arrow
     keyboardEvent.keyCode === 33 // page up
     )
     {
-        fetchElems();
-        
-        if (keyboardEvent.target === txtArea || keyboardEvent.target === txtAreaEditor)
+        if (editing)
         {
             return;
         }
@@ -1261,9 +1262,7 @@ Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
         keyboardEvent.keyCode === 34 // page down
     )
     {
-        fetchElems();
-        
-        if (keyboardEvent.target === txtArea || keyboardEvent.target === txtAreaEditor)
+        if (editing)
         {
             return;
         }
@@ -1283,10 +1282,10 @@ Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
         alert('Author mode is not enabled for this slide.\n\nAre you sure it was edited with Markdown?\n\nIf yes, check that VERBOSITY="VERBOSE_max" in the sliderize.sh script\n(this enables the "author" mode).');
         return;
     }
-    
+
+    var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
     var root = document.getElementById("epb3sldrzr-root");
     var divEditor = document.getElementById('epb3sldrzr-markdown-editor');
-    var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
     
     var imgSrcPrefix = "../img/custom/";
     
@@ -1565,6 +1564,27 @@ Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
 
 // ----------
 
+Epub3Sliderizer.isContentWrapDescendant = function(el)
+{
+    var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
+    var found = false;
+    var parent = el;
+    while (parent)
+    {
+        if (parent === contentWrap)
+        {
+            found = true;
+            break;
+        }
+
+        parent = parent.parentNode;
+    }
+    //var parents = $(keyboardEvent.target).parents('#epb3sldrzr-content-wrap');
+    return found;
+}
+
+// ----------
+
 //http://www.sceneonthe.net/unicode.htm
 //http://www.w3.org/2002/09/tests/keys.html
 Epub3Sliderizer.onKeyboard = function(keyboardEvent)
@@ -1588,15 +1608,20 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 
     var fontSizeIncrease = 5;
 
-    if (keyboardEvent.keyCode === 65 && $("#epb3sldrzr-root").css("display") === "block") // A
+    if (keyboardEvent.keyCode === 65) // A
     {
-        keyboardEvent.preventDefault();
-        
-        this.reloadSlide(this.authorMode ? "" : "author");
+        var notEditing = !this.authorMode ||
+            $("#epb3sldrzr-root").css("display") === "block" && !this.isContentWrapDescendant(keyboardEvent.target);
+        if (notEditing)
+        {
+            keyboardEvent.preventDefault();
+            this.reloadSlide(this.authorMode ? "" : "author");
+        }
     }
     else if (this.authorMode)
     {
-        this.toggleAuthoring(keyboardEvent);
+        // LEFT RIGHT ESCAPE
+        this.keyboardAuthoring(keyboardEvent);
     }
     else if (!this.reflow && keyboardEvent.keyCode === 90) // Z
     {
@@ -1745,12 +1770,12 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
     }
     else if (keyboardEvent.keyCode === 83) // S
     {
-        keyboardEvent.preventDefault();
+        //keyboardEvent.preventDefault();
         //TODO this.toggleSlideStrip();
     }
     else if (keyboardEvent.keyCode === 84) // T
     {
-        keyboardEvent.preventDefault();
+        //keyboardEvent.preventDefault();
         //TODO this.toggleTwoPageSpread();
     }
 };
@@ -3369,7 +3394,6 @@ Epub3Sliderizer.initIncrementals = function()
     }
 };
 
-
 // ----------
 
 Epub3Sliderizer.initLocation = function()
@@ -3464,8 +3488,6 @@ Epub3Sliderizer.init = function()
             
     console.log("Epub3Sliderizer");
     console.log(window.navigator.userAgent);    
-
-    this.initLocation();
 
     var fakeEpubReadingSystem = false;
 
@@ -3920,6 +3942,8 @@ function readyDelayed()
 
 function readyFirst()
 {
+    Epub3Sliderizer.initLocation();
+
     /*
     var obj = window;
     var str = "";
@@ -4076,6 +4100,18 @@ function readyFirst()
         Epub3Sliderizer.authorMode = true;
         document.body.classList.add("author");
 
+        var html = Epub3Sliderizer.thisFilename && Epub3Sliderizer.thisFilename.indexOf(".html") > 0;
+        if (html)
+        {
+            console.log("AUTHOR MODE, HTML (WYSIWYG CONTENT EDITABLE)");
+            var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
+            contentWrap.setAttribute("contentEditable", 'true');
+        }
+        else
+        {
+            console.log("AUTHOR MODE, XHTML (NON-WYSIWYG EDITOR)");
+        }
+            
         if (Epub3Sliderizer.ACE)
         {
             loadScript(undefined, 'ace.js');

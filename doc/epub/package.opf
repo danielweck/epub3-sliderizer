@@ -6,7 +6,7 @@
     <meta property="media:active-class">-epub-media-overlay-active</meta>
     <meta property="media:playback-active-class">-epub-media-overlay-playing</meta>
     <meta property="media:narrator">Daniel Weck</meta>
-    <meta property="dcterms:modified">2013-11-02T19:14:39Z</meta>
+    <meta property="dcterms:modified">2013-11-02T23:15:02Z</meta>
     <meta content="cover" name="cover"/>
     <dc:identifier id="UID">DEFAULT-UID</dc:identifier>
     <dc:language>en-US</dc:language>
@@ -21,7 +21,7 @@
     <meta property="media:duration" refines="#page_16_mo">11.307</meta>
   </metadata>
   <manifest>
-    <item href="nav.xhtml" id="nav" media-type="application/xhtml+xml" properties="nav scripted"/>
+    <item href="nav.html" id="nav" media-type="application/xhtml+xml" properties="nav scripted"/>
     <item href="nav.ncx" id="ncx" media-type="application/x-dtbncx+xml"/>
     <item href="img/600px.png" id="px600" media-type="image/png"/>
     <item href="img/back.png" id="background" media-type="image/png"/>
@@ -63,32 +63,32 @@
     <item href="img/custom/assets/EPUB3-Sliderizer.png" id="logo" media-type="image/png"/>
     <item href="img/custom/assets/TouchIcon.png" id="touchicon" media-type="image/png"/>
     <item href="mo/assets/mo.mp3" id="mo-audio_000" media-type="audio/mpeg"/>
-    <item href="html/slide_01.xhtml" id="page_01" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_01.html" id="page_01" media-type="application/xhtml+xml" properties="scripted"/>
     <item href="img/custom/assets/forkme.png" id="img_001" media-type="image/png"/>
-    <item href="html/slide_02.xhtml" id="page_02" media-type="application/xhtml+xml" properties="scripted"/>
-    <item href="html/slide_03.xhtml" id="page_03" media-type="application/xhtml+xml" properties="scripted"/>
-    <item href="html/slide_04.xhtml" id="page_04" media-type="application/xhtml+xml" properties="scripted"/>
-    <item href="html/slide_05.xhtml" id="page_05" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_02.html" id="page_02" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_03.html" id="page_03" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_04.html" id="page_04" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_05.html" id="page_05" media-type="application/xhtml+xml" properties="scripted"/>
     <item href="img/custom/assets/HTML5.png" id="img_002" media-type="image/png"/>
-    <item href="html/slide_06.xhtml" id="page_06" media-type="application/xhtml+xml" properties="scripted"/>
-    <item href="html/slide_07.xhtml" id="page_07" media-type="application/xhtml+xml" properties="scripted"/>
-    <item href="html/slide_07_NOTES.xhtml" id="page_Notes07" media-type="application/xhtml+xml" properties="scripted"/>
-    <item href="html/slide_08.xhtml" id="page_08" media-type="application/xhtml+xml" properties="scripted"/>
-    <item href="html/slide_09.xhtml" id="page_09" media-type="application/xhtml+xml" properties="scripted"/>
-    <item href="html/slide_10.xhtml" id="page_10" media-type="application/xhtml+xml" properties="scripted"/>
-    <item href="html/slide_11.xhtml" id="page_11" media-type="application/xhtml+xml" properties="scripted"/>
-    <item href="html/slide_12.xhtml" id="page_12" media-type="application/xhtml+xml" properties="scripted"/>
-    <item href="html/slide_13.xhtml" id="page_13" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_06.html" id="page_06" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_07.html" id="page_07" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_07_NOTES.html" id="page_Notes07" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_08.html" id="page_08" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_09.html" id="page_09" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_10.html" id="page_10" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_11.html" id="page_11" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_12.html" id="page_12" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_13.html" id="page_13" media-type="application/xhtml+xml" properties="scripted"/>
     <item href="img/custom/assets/kitten.jpg" id="img_003" media-type="image/jpeg"/>
-    <item href="html/slide_14.xhtml" id="page_14" media-type="application/xhtml+xml" properties="scripted"/>
-    <item href="html/slide_15.xhtml" id="page_15" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_14.html" id="page_14" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_15.html" id="page_15" media-type="application/xhtml+xml" properties="scripted"/>
     <item href="img/custom/assets/wall.jpg" id="img_004" media-type="image/jpeg"/>
-    <item href="html/slide_16.xhtml" id="page_16" media-overlay="page_16_mo" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_16.html" id="page_16" media-overlay="page_16_mo" media-type="application/xhtml+xml" properties="scripted"/>
     <item href="mo/page_16.smil" id="page_16_mo" media-type="application/smil+xml"/>
-    <item href="html/slide_17.xhtml" id="page_17" media-type="application/xhtml+xml" properties="scripted"/>
-    <item href="html/slide_18.xhtml" id="page_18" media-type="application/xhtml+xml" properties="scripted"/>
-    <item href="html/slide_19.xhtml" id="page_19" media-type="application/xhtml+xml" properties="scripted"/>
-    <item href="html/slide_20.xhtml" id="page_20" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_17.html" id="page_17" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_18.html" id="page_18" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_19.html" id="page_19" media-type="application/xhtml+xml" properties="scripted"/>
+    <item href="html/slide_20.html" id="page_20" media-type="application/xhtml+xml" properties="scripted"/>
   </manifest>
   <spine page-progression-direction="ltr" toc="ncx">
     <itemref idref="nav" properties="page-spread-right"/>

@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_2" lang="en-US" xml:lang="en-US">
+    <head>
+        <meta charset="UTF-8"/>
+
+        <meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/>
+        <meta content="EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook" name="keywords"/>
+        
+        <title>(2/20) EPUB3 Sliderizer / Tips: - navigation</title>
+        
+        <link href="../img/favicon.ico" rel="shortcut icon"/>
+        
+        <link href="../img/custom/assets/TouchIcon.png" rel="apple-touch-icon"/>
+        
+        <meta content="width=1290, height=1000" name="viewport"/>
+        
+        <link href="fonts/fonts.css" rel="stylesheet" type="text/css"/>
+        
+        <link href="../css/FontAwesome.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/struct.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/incrementals.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/animations.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/controls.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/default.css" rel="stylesheet" type="text/css"/>
+        
+        
+        
+        
+        
+        <script src="../js/jquery.min.js"> </script>
+        <script src="../js/default.js"> </script>
+        
+        
+
+        <link href="slide_01.html" rel="prev"/>
+        
+        <link href="slide_03.html" rel="next"/>
+
+        <link href="../nav.html" rel="nav"/>
+
+        <link href="slide_01.html" rel="first"/>
+        
+        <link href="slide_20.html" rel="last"/>
+                
+        <link href="../../../EPUB3-Sliderizer.epub" rel="epub"/>
+
+        
+        <style type="text/css">
+        /*<![CDATA[*/
+        body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
+{
+
+-webkit-animation-duration: 1s;
+-moz-animation-duration: 1s;
+-ms-animation-duration: 1s;
+-o-animation-duration: 1s;
+animation-duration: 1s;
+
+
+-webkit-animation-delay: 0s;
+-moz-animation-delay: 0s;
+-ms-animation-delay: 0s;
+-o-animation-delay: 0s;
+animation-delay: 0s;
+
+}
+html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
+{
+width: 200px;
+height: 84px;
+}
+html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+opacity: 0.4;
+}
+.pale-red
+{
+background: rgba(255, 0, 0, 0.2);
+}
+.pale-green
+{
+background: rgba(0, 255, 0, 0.2);
+}
+.pale-blue
+{
+background: rgba(0, 0, 255, 0.2);
+}
+.pale-grey
+{
+background: rgba(0, 0, 0, 0.2);
+}
+.magenta
+{
+background: #ff00ff;
+}
+.red
+{
+background: #FF0033;
+}
+        /*]]>*/
+        </style>
+
+        <style type="text/css">
+        /*<![CDATA[*/
+        /*
+body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-previous,
+body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-next,
+body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-toc,
+.glowButt
+{
+-webkit-backface-visibility: hidden;
+opacity: 1;
+-PREFIXED_PROPERTY-animation-name: onoff;
+-PREFIXED_PROPERTY-animation-timing-function: linear;
+-PREFIXED_PROPERTY-animation-duration: 1.8s;
+-PREFIXED_PROPERTY-animation-iteration-count: infinite;
+-PREFIXED_PROPERTY-animation-delay: 1s;
+}
+*/
+/*
+border: 4px solid #ff00ff;
+*/
+        /*]]>*/
+        </style>
+
+        
+
+        <script>
+        //<![CDATA[
+        function setupAnimations()
+{
+var html = document.documentElement;
+if (html.id == "epb3sldrzr-NavDoc")
+{
+var elem = document.getElementById("epb3sldrzr-logo");
+elem.classList.add("fadeIn");
+elem.classList.add("epb3sldrzr-animated");
+}
+}
+//setTimeout(setupAnimations, 100);
+document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
+        //]]>
+        </script>
+
+</head>
+<body epub:type="bodymatter">
+    <div id="epb3sldrzr-body">
+        
+        <div id="epb3sldrzr-root">
+
+            <img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/>
+
+            <section id="epb3sldrzr-content">
+
+                <div id="epb3sldrzr-anim-overflow">
+
+                    <h1 id="epb3sldrzr-title">Tips: <span id="epb3sldrzr-subtitle">navigation</span>
+            </h1>
+
+<div id="epb3sldrzr-content-wrap">
+                    
+  <!--SOUP-->
+<div class="incremental auto">
+<div class="boxed" style="margin-bottom: 0.6em;">
+<h3>Swipe gestures</h3>
+<div class="nopad">
+<table class="spaceLined">
+<tbody>
+            <tr>
+<td style="width: 30%">
+<span class="symbols pale-bluex" title="left"></span>
+<span class="symbols pale-greenx" title="right"></span>
+</td>
+<td>
+previous / next slide
+</td>
+</tr>
+<tr>
+<td style="width: 30%">
+<span class="symbols pale-bluex" style="padding-left: 0.4em; padding-right: 0.4em; " title="up"></span> <span class="symbols pale-greenx" style="padding-left: 0; padding-right: 0.4em; " title="down"></span>
+</td>
+<td>
+previous / next incremental item
+</td>
+</tr>
+</tbody>
+        </table>
+</div>
+</div>
+<div class="boxed" style="margin-bottom: 0.6em;">
+<h3>Keyboard</h3>
+<div class="nopad">
+<table class="spaceLined">
+<tbody>
+            <tr>
+<td style="width: 30%;  padding-top: 0.2em">
+<span class="keyboard symbols" style="padding-left: 0.2em; padding-right: 0.4em;" title="left"></span>
+<span class="keyboard symbols" style="padding-left: 0.4em; padding-right: 0.2em; " title="right"></span>
+</td>
+<td>
+previous / next slide
+</td>
+</tr>
+<tr>
+<td style="width: 30%">
+<span class="keyboard symbols" title="up"></span>
+<span class="keyboard symbols" title="down"></span>
+</td>
+<td>
+previous / next incremental item
+</td>
+</tr>
+<tr>
+<td style="width: 30%">
+<span class="keyboard" style="padding-left: 0.4em; padding-right: 0.4em; " title="down">_</span>
+</td>
+<td>
+<span class="code">[space bar]</span> next incremental item
+</td>
+</tr>
+<tr>
+<td style="width: 30%; padding-bottom: 0.2em">
+<span class="keyboard">m</span>
+</td>
+<td>
+slides menu <span class="fade">(table of contents)</span>
+</td>
+</tr>
+</tbody>
+        </table>
+</div>
+</div>
+<div class="boxed" style="margin-bottom: 0;">
+<h3>Buttons</h3>
+<div class="nopad">
+<table class="spaceLined">
+<tbody>
+            <tr>
+<td style="width: 30%;  padding-top: 0.2em">
+<span class="symbols pale-bluex" title="first">
+                  <span style="font-size: 90%;"></span>
+                </span>
+<span class="symbols" title="left">
+                  <span style="font-size: 90%;"></span>
+                </span>
+<span class="symbols" title="right">
+                  <span style="font-size: 90%;"></span>
+                </span>
+<span class="symbols pale-greenx" title="last">
+                  <span style="font-size: 90%;"></span>
+                </span>
+</td>
+<td>
+first / previous / next / last slide
+</td>
+</tr>
+<tr>
+<td style="width: 30%; padding-bottom: 0.2em">
+<span class="symbols">
+                  <span style="font-size: 80%;"></span>
+                </span>
+</td>
+<td>
+slides menu <span class="fade">(table of contents)</span>
+</td>
+</tr>
+</tbody>
+        </table>
+</div>
+</div>
+<p style="text-align: right; font-size: 80%;">
+(show control panel with
+<span class="keyboard " style="padding-left: 0.4em; padding-right: 0.4em;" title="C">c</span>
+or <span class="code">[tap]</span> / <span class="code">[click]</span>
+<!-- span class="symbols pale-greenx" title="tap">&#xf0a6;</span -->
+)
+
+</p>
+  </div>
+
+
+</div>
+
+                </div>
+
+             </section>
+         </div>
+     </div>
+
+     <div class="epb3sldrzr-markdown" id="epb3sldrzr-markdown-editor">NO-MARKDOWN
+&lt;div class="incremental auto"&gt;
+&lt;div class="boxed" style="margin-bottom: 0.6em;"&gt;
+&lt;h3&gt;Swipe gestures&lt;/h3&gt;
+&lt;div class="nopad"&gt;
+&lt;table class="spaceLined"&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%"&gt;
+&lt;span class="symbols pale-bluex" title="left"&gt;&amp;#xf177;&lt;/span&gt;
+&lt;span class="symbols pale-greenx" title="right"&gt;&amp;#xf178;&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+previous / next slide
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%"&gt;
+&lt;span class="symbols pale-bluex" title="up" style="padding-left: 0.4em; padding-right: 0.4em; "&gt;&amp;#xf176;&lt;/span&gt; &lt;span class="symbols pale-greenx" title="down"  style="padding-left: 0; padding-right: 0.4em; "&gt;&amp;#xf175;&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+previous / next incremental item
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="boxed"  style="margin-bottom: 0.6em;"&gt;
+&lt;h3&gt;Keyboard&lt;/h3&gt;
+&lt;div class="nopad"&gt;
+&lt;table class="spaceLined"&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%;  padding-top: 0.2em"&gt;
+&lt;span class="keyboard symbols" title="left"  style="padding-left: 0.2em; padding-right: 0.4em;"&gt;&amp;#xf0d9;&lt;/span&gt;
+&lt;span class="keyboard symbols" title="right" style="padding-left: 0.4em; padding-right: 0.2em; "&gt;&amp;#xf0da;&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+previous / next slide
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%"&gt;
+&lt;span class="keyboard symbols" title="up"&gt;&amp;#xf0d8;&lt;/span&gt;
+&lt;span class="keyboard symbols" title="down"&gt;&amp;#xf0d7;&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+previous / next incremental item
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%"&gt;
+&lt;span class="keyboard" title="down"  style="padding-left: 0.4em; padding-right: 0.4em; "&gt;_&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;span class="code"&gt;[space bar]&lt;/span&gt; next incremental item
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%; padding-bottom: 0.2em"&gt;
+&lt;span class="keyboard"&gt;m&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+slides menu &lt;span class="fade"&gt;(table of contents)&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="boxed"  style="margin-bottom: 0;"&gt;
+&lt;h3&gt;Buttons&lt;/h3&gt;
+&lt;div class="nopad"&gt;
+&lt;table class="spaceLined"&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%;  padding-top: 0.2em"&gt;
+&lt;span class="symbols pale-bluex" title="first"&gt;&lt;span style="font-size: 90%;"&gt;&amp;#xf100;&lt;/span&gt;&lt;/span&gt;
+&lt;span class="symbols" title="left"&gt;&lt;span style="font-size: 90%;"&gt;&amp;#xf0a8;&lt;/span&gt;&lt;/span&gt;
+&lt;span class="symbols" title="right"&gt;&lt;span style="font-size: 90%;"&gt;&amp;#xf0a9;&lt;/span&gt;&lt;/span&gt;
+&lt;span class="symbols pale-greenx" title="last"&gt;&lt;span style="font-size: 90%;"&gt;&amp;#xf101;&lt;/span&gt;&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+first / previous / next / last slide
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%; padding-bottom: 0.2em"&gt;
+&lt;span class="symbols"&gt;&lt;span style="font-size: 80%;"&gt;&amp;#xf0ca;&lt;/span&gt;&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+slides menu &lt;span class="fade"&gt;(table of contents)&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="text-align: right; font-size: 80%;"&gt;
+(show control panel with
+&lt;span class="keyboard " title="C" style="padding-left: 0.4em; padding-right: 0.4em;"&gt;c&lt;/span&gt;
+or &lt;span class="code"&gt;[tap]&lt;/span&gt; / &lt;span class="code"&gt;[click]&lt;/span&gt;
+&lt;!-- span class="symbols pale-greenx" title="tap"&gt;&amp;#xf0a6;&lt;/span --&gt;
+)
+&lt;/span&gt;
+&lt;/div&gt;</div>
+     <textarea class="epb3sldrzr-markdown" id="epb3sldrzr-markdown-src">NO-MARKDOWN
+&lt;div class="incremental auto"&gt;
+&lt;div class="boxed" style="margin-bottom: 0.6em;"&gt;
+&lt;h3&gt;Swipe gestures&lt;/h3&gt;
+&lt;div class="nopad"&gt;
+&lt;table class="spaceLined"&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%"&gt;
+&lt;span class="symbols pale-bluex" title="left"&gt;&amp;#xf177;&lt;/span&gt;
+&lt;span class="symbols pale-greenx" title="right"&gt;&amp;#xf178;&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+previous / next slide
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%"&gt;
+&lt;span class="symbols pale-bluex" title="up" style="padding-left: 0.4em; padding-right: 0.4em; "&gt;&amp;#xf176;&lt;/span&gt; &lt;span class="symbols pale-greenx" title="down"  style="padding-left: 0; padding-right: 0.4em; "&gt;&amp;#xf175;&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+previous / next incremental item
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="boxed"  style="margin-bottom: 0.6em;"&gt;
+&lt;h3&gt;Keyboard&lt;/h3&gt;
+&lt;div class="nopad"&gt;
+&lt;table class="spaceLined"&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%;  padding-top: 0.2em"&gt;
+&lt;span class="keyboard symbols" title="left"  style="padding-left: 0.2em; padding-right: 0.4em;"&gt;&amp;#xf0d9;&lt;/span&gt;
+&lt;span class="keyboard symbols" title="right" style="padding-left: 0.4em; padding-right: 0.2em; "&gt;&amp;#xf0da;&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+previous / next slide
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%"&gt;
+&lt;span class="keyboard symbols" title="up"&gt;&amp;#xf0d8;&lt;/span&gt;
+&lt;span class="keyboard symbols" title="down"&gt;&amp;#xf0d7;&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+previous / next incremental item
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%"&gt;
+&lt;span class="keyboard" title="down"  style="padding-left: 0.4em; padding-right: 0.4em; "&gt;_&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;span class="code"&gt;[space bar]&lt;/span&gt; next incremental item
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%; padding-bottom: 0.2em"&gt;
+&lt;span class="keyboard"&gt;m&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+slides menu &lt;span class="fade"&gt;(table of contents)&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="boxed"  style="margin-bottom: 0;"&gt;
+&lt;h3&gt;Buttons&lt;/h3&gt;
+&lt;div class="nopad"&gt;
+&lt;table class="spaceLined"&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%;  padding-top: 0.2em"&gt;
+&lt;span class="symbols pale-bluex" title="first"&gt;&lt;span style="font-size: 90%;"&gt;&amp;#xf100;&lt;/span&gt;&lt;/span&gt;
+&lt;span class="symbols" title="left"&gt;&lt;span style="font-size: 90%;"&gt;&amp;#xf0a8;&lt;/span&gt;&lt;/span&gt;
+&lt;span class="symbols" title="right"&gt;&lt;span style="font-size: 90%;"&gt;&amp;#xf0a9;&lt;/span&gt;&lt;/span&gt;
+&lt;span class="symbols pale-greenx" title="last"&gt;&lt;span style="font-size: 90%;"&gt;&amp;#xf101;&lt;/span&gt;&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+first / previous / next / last slide
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="width: 30%; padding-bottom: 0.2em"&gt;
+&lt;span class="symbols"&gt;&lt;span style="font-size: 80%;"&gt;&amp;#xf0ca;&lt;/span&gt;&lt;/span&gt;
+&lt;/td&gt;
+&lt;td&gt;
+slides menu &lt;span class="fade"&gt;(table of contents)&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p style="text-align: right; font-size: 80%;"&gt;
+(show control panel with
+&lt;span class="keyboard " title="C" style="padding-left: 0.4em; padding-right: 0.4em;"&gt;c&lt;/span&gt;
+or &lt;span class="code"&gt;[tap]&lt;/span&gt; / &lt;span class="code"&gt;[click]&lt;/span&gt;
+&lt;!-- span class="symbols pale-greenx" title="tap"&gt;&amp;#xf0a6;&lt;/span --&gt;
+)
+&lt;/span&gt;
+&lt;/div&gt;</textarea>
+</body>
+</html>

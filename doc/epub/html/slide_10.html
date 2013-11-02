@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_12" lang="en-US" xml:lang="en-US">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_10" lang="en-US" xml:lang="en-US">
     <head>
         <meta charset="UTF-8"/>
 
         <meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/>
         <meta content="EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook" name="keywords"/>
         
-        <title>(12/20) EPUB3 Sliderizer / Incrementals</title>
+        <title>(10/20) EPUB3 Sliderizer / Markdown - (2/2)</title>
         
         <link href="../img/favicon.ico" rel="shortcut icon"/>
         
@@ -31,15 +32,15 @@
         
         
 
-        <link href="slide_11.xhtml" rel="prev"/>
+        <link href="slide_09.html" rel="prev"/>
         
-        <link href="slide_13.xhtml" rel="next"/>
+        <link href="slide_11.html" rel="next"/>
 
-        <link href="../nav.xhtml" rel="nav"/>
+        <link href="../nav.html" rel="nav"/>
 
-        <link href="slide_01.xhtml" rel="first"/>
+        <link href="slide_01.html" rel="first"/>
         
-        <link href="slide_20.xhtml" rel="last"/>
+        <link href="slide_20.html" rel="last"/>
                 
         <link href="../../../EPUB3-Sliderizer.epub" rel="epub"/>
 
@@ -131,53 +132,87 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 
                 <div id="epb3sldrzr-anim-overflow">
 
-                    <h1 id="epb3sldrzr-title">Incrementals</h1>
+                    <h1 id="epb3sldrzr-title">Markdown <span id="epb3sldrzr-subtitle">(2/2)</span>
+            </h1>
 
 <div id="epb3sldrzr-content-wrap">
-                    <!--SOUP-->
-<div class="boxed" style="margin-bottom: 1em;">
-<h3>Example:</h3>
-<p class="code" style="font-size: 0.8em;">
-&lt;ul class="<span class="code pale-blue">incremental</span> <span class="code pale-red">auto</span>" <span class="code pale-green">data-incremental-delay</span>="200"&gt;
-<br/>
-<span class="auto incremental" data-incremental-delay="200">
-<span class="code pale-grey" style="font-weight: 900">    &lt;li&gt; <strong>item 1</strong> &lt;/li&gt;<br/></span>
-<span class="code pale-grey" style="font-weight: 900">    &lt;li&gt; <strong>item 2</strong> &lt;/li&gt;<br/></span>
-<span>
-<span class="code">    &lt;li&gt;<br/>        &lt;ul class="<span class="code pale-blue">incremental</span> <span class="code pale-red">auto</span>"&gt;<br/></span>
-<span class="auto incremental" data-incremental-delay="400">
-<span class="code pale-grey" style="font-weight: 900">            &lt;li&gt; <strong>item 3</strong> &lt;/li&gt;<br/></span>
-<span class="code pale-grey" style="font-weight: 900">            &lt;li&gt; <strong>item 4</strong> &lt;/li&gt;<br/></span>
-</span>
-<span class="code">        &lt;/ul&gt;<br/>    &lt;/li&gt;<br/></span>
-</span>
-</span>
-&lt;/ul&gt;
-</p>
-</div>
-<div style="font-size: 1em; width: 9em; float: right; padding-top: 1em; padding-bottom: 1em; margin-top: -10em; margin-right: 3em; background-color: #666666; color: white; border: 4px solid #333333;">
-<ul class="incremental auto" data-incremental-delay="200">
-<li> item 1 </li>
-<li> item 2 </li>
-<li style="list-style-type:none;">
-<ul class="incremental auto">
-<li> item 3 </li>
-<li> item 4 </li>
-</ul>
-</li>
-</ul>
-</div>
-<ul class="auto incremental" data-incremental-delay="200">
-<li>
-CSS class '<span class="code pale-blue">incremental</span>' on element ⇒ children progression
-</li>
-<li>
-CSS class '<span class="code pale-red">auto</span>' ⇒ automatic reveal
-</li>
-<li>
-Attribute '<span class="code pale-green">data-incremental-delay</span>' ⇒ time offset <span class="fade">(500ms default)</span>
-</li>
-</ul>
+                    
+  <!--XML-->
+  <pre>
+
+Actual source of the previous slide:
+
+
+
+Markdown: Syntax
+================
+
+*   [Overview](#overview)
+    *   [Philosophy](#philosophy)
+    *   [Inline HTML](#html)
+    *   [Automatic Escaping for Special Characters](#autoescape)
+*   [Block Elements](#block)
+    *   [Paragraphs and Line Breaks](#p)
+    *   [Headers](#header)
+    *   [Blockquotes](#blockquote)
+    *   [Lists](#list)
+    *   [Code Blocks](#precode)
+    *   [Horizontal Rules](#hr)
+*   [Span Elements](#span)
+    *   [Links](#link)
+    *   [Emphasis](#em)
+    *   [Code](#code)
+    *   [Images](#img)
+*   [Miscellaneous](#misc)
+    *   [Backslash Escapes](#backslash)
+    *   [Automatic Links](#autolink)
+
+* * *
+
+&lt;h2 id="overview"&gt;Overview&lt;/h2&gt;
+
+&lt;h3 id="philosophy"&gt;Philosophy&lt;/h3&gt;
+
+Markdown is intended to be as easy-to-read and easy-to-write as is feasible.
+
+Readability, however, is emphasized above all else. A Markdown-formatted
+document should be publishable as-is, as plain text, without looking
+like it's been marked up with tags or formatting instructions. While
+Markdown's syntax has been influenced by several existing text-to-HTML
+filters -- including [Setext] [1], [atx] [2], [Textile] [3], [reStructuredText] [4],
+[Grutatext] [5], and [EtText] [6] -- the single biggest source of
+inspiration for Markdown's syntax is the format of plain text email.
+
+  [1]: http://docutils.sourceforge.net/mirror/setext.html
+  [2]: http://www.aaronsw.com/2002/atx/
+  [3]: http://textism.com/tools/textile/
+  [4]: http://docutils.sourceforge.net/rst.html
+  [5]: http://www.triptico.com/software/grutatxt.html
+  [6]: http://ettext.taint.org/doc/
+
+To this end, Markdown's syntax is comprised entirely of punctuation
+characters, which punctuation characters have been carefully chosen so
+as to look like what they mean. E.g., asterisks around a word actually
+look like \*emphasis\*. Markdown lists look like, well, lists. Even
+blockquotes look like quoted passages of text, assuming you've ever
+used email.
+
+
+
+&lt;h3 id="html"&gt;Inline HTML&lt;/h3&gt;
+
+Markdown's syntax is intended for one purpose: to be used as a
+format for *writing* for the web.
+
+...
+
+...
+
+CROPPED HERE FOR BREVITY :)
+
+</pre>
+
+
 </div>
 
                 </div>

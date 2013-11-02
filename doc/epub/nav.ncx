@@ -17,121 +17,121 @@
       <navLabel>
         <text>Intro</text>
       </navLabel>
-      <content src="html/slide_01.xhtml"/>
+      <content src="html/slide_01.html"/>
     </navPoint>
     <navPoint id="s2" playOrder="3">
       <navLabel>
         <text>Tips: -- navigation</text>
       </navLabel>
-      <content src="html/slide_02.xhtml"/>
+      <content src="html/slide_02.html"/>
     </navPoint>
     <navPoint id="s3" playOrder="5">
       <navLabel>
         <text>Tips: -- zoom &amp; pan</text>
       </navLabel>
-      <content src="html/slide_03.xhtml"/>
+      <content src="html/slide_03.html"/>
     </navPoint>
     <navPoint id="s4" playOrder="7">
       <navLabel>
         <text>Tips: -- text size</text>
       </navLabel>
-      <content src="html/slide_04.xhtml"/>
+      <content src="html/slide_04.html"/>
     </navPoint>
     <navPoint id="s5" playOrder="9">
       <navLabel>
         <text>Why EPUB3?</text>
       </navLabel>
-      <content src="html/slide_05.xhtml"/>
+      <content src="html/slide_05.html"/>
     </navPoint>
     <navPoint id="s6" playOrder="11">
       <navLabel>
         <text>Example -- (1/2)</text>
       </navLabel>
-      <content src="html/slide_06.xhtml"/>
+      <content src="html/slide_06.html"/>
     </navPoint>
     <navPoint id="s7" playOrder="13">
       <navLabel>
         <text>Example -- (2/2)</text>
       </navLabel>
-      <content src="html/slide_07.xhtml"/>
+      <content src="html/slide_07.html"/>
     </navPoint>
     <navPoint id="s8" playOrder="15">
       <navLabel>
         <text>CSS -- prefixes</text>
       </navLabel>
-      <content src="html/slide_08.xhtml"/>
+      <content src="html/slide_08.html"/>
     </navPoint>
     <navPoint id="s9" playOrder="17">
       <navLabel>
         <text>Markdown -- (1/2)</text>
       </navLabel>
-      <content src="html/slide_09.xhtml"/>
+      <content src="html/slide_09.html"/>
     </navPoint>
     <navPoint id="s10" playOrder="19">
       <navLabel>
         <text>Markdown -- (2/2)</text>
       </navLabel>
-      <content src="html/slide_10.xhtml"/>
+      <content src="html/slide_10.html"/>
     </navPoint>
     <navPoint id="s11" playOrder="21">
       <navLabel>
         <text>Animations</text>
       </navLabel>
-      <content src="html/slide_11.xhtml"/>
+      <content src="html/slide_11.html"/>
     </navPoint>
     <navPoint id="s12" playOrder="23">
       <navLabel>
         <text>Incrementals</text>
       </navLabel>
-      <content src="html/slide_12.xhtml"/>
+      <content src="html/slide_12.html"/>
     </navPoint>
     <navPoint id="s13" playOrder="25">
       <navLabel>
         <text>Content scroll</text>
       </navLabel>
-      <content src="html/slide_13.xhtml"/>
+      <content src="html/slide_13.html"/>
     </navPoint>
     <navPoint id="s14" playOrder="27">
       <navLabel>
         <text>Styling, templates</text>
       </navLabel>
-      <content src="html/slide_14.xhtml"/>
+      <content src="html/slide_14.html"/>
     </navPoint>
     <navPoint id="s15" playOrder="29">
       <navLabel>
         <text>Picture slides</text>
       </navLabel>
-      <content src="html/slide_15.xhtml"/>
+      <content src="html/slide_15.html"/>
     </navPoint>
     <navPoint id="s16" playOrder="31">
       <navLabel>
         <text>Media Overlays</text>
       </navLabel>
-      <content src="html/slide_16.xhtml"/>
+      <content src="html/slide_16.html"/>
     </navPoint>
     <navPoint id="s17" playOrder="33">
       <navLabel>
         <text>Parameters</text>
       </navLabel>
-      <content src="html/slide_17.xhtml"/>
+      <content src="html/slide_17.html"/>
     </navPoint>
     <navPoint id="s18" playOrder="35">
       <navLabel>
         <text>Author mode -- (alpha)</text>
       </navLabel>
-      <content src="html/slide_18.xhtml"/>
+      <content src="html/slide_18.html"/>
     </navPoint>
     <navPoint id="s19" playOrder="37">
       <navLabel>
         <text>Web browsers</text>
       </navLabel>
-      <content src="html/slide_19.xhtml"/>
+      <content src="html/slide_19.html"/>
     </navPoint>
     <navPoint id="s20" playOrder="39">
       <navLabel>
         <text>E-readers</text>
       </navLabel>
-      <content src="html/slide_20.xhtml"/>
+      <content src="html/slide_20.html"/>
     </navPoint>
   </navMap>
   <pageList>
@@ -142,121 +142,121 @@
       <navLabel>
         <text>1</text>
       </navLabel>
-      <content src="html/slide_01.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_01.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p2" playOrder="4" type="normal" value="2">
       <navLabel>
         <text>2</text>
       </navLabel>
-      <content src="html/slide_02.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_02.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p3" playOrder="6" type="normal" value="3">
       <navLabel>
         <text>3</text>
       </navLabel>
-      <content src="html/slide_03.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_03.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p4" playOrder="8" type="normal" value="4">
       <navLabel>
         <text>4</text>
       </navLabel>
-      <content src="html/slide_04.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_04.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p5" playOrder="10" type="normal" value="5">
       <navLabel>
         <text>5</text>
       </navLabel>
-      <content src="html/slide_05.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_05.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p6" playOrder="12" type="normal" value="6">
       <navLabel>
         <text>6</text>
       </navLabel>
-      <content src="html/slide_06.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_06.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p7" playOrder="14" type="normal" value="7">
       <navLabel>
         <text>7</text>
       </navLabel>
-      <content src="html/slide_07.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_07.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p8" playOrder="16" type="normal" value="8">
       <navLabel>
         <text>8</text>
       </navLabel>
-      <content src="html/slide_08.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_08.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p9" playOrder="18" type="normal" value="9">
       <navLabel>
         <text>9</text>
       </navLabel>
-      <content src="html/slide_09.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_09.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p10" playOrder="20" type="normal" value="10">
       <navLabel>
         <text>10</text>
       </navLabel>
-      <content src="html/slide_10.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_10.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p11" playOrder="22" type="normal" value="11">
       <navLabel>
         <text>11</text>
       </navLabel>
-      <content src="html/slide_11.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_11.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p12" playOrder="24" type="normal" value="12">
       <navLabel>
         <text>12</text>
       </navLabel>
-      <content src="html/slide_12.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_12.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p13" playOrder="26" type="normal" value="13">
       <navLabel>
         <text>13</text>
       </navLabel>
-      <content src="html/slide_13.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_13.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p14" playOrder="28" type="normal" value="14">
       <navLabel>
         <text>14</text>
       </navLabel>
-      <content src="html/slide_14.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_14.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p15" playOrder="30" type="normal" value="15">
       <navLabel>
         <text>15</text>
       </navLabel>
-      <content src="html/slide_15.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_15.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p16" playOrder="32" type="normal" value="16">
       <navLabel>
         <text>16</text>
       </navLabel>
-      <content src="html/slide_16.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_16.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p17" playOrder="34" type="normal" value="17">
       <navLabel>
         <text>17</text>
       </navLabel>
-      <content src="html/slide_17.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_17.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p18" playOrder="36" type="normal" value="18">
       <navLabel>
         <text>18</text>
       </navLabel>
-      <content src="html/slide_18.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_18.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p19" playOrder="38" type="normal" value="19">
       <navLabel>
         <text>19</text>
       </navLabel>
-      <content src="html/slide_19.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_19.html#epb3sldrzr-title"/>
     </pageTarget>
     <pageTarget id="p20" playOrder="40" type="normal" value="20">
       <navLabel>
         <text>20</text>
       </navLabel>
-      <content src="html/slide_20.xhtml#epb3sldrzr-title"/>
+      <content src="html/slide_20.html#epb3sldrzr-title"/>
     </pageTarget>
   </pageList>
 </ncx>
