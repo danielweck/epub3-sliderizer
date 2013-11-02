@@ -555,7 +555,7 @@ function loadScript(that, src)
     script.setAttribute("type", 'text/javascript');
     src = "js/" + src;
     
-    var hasNav = false;
+    var hasNavOrBack = false;
     if (!that)
     {
         Array.prototype.forEach.call(
@@ -572,18 +572,18 @@ function loadScript(that, src)
 
                 var href = link.getAttribute('href');
                 var rel = link.getAttribute('rel');
-                if (rel === "nav" && href !== "")
+                if ((rel === "nav" || rel === "back") && href !== "")
                 {
-                    hasNav = true;
+                    hasNavOrBack = true;
                 }
             }
         );
     }
-    else if (that.toc && that.toc !== "")
+    else if (that.toc && that.toc !== "" || that.back && that.back !== "")
     {
-        hasNav = true;
+        hasNavOrBack = true;
     }
-    if (hasNav)
+    if (hasNavOrBack)
     {
         src = "../" + src;
     }
@@ -611,6 +611,7 @@ var Epub3Sliderizer = {
     first: "",
     last: "",
     toc: "",
+    back: "",
     epub: "",
     reverse: false,
     thisFilename: null,
@@ -2708,6 +2709,10 @@ Epub3Sliderizer.initLinks = function()
             else if (rel === "nav")
             {
                 that.toc = href;
+            }
+            else if (rel === "back")
+            {
+                that.back = href;
             }
         }
     );

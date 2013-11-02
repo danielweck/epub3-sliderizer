@@ -78,12 +78,6 @@ a#epb3sldrzr-link-epubReadingSystem
 	text-transform: uppercase;
 }
 
-a#epb3sldrzr-link-noteback
-{
-	border-bottom: 1px dotted blue;
-	color: blue;
-}
-
 a#epb3sldrzr-link-noteback,
 a#epb3sldrzr-link-notesref,
 a#epb3sldrzr-link-previous,
@@ -258,8 +252,26 @@ a#epb3sldrzr-link-reflow
 
 a#epb3sldrzr-link-noteback
 {
-	float: right;
-	margin-right: 1em;
+	position: fixed;
+}
+
+body:not(.reflow) a#epb3sldrzr-link-noteback
+{
+	position: absolute;
+}
+
+a#epb3sldrzr-link-noteback
+{
+	right: 1em;
+    bottom: 1em;
+    z-index: 99;
+}
+
+a#epb3sldrzr-link-noteback:active,
+a#epb3sldrzr-link-noteback:link,
+a#epb3sldrzr-link-noteback:visited
+{
+    color: magenta;
 }
 
 div#epb3sldrzr-controls
