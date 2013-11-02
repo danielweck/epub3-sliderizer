@@ -1,5 +1,3 @@
-@charset "utf-8";
-
 @namespace epub 'http://www.idpf.org/2007/ops';
 
 /*
@@ -126,8 +124,7 @@ body:not(.epb3sldrzr-epubReadingSystem) *.epb3sldrzr-epubReadingSystem
     display:none;
 }
 
-#epb3sldrzr-notes,
-nav#epb3sldrzr-pageList
+#epb3sldrzr-notes
 {
     display:none;
 }
@@ -167,14 +164,6 @@ div.paper
     
     font-size: 0.95em;
 }
-
-
-
-nav[epub|type~='page-list']
-{
-    display:none;
-}
-
 
 *[hidden]
 {
@@ -423,30 +412,32 @@ Slide content
     overflow: hidden;
 }
 
-/*
 body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle:before
 {
+    height: VIEWPORT_HEIGHTpx;
+    
     content: '';
+    
     display: inline-block;
-    height: 100%;
+        display:table-cell;
+    
     vertical-align: middle;
     
     margin-right: -0.25em;
 }
-*/
 
 /*
-white-space: nowrap;
-font-size: 0;
-line-height: 0;
+    white-space: nowrap;
+    font-size: 0;
+    line-height: 0;
 */
 
 body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle
 {
-    line-height:VIEWPORT_HEIGHTpx;
-    
-    /* 
     height:VIEWPORT_HEIGHTpx;
+
+    /* 
+    line-height:VIEWPORT_HEIGHTpx;
     height: 100%;
     */
 }
@@ -454,6 +445,8 @@ body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle
 body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle > #epb3sldrzr-content-wrap.vertical-middle
 {
     display: inline-block;
+        display:table-cell;
+        
     vertical-align: middle;
 }
 
@@ -544,6 +537,23 @@ div.boxed.framed > *
 }
 
 
+.epb3sldrzr-author-toMove
+{
+    cursor: move;
+    border: 2px dotted blue;
+}
+
+.epb3sldrzr-author-moving
+{
+    border: 2px dotted red;
+}
+
+
+nav#epb3sldrzr-pageList
+{
+    display:none;
+}
+
 h1#epb3sldrzr-title
 {    
     background: -moz-linear-gradient(left,  rgba(237,237,237,1) 0%, rgba(250,250,250,1) 70%, rgba(255,255,255,0) 100%);
@@ -561,15 +571,8 @@ h1#epb3sldrzr-title
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ededed', endColorstr='#00ffffff',GradientType=1 );
 }
 
-
-
-.epb3sldrzr-author-toMove
+nav[epub|type~='page-list']
 {
-    cursor: move;
-    border: 2px dotted blue;
+    display:none;
 }
 
-.epb3sldrzr-author-moving
-{
-    border: 2px dotted red;
-}

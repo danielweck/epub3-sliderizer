@@ -15,7 +15,7 @@ import danielweck.xml.XmlDocument;
 public final class NavDoc {
 
 	public static String getFileName() {
-		return "nav.xhtml";
+		return "nav" + Epub3FileSet.XHTML_EXT;
 	}
 
 	public static void create(MustacheFactory mustacheFactory,

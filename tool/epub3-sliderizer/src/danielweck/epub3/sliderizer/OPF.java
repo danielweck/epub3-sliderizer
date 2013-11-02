@@ -455,7 +455,7 @@ public final class OPF {
 
 		// elementSeq.setAttributeNS("http://www.idpf.org/2007/ops",
 		// "epub:textref", "../" + Epub3FileSet.HTML_FOLDER_NAME + "/p"
-		// + nStr + ".xhtml#body");
+		// + nStr + Epub3FileSet.XHTML_EXT + "#body");
 
 		final String MARK_TEXT = "TXT ";
 		final String MARK_AUDIO = "AUDIO ";

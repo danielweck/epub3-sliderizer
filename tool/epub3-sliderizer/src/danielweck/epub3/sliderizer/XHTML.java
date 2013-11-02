@@ -35,12 +35,12 @@ public final class XHTML {
 		// String nStr = String.format("0\1", n);
 		String nStr = i <= 9 ? "0" + i : "" + i;
 
-		String htmlFile = "slide_" + nStr + ".xhtml";
+		String htmlFile = "slide_" + nStr + Epub3FileSet.XHTML_EXT;
 		return htmlFile;
 	}
 
 	public static String getFileName_Notes(int i) {
-		return getFileName(i).replace(".xhtml", "_NOTES.xhtml");
+		return getFileName(i).replace(Epub3FileSet.XHTML_EXT, "_NOTES" + Epub3FileSet.XHTML_EXT);
 	}
 
 	public static void createAll(MustacheFactory mustacheFactory,

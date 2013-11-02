@@ -29,7 +29,9 @@ public final class Epub3FileSet {
 			ID = id;
 		}
 	}
-
+    
+    public static String XHTML_EXT = ".xhtml";
+    
 	public final static String GENERATOR = "EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer";
 	public final static String KEYWORDS = "EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook";
 
@@ -605,8 +607,10 @@ public final class Epub3FileSet {
 		if (fileExtension.equalsIgnoreCase("gif")) {
 			return "image/gif";
 		}
-		if (fileExtension.equalsIgnoreCase("html")
-				|| fileExtension.equalsIgnoreCase("xhtml")) {
+		if (fileExtension.equalsIgnoreCase("html")) {
+			return "application/xhtml+xml"; //"text/html";
+		}
+		if (fileExtension.equalsIgnoreCase("xhtml")) {
 			return "application/xhtml+xml";
 		}
 		if (fileExtension.equalsIgnoreCase("ncx")) {
