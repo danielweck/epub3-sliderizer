@@ -1363,7 +1363,6 @@ Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
             markdown = reMarker.render(contentWrap);
             
             markdown = markdown.replace(/><\/img>/g, "/>").replace(/ xmlns="http:\/\/www.w3.org\/1999\/xhtml"/g, "").replace(/ class=""/g, "");
-
         }
         
         markdown = markdown.replace(/<!--XML-->/g, "").replace(/<!--SOUP-->/g, "").trim();
@@ -1456,55 +1455,98 @@ Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
         }
         txtArea.blur();
         
-        marked.setOptions({
-          gfm: false,
-          tables: false,
-          breaks: false,
-          highlight: function (code, lang, callback)
-          {
-              callback(null, code);
-          },
-          pedantic: false,
-          sanitize: false,
-          smartLists: true,
-          smartypants: false,
-          langPrefix: 'lang-'
-        });
+        
+        // var parser = new DOMParser();
+        // var doc = parser.parseFromString(txtArea.value, "text/html");
+        // var inner = doc.innerHTML;
 
-        marked(txtArea.value, function (err, content)
+        //.replace(/<hr><\/hr>/g, "<hr/>").replace(/<br><\/br>/g, "<br/>");
+        //.replace(/<hr>/g, "<hr/>").replace(/<br>/g, "<br/>").replace(/<img ([^>]*)([^\/])>/g, "<img $1$2 />");
+        
+        var xml = txtArea.value;
+
+        var NOMARKDOWN_MARKER = "NO-MARKDOWN";
+        var NOMARKDOWN = xml.indexOf(NOMARKDOWN_MARKER) == 0;
+        if (NOMARKDOWN)
         {
-          if (err)
-          {
-              throw err;
-          }
-          
-          var cleaned = content.replace(/<hr>/g, "<hr/>").replace(/<br>/g, "<br/>").replace(/<img ([^>]*)([^\/])>/g, "<img $1$2 />");
+            xml = xml.substr(NOMARKDOWN_MARKER.length);
+        }
+        
+        try
+        {
+            xml = HTMLtoXML(xml);
+        }
+        catch (ex)
+        {
+            console.log("PRE-MARKDOWN XML cleanup error, let's try without...");
+        }
 
-          try
-          {
-              contentWrap.innerHTML = cleaned;
-          }
-          catch(ex)
-          {
-              console.error(ex);
-              console.log(cleaned);
-              
-              alert("Oops, invalid XHTML :(\n\n(next message will show Markdown parser result)");
-              alert(cleaned);
-          }
+        if (NOMARKDOWN)
+        {
+            var cleaned = xml.replace(/&nbsp;/g, " ");
+            try
+            {
+                contentWrap.innerHTML = cleaned;
+            }
+            catch(ex)
+            {
+                console.error(ex);
+                console.log(cleaned);
+            
+                alert("NO-MARKDOWN: Oops, invalid XHTML :(\n\n(next message will show Markdown parser result)");
+                alert(cleaned);
+            }
+        }
+        else
+        {
+            marked.setOptions({
+              gfm: false,
+              tables: false,
+              breaks: false,
+              highlight: function (code, lang, callback)
+              {
+                  callback(null, code);
+              },
+              pedantic: false,
+              sanitize: false,
+              smartLists: true,
+              smartypants: false,
+              langPrefix: 'lang-'
+            });
+            marked(xml, function (err, content)
+            {
+              if (err)
+              {
+                  throw err;
+              }
           
-          $("img", contentWrap).each(function(index)
-          {
-              var $that = $(this);
-              var src = $that.attr("src");
-              if (!src) return;
+              var cleaned = HTMLtoXML(content).replace(/&nbsp;/g, " ");
+              try
+              {
+                  contentWrap.innerHTML = cleaned;
+              }
+              catch(ex)
+              {
+                  console.error(ex);
+                  console.log(cleaned);
               
-              if (src.indexOf(imgSrcPrefix) == 0) return;
-              
-              $that.attr("src", imgSrcPrefix + src);
-          });
+                  alert("POST-MARKDOWN: Oops, invalid XHTML :(\n\n(next message will show Markdown parser result)");
+                  alert(cleaned);
+              }
+            });
+        }
+        
+        $("img", contentWrap).each(function(index)
+        {
+            var $that = $(this);
+            var src = $that.attr("src");
+            if (!src) return;
+            
+            if (src.indexOf(imgSrcPrefix) == 0) return;
+            
+            $that.attr("src", imgSrcPrefix + src);
         });
-
+        
         setTimeout(function()
         {
             document.body.style.overflow = "auto";
@@ -1546,7 +1588,7 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 
     var fontSizeIncrease = 5;
 
-    if (keyboardEvent.keyCode === 65) // A
+    if (keyboardEvent.keyCode === 65 && $("#epb3sldrzr-root").css("display") === "block") // A
     {
         keyboardEvent.preventDefault();
         
@@ -4046,6 +4088,8 @@ function readyFirst()
         loadScript(undefined, 'reMarked.js');
         
         loadScript(undefined, 'marked.js');
+        
+        loadScript(undefined, 'htmlparser.js');
     }
     else if (Epub3Sliderizer.android ||
         (getUrlQueryParam("basic") !== null)
