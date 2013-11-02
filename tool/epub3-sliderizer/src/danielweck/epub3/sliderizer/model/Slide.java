@@ -86,7 +86,7 @@ public final class Slide extends Fielder {
 				|| CONTENT_MIDDLE.equalsIgnoreCase("1");
 	}
 
-	public boolean AUTHORize() {
+	public boolean AUTHORize() throws Exception {
 		return CONTENT != null
             && CONTENT.indexOf(XHTML.MARKDOWN_SRC) != 0
             && (_verbosity >= 3 || CONTENT.indexOf(XHTML.MARKDOWN) == 0);

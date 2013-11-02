@@ -14,7 +14,8 @@ fi
 #VERBOSITY="VERBOSE_medium"
 #VERBOSITY="VERBOSE_max" ===> triggers special "author" mode with Markdown editor
 
-VERBOSITY="VERBOSE_max"
+# FIRST PASS => XHTML (EPUB3 ZIP)
+VERBOSITY="VERBOSE_min"
 
 root=$(pwd)
 
@@ -112,3 +113,23 @@ cd ${root}
 ./pack-epub.sh
 
 mv "${root}/_OUTPUT/content/EPUB3-Sliderizer.epub" "${root}/_OUTPUT/content/${EPUB_FILENAME}.epub"
+
+
+
+
+cd ./tool/epub3-sliderizer/
+
+# SECOND PASS => HTML content editable author mode
+VERBOSITY="VERBOSE_max"
+
+java -classpath "${root}/tool/epub3-sliderizer/lib/guava-15.0.jar:${root}/tool/epub3-sliderizer/lib/mustache-compiler-0.8.13.jar:${root}/tool/epub3-sliderizer/lib/asm-all-4.1.jar:${root}/tool/epub3-sliderizer/lib/parboiled-core-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/parboiled-java-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/pegdown-1.4.1.jar:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar:${bin}" Main ${DATA_url} ${EPUB_FOLDER} ${VERBOSITY}
+
+exitValue=$? 
+
+if [ $exitValue != 0 ] 
+then
+echo "Execution error?"
+exit $exitValue 
+fi
+
+cd ${root}
