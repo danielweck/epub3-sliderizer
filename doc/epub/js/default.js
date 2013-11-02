@@ -769,12 +769,12 @@ Epub3Sliderizer.AUTHORize = function()
         var pos = $that.css("position");
         
         var top = $that.css("top");
-        top = (!top || top === "auto") ? "auto" : Math.floor(parseInt(top)*100.0)/100.0;
+        top = (!top || top === "auto") ? "auto" : (Math.floor(parseInt(top)*100.0)/100.0) + "px";
         
         var left = $that.css("left");
-        left = (!left || left === "auto") ? "auto" : Math.floor(parseInt(left)*100.0)/100.0;
+        left = (!left || left === "auto") ? "auto" : (Math.floor(parseInt(left)*100.0)/100.0) + "px";
         
-        alert("COPY+PASTE CSS:\n\n\nposition: "+pos+";\nleft: "+left+"px;\ntop: "+top+"px;\n");
+        alert("COPY+PASTE CSS:\n\n\nposition: "+pos+";\nleft: "+left+";\ntop: "+top+";\n");
         
         e.preventDefault();
     });
