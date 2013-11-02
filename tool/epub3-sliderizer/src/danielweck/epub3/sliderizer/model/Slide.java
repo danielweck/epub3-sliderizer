@@ -89,7 +89,8 @@ public final class Slide extends Fielder {
 	public boolean AUTHORize() {
 		return CONTENT != null && (_verbosity >= 3
 				&& CONTENT.indexOf(XHTML.MARKDOWN_SRC) != 0
-				&& CONTENT.indexOf(XHTML.NOMARKDOWN) != 0)
+				&& CONTENT.indexOf(XHTML.NOMARKDOWN) != 0
+                    )
                     || CONTENT.indexOf(XHTML.MARKDOWN) == 0;
 	}
 
@@ -107,7 +108,7 @@ public final class Slide extends Fielder {
             content = content.substring(XHTML.MARKDOWN_SRC.length());
         }
 		return content.replace("&", "&amp;").replace("<", "&lt;")
-				.replace(">", "&gt;");
+				.replace(">", "&gt;").trim();
 	}
 
 	public String INCREMENTALS = null;

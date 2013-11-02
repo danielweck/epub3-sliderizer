@@ -1287,16 +1287,29 @@ Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
     var divEditor = document.getElementById('epb3sldrzr-markdown-editor');
     var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
     
+    var imgSrcPrefix = "../img/custom/";
+    
     if ($(root).css("display") === "block")
     {
         var markdown = txtArea.value;
-        markdown = markdown.replace(/<!--XML-->/g, "").replace(/<!--SOUP-->/g, "");
+        markdown = markdown.replace(/<!--XML-->/g, "").replace(/<!--SOUP-->/g, "").trim();
         
         if (that.AUTHORized)
         {
             that.AUTHORized = false;
             
             console.log("Content was moved,\nattempting conversion from HTML to Markdown...");
+          
+            $("img", contentWrap).each(function(index)
+            {
+                var $that = $(this);
+                var src = $that.attr("src");
+                if (!src) return;
+              
+                if (src.indexOf(imgSrcPrefix) != 0) return;
+              
+                $that.attr("src", src.substr(imgSrcPrefix.length));
+            });
             
             var options = {
                 link_list:    false,            // render links as references, create link list as appendix
@@ -1464,10 +1477,6 @@ Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
           
           var cleaned = content.replace(/<hr>/g, "<hr/>").replace(/<br>/g, "<br/>").replace(/<img ([^>]*)([^\/])>/g, "<img $1$2 />");
 
-// TODO: WORST HACK EVER!! (need to figure-out how to map asset paths...)
-// We do this just for the demo
-cleaned = cleaned.replace(/"assets\//g, '"../img/custom/assets/');
-          
           try
           {
               contentWrap.innerHTML = cleaned;
@@ -1480,6 +1489,17 @@ cleaned = cleaned.replace(/"assets\//g, '"../img/custom/assets/');
               alert("Oops, invalid XHTML :(\n\n(next message will show Markdown parser result)");
               alert(cleaned);
           }
+          
+          $("img", contentWrap).each(function(index)
+          {
+              var $that = $(this);
+              var src = $that.attr("src");
+              if (!src) return;
+              
+              if (src.indexOf(imgSrcPrefix) == 0) return;
+              
+              $that.attr("src", imgSrcPrefix + src);
+          });
         });
 
         setTimeout(function()

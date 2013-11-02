@@ -2605,9 +2605,9 @@ MARKDOWN
 
 <p style="font-color: silver; font-size: 0.5em;">This is an experimental feature.</p>
 
-1. Press the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;">a</span> key to toggle "author" mode. The slide will expand horizontally, so shrink the window if you need to.
-2. Once in "author" mode, press <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">esc</span> (escape) to switch to the Markdown editor. Note that changes are discarded when the page is reloaded. To save your modifications, you must copy + paste into the master `data.txt`.
-3. The images and text below can be _moved_ relative to their original position, using the mouse. Double-click to see the CSS style (select + copy the text into the clipboard).
+1. Press the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;">a</span> key to toggle `author` mode. The slide will expand horizontally, so shrink the window if you need to.
+2. Once in `author` mode, press <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">esc</span> to switch to the Markdown editor. Note that changes are discarded when the page is reloaded, and when exiting `author` mode. To save your modifications, you must copy + paste into the master `data.txt`.
+3. The images and text below can be _moved_ relative to their original position, using the mouse. The changes will be reflected in the mixed Markdown / HTML source.
 
 ![HTML5 logo](assets/HTML5.png "the HTML5 logo") <img src="assets/EPUB.png" alt="EPUB3 logo" title="the EPUB3 logo"/><span class="epb3sldrzr-author"  style="position: relative; left: 41px; top: -66px; font-size: 2.5em; background-color: silver; color: #666666;">Move me too!</span>
 

@@ -205,7 +205,7 @@ NO-MARKDOWN
     <div id="t1" class="epb3sldrzr-author"><span class="text" id="txt1">Jiggle</span></div>
     <div id="t2" class="epb3sldrzr-author"><span class="text" id="txt2">Zebra!</span></div>
 
-    <img id="o1" class="epb3sldrzr-author" src="zebra.png" alt="Zebra"/>
+    <img id="o1" src="zebra.png" alt="Zebra"/>
 </div>
 
 // --------------------------------------------
@@ -298,7 +298,7 @@ NO-MARKDOWN
     <div id="t1" class="epb3sldrzr-author"><span class="text" id="txt1">Wiggle</span></div>
     <div id="t2" class="epb3sldrzr-author"><span class="text" id="txt2">Elephant!</span></div>
 
-    <img id="o2" class="epb3sldrzr-author" src="elephant.png" alt="Elephant"/>
+    <img id="o2" src="elephant.png" alt="Elephant"/>
 </div>
 
 // --------------------------------------------
