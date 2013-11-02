@@ -195,7 +195,7 @@ public abstract class Fielder {
 					break;
 				} else if (found != null) {
 					currentFieldName = found;
-					if (currentFieldName.equals(Slide.FIELD_CONTENT)) {
+					if (currentFieldName.equals(Slide.FIELD_CONTENT) || currentFieldName.equals(Slide.FIELD_NOTES)) {
 						preserveWhitespace = true;
 					}
 				} else if (special) {
@@ -203,7 +203,7 @@ public abstract class Fielder {
 				}
 			} else {
 				if (currentFieldName != null
-						&& currentFieldName.equals(Slide.FIELD_CONTENT)
+						&& (currentFieldName.equals(Slide.FIELD_CONTENT) || currentFieldName.equals(Slide.FIELD_NOTES))
 						&& line.equals(XHTML.NOMARKDOWN)) {
 					preserveWhitespace = false;
 				}

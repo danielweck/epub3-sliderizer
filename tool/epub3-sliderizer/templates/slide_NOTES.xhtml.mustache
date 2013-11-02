@@ -102,8 +102,8 @@
                  src="../{{{slideShow.FOLDER_IMG}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{slideShow.LOGO}}}"
                  alt=""/>
             {{/slideShow.LOGO}}
-
-             <p><a id="epb3sldrzr-link-noteback" href="{{{SLIDE_FILENAME}}}">Back</a></p>
+            
+            <a id="epb3sldrzr-link-noteback" href="{{{SLIDE_FILENAME}}}">Back</a>
          
             <section id="epb3sldrzr-content">
                 
@@ -119,5 +119,10 @@
              </section>
          </div>
      </div>
+
+     {{#AUTHORize_NOTES}}
+     <div id="epb3sldrzr-markdown-editor" class="epb3sldrzr-markdown">{{{NOTES_ORIGINAL}}}</div>
+     <textarea id="epb3sldrzr-markdown-src" class="epb3sldrzr-markdown">{{{NOTES_ORIGINAL}}}</textarea>
+     {{/AUTHORize_NOTES}}
 </body>
 </html>
