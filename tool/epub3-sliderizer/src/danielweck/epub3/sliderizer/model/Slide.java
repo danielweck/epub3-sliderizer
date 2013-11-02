@@ -87,11 +87,9 @@ public final class Slide extends Fielder {
 	}
 
 	public boolean AUTHORize() {
-		return CONTENT != null && (_verbosity >= 3
-				&& CONTENT.indexOf(XHTML.MARKDOWN_SRC) != 0
-				&& CONTENT.indexOf(XHTML.NOMARKDOWN) != 0
-                    )
-                    || CONTENT.indexOf(XHTML.MARKDOWN) == 0;
+		return CONTENT != null
+            && CONTENT.indexOf(XHTML.MARKDOWN_SRC) != 0
+            && (_verbosity >= 3 || CONTENT.indexOf(XHTML.MARKDOWN) == 0);
 	}
     
 	public String CONTENT_ORIGINAL() throws Exception {
@@ -100,24 +98,24 @@ public final class Slide extends Fielder {
 			return null;
 		}
         String content = CONTENT;
+        // if (content.indexOf(XHTML.MARKDOWN_SRC) == 0) {
+        //     content = content.substring(XHTML.MARKDOWN_SRC.length());
+        // } else
         if (content.indexOf(XHTML.MARKDOWN) == 0) {
             content = content.substring(XHTML.MARKDOWN.length());
-        } else if (content.indexOf(XHTML.NOMARKDOWN) == 0) {
-            content = content.substring(XHTML.NOMARKDOWN.length());
-        } else if (content.indexOf(XHTML.MARKDOWN_SRC) == 0) {
-            content = content.substring(XHTML.MARKDOWN_SRC.length());
         }
+        // else if (content.indexOf(XHTML.NOMARKDOWN) == 0) {
+        //     content = content.substring(XHTML.NOMARKDOWN.length());
+        // }
 		return content.replace("&", "&amp;").replace("<", "&lt;")
 				.replace(">", "&gt;").trim();
 	}
 
 
 	public boolean AUTHORize_NOTES() {
-		return NOTES != null && (_verbosity >= 3
-				&& NOTES.indexOf(XHTML.MARKDOWN_SRC) != 0
-				&& NOTES.indexOf(XHTML.NOMARKDOWN) != 0
-                    )
-                    || NOTES.indexOf(XHTML.MARKDOWN) == 0;
+		return NOTES != null
+            && NOTES.indexOf(XHTML.MARKDOWN_SRC) != 0
+            && (_verbosity >= 3 || NOTES.indexOf(XHTML.MARKDOWN) == 0);
 	}
     
 	public String NOTES_ORIGINAL() throws Exception {
@@ -126,13 +124,15 @@ public final class Slide extends Fielder {
 			return null;
 		}
         String content = NOTES;
+        // if (content.indexOf(XHTML.MARKDOWN_SRC) == 0) {
+        //     content = content.substring(XHTML.MARKDOWN_SRC.length());
+        // } else
         if (content.indexOf(XHTML.MARKDOWN) == 0) {
             content = content.substring(XHTML.MARKDOWN.length());
-        } else if (content.indexOf(XHTML.NOMARKDOWN) == 0) {
-            content = content.substring(XHTML.NOMARKDOWN.length());
-        } else if (content.indexOf(XHTML.MARKDOWN_SRC) == 0) {
-            content = content.substring(XHTML.MARKDOWN_SRC.length());
         }
+        // else if (content.indexOf(XHTML.NOMARKDOWN) == 0) {
+        //     content = content.substring(XHTML.NOMARKDOWN.length());
+        // }
 		return content.replace("&", "&amp;").replace("<", "&lt;")
 				.replace(">", "&gt;").trim();
 	}

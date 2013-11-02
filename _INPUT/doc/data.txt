@@ -734,6 +734,7 @@ EPUB3 is a structured container for web documents.
 unzip <span class="code">ebook.epub</span> to access internal files
 <br>
 <span class="fade" style="font-size: 0.8em">(HTML, CSS, Javscript, SVG, MathML, images, fonts, etc.)</span>
+</p>
 
 <div class="boxed">
 

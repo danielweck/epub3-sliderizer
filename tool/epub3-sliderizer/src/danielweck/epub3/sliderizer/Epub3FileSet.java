@@ -87,7 +87,8 @@ public final class Epub3FileSet {
 			new FileId("ace.js", "js-ace"),
 			new FileId("mode-markdown.js", "js-ace-markdown"),
 			new FileId("theme-solarized_dark.js", "js-ace-theme"),
-			new FileId("Markdown.Editor.js", "js-markdown-editor") };
+			new FileId("Markdown.Editor.js", "js-markdown-editor"),
+			new FileId("htmlparser.js", "js-html-parser") };
 
 	private final static String CSS_PREFIXED = "_PREFIXED_";
 	private final static String CSS_PREFIXED_PROP = "-PREFIXED_PROPERTY-";

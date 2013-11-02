@@ -14,7 +14,7 @@ fi
 #VERBOSITY="VERBOSE_medium"
 #VERBOSITY="VERBOSE_max" ===> triggers special "author" mode with Markdown editor
 
-VERBOSITY="VERBOSE_min"
+VERBOSITY="VERBOSE_max"
 
 root=$(pwd)
 
