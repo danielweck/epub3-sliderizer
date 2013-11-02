@@ -1292,7 +1292,6 @@ Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
     if ($(root).css("display") === "block")
     {
         var markdown = txtArea.value;
-        markdown = markdown.replace(/<!--XML-->/g, "").replace(/<!--SOUP-->/g, "").trim();
         
         if (that.AUTHORized)
         {
@@ -1364,9 +1363,12 @@ Epub3Sliderizer.toggleAuthoring = function(keyboardEvent)
             
             markdown = markdown.replace(/><\/img>/g, "/>").replace(/ xmlns="http:\/\/www.w3.org\/1999\/xhtml"/g, "").replace(/ class=""/g, "");
 
-            txtArea.value = markdown; //.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
+        
+        markdown = markdown.replace(/<!--XML-->/g, "").replace(/<!--SOUP-->/g, "").trim();
 
+        txtArea.value = markdown; //.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                
         window.scrollTo(0, 0);
         
         root.style.display = "none";
