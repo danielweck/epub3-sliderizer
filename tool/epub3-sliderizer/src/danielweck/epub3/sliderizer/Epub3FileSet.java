@@ -82,7 +82,7 @@ public final class Epub3FileSet {
 			new FileId("hammer.showtouches.js", "js-hammer-showtouches"),
 			new FileId("jquery.mousewheel.js", "js-jquery-mousewheel"),
 			new FileId("jquery.blockUI.js", "js-jquery-blockUI"),
-			//new FileId("reMarked.js", "js-reMarked"),
+			new FileId("reMarked.js", "js-reMarked"),
 			new FileId("marked.js", "js-marked"),
 			new FileId("ace.js", "js-ace"),
 			new FileId("mode-markdown.js", "js-ace-markdown"),

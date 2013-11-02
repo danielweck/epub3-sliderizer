@@ -563,13 +563,13 @@ h1#epb3sldrzr-title
 
 
 
-.epb3sldrzr-author-INIT
+.epb3sldrzr-author-toMove
 {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: auto;
-    bottom: auto;
-    width: auto;
-    height: auto;
+    cursor: move;
+    border: 2px dotted blue;
+}
+
+.epb3sldrzr-author-moving
+{
+    border: 2px dotted red;
 }
