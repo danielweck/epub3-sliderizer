@@ -2418,7 +2418,7 @@ Epub3Sliderizer.onResize = function()
     this.bodyRoot.style.msTransformOrigin = transformOrigin;
     this.bodyRoot.style.transformOrigin = transformOrigin;
     
-    var bodyFit = this.getElementFit(this.bodyRoot, this.authorMode);
+    var bodyFit = this.getElementFit(this.bodyRoot, false); //this.authorMode);
     var ratio = bodyFit.ratio;
     var offsetX = bodyFit.offsetX;
     var offsetY = bodyFit.offsetY;
