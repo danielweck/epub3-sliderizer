@@ -430,7 +430,7 @@ slides menu <span class="fade">(table of contents)</span>
 
 
 <p style="text-align: right; font-size: 80%;">
-(display button panel with 
+(show control panel with 
 <span class="keyboard " title="C" style="padding-left: 0.4em; padding-right: 0.4em;">c</span>
 or <span class="code">[tap]</span> / <span class="code">[click]</span>
 <!-- span class="symbols pale-greenx" title="tap">&#xf0a6;</span -->
