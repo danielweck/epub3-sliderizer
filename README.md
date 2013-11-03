@@ -18,7 +18,7 @@ Demonstration
 * Any modifications to the slide content require the "source code" (Mardown + HTML) to be copy/pasted from the built-in syntax-highlighting editor, back into the master `data.txt` file (use the `escape` key to toggle the editor).
 * Slide content is stored only within the live web page, so modifications are discarded when the page is reloaded, or when exiting "author" mode.
 * `contentEditable` live editing (true WYSIWYG) is only available for HTML slides, not XHTML (thus why EPUB3-Sliderizer builds a non-XML alternative).
-* Basic formatting commands such as italic / emphasis (CTRL-I) or bold / strong (CTRL-B) work fine in Safara (probably other WebKit-based browsers as well), but unfortunately the keyboard shortcuts conflit in Firefox. I have not tried IE at all.
+* Basic formatting commands such as italic / emphasis (CTRL-I) or bold / strong (CTRL-B) work fine in Safari (probably other WebKit-based browsers as well), but unfortunately the keyboard shortcuts conflit in Firefox. I have not tried IE at all.
 * Notice how bullet points get automatically created when hitting ENTER within an existing list item. This is a standard contentEditable feature, I did not implement any additional features on top of execCommand() etc.
 * Yes, I know about Aloha, Hallo, CKEditor, Medium, Squire, etc., I have tried them all and they all seem to conflict one way or another with the layout requirements (some of them actually alter the DOM to discard "unwanted" markup).
 * The `ctrl` / `Apple-cmd` keyboard modifier is necessary to move text with the mouse (because the default behaviour is to manipulate the text cursor), but this is optional for images.
@@ -102,6 +102,36 @@ Make Your Own
 * `./sliderize.sh test`
 
 Learn by example by exploring the [documentation](https://github.com/danielweck/epub3-sliderizer/tree/master/_INPUT/doc) or the [demo](https://github.com/danielweck/epub3-sliderizer/tree/master/_INPUT/demo1).
+
+
+Screenshots
+----------------
+
+### iBooks (iPad)
+
+![iBooks iPad](http://danielweck.github.io/epub3-sliderizer/EPUB3-Sliderizer_iBooks.png)
+
+### iBooks (Mac OS X)
+
+![iBooksX](http://danielweck.github.io/epub3-sliderizer/EPUB3-Sliderizer_iBooksX.png)
+
+### Readium (Chrome Extension)
+
+![Readium Chrome Extension](http://danielweck.github.io/epub3-sliderizer/EPUB3-Sliderizer_ReadiumChrome.png)
+
+### Web Browser
+
+![Web Browser](http://danielweck.github.io/epub3-sliderizer/EPUB3-Sliderizer_Browser.png)
+
+### Readium-SDK (OSX "Launcher App")
+
+![Readium SDK OSX Launcher App](http://danielweck.github.io/epub3-sliderizer/EPUB3-Sliderizer_ReadiumOSX.png)
+
+### Readium.js
+
+![Readium JS](http://danielweck.github.io/epub3-sliderizer/EPUB3-Sliderizer_ReadiumJS.png)
+
+
 
 Master Format Syntax
 ----------------
@@ -502,32 +532,4 @@ _NOTES
 [OPTIONAL]
 (per-slide notes, linked from the slide, but typically invisible at presentation time)
 ```
-
-
-Screenshots
-----------------
-
-### iBooks (iPad)
-
-![iBooks iPad](http://danielweck.github.io/epub3-sliderizer/EPUB3-Sliderizer_iBooks.png)
-
-### iBooks (Mac OS X)
-
-![iBooksX](http://danielweck.github.io/epub3-sliderizer/EPUB3-Sliderizer_iBooksX.png)
-
-### Readium (Chrome Extension)
-
-![Readium Chrome Extension](http://danielweck.github.io/epub3-sliderizer/EPUB3-Sliderizer_ReadiumChrome.png)
-
-### Web Browser
-
-![Web Browser](http://danielweck.github.io/epub3-sliderizer/EPUB3-Sliderizer_Browser.png)
-
-### Readium-SDK (OSX "Launcher App")
-
-![Readium SDK OSX Launcher App](http://danielweck.github.io/epub3-sliderizer/EPUB3-Sliderizer_ReadiumOSX.png)
-
-### Readium.js
-
-![Readium JS](http://danielweck.github.io/epub3-sliderizer/EPUB3-Sliderizer_ReadiumJS.png)
 
