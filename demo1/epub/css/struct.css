@@ -1,8 +1,6 @@
-@charset "utf-8";
-
-*,
 *:before,
-*:after
+*:after,
+*
 {
 	
 -webkit-box-sizing:border-box;
@@ -16,6 +14,10 @@ box-sizing:border-box;
 	padding: 0;
 }
 
+table
+{
+    font-size: 1em; /* quirk in text/html mode vs application/xml+xhtml */
+}
 html
 {
 	width:100%;
@@ -166,7 +168,9 @@ body:not(.reflow):not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body,
 body:not(.reflow).basic.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body
 {
 	border-radius: 20px;
+    /*
 	border-radius: 2rem;
+    */
 
 	/*
 	-PREFIXED_PROPERTY-box-shadow:0 0 40px rgba(0, 0, 0, 1);
@@ -176,7 +180,9 @@ body:not(.reflow).basic.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body
 body:not(.reflow).static.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body
 {
 	border-radius: 40px;
+    /*
 	border-radius: 4rem;
+    */
 }
 
 

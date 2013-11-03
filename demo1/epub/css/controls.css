@@ -1,5 +1,3 @@
-@charset "utf-8";
-
 a#epb3sldrzr-link-toc:before,
 a#epb3sldrzr-link-first:before,
 a#epb3sldrzr-link-last:before,
@@ -76,12 +74,6 @@ a#epb3sldrzr-link-notesref,
 a#epb3sldrzr-link-epubReadingSystem
 {
 	text-transform: uppercase;
-}
-
-a#epb3sldrzr-link-noteback
-{
-	border-bottom: 1px dotted blue;
-	color: blue;
 }
 
 a#epb3sldrzr-link-noteback,
@@ -258,8 +250,26 @@ a#epb3sldrzr-link-reflow
 
 a#epb3sldrzr-link-noteback
 {
-	float: right;
-	margin-right: 1em;
+	position: fixed;
+}
+
+body:not(.reflow) a#epb3sldrzr-link-noteback
+{
+	position: absolute;
+}
+
+a#epb3sldrzr-link-noteback
+{
+	right: 1em;
+    bottom: 1em;
+    z-index: 99;
+}
+
+a#epb3sldrzr-link-noteback:active,
+a#epb3sldrzr-link-noteback:link,
+a#epb3sldrzr-link-noteback:visited
+{
+    color: magenta;
 }
 
 div#epb3sldrzr-controls
@@ -276,10 +286,12 @@ box-shadow: 0 0 20px rgba(0, 0, 0, 1);
 
 	
 	border-top-left-radius: 20px;
-	border-top-left-radius: 2rem;
-	
 	border-top-right-radius: 20px;
+    
+    /*
 	border-top-right-radius: 2rem;
+	border-top-left-radius: 2rem;
+    */
 
 	text-align: center;
 	vertical-align: middle;
