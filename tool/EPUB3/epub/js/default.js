@@ -553,6 +553,9 @@ function loadScript(that, src)
     var head = document.head ? document.head : document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
     script.setAttribute("type", 'text/javascript');
+    
+//    script.setAttribute("data-aloha-plugins", "common/ui,common/format,common/link,common/list,common/paste,common/horizontalruler,common/dom-to-xhtml,common/contenthandler,common/commands,common/align,common/block");
+    
     src = "js/" + src;
     
     var hasNavOrBack = false;
@@ -4113,16 +4116,6 @@ function readyFirst()
         document.body.classList.add("author");
 
         var html = Epub3Sliderizer.thisFilename && Epub3Sliderizer.thisFilename.indexOf(".html") > 0;
-        if (html)
-        {
-            console.log("AUTHOR MODE, HTML (WYSIWYG CONTENT EDITABLE)");
-            var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
-            contentWrap.setAttribute("contentEditable", 'true');
-        }
-        else
-        {
-            console.log("AUTHOR MODE, XHTML (NON-WYSIWYG EDITOR)");
-        }
             
         if (Epub3Sliderizer.ACE)
         {
@@ -4138,6 +4131,134 @@ function readyFirst()
         loadScript(undefined, 'marked.js');
         
         loadScript(undefined, 'htmlparser.js');
+        
+        if (html)
+        {
+            console.log("AUTHOR MODE, HTML (WYSIWYG CONTENT EDITABLE)");
+            
+            var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
+            contentWrap.setAttribute("contentEditable", 'true');
+
+            contentWrap.addEventListener("blur", function() { document.designMode = 'off'; }, false);
+            contentWrap.addEventListener("focus", function() { document.designMode = 'on'; }, false);
+            
+            // loadScript(undefined, 'wysiwyg.js');
+            // setTimeout(function()
+            // {
+            //     var wysiwyg = new Wysiwyg();
+            //     //$(contentWrap).before(wysiwyg.el);
+            //     wysiwyg.el.insertBefore(contentWrap);
+            // }, 500);
+            
+            // loadScript(undefined, 'medium.js');
+            // setTimeout(function()
+            // {
+            //     new Medium({
+            //         debug: true,
+            //         element: contentWrap,
+            //         modifier: 'auto',
+            //         placeholder: "",
+            //         autofocus: false,
+            //         autoHR: false,
+            //         mode: 'rich', // inline, partial, rich
+            //         maxLength: -1,
+            //         modifiers: {
+            //             66: 'bold',
+            //             73: 'italicize',
+            //             85: 'underline',
+            //             86: 'paste'
+            //         },
+            //         tags: {
+            //             paragraph: 'p',
+            //             outerLevel: ['pre','blockquote', 'figure', 'hr'],
+            //             innerLevel: ['a', 'b', 'u', 'i', 'img', 'strong'] // Todo: Convert strong to b (IE)
+            //         },
+            //         cssClasses: {
+            //             editor: 'Medium',
+            //             pasteHook: 'Medium-paste-hook',
+            //             placeholder: 'Medium-placeholder'
+            //         },
+            //         attributes: {
+            //             remove: ['style','class']
+            //         }
+            //     });
+            // }, 500);
+            // 
+            // 
+            // loadScript(undefined, 'rangy-core.js');
+            // loadScript(undefined, 'jquery-ui.min.js');
+            // loadScript(undefined, 'hallo.js');
+            // 
+            // setTimeout(function()
+            // {            
+            //     $('#epb3sldrzr-content-wrap').hallo(
+            //     {
+            //         plugins:
+            //         {
+            //             'halloformat':
+            //             {
+            //                 "formattings":
+            //                 {
+            //                     "bold": true,
+            //                     "italic": true,
+            //                     "strikethrough": true,
+            //                     "underline": true
+            //                 }
+            //             },
+            //             'halloheadings':
+            //             {
+            //                 "headers": [1,2,3,4]
+            //             },
+            //             "hallojustify":
+            //             {
+            //             
+            //             },
+            //             "hallolists":
+            //             {
+            //                 "lists":
+            //                 {
+            //                     "ordered": true,
+            //                     "unordered": true
+            //                 }
+            //             },
+            //             "halloreundo":
+            //             {}
+            //       }
+            //     });
+            // 
+            // }, 500);
+            // 
+            // 
+            
+// 
+// //            loadScript(undefined, 'aloha/lib/vendor/jquery-1.7.2.js');        
+// //            loadScript(undefined, 'aloha/lib/require.js');
+//             loadScript(undefined, 'aloha/lib/aloha-full.js');
+// 
+//             // var Aloha = window.Aloha || {};
+//             // Aloha.settings = Aloha.settings || {};
+//             // // Restore the global $ and jQuery variables of your project's jQuery
+//             // Aloha.settings.jQuery = window.jQuery.noConflict(true);
+// 
+//             setTimeout(function()
+//             {
+//                 Aloha.jQuery('#epb3sldrzr-content-wrap').aloha();
+//             }, 500);
+
+            // loadScript(undefined, 'ckeditor/ckeditor.js');
+            // setTimeout(function()
+            // {
+            //     CKEDITOR.disableAutoInline = true;
+            //     
+            //     CKEDITOR.inline(contentWrap);
+            //     
+            //     //var data = CKEDITOR.instances.editable.getData();
+            // }, 500);
+       }
+       else
+       {
+           console.log("AUTHOR MODE, XHTML (NON-WYSIWYG EDITOR)");
+       }
     }
     else if (Epub3Sliderizer.android ||
         (getUrlQueryParam("basic") !== null)

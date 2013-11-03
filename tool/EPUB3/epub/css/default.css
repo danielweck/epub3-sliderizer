@@ -576,3 +576,11 @@ nav[epub|type~='page-list']
     display:none;
 }
 
+/*
+*[contenteditable="true"]
+{
+    outline-style: auto;
+    outline-width: 0.2em;
+    outline-color: #111111;
+}
+*/

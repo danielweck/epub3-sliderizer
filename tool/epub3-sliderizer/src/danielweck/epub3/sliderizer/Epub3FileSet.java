@@ -69,7 +69,9 @@ public final class Epub3FileSet {
 			new FileId("incrementals.css", "css-incrementals"),
 			new FileId("animations.css", "css-animations"),
 			new FileId("controls.css", "css-controls"),
-			new FileId("default.css", "css-default") };
+			new FileId("default.css", "css-default")
+            //new FileId("jquery-ui.css", "css-jquery-ui")
+        };
 
 	public final static FileId[] JSs = new FileId[] {
 			new FileId("jquery.min.js", "js-jquery"),
