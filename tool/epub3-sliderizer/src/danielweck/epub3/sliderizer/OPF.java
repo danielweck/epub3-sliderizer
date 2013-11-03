@@ -1,5 +1,6 @@
 package danielweck.epub3.sliderizer;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.xml.XMLConstants;
@@ -275,10 +276,14 @@ public final class OPF {
 				elementManifest, Epub3FileSet.CSS_NAVDOC.ID, false,
 				Epub3FileSet.FOLDER_CSS, null);
 
-		create_ManifestItem(Epub3FileSet.CSS_FONTS.FILE, document,
-				elementManifest, Epub3FileSet.CSS_FONTS.ID, false,
-				Epub3FileSet.FOLDER_HTML + "/" + Epub3FileSet.FOLDER_FONTS,
-				null);
+		for (int i = 0; i < Epub3FileSet.CSS_FONTS.length; i++) {
+			String filename = Epub3FileSet.CSS_FONTS[i].FILE;
+			String id = Epub3FileSet.CSS_FONTS[i].ID;
+
+			create_ManifestItem(filename, document, elementManifest, id, false,
+					Epub3FileSet.FOLDER_HTML + "/" + Epub3FileSet.FOLDER_FONTS,
+					null);
+		}
 
 		create_ManifestItem(slideShow.LOGO, document, elementManifest, "logo",
 				false, Epub3FileSet.FOLDER_IMG + "/"

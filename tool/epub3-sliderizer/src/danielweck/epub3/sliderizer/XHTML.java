@@ -40,7 +40,8 @@ public final class XHTML {
 	}
 
 	public static String getFileName_Notes(int i) {
-		return getFileName(i).replace(Epub3FileSet.XHTML_EXT, "_NOTES" + Epub3FileSet.XHTML_EXT);
+		return getFileName(i).replace(Epub3FileSet.XHTML_EXT,
+				"_NOTES" + Epub3FileSet.XHTML_EXT);
 	}
 
 	public static void createAll(MustacheFactory mustacheFactory,
@@ -736,9 +737,17 @@ public final class XHTML {
 		XHTML.create_Content(rootElement, document, content, slideShow, slide,
 				pathEpubFolder, verbosity);
 
-		return XmlDocument.toString(rootElement, -1)
+		String src = XmlDocument.toString(rootElement, -1)
 				.replaceAll("<\\?xml[^>]*\\?>", "")
 				.replaceAll("<html[^>]*>", "").replaceAll("</html>", "");
+		//
+		// if (slide.SLIDE_NUMBER() == 14
+		// && Epub3FileSet.XHTML_EXT.indexOf(".xhtml") == 0) {
+		// System.err.println(src);
+		// throw new Exception();
+		// }
+
+		return src;
 	}
 
 	public static void create_Content(Element elementSection,

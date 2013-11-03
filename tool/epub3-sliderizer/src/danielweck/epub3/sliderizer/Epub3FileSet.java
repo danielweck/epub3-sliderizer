@@ -29,9 +29,9 @@ public final class Epub3FileSet {
 			ID = id;
 		}
 	}
-    
-    public static String XHTML_EXT = ".xhtml";
-    
+
+	public static String XHTML_EXT = ".xhtml";
+
 	public final static String GENERATOR = "EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer";
 	public final static String KEYWORDS = "EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook";
 
@@ -62,16 +62,17 @@ public final class Epub3FileSet {
 
 	public final static FileId CSS_NAVDOC = new FileId("navdoc.css",
 			"css-navdoc");
-	public final static FileId CSS_FONTS = new FileId("fonts.css", "css-fonts");
+	public final static FileId CSS_FONTS[] = new FileId[] {
+			new FileId("fonts.css", "css-fonts"),
+			new FileId("FontAwesome.css", "css-font-awesome") };
 	public final static FileId[] CSSs = new FileId[] {
-			new FileId("FontAwesome.css", "css-font-awesome"),
 			new FileId("struct.css", "css-struct"),
 			new FileId("incrementals.css", "css-incrementals"),
 			new FileId("animations.css", "css-animations"),
 			new FileId("controls.css", "css-controls"),
 			new FileId("default.css", "css-default")
-            //new FileId("jquery-ui.css", "css-jquery-ui")
-        };
+	// new FileId("jquery-ui.css", "css-jquery-ui")
+	};
 
 	public final static FileId[] JSs = new FileId[] {
 			new FileId("jquery.min.js", "js-jquery"),
@@ -444,7 +445,7 @@ public final class Epub3FileSet {
 
 		for (int i = 0; i < Epub3FileSet.CSSs.length; i++) {
 			String filename = Epub3FileSet.CSSs[i].FILE;
-			// String id = Epub3FileSet.CSS_FILENAMES_IDS[i][1];
+			// String id = Epub3FileSet.CSSs[i][1];
 
 			processCssFile(slideShow, new File(pathEpubFolder,
 					Epub3FileSet.FOLDER_CSS + "/" + filename), verbosity);
@@ -453,9 +454,15 @@ public final class Epub3FileSet {
 		processCssFile(slideShow, new File(pathEpubFolder,
 				Epub3FileSet.FOLDER_CSS + "/" + Epub3FileSet.CSS_NAVDOC.FILE),
 				verbosity);
-		processCssFile(slideShow, new File(pathEpubFolder,
-				Epub3FileSet.FOLDER_HTML + "/" + Epub3FileSet.FOLDER_FONTS
-						+ "/" + Epub3FileSet.CSS_FONTS.FILE), verbosity);
+
+		for (int i = 0; i < Epub3FileSet.CSS_FONTS.length; i++) {
+			String filename = Epub3FileSet.CSS_FONTS[i].FILE;
+			// String id = Epub3FileSet.CSS_FONTS[i][1];
+
+			processCssFile(slideShow, new File(pathEpubFolder,
+					Epub3FileSet.FOLDER_HTML + "/" + Epub3FileSet.FOLDER_FONTS
+							+ "/" + filename), verbosity);
+		}
 
 		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.LOGO, verbosity);
@@ -610,7 +617,7 @@ public final class Epub3FileSet {
 			return "image/gif";
 		}
 		if (fileExtension.equalsIgnoreCase("html")) {
-			return "application/xhtml+xml"; //"text/html";
+			return "application/xhtml+xml"; // "text/html";
 		}
 		if (fileExtension.equalsIgnoreCase("xhtml")) {
 			return "application/xhtml+xml";

@@ -87,52 +87,49 @@ public final class Slide extends Fielder {
 	}
 
 	public boolean AUTHORize() throws Exception {
-		return CONTENT != null
-            && CONTENT.indexOf(XHTML.MARKDOWN_SRC) != 0
-            && (_verbosity >= 3 || CONTENT.indexOf(XHTML.MARKDOWN) == 0);
+		return CONTENT != null && CONTENT.indexOf(XHTML.MARKDOWN_SRC) != 0
+				&& (_verbosity >= 3 || CONTENT.indexOf(XHTML.MARKDOWN) == 0);
 	}
-    
+
 	public String CONTENT_ORIGINAL() throws Exception {
 
 		if (CONTENT == null) {
 			return null;
 		}
-        String content = CONTENT;
-        // if (content.indexOf(XHTML.MARKDOWN_SRC) == 0) {
-        //     content = content.substring(XHTML.MARKDOWN_SRC.length());
-        // } else
-        if (content.indexOf(XHTML.MARKDOWN) == 0) {
-            content = content.substring(XHTML.MARKDOWN.length());
-        }
-        // else if (content.indexOf(XHTML.NOMARKDOWN) == 0) {
-        //     content = content.substring(XHTML.NOMARKDOWN.length());
-        // }
+		String content = CONTENT;
+		// if (content.indexOf(XHTML.MARKDOWN_SRC) == 0) {
+		// content = content.substring(XHTML.MARKDOWN_SRC.length());
+		// } else
+		if (content.indexOf(XHTML.MARKDOWN) == 0) {
+			content = content.substring(XHTML.MARKDOWN.length());
+		}
+		// else if (content.indexOf(XHTML.NOMARKDOWN) == 0) {
+		// content = content.substring(XHTML.NOMARKDOWN.length());
+		// }
 		return content.replace("&", "&amp;").replace("<", "&lt;")
 				.replace(">", "&gt;").trim();
 	}
 
-
 	public boolean AUTHORize_NOTES() {
-		return NOTES != null
-            && NOTES.indexOf(XHTML.MARKDOWN_SRC) != 0
-            && (_verbosity >= 3 || NOTES.indexOf(XHTML.MARKDOWN) == 0);
+		return NOTES != null && NOTES.indexOf(XHTML.MARKDOWN_SRC) != 0
+				&& (_verbosity >= 3 || NOTES.indexOf(XHTML.MARKDOWN) == 0);
 	}
-    
+
 	public String NOTES_ORIGINAL() throws Exception {
 
 		if (NOTES == null) {
 			return null;
 		}
-        String content = NOTES;
-        // if (content.indexOf(XHTML.MARKDOWN_SRC) == 0) {
-        //     content = content.substring(XHTML.MARKDOWN_SRC.length());
-        // } else
-        if (content.indexOf(XHTML.MARKDOWN) == 0) {
-            content = content.substring(XHTML.MARKDOWN.length());
-        }
-        // else if (content.indexOf(XHTML.NOMARKDOWN) == 0) {
-        //     content = content.substring(XHTML.NOMARKDOWN.length());
-        // }
+		String content = NOTES;
+		// if (content.indexOf(XHTML.MARKDOWN_SRC) == 0) {
+		// content = content.substring(XHTML.MARKDOWN_SRC.length());
+		// } else
+		if (content.indexOf(XHTML.MARKDOWN) == 0) {
+			content = content.substring(XHTML.MARKDOWN.length());
+		}
+		// else if (content.indexOf(XHTML.NOMARKDOWN) == 0) {
+		// content = content.substring(XHTML.NOMARKDOWN.length());
+		// }
 		return content.replace("&", "&amp;").replace("<", "&lt;")
 				.replace(">", "&gt;").trim();
 	}
@@ -287,7 +284,7 @@ public final class Slide extends Fielder {
 	public String JS_SCRIPT = null;
 
 	public String NOTES = null;
-    public static String FIELD_NOTES = "NOTES";
+	public static String FIELD_NOTES = "NOTES";
 
 	public String NOTES_XHTML() throws Exception {
 

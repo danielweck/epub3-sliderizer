@@ -34,7 +34,7 @@ public final class SlideShow extends Fielder {
 	public final static String FOLDER_CUSTOM = Epub3FileSet.FOLDER_CUSTOM;
 	public final static Epub3FileSet.FileId[] CSSs = Epub3FileSet.CSSs;
 	public final static Epub3FileSet.FileId CSS_NAVDOC = Epub3FileSet.CSS_NAVDOC;
-	public final static Epub3FileSet.FileId CSS_FONTS = Epub3FileSet.CSS_FONTS;
+	public final static Epub3FileSet.FileId[] CSS_FONTS = Epub3FileSet.CSS_FONTS;
 	public final static Epub3FileSet.FileId[] JSs = Epub3FileSet.JSs;
 	public final static String FIRST_SLIDE_FILENAME = XHTML.getFileName(1);
 	public final static String NAV_SLIDE_FILENAME = NavDoc.getFileName();

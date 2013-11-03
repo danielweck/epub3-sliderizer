@@ -27,7 +27,9 @@
         {{/VIEWPORT_HEIGHT}}
         {{/VIEWPORT_WIDTH}}
         
-        <link href="{{{FOLDER_HTML}}}/{{{FOLDER_FONTS}}}/{{{CSS_FONTS.FILE}}}" rel="stylesheet" type="text/css"/>
+        {{#CSS_FONTS}}
+        <link href="{{{FOLDER_HTML}}}/{{{FOLDER_FONTS}}}/{{{FILE}}}" rel="stylesheet" type="text/css"/>
+        {{/CSS_FONTS}}
         
         {{#CSSs}}
         <link href="{{{FOLDER_CSS}}}/{{{FILE}}}" rel="stylesheet" type="text/css"/>

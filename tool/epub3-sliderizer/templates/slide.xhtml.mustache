@@ -27,7 +27,9 @@
         {{/slideShow.VIEWPORT_HEIGHT}}
         {{/slideShow.VIEWPORT_WIDTH}}
         
-        <link href="{{{slideShow.FOLDER_FONTS}}}/{{{slideShow.CSS_FONTS.FILE}}}" rel="stylesheet" type="text/css"/>
+        {{#slideShow.CSS_FONTS}}
+        <link href="{{{slideShow.FOLDER_FONTS}}}/{{{FILE}}}" rel="stylesheet" type="text/css"/>
+        {{/slideShow.CSS_FONTS}}
         
         {{#slideShow.CSSs}}
         <link href="../{{{slideShow.FOLDER_CSS}}}/{{{FILE}}}" rel="stylesheet" type="text/css"/>

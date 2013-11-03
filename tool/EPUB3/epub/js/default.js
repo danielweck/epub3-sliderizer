@@ -2881,7 +2881,7 @@ Epub3Sliderizer.initLinks = function()
 // ----------
 
 Epub3Sliderizer.reAnimateElement = function(elem)
-{    
+{
     var elm = elem;
     var newOne = elm.cloneNode(true);
     elm.parentNode.replaceChild(newOne, elm);

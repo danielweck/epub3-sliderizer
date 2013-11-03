@@ -199,7 +199,9 @@ h1#epb3sldrzr-title
     letter-spacing:0.03em;
     
     padding-left: FONT_SIZE_HALFpx;
+    /*
     padding-left: FONT_SIZE_HALFrem;
+    */
     
     padding-top: 0.2em;
     padding-bottom: 0.2em;
@@ -220,20 +222,24 @@ html#epb3sldrzr-NavDoc h1#epb3sldrzr-title
 body:not(.reflow).static.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title
 {
     border-top-left-radius: FONT_SIZEpx;
-    border-top-left-radius: FONT_SIZErem;
-    
     border-top-right-radius: FONT_SIZEpx;
+    
+    /*
     border-top-right-radius: FONT_SIZErem;
+    border-top-left-radius: FONT_SIZErem;
+    */
 }
 
 body:not(.reflow):not(.epb3sldrzr-epubReadingSystem) h1#epb3sldrzr-title,
 body:not(.reflow).basic.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title
 {
     border-top-left-radius: FONT_SIZE_HALFpx;
-    border-top-left-radius: FONT_SIZE_HALFrem;
-    
     border-top-right-radius: FONT_SIZE_HALFpx;
+    
+    /*
     border-top-right-radius: FONT_SIZE_HALFrem;
+    border-top-left-radius: FONT_SIZE_HALFrem;
+    */
 }
 
 
@@ -303,12 +309,29 @@ Lists
 ul,
 ol
 {
-    margin-left: 1em;
+    margin-left: 0.8em;
 }
 
 ul
 {
-    list-style-type:square;
+    list-style-type:none;
+}
+
+ul > li:before
+{
+    content: '\2022';
+    
+    font-weight: 900;
+    
+    font-size: 0.7em;
+    
+    color: #555555;
+    
+    padding: 0;
+    padding-right: 0.6em;
+    
+    margin-right: 0;
+    margin-left: 0;
 }
 
 ol
@@ -453,13 +476,14 @@ body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle > #epb3sldrzr-
 #epb3sldrzr-content > #epb3sldrzr-anim-overflow > #epb3sldrzr-content-wrap:not(.vertical-middle) > *:not(img):not(.spread)
 {
     padding-left: FONT_SIZEpx;
-    padding-left: FONT_SIZErem;
-    
     padding-right: FONT_SIZEpx;
-    padding-right: FONT_SIZErem;
-
     margin-top: FONT_SIZE_HALFpx;
+    
+    /*
     margin-top: FONT_SIZE_HALFrem;
+    padding-right: FONT_SIZErem;
+    padding-left: FONT_SIZErem;
+    */
 }
 
 div.boxed > p,
@@ -474,16 +498,16 @@ div.boxed > div
     border: 0.06em solid #888888; /* rgb(210, 220, 230); */
 
     border-bottom-left-radius: FONT_SIZE_HALFpx;
-    border-bottom-left-radius: FONT_SIZE_HALFrem;
-    
     border-bottom-right-radius: FONT_SIZE_HALFpx;
-    border-bottom-right-radius: FONT_SIZE_HALFrem;
-    
     border-top-right-radius: FONT_SIZE_HALFpx;
-    border-top-right-radius: FONT_SIZE_HALFrem;
-
     padding-left: FONT_SIZE_HALFpx;
+    
+    /*
     padding-left: FONT_SIZE_HALFrem;
+    border-top-right-radius: FONT_SIZE_HALFrem;
+    border-bottom-right-radius: FONT_SIZE_HALFrem;
+    border-bottom-left-radius: FONT_SIZE_HALFrem;
+    */
 }
 
 div.boxed > p:not(.nopad),
@@ -492,10 +516,12 @@ div.boxed > ol:not(.nopad),
 div.boxed > div:not(.nopad)
 {
     padding-top: FONT_SIZE_HALFpx;
-    padding-top: FONT_SIZE_HALFrem;
-    
     padding-bottom: FONT_SIZE_HALFpx;
+    
+    /*
     padding-bottom: FONT_SIZE_HALFrem;
+    padding-top: FONT_SIZE_HALFrem;
+    */
 }
 
 

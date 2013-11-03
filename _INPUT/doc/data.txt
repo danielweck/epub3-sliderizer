@@ -175,7 +175,7 @@ NO-MARKDOWN
                 <strong>See</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/doc/data.txt" target="_blank">input file</a> for this slidedeck
             </li>
             <li>
-                <strong>Grab</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/" target="_blank">open-source code</a> from GitHub <i class="icon-github" style="font-size: 1.5em"></i> 
+                <strong>Grab</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/" target="_blank">open-source code</a> from GitHub <i class="fa fa-github" style="font-size: 1.5em;"> </i>
             </li>
         </ul>
     </div>
@@ -183,6 +183,12 @@ NO-MARKDOWN
 
 // --------------------------------------------
 _CSS_STYLE
+
+/* testing */
+#daniel > .weck
+{
+    color: blue;
+}
 
 #epb3sldrzr-anim-overflow
 {
@@ -214,7 +220,6 @@ body:not(.mobile):not(.epb3sldrzr-epubReadingSystem) .incremental > *
 #epb3sldrzr-content
 {
     margin-left: FONT_SIZEpx;
-    margin-left: FONT_SIZErem;
 }
 
 html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
@@ -245,12 +250,10 @@ h1#epb3sldrzr-title
     font-size: 1.6em;
 
     padding-top: FONT_SIZEpx;
-    padding-top: FONT_SIZErem;
 
     margin-bottom: 1em;
     
     margin-left: FONT_SIZEpx;
-    margin-left: FONT_SIZErem;
 
     border-bottom: 0.14em solid #8AC007;
 }
@@ -282,19 +285,6 @@ function setupLogoAnimation()
     elem.classList.add("epb3sldrzr-animated");
 }
 document.addEventListener("DOMContentLoaded", function(e) { setupLogoAnimation(); }, false);
-
-/*
-function setupLogo()
-{
-    if (Epub3Sliderizer.authorMode)
-    {
-//        Epub3Sliderizer.AUTHORize("img#epb3sldrzr-logo");
-//        Epub3Sliderizer.AUTHORize("#FMOGH");
-    }
-}
-document.addEventListener("DOMContentLoaded", function(e) { setTimeout(setupLogo, 1000); }, false);
-*/
-
 
 // #########################################################
 // #########################################################
@@ -2137,7 +2127,7 @@ NO-MARKDOWN
 <ul class="incremental auto" data-incremental-delay="200"> 
     <li> item 1 </li>
     <li> item 2 </li>
-    <li style="list-style-type:none;">
+    <li class="listMid">
         <ul class="incremental auto">
             <li> item 3 </li>
             <li> item 4 </li>
@@ -2158,6 +2148,17 @@ Attribute '<span class="code pale-green">data-incremental-delay</span>' &#8658; 
 </li>
 </ul>
 
+
+// --------------------------------------------
+_CSS_STYLE
+
+li.listMid:before
+{
+content: '';
+padding: 0;
+margin: 0;
+font-size: 0.01em;
+}
 
 // #########################################################
 // #########################################################
@@ -2255,7 +2256,7 @@ a:hover
 }
 a:active
 {
-    color:#white;
+    color:white;
 }
 
 ul#yo
@@ -2624,7 +2625,7 @@ _CSS_STYLE
 
 ol li
 {
-    margin-bottom: 0.8em;
+    margin-bottom: 0.6em;
 }
 
 // #########################################################

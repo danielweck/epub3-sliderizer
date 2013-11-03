@@ -94,8 +94,9 @@ public final class XmlDocument {
 
 			// transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,
 			// "testing.dtd");
-			transformer.setOutputProperty(OutputKeys.INDENT,
-					verbosity > 2 ? "yes" : "no");
+			transformer.setOutputProperty(OutputKeys.INDENT, "no"
+					//verbosity > 2 ? "yes" : "no"
+						);
 			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 			transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 			transformer.setOutputProperty(

@@ -280,10 +280,12 @@ div#epb3sldrzr-controls
 
 	
 	border-top-left-radius: FONT_SIZE_HALFpx;
-	border-top-left-radius: FONT_SIZE_HALFrem;
-	
 	border-top-right-radius: FONT_SIZE_HALFpx;
+    
+    /*
 	border-top-right-radius: FONT_SIZE_HALFrem;
+	border-top-left-radius: FONT_SIZE_HALFrem;
+    */
 
 	text-align: center;
 	vertical-align: middle;
