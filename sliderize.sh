@@ -124,7 +124,7 @@ echo "PACK EPUB error?"
 exit $exitValue 
 fi
 
-#mv "${root}/_OUTPUT/content/EPUB3-Sliderizer.epub" "${root}/_OUTPUT/content/${EPUB_FILENAME}.epub"
+mv "${root}/_OUTPUT/content/EPUB3-Sliderizer.epub" "${root}/_OUTPUT/content/${EPUB_FILENAME}.epub"
 
 #mv "${root}/_OUTPUT/content/aloha/" "${root}/_OUTPUT/content/EPUB3/epub/js/" 
 
