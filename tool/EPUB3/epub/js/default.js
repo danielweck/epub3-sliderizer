@@ -1438,6 +1438,7 @@ Epub3Sliderizer.updateLocalStorageTextArea = function(content)
 Epub3Sliderizer.convertContentToMarkdown = function(NOMARKDOWN)
 {
     var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
+    
     if (!contentWrap)
     {
         return;
@@ -1513,17 +1514,6 @@ Epub3Sliderizer.convertContentToMarkdown = function(NOMARKDOWN)
     {
         markdown = Epub3Sliderizer.NOMARKDOWN_MARKER + "\n\n" + markdown;
     }
-    
-    // $("img", contentWrap).each(function(index)
-    // {
-    //     var $that = $(this);
-    //     var src = $that.attr("src");
-    //     if (!src) return;
-    //     
-    //     if (src.indexOf(Epub3Sliderizer.imgSrcPrefix) == 0) return;
-    //     
-    //     $that.attr("src", Epub3Sliderizer.imgSrcPrefix + src);
-    // });
     
     return markdown;
 }
@@ -4360,7 +4350,40 @@ function readyFirst()
             // contentWrap.addEventListener("blur", function() { document.designMode = 'off'; }, false);
             // contentWrap.addEventListener("focus", function() { document.designMode = 'on'; }, false);
 
+        
+            loadScript(undefined, 'keymaster.js');
 
+            setTimeout(function()
+            {
+                key('⌘+s, ctrl+s', function()
+                {
+                    var root = document.getElementById("epb3sldrzr-root");
+                    root.style.display = "none";
+                    Epub3Sliderizer.convertContentToMarkdownAndUpdateLocalStorageTextArea();
+
+                    setTimeout(function()
+                    {
+                        var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
+    
+                        $("img", contentWrap).each(function(index)
+                        {
+                            var $that = $(this);
+                            var src = $that.attr("src");
+                            if (!src) return;
+                            
+                            if (src.indexOf(Epub3Sliderizer.imgSrcPrefix) == 0) return;
+                            
+                            $that.attr("src", Epub3Sliderizer.imgSrcPrefix + src);
+                        });
+    
+                        root.style.display = "block";
+                    }, 200);
+                    
+                    return false;
+                });
+            }, 500);
+            
+            
             // loadScript(undefined, 'wysiwyg.js');
             // setTimeout(function()
             // {
