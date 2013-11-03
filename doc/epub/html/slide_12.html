@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_12" lang="en-US" xml:lang="en-US">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_12" lang="en-US" xml:lang="en-US">
     <head>
         <meta charset="UTF-8"/>
 
@@ -15,8 +14,8 @@
         <meta content="width=1290, height=1000" name="viewport"/>
         
         <link href="fonts/fonts.css" rel="stylesheet" type="text/css"/>
+        <link href="fonts/FontAwesome.css" rel="stylesheet" type="text/css"/>
         
-        <link href="../css/FontAwesome.css" rel="stylesheet" type="text/css"/>
         <link href="../css/struct.css" rel="stylesheet" type="text/css"/>
         <link href="../css/incrementals.css" rel="stylesheet" type="text/css"/>
         <link href="../css/animations.css" rel="stylesheet" type="text/css"/>
@@ -100,6 +99,17 @@ background: #FF0033;
         /*]]>*/
         </style>
 
+        <style type="text/css">
+        /*<![CDATA[*/
+        li.listMid:before
+{
+content: '';
+padding: 0;
+margin: 0;
+font-size: 0.01em;
+}
+        /*]]>*/
+        </style>
 
         
 
@@ -136,29 +146,22 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
                     <h1 id="epb3sldrzr-title">Incrementals</h1>
 
 <div id="epb3sldrzr-content-wrap">
-                    
-  <!--SOUP-->
+                    <!--SOUP-->
 <div class="boxed" style="margin-bottom: 1em;">
 <h3>Example:</h3>
 <p class="code" style="font-size: 0.8em;">
 &lt;ul class="<span class="code pale-blue">incremental</span> <span class="code pale-red">auto</span>" <span class="code pale-green">data-incremental-delay</span>="200"&gt;
 <br/>
 <span class="auto incremental" data-incremental-delay="200">
-<span class="code pale-grey" style="font-weight: 900">    &lt;li&gt; <strong>item 1</strong> &lt;/li&gt;<br/>
-        </span>
-<span class="code pale-grey" style="font-weight: 900">    &lt;li&gt; <strong>item 2</strong> &lt;/li&gt;<br/>
-        </span>
+<span class="code pale-grey" style="font-weight: 900">    &lt;li&gt; <strong>item 1</strong> &lt;/li&gt;<br/></span>
+<span class="code pale-grey" style="font-weight: 900">    &lt;li&gt; <strong>item 2</strong> &lt;/li&gt;<br/></span>
 <span>
-<span class="code">    &lt;li&gt;<br/>        &lt;ul class="<span class="code pale-blue">incremental</span> <span class="code pale-red">auto</span>"&gt;<br/>
-          </span>
+<span class="code">    &lt;li&gt;<br/>        &lt;ul class="<span class="code pale-blue">incremental</span> <span class="code pale-red">auto</span>"&gt;<br/></span>
 <span class="auto incremental" data-incremental-delay="400">
-<span class="code pale-grey" style="font-weight: 900">            &lt;li&gt; <strong>item 3</strong> &lt;/li&gt;<br/>
-            </span>
-<span class="code pale-grey" style="font-weight: 900">            &lt;li&gt; <strong>item 4</strong> &lt;/li&gt;<br/>
-            </span>
+<span class="code pale-grey" style="font-weight: 900">            &lt;li&gt; <strong>item 3</strong> &lt;/li&gt;<br/></span>
+<span class="code pale-grey" style="font-weight: 900">            &lt;li&gt; <strong>item 4</strong> &lt;/li&gt;<br/></span>
 </span>
-<span class="code">        &lt;/ul&gt;<br/>    &lt;/li&gt;<br/>
-          </span>
+<span class="code">        &lt;/ul&gt;<br/>    &lt;/li&gt;<br/></span>
 </span>
 </span>
 &lt;/ul&gt;
@@ -168,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 <ul class="incremental auto" data-incremental-delay="200">
 <li> item 1 </li>
 <li> item 2 </li>
-<li style="list-style-type:none;">
+<li class="listMid">
 <ul class="incremental auto">
 <li> item 3 </li>
 <li> item 4 </li>
@@ -187,8 +190,6 @@ CSS class '<span class="code pale-red">auto</span>' ⇒ automatic reveal
 Attribute '<span class="code pale-green">data-incremental-delay</span>' ⇒ time offset <span class="fade">(500ms default)</span>
 </li>
 </ul>
-
-
 </div>
 
                 </div>
@@ -222,7 +223,7 @@ Attribute '<span class="code pale-green">data-incremental-delay</span>' ⇒ time
 &lt;ul class="incremental auto" data-incremental-delay="200"&gt;
 &lt;li&gt; item 1 &lt;/li&gt;
 &lt;li&gt; item 2 &lt;/li&gt;
-&lt;li style="list-style-type:none;"&gt;
+&lt;li class="listMid"&gt;
 &lt;ul class="incremental auto"&gt;
 &lt;li&gt; item 3 &lt;/li&gt;
 &lt;li&gt; item 4 &lt;/li&gt;
@@ -266,7 +267,7 @@ Attribute '&lt;span class="code pale-green"&gt;data-incremental-delay&lt;/span&g
 &lt;ul class="incremental auto" data-incremental-delay="200"&gt;
 &lt;li&gt; item 1 &lt;/li&gt;
 &lt;li&gt; item 2 &lt;/li&gt;
-&lt;li style="list-style-type:none;"&gt;
+&lt;li class="listMid"&gt;
 &lt;ul class="incremental auto"&gt;
 &lt;li&gt; item 3 &lt;/li&gt;
 &lt;li&gt; item 4 &lt;/li&gt;

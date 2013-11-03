@@ -14,8 +14,8 @@
         <meta content="width=1290, height=1000" name="viewport"/>
         
         <link href="fonts/fonts.css" rel="stylesheet" type="text/css"/>
+        <link href="fonts/FontAwesome.css" rel="stylesheet" type="text/css"/>
         
-        <link href="../css/FontAwesome.css" rel="stylesheet" type="text/css"/>
         <link href="../css/struct.css" rel="stylesheet" type="text/css"/>
         <link href="../css/incrementals.css" rel="stylesheet" type="text/css"/>
         <link href="../css/animations.css" rel="stylesheet" type="text/css"/>
@@ -99,6 +99,17 @@ background: #FF0033;
         /*]]>*/
         </style>
 
+        <style type="text/css">
+        /*<![CDATA[*/
+        li.listMid:before
+{
+content: '';
+padding: 0;
+margin: 0;
+font-size: 0.01em;
+}
+        /*]]>*/
+        </style>
 
         
 
@@ -160,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 <ul class="incremental auto" data-incremental-delay="200">
 <li> item 1 </li>
 <li> item 2 </li>
-<li style="list-style-type:none;">
+<li class="listMid">
 <ul class="incremental auto">
 <li> item 3 </li>
 <li> item 4 </li>

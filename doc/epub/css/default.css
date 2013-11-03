@@ -299,7 +299,9 @@ h1#epb3sldrzr-title
     letter-spacing:0.03em;
     
     padding-left: 20px;
+    /*
     padding-left: 2rem;
+    */
     
     padding-top: 0.2em;
     padding-bottom: 0.2em;
@@ -320,20 +322,24 @@ html#epb3sldrzr-NavDoc h1#epb3sldrzr-title
 body:not(.reflow).static.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title
 {
     border-top-left-radius: 40px;
-    border-top-left-radius: 4rem;
-    
     border-top-right-radius: 40px;
+    
+    /*
     border-top-right-radius: 4rem;
+    border-top-left-radius: 4rem;
+    */
 }
 
 body:not(.reflow):not(.epb3sldrzr-epubReadingSystem) h1#epb3sldrzr-title,
 body:not(.reflow).basic.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title
 {
     border-top-left-radius: 20px;
-    border-top-left-radius: 2rem;
-    
     border-top-right-radius: 20px;
+    
+    /*
     border-top-right-radius: 2rem;
+    border-top-left-radius: 2rem;
+    */
 }
 
 
@@ -403,12 +409,29 @@ Lists
 ul,
 ol
 {
-    margin-left: 1em;
+    margin-left: 0.8em;
 }
 
 ul
 {
-    list-style-type:square;
+    list-style-type:none;
+}
+
+ul > li:before
+{
+    content: '\2022';
+    
+    font-weight: 900;
+    
+    font-size: 0.7em;
+    
+    color: #555555;
+    
+    padding: 0;
+    padding-right: 0.6em;
+    
+    margin-right: 0;
+    margin-left: 0;
 }
 
 ol
@@ -553,13 +576,14 @@ body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle > #epb3sldrzr-
 #epb3sldrzr-content > #epb3sldrzr-anim-overflow > #epb3sldrzr-content-wrap:not(.vertical-middle) > *:not(img):not(.spread)
 {
     padding-left: 40px;
-    padding-left: 4rem;
-    
     padding-right: 40px;
-    padding-right: 4rem;
-
     margin-top: 20px;
+    
+    /*
     margin-top: 2rem;
+    padding-right: 4rem;
+    padding-left: 4rem;
+    */
 }
 
 div.boxed > p,
@@ -580,16 +604,16 @@ box-shadow: 2px 2px 4px rgb(200, 200, 200);
     border: 0.06em solid #888888; /* rgb(210, 220, 230); */
 
     border-bottom-left-radius: 20px;
-    border-bottom-left-radius: 2rem;
-    
     border-bottom-right-radius: 20px;
-    border-bottom-right-radius: 2rem;
-    
     border-top-right-radius: 20px;
-    border-top-right-radius: 2rem;
-
     padding-left: 20px;
+    
+    /*
     padding-left: 2rem;
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    */
 }
 
 div.boxed > p:not(.nopad),
@@ -598,10 +622,12 @@ div.boxed > ol:not(.nopad),
 div.boxed > div:not(.nopad)
 {
     padding-top: 20px;
-    padding-top: 2rem;
-    
     padding-bottom: 20px;
+    
+    /*
     padding-bottom: 2rem;
+    padding-top: 2rem;
+    */
 }
 
 

@@ -286,10 +286,12 @@ box-shadow: 0 0 20px rgba(0, 0, 0, 1);
 
 	
 	border-top-left-radius: 20px;
-	border-top-left-radius: 2rem;
-	
 	border-top-right-radius: 20px;
+    
+    /*
 	border-top-right-radius: 2rem;
+	border-top-left-radius: 2rem;
+    */
 
 	text-align: center;
 	vertical-align: middle;
