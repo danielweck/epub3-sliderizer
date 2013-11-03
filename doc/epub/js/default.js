@@ -740,26 +740,88 @@ Epub3Sliderizer.AUTHORize = function()
         return;
     }
    
-    var elems = $("#epb3sldrzr-content-wrap .epb3sldrzr-author, #epb3sldrzr-content-wrap img");
-    
+    var $root = $("#epb3sldrzr-content-wrap");
+   
+    var elems = $(".epb3sldrzr-author, img", $root[0]);
     elems.addClass("epb3sldrzr-author-toMove");
     
     var thiz = this;
     
+    var canMove = function(e, $el)
+    {
+        var can = $el[0].nodeName && $el[0].nodeName.toLowerCase().indexOf("img") == 0 || e.metaKey && ($el.hasClass("epb3sldrzr-author") || $el.parents().hasClass("epb3sldrzr-author"));
+        if (can)
+        {
+            $el.addClass('epb3sldrzr-author-canMove');
+        }
+        else
+        {
+            $el.removeClass('epb3sldrzr-author-canMove');
+        }
+        
+        return can;
+    };
+    
     var onMouseMove = function(e)
     {
-        thiz.AUTHORized = true;
-        
-        e.data.that
-        .offset(
+        if (!e.data)
         {
-            top: e.pageY + e.data.pos_y - e.data.drg_h,
-            left: e.pageX + e.data.pos_x - e.data.drg_w
-        })
+            var $el = $(e.target);
+            canMove(e, $el);
+            return;
+        }
+        
+        if (canMove(e, e.data.that))
+        {
+            thiz.AUTHORized = true;
+            
+            e.data.that
+            .offset(
+            {
+                top: e.pageY + e.data.pos_y - e.data.drg_h,
+                left: e.pageX + e.data.pos_x - e.data.drg_w
+            });
+        }
     };
+    
+    $root.on("mousemove", undefined, onMouseMove);
+    
+    elems.on("mousedown", function(e)
+    {
+        var $that = $(this);
+
+        if (canMove(e, $that))
+        {
+            $that.removeClass('epb3sldrzr-author-toMove');
+            $that.addClass('epb3sldrzr-author-moving');
+        
+            var drg_h = $that.outerHeight();
+            var drg_w = $that.outerWidth();
+            var pos_y = $that.offset().top + drg_h - e.pageY;
+            var pos_x = $that.offset().left + drg_w - e.pageX;
+        
+            $(document.body).on("mousemove", {that: $that, drg_h: drg_h, drg_w: drg_w, pos_y: pos_y, pos_x: pos_x}, onMouseMove);
+            
+            e.preventDefault();
+        }
+    });
+            
+    elems.on("mouseup", function()
+    {
+        var $that = $(this);
+        
+        $that.removeClass('epb3sldrzr-author-moving');
+        $that.removeClass('epb3sldrzr-author-canMove');
+        $that.addClass('epb3sldrzr-author-toMove');
+        
+        $(document.body).off("mousemove", onMouseMove);
+    });
+    
     
     elems.on("dblclick", function(e)
     {
+        if (!e.metaKey) return;
+        
         var $that = $(this);
         
         // console.log($that[0].style);
@@ -782,49 +844,6 @@ Epub3Sliderizer.AUTHORize = function()
         
         e.preventDefault();
     });
-    
-    elems.on("mousedown", function(e)
-    {
-        var $that = $(this);
-        $that.removeClass('epb3sldrzr-author-toMove');
-        $that.addClass('epb3sldrzr-author-moving');
-
-        var drg_h = $that.outerHeight();
-        var drg_w = $that.outerWidth();
-        var pos_y = $that.offset().top + drg_h - e.pageY;
-        var pos_x = $that.offset().left + drg_w - e.pageX;
-        
-        $(document.body) //$that[0].parentNode
-        .on("mousemove", {that: $that, drg_h: drg_h, drg_w: drg_w, pos_y: pos_y, pos_x: pos_x}, onMouseMove);
-
-        e.preventDefault();
-    });
-            
-    elems.on("mouseup", function()
-    {
-        var $that = $(this);
-        $that.removeClass('epb3sldrzr-author-moving');
-        $that.addClass('epb3sldrzr-author-toMove');
-        
-        $(document.body) //$that[0].parentNode
-        .off("mousemove", onMouseMove);
-    });
-    
-    // elems.addClass("ui-widget-content");
-//     if (isDefinedAndNotNull($(window).draggable))
-//     {
-//         elems.draggable();
-//     }
-//     if (isDefinedAndNotNull($(window).resizable))
-//     {
-//         elems.resizable();
-//     }
-//     /*
-//     if (isDefinedAndNotNull($(window).selectable))
-//     {
-//         elems.selectable();
-//     }
-//     */
 };
 
 // ----------
