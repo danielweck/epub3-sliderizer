@@ -113,7 +113,7 @@ cd ${root}
 #mv "${root}/_OUTPUT/content/EPUB3/epub/js/aloha/" "${root}/_OUTPUT/content/"
 
 ############################################################
-#./pack-epub.sh
+./pack-epub.sh
 ############################################################
 
 exitValue=$? 

@@ -2620,9 +2620,11 @@ _CONTENT
 
 MARKDOWN
 
-1. Press the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;">a</span> key to toggle `author` mode.
-2. Press <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">esc</span> to switch to the Markdown editor. Note that changes are discarded when the page is reloaded, and when exiting `author` mode. To save your modifications, copy + paste into the master `data.txt`.
-3. The images and text below can be _moved_ relative to their original position, using the mouse. To move text, use the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">ctrl</span> modifier key (or Apple <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">cmd</span>).
+1. Press the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;">a</span> key to toggle `author` mode (click outside of the text-edit area if necessary).
+2. Press <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">esc</span> to switch to the Markdown / HTML editor, _or to commit_ the live changes made on the WYSIWYG page.
+3. Hit the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;">d</span> key to discard your changes, which are saved into the browser local storage (this reverts back to the original `data.txt` state).
+4. To save your modifications permanently, _copy + paste_ from the editor into the master `data.txt`.
+5. The images and text below can be moved using the mouse. To move text, use the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">ctrl</span> modifier key (or Apple <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">cmd</span>).
 
 ![HTML5 logo](assets/HTML5.png "the HTML5 logo") <img src="assets/EPUB.png" alt="EPUB3 logo" title="the EPUB3 logo"/><span class="epb3sldrzr-author"  style="position: relative; left: 41px; top: -66px; font-size: 2.5em; background-color: silver; color: #666666;">Move me too!</span>
 
