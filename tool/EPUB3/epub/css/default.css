@@ -565,13 +565,17 @@ div.boxed.framed > *
 
 .epb3sldrzr-author-toMove
 {
+    border: 4px dotted blue;
+}
+
+.epb3sldrzr-author-canMove
+{
     cursor: move;
-    border: 2px dotted blue;
 }
 
 .epb3sldrzr-author-moving
 {
-    border: 2px dotted red;
+    border: 4px dotted magenta;
 }
 
 
