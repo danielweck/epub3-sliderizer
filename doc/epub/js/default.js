@@ -4377,7 +4377,7 @@ function readyFirst()
                         });
     
                         root.style.display = "block";
-                    }, 500);
+                    }, 200);
                     
                     return false;
                 });
