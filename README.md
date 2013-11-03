@@ -1,7 +1,9 @@
 EPUB3-Sliderizer
 ================
 
-A simple utility to easily create __EPUB 3__ / __HTML 5__ slidedecks: just one output fileset &#8658; dual support for e-book readers and web browsers. The input format is a single text file that uses a basic line-by-line syntax (no XML). Markdown and tag-soup HTML are supported (they get "massaged" into the required (X)HTML5 markup). Visual styles can be overridden using regular CSS. Slides can be edited directly within the web browser: syntax-highlighting editor for mixed Markdown / HTML code + live `contentEditable` WYSIWYG mode (see demo below).
+A simple utility to easily create __EPUB 3__ / __HTML 5__ slidedecks: just one output fileset &#8658; dual support for e-book readers and web browsers. The input format is a single text file that uses a basic line-by-line syntax (no XML). Markdown and tag-soup HTML are supported (they get "massaged" into the required (X)HTML5 markup). Visual styles can be overridden using regular CSS.
+
+Slides can be edited directly within the web browser: syntax-highlighting editor for mixed Markdown / HTML code + live `contentEditable` WYSIWYG mode (see demo below). This feature uses modern web browser's local storage, so that local edits can survive page reloads (useful if you need to fix typos during a live presentation :) ).
 
 **[Screenshots](#screenshots) further down this page.**
 
@@ -16,8 +18,11 @@ Demonstration
 
 **Notes about the "author" mode:**
 
-* Any modifications to the slide content require the "source code" (Mardown + HTML) to be copy/pasted from the built-in syntax-highlighting editor, back into the master `data.txt` file (use the `escape` key to toggle the editor).
-* Slide content is stored only within the live web page, so modifications are discarded when the page is reloaded, or when exiting "author" mode. By the way, just click outside of the edit area and hit 'a' again to exit author mode.
+* Permanently saving the modifications to the slide content requires copying the "source code" (Mardown + HTML) from the built-in syntax-highlighting editor, back into the master `data.txt` file.
+* The `escape` key toggles the editor, but it __also saves__ the live content edits into local storage (read below).
+* Modified slide content is stored within the browser's local storage, so it will survive page refresh. Hit `d` to delete the current slide's cache, this will revert back to the original `data.txt` state.
+* The title bar and background color indicate that a slide has changed since the original `data.txt` state.
+* Click outside of the edit area to allow the keyboard focus to receive the 'a' and 'd' shortcuts.
 * `contentEditable` live editing (true WYSIWYG) is only available for HTML slides, not XHTML (thus why EPUB3-Sliderizer builds a non-XML alternative).
 * Basic formatting commands such as italic / emphasis (CTRL-I) or bold / strong (CTRL-B) work fine in Safari (probably other WebKit-based browsers as well), but unfortunately the keyboard shortcuts conflit in Firefox. I have not tried IE at all.
 * Notice how bullet points get automatically created when hitting ENTER within an existing list item. This is a standard contentEditable feature, I did not implement any additional features on top of execCommand() etc.
