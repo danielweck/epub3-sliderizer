@@ -8,15 +8,16 @@ A simple utility to easily create __EPUB 3__ / __HTML 5__ slidedecks: just one o
 Demonstration
 ----------------
 
-* [Follow this link](http://danielweck.github.io/epub3-sliderizer "EPUB3-Sliderizer homepage") to learn more about EPUB3-Sliderizer (basic introduction).
-* [Jump here](http://danielweck.github.io/epub3-sliderizer/doc/epub/html/slide_18.html) to try the "author" mode (live editing, instructions included).
-* [Go there](http://danielweck.github.io/epub3-sliderizer/demo1/epub/html/slide_01.html?author) to experience the "author" mode  with rich typography, and fun image + text positioning.
-
+* [Click here](http://danielweck.github.io/epub3-sliderizer "EPUB3-Sliderizer homepage") to learn more about EPUB3-Sliderizer (basic introduction).
+* [Make your way here](http://danielweck.github.io/epub3-sliderizer/demo1/epub/html/slide_01.xhtml) to see a fun 3-slide experiment ("bullet points" transition activate animations).
+* [Jump there](http://danielweck.github.io/epub3-sliderizer/doc/epub/html/slide_18.html) to try the "author" mode (live editing, instructions included).
+* [Go visit this page](http://danielweck.github.io/epub3-sliderizer/demo1/epub/html/slide_01.html?author) to experience the "author" mode  with rich typography, and fun image + text positioning.
+* [Follow this link](http://danielweck.github.io/epub3-sliderizer/demo1/epub/nav.xhtml) to try a fun trick with EPUB 3 Media Overlays (talking / read-aloud book, with a twist): click on the "cloud" icon in the upper right corner to download the EPUB file, and open with a compatible reading system. iBooks on iOS and MacOSX works best (especially with the touch experience to activate the slide sounds), but Readium supports MO as well.
 
 **Notes about the "author" mode:**
 
 * Any modifications to the slide content require the "source code" (Mardown + HTML) to be copy/pasted from the built-in syntax-highlighting editor, back into the master `data.txt` file (use the `escape` key to toggle the editor).
-* Slide content is stored only within the live web page, so modifications are discarded when the page is reloaded, or when exiting "author" mode.
+* Slide content is stored only within the live web page, so modifications are discarded when the page is reloaded, or when exiting "author" mode. By the way, just click outside of the edit area and hit 'a' again to exit author mode.
 * `contentEditable` live editing (true WYSIWYG) is only available for HTML slides, not XHTML (thus why EPUB3-Sliderizer builds a non-XML alternative).
 * Basic formatting commands such as italic / emphasis (CTRL-I) or bold / strong (CTRL-B) work fine in Safari (probably other WebKit-based browsers as well), but unfortunately the keyboard shortcuts conflit in Firefox. I have not tried IE at all.
 * Notice how bullet points get automatically created when hitting ENTER within an existing list item. This is a standard contentEditable feature, I did not implement any additional features on top of execCommand() etc.
