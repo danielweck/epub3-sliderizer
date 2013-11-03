@@ -1294,7 +1294,7 @@ Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
     fetchElems();
     if (!txtArea)
     {
-        alert('Author mode is not enabled for this slide.\n\nAre you sure it was edited with Markdown?\n\nIf yes, check that VERBOSITY="VERBOSE_max" in the sliderize.sh script\n(this enables the "author" mode).');
+        alert('Author mode is not active for this slide.\n\nNote that it is disabled by default with XHTML slides,\nunless content field is explicitly MARKDOWN.\n\n Perhaps try the HTML slide instead?\n(just change the file extension in the address bar).\n\n[' + this.thisFilename + "]");
         return;
     }
 
@@ -1303,6 +1303,8 @@ Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
     var divEditor = document.getElementById('epb3sldrzr-markdown-editor');
     
     var imgSrcPrefix = "../img/custom/";
+
+    var NOMARKDOWN_MARKER = "NO-MARKDOWN";
     
     if ($(root).css("display") === "block")
     {
@@ -1311,6 +1313,8 @@ Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
         if (that.AUTHORized)
         {
             that.AUTHORized = false;
+            
+            var NOMARKDOWN = markdown.indexOf(NOMARKDOWN_MARKER) == 0;
             
             console.log("Content was changed,\nattempting conversion from HTML to Markdown...");
           
@@ -1377,6 +1381,11 @@ Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
             markdown = reMarker.render(contentWrap);
             
             markdown = markdown.replace(/><\/img>/g, "/>").replace(/ xmlns="http:\/\/www.w3.org\/1999\/xhtml"/g, "").replace(/ class=""/g, "");
+        
+            if (NOMARKDOWN)
+            {
+                markdown = NOMARKDOWN_MARKER + "\n\n" + markdown;
+            }
         }
         
         markdown = markdown.replace(/<!--XML-->/g, "").replace(/<!--SOUP-->/g, "").trim();
@@ -1479,7 +1488,6 @@ Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
         
         var xml = txtArea.value;
 
-        var NOMARKDOWN_MARKER = "NO-MARKDOWN";
         var NOMARKDOWN = xml.indexOf(NOMARKDOWN_MARKER) == 0;
         if (NOMARKDOWN)
         {
@@ -1507,7 +1515,7 @@ Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
                 console.error(ex);
                 console.log(cleaned);
             
-                alert("NO-MARKDOWN: Oops, invalid XHTML :(\n\n(next message will show Markdown parser result)");
+                alert("NO-MARKDOWN: Oops, invalid XHTML :(\n\n(next message will show the output)");
                 alert(cleaned);
             }
         }
@@ -1544,7 +1552,7 @@ Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
                   console.error(ex);
                   console.log(cleaned);
               
-                  alert("POST-MARKDOWN: Oops, invalid XHTML :(\n\n(next message will show Markdown parser result)");
+                  alert("POST-MARKDOWN: Oops, invalid XHTML :(\n\n(next message will show cleaned-up Markdown parser result)");
                   alert(cleaned);
               }
             });
