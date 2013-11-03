@@ -18,11 +18,12 @@ Demonstration
 
 **Notes about the "author" mode:**
 
-* Permanently saving the modifications to the slide content requires copying the "source code" (Mardown + HTML) from the built-in syntax-highlighting editor, back into the master `data.txt` file.
-* The `escape` key toggles the editor, but it __also saves__ the live content edits into local storage (read below).
-* Modified slide content is stored within the browser's local storage, so it will survive page refresh. Hit `d` to delete the current slide's cache, this will revert back to the original `data.txt` state.
+* Permanently saving the edits to a given slide requires copying the "source code" (Mardown + HTML) from the built-in syntax-highlighting "source code" editor, back into the master `data.txt` file.
+* However, modified slide content is stored within the browser's local storage, so it will survive page refresh. Hit `CTRL+d` to delete the current slide's cache, this will revert back to the original `data.txt` state.
+* The `escape` key toggles the editor, and this also automatically save the edits into local storage.
+* Use `CTRL+s` at any time to save edits made in WYSIWYG author mode.
 * The title bar and background color indicate that a slide has changed since the original `data.txt` state.
-* Click outside of the edit area to allow the keyboard focus to receive the 'a' and 'd' shortcuts.
+* Click outside of the edit area to allow the keyboard focus to receive the 'a' shortcuts.
 * `contentEditable` live editing (true WYSIWYG) is only available for HTML slides, not XHTML (thus why EPUB3-Sliderizer builds a non-XML alternative).
 * Basic formatting commands such as italic / emphasis (CTRL-I) or bold / strong (CTRL-B) work fine in Safari (probably other WebKit-based browsers as well), but unfortunately the keyboard shortcuts conflit in Firefox. I have not tried IE at all.
 * Notice how bullet points get automatically created when hitting ENTER within an existing list item. This is a standard contentEditable feature, I did not implement any additional features on top of execCommand() etc.
