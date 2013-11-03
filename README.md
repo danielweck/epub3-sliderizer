@@ -1,11 +1,28 @@
-epub3-sliderizer
+EPUB3-Sliderizer
 ================
 
-A simple utility to easily create __EPUB 3__ / __HTML 5__ slidedecks: just one output fileset &#8658; dual support for e-book readers and web browsers. The input format is a single text file that uses a basic line-by-line syntax (no XML). Markdown and tag-soup HTML are supported (they get "massaged" into the required (X)HTML5 markup). Visual styles can be overridden using regular CSS.
+A simple utility to easily create __EPUB 3__ / __HTML 5__ slidedecks: just one output fileset &#8658; dual support for e-book readers and web browsers. The input format is a single text file that uses a basic line-by-line syntax (no XML). Markdown and tag-soup HTML are supported (they get "massaged" into the required (X)HTML5 markup). Visual styles can be overridden using regular CSS. Slides can be edited directly within the web browser: syntax-highlighting editor for mixed Markdown / HTML code + live `contentEditable` WYSIWYG mode (see demo below).
 
-[Follow this link](http://danielweck.github.io/epub3-sliderizer "epub3-sliderizer homepage") to learn more about the tool (live demo).
+**[Screenshots](#screenshots) further down this page.**
 
-**[Screenshots](#screenshots) below.**
+Demonstration
+----------------
+
+* [Follow this link](http://danielweck.github.io/epub3-sliderizer "EPUB3-Sliderizer homepage") to learn more about EPUB3-Sliderizer (basic introduction).
+* [Jump here](http://danielweck.github.io/epub3-sliderizer/doc/epub/html/slide_18.html?author) to try the "author" mode (live editing, instructions included).
+* [Go there](http://danielweck.github.io/epub3-sliderizer/demo1/epub/html/slide_01.html?author) to experience the "author" mode  with rich typography, and fun image + text positioning.
+
+
+**Notes about the "author" mode:**
+
+* Any modifications to the slide content require the "source code" (Mardown + HTML) to be copy/pasted from the built-in syntax-highlighting editor, back into the master `data.txt` file (use the `escape` key to toggle the editor).
+* Slide content is stored only within the live web page, so modifications are discarded when the page is reloaded, or when exiting "author" mode.
+* `contentEditable` live editing (true WYSIWYG) is only available for HTML slides, not XHTML (thus why EPUB3-Sliderizer builds a non-XML alternative).
+* Basic formatting commands such as italic / emphasis (CTRL-I) or bold / strong (CTRL-B) work fine in Safara (probably other WebKit-based browsers as well), but unfortunately the keyboard shortcuts conflit in Firefox. I have not tried IE at all.
+* Notice how bullet points get automatically created when hitting ENTER within an existing list item. This is a standard contentEditable feature, I did not implement any additional features on top of execCommand() etc.
+* Yes, I know about Aloha, Hallo, CKEditor, Medium, Squire, etc., I have tried them all and they all seem to conflict one way or another with the layout requirements (some of them actually alter the DOM to discard "unwanted" markup).
+* The `ctrl` / `Apple-cmd` keyboard modifier is necessary to move text with the mouse (because the default behaviour is to manipulate the text cursor), but this is optional for images.
+* Behind the scenes, the editor’s content round-tripping logic consists in preserving as much Markdown as possible (rather than converting everything to HTML), but as soon as Markdown doesn’t support certain features (such as CSS positioning) then HTML is generated instead.
 
 Notice
 ----------------
