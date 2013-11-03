@@ -771,7 +771,7 @@ Epub3Sliderizer.AUTHORize = function()
             return;
         }
         
-        if (canMove(e, e.data.that))
+        if (true || canMove(e, e.data.that))
         {
             thiz.AUTHORized = true;
             

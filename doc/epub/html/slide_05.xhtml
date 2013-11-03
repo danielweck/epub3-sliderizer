@@ -101,7 +101,14 @@ background: #FF0033;
 
         <style type="text/css">
         /*<![CDATA[*/
-        /*
+        .noBullet li:before
+{
+content: '';
+padding: 0;
+margin: 0;
+font-size: 0.01em;
+}
+/*
 div#epb3sldrzr-root
 {
 overflow: hidden;
@@ -182,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 <div id="epb3sldrzr-content-wrap">
                     <!--SOUP-->
 <div class="incremental auto" style="margin-top: 1.5em;">
-<ul style="list-style-type: none; margin-bottom: 1em;">
+<ul class="noBullet" style="margin-bottom: 1em;">
 <li style="margin-bottom: 1.5em;">
 <div class="epb3sldrzr-animated bounceInRight"><img alt="HTML5" class="animated-logos" src="../img/custom/assets/HTML5.png"/></div>
 <strong>HTML5</strong> interactive slide deck for live presentations
