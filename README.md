@@ -9,7 +9,7 @@ Demonstration
 ----------------
 
 * [Follow this link](http://danielweck.github.io/epub3-sliderizer "EPUB3-Sliderizer homepage") to learn more about EPUB3-Sliderizer (basic introduction).
-* [Jump here](http://danielweck.github.io/epub3-sliderizer/doc/epub/html/slide_18.html?author) to try the "author" mode (live editing, instructions included).
+* [Jump here](http://danielweck.github.io/epub3-sliderizer/doc/epub/html/slide_18.html) to try the "author" mode (live editing, instructions included).
 * [Go there](http://danielweck.github.io/epub3-sliderizer/demo1/epub/html/slide_01.html?author) to experience the "author" mode  with rich typography, and fun image + text positioning.
 
 
