@@ -607,6 +607,7 @@ var Epub3Sliderizer = {
     azardi: navigator.userAgent.toLowerCase().indexOf('azardi') > -1,
     staticMode: false,
     authorMode: false,
+    htmlNotXHTML: false,
     basicMode: false,
     epubMode: false,
     prev: "",
@@ -1805,25 +1806,6 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
         {
             keyboardEvent.preventDefault();
             this.reloadSlide(this.authorMode ? "" : "author");
-        }
-    }
-    else if (keyboardEvent.keyCode === 68 && hasLocalStorage()) // D
-    {
-        for (var i = 0; i < localStorage.length; i++)
-        {
-            var key = localStorage.key(i);
-            if (key === this.thisFilename && confirm("Discard changes to [" + this.thisFilename + "] ?"))
-            {
-                //var data = localStorage.getItem(key);
-                localStorage.removeItem(key);
-                
-                console.log(":::: LOCALSTORAGE DELETED: " + key);
-                
-                keyboardEvent.preventDefault();
-                this.reloadSlide(this.authorMode ? "author" : "");
-                
-                return;
-            }
         }
     }
     
@@ -3918,6 +3900,64 @@ Epub3Sliderizer.init = function()
             this.initLinks();
         
             window.onkeyup = this.onKeyboard.bind(this);
+
+            key('⌘+d, ctrl+d', function()
+            {
+                if (hasLocalStorage())
+                {
+                    for (var i = 0; i < localStorage.length; i++)
+                    {
+                        var key = localStorage.key(i);
+                        if (key === that.thisFilename && confirm("Discard changes to [" + that.thisFilename + "] ?"))
+                        {
+                            //var data = localStorage.getItem(key);
+                            localStorage.removeItem(key);
+            
+                            console.log(":::: LOCALSTORAGE DELETED: " + key);
+                            that.reloadSlide(that.authorMode ? "author" : "");
+            
+                            return false;
+                        }
+                    }
+                }
+                
+                return false;
+            });
+            
+            if (Epub3Sliderizer.htmlNotXHTML)
+            {
+                key('⌘+s, ctrl+s', function()
+                {
+                    var root = document.getElementById("epb3sldrzr-root");
+                    root.style.display = "none";
+                    Epub3Sliderizer.convertContentToMarkdownAndUpdateLocalStorageTextArea();
+
+                    setTimeout(function()
+                    {
+                        var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
+    
+                        $("img", contentWrap).each(function(index)
+                        {
+                            var $that = $(this);
+                            var src = $that.attr("src");
+                            if (!src) return;
+                            
+                            if (src.indexOf(Epub3Sliderizer.imgSrcPrefix) == 0) return;
+                            
+                            $that.attr("src", Epub3Sliderizer.imgSrcPrefix + src);
+                        });
+    
+                        root.style.display = "block";
+
+                        setTimeout(function()
+                        {
+                            that.AUTHORize();
+                        }, 300);
+                    }, 200);
+                    
+                    return false;
+                });
+            }
         }
     }
     else
@@ -4166,7 +4206,10 @@ function readyDelayed()
 function readyFirst()
 {
     Epub3Sliderizer.initLocation();
-    
+
+    Epub3Sliderizer.htmlNotXHTML = Epub3Sliderizer.thisFilename && Epub3Sliderizer.thisFilename.indexOf(".html") > 0;
+        
+        
     /*
     var obj = window;
     var str = "";
@@ -4323,8 +4366,6 @@ function readyFirst()
         Epub3Sliderizer.authorMode = true;
         document.body.classList.add("author");
 
-        var html = Epub3Sliderizer.thisFilename && Epub3Sliderizer.thisFilename.indexOf(".html") > 0;
-            
         if (Epub3Sliderizer.ACE)
         {
             loadScript(undefined, 'ace.js');
@@ -4340,7 +4381,7 @@ function readyFirst()
         
         loadScript(undefined, 'reMarked.js');
         
-        if (html)
+        if (Epub3Sliderizer.htmlNotXHTML)
         {
             console.log("AUTHOR MODE, HTML (WYSIWYG CONTENT EDITABLE)");
             
@@ -4353,37 +4394,6 @@ function readyFirst()
         
             loadScript(undefined, 'keymaster.js');
 
-            setTimeout(function()
-            {
-                key('⌘+s, ctrl+s', function()
-                {
-                    var root = document.getElementById("epb3sldrzr-root");
-                    root.style.display = "none";
-                    Epub3Sliderizer.convertContentToMarkdownAndUpdateLocalStorageTextArea();
-
-                    setTimeout(function()
-                    {
-                        var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
-    
-                        $("img", contentWrap).each(function(index)
-                        {
-                            var $that = $(this);
-                            var src = $that.attr("src");
-                            if (!src) return;
-                            
-                            if (src.indexOf(Epub3Sliderizer.imgSrcPrefix) == 0) return;
-                            
-                            $that.attr("src", Epub3Sliderizer.imgSrcPrefix + src);
-                        });
-    
-                        root.style.display = "block";
-                    }, 200);
-                    
-                    return false;
-                });
-            }, 500);
-            
-            
             // loadScript(undefined, 'wysiwyg.js');
             // setTimeout(function()
             // {

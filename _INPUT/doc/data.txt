@@ -2620,13 +2620,15 @@ _CONTENT
 
 MARKDOWN
 
-1. Press the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;">a</span> key to toggle `author` mode (click outside of the text-edit area if necessary).
-2. Press <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">esc</span> to switch to the Markdown / HTML editor, _or to commit_ the live changes made on the WYSIWYG page.
-3. Hit the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;">d</span> key to discard your changes, which are saved into the browser local storage (this reverts back to the original `data.txt` state).
-4. To save your modifications permanently, _copy + paste_ from the editor into the master `data.txt`.
-5. The images and text below can be moved using the mouse. To move text, use the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">ctrl</span> modifier key (or Apple <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">cmd</span>).
+1. Press the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;">a</span> key to toggle `author` mode (click outside of the WYSIWYG area, if already editing text).
+2. Hit <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">esc</span> to toggle the Markdown / HTML "source code" editor. You can also edit directly in WYSIWYG mode (HTML slides only, not XHTML).
+3. Changes are saved automatically to the browser local storage when switching in and out of the "source code" editor. In WYSIWYG mode, press <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">ctrl</span> + <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">s</span> at any time to save changes (or with Apple <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">cmd</span>).
+4. Use <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;">ctrl</span> + <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;">d</span> (or Apple <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">cmd</span>) to discard changes. This reverts back to the original `data.txt` state.
+5. The window title and the background color let you know the "modified" status of a slide.
+6. To save your edits permanently, you must _copy + paste_ the text from the "source code" editor into the master `data.txt`.
+7. The images and text below can be moved using the mouse. To move the editable text below, use the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">ctrl</span> modifier key (or Apple <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">cmd</span>).
 
-![HTML5 logo](assets/HTML5.png "the HTML5 logo") <img src="assets/EPUB.png" alt="EPUB3 logo" title="the EPUB3 logo"/><span class="epb3sldrzr-author"  style="position: relative; left: 41px; top: -66px; font-size: 2.5em; background-color: silver; color: #666666;">Move me too!</span>
+![HTML5 logo](assets/HTML5.png "the HTML5 logo") <img src="assets/EPUB.png" alt="EPUB3 logo" title="the EPUB3 logo"/><span class="epb3sldrzr-author"  style="position: relative; left: 41px; top: -66px; font-size: 2.5em; background-color: silver; color: #333333; padding: 0.2em;">Move me too!</span>
 
 // --------------------------------------------
 _CSS_STYLE
