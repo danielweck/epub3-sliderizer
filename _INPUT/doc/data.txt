@@ -700,7 +700,7 @@ NO-MARKDOWN
 
 <div class="incremental auto" style="margin-top: 1.5em;">
 
-<ul style="list-style-type: none; margin-bottom: 1em;">
+<ul class="noBullet" style="margin-bottom: 1em;">
 
 <li style="margin-bottom: 1.5em;">
 
@@ -737,6 +737,14 @@ which supports <strong>both</strong> <em>web</em> and <em>e-book</em> presentati
 
 // --------------------------------------------
 _CSS_STYLE
+
+.noBullet li:before
+{
+content: '';
+padding: 0;
+margin: 0;
+font-size: 0.01em;
+}
 
 /*
 div#epb3sldrzr-root
@@ -2612,11 +2620,9 @@ _CONTENT
 
 MARKDOWN
 
-<p style="font-color: silver; font-size: 0.5em;">This is an experimental feature.</p>
-
 1. Press the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;">a</span> key to toggle `author` mode.
 2. Press <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">esc</span> to switch to the Markdown editor. Note that changes are discarded when the page is reloaded, and when exiting `author` mode. To save your modifications, copy + paste into the master `data.txt`.
-3. The images and text below can be _moved_ relative to their original position, using the mouse (+ the CTRL/CMD modifier key when moving text). Changes are reflected in the mixed Markdown / HTML source.
+3. The images and text below can be _moved_ relative to their original position, using the mouse. To move text, use the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">ctrl</span> modifier key (or Apple <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">cmd</span>).
 
 ![HTML5 logo](assets/HTML5.png "the HTML5 logo") <img src="assets/EPUB.png" alt="EPUB3 logo" title="the EPUB3 logo"/><span class="epb3sldrzr-author"  style="position: relative; left: 41px; top: -66px; font-size: 2.5em; background-color: silver; color: #666666;">Move me too!</span>
 
