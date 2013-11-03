@@ -4139,9 +4139,10 @@ function readyFirst()
             var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
             contentWrap.setAttribute("contentEditable", 'true');
 
-            contentWrap.addEventListener("blur", function() { document.designMode = 'off'; }, false);
-            contentWrap.addEventListener("focus", function() { document.designMode = 'on'; }, false);
-            
+            // contentWrap.addEventListener("blur", function() { document.designMode = 'off'; }, false);
+            // contentWrap.addEventListener("focus", function() { document.designMode = 'on'; }, false);
+
+
             // loadScript(undefined, 'wysiwyg.js');
             // setTimeout(function()
             // {
