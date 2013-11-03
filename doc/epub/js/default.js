@@ -815,6 +815,9 @@ Epub3Sliderizer.AUTHORize = function()
         $that.addClass('epb3sldrzr-author-toMove');
         
         $(document.body).off("mousemove", onMouseMove);
+
+
+//        thiz.convertContentToMarkdownAndUpdateLocalStorageTextArea_Throttled();
     });
     
     
@@ -1241,6 +1244,291 @@ Epub3Sliderizer.toggleReflow = function()
 
 // ----------
 
+Epub3Sliderizer.NOMARKDOWN_MARKER = "NO-MARKDOWN";
+Epub3Sliderizer.imgSrcPrefix = "../img/custom/";
+
+Epub3Sliderizer.updateSlideContent = function(xml)
+{
+    var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
+    if (!contentWrap)
+    {
+        return;
+    }
+
+    var that = this;
+    
+    var NOMARKDOWN = xml.indexOf(Epub3Sliderizer.NOMARKDOWN_MARKER) == 0;
+    if (NOMARKDOWN)
+    {
+        xml = xml.substr(Epub3Sliderizer.NOMARKDOWN_MARKER.length);
+    }
+    
+    try
+    {
+        xml = HTMLtoXML(xml);
+    }
+    catch (ex)
+    {
+        console.log("PRE-MARKDOWN XML cleanup error, let's try without...");
+    }
+
+    if (NOMARKDOWN)
+    {
+        var cleaned = xml.replace(/&nbsp;/g, " ");
+        try
+        {
+            contentWrap.innerHTML = cleaned;
+        }
+        catch(ex)
+        {
+            console.error(ex);
+            console.log(cleaned);
+        
+            alert("NO-MARKDOWN: Oops, invalid XHTML :(\n\n(next message will show the output)");
+            alert(cleaned);
+        }
+    }
+    else
+    {
+        marked.setOptions({
+          gfm: false,
+          tables: false,
+          breaks: false,
+          highlight: function (code, lang, callback)
+          {
+              callback(null, code);
+          },
+          pedantic: false,
+          sanitize: false,
+          smartLists: true,
+          smartypants: false,
+          langPrefix: 'lang-'
+        });
+        marked(xml, function (err, content)
+        {
+          if (err)
+          {
+              throw err;
+          }
+      
+          var cleaned = HTMLtoXML(content).replace(/&nbsp;/g, " ");
+          try
+          {
+              contentWrap.innerHTML = cleaned;
+          }
+          catch(ex)
+          {
+              console.error(ex);
+              console.log(cleaned);
+          
+              alert("POST-MARKDOWN: Oops, invalid XHTML :(\n\n(next message will show cleaned-up Markdown parser result)");
+              alert(cleaned);
+          }
+        });
+    }
+    
+    $("img", contentWrap).each(function(index)
+    {
+        var $that = $(this);
+        var src = $that.attr("src");
+        if (!src) return;
+        
+        if (src.indexOf(Epub3Sliderizer.imgSrcPrefix) == 0) return;
+        
+        $that.attr("src", Epub3Sliderizer.imgSrcPrefix + src);
+    });
+
+    if (this.authorMode)
+    {
+        setTimeout(function()
+        {
+            that.AUTHORize();
+        }, 300);
+    }
+    
+    document.title = "[[ MODIFIED ]] " + document.title;
+    document.body.style.backgroundColor = "#500000";
+}
+
+// ----------
+
+Epub3Sliderizer.fetchLocalStorageTextArea = function()
+{
+    if (hasLocalStorage())
+    {
+        var data = undefined;
+        for (var i = 0; i < localStorage.length; i++)
+        {
+            var key = localStorage.key(i);
+            if (key === this.thisFilename)
+            {
+                data = localStorage.getItem(key);
+                break;
+            }
+        }
+        if (!data)
+        {
+            return false;
+        }
+
+        console.log(":::: LOCALSTORAGE FETCH: " + this.thisFilename);
+        
+        var txtArea = document.getElementById('epb3sldrzr-markdown-src');
+        if (txtArea)
+        {
+            txtArea.value = data;
+        }
+        
+        this.updateSlideContent(data);
+        
+        return true;
+    }
+    
+    return false;
+}
+
+// ----------
+
+Epub3Sliderizer.convertContentToMarkdownAndUpdateLocalStorageTextArea = function()
+{
+    var txtArea = document.getElementById('epb3sldrzr-markdown-src');
+    if (!txtArea) return;
+    
+    var markdown = txtArea.value;
+    var NOMARKDOWN = markdown.indexOf(Epub3Sliderizer.NOMARKDOWN_MARKER) == 0;
+
+    markdown = this.convertContentToMarkdown(NOMARKDOWN);
+    
+    this.updateLocalStorageTextArea(markdown);
+}       
+
+//Epub3Sliderizer.convertContentToMarkdownAndUpdateLocalStorageTextArea_Throttled = undefined;
+
+// ----------
+        
+Epub3Sliderizer.updateLocalStorageTextArea = function(content)
+{
+    var txtArea = document.getElementById('epb3sldrzr-markdown-src');
+    if (txtArea)
+    {
+        txtArea.value = content;
+    }
+    
+    if (hasLocalStorage())
+    {
+        for (var i = 0; i < localStorage.length; i++)
+        {
+            var key = localStorage.key(i);
+            if (key === this.thisFilename)
+            {
+                //var data = localStorage.getItem(key);
+                localStorage.removeItem(key);
+                break;
+            }
+        }
+        
+        localStorage.setItem(this.thisFilename, content);
+        
+        console.log(":::: LOCALSTORAGE UPDATED: " + this.thisFilename);
+    }
+}
+
+// ----------
+
+Epub3Sliderizer.convertContentToMarkdown = function(NOMARKDOWN)
+{
+    var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
+    if (!contentWrap)
+    {
+        return;
+    }
+    
+    console.log("Content was changed,\nattempting conversion from HTML to Markdown...");
+  
+    $("img", contentWrap).each(function(index)
+    {
+        var $that = $(this);
+        var src = $that.attr("src");
+        if (!src) return;
+      
+        if (src.indexOf(Epub3Sliderizer.imgSrcPrefix) != 0) return;
+      
+        $that.attr("src", src.substr(Epub3Sliderizer.imgSrcPrefix.length));
+    });
+    
+    var options = {
+        link_list:    false,            // render links as references, create link list as appendix
+    //  link_near:                    // cite links immediately after blocks
+        h1_setext:    true,            // underline h1 headers
+        h2_setext:    true,            // underline h2 headers
+        h_atx_suf:    false,            // header suffix (###)
+    //    h_compact:    true,            // compact headers (except h1)
+        gfm_code:    false,            // render code blocks as via ``` delims
+        li_bullet:    "*-+"[0],        // list item bullet style
+    //    list_indnt:                    // indent top-level lists
+        hr_char:    "-_*"[0],        // hr style
+        indnt_str:    ["    ","\t","  "][0],    // indentation string
+        bold_char:    "*_"[0],        // char used for strong
+        emph_char:    "*_"[1],        // char used for em
+        gfm_del:    true,            // ~~strikeout~~ for <del>strikeout</del>
+        gfm_tbls:    false,            // markdown-extra tables
+        tbl_edges:    false,            // show side edges on tables
+        hash_lnks:    false,            // anchors w/hash hrefs as links
+        br_only:    false,            // avoid using "  " as line break indicator
+        col_pre:    "col ",            // column prefix to use when creating missing headers for tables
+        //    comp_style: false,            // use getComputedStyle instead of hardcoded tag list to discern block/inline
+        unsup_tags: {                // handling of unsupported tags, defined in terms of desired output style. if not listed, output = outerHTML
+        force_preserve: "",
+        // no output
+        ignore: "script style noscript",
+        // eg: "<tag>some content</tag>"
+        inline: "span sup sub i u b", //span sup sub i u b center big
+        // eg: "\n<tag>\n\tsome content\n</tag>"
+    //    block1: "",
+        // eg: "\n\n<tag>\n\tsome content\n</tag>"
+        block2: "", //div form fieldset dl header footer address article aside figure hgroup section
+        // eg: "\n<tag>some content</tag>"
+        block1c: "", //dt dd caption legend figcaption output
+        // eg: "\n\n<tag>some content</tag>"
+        block2c: "", //canvas audio video iframe
+    /*    // direct remap of unsuported tags
+        convert: {
+            i: "em",
+            b: "strong"
+        }
+    */
+        }
+    };
+    var reMarker = new reMarked(options);
+
+    $(".epb3sldrzr-author-toMove", contentWrap).removeClass("epb3sldrzr-author-toMove");
+    $(".auto", contentWrap).removeClass("auto");
+    $(".incremental", contentWrap).removeClass("incremental");
+//console.log(contentWrap);
+    var markdown = reMarker.render(contentWrap);
+    
+    markdown = markdown.replace(/><\/img>/g, "/>").replace(/ xmlns="http:\/\/www.w3.org\/1999\/xhtml"/g, "").replace(/ class=""/g, "");
+
+    if (NOMARKDOWN)
+    {
+        markdown = Epub3Sliderizer.NOMARKDOWN_MARKER + "\n\n" + markdown;
+    }
+    
+    // $("img", contentWrap).each(function(index)
+    // {
+    //     var $that = $(this);
+    //     var src = $that.attr("src");
+    //     if (!src) return;
+    //     
+    //     if (src.indexOf(Epub3Sliderizer.imgSrcPrefix) == 0) return;
+    //     
+    //     $that.attr("src", Epub3Sliderizer.imgSrcPrefix + src);
+    // });
+    
+    return markdown;
+}
+
+// ----------
 
 Epub3Sliderizer.ACE = true;
 Epub3Sliderizer.aceEditor = undefined;
@@ -1307,10 +1595,15 @@ Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
 
     if (keyboardEvent.keyCode !== 27) // ESC
     {
+        if (contentHasProbablyChanged)
+        {
+//            this.convertContentToMarkdownAndUpdateLocalStorageTextArea_Throttled();
+        }
         return;
     }
 
     fetchElems();
+    
     if (!txtArea)
     {
         alert('Author mode is not active for this slide.\n\nNote that it is disabled by default with XHTML slides,\nunless content field is explicitly MARKDOWN.\n\n Perhaps try the HTML slide instead?\n(just change the file extension in the address bar).\n\n[' + this.thisFilename + "]");
@@ -1320,96 +1613,25 @@ Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
     var contentWrap = document.getElementById("epb3sldrzr-content-wrap");
     var root = document.getElementById("epb3sldrzr-root");
     var divEditor = document.getElementById('epb3sldrzr-markdown-editor');
-    
-    var imgSrcPrefix = "../img/custom/";
 
-    var NOMARKDOWN_MARKER = "NO-MARKDOWN";
-    
     if ($(root).css("display") === "block")
     {
         var markdown = txtArea.value;
         
-        if (that.AUTHORized)
+        if (this.AUTHORized)
         {
-            that.AUTHORized = false;
-            
-            var NOMARKDOWN = markdown.indexOf(NOMARKDOWN_MARKER) == 0;
-            
-            console.log("Content was changed,\nattempting conversion from HTML to Markdown...");
-          
-            $("img", contentWrap).each(function(index)
-            {
-                var $that = $(this);
-                var src = $that.attr("src");
-                if (!src) return;
-              
-                if (src.indexOf(imgSrcPrefix) != 0) return;
-              
-                $that.attr("src", src.substr(imgSrcPrefix.length));
-            });
-            
-            var options = {
-                link_list:    false,            // render links as references, create link list as appendix
-            //  link_near:                    // cite links immediately after blocks
-                h1_setext:    true,            // underline h1 headers
-                h2_setext:    true,            // underline h2 headers
-                h_atx_suf:    false,            // header suffix (###)
-            //    h_compact:    true,            // compact headers (except h1)
-                gfm_code:    false,            // render code blocks as via ``` delims
-                li_bullet:    "*-+"[0],        // list item bullet style
-            //    list_indnt:                    // indent top-level lists
-                hr_char:    "-_*"[0],        // hr style
-                indnt_str:    ["    ","\t","  "][0],    // indentation string
-                bold_char:    "*_"[0],        // char used for strong
-                emph_char:    "*_"[1],        // char used for em
-                gfm_del:    true,            // ~~strikeout~~ for <del>strikeout</del>
-                gfm_tbls:    false,            // markdown-extra tables
-                tbl_edges:    false,            // show side edges on tables
-                hash_lnks:    false,            // anchors w/hash hrefs as links
-                br_only:    false,            // avoid using "  " as line break indicator
-                col_pre:    "col ",            // column prefix to use when creating missing headers for tables
-                //    comp_style: false,            // use getComputedStyle instead of hardcoded tag list to discern block/inline
-                unsup_tags: {                // handling of unsupported tags, defined in terms of desired output style. if not listed, output = outerHTML
-                force_preserve: "",
-                // no output
-                ignore: "script style noscript",
-                // eg: "<tag>some content</tag>"
-                inline: "span sup sub i u b", //span sup sub i u b center big
-                // eg: "\n<tag>\n\tsome content\n</tag>"
-            //    block1: "",
-                // eg: "\n\n<tag>\n\tsome content\n</tag>"
-                block2: "", //div form fieldset dl header footer address article aside figure hgroup section
-                // eg: "\n<tag>some content</tag>"
-                block1c: "", //dt dd caption legend figcaption output
-                // eg: "\n\n<tag>some content</tag>"
-                block2c: "", //canvas audio video iframe
-            /*    // direct remap of unsuported tags
-                convert: {
-                    i: "em",
-                    b: "strong"
-                }
-            */
-                }
-            };
-            var reMarker = new reMarked(options);
+            this.AUTHORized = false;
 
-            $(".epb3sldrzr-author-toMove", contentWrap).removeClass("epb3sldrzr-author-toMove");
-            $(".auto", contentWrap).removeClass("auto");
-            $(".incremental", contentWrap).removeClass("incremental");
-//console.log(contentWrap);
-            markdown = reMarker.render(contentWrap);
-            
-            markdown = markdown.replace(/><\/img>/g, "/>").replace(/ xmlns="http:\/\/www.w3.org\/1999\/xhtml"/g, "").replace(/ class=""/g, "");
-        
-            if (NOMARKDOWN)
-            {
-                markdown = NOMARKDOWN_MARKER + "\n\n" + markdown;
-            }
+            var NOMARKDOWN = markdown.indexOf(Epub3Sliderizer.NOMARKDOWN_MARKER) == 0;
+    
+            markdown = this.convertContentToMarkdown(NOMARKDOWN);
         }
         
         markdown = markdown.replace(/<!--XML-->/g, "").replace(/<!--SOUP-->/g, "").trim();
 
-        txtArea.value = markdown; //.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        //.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        this.updateLocalStorageTextArea(markdown);
+
                 
         window.scrollTo(0, 0);
         
@@ -1453,7 +1675,7 @@ Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
                 this.aceEditor.on('blur', function(e)
                 {
                     var src = that.aceEditor.getSession().getValue();
-                    txtArea.value = src;
+                    that.updateLocalStorageTextArea(src);
                 });
             }
 
@@ -1504,100 +1726,21 @@ Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
 
         //.replace(/<hr><\/hr>/g, "<hr/>").replace(/<br><\/br>/g, "<br/>");
         //.replace(/<hr>/g, "<hr/>").replace(/<br>/g, "<br/>").replace(/<img ([^>]*)([^\/])>/g, "<img $1$2 />");
-        
-        var xml = txtArea.value;
 
-        var NOMARKDOWN = xml.indexOf(NOMARKDOWN_MARKER) == 0;
-        if (NOMARKDOWN)
-        {
-            xml = xml.substr(NOMARKDOWN_MARKER.length);
-        }
-        
-        try
-        {
-            xml = HTMLtoXML(xml);
-        }
-        catch (ex)
-        {
-            console.log("PRE-MARKDOWN XML cleanup error, let's try without...");
-        }
-
-        if (NOMARKDOWN)
-        {
-            var cleaned = xml.replace(/&nbsp;/g, " ");
-            try
-            {
-                contentWrap.innerHTML = cleaned;
-            }
-            catch(ex)
-            {
-                console.error(ex);
-                console.log(cleaned);
-            
-                alert("NO-MARKDOWN: Oops, invalid XHTML :(\n\n(next message will show the output)");
-                alert(cleaned);
-            }
-        }
-        else
-        {
-            marked.setOptions({
-              gfm: false,
-              tables: false,
-              breaks: false,
-              highlight: function (code, lang, callback)
-              {
-                  callback(null, code);
-              },
-              pedantic: false,
-              sanitize: false,
-              smartLists: true,
-              smartypants: false,
-              langPrefix: 'lang-'
-            });
-            marked(xml, function (err, content)
-            {
-              if (err)
-              {
-                  throw err;
-              }
-          
-              var cleaned = HTMLtoXML(content).replace(/&nbsp;/g, " ");
-              try
-              {
-                  contentWrap.innerHTML = cleaned;
-              }
-              catch(ex)
-              {
-                  console.error(ex);
-                  console.log(cleaned);
-              
-                  alert("POST-MARKDOWN: Oops, invalid XHTML :(\n\n(next message will show cleaned-up Markdown parser result)");
-                  alert(cleaned);
-              }
-            });
-        }
-        
-        $("img", contentWrap).each(function(index)
-        {
-            var $that = $(this);
-            var src = $that.attr("src");
-            if (!src) return;
-            
-            if (src.indexOf(imgSrcPrefix) == 0) return;
-            
-            $that.attr("src", imgSrcPrefix + src);
-        });
-        
         setTimeout(function()
         {
-            document.body.style.overflow = "auto";
-            root.style.display = "block";
+            var xml = txtArea.value;
+            that.updateSlideContent(xml);
+
+            setTimeout(function()
+            {
+                document.body.style.overflow = "auto";
+                root.style.display = "block";
             
-            txtArea.style.display = "none";
-            divEditor.style.display = "none";
-            
-            that.AUTHORize();
-        }, 300);
+                txtArea.style.display = "none";
+                divEditor.style.display = "none";
+            }, 200);
+        }, 200);
     }
     
 
@@ -1623,6 +1766,20 @@ Epub3Sliderizer.isContentWrapDescendant = function(el)
     }
     //var parents = $(keyboardEvent.target).parents('#epb3sldrzr-content-wrap');
     return found;
+}
+
+// ----------
+
+function hasLocalStorage()
+{
+    try
+    {
+        return 'localStorage' in window && window['localStorage'] !== null;
+    }
+    catch (e)
+    {
+        return false;
+    }
 }
 
 // ----------
@@ -1660,9 +1817,28 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
             this.reloadSlide(this.authorMode ? "" : "author");
         }
     }
-    else if (this.authorMode)
+    else if (keyboardEvent.keyCode === 68 && hasLocalStorage()) // D
     {
-        // LEFT RIGHT ESCAPE
+        for (var i = 0; i < localStorage.length; i++)
+        {
+            var key = localStorage.key(i);
+            if (key === this.thisFilename && confirm("Discard changes to [" + this.thisFilename + "] ?"))
+            {
+                //var data = localStorage.getItem(key);
+                localStorage.removeItem(key);
+                
+                console.log(":::: LOCALSTORAGE DELETED: " + key);
+                
+                keyboardEvent.preventDefault();
+                this.reloadSlide(this.authorMode ? "author" : "");
+                
+                return;
+            }
+        }
+    }
+    
+    if (this.authorMode)
+    {
         this.keyboardAuthoring(keyboardEvent);
     }
     else if (!this.reflow && keyboardEvent.keyCode === 90) // Z
@@ -3540,7 +3716,6 @@ Epub3Sliderizer.init = function()
     else
     {    
         if (!this.basicMode && !this.staticMode && !this.authorMode && this.epubMode)
-        //if (window.location.href.indexOf("static") >= 0)
         {
             fakeEpubReadingSystem = true;
             this.epubReadingSystem = {name: "FAKE epub reader", version: "0.0.1"};
@@ -3618,6 +3793,24 @@ Epub3Sliderizer.init = function()
         }
     }
 
+    
+//    this.convertContentToMarkdownAndUpdateLocalStorageTextArea_Throttled = throttle(this.convertContentToMarkdownAndUpdateLocalStorageTextArea, 1000, false).bind(this);
+    
+
+    if (fakeEpubReadingSystem || !this.isEpubReadingSystem())
+    {
+        loadScript(undefined, 'marked.js');
+        loadScript(undefined, 'htmlparser.js');
+        setTimeout(function()
+        {
+            var fetched = that.fetchLocalStorageTextArea();
+
+            if (!fetched && that.authorMode)
+            {
+                that.AUTHORize();
+            }
+        }, 200);
+    }
 
     if (this.isEpubReadingSystem())
     {
@@ -3735,8 +3928,6 @@ Epub3Sliderizer.init = function()
             this.initLinks();
         
             window.onkeyup = this.onKeyboard.bind(this);
-        
-            this.AUTHORize();
         }
     }
     else
@@ -3985,7 +4176,7 @@ function readyDelayed()
 function readyFirst()
 {
     Epub3Sliderizer.initLocation();
-
+    
     /*
     var obj = window;
     var str = "";
@@ -4147,17 +4338,17 @@ function readyFirst()
         if (Epub3Sliderizer.ACE)
         {
             loadScript(undefined, 'ace.js');
-            loadScript(undefined, 'mode-markdown.js');
-            loadScript(undefined, 'theme-solarized_dark.js');
 
-            loadScript(undefined, 'Markdown.Editor.js');
+            setTimeout(function()
+            {
+                loadScript(undefined, 'mode-markdown.js');
+                loadScript(undefined, 'theme-solarized_dark.js');
+
+                loadScript(undefined, 'Markdown.Editor.js');
+            }, 200);
         }
         
         loadScript(undefined, 'reMarked.js');
-        
-        loadScript(undefined, 'marked.js');
-        
-        loadScript(undefined, 'htmlparser.js');
         
         if (html)
         {

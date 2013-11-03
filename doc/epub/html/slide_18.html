@@ -144,9 +144,11 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 
 <div id="epb3sldrzr-content-wrap">
                     <!--XML--><ol class="auto incremental">
-  <li>Press the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;">a</span> key to toggle <code>author</code> mode.</li>
-  <li>Press <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">esc</span> to switch to the Markdown editor. Note that changes are discarded when the page is reloaded, and when exiting <code>author</code> mode. To save your modifications, copy + paste into the master <code>data.txt</code>.</li>
-  <li>The images and text below can be <em>moved</em> relative to their original position, using the mouse. To move text, use the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">ctrl</span> modifier key (or Apple <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">cmd</span>).</li>
+  <li>Press the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;">a</span> key to toggle <code>author</code> mode (click outside of the text-edit area if necessary).</li>
+  <li>Press <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">esc</span> to switch to the Markdown / HTML editor, <em>or to commit</em> the live changes made on the WYSIWYG page.</li>
+  <li>Hit the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;">d</span> key to discard your changes, which are saved into the browser local storage (this reverts back to the original <code>data.txt</code> state).</li>
+  <li>To save your modifications permanently, <em>copy + paste</em> from the editor into the master <code>data.txt</code>.</li>
+  <li>The images and text below can be moved using the mouse. To move text, use the <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">ctrl</span> modifier key (or Apple <span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;">cmd</span>).</li>
 </ol><p><img alt="HTML5 logo" src="../img/custom/assets/HTML5.png"/> <img alt="EPUB3 logo" src="../img/custom/assets/EPUB.png" title="the EPUB3 logo"/><span class="epb3sldrzr-author" style="position: relative; left: 41px; top: -66px; font-size: 2.5em; background-color: silver; color: #666666;">Move me too!</span></p>
 </div>
 
@@ -156,14 +158,18 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
          </div>
      </div>
 
-     <div class="epb3sldrzr-markdown" id="epb3sldrzr-markdown-editor">1. Press the &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;"&gt;a&lt;/span&gt; key to toggle `author` mode.
-2. Press &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;"&gt;esc&lt;/span&gt; to switch to the Markdown editor. Note that changes are discarded when the page is reloaded, and when exiting `author` mode. To save your modifications, copy + paste into the master `data.txt`.
-3. The images and text below can be _moved_ relative to their original position, using the mouse. To move text, use the &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;"&gt;ctrl&lt;/span&gt; modifier key (or Apple &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;"&gt;cmd&lt;/span&gt;).
+     <div class="epb3sldrzr-markdown" id="epb3sldrzr-markdown-editor">1. Press the &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;"&gt;a&lt;/span&gt; key to toggle `author` mode (click outside of the text-edit area if necessary).
+2. Press &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;"&gt;esc&lt;/span&gt; to switch to the Markdown / HTML editor, _or to commit_ the live changes made on the WYSIWYG page.
+3. Hit the &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;"&gt;d&lt;/span&gt; key to discard your changes, which are saved into the browser local storage (this reverts back to the original `data.txt` state).
+4. To save your modifications permanently, _copy + paste_ from the editor into the master `data.txt`.
+5. The images and text below can be moved using the mouse. To move text, use the &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;"&gt;ctrl&lt;/span&gt; modifier key (or Apple &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;"&gt;cmd&lt;/span&gt;).
 
 ![HTML5 logo](assets/HTML5.png "the HTML5 logo") &lt;img src="assets/EPUB.png" alt="EPUB3 logo" title="the EPUB3 logo"/&gt;&lt;span class="epb3sldrzr-author"  style="position: relative; left: 41px; top: -66px; font-size: 2.5em; background-color: silver; color: #666666;"&gt;Move me too!&lt;/span&gt;</div>
-     <textarea class="epb3sldrzr-markdown" id="epb3sldrzr-markdown-src">1. Press the &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;"&gt;a&lt;/span&gt; key to toggle `author` mode.
-2. Press &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;"&gt;esc&lt;/span&gt; to switch to the Markdown editor. Note that changes are discarded when the page is reloaded, and when exiting `author` mode. To save your modifications, copy + paste into the master `data.txt`.
-3. The images and text below can be _moved_ relative to their original position, using the mouse. To move text, use the &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;"&gt;ctrl&lt;/span&gt; modifier key (or Apple &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;"&gt;cmd&lt;/span&gt;).
+     <textarea class="epb3sldrzr-markdown" id="epb3sldrzr-markdown-src">1. Press the &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;"&gt;a&lt;/span&gt; key to toggle `author` mode (click outside of the text-edit area if necessary).
+2. Press &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;"&gt;esc&lt;/span&gt; to switch to the Markdown / HTML editor, _or to commit_ the live changes made on the WYSIWYG page.
+3. Hit the &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;padding-left: 0.4em;padding-right: 0.4em;"&gt;d&lt;/span&gt; key to discard your changes, which are saved into the browser local storage (this reverts back to the original `data.txt` state).
+4. To save your modifications permanently, _copy + paste_ from the editor into the master `data.txt`.
+5. The images and text below can be moved using the mouse. To move text, use the &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;"&gt;ctrl&lt;/span&gt; modifier key (or Apple &lt;span class="keyboard" style="padding-top: 0;padding-bottom: 0.2em;"&gt;cmd&lt;/span&gt;).
 
 ![HTML5 logo](assets/HTML5.png "the HTML5 logo") &lt;img src="assets/EPUB.png" alt="EPUB3 logo" title="the EPUB3 logo"/&gt;&lt;span class="epb3sldrzr-author"  style="position: relative; left: 41px; top: -66px; font-size: 2.5em; background-color: silver; color: #666666;"&gt;Move me too!&lt;/span&gt;</textarea>
 </body>
