@@ -1347,8 +1347,36 @@ Epub3Sliderizer.updateSlideContent = function(xml)
         }, 300);
     }
     
-    document.title = "[[ MODIFIED ]] " + document.title;
-    document.body.style.backgroundColor = "#500000";
+    this.setModifiedStatus(true);
+}
+
+// ----------
+
+Epub3Sliderizer.mod = "[[ MODIFIED ]] ";
+
+Epub3Sliderizer.isModifiedStatus = function()
+{
+    return document.title.indexOf(this.mod) === 0;
+}
+
+Epub3Sliderizer.setModifiedStatus = function(modified)
+{
+    if (modified) //this.AUTHORized
+    {
+        if (document.title.indexOf(this.mod) !== 0)
+        {
+            document.title = this.mod + document.title;
+        }
+        document.body.style.backgroundColor = "#500000";
+    }
+    else
+    {
+        if (document.title.indexOf(this.mod) === 0)
+        {
+            document.title = document.title.substr(this.mod.length);
+        }
+        document.body.style.backgroundColor = undefined;
+    }
 }
 
 // ----------
@@ -1523,6 +1551,8 @@ Epub3Sliderizer.convertContentToMarkdown = function(NOMARKDOWN)
 
 Epub3Sliderizer.ACE = true;
 Epub3Sliderizer.aceEditor = undefined;
+Epub3Sliderizer.aceChanged = false;
+
 
 Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
 {
@@ -1663,10 +1693,14 @@ Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
                 var markdownEditor = new Markdown.Editor();
                 markdownEditor.run(this.aceEditor);
                 
+                this.aceChanged = false;
+                
                 this.aceEditor.on('blur', function(e)
                 {
                     var src = that.aceEditor.getSession().getValue();
                     that.updateLocalStorageTextArea(src);
+                    
+                    that.aceChanged = markdown !== src;
                 });
             }
 
@@ -1720,8 +1754,16 @@ Epub3Sliderizer.keyboardAuthoring = function(keyboardEvent)
 
         setTimeout(function()
         {
+            var wasModified = that.isModifiedStatus();
+            
             var xml = txtArea.value;
             that.updateSlideContent(xml);
+
+            if (!that.aceChanged && !wasModified)
+            {
+                that.setModifiedStatus(false);
+            }
+            that.aceChanged = false;
 
             setTimeout(function()
             {
@@ -3771,6 +3813,8 @@ Epub3Sliderizer.init = function()
 
     if (fakeEpubReadingSystem || !this.isEpubReadingSystem())
     {
+        loadScript(undefined, 'keymaster.js');
+        
         loadScript(undefined, 'marked.js');
         loadScript(undefined, 'htmlparser.js');
         setTimeout(function()
@@ -3781,6 +3825,29 @@ Epub3Sliderizer.init = function()
             {
                 that.AUTHORize();
             }
+
+            key('⌘+d, ctrl+d', function()
+            {
+                if (hasLocalStorage())
+                {
+                    for (var i = 0; i < localStorage.length; i++)
+                    {
+                        var key = localStorage.key(i);
+                        if (key === that.thisFilename && confirm("Discard changes to [" + that.thisFilename + "] ?"))
+                        {
+                            //var data = localStorage.getItem(key);
+                            localStorage.removeItem(key);
+        
+                            console.log(":::: LOCALSTORAGE DELETED: " + key);
+                            that.reloadSlide(that.authorMode ? "author" : "");
+        
+                            return false;
+                        }
+                    }
+                }
+            
+                return false;
+            });
         }, 200);
     }
 
@@ -3901,29 +3968,6 @@ Epub3Sliderizer.init = function()
         
             window.onkeyup = this.onKeyboard.bind(this);
 
-            key('⌘+d, ctrl+d', function()
-            {
-                if (hasLocalStorage())
-                {
-                    for (var i = 0; i < localStorage.length; i++)
-                    {
-                        var key = localStorage.key(i);
-                        if (key === that.thisFilename && confirm("Discard changes to [" + that.thisFilename + "] ?"))
-                        {
-                            //var data = localStorage.getItem(key);
-                            localStorage.removeItem(key);
-            
-                            console.log(":::: LOCALSTORAGE DELETED: " + key);
-                            that.reloadSlide(that.authorMode ? "author" : "");
-            
-                            return false;
-                        }
-                    }
-                }
-                
-                return false;
-            });
-            
             if (Epub3Sliderizer.htmlNotXHTML)
             {
                 key('⌘+s, ctrl+s', function()
@@ -3954,6 +3998,8 @@ Epub3Sliderizer.init = function()
                             that.AUTHORize();
                         }, 300);
                     }, 200);
+    
+                    that.setModifiedStatus(true);
                     
                     return false;
                 });
