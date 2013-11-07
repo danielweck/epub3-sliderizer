@@ -617,6 +617,8 @@ var Epub3Sliderizer = {
     toc: "",
     back: "",
     epub: "",
+    slideCount: -1,
+    slideIndex: -1,
     reverse: false,
     thisFilename: null,
     from: null,
@@ -3021,6 +3023,18 @@ Epub3Sliderizer.initLinks = function()
     );
 
 
+    var slideIndex = querySelectorZ("head > meta[name=slideIndex]");
+    if (slideIndex !== null)
+    {
+        this.slideIndex = parseInt(slideIndex.getAttribute('content'));
+    }
+    var slideCount = querySelectorZ("head > meta[name=slideCount]");
+    if (slideCount !== null)
+    {
+        this.slideCount = parseInt(slideCount.getAttribute('content'));
+    }
+    
+
     var controls = document.getElementById("epb3sldrzr-controls");
         
     var anchor = controls; //this.bodyRoot
@@ -3061,7 +3075,19 @@ Epub3Sliderizer.initLinks = function()
         a1.setAttribute("title", "Previous slide");
         a1.setAttribute("href", "javascript:Epub3Sliderizer.gotoPrevious_();");
     }
-     
+    
+    if (this.slideIndex !== -1 && this.slideCount !== -1)
+    {
+        var sp = document.createElement('span');
+        anchor.insertBefore(sp, anchor.childNodes[0]);
+
+        sp.id = "epb3sldrzr-slide-indexCount";
+        sp.setAttribute("id", sp.id);
+        
+        var txt = document.createTextNode(this.slideIndex + '/' + this.slideCount);
+        sp.appendChild(txt);
+    }
+    
     if (this.next !== "")
     {
         var a2 = document.createElement('a');
@@ -3740,13 +3766,118 @@ Epub3Sliderizer.init = function()
         }
     }
     
+    this.kobo = isDefinedAndNotNull(window.KOBO_TAG); // window.nextKoboSpan
+    
     if (this.epubReadingSystem !== null)
     {
         console.log(this.epubReadingSystem.name);
         console.log(this.epubReadingSystem.version);
     }
+    else
+    {
+        console.log("!this.epubReadingSystem");
+        
+        // one last chance (500ms delay)
+        if (this.readium || this.kobo || this.ibooks || this.playbooks || this.azardi)
+        {
+            setTimeout(function()
+            {
+                if (isDefinedAndNotNull(navigator.epubReadingSystem))
+                {
+                    that.epubReadingSystem = navigator.epubReadingSystem;
+                    console.log(that.epubReadingSystem.name);
+                    console.log(that.epubReadingSystem.version);
+                }
+                else
+                {
+                    console.log("STILL !this.epubReadingSystem");
+                }
+            }, 500);
+        }
+    }
     
-    this.kobo = isDefinedAndNotNull(window.KOBO_TAG); // window.nextKoboSpan
+            
+    console.log("Readium: " + this.readium);
+    console.log("Kobo: " + this.kobo);
+    console.log("Apple iBooks: " + this.ibooks);
+    console.log("Google Playbooks: " + this.playbooks);
+    console.log("Azardi: " + this.azardi);
+    
+    console.log("htmlNotXHTML: " + this.htmlNotXHTML);
+    
+    console.log("staticMode: " + this.staticMode);
+    console.log("authorMode: " + this.authorMode);
+    console.log("basicMode: " + this.basicMode);
+    console.log("epubMode: " + this.epubMode);
+    console.log("reflow: " + this.reflow);
+    
+    console.log("mobile: " + this.mobile);
+    console.log("android: " + this.android);
+    console.log("opera: " + this.opera);
+    console.log("IE: " + this.IE);
+    
+
+    // document.getElementById("epb3sldrzr-body").style.visibility = "visible";
+    // 
+    // var root = document.getElementById("epb3sldrzr-content");
+    // var info = document.createElement('p');
+    // root.insertBefore(info, root.childNodes[0]);
+    // 
+    // setTimeout(function()
+    // {
+    //     info.style.backgroundColor = "white";
+    //     info.style.color = "black";
+    //     info.style.padding = "0.2em";
+    // }, 500);
+    // 
+    // var txt = document.createTextNode(window.location.href.replace(/\//g, " ")); //
+    // info.appendChild(txt);
+    // 
+    // var brk = document.createElement('br');
+    // info.appendChild(brk);
+    // 
+    // var obj = window; //.navigator
+    // var str = "";
+    // for (var prop in obj) {
+    //     if (true || obj.hasOwnProperty(prop)) {
+    //         
+    //         var p = prop.toLowerCase();
+    //         
+    //         if (//true ||
+    //             (p.indexOf("webkit") < 0
+    //             && (
+    //             p.indexOf("kobo") >= 0
+    //             || p.indexOf("ibooks") >= 0
+    //             || p.indexOf("sdk") >= 0
+    //             || p.indexOf("bk") >= 0
+    //             || p.indexOf("apple") >= 0
+    //             || p.indexOf("google") >= 0
+    //             || p.indexOf("edition") >= 0
+    //             || p.indexOf("book") >= 0
+    //             || p.indexOf("page") >= 0
+    //         || p.indexOf("epub") >= 0
+    //         || p.indexOf("azardi") >= 0
+    //         || p.indexOf("igp") >= 0
+    //         || p.indexOf("read") >= 0
+    //         || p.indexOf("back") >= 0
+    //         || p.indexOf("launcher") >= 0
+    //         //|| p.indexOf("readium") >= 0
+    //         ))
+    //     )
+    //         {
+    //             str += ("\n" + prop);
+    //             
+    //             var tx = document.createTextNode(prop + " ");
+    //             info.appendChild(tx);
+    //             
+    //             var br = document.createElement('br');
+    //             info.appendChild(br);
+    //         }
+    //     }
+    // }
+    // //alert(str);
+    
+    
     
     /*
     TOO SLOW! :(
@@ -3864,69 +3995,69 @@ Epub3Sliderizer.init = function()
 
         document.body.classList.add("epb3sldrzr-epubReadingSystem");
 
-        var controls = document.getElementById("epb3sldrzr-controls");
-        var anchor = controls; //this.bodyRoot
-
-        if (!anchor)
-        {
-            console.error("cannot find #epb3sldrzr-controls");
-        }
-        else
-        {
-            var a = document.createElement('a');
-
-            if (anchor.childNodes.length === 0)
-            {
-                anchor.appendChild(a);
-            }
-            else
-            {
-                anchor.insertBefore(a, anchor.childNodes[0]);
-            }
-        
-            a.id = "epb3sldrzr-link-epubReadingSystem";
-            a.setAttribute("id", a.id);
-            a.setAttribute("title", "EPUB Reading System info");
-        
-            if (this.epubReadingSystem === null)
-            {
-                if (this.readium)
-                {
-                    a.setAttribute("href", "javascript:window.alert('Readium')");
-                    a.innerHTML = "Readium";
-                }
-                else if (this.kobo)
-                {
-                    a.setAttribute("href", "javascript:window.alert('Kobo')");
-                    a.innerHTML = "Kobo";
-                }
-                else if (this.ibooks)
-                {
-                    a.setAttribute("href", "javascript:window.alert('iBooks')");
-                    a.innerHTML = "iBooks";
-                }
-                else if (this.playbooks)
-                {
-                    a.setAttribute("href", "javascript:window.alert('Google Play Books')");
-                    a.innerHTML = "Google Play Books";
-                }
-                else if (this.azardi)
-                {
-                    a.setAttribute("href", "javascript:window.alert('Azardi')");
-                    a.innerHTML = "Azardi";
-                }
-                else
-                {
-                    a.setAttribute("href", "javascript:window.alert('??')");
-                    a.innerHTML = "??";
-                }
-            }
-            else
-            {
-                a.setAttribute("href", "javascript:window.alert(window.Epub3Sliderizer.epubReadingSystem.name + '_' + window.Epub3Sliderizer.epubReadingSystem.version)");
-                a.innerHTML = this.epubReadingSystem.name + '_' + this.epubReadingSystem.version;
-            }
-        }
+//         var controls = document.getElementById("epb3sldrzr-controls");
+//         var anchor = controls; //this.bodyRoot
+// 
+//         if (!anchor)
+//         {
+//             console.error("cannot find #epb3sldrzr-controls");
+//         }
+//         else
+//         {
+//             var a = document.createElement('a');
+// 
+//             if (anchor.childNodes.length === 0)
+//             {
+//                 anchor.appendChild(a);
+//             }
+//             else
+//             {
+//                 anchor.insertBefore(a, anchor.childNodes[0]);
+//             }
+//         
+//             a.id = "epb3sldrzr-link-epubReadingSystem";
+//             a.setAttribute("id", a.id);
+//             a.setAttribute("title", "EPUB Reading System info");
+//         
+//             if (this.epubReadingSystem === null)
+//             {
+//                 if (this.readium)
+//                 {
+//                     a.setAttribute("href", "javascript:window.alert('Readium')");
+//                     a.innerHTML = "Readium";
+//                 }
+//                 else if (this.kobo)
+//                 {
+//                     a.setAttribute("href", "javascript:window.alert('Kobo')");
+//                     a.innerHTML = "Kobo";
+//                 }
+//                 else if (this.ibooks)
+//                 {
+//                     a.setAttribute("href", "javascript:window.alert('iBooks')");
+//                     a.innerHTML = "iBooks";
+//                 }
+//                 else if (this.playbooks)
+//                 {
+//                     a.setAttribute("href", "javascript:window.alert('Google Play Books')");
+//                     a.innerHTML = "Google Play Books";
+//                 }
+//                 else if (this.azardi)
+//                 {
+//                     a.setAttribute("href", "javascript:window.alert('Azardi')");
+//                     a.innerHTML = "Azardi";
+//                 }
+//                 else
+//                 {
+//                     a.setAttribute("href", "javascript:window.alert('??')");
+//                     a.innerHTML = "??";
+//                 }
+//             }
+//             else
+//             {
+//                 a.setAttribute("href", "javascript:window.alert(window.Epub3Sliderizer.epubReadingSystem.name + '_' + window.Epub3Sliderizer.epubReadingSystem.version)");
+//                 a.innerHTML = this.epubReadingSystem.name + '_' + this.epubReadingSystem.version;
+//             }
+//         }
 
         this.bodyRoot.style.visibility = "visible";
     }
@@ -4243,7 +4374,7 @@ Epub3Sliderizer.init = function()
 
 function readyDelayed()
 {
-    if (Epub3Sliderizer.staticMode || Epub3Sliderizer.basicMode || Epub3Sliderizer.ibooks || Epub3Sliderizer.readium || Epub3Sliderizer.playbooks)
+    if (Epub3Sliderizer.staticMode || Epub3Sliderizer.basicMode || Epub3Sliderizer.ibooks || Epub3Sliderizer.readium || Epub3Sliderizer.playbooks || Epub3Sliderizer.azardi)
     {
         return;
     }
@@ -4258,30 +4389,6 @@ function readyFirst()
     Epub3Sliderizer.initLocation();
 
     Epub3Sliderizer.htmlNotXHTML = Epub3Sliderizer.thisFilename && Epub3Sliderizer.thisFilename.indexOf(".html") > 0;
-        
-        
-    /*
-    var obj = window;
-    var str = "";
-    for (var prop in obj) {
-        if (true || obj.hasOwnProperty(prop)) {
-            if (prop.toLowerCase().indexOf("kobo") >= 0
-                || prop.toLowerCase().indexOf("ibooks") >= 0
-                || prop.toLowerCase().indexOf("google") >= 0
-                || prop.toLowerCase().indexOf("edition") >= 0
-                || prop.toLowerCase().indexOf("book") >= 0
-                || prop.toLowerCase().indexOf("page") >= 0
-            || prop.toLowerCase().indexOf("epub") >= 0
-            || prop.toLowerCase().indexOf("azardi") >= 0
-            || prop.toLowerCase().indexOf("igp") >= 0
-        )
-            {
-                str += ("\n" + prop);
-            }
-        }
-    }
-    alert(str);
-    */
     
     if (window.Element && Element.prototype.attachEvent && !Element.prototype.addEventListener)
     {
@@ -4361,15 +4468,19 @@ function readyFirst()
     a.setAttribute("title", "Toggle reflow");
     a.setAttribute("href", "javascript:Epub3Sliderizer.toggleReflow();");
     
-    try
+    Epub3Sliderizer.readium = isDefinedAndNotNull(window.LauncherUI);
+    if (!Epub3Sliderizer.readium)
     {
-        Epub3Sliderizer.readium = isDefinedAndNotNull(window.parent.Readium);
+        try
+        {
+            Epub3Sliderizer.readium = isDefinedAndNotNull(window.parent.Readium);
+        }
+        catch(e)
+        {
+            console.error(e);
+        }
     }
-    catch(e)
-    {
-        console.error(e);
-    }
-    Epub3Sliderizer.ibooks = isDefinedAndNotNull(window.iBooks);
+    Epub3Sliderizer.ibooks = isDefinedAndNotNull(window.iBooks) || window.location.href && window.location.href.toLowerCase().indexOf("com.apple.bkagentservice") >= 0;
     Epub3Sliderizer.playbooks = isDefinedAndNotNull(window.editions);
 
     if (Epub3Sliderizer.opera)
@@ -4594,7 +4705,7 @@ function readyFirst()
     }
     else
     {
-        if (Epub3Sliderizer.ibooks || Epub3Sliderizer.readium || Epub3Sliderizer.playbooks)
+        if (Epub3Sliderizer.ibooks || Epub3Sliderizer.readium || Epub3Sliderizer.playbooks || Epub3Sliderizer.azardi) // KOBO needs delayed
         {
             Epub3Sliderizer.init();
         }
