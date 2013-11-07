@@ -1,3 +1,4 @@
+
 a#epb3sldrzr-link-toc:before,
 a#epb3sldrzr-link-first:before,
 a#epb3sldrzr-link-last:before,
@@ -363,6 +364,19 @@ a#epb3sldrzr-link-last
 a#epb3sldrzr-link-last
 {
 	margin-right: 0.5em;
+}
+
+#epb3sldrzr-slide-indexCount
+{
+	float: right;
+    color: #dddddd;
+    font-size: 0.8em;
+    
+	margin-left: 0.2em;
+	margin-right: 0.2em;
+
+    line-height: 1em;
+    margin-top: 0.4em;
 }
 
 body:not(.basic).epb3sldrzr-epubReadingSystem a#epb3sldrzr-link-noteback,
