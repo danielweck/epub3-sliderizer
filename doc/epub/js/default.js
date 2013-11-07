@@ -2548,6 +2548,10 @@ Epub3Sliderizer.initTouch = function()
                 {
                     return;
                 }
+                if (target.nodeName && target.nodeName.toLowerCase() === "a")
+                {
+                    return;
+                }
                 target = target.parentNode;
             }
         }

@@ -125,7 +125,14 @@ body.reflow
 }
 
 
-body:not(.reflow):not(.author)
+/*
+body:not(.reflow):not(.author):not(.static):not(.basic).epb3sldrzr-epubReadingSystem
+{
+	border-right: none;
+	border-left: none;
+}
+
+body:not(.reflow):not(.author):not(.static):not(.basic)
 {
 	border-right: 0.08em solid transparent;
 	border-left: 0.08em solid transparent;
@@ -136,6 +143,7 @@ body:not(.reflow):not(.author):not(.static):not(.basic).epb3sldrzr-epubReadingSy
 	border-right: 0.08em solid #aaaaaa;
 	border-left: 0.08em solid #aaaaaa;
 }
+*/
 
 div#epb3sldrzr-body
 {
