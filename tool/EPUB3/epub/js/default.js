@@ -617,6 +617,8 @@ var Epub3Sliderizer = {
     toc: "",
     back: "",
     epub: "",
+    slideCount: -1,
+    slideIndex: -1,
     reverse: false,
     thisFilename: null,
     from: null,
@@ -3021,6 +3023,18 @@ Epub3Sliderizer.initLinks = function()
     );
 
 
+    var slideIndex = querySelectorZ("head > meta[name=slideIndex]");
+    if (slideIndex !== null)
+    {
+        this.slideIndex = parseInt(slideIndex.getAttribute('content'));
+    }
+    var slideCount = querySelectorZ("head > meta[name=slideCount]");
+    if (slideCount !== null)
+    {
+        this.slideCount = parseInt(slideCount.getAttribute('content'));
+    }
+    
+
     var controls = document.getElementById("epb3sldrzr-controls");
         
     var anchor = controls; //this.bodyRoot
@@ -3061,7 +3075,19 @@ Epub3Sliderizer.initLinks = function()
         a1.setAttribute("title", "Previous slide");
         a1.setAttribute("href", "javascript:Epub3Sliderizer.gotoPrevious_();");
     }
-     
+    
+    if (this.slideIndex !== -1 && this.slideCount !== -1)
+    {
+        var sp = document.createElement('span');
+        anchor.insertBefore(sp, anchor.childNodes[0]);
+
+        sp.id = "epb3sldrzr-slide-indexCount";
+        sp.setAttribute("id", sp.id);
+        
+        var txt = document.createTextNode(this.slideIndex + '/' + this.slideCount);
+        sp.appendChild(txt);
+    }
+    
     if (this.next !== "")
     {
         var a2 = document.createElement('a');
