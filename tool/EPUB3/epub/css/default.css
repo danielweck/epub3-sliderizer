@@ -317,6 +317,11 @@ ul
     list-style-type:none;
 }
 
+ul li
+{
+    list-style-type:none;
+}
+
 ul > li:before
 {
     content: '\2022';
@@ -338,6 +343,11 @@ ol
 {
     list-style-type:none;
     counter-reset:item;
+}
+
+ol li
+{
+    list-style-type:none;
 }
 
 ol > li:before
