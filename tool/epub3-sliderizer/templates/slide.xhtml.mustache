@@ -136,11 +136,15 @@
                  alt=""/>
             {{/slideShow.LOGO}}
 
+            {{#CONTENT_MIDDLE_ALIGN}}
+            <h1 id="epb3sldrzr-title" {{#CONTENT_MIDDLE_ALIGN}}class="vertical-align"{{/CONTENT_MIDDLE_ALIGN}}>{{TITLE}}{{#SUBTITLE}} <span id="epb3sldrzr-subtitle">{{SUBTITLE}}</span>{{/SUBTITLE}}</h1>
+            {{/CONTENT_MIDDLE_ALIGN}}
+
             <section id="epb3sldrzr-content">
 
                 <div id="epb3sldrzr-anim-overflow" {{#CONTENT_MIDDLE_ALIGN}}class="vertical-align-middle"{{/CONTENT_MIDDLE_ALIGN}}>
 
-                    <h1 id="epb3sldrzr-title">{{TITLE}}{{#SUBTITLE}} <span id="epb3sldrzr-subtitle">{{SUBTITLE}}</span>{{/SUBTITLE}}</h1>
+                    <h1 id="epb3sldrzr-title{{#CONTENT_MIDDLE_ALIGN}}-void{{/CONTENT_MIDDLE_ALIGN}}" {{#CONTENT_MIDDLE_ALIGN}}style="display:none;"{{/CONTENT_MIDDLE_ALIGN}}>{{TITLE}}{{#SUBTITLE}} <span id="epb3sldrzr-subtitle{{#CONTENT_MIDDLE_ALIGN}}-void{{/CONTENT_MIDDLE_ALIGN}}">{{SUBTITLE}}</span>{{/SUBTITLE}}</h1>
 
 <div id="epb3sldrzr-content-wrap" {{#CONTENT_MIDDLE_ALIGN}}class="vertical-middle"{{/CONTENT_MIDDLE_ALIGN}}>
                     {{{CONTENT_XHTML}}}
