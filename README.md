@@ -11,10 +11,10 @@ Demonstration
 ----------------
 
 * [Click here](http://danielweck.github.io/epub3-sliderizer "EPUB3-Sliderizer homepage") to learn more about EPUB3-Sliderizer (basic introduction).
-* [Make your way here](http://danielweck.github.io/epub3-sliderizer/demo1/epub/html/slide_01.xhtml) to see a fun 3-slide experiment ("bullet points" transition activate animations).
+* [Make your way here](http://danielweck.github.io/epub3-sliderizer/demo1/epub/html/slide_01.html) to see a fun 3-slide experiment ("bullet points" transition activate animations).
 * [Jump there](http://danielweck.github.io/epub3-sliderizer/doc/epub/html/slide_18.html) to try the "author" mode (live editing, instructions included).
 * [Go visit this page](http://danielweck.github.io/epub3-sliderizer/demo1/epub/html/slide_01.html?author) to experience the "author" mode  with rich typography, and fun image + text positioning.
-* [Follow this link](http://danielweck.github.io/epub3-sliderizer/demo1/epub/nav.xhtml) to try a fun trick with EPUB 3 Media Overlays (talking / read-aloud book, with a twist): click on the "cloud" icon in the upper right corner to download the EPUB file, and open with a compatible reading system. iBooks on iOS and MacOSX works best (especially with the touch experience to activate the slide sounds), but Readium supports MO as well.
+* [Follow this link](http://danielweck.github.io/epub3-sliderizer/demo1/epub/nav.html) to try a fun trick with EPUB 3 Media Overlays (talking / read-aloud book, with a twist): click on the "cloud" icon in the upper right corner to download the EPUB file, and open with a compatible reading system. iBooks on iOS and MacOSX works best (especially with the touch experience to activate the slide sounds), but Readium supports MO as well.
 
 **Notes about the "author" mode:**
 
@@ -94,6 +94,8 @@ The output fileset is _always_ generated in `./_OUTPUT/`. Beware, this folder ge
 There is an additional demonstration project in `./_INPUT/demo1/`. To build it, simply pass the `demo1` parameter to the `sliderize.sh` command.
 
 If all goes well, the `./_OUTPUT/content/` folder should then contain `EPUB3-Sliderizer.epub` (documentation), or `EPUB3-Sliderizer_demo1.epub` (additional demo). To check the results in your web-browser, open the `./_OUTPUT/content/EPUB3/epub/nav.xhtml` file (drag and drop, or double-click if the XHTML file association is supported on your system).
+
+The XHTML files are also generated with the `.html` extension (within the same directory structure), as a workaround to web servers and browsers handling XML incorrectly. For example, GitHub.io / gh-pages (powered by Nginx + Jekyll) seems to have recently changed the HTTP `content-type` header from `application/xhtml+xml` to `application/vnd.wap.xhtml+xml`, which breaks web browser rendering (except good old Opera!).
 
 To test the generated HTML fileset on remote devices (e.g. an iPad connected wirelessly on the same sub-network), you can start a local HTTP server on port 3000 by typing this command: `./thin.sh` (this should automatically open a local web-browser page). Note: this requires a [Ruby](https://www.ruby-lang.org) runtime. Obviously, you can serve the static XHTML files any other way you want (e.g. DropBox).
 
