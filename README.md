@@ -24,7 +24,7 @@ Demonstration
 * Use `CTRL+s` at any time to save edits made in WYSIWYG author mode.
 * The title bar and background color indicate that a slide has changed since the original `data.txt` state.
 * Click outside of the edit area to allow the keyboard focus to receive the 'a' shortcuts.
-* `contentEditable` live editing (true WYSIWYG) is only available for HTML slides, not XHTML (thus why EPUB3-Sliderizer builds a non-XML alternative).
+* `contentEditable` live editing (true WYSIWYG) is only available for HTML slides, not XHTML (thus why EPUB3-Sliderizer generates a non-XML alternative to the regular XHTML files).
 * Basic formatting commands such as italic / emphasis (CTRL-I) or bold / strong (CTRL-B) work fine in Safari (probably other WebKit-based browsers as well), but unfortunately the keyboard shortcuts conflit in Firefox. I have not tried IE at all.
 * Notice how bullet points get automatically created when hitting ENTER within an existing list item. This is a standard contentEditable feature, I did not implement any additional features on top of execCommand() etc.
 * Yes, I know about Aloha, Hallo, CKEditor, Medium, Squire, etc., I have tried them all and they all seem to conflict one way or another with the layout requirements (some of them actually alter the DOM to discard "unwanted" markup).
@@ -95,7 +95,7 @@ There is an additional demonstration project in `./_INPUT/demo1/`. To build it, 
 
 If all goes well, the `./_OUTPUT/content/` folder should then contain `EPUB3-Sliderizer.epub` (documentation), or `EPUB3-Sliderizer_demo1.epub` (additional demo). To check the results in your web-browser, open the `./_OUTPUT/content/EPUB3/epub/nav.xhtml` file (drag and drop, or double-click if the XHTML file association is supported on your system).
 
-The XHTML files are also generated with the `.html` extension (within the same directory structure), as a workaround to web servers and browsers handling XML incorrectly. For example, GitHub.io / gh-pages (powered by Nginx + Jekyll) seems to have recently changed the HTTP `content-type` header from `application/xhtml+xml` to `application/vnd.wap.xhtml+xml`, which breaks web browser rendering (except good old Opera!).
+The XHTML files are also generated with the `.html` extension (within the same directory structure), as a workaround for web servers and browsers that handle XML "incorrectly". For example, at some point GitHub.io / gh-pages (powered by Nginx + Jekyll) seems to have changed the HTTP `content-type` header from `application/xhtml+xml` to `application/vnd.wap.xhtml+xml`, which suddenly broke web browser support (desktop + mobile, except for good old Opera!).
 
 To test the generated HTML fileset on remote devices (e.g. an iPad connected wirelessly on the same sub-network), you can start a local HTTP server on port 3000 by typing this command: `./thin.sh` (this should automatically open a local web-browser page). Note: this requires a [Ruby](https://www.ruby-lang.org) runtime. Obviously, you can serve the static XHTML files any other way you want (e.g. DropBox).
 
