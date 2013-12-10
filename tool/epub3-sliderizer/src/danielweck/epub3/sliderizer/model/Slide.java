@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import danielweck.epub3.sliderizer.Epub3FileSet;
 import danielweck.epub3.sliderizer.NavDoc;
+import danielweck.epub3.sliderizer.Print;
 import danielweck.epub3.sliderizer.XHTML;
 
 public final class Slide extends Fielder {

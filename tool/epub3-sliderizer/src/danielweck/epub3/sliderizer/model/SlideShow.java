@@ -19,6 +19,7 @@ import com.google.common.base.Function;
 
 import danielweck.epub3.sliderizer.Epub3FileSet;
 import danielweck.epub3.sliderizer.NavDoc;
+import danielweck.epub3.sliderizer.Print;
 import danielweck.epub3.sliderizer.XHTML;
 
 public final class SlideShow extends Fielder {
@@ -38,6 +39,7 @@ public final class SlideShow extends Fielder {
 	public final static Epub3FileSet.FileId[] JSs = Epub3FileSet.JSs;
 	public final static String FIRST_SLIDE_FILENAME = XHTML.getFileName(1);
 	public final static String NAV_SLIDE_FILENAME = NavDoc.getFileName();
+	public final static String PRINT_FILENAME = Print.getFileName();
 
 	public final String LAST_SLIDE_FILENAME() {
 		return XHTML.getFileName(slides.size());

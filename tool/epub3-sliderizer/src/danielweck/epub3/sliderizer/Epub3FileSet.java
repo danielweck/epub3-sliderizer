@@ -40,6 +40,7 @@ public final class Epub3FileSet {
 	public final static String TEMPLATE_SLIDE = "slide.xhtml.mustache";
 	public final static String TEMPLATE_SLIDE_NOTES = "slide_NOTES.xhtml.mustache";
 	public final static String TEMPLATE_BACK_IMG_CSS = "background_img.css.mustache";
+	public final static String TEMPLATE_PRINT = "print.xhtml.mustache";
 
 	public final static String FOLDER_FONTS = "fonts";
 	public final static String FOLDER_HTML = "html";
@@ -94,7 +95,7 @@ public final class Epub3FileSet {
 			new FileId("theme-solarized_dark.js", "js-ace-theme"),
 			new FileId("Markdown.Editor.js", "js-markdown-editor"),
 			new FileId("htmlparser.js", "js-html-parser"),
-            new FileId("keymaster.js", "js-keymaster") };
+			new FileId("keymaster.js", "js-keymaster") };
 
 	private final static String CSS_PREFIXED = "_PREFIXED_";
 	private final static String CSS_PREFIXED_PROP = "-PREFIXED_PROPERTY-";
@@ -386,6 +387,7 @@ public final class Epub3FileSet {
 		File template_Slide = null;
 		File template_SlideNotes = null;
 		File template_BackImgCSS = null;
+		File template_Print = null;
 
 		MustacheFactory mustacheFactory = null;
 
@@ -441,6 +443,15 @@ public final class Epub3FileSet {
 									+ backImgCssTemplateFile.getAbsolutePath());
 				}
 				template_BackImgCSS = backImgCssTemplateFile;
+			}
+			File printTemplateFile = new File(templateDir, TEMPLATE_PRINT);
+			if (file.exists()) {
+				if (verbosity > 0) {
+					System.out.println(" ");
+					System.out.println("}}}}} FOUND TEMPLATE [PRINT DOC]: "
+							+ printTemplateFile.getAbsolutePath());
+				}
+				template_Print = printTemplateFile;
 			}
 		}
 
@@ -532,6 +543,9 @@ public final class Epub3FileSet {
 
 		NavDoc.create(mustacheFactory, template_Nav, slideShow, pathEpubFolder,
 				verbosity);
+
+		Print.create(mustacheFactory, template_Print, slideShow,
+				pathEpubFolder, verbosity);
 
 		XHTML.createAll(mustacheFactory, template_Slide, template_SlideNotes,
 				template_BackImgCSS, slideShow, pathEpubFolder, verbosity);

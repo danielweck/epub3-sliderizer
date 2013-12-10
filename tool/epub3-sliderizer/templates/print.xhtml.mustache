@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:epub="http://www.idpf.org/2007/ops"
+    xmlns:m="http://www.w3.org/1998/Math/MathML"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    id="epb3sldrzr-Print"
+    lang="{{{LANGUAGE}}}"
+    xml:lang="{{{LANGUAGE}}}">
+    <head>
+        <meta charset="UTF-8"/>
+
+        <meta content="{{{GENERATOR}}}" name="description"/>
+        <meta content="{{{KEYWORDS}}}" name="keywords"/>
+        
+        <title>{{TITLE}}{{#SUBTITLE}} - {{SUBTITLE}}{{/SUBTITLE}} ({{{slides.size}}}) </title>
+        
+        <link href="{{{FAVICON_FOLDER}}}/{{{FAVICON}}}" rel="shortcut icon"/>
+        
+        {{#TOUCHICON}}
+        <link href="{{{FOLDER_IMG}}}/{{{FOLDER_CUSTOM}}}/{{{TOUCHICON}}}" rel="apple-touch-icon"/>
+        {{/TOUCHICON}}
+        
+        <style type="text/css">
+        /*<![CDATA[*/
+        body
+        {
+        	text-align: center;
+        }
+        html,
+        body,
+        *,
+        *:before,
+        *:after
+        {
+        	margin: 0;
+        	padding: 0;
+        }
+        iframe
+        {
+        	border: 2px solid #333333;
+        	margin-bottom: 1em;
+        	margin-top: 1em;
+        }
+        @media print
+        {
+	        body
+	        {
+	        	text-align: left;
+	        }
+	        .header
+	        {
+	        	display: none;
+	        }
+	        iframe
+	        {
+	        	-webkit-page-break-after: always;
+	        	-webkit-page-break-before: always;
+	        	
+	        	page-break-after: always;
+	        	page-break-before: always;
+	        	
+	        	border: none;
+	        	margin-bottom: 0;
+	        	margin-top: 0;
+	        }
+        }
+        /*]]>*/
+        </style>
+        
+        <script>
+        //<![CDATA[
+        
+        //]]>
+        </script>
+</head>
+<body>
+    {{#slides}}
+    {{{#slide}}}
+    <p class="header">{{{SLIDE_NUMBER}}}/{{{slideShow.slides.size}}} - {{TITLE}}{{#SUBTITLE}} <span>{{SUBTITLE}}</span>{{/SUBTITLE}}</p>
+    <iframe src="{{{FOLDER_HTML}}}/{{{SLIDE_FILENAME}}}?epub"
+    	
+        {{#slideShow.VIEWPORT_WIDTH}}
+        {{#slideShow.VIEWPORT_HEIGHT}}
+        width="{{{slideShow.VIEWPORT_WIDTH}}}" height="{{{slideShow.VIEWPORT_HEIGHT}}}"
+        {{/slideShow.VIEWPORT_HEIGHT}}
+        {{/slideShow.VIEWPORT_WIDTH}}> </iframe>
+    {{{/slide}}}
+    {{/slides}}
+</body>
+</html>

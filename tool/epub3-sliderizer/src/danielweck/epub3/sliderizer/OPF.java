@@ -216,6 +216,9 @@ public final class OPF {
 		create_ManifestItem(NavDoc.getFileName(), document, elementManifest,
 				"nav", false, ".", "nav scripted");
 
+		create_ManifestItem(Print.getFileName(), document, elementManifest,
+				"print", false, ".", "scripted");
+
 		create_ManifestItem(NCX.getFileName(), document, elementManifest,
 				"ncx", false, ".", null);
 
