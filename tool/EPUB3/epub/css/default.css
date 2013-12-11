@@ -221,12 +221,12 @@ html#epb3sldrzr-NavDoc h1#epb3sldrzr-title
 
 body:not(.reflow).static.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title
 {
-    border-top-left-radius: FONT_SIZEpx;
-    border-top-right-radius: FONT_SIZEpx;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
     
     /*
-    border-top-right-radius: FONT_SIZErem;
-    border-top-left-radius: FONT_SIZErem;
+    border-top-left-radius: FONT_SIZEpx;
+    border-top-right-radius: FONT_SIZEpx;
     */
 }
 
