@@ -3946,7 +3946,7 @@ Epub3Sliderizer.init = function()
 //    this.convertContentToMarkdownAndUpdateLocalStorageTextArea_Throttled = throttle(this.convertContentToMarkdownAndUpdateLocalStorageTextArea, 1000, false).bind(this);
     
 
-    if (fakeEpubReadingSystem || !this.isEpubReadingSystem())
+    if (!this.staticMode && (fakeEpubReadingSystem || !this.isEpubReadingSystem()))
     {
         loadScript(undefined, 'keymaster.js');
         
@@ -4065,7 +4065,7 @@ Epub3Sliderizer.init = function()
     {   
         document.body.classList.add("epb3sldrzr-epubReadingSystem");
         
-        if (this.authorMode)
+        if (true || this.authorMode)
         {
             if (isDefinedAndNotNull(window.orientation))
             {
@@ -4471,14 +4471,14 @@ function readyFirst()
     Epub3Sliderizer.readium = isDefinedAndNotNull(window.LauncherUI);
     if (!Epub3Sliderizer.readium)
     {
-        try
-        {
-            Epub3Sliderizer.readium = isDefinedAndNotNull(window.parent.Readium);
-        }
-        catch(e)
-        {
-            console.error(e);
-        }
+        // try
+//         {
+//             Epub3Sliderizer.readium = isDefinedAndNotNull(window.parent.Readium);
+//         }
+//         catch(e)
+//         {
+//             console.error(e);
+//         }
     }
     Epub3Sliderizer.ibooks = isDefinedAndNotNull(window.iBooks) || window.location.href && window.location.href.toLowerCase().indexOf("com.apple.bkagentservice") >= 0;
     Epub3Sliderizer.playbooks = isDefinedAndNotNull(window.editions);
