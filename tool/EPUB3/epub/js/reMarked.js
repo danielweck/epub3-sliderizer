@@ -30,6 +30,7 @@ reMarked = function(opts) {
 		col_pre:	"col ",			// column prefix to use when creating missing headers for tables
 	//	comp_style: false,			// use getComputedStyle instead of hardcoded tag list to discern block/inline
 		unsup_tags: {				// handling of unsupported tags, defined in terms of desired output style. if not listed, output = outerHTML
+            force_preserve: "", //e.g. img
 			// no output
 			ignore: "script style noscript",
 			// eg: "<tag>some content</tag>"
@@ -177,6 +178,34 @@ reMarked = function(opts) {
 	var lib = {};
 
 	lib.tag = klass({
+        
+        mustPreserveAttributes: function()
+        {
+            var attrs = this.e.attributes;
+            if (!attrs) return false;
+            
+            var l = attrs.length;
+            
+            // MUST check for attribute emptyness!
+            // if (l > 0  && this.supportedAttributes.length === 0)
+            // {
+            //     return true;
+            // }
+
+        for (var attr, i=0; i<l; i++)
+            {
+          attr = attrs.item(i);
+                var name = attr.nodeName.toLowerCase();
+                if (attr.nodeValue && attr.nodeValue.length > 0 && this.supportedAttributes.indexOf(name) < 0)
+                {
+                    return true;
+                }
+        }
+            
+            return false;
+        },
+        supportedAttributes: [],
+        
 		wrap: "",
 		lnPfx: "",		// only block
 		lnInd: 0,		// only block
@@ -255,24 +284,67 @@ reMarked = function(opts) {
 
 					var wrap = null;
 
-					if (!lib[name]) {
-						var unsup = cfg.unsup_tags;
+                    var unsup = cfg.unsup_tags;
 
-						if (unsup.inline.test(name))
-							name = "tinl";
-						else if (unsup.block2.test(name))
-							name = "tblk";
-						else if (unsup.block1c.test(name))
-							name = "ctblk";
-						else if (unsup.block2c.test(name)) {
-							name = "ctblk";
-							wrap = ["\n\n", ""];
-						}
-						else
-							name = "rawhtml";
-					}
+                                       var libObj = undefined;
+                                       var preserve = false;
+                                       if (lib[name])
+                                       {
+                                           libObj = new lib[name](n, this, this.c.length);
+                                           preserve = libObj.mustPreserveAttributes();
+                                       }
 
-					var node = new lib[name](n, this, this.c.length);
+                                       var forcePreserve = unsup.force_preserve.test(name);
+        
+                                                           if (!libObj || preserve || forcePreserve) {
+
+                                                                   if (preserve && libObj instanceof lib.tinl || unsup.inline.test(name))
+                                                                   {
+                                               name = "tinl";
+                                           }
+                                                               else if (preserve && libObj instanceof lib.inl)
+                                           {
+                                                                       name = "inl";
+                                           }
+                                                                   else if (unsup.block2c.test(name))
+                                           {
+                                                                           name = "ctblk";
+                                                                           wrap = ["\n\n", ""];
+                                                                   }
+                                                                   else if (preserve && libObj instanceof lib.ctblk || unsup.block1c.test(name))
+                                           {
+                                                                           name = "ctblk";
+                                           }
+                                                                   else if (preserve && libObj instanceof lib.tblk || unsup.block2.test(name))
+                                           {
+                                                                           name = "tblk";
+                                           }
+                                           // Non-tagr!
+                                           // else if (preserve && libObj instanceof lib.cblk)
+                                           //                         {
+                                           //     name = "cblk";
+                                           //                         }
+                                           // else if (preserve && libObj instanceof lib.blk)
+                                           //                         {
+                                           //     name = "blk";
+                                           //                         }
+                                                                   else
+                                                                   {
+                   // console.error(name);
+                   // console.log(preserve);
+                                               name = "rawhtml";
+                                           }
+                                                           }
+
+                                                           var node = undefined;
+                                       if (libObj && !preserve && !forcePreserve)
+                                       {
+                                           node = libObj;
+                                       }
+                                       else
+                                       {
+                                           node = new lib[name](n, this, this.c.length);
+                                       }
 
 					if (wrap)
 						node.wrap = wrap;
@@ -441,6 +513,7 @@ reMarked = function(opts) {
 			lib.h6 = lib.h_atx.extend({});
 
 		lib.a = lib.inl.extend({
+            supportedAttributes: ["href", "title"],
 			lnkid: null,
 			rend: function() {
 				var kids = this.rendK(),
@@ -459,6 +532,7 @@ reMarked = function(opts) {
 
 		// almost identical to links, maybe merge
 		lib.img = lib.inl.extend({
+            supportedAttributes: ["src", "alt", "title"],
 			lnkid: null,
 			rend: function() {
 				var kids = this.e.alt,

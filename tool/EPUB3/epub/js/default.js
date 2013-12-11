@@ -1510,7 +1510,7 @@ Epub3Sliderizer.convertContentToMarkdown = function(NOMARKDOWN)
         col_pre:    "col ",            // column prefix to use when creating missing headers for tables
         //    comp_style: false,            // use getComputedStyle instead of hardcoded tag list to discern block/inline
         unsup_tags: {                // handling of unsupported tags, defined in terms of desired output style. if not listed, output = outerHTML
-        force_preserve: "",
+        force_preserve: "", //e.g. img
         // no output
         ignore: "script style noscript",
         // eg: "<tag>some content</tag>"
