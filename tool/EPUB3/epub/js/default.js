@@ -1534,6 +1534,7 @@ Epub3Sliderizer.convertContentToMarkdown = function(NOMARKDOWN)
     var reMarker = new reMarked(options);
 
     $(".epb3sldrzr-author-toMove", contentWrap).removeClass("epb3sldrzr-author-toMove");
+    $(".epb3sldrzr-author-canMove", contentWrap).removeClass("epb3sldrzr-author-canMove");
     $(".auto", contentWrap).removeClass("auto");
     $(".incremental", contentWrap).removeClass("incremental");
 //console.log(contentWrap);
