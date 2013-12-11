@@ -99,7 +99,7 @@ body:not(.epb3sldrzr-epubReadingSystem):not(.reflow):not(.author)
 	background-color: black;
 }
 
-body.epb3sldrzr-epubReadingSystem
+body.epb3sldrzr-epubReadingSystem.static
 {
 	background-color: white;
 }

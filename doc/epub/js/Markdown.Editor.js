@@ -1,3 +1,5 @@
+//Heavily modified from: https://code.google.com/p/pagedown/source/browse/Markdown.Editor.js
+
 var Markdown = {};
 
 function identity(x) { return x; }

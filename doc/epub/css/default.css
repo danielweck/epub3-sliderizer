@@ -321,12 +321,12 @@ html#epb3sldrzr-NavDoc h1#epb3sldrzr-title
 
 body:not(.reflow).static.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title
 {
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
     
     /*
-    border-top-right-radius: 4rem;
-    border-top-left-radius: 4rem;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
     */
 }
 
