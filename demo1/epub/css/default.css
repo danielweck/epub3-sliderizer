@@ -583,6 +583,22 @@ body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle > #epb3sldrzr-
     vertical-align: middle;
 }
 
+body.reflow h1#epb3sldrzr-title.vertical-align
+{
+    position:fixed;
+}
+
+body:not(.reflow) h1#epb3sldrzr-title.vertical-align
+{
+    position:absolute;
+}
+
+h1#epb3sldrzr-title.vertical-align
+{
+    left: 0px;
+    top: 0px;
+}
+
 #epb3sldrzr-content > #epb3sldrzr-anim-overflow > #epb3sldrzr-content-wrap:not(.vertical-middle) > *:not(img):not(.spread)
 {
     padding-left: 40px;
