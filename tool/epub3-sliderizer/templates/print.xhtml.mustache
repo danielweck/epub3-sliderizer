@@ -23,10 +23,15 @@
         
         <style type="text/css">
         /*<![CDATA[*/
+    
         body
         {
         	text-align: center;
+
+            background-color: #FAFAFA;
+            font: 12pt "Tahoma";
         }
+        
         html,
         body,
         *,
@@ -35,34 +40,89 @@
         {
         	margin: 0;
         	padding: 0;
+            
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+            -o-box-sizing: border-box;
+            box-sizing: border-box;
         }
+
+        .page
+        {
+            width: {{{VIEWPORT_WIDTH}}}px;
+            min-height: {{{VIEWPORT_HEIGHT}}}px;
+            
+            padding: 0cm;
+            margin: 0cm auto;
+            
+            border: 1px #D3D3D3 solid;
+            
+            border-radius: 5px;
+            
+            background: white;
+            
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        
         iframe
         {
-        	border: 2px solid #333333;
-        	margin-bottom: 1em;
-        	margin-top: 1em;
+	        	border: none;
+                background-color: yellow;
+                margin: 0;
+                padding: 0;
         }
+        
+	        .header
+	        {
+	        	margin-top: 2em;
+	        }
+            
+        @page
+        {
+            size: A4;
+            margin: 0cm;
+        }
+        
         @media print
         {
-	        body
-	        {
-	        	text-align: left;
-	        }
+        body
+        {
+background-color: white;
+        }
 	        .header
 	        {
 	        	display: none;
 	        }
+            
+            .page
+            {
+            
+            overflow: hidden;
+            
+            width: 21cm !important;
+            min-height: 29.7cm !important;
+            
+                        margin: 0 auto;
+                        padding: 0;
+                        padding-top: 2cm;
+                        
+                        border: none;
+                        border-radius: 0;
+                        
+                        box-shadow: none;
+                        
+            }
+            
 	        iframe
 	        {
-	        	-webkit-page-break-after: always;
-	        	-webkit-page-break-before: always;
-	        	
-	        	page-break-after: always;
-	        	page-break-before: always;
-	        	
-	        	border: none;
-	        	margin-bottom: 0;
-	        	margin-top: 0;
+background: white;
+                        
+                width: 19cm !important;
+                height: 19cm !important;
+                
+                        
+                        page-break-after: always;
 	        }
         }
         /*]]>*/
@@ -71,6 +131,110 @@
         <script>
         //<![CDATA[
         
+        throttle = function(func, wait, immediate)
+            {
+                var context, args, result;
+                var timeout = null;
+                var previous = 0;
+                var later = function()
+                {
+                    previous = new Date();
+                    timeout = null;
+                    result = func.apply(context, args);
+                };
+
+                return function()
+                {
+                    var now = new Date();
+                    if (!previous && immediate === false)
+                    {
+                        previous = now;
+                    }
+                    var remaining = wait - (now - previous);
+                    context = this;
+                    args = arguments;
+        
+                    if (remaining <= 0)
+                    {
+                        clearTimeout(timeout);
+                        timeout = null;
+                        previous = now;
+                        result = func.apply(context, args);
+                    }
+                    else if (!timeout)
+                    {
+                        timeout = setTimeout(later, remaining);
+                    }
+        
+                    return result;
+                };
+            }
+                
+        document.addEventListener("DOMContentLoaded", function()
+        {
+            
+            var printing = false;
+            
+            //window.print();
+var beforePrint = function() {
+        console.log('before printing.');
+        printing = true;
+    };
+    var afterPrint = function() {
+        console.log('after printing');
+        printing = false;
+    };
+
+    if (window.matchMedia) {
+        var mediaQueryList = window.matchMedia('print');
+        mediaQueryList.addListener(function(mql) {
+            if (mql.matches) {
+                beforePrint();
+            } else {
+                afterPrint();
+            }
+        });
+    }
+
+    window.onbeforeprint = beforePrint;
+    window.onafterprint = afterPrint;
+    
+var func = function()
+            {
+            if (printing) return;
+            
+                var iframes = document.getElementsByTagName("iframe");
+                for (var i = 0; i < iframes.length; i++)
+                {
+                    var iframe = iframes[i];
+                    //iframe.contentDocument.getElementsByTagName("html")[0].style.backgroundColor = "white";
+                    iframe.contentDocument.getElementsByTagName("html")[0].setAttribute("style", "background-color: white;");
+//console.log(iframe.contentDocument.getElementsByTagName("html")[0].style.backgroundColor);
+                    
+                    var ratio = iframe.width / iframe.height;
+                    
+                    var w = window.innerWidth;
+                    var h = w / ratio;
+                    
+                    iframe.setAttribute("width", w);
+                    iframe.setAttribute("height", h);
+
+                    iframe.parentNode.style.width = w + "px";
+                    //iframe.parentNode.style.height = h + "px";
+                    iframe.parentNode.style.minHeight = h + "px";
+
+                    //console.log("W: " + iframe.getAttribute("width"));
+                    //console.log("H: " + iframe.getAttribute("height"));
+                    //console.log("---");
+                }
+            };
+            
+            window.onresize = throttle(func, 200, false);
+            
+            setTimeout(func, 500);
+            
+        }, false);
+        
         //]]>
         </script>
 </head>
@@ -78,13 +242,15 @@
     {{#slides}}
     {{{#slide}}}
     <p class="header">{{{SLIDE_NUMBER}}}/{{{slideShow.slides.size}}} - {{TITLE}}{{#SUBTITLE}} <span>{{SUBTITLE}}</span>{{/SUBTITLE}}</p>
-    <iframe src="{{{FOLDER_HTML}}}/{{{SLIDE_FILENAME}}}?epub"
+    <div class="page">
+    <iframe src="{{{FOLDER_HTML}}}/{{{SLIDE_FILENAME}}}?static"
     	
         {{#slideShow.VIEWPORT_WIDTH}}
         {{#slideShow.VIEWPORT_HEIGHT}}
         width="{{{slideShow.VIEWPORT_WIDTH}}}" height="{{{slideShow.VIEWPORT_HEIGHT}}}"
         {{/slideShow.VIEWPORT_HEIGHT}}
         {{/slideShow.VIEWPORT_WIDTH}}> </iframe>
+    </div>
     {{{/slide}}}
     {{/slides}}
 </body>

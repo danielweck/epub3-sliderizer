@@ -66,8 +66,6 @@ body
 
 body:not(.reflow):not(.author)
 {
-	background-color: black;
-
 	position: relative;
 
 	left: 0;
@@ -76,6 +74,16 @@ body:not(.reflow):not(.author)
 	height:100%;
 
     overflow:hidden;
+}
+
+body:not(.epb3sldrzr-epubReadingSystem):not(.reflow):not(.author)
+{
+	background-color: black;
+}
+
+body.epb3sldrzr-epubReadingSystem
+{
+	background-color: white;
 }
 
 body.author
@@ -169,9 +177,9 @@ body:not(.reflow).basic.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body
 
 body:not(.reflow).static.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body
 {
-	border-radius: FONT_SIZEpx;
+	border-radius: 0;
     /*
-	border-radius: FONT_SIZErem;
+	border-radius: FONT_SIZEpx;
     */
 }
 
