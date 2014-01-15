@@ -552,7 +552,7 @@ body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle:before
     content: '';
     
     display: inline-block;
-        display:table-cell;
+    display: table-cell;
     
     vertical-align: middle;
     
@@ -569,6 +569,9 @@ body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle
 {
     height:960px;
 
+    overflow-y: auto;
+    overflow-x: hidden;
+    
     /* 
     line-height:960px;
     height: 100%;
@@ -578,9 +581,17 @@ body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle
 body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle > #epb3sldrzr-content-wrap.vertical-middle
 {
     display: inline-block;
-        display:table-cell;
+    display: table-cell;
         
     vertical-align: middle;
+
+    /*
+    THIS WORKS, JUST COMMENT THE :before CSS selector rule above
+    
+    position: relative;
+    top: 50%;
+    -PREFIXED_PROPERTY-transform: translateY(-50%);
+    */
 }
 
 body.reflow h1#epb3sldrzr-title.vertical-align
