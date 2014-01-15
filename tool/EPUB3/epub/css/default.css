@@ -445,6 +445,7 @@ Slide content
     overflow: hidden;
 }
 
+/*
 body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle:before
 {
     height: VIEWPORT_HEIGHTpx;
@@ -458,6 +459,7 @@ body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle:before
     
     margin-right: -0.25em;
 }
+*/
 
 /*
     white-space: nowrap;
@@ -468,7 +470,7 @@ body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle:before
 body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle
 {
     height:VIEWPORT_HEIGHTpx;
-
+ 
     /* 
     line-height:VIEWPORT_HEIGHTpx;
     height: 100%;
@@ -477,10 +479,18 @@ body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle
 
 body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle > #epb3sldrzr-content-wrap.vertical-middle
 {
+    /*
+    THIS WORKS, JUST UNCOMMENT THE :before CSS selector rule above
+    
     display: inline-block;
         display:table-cell;
         
     vertical-align: middle;
+    */
+    
+    position: relative;
+    top: 50%;
+    -PREFIXED_PROPERTY-transform: translateY(-50%);
 }
 
 body.reflow h1#epb3sldrzr-title.vertical-align

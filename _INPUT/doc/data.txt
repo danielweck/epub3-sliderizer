@@ -2350,7 +2350,7 @@ NO-MARKDOWN
 <div id="fatty" class="epb3sldrzr-animated fadeIn">
 <p>This slide's background
 <p>is a <strong>full-spread image</strong>.
-<p>This is a vertically-centered text overlay.
+<p>This rotated text is <br/> vertically-centered.
 
 
 // --------------------------------------------
@@ -2385,18 +2385,20 @@ html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
     font-family: Neuton, serif;
     
     text-align: center;
-    font-size: 2.3em;
+    font-size: 2.1em;
     
     color: rgba(0,0,0,0.7);
     color: #333333;
 
 
     text-shadow: 0 0 0.08em rgba(255, 255, 255, 0.9);
+    
+-PREFIXED_PROPERTY-transform: rotate(-5deg);
 }
 
 h1#epb3sldrzr-title
 {
-display: none;
+display: block;
 
     color:white;
 
