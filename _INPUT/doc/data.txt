@@ -2350,7 +2350,7 @@ NO-MARKDOWN
 <div id="fatty" class="epb3sldrzr-animated fadeIn">
 <p>This slide's background
 <p>is a <strong>full-spread image</strong>.
-<p>This rotated text is <br/> vertically-centered.
+<p>This rotated text is vertically-centered.
 
 
 // --------------------------------------------
