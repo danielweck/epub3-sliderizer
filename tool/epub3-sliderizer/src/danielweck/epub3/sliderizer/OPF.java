@@ -1,6 +1,5 @@
 package danielweck.epub3.sliderizer;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.xml.XMLConstants;
@@ -356,10 +355,22 @@ public final class OPF {
 
 			String htmlFileName = XHTML.getFileName(n);
 
+			boolean containsRemoteResources = slide.containsRemoteResources();
+
 			Element elementItem = create_ManifestItem(htmlFileName, document,
 					elementManifest, id, false, Epub3FileSet.FOLDER_HTML,
-					"scripted" + (slide.containsSVG ? " svg" : "")
-							+ (slide.containsMATHML ? " math" : ""));
+					"scripted"
+							+ (slide.containsSVG ? " svg" : "")
+							+ (slide.containsMATHML ? " math" : "")
+							+ (containsRemoteResources ? " remote-resources"
+									: ""));
+
+			if (containsRemoteResources) {
+				for (String src : slide.remoteResources) {
+					create_ManifestItem(src, document, elementManifest,
+							"remote-resource-", true, null, null);
+				}
+			}
 
 			String smilId = id + "_mo";
 
@@ -558,8 +569,12 @@ public final class OPF {
 			elementItem.setAttribute("id", id == null ? getNextID(null)
 					: (idPrefixOnly ? getNextID(id) : id));
 			elementItem.setAttribute("href", ref);
-			elementItem.setAttribute("media-type",
-					Epub3FileSet.getMediaType(path));
+
+			String mediaType = Epub3FileSet.getMediaType(path);
+			if (mediaType == null) {
+				mediaType = "text/html"; // application/xhtml+xml
+			}
+			elementItem.setAttribute("media-type", mediaType);
 
 			if (properties != null) {
 				elementItem.setAttribute("properties", properties);

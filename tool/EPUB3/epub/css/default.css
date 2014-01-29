@@ -95,7 +95,7 @@ img
     -PREFIXED_PROPERTY-backface-visibility: hidden;
 }
 
-img.full
+.full
 {
     position:absolute;
 
@@ -510,7 +510,7 @@ h1#epb3sldrzr-title.vertical-align
     top: 0px;
 }
 
-#epb3sldrzr-content > #epb3sldrzr-anim-overflow > #epb3sldrzr-content-wrap:not(.vertical-middle) > *:not(img):not(.spread)
+#epb3sldrzr-content > #epb3sldrzr-anim-overflow > #epb3sldrzr-content-wrap:not(.vertical-middle) > *:not(img):not(.spread):not(.full)
 {
     padding-left: FONT_SIZEpx;
     padding-right: FONT_SIZEpx;

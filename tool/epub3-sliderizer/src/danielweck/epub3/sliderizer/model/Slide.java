@@ -2,6 +2,8 @@ package danielweck.epub3.sliderizer.model;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import danielweck.epub3.sliderizer.Epub3FileSet;
 import danielweck.epub3.sliderizer.NavDoc;
@@ -59,6 +61,32 @@ public final class Slide extends Fielder {
 
 	public boolean containsSVG = false;
 	public boolean containsMATHML = false;
+
+	public ArrayList<String> remoteResources = null;
+
+	public boolean containsRemoteResources() {
+		if (remoteResources == null) {
+			remoteResources = new ArrayList<String>();
+
+			String regexp = "src\\s*=\\s*\"\\s*(https?[^\"]+)\\s*\"";
+
+			Pattern pattern = Pattern.compile(regexp);
+			Matcher matcher = pattern.matcher(this.CONTENT);
+			while (matcher.find()) {
+				for (int i = 1; i <= matcher.groupCount(); i++) {
+					String src = matcher.group(i);
+					
+					if (!src.startsWith("http")) {
+						throw new RuntimeException(src);
+					}
+					
+					remoteResources.add(src);
+				}
+			}
+		}
+
+		return remoteResources.size() > 0;
+	}
 
 	public String TITLE = "DEFAULT TITLE";
 	public String SUBTITLE = null;

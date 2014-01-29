@@ -655,6 +655,15 @@ public final class Epub3FileSet {
 		if (fileExtension.equalsIgnoreCase("mp4")) {
 			return "audio/mp4";
 		}
+		if (fileExtension.equalsIgnoreCase("mp4")) { // oops :(
+			return "video/mp4";
+		}
+		if (fileExtension.equalsIgnoreCase("webm")) {
+			return "video/webm";
+		}
+		if (fileExtension.equalsIgnoreCase("ogv")) {
+			return "video/ogg";
+		}
 		if (fileExtension.equalsIgnoreCase("pls")) {
 			return "application/pls+xml";
 		}

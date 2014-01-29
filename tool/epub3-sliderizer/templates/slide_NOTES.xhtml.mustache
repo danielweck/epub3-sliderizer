@@ -56,11 +56,13 @@
         {{/slideShow.JSs}}
         
         {{#slideShow.xJSs}}
-        <link href="../{{{slideShow.FOLDER_JS}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{.}}}" type="text/javascript" rel="script"/>
+        <script src="../{{{slideShow.FOLDER_JS}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{.}}}"> </script>
+        <!-- link href="../{{{slideShow.FOLDER_JS}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{.}}}" type="text/javascript" rel="script"/ -->
         {{/slideShow.xJSs}}
         
         {{#xJSs}}
-        <link href="../{{{slideShow.FOLDER_JS}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{.}}}" type="text/javascript" rel="script"/>
+        <script src="../{{{slideShow.FOLDER_JS}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{.}}}"> </script>
+        <!-- link href="../{{{slideShow.FOLDER_JS}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{.}}}" type="text/javascript" rel="script"/ -->
         {{/xJSs}}
 
         <link href="{{{SLIDE_FILENAME}}}" rel="back"/>
