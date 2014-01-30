@@ -31,9 +31,67 @@ NO-MARKDOWN
 // --------------------------------------------
 _CSS_STYLE
 
+.propName
+{
+    font-weight: bold;
+    font-family: monospace;
+}
+
+.propValue
+{
+    display: block;
+    width: 100%;
+    
+    text-align: right;
+    padding-right: 0.3em;
+}
+
+.function
+{
+    font-style: italic;
+    opacity: 0.6;
+}
+
+.objectOrArray
+{
+    color: #880000;
+    text-transform: uppercase;
+}
+
+.index
+{
+    color: #006633;
+}
+
+#dropzone > ul
+{
+    margin-left: 0;
+}
+
+ul
+{
+    margin-left: 0.5em;
+}
+
+li
+{
+    border-top: 0.15em solid #dddddd;
+    border-left: 0.1em dashed #dddddd;
+}
+
+li:before
+{
+    content: '' !important;
+    padding-right: 0;
+}
+
+li.name
+{
+    background-color: #F8FBEF;
+}
+
 #dropzone
 {
-    border: 2px solid blue;
     width: 100%;
 }
 
@@ -84,7 +142,7 @@ function dump()
     if (!navigator.epubReadingSystem)
     {
         navigator.epubReadingSystem = {
-            name: "UNDEFINED navigator.epubReadingSystem (simulated)",
+            name: "FAKE (simulated Javascript object)",
             version: "0.0.0",
             layoutStyle: "paginated",
             hasFeature: function (feature, version) {
@@ -210,7 +268,7 @@ function dump()
 
     var dropzone = document.getElementById("dropzone");
     
-    var dumpObject = function(object)
+    var dumpObject = function(object, parent)
     {
         if (!object) return;
 
@@ -221,30 +279,66 @@ function dump()
                 continue;
             }
 
-            var p = document.createElement('p');
-            dropzone.insertBefore(p, dropzone.childNodes[dropzone.childNodes.length-1]);
-
-            var txt = document.createTextNode(property);
-            p.appendChild(txt);
+            var index = parseInt(property);
             
             var value = object[property];
             
-            if(typeof value === 'object')
+            var isObjectOrArray = typeof value === 'object';
+            
+            var isFunction = false;
+            if (value.call) isFunction = true;
+            
+            var li = document.createElement('li');
+            parent.appendChild(li);
+
+            if (property === "name")
             {
-                dumpObject(value);
+                li.setAttribute("class", "name");
+            }
+
+            var span = document.createElement('span');
+            li.appendChild(span);
+            span.setAttribute("class", "propName" + (!isNaN(index) ? " index" : (isObjectOrArray ? " objectOrArray" : "")));
+
+            var txt = document.createTextNode(isNaN(index) ? property : ("#" + property));
+            span.appendChild(txt);
+            
+            if (isObjectOrArray)
+            {
+                var ul = document.createElement('ul');
+                li.appendChild(ul);
+            
+                dumpObject(value, ul);
             }
             else
             {
-                p = document.createElement('p');
-                dropzone.insertBefore(p, dropzone.childNodes[dropzone.childNodes.length-1]);
+                var div = document.createElement('span');
+                li.appendChild(div);
+                div.setAttribute("class", "propValue" + (isFunction ? " function" : ""));
 
-                txt = document.createTextNode(value.call ? "FUNCTION" : value);
-                p.appendChild(txt);
+                txt = document.createTextNode(isFunction ? "function" : value);
+
+                if (value.indexOf && value.indexOf("http") == 0)
+                {
+                    var a = document.createElement('a');
+                    div.appendChild(a);
+                    a.appendChild(txt);
+                    a.setAttribute("target", "_BLANK");
+                    
+                    a.setAttribute("href", value);
+                }
+                else
+                {
+                    div.appendChild(txt);
+                }
             }
         }
     };
 
-    dumpObject(navigator.epubReadingSystem);
+    var ul = document.createElement('ul');
+    dropzone.insertBefore(ul, dropzone.childNodes[dropzone.childNodes.length-1]);
+
+    dumpObject(navigator.epubReadingSystem, ul);
     
     setTimeout(function()
     {
