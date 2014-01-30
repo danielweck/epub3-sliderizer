@@ -24,7 +24,7 @@ _CONTENT
 
 NO-MARKDOWN
 
-<div id="spinner" class="full"></div>
+<div id="spinner" class="full"><p>&nbsp;</p></div>
 
 <div id="dropzone"><p>&nbsp;</p></div>
 
