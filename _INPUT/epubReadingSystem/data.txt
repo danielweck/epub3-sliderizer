@@ -1,0 +1,254 @@
+// --------------------------------------------
+_TITLE
+EPUB3 epubReadingSystem
+
+// --------------------------------------------
+_FILE_EPUB
+EPUB3-Sliderizer_epubReadingSystem.epub
+
+// --------------------------------------------
+_CREATOR
+Daniel Weck
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+navigator.epubReadingSystem
+
+// --------------------------------------------
+_CONTENT
+
+NO-MARKDOWN
+
+<div id="spinner" class="full"></div>
+
+<div id="dropzone"><p>&nbsp;</p></div>
+
+// --------------------------------------------
+_CSS_STYLE
+
+#dropzone
+{
+    border: 2px solid blue;
+    width: 100%;
+}
+
+#spinner
+{
+    -PREFIXED_PROPERTY-animation: rotation .6s infinite linear;
+    -PREFIXED_PROPERTY-border-radius: 100%;
+	
+    border-left: 0.5em solid rgba(0,174,239,.15);
+    border-right: 0.5em solid rgba(0,174,239,.15);
+    border-bottom: 0.5em solid rgba(0,174,239,.15);
+    border-top: 0.5em solid rgba(0,174,239,.8);
+    
+    /*
+    -PREFIXED_PROPERTY-animation: sweep 1s infinite linear;
+    -PREFIXED_PROPERTY-border-radius: 1em;
+    border-bottom: 0.5em solid black;
+    */
+}
+
+_PREFIXED_@keyframes rotation
+{
+	from
+    {
+        -PREFIXED_PROPERTY-transform: rotate(0deg);
+    }
+    
+	to
+    {
+        -PREFIXED_PROPERTY-transform: rotate(359deg);
+    }
+}
+_PREFIXED_@keyframes sweep
+{
+    to
+    {
+        -PREFIXED_PROPERTY-transform: rotate(360deg);
+    }
+}
+
+// --------------------------------------------
+_JS_SCRIPT
+
+document.addEventListener("DOMContentLoaded", function(e) { setTimeout(dump, 1500); }, false);
+
+function dump()
+{
+    if (!navigator.epubReadingSystem)
+    {
+        navigator.epubReadingSystem = {
+            name: "UNDEFINED navigator.epubReadingSystem (simulated)",
+            version: "0.0.0",
+            layoutStyle: "paginated",
+            hasFeature: function (feature, version) {
+
+                // for now all features must be version 1.0 so fail fast if the user has asked for something else
+                if (version && version !== "1.0") {
+                    return false;
+                }
+
+                if (feature === "dom-manipulation") {
+                    // Scripts may make structural changes to the document’s DOM (applies to spine-level scripting only).
+                    return true;
+                }
+                if (feature === "layout-changes") {
+                    // Scripts may modify attributes and CSS styles that affect content layout (applies to spine-level scripting only).
+                    return true;
+                }
+                if (feature === "touch-events") {
+                    // The device supports touch events and the Reading System passes touch events to the content.
+                    return false;
+                }
+                if (feature === "mouse-events") {
+                    // The device supports mouse events and the Reading System passes mouse events to the content.
+                    return true;
+                }
+                if (feature === "keyboard-events") {
+                    // The device supports keyboard events and the Reading System passes keyboard events to the content.
+                    return true;
+                }
+
+                if (feature === "spine-scripting") {
+                    //Spine-level scripting is supported.
+                    return true;
+                }
+
+                return false;
+            },
+    
+            readium:
+            {
+            about: "Readium Foundation, IDPF",
+            components:
+            [
+                {
+                    name: "LauncherAppOSX",
+                    description: "Native 'launcher' application",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+                {
+                    name: "CoreCPP",
+                    description: "Readium core C++ SDK",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+                {
+                    name: "SharedJS",
+                    description: "Readium shared JavaScript module",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+                {
+                    name: "ReadiumJS",
+                    description: "Readium JavaScript code for web browser 'cloud reader'",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+                {
+                    name: "ReadiumJS_Viewer",
+                    description: "Readium viewer application for web browser 'cloud reader'",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+                {
+                    name: "ReadiumChrome",
+                    description: "Readium Chrome extension",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+                {
+                    name: "SimpleHTTPServer",
+                    description: "Jim Dovey's HTTP server",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+                {
+                    name: "CFI_JS",
+                    description: "Readium CFI JavaScript library",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+            ]
+            },
+    
+            epubWidget_GetSize: function(id)
+            {
+                if (!epubWidget) return;
+     
+                var widget = epubWidget.get(id);
+                if (!widget) return;
+        
+                return widget.getSize();
+            },
+            epubWidget_PostMessage: function(id, msg)
+            {
+                if (!epubWidget) return;
+        
+                var widget = epubWidget.get(id);
+                if (!widget) return;
+        
+                widget.postMessage(JSON.jsonify(msg));
+            }
+        };
+    }
+
+    var dropzone = document.getElementById("dropzone");
+    
+    var dumpObject = function(object)
+    {
+        if (!object) return;
+
+        for (var property in object)
+        {
+            if (!object.hasOwnProperty(property))
+            {
+                continue;
+            }
+
+            var p = document.createElement('p');
+            dropzone.insertBefore(p, dropzone.childNodes[dropzone.childNodes.length-1]);
+
+            var txt = document.createTextNode(property);
+            p.appendChild(txt);
+            
+            var value = object[property];
+            
+            if(typeof value === 'object')
+            {
+                dumpObject(value);
+            }
+            else
+            {
+                p = document.createElement('p');
+                dropzone.insertBefore(p, dropzone.childNodes[dropzone.childNodes.length-1]);
+
+                txt = document.createTextNode(value.call ? "FUNCTION" : value);
+                p.appendChild(txt);
+            }
+        }
+    };
+
+    dumpObject(navigator.epubReadingSystem);
+    
+    setTimeout(function()
+    {
+        var spinner = document.getElementById("spinner");
+        spinner.style.display = "none";
+    }, 500);
+}
