@@ -23,6 +23,8 @@ git status --short ${TARGET}
 
 git ls-files --exclude-standard --others ${TARGET} | xargs git add
 
+git add "EPUB3-Sliderizer_${TARGET}.epub"
+
 git status
 
 git status --short ${TARGET}
