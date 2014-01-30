@@ -288,7 +288,7 @@ function dump()
             var isFunction = false;
             if (value.call) isFunction = true;
             
-            var li = document.createElement('li');
+            var li = document.createElementNS("http://www.w3.org/1999/xhtml", 'li');
             parent.appendChild(li);
 
             if (property === "name")
@@ -296,7 +296,7 @@ function dump()
                 li.setAttribute("class", "name");
             }
 
-            var span = document.createElement('span');
+            var span = document.createElementNS("http://www.w3.org/1999/xhtml", 'span');
             li.appendChild(span);
             span.setAttribute("class", "propName" + (!isNaN(index) ? " index" : (isObjectOrArray ? " objectOrArray" : "")));
 
@@ -305,14 +305,14 @@ function dump()
             
             if (isObjectOrArray)
             {
-                var ul = document.createElement('ul');
+                var ul = document.createElementNS("http://www.w3.org/1999/xhtml", 'ul');
                 li.appendChild(ul);
             
                 dumpObject(value, ul);
             }
             else
             {
-                var div = document.createElement('span');
+                var div = document.createElementNS("http://www.w3.org/1999/xhtml", 'span');
                 li.appendChild(div);
                 div.setAttribute("class", "propValue" + (isFunction ? " function" : ""));
 
@@ -320,7 +320,7 @@ function dump()
 
                 if (value.indexOf && value.indexOf("http") == 0)
                 {
-                    var a = document.createElement('a');
+                    var a = document.createElementNS("http://www.w3.org/1999/xhtml", 'a');
                     div.appendChild(a);
                     a.appendChild(txt);
                     a.setAttribute("target", "_BLANK");
@@ -335,13 +335,14 @@ function dump()
         }
     };
 
-    var ul = document.createElement('ul');
-    dropzone.insertBefore(ul, dropzone.childNodes[dropzone.childNodes.length-1]);
-
+    var ul = document.createElementNS("http://www.w3.org/1999/xhtml", 'ul');
+    
     dumpObject(navigator.epubReadingSystem, ul);
     
     setTimeout(function()
     {
+        dropzone.insertBefore(ul, dropzone.childNodes[dropzone.childNodes.length-1]);
+
         var spinner = document.getElementById("spinner");
         spinner.style.display = "none";
     }, 500);
