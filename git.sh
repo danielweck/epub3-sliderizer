@@ -13,6 +13,8 @@ fi
 
 cp _OUTPUT/content/*.epub .
 
+mkdir ${TARGET}
+
 cp -r _OUTPUT/content/EPUB3/* ${TARGET}
 
 git status
