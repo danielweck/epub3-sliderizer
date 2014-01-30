@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_1" lang="en-US" xml:lang="en-US">
+    <head>
+        <meta charset="UTF-8"/>
+
+        <meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/>
+        <meta content="EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook" name="keywords"/>
+        
+        <title>(1/1) EPUB3 epubReadingSystem / navigator.epubReadingSystem</title>
+
+        <meta content="1" name="slideIndex"/>
+        <meta content="1" name="slideCount"/>
+        
+        <link href="../img/favicon.ico" rel="shortcut icon"/>
+        
+        
+        <meta content="width=1290, height=1000" name="viewport"/>
+        
+        <link href="fonts/fonts.css" rel="stylesheet" type="text/css"/>
+        <link href="fonts/FontAwesome.css" rel="stylesheet" type="text/css"/>
+        
+        <link href="../css/struct.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/incrementals.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/animations.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/controls.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/default.css" rel="stylesheet" type="text/css"/>
+        
+        
+        
+        
+        
+        <script src="../js/jquery.min.js"> </script>
+        <script src="../js/default.js"> </script>
+        
+        
+
+        
+
+        <link href="../nav.xhtml" rel="nav"/>
+
+        <link href="../print.xhtml" rel="print"/>
+        
+        
+                
+        <link href="../../../EPUB3-Sliderizer_epubReadingSystem.epub" rel="epub"/>
+
+        
+
+        <style type="text/css">
+        /*<![CDATA[*/
+        .propName
+{
+font-weight: bold;
+font-family: monospace;
+}
+.propValue
+{
+display: block;
+width: 100%;
+text-align: right;
+padding-right: 0.3em;
+}
+.function
+{
+font-style: italic;
+opacity: 0.6;
+}
+.objectOrArray
+{
+color: #880000;
+text-transform: uppercase;
+}
+.index
+{
+color: #006633;
+}
+#dropzone > ul
+{
+margin-left: 0;
+}
+ul
+{
+margin-left: 0.5em;
+}
+li
+{
+border-top: 0.15em solid #dddddd;
+border-left: 0.1em dashed #dddddd;
+}
+li:before
+{
+content: '' !important;
+padding-right: 0;
+}
+li.name
+{
+background-color: #F8FBEF;
+}
+#dropzone
+{
+width: 100%;
+}
+#spinner
+{
+
+-webkit-animation: rotation .6s infinite linear;
+-moz-animation: rotation .6s infinite linear;
+-ms-animation: rotation .6s infinite linear;
+-o-animation: rotation .6s infinite linear;
+animation: rotation .6s infinite linear;
+
+
+-webkit-border-radius: 100%;
+-moz-border-radius: 100%;
+-ms-border-radius: 100%;
+-o-border-radius: 100%;
+border-radius: 100%;
+
+border-left: 0.5em solid rgba(0,174,239,.15);
+border-right: 0.5em solid rgba(0,174,239,.15);
+border-bottom: 0.5em solid rgba(0,174,239,.15);
+border-top: 0.5em solid rgba(0,174,239,.8);
+/*
+-PREFIXED_PROPERTY-animation: sweep 1s infinite linear;
+-PREFIXED_PROPERTY-border-radius: 1em;
+border-bottom: 0.5em solid black;
+*/
+}
+
+@-webkit-keyframes rotation
+{
+from
+{
+-webkit-transform: rotate(0deg);
+}
+to
+{
+-webkit-transform: rotate(359deg);
+}
+}
+@-moz-keyframes rotation
+{
+from
+{
+-moz-transform: rotate(0deg);
+}
+to
+{
+-moz-transform: rotate(359deg);
+}
+}
+@-ms-keyframes rotation
+{
+from
+{
+-ms-transform: rotate(0deg);
+}
+to
+{
+-ms-transform: rotate(359deg);
+}
+}
+@-o-keyframes rotation
+{
+from
+{
+-o-transform: rotate(0deg);
+}
+to
+{
+-o-transform: rotate(359deg);
+}
+}
+@keyframes rotation
+{
+from
+{
+transform: rotate(0deg);
+}
+to
+{
+transform: rotate(359deg);
+}
+}
+
+
+@-webkit-keyframes sweep
+{
+to
+{
+-webkit-transform: rotate(360deg);
+}
+}
+@-moz-keyframes sweep
+{
+to
+{
+-moz-transform: rotate(360deg);
+}
+}
+@-ms-keyframes sweep
+{
+to
+{
+-ms-transform: rotate(360deg);
+}
+}
+@-o-keyframes sweep
+{
+to
+{
+-o-transform: rotate(360deg);
+}
+}
+@keyframes sweep
+{
+to
+{
+transform: rotate(360deg);
+}
+}
+
+        /*]]>*/
+        </style>
+
+        
+
+
+        <script>
+        //<![CDATA[
+        document.addEventListener("DOMContentLoaded", function(e) { setTimeout(dump, 1500); }, false);
+function dump()
+{
+if (!navigator.epubReadingSystem)
+{
+navigator.epubReadingSystem = {
+name: "FAKE (simulated Javascript object)",
+version: "0.0.0",
+layoutStyle: "paginated",
+hasFeature: function (feature, version) {
+if (version && version !== "1.0") {
+return false;
+}
+if (feature === "dom-manipulation") {
+return true;
+}
+if (feature === "layout-changes") {
+return true;
+}
+if (feature === "touch-events") {
+return false;
+}
+if (feature === "mouse-events") {
+return true;
+}
+if (feature === "keyboard-events") {
+return true;
+}
+if (feature === "spine-scripting") {
+//Spine-level scripting is supported.
+return true;
+}
+return false;
+},
+readium:
+{
+about: "Readium Foundation, IDPF",
+components:
+[
+{
+name: "LauncherAppOSX",
+description: "Native 'launcher' application",
+url: "http://github.com/readium/",
+version: "0.1.2",
+commit_hash: "abcd"
+},
+{
+name: "CoreCPP",
+description: "Readium core C++ SDK",
+url: "http://github.com/readium/",
+version: "0.1.2",
+commit_hash: "abcd"
+},
+{
+name: "SharedJS",
+description: "Readium shared JavaScript module",
+url: "http://github.com/readium/",
+version: "0.1.2",
+commit_hash: "abcd"
+},
+{
+name: "ReadiumJS",
+description: "Readium JavaScript code for web browser 'cloud reader'",
+url: "http://github.com/readium/",
+version: "0.1.2",
+commit_hash: "abcd"
+},
+{
+name: "ReadiumJS_Viewer",
+description: "Readium viewer application for web browser 'cloud reader'",
+url: "http://github.com/readium/",
+version: "0.1.2",
+commit_hash: "abcd"
+},
+{
+name: "ReadiumChrome",
+description: "Readium Chrome extension",
+url: "http://github.com/readium/",
+version: "0.1.2",
+commit_hash: "abcd"
+},
+{
+name: "SimpleHTTPServer",
+description: "Jim Dovey's HTTP server",
+url: "http://github.com/readium/",
+version: "0.1.2",
+commit_hash: "abcd"
+},
+{
+name: "CFI_JS",
+description: "Readium CFI JavaScript library",
+url: "http://github.com/readium/",
+version: "0.1.2",
+commit_hash: "abcd"
+},
+]
+},
+epubWidget_GetSize: function(id)
+{
+if (!epubWidget) return;
+var widget = epubWidget.get(id);
+if (!widget) return;
+return widget.getSize();
+},
+epubWidget_PostMessage: function(id, msg)
+{
+if (!epubWidget) return;
+var widget = epubWidget.get(id);
+if (!widget) return;
+widget.postMessage(JSON.jsonify(msg));
+}
+};
+}
+var dropzone = document.getElementById("dropzone");
+var dumpObject = function(object, parent)
+{
+if (!object) return;
+for (var property in object)
+{
+if (!object.hasOwnProperty(property))
+{
+continue;
+}
+var index = parseInt(property);
+var value = object[property];
+var isObjectOrArray = typeof value === 'object';
+var isFunction = false;
+if (value.call) isFunction = true;
+var li = document.createElement('li');
+parent.appendChild(li);
+if (property === "name")
+{
+li.setAttribute("class", "name");
+}
+var span = document.createElement('span');
+li.appendChild(span);
+span.setAttribute("class", "propName" + (!isNaN(index) ? " index" : (isObjectOrArray ? " objectOrArray" : "")));
+var txt = document.createTextNode(isNaN(index) ? property : ("#" + property));
+span.appendChild(txt);
+if (isObjectOrArray)
+{
+var ul = document.createElement('ul');
+li.appendChild(ul);
+dumpObject(value, ul);
+}
+else
+{
+var div = document.createElement('span');
+li.appendChild(div);
+div.setAttribute("class", "propValue" + (isFunction ? " function" : ""));
+txt = document.createTextNode(isFunction ? "function" : value);
+if (value.indexOf && value.indexOf("http") == 0)
+{
+var a = document.createElement('a');
+div.appendChild(a);
+a.appendChild(txt);
+a.setAttribute("target", "_BLANK");
+a.setAttribute("href", value);
+}
+else
+{
+div.appendChild(txt);
+}
+}
+}
+};
+var ul = document.createElement('ul');
+dropzone.insertBefore(ul, dropzone.childNodes[dropzone.childNodes.length-1]);
+dumpObject(navigator.epubReadingSystem, ul);
+setTimeout(function()
+{
+var spinner = document.getElementById("spinner");
+spinner.style.display = "none";
+}, 500);
+}
+        //]]>
+        </script>
+
+</head>
+<body epub:type="bodymatter">
+    <div id="epb3sldrzr-body">
+        
+        <div id="epb3sldrzr-root">
+
+
+
+            <section id="epb3sldrzr-content">
+
+                <div id="epb3sldrzr-anim-overflow">
+
+                    <h1 id="epb3sldrzr-title">navigator.epubReadingSystem</h1>
+
+<div id="epb3sldrzr-content-wrap">
+                    <!--SOUP-->
+<div class="full" id="spinner"/>
+<div id="dropzone"><p> </p></div>
+</div>
+
+                </div>
+
+             </section>
+         </div>
+     </div>
+
+</body>
+</html>
