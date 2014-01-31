@@ -75,7 +75,9 @@ echo "Compiling: ${class}"
 
 javac -classpath ".:${root}/tool/epub3-sliderizer/lib/guava-15.0.jar:${root}/tool/epub3-sliderizer/lib/mustache-compiler-0.8.13.jar:${root}/tool/epub3-sliderizer/lib/asm-all-4.1.jar:${root}/tool/epub3-sliderizer/lib/parboiled-core-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/parboiled-java-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/pegdown-1.4.1.jar:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar" "${root}/tool/epub3-sliderizer/src/Main.java" -d "${bin}" -sourcepath "${root}/tool/epub3-sliderizer/src" #-verbose
 
-exitValue=$? 
+exitValue=$?
+
+echo "[INFO] javac: ${exitValue}"
 
 if [ $exitValue != 0 ] 
 then
@@ -95,7 +97,9 @@ echo ${EPUB_FOLDER}
 
 java -classpath "${root}/tool/epub3-sliderizer/lib/guava-15.0.jar:${root}/tool/epub3-sliderizer/lib/mustache-compiler-0.8.13.jar:${root}/tool/epub3-sliderizer/lib/asm-all-4.1.jar:${root}/tool/epub3-sliderizer/lib/parboiled-core-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/parboiled-java-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/pegdown-1.4.1.jar:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar:${bin}" Main ${DATA_url} ${EPUB_FOLDER} ${VERBOSITY}
 
-exitValue=$? 
+exitValue=$?
+
+echo "[INFO] java (sliderize XHTML): ${exitValue}"
 
 if [ $exitValue != 0 ] 
 then
@@ -116,7 +120,9 @@ cd ${root}
 ./pack-epub.sh
 ############################################################
 
-exitValue=$? 
+exitValue=$?
+
+echo "[INFO] pack-epub.sh: ${exitValue}"
 
 if [ $exitValue != 0 ] 
 then
@@ -131,12 +137,18 @@ mv "${root}/_OUTPUT/content/EPUB3-Sliderizer.epub" "${root}/_OUTPUT/content/${EP
 
 cd ./tool/epub3-sliderizer/
 
+
+exit
+
+
 # SECOND PASS => HTML content editable author mode
 VERBOSITY="VERBOSE_max"
 
 java -classpath "${root}/tool/epub3-sliderizer/lib/guava-15.0.jar:${root}/tool/epub3-sliderizer/lib/mustache-compiler-0.8.13.jar:${root}/tool/epub3-sliderizer/lib/asm-all-4.1.jar:${root}/tool/epub3-sliderizer/lib/parboiled-core-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/parboiled-java-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/pegdown-1.4.1.jar:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar:${bin}" Main ${DATA_url} ${EPUB_FOLDER} ${VERBOSITY}
 
-exitValue=$? 
+exitValue=$?
+
+echo "[INFO] java (sliderize HTML): ${exitValue}"
 
 if [ $exitValue != 0 ] 
 then

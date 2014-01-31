@@ -41,6 +41,48 @@ _CSS_STYLE
     height: 650px;
 }
 
+// #########################################################
+// #########################################################
+// #########################################################
+// -SLIDE
+// --------------------------------------------
+// _TITLE
+// Video.js YouTube plugin
+// --------------------------------------------
+// _CONTENT
+// 
+// NO-MARKDOWN
+// 
+//  <!-- video id="vid1" src="http://www.youtube.com/dummy.mp4" class="video-js vjs-default-skin" controls="controls" 
+//            preload="auto" autoplay="autoplay" loop="loop" width="640" height="360" 
+//            data-setup='{ "techOrder": ["youtube"], "src": "http://www.youtube.com/watch?v=xjS6SftYQaQ" }'>
+//     </video>
+//     <br / -->
+// 
+//     <video id="vid2" src="http://www.youtube.com/dummy.mp4" class="video-js vjs-default-skin" controls="controls"  
+//            preload="auto" width="640" height="360" 
+//            data-setup='{ "techOrder": ["youtube"], "src": "http://www.youtube.com/watch?v=xjS6SftYQaQ", "ytcontrols": true }'>
+//     </video>
+//     
+//     <!-- br />
+// 
+//     <video id="vid3" src="http://www.youtube.com/dummy.mp4" class="video-js vjs-default-skin" controls="controls" 
+//            preload="auto" width="640" height="360">
+//     </video -->
+// --------------------------------------------
+// _FILES_JS
+// 
+// video.js
+// vjs.youtube.js
+// --------------------------------------------
+// _JS_SCRIPT
+// 
+//     videojs('vid3', { "techOrder": ["youtube"], "src": "http://www.youtube.com/watch?v=xjS6SftYQaQ" }).ready(function() {
+//       // Cue a video using ended event
+//       this.one('ended', function() {
+//         this.src('http://www.youtube.com/watch?v=jofNR_WkoCE');
+//       });
+//     });
 
 // #########################################################
 // #########################################################
