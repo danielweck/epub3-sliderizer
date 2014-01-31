@@ -395,9 +395,9 @@ div.appendChild(txt);
 };
 var ul = document.createElementNS("http://www.w3.org/1999/xhtml", 'ul');
 dumpObject(navigator.epubReadingSystem, ul);
+dropzone.insertBefore(ul, dropzone.childNodes[dropzone.childNodes.length-1]);
 setTimeout(function()
 {
-dropzone.insertBefore(ul, dropzone.childNodes[dropzone.childNodes.length-1]);
 var spinner = document.getElementById("spinner");
 spinner.style.display = "none";
 }, 500);
@@ -420,9 +420,19 @@ spinner.style.display = "none";
                     <h1 id="epb3sldrzr-title">navigator.epubReadingSystem</h1>
 
 <div id="epb3sldrzr-content-wrap">
-                    <!--SOUP-->
-<div class="full" id="spinner"><p> </p></div>
-<div id="dropzone"><p> </p></div>
+                    <!--XML-->
+<!--
+Note that any HTML entity (not valid XML) triggers "tagsoup" parser mode in Epub3Sliderizer:
+&nbsp;
+-->
+<!--
+Line breaks in the divs below are important! (could be replaced by space character, or the above equivalent HTML emtity)
+(otherwise the markup adopts self-closing XML elements, which break HTML parser in web browsers)
+-->
+<div class="full" id="spinner">
+</div>
+<div id="dropzone"><p>
+</p></div>
 </div>
 
                 </div>
