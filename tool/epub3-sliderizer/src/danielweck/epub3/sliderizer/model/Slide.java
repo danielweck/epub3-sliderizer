@@ -305,12 +305,14 @@ public final class Slide extends Fielder {
 	}
 
 	public String CSS_STYLE = null;
+	public static String FIELD_CSS_STYLE = "CSS_STYLE";
 
 	public String CSS_STYLING() throws Exception {
 		return Epub3FileSet.processCssStyle(slideShow, CSS_STYLE);
 	}
 
 	public String JS_SCRIPT = null;
+	public static String FIELD_JS_SCRIPT = "JS_SCRIPT";
 
 	public String NOTES = null;
 	public static String FIELD_NOTES = "NOTES";

@@ -96,7 +96,7 @@ public abstract class Fielder {
 	static final String COMMENT_PREFIX = "// ";
 
 	protected static String nextLine(BufferedReader bufferedReader,
-			int verbosity, boolean preserveWhitespace) throws IOException {
+			int verbosity, boolean preserveWhitespace, String currentFieldName) throws IOException {
 		// Windows CR LF "\r\n"
 		// (0Dh 0Ah for DOS, 0Dh for older Macs, 0Ah for Unix/Linux)
 
@@ -115,7 +115,10 @@ public abstract class Fielder {
 			}
 
 			if (// !preserveWhitespace &&
-			nextLine.startsWith(COMMENT_PREFIX)) {
+                (currentFieldName == null || (!currentFieldName.equals(Slide.FIELD_JS_SCRIPT)
+                    //&& !currentFieldName.equals(Slide.FIELD_CSS_STYLE) BECAUSE COMMENT BEFORE NEXT FIELD NAME GETS INCLUDED! :(
+                        ))
+            && nextLine.startsWith(COMMENT_PREFIX)) {
 				continue;
 			}
 
@@ -163,7 +166,7 @@ public abstract class Fielder {
 		String line = null;
 		StringBuilder lines = new StringBuilder();
 		while (true) {
-			line = nextLine(bufferedReader, verbosity, preserveWhitespace);
+			line = nextLine(bufferedReader, verbosity, preserveWhitespace, currentFieldName);
 
 			String found = null;
 			boolean special = false;
@@ -195,7 +198,7 @@ public abstract class Fielder {
 					break;
 				} else if (found != null) {
 					currentFieldName = found;
-					if (currentFieldName.equals(Slide.FIELD_CONTENT) || currentFieldName.equals(Slide.FIELD_NOTES)) {
+					if (currentFieldName.equals(Slide.FIELD_CONTENT) || currentFieldName.equals(Slide.FIELD_NOTES) || currentFieldName.equals(Slide.FIELD_JS_SCRIPT) || currentFieldName.equals(Slide.FIELD_CSS_STYLE)) {
 						preserveWhitespace = true;
 					}
 				} else if (special) {

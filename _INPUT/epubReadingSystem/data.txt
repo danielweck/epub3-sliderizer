@@ -152,6 +152,7 @@ document.addEventListener("DOMContentLoaded", function(e) { setTimeout(dump, 150
 
 function dump()
 {
+
     if (!navigator.epubReadingSystem)
     {
         navigator.epubReadingSystem = {
@@ -279,7 +280,6 @@ function dump()
         };
     }
 
-    var dropzone = document.getElementById("dropzone");
     
     var dumpObject = function(object, parent)
     {
@@ -296,10 +296,10 @@ function dump()
             
             var value = object[property];
             
-            var isObjectOrArray = typeof value === 'object';
+            var isObjectOrArray = value && (typeof value === 'object');
             
             var isFunction = false;
-            if (value.call) isFunction = true;
+            if (value && value.call) isFunction = true;
             
             var li = document.createElementNS("http://www.w3.org/1999/xhtml", 'li');
             parent.appendChild(li);
@@ -347,16 +347,181 @@ function dump()
             }
         }
     };
-
+    
+    
+    var dropzone = document.getElementById("dropzone");
+    var root = dropzone.parentNode;
+    
     var ul = document.createElementNS("http://www.w3.org/1999/xhtml", 'ul');
-    
     dumpObject(navigator.epubReadingSystem, ul);
-    
     dropzone.insertBefore(ul, dropzone.childNodes[dropzone.childNodes.length-1]);
+
+
+
+    function introspect(obj, filter, parent)
+    {
+        for (var prop in obj)
+        {
+            if (obj.hasOwnProperty(prop))
+            {
+// log(typeof obj);
+// log(typeof prop);
+                                
+                var p = prop.toLowerCase();
+
+                if (!filter ||
+(p.indexOf("webkit") < 0 &&
+p.indexOf("sliderizer") < 0 &&
+(
+    prop === "X"
+//prop === "BKDOMCleanup"
+//prop === "BKEpubLocation"
+//prop === "BKContentTheme"
+//prop === "BKSearchInsensitively" // native code
+//prop === "BKConsoleLog" // native code
+//prop === "__bk_original_addEventListener" // native code
+//prop === "__BKPatchAddEventListener"
+// prop === "stashedCFI" null
+// prop === "lastClickedAnchorID" null
+// prop === "stashCFIForClickedElement" null
+//prop === "CFIUtilities"
+//prop === "CFI"
+
+//prop === "loadFunction" //document.__bk_original_addEventListener("click", stashCFIForClickedElement, true /* capture instead of bubble */);
+
+//true
+//prop.indexOf("on") === 0
+
+
+// p.indexOf("read") >= 0
+// p.indexOf("audio") >= 0 ||
+// p.indexOf("aloud") >= 0 ||
+// p.indexOf("smil") >= 0
+
+// p.indexOf("bk") >= 0 ||
+// p.indexOf("book") >= 0 ||
+// p.indexOf("apple") >= 0 ||
+// p.indexOf("html") >= 0 ||
+// p.indexOf("nav") >= 0 ||
+// p.indexOf("console") >= 0 ||
+// p.indexOf("alert") >= 0
+))
+                )
+                {
+                    var newParent = parent + " >>> " + prop;
+        
+                    log("-----------------");
+                    log(newParent);
+            
+                    var value = obj[prop];
+                    var type = typeof value;
+                    log(type);
+log(value);
+                    if (
+//false &&
+                    value !== null
+                    &&
+                    (type !== "undefined")
+                    &&
+                    (type !== "string")
+                    &&
+                    (type !== "number")
+                    &&
+                    (type !== "boolean")
+                        //filter && // 1-recursive deep
+                        //&& (isObjectOrArray || isFunction)
+                    )
+                    {
+                        // if (value.toString)
+                        // {
+                        //     log(value.toString());
+                        // }
+                    
+                        log("...");
+                    
+                        try
+                        {
+                            introspect(value, false, newParent);
+                        }
+                        catch(e)
+                        {
+                            log("oops!");
+                            log(e);
+                        }
+                    }
+            
+                    //log(isObjectOrArray ? "isObjectOrArray" : (isFunction ? "isFunction" : "??"));
+                }
+            }
+        }
+    }
+    
+    function log(text)
+    {
+        // var p = document.createElementNS("http://www.w3.org/1999/xhtml", 'p');
+        // var txt = document.createTextNode(text);
+        // p.appendChild(txt);
+        // root.insertBefore(p, root.childNodes[0]);
+        
+        console.log(text);
+    }
+    
+    if (typeof BKConsoleLog !== "undefined")
+    {
+        BKConsoleLog("BKConsoleLog();");
+        //BKConsoleLog(window.console.log); // NATIVE FUNCTION CODE
+    
+        if (true
+            //typeof window.console === "undefined"
+        )
+        {
+            BKConsoleLog("HIJACK window.console");
+        
+            window.console = {
+                log: function(txt){BKConsoleLog(txt);},
+                debug:  function(txt){BKConsoleLog(txt);},
+                warn:  function(txt){BKConsoleLog(txt);},
+                error: function(txt){BKConsoleLog(txt);}
+            };
+        
+            window.alert = function(txt){BKConsoleLog(txt);}
+        }
+    }
+
+    //alert("ALERT");
+    console.log("LOG");
+    console.error("ERROR");
+    console.debug("DEBUG");
+    console.warn("WARN");
+    
+    //log(window.parent.document.body.innerHTML.toString());
+    
+
+    log("INTROSPECT: " + window.location.href);
+    
+    introspect(window, true, "window");
+    //introspect(window.document, true, "document");
     
     setTimeout(function()
     {
         var spinner = document.getElementById("spinner");
         spinner.style.display = "none";
+        
+        //window.setTimeout(function() { window.location = "warn://events"; }, 2000);
+
+        // setTimeout(function()
+        // {
+        //     try
+        //     {
+        //         console.log("Attempting hack...");
+        //         //window.parent.document.body.innerHTML = "HACKED";
+        //     }
+        //     catch(e)
+        //     {
+        //         console.error(e);
+        //         console.log("Cannot hack host.");
+        //     }
+        // }, 1000);
+        
     }, 500);
 }
