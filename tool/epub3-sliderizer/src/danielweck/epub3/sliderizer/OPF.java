@@ -112,8 +112,8 @@ public final class OPF {
 					"http://purl.org/dc/elements/1.1/", "dc:identifier");
 			elementMetadata.appendChild(elementId);
 			elementId.setAttribute("id", UID);
-			elementId
-					.appendChild(document.createTextNode(slideShow.IDENTIFIER));
+			elementId.appendChild(document.createTextNode(slideShow.IDENTIFIER
+					+ (slideShow.FIXED() ? "" : "_REFLOW")));
 		}
 
 		if (slideShow.LANGUAGE != null) {
@@ -128,7 +128,8 @@ public final class OPF {
 			Element elementTitle = document.createElementNS(
 					"http://purl.org/dc/elements/1.1/", "dc:title");
 			elementMetadata.appendChild(elementTitle);
-			elementTitle.appendChild(document.createTextNode(slideShow.TITLE));
+			elementTitle.appendChild(document.createTextNode(slideShow.TITLE
+					+ (slideShow.FIXED() ? "" : " [REFLOW]")));
 		}
 
 		if (slideShow.SUBJECT != null) {
@@ -181,7 +182,9 @@ public final class OPF {
 		Element elementMeta = document.createElement("meta");
 		elementMetadata.appendChild(elementMeta);
 		elementMeta.setAttribute("property", "rendition:layout");
-		elementMeta.appendChild(document.createTextNode("pre-paginated"));
+		elementMeta
+				.appendChild(document.createTextNode(slideShow.FIXED() ? "pre-paginated"
+						: "reflowable"));
 
 		Element elementMeta2 = document.createElement("meta");
 		elementMetadata.appendChild(elementMeta2);
@@ -213,7 +216,8 @@ public final class OPF {
 		elementPackage.appendChild(elementManifest);
 
 		create_ManifestItem(NavDoc.getFileName(), document, elementManifest,
-				"nav", false, ".", "nav scripted");
+				"nav", false, ".", "nav"
+						+ (slideShow.FIXED() ? " scripted" : ""));
 
 		create_ManifestItem(Print.getFileName(), document, elementManifest,
 				"print", false, ".", "scripted");

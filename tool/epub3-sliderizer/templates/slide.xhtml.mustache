@@ -6,7 +6,9 @@
     xmlns:svg="http://www.w3.org/2000/svg"
     id="epb3sldrzr-Slide_{{{SLIDE_NUMBER}}}"
     lang="{{{slideShow.LANGUAGE}}}"
-    xml:lang="{{{slideShow.LANGUAGE}}}">
+    xml:lang="{{{slideShow.LANGUAGE}}}"
+    {{#slideShow.REFLOW}}style="background-color: white;"{{/slideShow.REFLOW}}
+    >
     <head>
         <meta charset="UTF-8"/>
 
@@ -24,11 +26,13 @@
         <link href="../{{{slideShow.FOLDER_IMG}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{slideShow.TOUCHICON}}}" rel="apple-touch-icon"/>
         {{/slideShow.TOUCHICON}}
         
+        {{#slideShow.FIXED}}
         {{#slideShow.VIEWPORT_WIDTH}}
         {{#slideShow.VIEWPORT_HEIGHT}}
         <meta content="width={{{slideShow.VIEWPORT_WIDTH}}}, height={{{slideShow.VIEWPORT_HEIGHT}}}" name="viewport"/>
         {{/slideShow.VIEWPORT_HEIGHT}}
         {{/slideShow.VIEWPORT_WIDTH}}
+        {{/slideShow.FIXED}}
         
         {{#slideShow.CSS_FONTS}}
         <link href="{{{slideShow.FOLDER_FONTS}}}/{{{FILE}}}" rel="stylesheet" type="text/css"/>
@@ -54,9 +58,11 @@
         <link href="{{{slideShow.FOLDER_FONTS}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{.}}}" rel="stylesheet" type="text/css"/>
         {{/xCSSs_FONTS}}
         
+        {{#slideShow.FIXED}}
         {{#slideShow.JSs}}
         <script src="../{{{slideShow.FOLDER_JS}}}/{{{FILE}}}"> </script>
         {{/slideShow.JSs}}
+        {{/slideShow.FIXED}}
         
         {{#slideShow.xJSs}}
         <script src="../{{{slideShow.FOLDER_JS}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{.}}}"> </script>
@@ -111,7 +117,7 @@
         {{/CSS_STYLE}}
 
         {{#slideShow.backgroundImageCss}}{{{SLIDE_NUMBER}}}{{/slideShow.backgroundImageCss}}
-
+       
         {{#slideShow.JS_SCRIPT}}
         <script>
         //<![CDATA[
@@ -129,8 +135,14 @@
         {{/JS_SCRIPT}}
 
 </head>
-<body epub:type="bodymatter">
-    <div id="epb3sldrzr-body">
+
+{{#slideShow.REFLOW}}<!-- REFLOWABLE LAYOUT -->{{/slideShow.REFLOW}}
+{{#slideShow.FIXED}}<!-- FIXED LAYOUT -->{{/slideShow.FIXED}}
+
+<body epub:type="bodymatter" {{#slideShow.REFLOW}}class="reflow"{{/slideShow.REFLOW}}>
+{{#slideShow.FIXED}}
+
+    <div id="epb3sldrzr-body" {{#slideShow.REFLOW}}style="visibility: visible;"{{/slideShow.REFLOW}}>
         
         <div id="epb3sldrzr-root">
 
@@ -172,5 +184,14 @@
      <div id="epb3sldrzr-markdown-editor" class="epb3sldrzr-markdown">{{{CONTENT_ORIGINAL}}}</div>
      <textarea id="epb3sldrzr-markdown-src" class="epb3sldrzr-markdown">{{{CONTENT_ORIGINAL}}}</textarea>
      {{/AUTHORize}}
+{{/slideShow.FIXED}}
+
+{{#slideShow.REFLOW}}
+
+                    <h1 id="epb3sldrzr-title">{{TITLE}}{{#SUBTITLE}} <span id="epb3sldrzr-subtitle">{{SUBTITLE}}</span>{{/SUBTITLE}}</h1>
+
+                    {{{CONTENT_XHTML}}}
+
+{{/slideShow.REFLOW}}
 </body>
 </html>

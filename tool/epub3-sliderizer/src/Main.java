@@ -52,6 +52,12 @@ public final class Main {
 
 			SlideShow slideShow = SlideShow.parse(uriDataFile, verbosity);
 
+			if (args.length > 3) {
+				if (args[3].equalsIgnoreCase("REFLOWABLE")) {
+					slideShow.REFLOWABLE = "YES";
+				}
+			}
+			
 			if (verbosity > 2) {
 				slideShow.createSampleTemplate(new PrintWriter(System.out),
 						verbosity);
@@ -61,7 +67,7 @@ public final class Main {
 
 			// TODO: yuck yuck yuck!!
 			slideShow.pathEpubFolder = pathEpubFolder;
-
+			
 			Epub3FileSet.create(uriDataFile, slideShow, pathEpubFolder,
 					verbosity);
 

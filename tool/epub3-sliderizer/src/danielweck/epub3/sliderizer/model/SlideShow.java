@@ -69,6 +69,22 @@ public final class SlideShow extends Fielder {
 		baseFolderPath = folderPath;
 	}
 
+	public String REFLOWABLE = null;
+
+	public boolean FIXED() {
+		if (REFLOWABLE == null) {
+			return true;
+		}
+		// String reflow = REFLOWABLE.toLowerCase();
+		return !REFLOWABLE.equalsIgnoreCase("yes")
+				&& !REFLOWABLE.equalsIgnoreCase("true")
+				&& !REFLOWABLE.equalsIgnoreCase("1");
+	}
+
+	public boolean REFLOW() {
+		return !FIXED();
+	}
+
 	public String DATE = null;
 
 	public String TITLE = "DEFAULT TITLE";

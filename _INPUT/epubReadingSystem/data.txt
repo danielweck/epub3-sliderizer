@@ -147,13 +147,205 @@ _PREFIXED_@keyframes sweep
 
 // --------------------------------------------
 _JS_SCRIPT
+    
+    
+    // var tryLog = function(msg)
+    // {
+    //     if (typeof BKConsoleLog !== "undefined")
+    //     {
+    //         BKConsoleLog(msg);
+    //     }
+    //     else
+    //     {
+    //         setTimeout(function(){
+    //             console.log("(!BKConsoleLog)");
+    //             console.log(msg);
+    //         }, 3000);
+    //     }
+    // }
+        // 
+    //     var iTry = 0;
+    //     var maxTries = 100; //10s
+    // 
+    //     var tryAgain = function()
+    //     {
+    //         if (typeof KLASS !== "undefined")
+    //         {
+    // 
+    //             tryLog("KLASS.FUNC highjack");
+    //             
+    //             var KLASS_FUNC = KLASS.FUNC;
+    //                         KLASS.FUNC = function (PARAMS) {
+    // 
+    //                             tryLog(PARAMS);
+    //                             // //                 setTimeout(function(){
+    //                             // //                     introspect(SOMETHING, true, "SOMETHING");
+    //                             // //                 }, 4000);
+    //                             KLASS_FUNC(PARAMS);
+    // };
+    //         }
+    //         else
+    //         {
+    //             if (iTry >= maxTries)
+    //             {
+    //                 setTimeout(function(){
+    //                     console.log("MAX TRIES");
+    //                 }, 3000);
+    //                 return;
+    //             }
+    //         tryLog("TRY AGAIN: " + iTry);
+    //             setTimeout(function(){
+    //                 iTry++;
+    //                 tryAgain();
+    //             }, 10);
+    //         }
+    //     }
+    //     tryAgain();
+    
+    function logHTML(text, root)
+    {
+            var p = document.createElementNS("http://www.w3.org/1999/xhtml", 'p');
+            var txt = document.createTextNode(text);
+            p.appendChild(txt);
+            root.insertBefore(p, root.childNodes[0]);
+    }
+    
+    function log(text)
+    {
+        if (false)
+        {
+            if ("complete" == document.readyState)
+            {
+                var root = document.body;
+                logHTML(text, root);
+            }
+        }
+        
+        console.log(text);
+    }
 
+    function introspect(obj, filter, parent)
+    {
+        if (!obj || (typeof obj === "undefined"))
+            return;
+        
+        for (var prop in obj)
+        {
+            if (obj.hasOwnProperty(prop))
+            {
+// log(typeof obj);
+// log(typeof prop);
+                                
+                var p = prop.toLowerCase();
+
+                if (!filter ||
+(p.indexOf("webkit") < 0 &&
+p.indexOf("sliderizer") < 0 &&
+(
+true
+//prop.indexOf("on") === 0
+
+
+// p.indexOf("read") >= 0
+// p.indexOf("audio") >= 0 ||
+// p.indexOf("aloud") >= 0 ||
+// p.indexOf("smil") >= 0
+
+// p.indexOf("bk") >= 0 ||
+// p.indexOf("book") >= 0 ||
+// p.indexOf("apple") >= 0 ||
+// p.indexOf("html") >= 0 ||
+// p.indexOf("nav") >= 0 ||
+// p.indexOf("console") >= 0 ||
+// p.indexOf("alert") >= 0
+))
+                )
+                {
+                    var newParent = parent + " >>> " + prop;
+        
+                    log("-----------------");
+                    log(newParent);
+            
+                    var value = obj[prop];
+                    var type = typeof value;
+                    log(type);
+log(value);
+                    if (
+//false &&
+                    value !== null
+                    &&
+                    type !== undefined
+                    &&
+                    (type !== "undefined")
+                    &&
+                    (type !== "string")
+                    &&
+                    (type !== "number")
+                    &&
+                    (type !== "boolean")
+                        //filter && // 1-recursive deep
+                        //&& (isObjectOrArray || isFunction)
+                    )
+                    {
+                        // if (value.toString)
+                        // {
+                        //     log(value.toString());
+                        // }
+                    
+                        log("...");
+                    
+                        try
+                        {
+                            introspect(value, false, newParent);
+                        }
+                        catch(e)
+                        {
+                            log("oops!");
+                            log(e);
+                        }
+
+                        if (type === "function")
+                        {
+                                (function () {
+                                    var signature = newParent;
+                                    var original = value;
+
+                                    obj[prop] = function()
+                                    {
+                                        log("~~~~ ------");
+                                        log(signature);
+                                        for(var i=0; i<arguments.length; i++)
+                                        {
+                                            log(arguments[i]);
+                                        }
+                                        // log("''''");
+                                        // log(this);
+                                        // log("====");
+                                        // log(original);
+                                        log("++++");
+                                        var ret = original.apply(this, arguments);
+                                        log(ret);
+                                        log("$$$$ ------");
+                                        return ret;
+                                    };
+                                })();
+                        }
+                    }
+            
+                    //log(isObjectOrArray ? "isObjectOrArray" : (isFunction ? "isFunction" : "??"));
+                }
+            }
+        }
+    }
+    
+    
 document.addEventListener("DOMContentLoaded", function(e) { setTimeout(dump, 1500); }, false);
 
 function dump()
 {
-
-    if (!navigator.epubReadingSystem)
+    if (
+        true ||
+        !navigator.epubReadingSystem)
     {
         navigator.epubReadingSystem = {
             name: "FAKE (simulated Javascript object)",
@@ -355,103 +547,7 @@ function dump()
     var ul = document.createElementNS("http://www.w3.org/1999/xhtml", 'ul');
     dumpObject(navigator.epubReadingSystem, ul);
     dropzone.insertBefore(ul, dropzone.childNodes[dropzone.childNodes.length-1]);
-
-
-
-    function introspect(obj, filter, parent)
-    {
-        if (!obj || (typeof obj === "undefined"))
-            return;
-        
-        for (var prop in obj)
-        {
-            if (obj.hasOwnProperty(prop))
-            {
-// log(typeof obj);
-// log(typeof prop);
-                                
-                var p = prop.toLowerCase();
-
-                if (!filter ||
-(p.indexOf("webkit") < 0 &&
-p.indexOf("sliderizer") < 0 &&
-(
-true
-//prop.indexOf("on") === 0
-
-
-// p.indexOf("read") >= 0
-// p.indexOf("audio") >= 0 ||
-// p.indexOf("aloud") >= 0 ||
-// p.indexOf("smil") >= 0
-
-// p.indexOf("bk") >= 0 ||
-// p.indexOf("book") >= 0 ||
-// p.indexOf("apple") >= 0 ||
-// p.indexOf("html") >= 0 ||
-// p.indexOf("nav") >= 0 ||
-// p.indexOf("console") >= 0 ||
-// p.indexOf("alert") >= 0
-))
-                )
-                {
-                    var newParent = parent + " >>> " + prop;
-        
-                    log("-----------------");
-                    log(newParent);
-            
-                    var value = obj[prop];
-                    var type = typeof value;
-                    log(type);
-log(value);
-                    if (
-//false &&
-                    value !== null
-                    &&
-                    (type !== "undefined")
-                    &&
-                    (type !== "string")
-                    &&
-                    (type !== "number")
-                    &&
-                    (type !== "boolean")
-                        //filter && // 1-recursive deep
-                        //&& (isObjectOrArray || isFunction)
-                    )
-                    {
-                        // if (value.toString)
-                        // {
-                        //     log(value.toString());
-                        // }
-                    
-                        log("...");
-                    
-                        try
-                        {
-                            introspect(value, false, newParent);
-                        }
-                        catch(e)
-                        {
-                            log("oops!");
-                            log(e);
-                        }
-                    }
-            
-                    //log(isObjectOrArray ? "isObjectOrArray" : (isFunction ? "isFunction" : "??"));
-                }
-            }
-        }
-    }
     
-    function log(text)
-    {
-        // var p = document.createElementNS("http://www.w3.org/1999/xhtml", 'p');
-        // var txt = document.createTextNode(text);
-        // p.appendChild(txt);
-        // root.insertBefore(p, root.childNodes[0]);
-        
-        console.log(text);
-    }
     
     if (typeof BKConsoleLog !== "undefined")
     {
@@ -488,29 +584,26 @@ log(value);
     
     //introspect(window, true, "window");
     //log(document.location);
-    introspect(document.location, true, "document.location");
+    //introspect(document.location, true, "document.location");
+        // 
+    // if (typeof CFIUtilities !== "undefined") introspect(CFIUtilities, true, "CFIUtilities");
+    // if (typeof CFI !== "undefined") introspect(CFI, true, "CFI");
+    // if (typeof BKDOMCleanup !== "undefined") introspect(BKDOMCleanup, true, "BKDOMCleanup");
+    // if (typeof BKContentTheme !== "undefined") introspect(BKContentTheme, true, "BKContentTheme");
+    // if (typeof BKEpubLocation !== "undefined") introspect(BKEpubLocation, true, "BKEpubLocation");
+    // if (typeof readAloud !== "undefined") introspect(readAloud, true, "readAloud");
+    // 
     
+    window.oncontextmenu = function()
+    {
+        //log(window.document.documentElement.outerHTML);
+        //log(document.styleSheets[0]);
+    };
     
     setTimeout(function()
     {
         var spinner = document.getElementById("spinner");
         spinner.style.display = "none";
-        
-        //window.setTimeout(function() { window.location = "warn://events"; }, 2000);
-
-        // setTimeout(function()
-        // {
-        //     try
-        //     {
-        //         console.log("Attempting hack...");
-        //         //window.parent.document.body.innerHTML = "HACKED";
-        //     }
-        //     catch(e)
-        //     {
-        //         console.error(e);
-        //         console.log("Cannot hack host.");
-        //     }
-        // }, 1000);
         
     }, 500);
 }

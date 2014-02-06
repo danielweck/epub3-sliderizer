@@ -12,7 +12,7 @@ fi
 
 #VERBOSITY="VERBOSE_min"
 #VERBOSITY="VERBOSE_medium"
-#VERBOSITY="VERBOSE_max" ===> triggers special "author" mode with Markdown editor
+#VERBOSITY="VERBOSE_max" ===> triggers special "author" mode with Markdown editor (HTML mode)
 
 # FIRST PASS => XHTML (EPUB3 ZIP)
 VERBOSITY="VERBOSE_min"
@@ -95,6 +95,8 @@ echo "EPUB3-Sliderization in progress..."
 echo ${DATA_file}
 echo ${EPUB_FOLDER}
 
+########################################################################################
+
 java -classpath "${root}/tool/epub3-sliderizer/lib/guava-15.0.jar:${root}/tool/epub3-sliderizer/lib/mustache-compiler-0.8.13.jar:${root}/tool/epub3-sliderizer/lib/asm-all-4.1.jar:${root}/tool/epub3-sliderizer/lib/parboiled-core-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/parboiled-java-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/pegdown-1.4.1.jar:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar:${bin}" Main ${DATA_url} ${EPUB_FOLDER} ${VERBOSITY}
 
 exitValue=$?
@@ -111,6 +113,7 @@ fi
 #open ${EPUB_FOLDER}
 #exit
 
+########################################################################################
 
 cd ${root}
 
@@ -134,16 +137,54 @@ mv "${root}/_OUTPUT/content/EPUB3-Sliderizer.epub" "${root}/_OUTPUT/content/${EP
 
 #mv "${root}/_OUTPUT/content/aloha/" "${root}/_OUTPUT/content/EPUB3/epub/js/" 
 
+######## exit
 
-cd ./tool/epub3-sliderizer/
-
-
+# 
+# ########################################################################################
+# 
+# cd ./tool/epub3-sliderizer/
+# 
+# java -classpath "${root}/tool/epub3-sliderizer/lib/guava-15.0.jar:${root}/tool/epub3-sliderizer/lib/mustache-compiler-0.8.13.jar:${root}/tool/epub3-sliderizer/lib/asm-all-4.1.jar:${root}/tool/epub3-sliderizer/lib/parboiled-core-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/parboiled-java-1.1.6.jar:${root}/tool/epub3-sliderizer/lib/pegdown-1.4.1.jar:${root}/tool/epub3-sliderizer/lib/jsoup-1.7.2.jar:${bin}" Main ${DATA_url} ${EPUB_FOLDER} ${VERBOSITY} REFLOWABLE
+# 
+# exitValue=$?
+# 
+# echo "[INFO] java (sliderize XHTML reflowable): ${exitValue}"
+# 
+# if [ $exitValue != 0 ] 
+# then
+# echo "Execution error?"
+# exit $exitValue 
+# fi
+# 
+# ########################################################################################
+# 
+# cd ${root}
+# 
+# #mv "${root}/_OUTPUT/content/EPUB3/epub/js/aloha/" "${root}/_OUTPUT/content/"
+# 
+# ############################################################
+# ./pack-epub.sh
+# ############################################################
+# 
+# exitValue=$?
+# 
+# echo "[INFO] pack-epub.sh: ${exitValue}"
+# 
+# if [ $exitValue != 0 ] 
+# then
+# echo "PACK EPUB error?"
+# exit $exitValue 
+# fi
+# 
+# mv "${root}/_OUTPUT/content/EPUB3-Sliderizer.epub" "${root}/_OUTPUT/content/${EPUB_FILENAME}_REFLOW.epub"
+# 
+# #mv "${root}/_OUTPUT/content/aloha/" "${root}/_OUTPUT/content/EPUB3/epub/js/" 
+# 
+# ########################################################################################
 
 ######## exit
 
-
-
-
+cd ./tool/epub3-sliderizer/
 
 # SECOND PASS => HTML content editable author mode
 VERBOSITY="VERBOSE_max"

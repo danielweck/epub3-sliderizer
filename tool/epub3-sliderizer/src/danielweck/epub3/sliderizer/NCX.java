@@ -45,7 +45,8 @@ public final class NCX {
 			elementMeta = document.createElement("meta");
 			elementHead.appendChild(elementMeta);
 			elementMeta.setAttribute("name", "dtb:uid");
-			elementMeta.setAttribute("content", slideShow.IDENTIFIER);
+			elementMeta.setAttribute("content", slideShow.IDENTIFIER
+					+ (slideShow.FIXED() ? "" : "_REFLOW"));
 		}
 
 		if (slideShow.TITLE != null) {

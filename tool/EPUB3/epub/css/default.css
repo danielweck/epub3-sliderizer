@@ -112,6 +112,18 @@ img
     z-index:0;
 }
 
+body:not(.reflow) .full
+{
+    width:VIEWPORT_WIDTHpx;
+    height:VIEWPORT_HEIGHTpx;
+}
+
+body.reflow .full
+{
+    width:100%;
+    height:100%;
+}
+
 .-epub-media-overlay-active
 {
     background-color:#003399;

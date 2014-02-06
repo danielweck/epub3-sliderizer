@@ -6,7 +6,9 @@
     xmlns:svg="http://www.w3.org/2000/svg"
     id="epb3sldrzr-NavDoc"
     lang="{{{LANGUAGE}}}"
-    xml:lang="{{{LANGUAGE}}}">
+    xml:lang="{{{LANGUAGE}}}"
+    {{#REFLOW}}style="background-color: white;"{{/REFLOW}}
+    >
     <head>
         <meta charset="UTF-8"/>
 
@@ -21,11 +23,13 @@
         <link href="{{{FOLDER_IMG}}}/{{{FOLDER_CUSTOM}}}/{{{TOUCHICON}}}" rel="apple-touch-icon"/>
         {{/TOUCHICON}}
         
+        {{#FIXED}}
         {{#VIEWPORT_WIDTH}}
         {{#VIEWPORT_HEIGHT}}
         <meta content="width={{{VIEWPORT_WIDTH}}}, height={{{VIEWPORT_HEIGHT}}}" name="viewport"/>
         {{/VIEWPORT_HEIGHT}}
         {{/VIEWPORT_WIDTH}}
+        {{/FIXED}}
         
         {{#CSS_FONTS}}
         <link href="{{{FOLDER_HTML}}}/{{{FOLDER_FONTS}}}/{{{FILE}}}" rel="stylesheet" type="text/css"/>
@@ -45,9 +49,11 @@
         <link href="{{{FOLDER_HTML}}}/{{{FOLDER_FONTS}}}/{{{FOLDER_CUSTOM}}}/{{{.}}}" rel="stylesheet" type="text/css"/>
         {{/xCSSs_FONTS}}
         
+        {{#FIXED}}
         {{#JSs}}
         <script src="{{{FOLDER_JS}}}/{{{FILE}}}"> </script>
         {{/JSs}}
+        {{/FIXED}}
         
         {{#xJSs}}
         <script src="{{{FOLDER_JS}}}/{{{FOLDER_CUSTOM}}}/{{{.}}}"> </script>
@@ -79,8 +85,12 @@
         </script>
         {{/JS_SCRIPT}}
 </head>
-<body epub:type="bodymatter">
-    <div id="epb3sldrzr-body">
+
+{{#REFLOW}}<!-- REFLOWABLE LAYOUT -->{{/REFLOW}}
+{{#FIXED}}<!-- FIXED LAYOUT -->{{/FIXED}}
+
+<body epub:type="bodymatter" {{#REFLOW}}class="reflow"{{/REFLOW}}>
+    <div id="epb3sldrzr-body" {{#REFLOW}}style="visibility: visible;"{{/REFLOW}}>
         <div id="epb3sldrzr-root">
 
             {{#LOGO}}
