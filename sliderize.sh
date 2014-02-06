@@ -138,6 +138,13 @@ mv "${root}/_OUTPUT/content/EPUB3-Sliderizer.epub" "${root}/_OUTPUT/content/${EP
 cd ./tool/epub3-sliderizer/
 
 
+
+######## exit
+
+
+
+
+
 # SECOND PASS => HTML content editable author mode
 VERBOSITY="VERBOSE_max"
 
