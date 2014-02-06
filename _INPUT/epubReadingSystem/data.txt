@@ -360,6 +360,9 @@ function dump()
 
     function introspect(obj, filter, parent)
     {
+        if (!obj || (typeof obj === "undefined"))
+            return;
+        
         for (var prop in obj)
         {
             if (obj.hasOwnProperty(prop))
@@ -373,23 +376,7 @@ function dump()
 (p.indexOf("webkit") < 0 &&
 p.indexOf("sliderizer") < 0 &&
 (
-    prop === "X"
-//prop === "BKDOMCleanup"
-//prop === "BKEpubLocation"
-//prop === "BKContentTheme"
-//prop === "BKSearchInsensitively" // native code
-//prop === "BKConsoleLog" // native code
-//prop === "__bk_original_addEventListener" // native code
-//prop === "__BKPatchAddEventListener"
-// prop === "stashedCFI" null
-// prop === "lastClickedAnchorID" null
-// prop === "stashCFIForClickedElement" null
-//prop === "CFIUtilities"
-//prop === "CFI"
-
-//prop === "loadFunction" //document.__bk_original_addEventListener("click", stashCFIForClickedElement, true /* capture instead of bubble */);
-
-//true
+true
 //prop.indexOf("on") === 0
 
 
@@ -499,8 +486,10 @@ log(value);
 
     log("INTROSPECT: " + window.location.href);
     
-    introspect(window, true, "window");
-    //introspect(window.document, true, "document");
+    //introspect(window, true, "window");
+    //log(document.location);
+    introspect(document.location, true, "document.location");
+    
     
     setTimeout(function()
     {
