@@ -129,15 +129,18 @@ echo "[INFO] pack-epub.sh: ${exitValue}"
 
 if [ $exitValue != 0 ] 
 then
-echo "PACK EPUB error?"
-exit $exitValue 
+echo "PACK EPUB error? (rebuilding ZIP)"
+./zipEpub.sh
 fi
 
 mv "${root}/_OUTPUT/content/EPUB3-Sliderizer.epub" "${root}/_OUTPUT/content/${EPUB_FILENAME}.epub"
 
-#mv "${root}/_OUTPUT/content/aloha/" "${root}/_OUTPUT/content/EPUB3/epub/js/" 
+if [ $exitValue != 0 ] 
+then
+exit $exitValue 
+fi
 
-######## exit
+##### exit
 
 # 
 # ########################################################################################
