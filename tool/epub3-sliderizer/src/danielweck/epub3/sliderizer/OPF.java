@@ -196,17 +196,6 @@ public final class OPF {
 		elementMeta3.setAttribute("property", "rendition:spread");
 		elementMeta3.appendChild(document.createTextNode("auto"));
 
-		Element elementMeta4 = document.createElement("meta");
-		elementMetadata.appendChild(elementMeta4);
-		elementMeta4.setAttribute("property", "media:active-class");
-		elementMeta4.appendChild(document
-				.createTextNode("-epub-media-overlay-active"));
-
-		Element elementMeta5 = document.createElement("meta");
-		elementMetadata.appendChild(elementMeta5);
-		elementMeta5.setAttribute("property", "media:narrator");
-		elementMeta5.appendChild(document.createTextNode(slideShow.CREATOR)); // TODO
-
 		Element elementMeta6 = document.createElement("meta");
 		elementMetadata.appendChild(elementMeta6);
 		elementMeta6.setAttribute("property", "ibooks:binding");
