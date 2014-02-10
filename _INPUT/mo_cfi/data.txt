@@ -1,0 +1,126 @@
+// --------------------------------------------
+_TITLE
+EPUB3 Media Overlays CFI
+
+// --------------------------------------------
+_CREATOR
+Daniel Weck
+
+// --------------------------------------------
+_FILE_EPUB
+EPUB3-Sliderizer_mo.epub
+
+// --------------------------------------------
+_MO_NARRATOR
+
+Daniel Weck
+
+// --------------------------------------------
+_MO_DUR
+
+00:00:11.307
+
+// --------------------------------------------
+_MO_AUDIO_FILES
+
+mo.mp3
+
+// --------------------------------------------
+_MO_ACTIVE
+
+-epub-media-overlay-active
+
+// --------------------------------------------
+_MO_PLAYBACK_ACTIVE
+
+-epub-media-overlay-playing
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Media Overlays CFI
+
+// --------------------------------------------
+_CONTENT
+
+NO-MARKDOWN
+
+<p id="para">
+
+
+
+&lt;A simple syntax to build basic talking books "read aloud"&gt;
+
+Beginner's tip: use an audio <span id="mid">editing tool (e.g. Audacity)</span>
+
+MIDDLE
+
+<span id="test">to mark and export</span>
+
+ &lt;the synchronisation timestamp&gt;
+
+
+
+AFTER
+
+</p>
+
+// --------------------------------------------
+_MO_DUR
+
+11.307
+
+// --------------------------------------------
+_MO_SMIL
+
+AUDIO mo.mp3
+
+TXT #epubcfi(/99!/4/2[epb3sldrzr-body]/2[epb3sldrzr-root]/2[epb3sldrzr-content]/2[epb3sldrzr-anim-overflow]/4[epb3sldrzr-content-wrap]/2[para],/1:1,/1:60)
+END 04.855
+
+TXT #epubcfi(/99!/4/2[epb3sldrzr-body]/2[epb3sldrzr-root]/2[epb3sldrzr-content]/2[epb3sldrzr-anim-overflow]/4[epb3sldrzr-content-wrap]/2[para],/1:61,/1:90)
+END 06.000
+
+TXT #mid
+END 07.300
+
+TXT #epubcfi(/99!/4/2[epb3sldrzr-body]/2[epb3sldrzr-root]/2[epb3sldrzr-content]/2[epb3sldrzr-anim-overflow]/4[epb3sldrzr-content-wrap]/2[para]/4[test])
+END 09.000
+
+TXT #epubcfi(/99!/4/2[epb3sldrzr-body]/2[epb3sldrzr-root]/2[epb3sldrzr-content]/2[epb3sldrzr-anim-overflow]/4[epb3sldrzr-content-wrap]/2[para],/5:0,/5:32)
+END 11.307
+
+// --------------------------------------------
+_CSS_STYLE
+
+#para span
+{
+    padding: 0;
+    margin: 0;
+}
+
+#para
+{
+font-size: 2em;
+text-align: center;
+}
+
+#mid
+{
+    color: red;
+}
+#test
+{
+    color: blue;
+}
+
+.-epub-media-overlay-active
+{
+    color: white !important;
+    background-color: rgba(0,0,0,0.7);
+    border-radius: 0.4em;
+}
