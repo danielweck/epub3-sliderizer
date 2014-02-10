@@ -14,13 +14,22 @@ min-width: 110%;
 
 	white-space: no-wrap;
 
+#epb3sldrzr-content-wrap
+{
+    position: absolute;
+    min-height: 100%;
+    960px
+}
 */
+
 
 ol
 {
 	margin: 0;
 	padding: 0;
 	
+    /* UNFORTUNATELY WE CAN'T USE PROPER COLUMN COUNT BECAUSE OF OVERFLOW ISSUES :( */
+    /* SEE CSS OVERRIDES BELOW */
 	
 -webkit-column-count: 2;
 -moz-column-count: 2;
@@ -79,7 +88,8 @@ ol > li:hover:before
 
 
 body.opera ol,
-body.IE9 ol
+body.IE9 ol,
+ol /* UNFORTUNATELY WE CAN'T USE PROPER COLUMN COUNT BECAUSE OF OVERFLOW ISSUES :( */
 {
 	
 -webkit-column-count: auto;
@@ -92,13 +102,15 @@ column-count: auto;
 }
 
 body.opera ol > li,
-body.IE9 ol > li
+body.IE9 ol > li,
+ol > li /* UNFORTUNATELY WE CAN'T USE PROPER COLUMN COUNT BECAUSE OF OVERFLOW ISSUES :( */
 {
     width: 50%;
 	vertical-align: top;
 }
 
-body.opera ol > li
+body.opera ol > li,
+ol > li /* UNFORTUNATELY WE CAN'T USE PROPER COLUMN COUNT BECAUSE OF OVERFLOW ISSUES :( */
 {
 	float: left;
 	display: inline;

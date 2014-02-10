@@ -177,7 +177,7 @@ backface-visibility: hidden;
 
 }
 
-img.full
+.full
 {
     position:absolute;
 
@@ -192,6 +192,18 @@ img.full
     height:960px;
 
     z-index:0;
+}
+
+body:not(.reflow) .full
+{
+    width:728px;
+    height:960px;
+}
+
+body.reflow .full
+{
+    width:100%;
+    height:100%;
 }
 
 .-epub-media-overlay-active
@@ -610,7 +622,7 @@ h1#epb3sldrzr-title.vertical-align
     top: 0px;
 }
 
-#epb3sldrzr-content > #epb3sldrzr-anim-overflow > #epb3sldrzr-content-wrap:not(.vertical-middle) > *:not(img):not(.spread)
+#epb3sldrzr-content > #epb3sldrzr-anim-overflow > #epb3sldrzr-content-wrap:not(.vertical-middle) > *:not(img):not(.spread):not(.full)
 {
     padding-left: 40px;
     padding-right: 40px;
