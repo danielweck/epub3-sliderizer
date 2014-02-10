@@ -551,7 +551,7 @@ function isDefinedAndNotNull(obj)
 function loadScript(that, src)
 {
     var head = document.head ? document.head : document.getElementsByTagName('head')[0];
-    var script = document.createElement('script');
+    var script = document.createElementNS("http://www.w3.org/1999/xhtml", 'script');
     script.setAttribute("type", 'text/javascript');
     
 //    script.setAttribute("data-aloha-plugins", "common/ui,common/format,common/link,common/list,common/paste,common/horizontalruler,common/dom-to-xhtml,common/contenthandler,common/commands,common/align,common/block");
@@ -3041,7 +3041,7 @@ Epub3Sliderizer.initLinks = function()
     var anchor = controls; //this.bodyRoot
 
 
-    var aa = document.createElement('a');
+    var aa = document.createElementNS("http://www.w3.org/1999/xhtml", 'a');
     if (anchor.childNodes.length === 0)
     {
         anchor.appendChild(aa);
@@ -3057,7 +3057,7 @@ Epub3Sliderizer.initLinks = function()
 
     if (this.first !== "")
     {
-        var az1 = document.createElement('a');
+        var az1 = document.createElementNS("http://www.w3.org/1999/xhtml", 'a');
         anchor.insertBefore(az1, anchor.childNodes[0]);
         
         az1.id = "epb3sldrzr-link-first";
@@ -3068,7 +3068,7 @@ Epub3Sliderizer.initLinks = function()
     
     if (this.prev !== "")
     {
-        var a1 = document.createElement('a');
+        var a1 = document.createElementNS("http://www.w3.org/1999/xhtml", 'a');
         anchor.insertBefore(a1, anchor.childNodes[0]);
         
         a1.id = "epb3sldrzr-link-previous";
@@ -3079,7 +3079,7 @@ Epub3Sliderizer.initLinks = function()
     
     if (this.slideIndex !== -1 && this.slideCount !== -1)
     {
-        var sp = document.createElement('span');
+        var sp = document.createElementNS("http://www.w3.org/1999/xhtml", 'span');
         anchor.insertBefore(sp, anchor.childNodes[0]);
 
         sp.id = "epb3sldrzr-slide-indexCount";
@@ -3091,7 +3091,7 @@ Epub3Sliderizer.initLinks = function()
     
     if (this.next !== "")
     {
-        var a2 = document.createElement('a');
+        var a2 = document.createElementNS("http://www.w3.org/1999/xhtml", 'a');
         anchor.insertBefore(a2, anchor.childNodes[0]);
 
         a2.id = "epb3sldrzr-link-next";
@@ -3102,7 +3102,7 @@ Epub3Sliderizer.initLinks = function()
 
     if (this.last !== "")
     {
-        var az2 = document.createElement('a');
+        var az2 = document.createElementNS("http://www.w3.org/1999/xhtml", 'a');
         anchor.insertBefore(az2, anchor.childNodes[0]);
         
         az2.id = "epb3sldrzr-link-last";
@@ -3115,7 +3115,7 @@ Epub3Sliderizer.initLinks = function()
         
     if (nav !== null && this.epub !== "")
     {
-        var a3 = document.createElement('a');
+        var a3 = document.createElementNS("http://www.w3.org/1999/xhtml", 'a');
         this.bodyRoot.insertBefore(a3, this.bodyRoot.childNodes[0]);
         
         a3.id = "epb3sldrzr-link-epub";
@@ -3821,7 +3821,7 @@ Epub3Sliderizer.init = function()
     // document.getElementById("epb3sldrzr-body").style.visibility = "visible";
     // 
     // var root = document.getElementById("epb3sldrzr-content");
-    // var info = document.createElement('p');
+    // var info = document.createElementNS("http://www.w3.org/1999/xhtml", 'p');
     // root.insertBefore(info, root.childNodes[0]);
     // 
     // setTimeout(function()
@@ -3834,7 +3834,7 @@ Epub3Sliderizer.init = function()
     // var txt = document.createTextNode(window.location.href.replace(/\//g, " ")); //
     // info.appendChild(txt);
     // 
-    // var brk = document.createElement('br');
+    // var brk = document.createElementNS("http://www.w3.org/1999/xhtml", 'br');
     // info.appendChild(brk);
     // 
     // var obj = window; //.navigator
@@ -3871,7 +3871,7 @@ Epub3Sliderizer.init = function()
     //             var tx = document.createTextNode(prop + " ");
     //             info.appendChild(tx);
     //             
-    //             var br = document.createElement('br');
+    //             var br = document.createElementNS("http://www.w3.org/1999/xhtml", 'br');
     //             info.appendChild(br);
     //         }
     //     }
@@ -3893,7 +3893,7 @@ Epub3Sliderizer.init = function()
     */
 
     /*
-    var aa_ = document.createElement('a');
+    var aa_ = document.createElementNS("http://www.w3.org/1999/xhtml", 'a');
     aa_.id = "epb3sldrzr-link-firebug";
     aa_.title = "Firebug";
     aa_.href = "javascript:(function(F,i,r,e,b,u,g,L,I,T,E){if(F.getElementById(b))return;E=F[i+'NS']&&F.documentElement.namespaceURI;E=E?F[i+'NS'](E,'script'):F[i]('script');E[r]('id',b);E[r]('src',I+g+T);E[r](b,u);(F[e]('head')[0]||F[e]('body')[0]).appendChild(E);E=new%20Image;E[r]('src','../js/firebug-lite.js');})(document,'createElement','setAttribute','getElementsByTagName','FirebugLite','4','firebug-lite.js','releases/lite/latest/skin/xp/sprite.png','https://getfirebug.com/','#startOpened,enableTrace');";
@@ -4005,7 +4005,7 @@ Epub3Sliderizer.init = function()
 //         }
 //         else
 //         {
-//             var a = document.createElement('a');
+//             var a = document.createElementNS("http://www.w3.org/1999/xhtml", 'a');
 // 
 //             if (anchor.childNodes.length === 0)
 //             {
@@ -4396,7 +4396,7 @@ function readyFirst()
         loadScript(undefined, 'addEventListener.js');
     }
     
-    if (typeof document !== "undefined" && !("classList" in document.createElement("a")))
+    if (typeof document !== "undefined" && !("classList" in document.createElementNS("http://www.w3.org/1999/xhtml", "a")))
     {
         loadScript(undefined, 'classList.js');
     }
@@ -4406,14 +4406,16 @@ function readyFirst()
     
     Epub3Sliderizer.bodyRoot = document.getElementById("epb3sldrzr-body");
     
-    var controls = document.createElement('div');
-    Epub3Sliderizer.bodyRoot.insertBefore(controls, Epub3Sliderizer.bodyRoot.childNodes[0]);
+    var controls = document.createElementNS("http://www.w3.org/1999/xhtml", 'div');
+
+    //Epub3Sliderizer.bodyRoot.insertBefore(controls, Epub3Sliderizer.bodyRoot.childNodes[0]); BREAKS CFI even node/element indices
+    Epub3Sliderizer.bodyRoot.appendChild(controls);
     
     controls.id = "epb3sldrzr-controls";
     controls.setAttribute("id", controls.id);
     //$(controls).attr("id", controls.id);
 
-    var aa = document.createElement('a');
+    var aa = document.createElementNS("http://www.w3.org/1999/xhtml", 'a');
     if (controls.childNodes.length === 0)
     {
         controls.appendChild(aa);
@@ -4427,7 +4429,7 @@ function readyFirst()
     aa.setAttribute("title", "Increase font size");
     aa.setAttribute("href", "javascript:Epub3Sliderizer.increaseFontSize();");
 
-    var az = document.createElement('a');
+    var az = document.createElementNS("http://www.w3.org/1999/xhtml", 'a');
     if (controls.childNodes.length === 0)
     {
         controls.appendChild(az);
@@ -4441,7 +4443,7 @@ function readyFirst()
     az.setAttribute("title", "Reset font size");
     az.setAttribute("href", "javascript:Epub3Sliderizer.resetFontSize();");
     
-    var aaa = document.createElement('a');
+    var aaa = document.createElementNS("http://www.w3.org/1999/xhtml", 'a');
     if (controls.childNodes.length === 0)
     {
         controls.appendChild(aaa);
@@ -4455,7 +4457,7 @@ function readyFirst()
     aaa.setAttribute("title", "Decrease font size");
     aaa.setAttribute("href", "javascript:Epub3Sliderizer.decreaseFontSize();");
 
-    var a = document.createElement('a');
+    var a = document.createElementNS("http://www.w3.org/1999/xhtml", 'a');
     if (controls.childNodes.length === 0)
     {
         controls.appendChild(a);

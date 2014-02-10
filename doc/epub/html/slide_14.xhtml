@@ -53,14 +53,14 @@
         /*<![CDATA[*/
         body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
 {
-
+    
 -webkit-animation-duration: 1s;
 -moz-animation-duration: 1s;
 -ms-animation-duration: 1s;
 -o-animation-duration: 1s;
 animation-duration: 1s;
 
-
+    
 -webkit-animation-delay: 0s;
 -moz-animation-delay: 0s;
 -ms-animation-delay: 0s;
@@ -68,39 +68,44 @@ animation-duration: 1s;
 animation-delay: 0s;
 
 }
+
 html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
 {
-width: 200px;
-height: 84px;
+    width: 200px;
+    height: 84px;
 }
+
 html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
-opacity: 0.4;
+    opacity: 0.4;
 }
+
 .pale-red
 {
-background: rgba(255, 0, 0, 0.2);
+    background: rgba(255, 0, 0, 0.2);
 }
 .pale-green
 {
-background: rgba(0, 255, 0, 0.2);
+    background: rgba(0, 255, 0, 0.2);
 }
 .pale-blue
 {
-background: rgba(0, 0, 255, 0.2);
+    background: rgba(0, 0, 255, 0.2);
 }
 .pale-grey
 {
-background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.2);
 }
 .magenta
 {
-background: #ff00ff;
+    background: #ff00ff;
 }
 .red
 {
-background: #FF0033;
+    background: #FF0033;
 }
+
+
         /*]]>*/
         </style>
 
@@ -108,98 +113,126 @@ background: #FF0033;
         /*<![CDATA[*/
         html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
-display: none;
+    display: none;
 }
+
 a:link
 {
-color:#0066FF;
+    color:#0066FF;
 }
 a:visited
 {
-color:#0066FF;
+    color:#0066FF;
 }
 a:hover
 {
-color:white;
-text-decoration:none;
+    color:white;
+    text-decoration:none;
 }
 a:active
 {
-color:white;
+    color:white;
 }
+
 ul#yo
 {
-margin-left: 2em;
-padding-left: 1em;
-text-indent: -1.3em;
-font-family: Arvo, Lato, Tahoma, verdana, arial, sans-serif;
-font-size: 1.2em;
-color: #99CC99;
-list-style: none;
+    margin-left: 2em;
+    
+    padding-left: 1em;
+    text-indent: -1.3em;
+
+    font-family: Arvo, Lato, Tahoma, verdana, arial, sans-serif;
+    font-size: 1.2em;
+    
+    color: #99CC99;
+    
+    list-style: none;
 }
+
 ul#yo li
 {
-margin-bottom: 1.2em;
+    margin-bottom: 1.2em;
 }
+
 ul#yo li:before
 {
-content: '\2605 \020';
+    content: '\2605 \020';
+
 /*    margin: 0 0 1em 0; */
-margin-right: 0;
-text-shadow: 0 0 0.08em rgba(255, 255, 255, 0.9);
-color: #66FF66;
+    margin-right: 0;
+    
+    text-shadow: 0 0 0.08em rgba(255, 255, 255, 0.9);
+    color: #66FF66;
 }
+
 h1#epb3sldrzr-title
 {
-margin-bottom: 2em;
-color: #FFCC33;
-background-color: transparent;
-background: transparent;
-text-shadow: none;
-filter: none;
-filter: 0;
-font-family: Neuton, serif;
-font-size: 200%;
-text-align: right;
-margin-right: 2em;
+    margin-bottom: 2em;
+    
+    color: #FFCC33;
+    
+    background-color: transparent;
+    background: transparent;
+    
+    text-shadow: none;
+    
+    filter: none;
+    filter: 0;
+    
+    font-family: Neuton, serif;
+    
+    font-size: 200%;
 
+    text-align: right;
+    margin-right: 2em;
+    
 -webkit-transform: rotate(8deg);
 -moz-transform: rotate(8deg);
 -ms-transform: rotate(8deg);
 -o-transform: rotate(8deg);
 transform: rotate(8deg);
 
-text-shadow: 0.06em 0.06em 0.11em rgba(0, 0, 0, 1);
+
+    text-shadow: 0.06em 0.06em 0.11em rgba(0, 0, 0, 1);
 }
+
 #epb3sldrzr-body
 {
-background-color: #333333 !important;
+    background-color: #333333 !important;
 }
+
         /*]]>*/
         </style>
 
         
-
+       
         <script>
         //<![CDATA[
         function setupAnimations()
 {
-var html = document.documentElement;
-if (html.id == "epb3sldrzr-NavDoc")
-{
-var elem = document.getElementById("epb3sldrzr-logo");
-elem.classList.add("fadeIn");
-elem.classList.add("epb3sldrzr-animated");
-}
+    var html = document.documentElement;
+    if (html.id == "epb3sldrzr-NavDoc")
+    {
+        var elem = document.getElementById("epb3sldrzr-logo");
+        elem.classList.add("fadeIn");
+        elem.classList.add("epb3sldrzr-animated");
+    }
 }
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
+
+// --------------------------------------------
         //]]>
         </script>
 
 
 </head>
+
+
+<!-- FIXED LAYOUT -->
+
 <body epub:type="bodymatter">
+
     <div id="epb3sldrzr-body">
         
         <div id="epb3sldrzr-root">
@@ -228,6 +261,7 @@ or in external <code>files.css</code>.
              </section>
          </div>
      </div>
+
 
 </body>
 </html>

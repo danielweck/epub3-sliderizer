@@ -53,14 +53,14 @@
         /*<![CDATA[*/
         body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
 {
-
+    
 -webkit-animation-duration: 1s;
 -moz-animation-duration: 1s;
 -ms-animation-duration: 1s;
 -o-animation-duration: 1s;
 animation-duration: 1s;
 
-
+    
 -webkit-animation-delay: 0s;
 -moz-animation-delay: 0s;
 -ms-animation-delay: 0s;
@@ -68,39 +68,44 @@ animation-duration: 1s;
 animation-delay: 0s;
 
 }
+
 html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
 {
-width: 200px;
-height: 84px;
+    width: 200px;
+    height: 84px;
 }
+
 html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
-opacity: 0.4;
+    opacity: 0.4;
 }
+
 .pale-red
 {
-background: rgba(255, 0, 0, 0.2);
+    background: rgba(255, 0, 0, 0.2);
 }
 .pale-green
 {
-background: rgba(0, 255, 0, 0.2);
+    background: rgba(0, 255, 0, 0.2);
 }
 .pale-blue
 {
-background: rgba(0, 0, 255, 0.2);
+    background: rgba(0, 0, 255, 0.2);
 }
 .pale-grey
 {
-background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.2);
 }
 .magenta
 {
-background: #ff00ff;
+    background: #ff00ff;
 }
 .red
 {
-background: #FF0033;
+    background: #FF0033;
 }
+
+
         /*]]>*/
         </style>
 
@@ -108,22 +113,31 @@ background: #FF0033;
         /*<![CDATA[*/
         html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
-opacity: 1;
+    opacity: 1;
 }
+
 #fatty
 {
-/*
-margin-top: 3em !important;
-*/
-/* margin: auto !important; */
-padding-left: 2em;
-padding-right: 2em;
-font-family: Neuton, serif;
-text-align: center;
-font-size: 2.1em;
-color: rgba(0,0,0,0.7);
-color: #333333;
-text-shadow: 0 0 0.08em rgba(255, 255, 255, 0.9);
+    /* 
+    margin-top: 3em !important;
+    */
+
+    /* margin: auto !important; */
+
+    padding-left: 2em;
+    padding-right: 2em;
+    
+    font-family: Neuton, serif;
+    
+    text-align: center;
+    font-size: 2.1em;
+    
+    color: rgba(0,0,0,0.7);
+    color: #333333;
+
+
+    text-shadow: 0 0 0.08em rgba(255, 255, 255, 0.9);
+    
 
 -webkit-transform: rotate(-5deg);
 -moz-transform: rotate(-5deg);
@@ -132,16 +146,23 @@ text-shadow: 0 0 0.08em rgba(255, 255, 255, 0.9);
 transform: rotate(-5deg);
 
 }
+
 h1#epb3sldrzr-title
 {
 display: block;
-color:white;
-text-shadow: 0.06em 0.06em 0.11em rgba(0, 0, 0, 0.5);
-background-color: transparent;
-background: transparent;
-filter: none;
-filter: 0;
+
+    color:white;
+
+    text-shadow: 0.06em 0.06em 0.11em rgba(0, 0, 0, 0.5);
+
+    background-color: transparent;
+    background: transparent;
+    
+    filter: none;
+    filter: 0;
 }
+
+
         /*]]>*/
         </style>
 
@@ -209,27 +230,34 @@ background-size:cover;
 
 
 </style>
-
+       
         <script>
         //<![CDATA[
         function setupAnimations()
 {
-var html = document.documentElement;
-if (html.id == "epb3sldrzr-NavDoc")
-{
-var elem = document.getElementById("epb3sldrzr-logo");
-elem.classList.add("fadeIn");
-elem.classList.add("epb3sldrzr-animated");
-}
+    var html = document.documentElement;
+    if (html.id == "epb3sldrzr-NavDoc")
+    {
+        var elem = document.getElementById("epb3sldrzr-logo");
+        elem.classList.add("fadeIn");
+        elem.classList.add("epb3sldrzr-animated");
+    }
 }
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
+
+// --------------------------------------------
         //]]>
         </script>
 
 
 </head>
+
+
+<!-- FIXED LAYOUT -->
+
 <body epub:type="bodymatter">
+
     <div id="epb3sldrzr-body">
         
         <div id="epb3sldrzr-root">
@@ -268,5 +296,6 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 &lt;p&gt;This slide's background
 &lt;p&gt;is a &lt;strong&gt;full-spread image&lt;/strong&gt;.
 &lt;p&gt;This rotated text is vertically-centered.</textarea>
+
 </body>
 </html>

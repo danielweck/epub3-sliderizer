@@ -39,14 +39,14 @@
         /*<![CDATA[*/
         body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
 {
-
+    
 -webkit-animation-duration: 1s;
 -moz-animation-duration: 1s;
 -ms-animation-duration: 1s;
 -o-animation-duration: 1s;
 animation-duration: 1s;
 
-
+    
 -webkit-animation-delay: 0s;
 -moz-animation-delay: 0s;
 -ms-animation-delay: 0s;
@@ -54,39 +54,44 @@ animation-duration: 1s;
 animation-delay: 0s;
 
 }
+
 html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
 {
-width: 200px;
-height: 84px;
+    width: 200px;
+    height: 84px;
 }
+
 html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
-opacity: 0.4;
+    opacity: 0.4;
 }
+
 .pale-red
 {
-background: rgba(255, 0, 0, 0.2);
+    background: rgba(255, 0, 0, 0.2);
 }
 .pale-green
 {
-background: rgba(0, 255, 0, 0.2);
+    background: rgba(0, 255, 0, 0.2);
 }
 .pale-blue
 {
-background: rgba(0, 0, 255, 0.2);
+    background: rgba(0, 0, 255, 0.2);
 }
 .pale-grey
 {
-background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.2);
 }
 .magenta
 {
-background: #ff00ff;
+    background: #ff00ff;
 }
 .red
 {
-background: #FF0033;
+    background: #FF0033;
 }
+
+
         /*]]>*/
         </style>
 
@@ -95,37 +100,39 @@ background: #FF0033;
         body:not(.epb3sldrzr-epubReadingSystem) .notesref-highlight,
 body:not(.epb3sldrzr-epubReadingSystem) a#epb3sldrzr-link-notesref
 {
--webkit-backface-visibility: hidden;
-opacity: 1;
+    -webkit-backface-visibility: hidden;
 
+    opacity: 1;
+
+    
 -webkit-animation-name: onoff;
 -moz-animation-name: onoff;
 -ms-animation-name: onoff;
 -o-animation-name: onoff;
 animation-name: onoff;
 
-
+    
 -webkit-animation-timing-function: linear;
 -moz-animation-timing-function: linear;
 -ms-animation-timing-function: linear;
 -o-animation-timing-function: linear;
 animation-timing-function: linear;
 
-
+    
 -webkit-animation-duration: 1.8s;
 -moz-animation-duration: 1.8s;
 -ms-animation-duration: 1.8s;
 -o-animation-duration: 1.8s;
 animation-duration: 1.8s;
 
-
+    
 -webkit-animation-iteration-count: infinite;
 -moz-animation-iteration-count: infinite;
 -ms-animation-iteration-count: infinite;
 -o-animation-iteration-count: infinite;
 animation-iteration-count: infinite;
 
-
+    
 -webkit-animation-delay: 1s;
 -moz-animation-delay: 1s;
 -ms-animation-delay: 1s;
@@ -133,11 +140,13 @@ animation-iteration-count: infinite;
 animation-delay: 1s;
 
 }
+
 a#epb3sldrzr-link-notesref
 {
-background-color: #ff00ff;
-color: black !important;
+    background-color: #ff00ff;
+    color: black !important;
 }
+
         /*]]>*/
         </style>
 
@@ -145,20 +154,26 @@ color: black !important;
         //<![CDATA[
         function setupAnimations()
 {
-var html = document.documentElement;
-if (html.id == "epb3sldrzr-NavDoc")
-{
-var elem = document.getElementById("epb3sldrzr-logo");
-elem.classList.add("fadeIn");
-elem.classList.add("epb3sldrzr-animated");
-}
+    var html = document.documentElement;
+    if (html.id == "epb3sldrzr-NavDoc")
+    {
+        var elem = document.getElementById("epb3sldrzr-logo");
+        elem.classList.add("fadeIn");
+        elem.classList.add("epb3sldrzr-animated");
+    }
 }
 //setTimeout(setupAnimations, 100);
 document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
+
+// --------------------------------------------
         //]]>
         </script>
 
 </head>
+
+
+<!-- FIXED LAYOUT -->
+
 <body epub:type="bodymatter">
     <div id="epb3sldrzr-body">
         <div id="epb3sldrzr-root">
