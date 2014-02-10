@@ -4407,7 +4407,9 @@ function readyFirst()
     Epub3Sliderizer.bodyRoot = document.getElementById("epb3sldrzr-body");
     
     var controls = document.createElementNS("http://www.w3.org/1999/xhtml", 'div');
-    Epub3Sliderizer.bodyRoot.insertBefore(controls, Epub3Sliderizer.bodyRoot.childNodes[0]);
+
+    //Epub3Sliderizer.bodyRoot.insertBefore(controls, Epub3Sliderizer.bodyRoot.childNodes[0]); BREAKS CFI even node/element indices
+    Epub3Sliderizer.bodyRoot.appendChild(controls);
     
     controls.id = "epb3sldrzr-controls";
     controls.setAttribute("id", controls.id);
