@@ -8,7 +8,7 @@ Daniel Weck
 
 // --------------------------------------------
 _FILE_EPUB
-EPUB3-Sliderizer_mo.epub
+EPUB3-Sliderizer_mo_cfi.epub
 
 // --------------------------------------------
 _MO_NARRATOR
