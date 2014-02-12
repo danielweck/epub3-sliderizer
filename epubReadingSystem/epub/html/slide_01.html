@@ -444,8 +444,33 @@ document.addEventListener("DOMContentLoaded", function(e) { setTimeout(dump, 150
 
 function dump()
 {
+    // setTimeout(function()
+//     {
+//         var spinner = document.getElementById("spinner");
+//         spinner.style.display = "none";
+// 
+//         console.log(window.location.href);
+//         console.log(window.navigator.epubReadingSystem);
+// 
+//         for (var property in navigator.epubReadingSystem)
+//         {
+//             if (!navigator.epubReadingSystem.hasOwnProperty(property))
+//             {
+//                 continue;
+//             }
+// 
+//             var value = navigator.epubReadingSystem[property];
+//             console.log("----");
+//             console.log(property);
+//             console.log(value);
+//         }
+//         
+//     }, 500);
+//     
+//     return;
+    
     if (
-        true ||
+//        true ||
         !navigator.epubReadingSystem)
     {
         navigator.epubReadingSystem = {
@@ -648,35 +673,35 @@ function dump()
     var ul = document.createElementNS("http://www.w3.org/1999/xhtml", 'ul');
     dumpObject(navigator.epubReadingSystem, ul);
     dropzone.insertBefore(ul, dropzone.childNodes[dropzone.childNodes.length-1]);
-    
-    
-    if (typeof BKConsoleLog !== "undefined")
-    {
-        BKConsoleLog("BKConsoleLog();");
-        //BKConsoleLog(window.console.log); // NATIVE FUNCTION CODE
-    
-        if (true
-            //typeof window.console === "undefined"
-        )
-        {
-            BKConsoleLog("HIJACK window.console");
-        
-            window.console = {
-                log: function(txt){BKConsoleLog(txt);},
-                debug:  function(txt){BKConsoleLog(txt);},
-                warn:  function(txt){BKConsoleLog(txt);},
-                error: function(txt){BKConsoleLog(txt);}
-            };
-        
-            window.alert = function(txt){BKConsoleLog(txt);}
-        }
-    }
-
-    //alert("ALERT");
-    console.log("LOG");
-    console.error("ERROR");
-    console.debug("DEBUG");
-    console.warn("WARN");
+        // 
+    // 
+    // if (typeof BKConsoleLog !== "undefined")
+    // {
+    //     BKConsoleLog("BKConsoleLog();");
+    //     //BKConsoleLog(window.console.log); // NATIVE FUNCTION CODE
+    // 
+    //     if (true
+    //         //typeof window.console === "undefined"
+    //     )
+    //     {
+    //         BKConsoleLog("HIJACK window.console");
+    //     
+    //         window.console = {
+    //             log: function(txt){BKConsoleLog(txt);},
+    //             debug:  function(txt){BKConsoleLog(txt);},
+    //             warn:  function(txt){BKConsoleLog(txt);},
+    //             error: function(txt){BKConsoleLog(txt);}
+    //         };
+    //     
+    //         window.alert = function(txt){BKConsoleLog(txt);}
+    //     }
+    // }
+    // 
+    // //alert("ALERT");
+    // console.log("LOG");
+    // console.error("ERROR");
+    // console.debug("DEBUG");
+    // console.warn("WARN");
     
     //log(window.parent.document.body.innerHTML.toString());
     
