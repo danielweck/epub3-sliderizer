@@ -5,14 +5,13 @@
         <meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/>
         <meta content="EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook" name="keywords"/>
         
-        <title>(1/20) EPUB3 Sliderizer / Intro</title>
+        <title>(1/1) EPUB3 epubReadingSystem / navigator.epubReadingSystem</title>
 
         <meta content="1" name="slideIndex"/>
-        <meta content="20" name="slideCount"/>
+        <meta content="1" name="slideCount"/>
         
         <link href="../img/favicon.ico" rel="shortcut icon"/>
         
-        <link href="../img/custom/assets/TouchIcon.png" rel="apple-touch-icon"/>
         
         <meta content="width=1290, height=1000" name="viewport"/>
         
@@ -35,192 +34,209 @@
         
 
         
-        <link href="slide_02.xhtml" rel="next"/>
 
         <link href="../nav.xhtml" rel="nav"/>
 
         <link href="../print.xhtml" rel="print"/>
         
         
-        <link href="slide_20.xhtml" rel="last"/>
                 
-        <link href="../../../EPUB3-Sliderizer.epub" rel="epub"/>
+        <link href="../../../EPUB3-Sliderizer_epubReadingSystem.epub" rel="epub"/>
 
         
-        <style type="text/css">
-        /*<![CDATA[*/
-        body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
-{
-    
--webkit-animation-duration: 1s;
--moz-animation-duration: 1s;
--ms-animation-duration: 1s;
--o-animation-duration: 1s;
-animation-duration: 1s;
-
-    
--webkit-animation-delay: 0s;
--moz-animation-delay: 0s;
--ms-animation-delay: 0s;
--o-animation-delay: 0s;
-animation-delay: 0s;
-
-}
-
-html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
-{
-    width: 200px;
-    height: 84px;
-}
-
-html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
-{
-    opacity: 0.4;
-}
-
-.pale-red
-{
-    background: rgba(255, 0, 0, 0.2);
-}
-.pale-green
-{
-    background: rgba(0, 255, 0, 0.2);
-}
-.pale-blue
-{
-    background: rgba(0, 0, 255, 0.2);
-}
-.pale-grey
-{
-    background: rgba(0, 0, 0, 0.2);
-}
-.magenta
-{
-    background: #ff00ff;
-}
-.red
-{
-    background: #FF0033;
-}
-
-
-        /*]]>*/
-        </style>
 
         <style type="text/css">
         /*<![CDATA[*/
-        /* testing */
-#daniel > .weck
+        .propName
 {
-    color: blue;
+    font-weight: bold;
+    font-family: monospace;
 }
 
-#epb3sldrzr-anim-overflow
+.propValue
 {
-    padding-bottom: 0.5em;
+    display: block;
+    width: 100%;
+    
+    text-align: right;
+    padding-right: 0.3em;
 }
 
-a#FMOGH:link,
-a#FMOGH:visited,
-a#FMOGH:hover,
-a#FMOGH:active
+.function
 {
-    float: right;
-
-    text-decoration: none;
-    border: none;
+    font-style: italic;
+    opacity: 0.6;
 }
 
-a#FMOGH > img
+.objectOrArray
 {
-    border: none;
+    color: #880000;
+    text-transform: uppercase;
 }
 
+.index
+{
+    color: #006633;
+}
 
-body:not(.mobile):not(.epb3sldrzr-epubReadingSystem) .incremental > *
+#dropzone > ul
+{
+    margin-left: 0;
+}
+
+ul
+{
+    margin-left: 0.5em;
+}
+
+li
+{
+    border-top: 0.15em solid #dddddd;
+    border-left: 0.1em dashed #dddddd;
+}
+
+li:before
+{
+    content: '' !important;
+    padding-right: 0;
+}
+
+li.name
+{
+    background-color: #F8FBEF;
+}
+
+#dropzone
+{
+    width: 100%;
+}
+
+#spinner
 {
     
--webkit-transition: opacity 200ms ease-in-out 0ms !important;
--moz-transition: opacity 200ms ease-in-out 0ms !important;
--ms-transition: opacity 200ms ease-in-out 0ms !important;
--o-transition: opacity 200ms ease-in-out 0ms !important;
-transition: opacity 200ms ease-in-out 0ms !important;
-
-}
-
-#epb3sldrzr-content
-{
-    margin-left: 40px;
-}
-
-html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
-{
-    display: none;
-}
-
-#logoWrapper
-{
-    float: right;
-    
-    
--webkit-transform: rotate(45deg);
--moz-transform: rotate(45deg);
--ms-transform: rotate(45deg);
--o-transform: rotate(45deg);
-transform: rotate(45deg);
-
-}
-
-#logo
-{
-    width: 300px;
-    height: 125px;
-}
-
-h1#epb3sldrzr-title
-{
-    display: none;
-}
-
-#title
-{
-    font-size: 1.6em;
-
-    padding-top: 40px;
-
-    margin-bottom: 1em;
-    
-    margin-left: 40px;
-
-    border-bottom: 0.14em solid #8AC007;
-}
-
-div.incremental > p
-{
-    margin-bottom: 0.2em;
-    
-    font-weight: 400;
-    font-family: Arvo, Lato, Tahoma, verdana, arial, sans-serif;
-}
-
-#boox
-{
-    padding-top: 1.5em;
-    
-    
--webkit-animation-duration: 1s;
--moz-animation-duration: 1s;
--ms-animation-duration: 1s;
--o-animation-duration: 1s;
-animation-duration: 1s;
+-webkit-animation: rotation .6s infinite linear;
+-moz-animation: rotation .6s infinite linear;
+-ms-animation: rotation .6s infinite linear;
+-o-animation: rotation .6s infinite linear;
+animation: rotation .6s infinite linear;
 
     
--webkit-animation-delay: 1s;
--moz-animation-delay: 1s;
--ms-animation-delay: 1s;
--o-animation-delay: 1s;
-animation-delay: 1s;
+-webkit-border-radius: 100%;
+-moz-border-radius: 100%;
+-ms-border-radius: 100%;
+-o-border-radius: 100%;
+border-radius: 100%;
 
+	
+    border-left: 0.5em solid rgba(0,174,239,.15);
+    border-right: 0.5em solid rgba(0,174,239,.15);
+    border-bottom: 0.5em solid rgba(0,174,239,.15);
+    border-top: 0.5em solid rgba(0,174,239,.8);
+    
+    /*
+    -PREFIXED_PROPERTY-animation: sweep 1s infinite linear;
+    -PREFIXED_PROPERTY-border-radius: 1em;
+    border-bottom: 0.5em solid black;
+    */
+}
+
+
+@-webkit-keyframes rotation
+{
+	from
+    {
+        -webkit-transform: rotate(0deg);
+    }
+    
+	to
+    {
+        -webkit-transform: rotate(359deg);
+    }
+}
+@-moz-keyframes rotation
+{
+	from
+    {
+        -moz-transform: rotate(0deg);
+    }
+    
+	to
+    {
+        -moz-transform: rotate(359deg);
+    }
+}
+@-ms-keyframes rotation
+{
+	from
+    {
+        -ms-transform: rotate(0deg);
+    }
+    
+	to
+    {
+        -ms-transform: rotate(359deg);
+    }
+}
+@-o-keyframes rotation
+{
+	from
+    {
+        -o-transform: rotate(0deg);
+    }
+    
+	to
+    {
+        -o-transform: rotate(359deg);
+    }
+}
+@keyframes rotation
+{
+	from
+    {
+        transform: rotate(0deg);
+    }
+    
+	to
+    {
+        transform: rotate(359deg);
+    }
+}
+
+
+@-webkit-keyframes sweep
+{
+    to
+    {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@-moz-keyframes sweep
+{
+    to
+    {
+        -moz-transform: rotate(360deg);
+    }
+}
+@-ms-keyframes sweep
+{
+    to
+    {
+        -ms-transform: rotate(360deg);
+    }
+}
+@-o-keyframes sweep
+{
+    to
+    {
+        -o-transform: rotate(360deg);
+    }
+}
+@keyframes sweep
+{
+    to
+    {
+        transform: rotate(360deg);
+    }
 }
 
 
@@ -229,38 +245,494 @@ animation-delay: 1s;
 
         
        
+
         <script>
         //<![CDATA[
-        function setupAnimations()
-{
-    var html = document.documentElement;
-    if (html.id == "epb3sldrzr-NavDoc")
+            
+    
+    // var tryLog = function(msg)
+    // {
+    //     if (typeof BKConsoleLog !== "undefined")
+    //     {
+    //         BKConsoleLog(msg);
+    //     }
+    //     else
+    //     {
+    //         setTimeout(function(){
+    //             console.log("(!BKConsoleLog)");
+    //             console.log(msg);
+    //         }, 3000);
+    //     }
+    // }
+        // 
+    //     var iTry = 0;
+    //     var maxTries = 100; //10s
+    // 
+    //     var tryAgain = function()
+    //     {
+    //         if (typeof KLASS !== "undefined")
+    //         {
+    // 
+    //             tryLog("KLASS.FUNC highjack");
+    //             
+    //             var KLASS_FUNC = KLASS.FUNC;
+    //                         KLASS.FUNC = function (PARAMS) {
+    // 
+    //                             tryLog(PARAMS);
+    //                             // //                 setTimeout(function(){
+    //                             // //                     introspect(SOMETHING, true, "SOMETHING");
+    //                             // //                 }, 4000);
+    //                             KLASS_FUNC(PARAMS);
+    // };
+    //         }
+    //         else
+    //         {
+    //             if (iTry >= maxTries)
+    //             {
+    //                 setTimeout(function(){
+    //                     console.log("MAX TRIES");
+    //                 }, 3000);
+    //                 return;
+    //             }
+    //         tryLog("TRY AGAIN: " + iTry);
+    //             setTimeout(function(){
+    //                 iTry++;
+    //                 tryAgain();
+    //             }, 10);
+    //         }
+    //     }
+    //     tryAgain();
+    
+    function logHTML(text, root)
     {
-        var elem = document.getElementById("epb3sldrzr-logo");
-        elem.classList.add("fadeIn");
-        elem.classList.add("epb3sldrzr-animated");
+            var p = document.createElementNS("http://www.w3.org/1999/xhtml", 'p');
+            var txt = document.createTextNode(text);
+            p.appendChild(txt);
+            root.insertBefore(p, root.childNodes[0]);
     }
-}
-//setTimeout(setupAnimations, 100);
-document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
+    
+    function log(text)
+    {
+        if (false)
+        {
+            if ("complete" == document.readyState)
+            {
+                var root = document.body;
+                logHTML(text, root);
+            }
+        }
+        
+        console.log(text);
+    }
 
-// --------------------------------------------
-        //]]>
-        </script>
+    function introspect(obj, filter, parent)
+    {
+        if (!obj || (typeof obj === "undefined"))
+            return;
+        
+        for (var prop in obj)
+        {
+            if (obj.hasOwnProperty(prop))
+            {
+// log(typeof obj);
+// log(typeof prop);
+                                
+                var p = prop.toLowerCase();
 
-        <script>
-        //<![CDATA[
-        function setupLogoAnimation()
+                if (!filter ||
+(p.indexOf("webkit") < 0 &&
+p.indexOf("sliderizer") < 0 &&
+(
+true
+//prop.indexOf("on") === 0
+
+
+// p.indexOf("read") >= 0
+// p.indexOf("audio") >= 0 ||
+// p.indexOf("aloud") >= 0 ||
+// p.indexOf("smil") >= 0
+
+// p.indexOf("bk") >= 0 ||
+// p.indexOf("book") >= 0 ||
+// p.indexOf("apple") >= 0 ||
+// p.indexOf("html") >= 0 ||
+// p.indexOf("nav") >= 0 ||
+// p.indexOf("console") >= 0 ||
+// p.indexOf("alert") >= 0
+))
+                )
+                {
+                    var newParent = parent + " >>> " + prop;
+        
+                    log("-----------------");
+                    log(newParent);
+            
+                    var value = obj[prop];
+                    var type = typeof value;
+                    log(type);
+log(value);
+                    if (
+//false &&
+                    value !== null
+                    &&
+                    type !== undefined
+                    &&
+                    (type !== "undefined")
+                    &&
+                    (type !== "string")
+                    &&
+                    (type !== "number")
+                    &&
+                    (type !== "boolean")
+                        //filter && // 1-recursive deep
+                        //&& (isObjectOrArray || isFunction)
+                    )
+                    {
+                        // if (value.toString)
+                        // {
+                        //     log(value.toString());
+                        // }
+                    
+                        log("...");
+                    
+                        try
+                        {
+                            introspect(value, false, newParent);
+                        }
+                        catch(e)
+                        {
+                            log("oops!");
+                            log(e);
+                        }
+
+                        if (type === "function")
+                        {
+                                (function () {
+                                    var signature = newParent;
+                                    var original = value;
+
+                                    obj[prop] = function()
+                                    {
+                                        log("~~~~ ------");
+                                        log(signature);
+                                        for(var i=0; i<arguments.length; i++)
+                                        {
+                                            log(arguments[i]);
+                                        }
+                                        // log("''''");
+                                        // log(this);
+                                        // log("====");
+                                        // log(original);
+                                        log("++++");
+                                        var ret = original.apply(this, arguments);
+                                        log(ret);
+                                        log("$$$$ ------");
+                                        return ret;
+                                    };
+                                })();
+                        }
+                    }
+            
+                    //log(isObjectOrArray ? "isObjectOrArray" : (isFunction ? "isFunction" : "??"));
+                }
+            }
+        }
+    }
+    
+    
+document.addEventListener("DOMContentLoaded", function(e) { setTimeout(dump, 1500); }, false);
+
+function dump()
 {
-    var elem = document.getElementById("epb3sldrzr-logo");
-    elem.classList.add("fadeIn");
-    elem.classList.add("epb3sldrzr-animated");
-}
-document.addEventListener("DOMContentLoaded", function(e) { setupLogoAnimation(); }, false);
+    // setTimeout(function()
+//     {
+//         var spinner = document.getElementById("spinner");
+//         spinner.style.display = "none";
+// 
+//         console.log(window.location.href);
+//         console.log(window.navigator.epubReadingSystem);
+// 
+//         for (var property in navigator.epubReadingSystem)
+//         {
+//             if (!navigator.epubReadingSystem.hasOwnProperty(property))
+//             {
+//                 continue;
+//             }
+// 
+//             var value = navigator.epubReadingSystem[property];
+//             console.log("----");
+//             console.log(property);
+//             console.log(value);
+//         }
+//         
+//     }, 500);
+//     
+//     return;
+    
+    if (
+//        true ||
+        !navigator.epubReadingSystem)
+    {
+        navigator.epubReadingSystem = {
+            name: "FAKE (simulated Javascript object)",
+            version: "0.0.0",
+            layoutStyle: "paginated",
+            hasFeature: function (feature, version) {
 
-// #########################################################
-// #########################################################
-// #########################################################
+                // for now all features must be version 1.0 so fail fast if the user has asked for something else
+                if (version && version !== "1.0") {
+                    return false;
+                }
+
+                if (feature === "dom-manipulation") {
+                    // Scripts may make structural changes to the document’s DOM (applies to spine-level scripting only).
+                    return true;
+                }
+                if (feature === "layout-changes") {
+                    // Scripts may modify attributes and CSS styles that affect content layout (applies to spine-level scripting only).
+                    return true;
+                }
+                if (feature === "touch-events") {
+                    // The device supports touch events and the Reading System passes touch events to the content.
+                    return false;
+                }
+                if (feature === "mouse-events") {
+                    // The device supports mouse events and the Reading System passes mouse events to the content.
+                    return true;
+                }
+                if (feature === "keyboard-events") {
+                    // The device supports keyboard events and the Reading System passes keyboard events to the content.
+                    return true;
+                }
+
+                if (feature === "spine-scripting") {
+                    //Spine-level scripting is supported.
+                    return true;
+                }
+
+                return false;
+            },
+    
+            readium:
+            {
+            about: "Readium Foundation, IDPF",
+            components:
+            [
+                {
+                    name: "LauncherAppOSX",
+                    description: "Native 'launcher' application",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+                {
+                    name: "CoreCPP",
+                    description: "Readium core C++ SDK",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+                {
+                    name: "SharedJS",
+                    description: "Readium shared JavaScript module",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+                {
+                    name: "ReadiumJS",
+                    description: "Readium JavaScript code for web browser 'cloud reader'",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+                {
+                    name: "ReadiumJS_Viewer",
+                    description: "Readium viewer application for web browser 'cloud reader'",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+                {
+                    name: "ReadiumChrome",
+                    description: "Readium Chrome extension",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+                {
+                    name: "SimpleHTTPServer",
+                    description: "Jim Dovey's HTTP server",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+                {
+                    name: "CFI_JS",
+                    description: "Readium CFI JavaScript library",
+                    url: "http://github.com/readium/",
+                    version: "0.1.2",
+                    commit_hash: "abcd"
+                },
+            ]
+            },
+    
+            epubWidget_GetSize: function(id)
+            {
+                if (!epubWidget) return;
+     
+                var widget = epubWidget.get(id);
+                if (!widget) return;
+        
+                return widget.getSize();
+            },
+            epubWidget_PostMessage: function(id, msg)
+            {
+                if (!epubWidget) return;
+        
+                var widget = epubWidget.get(id);
+                if (!widget) return;
+        
+                widget.postMessage(JSON.jsonify(msg));
+            }
+        };
+    }
+
+    
+    var dumpObject = function(object, parent)
+    {
+        if (!object) return;
+
+        for (var property in object)
+        {
+            if (!object.hasOwnProperty(property))
+            {
+                continue;
+            }
+
+            var index = parseInt(property);
+            
+            var value = object[property];
+            
+            var isObjectOrArray = value && (typeof value === 'object');
+            
+            var isFunction = false;
+            if (value && value.call) isFunction = true;
+            
+            var li = document.createElementNS("http://www.w3.org/1999/xhtml", 'li');
+            parent.appendChild(li);
+
+            if (property === "name")
+            {
+                li.setAttribute("class", "name");
+            }
+
+            var span = document.createElementNS("http://www.w3.org/1999/xhtml", 'span');
+            li.appendChild(span);
+            span.setAttribute("class", "propName" + (!isNaN(index) ? " index" : (isObjectOrArray ? " objectOrArray" : "")));
+
+            var txt = document.createTextNode(isNaN(index) ? property : ("#" + property));
+            span.appendChild(txt);
+            
+            if (isObjectOrArray)
+            {
+                var ul = document.createElementNS("http://www.w3.org/1999/xhtml", 'ul');
+                li.appendChild(ul);
+            
+                dumpObject(value, ul);
+            }
+            else
+            {
+                var div = document.createElementNS("http://www.w3.org/1999/xhtml", 'span');
+                li.appendChild(div);
+                div.setAttribute("class", "propValue" + (isFunction ? " function" : ""));
+
+                txt = document.createTextNode(isFunction ? "function" : value);
+
+                if (value.indexOf && value.indexOf("http") == 0)
+                {
+                    var a = document.createElementNS("http://www.w3.org/1999/xhtml", 'a');
+                    div.appendChild(a);
+                    a.appendChild(txt);
+                    a.setAttribute("target", "_BLANK");
+                    
+                    a.setAttribute("href", value);
+                }
+                else
+                {
+                    div.appendChild(txt);
+                }
+            }
+        }
+    };
+    
+    
+    var dropzone = document.getElementById("dropzone");
+    var root = dropzone.parentNode;
+    
+    var ul = document.createElementNS("http://www.w3.org/1999/xhtml", 'ul');
+    dumpObject(navigator.epubReadingSystem, ul);
+    dropzone.insertBefore(ul, dropzone.childNodes[dropzone.childNodes.length-1]);
+        // 
+    // 
+    // if (typeof BKConsoleLog !== "undefined")
+    // {
+    //     BKConsoleLog("BKConsoleLog();");
+    //     //BKConsoleLog(window.console.log); // NATIVE FUNCTION CODE
+    // 
+    //     if (true
+    //         //typeof window.console === "undefined"
+    //     )
+    //     {
+    //         BKConsoleLog("HIJACK window.console");
+    //     
+    //         window.console = {
+    //             log: function(txt){BKConsoleLog(txt);},
+    //             debug:  function(txt){BKConsoleLog(txt);},
+    //             warn:  function(txt){BKConsoleLog(txt);},
+    //             error: function(txt){BKConsoleLog(txt);}
+    //         };
+    //     
+    //         window.alert = function(txt){BKConsoleLog(txt);}
+    //     }
+    // }
+    // 
+    // //alert("ALERT");
+    // console.log("LOG");
+    // console.error("ERROR");
+    // console.debug("DEBUG");
+    // console.warn("WARN");
+    
+    //log(window.parent.document.body.innerHTML.toString());
+    
+
+    log("INTROSPECT: " + window.location.href);
+    
+    //introspect(window, true, "window");
+    //log(document.location);
+    //introspect(document.location, true, "document.location");
+        // 
+    // if (typeof CFIUtilities !== "undefined") introspect(CFIUtilities, true, "CFIUtilities");
+    // if (typeof CFI !== "undefined") introspect(CFI, true, "CFI");
+    // if (typeof BKDOMCleanup !== "undefined") introspect(BKDOMCleanup, true, "BKDOMCleanup");
+    // if (typeof BKContentTheme !== "undefined") introspect(BKContentTheme, true, "BKContentTheme");
+    // if (typeof BKEpubLocation !== "undefined") introspect(BKEpubLocation, true, "BKEpubLocation");
+    // if (typeof readAloud !== "undefined") introspect(readAloud, true, "readAloud");
+    // 
+    
+    window.oncontextmenu = function()
+    {
+        //log(window.document.documentElement.outerHTML);
+        //log(document.styleSheets[0]);
+    };
+    
+    setTimeout(function()
+    {
+        var spinner = document.getElementById("spinner");
+        spinner.style.display = "none";
+        
+    }, 500);
+}
         //]]>
         </script>
 
@@ -275,50 +747,28 @@ document.addEventListener("DOMContentLoaded", function(e) { setupLogoAnimation()
         
         <div id="epb3sldrzr-root">
 
-            <img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/>
 
 
             <section id="epb3sldrzr-content">
 
                 <div id="epb3sldrzr-anim-overflow">
 
-                    <h1 id="epb3sldrzr-title">Intro</h1>
+                    <h1 id="epb3sldrzr-title">navigator.epubReadingSystem</h1>
 
 <div id="epb3sldrzr-content-wrap">
-                    <!--SOUP-->
-<a class="spread" href="https://github.com/danielweck/epub3-sliderizer/" id="FMOGH">
-<img alt="Fork me on GitHub" class="nozoom" src="../img/custom/assets/forkme.png" style="width: 200px; height: 200px;"/>
-</a>
-<h1 class="spread" id="title">EPUB3-Sliderizer</h1>
-<div class="auto incremental" data-incremental-delay="100">
-<p>
-a tool that creates slideshow presentations for
-</p><p>
-<span class="pale-red">web-browsers</span> and <span class="pale-blue">e-book readers</span>
-</p><p>
-by converting a simple input format (single text file)
-</p><p>
-to a pre-paginated EPUB 3 e-book (fixed-layout)
-</p><p>
-that can also be viewed in HTML5 web browsers
-</p><p>
-(+ accessibility switch: fixed-layout ↔ reflowable)
+                    <!--XML-->
+<!--
+Note that any HTML entity (not valid XML) triggers "tagsoup" parser mode in Epub3Sliderizer:
+&nbsp;
+-->
+<!--
+Line breaks in the divs below are important! (could be replaced by space character, or the above equivalent HTML emtity)
+(otherwise the markup adopts self-closing XML elements, which break HTML parser in web browsers)
+-->
+<div class="full" id="spinner">
+</div>
+<div id="dropzone"><p>
 </p></div>
-<div class="boxed epb3sldrzr-animated bounceInDown" id="boox">
-<div>
-<div id="logoWrapper">
-<img alt="Logo" id="logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/>
-</div>
-<ul>
-<li>
-<strong>See</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/doc/data.txt" target="_blank">input file</a> for this slidedeck
-</li>
-<li>
-<strong>Grab</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/" target="_blank">open-source code</a> from GitHub <i class="fa fa-github" style="font-size: 1.5em;"> </i>
-</li>
-</ul>
-</div>
-</div>
 </div>
 
                 </div>
