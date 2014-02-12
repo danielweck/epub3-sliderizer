@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_14" lang="en-US" xml:lang="en-US">
+    <head>
+        <meta charset="UTF-8"/>
+
+        <meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/>
+        <meta content="EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook" name="keywords"/>
+        
+        <title>(14/20) EPUB3 Sliderizer / Styling, templates</title>
+
+        <meta content="14" name="slideIndex"/>
+        <meta content="20" name="slideCount"/>
+        
+        <link href="../img/favicon.ico" rel="shortcut icon"/>
+        
+        <link href="../img/custom/assets/TouchIcon.png" rel="apple-touch-icon"/>
+        
+        <meta content="width=1290, height=1000" name="viewport"/>
+        
+        <link href="fonts/fonts.css" rel="stylesheet" type="text/css"/>
+        <link href="fonts/FontAwesome.css" rel="stylesheet" type="text/css"/>
+        
+        <link href="../css/struct.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/incrementals.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/animations.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/controls.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/default.css" rel="stylesheet" type="text/css"/>
+        
+        
+        
+        
+        
+        <script src="../js/jquery.min.js"> </script>
+        <script src="../js/default.js"> </script>
+        
+        
+
+        <link href="slide_13.xhtml" rel="prev"/>
+        
+        <link href="slide_15.xhtml" rel="next"/>
+
+        <link href="../nav.xhtml" rel="nav"/>
+
+        <link href="../print.xhtml" rel="print"/>
+        
+        <link href="slide_01.xhtml" rel="first"/>
+        
+        <link href="slide_20.xhtml" rel="last"/>
+                
+        <link href="../../../EPUB3-Sliderizer.epub" rel="epub"/>
+
+        
+        <style type="text/css">
+        /*<![CDATA[*/
+        body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
+{
+    
+-webkit-animation-duration: 1s;
+-moz-animation-duration: 1s;
+-ms-animation-duration: 1s;
+-o-animation-duration: 1s;
+animation-duration: 1s;
+
+    
+-webkit-animation-delay: 0s;
+-moz-animation-delay: 0s;
+-ms-animation-delay: 0s;
+-o-animation-delay: 0s;
+animation-delay: 0s;
+
+}
+
+html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
+{
+    width: 200px;
+    height: 84px;
+}
+
+html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+    opacity: 0.4;
+}
+
+.pale-red
+{
+    background: rgba(255, 0, 0, 0.2);
+}
+.pale-green
+{
+    background: rgba(0, 255, 0, 0.2);
+}
+.pale-blue
+{
+    background: rgba(0, 0, 255, 0.2);
+}
+.pale-grey
+{
+    background: rgba(0, 0, 0, 0.2);
+}
+.magenta
+{
+    background: #ff00ff;
+}
+.red
+{
+    background: #FF0033;
+}
+
+
+        /*]]>*/
+        </style>
+
+        <style type="text/css">
+        /*<![CDATA[*/
+        html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+    display: none;
+}
+
+a:link
+{
+    color:#0066FF;
+}
+a:visited
+{
+    color:#0066FF;
+}
+a:hover
+{
+    color:white;
+    text-decoration:none;
+}
+a:active
+{
+    color:white;
+}
+
+ul#yo
+{
+    margin-left: 2em;
+    
+    padding-left: 1em;
+    text-indent: -1.3em;
+
+    font-family: Arvo, Lato, Tahoma, verdana, arial, sans-serif;
+    font-size: 1.2em;
+    
+    color: #99CC99;
+    
+    list-style: none;
+}
+
+ul#yo li
+{
+    margin-bottom: 1.2em;
+}
+
+ul#yo li:before
+{
+    content: '\2605 \020';
+
+/*    margin: 0 0 1em 0; */
+    margin-right: 0;
+    
+    text-shadow: 0 0 0.08em rgba(255, 255, 255, 0.9);
+    color: #66FF66;
+}
+
+h1#epb3sldrzr-title
+{
+    margin-bottom: 2em;
+    
+    color: #FFCC33;
+    
+    background-color: transparent;
+    background: transparent;
+    
+    text-shadow: none;
+    
+    filter: none;
+    filter: 0;
+    
+    font-family: Neuton, serif;
+    
+    font-size: 200%;
+
+    text-align: right;
+    margin-right: 2em;
+    
+-webkit-transform: rotate(8deg);
+-moz-transform: rotate(8deg);
+-ms-transform: rotate(8deg);
+-o-transform: rotate(8deg);
+transform: rotate(8deg);
+
+
+    text-shadow: 0.06em 0.06em 0.11em rgba(0, 0, 0, 1);
+}
+
+#epb3sldrzr-body
+{
+    background-color: #333333 !important;
+}
+
+        /*]]>*/
+        </style>
+
+        
+       
+        <script>
+        //<![CDATA[
+        function setupAnimations()
+{
+    var html = document.documentElement;
+    if (html.id == "epb3sldrzr-NavDoc")
+    {
+        var elem = document.getElementById("epb3sldrzr-logo");
+        elem.classList.add("fadeIn");
+        elem.classList.add("epb3sldrzr-animated");
+    }
+}
+//setTimeout(setupAnimations, 100);
+document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
+
+// --------------------------------------------
+        //]]>
+        </script>
+
+
+</head>
+
+
+<!-- FIXED LAYOUT -->
+
+<body epub:type="bodymatter">
+
+    <div id="epb3sldrzr-body">
+        
+        <div id="epb3sldrzr-root">
+
+            <img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/>
+
+
+            <section id="epb3sldrzr-content">
+
+                <div id="epb3sldrzr-anim-overflow">
+
+                    <h1 id="epb3sldrzr-title">Styling, templates</h1>
+
+<div id="epb3sldrzr-content-wrap">
+                    <!--SOUP-->
+<ul class="incremental auto" id="yo">
+<li>The default CSS rules can be overridden on a <strong>per-slide</strong> basis,
+or for the <strong>entire slideshow</strong>.
+</li><li>The CSS can be authored in <code>data.txt</code> (the master file),
+or in external <code>files.css</code>.
+</li><li>The <strong>XHTML</strong> structure can be customised using <code><a href="http://mustache.github.io">{{Mustache}}</a></code> templates.</li></ul>
+</div>
+
+                </div>
+
+             </section>
+         </div>
+     </div>
+
+
+</body>
+</html>

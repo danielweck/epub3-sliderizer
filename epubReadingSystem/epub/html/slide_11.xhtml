@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_1" lang="en-US" xml:lang="en-US">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_11" lang="en-US" xml:lang="en-US">
     <head>
         <meta charset="UTF-8"/>
 
         <meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/>
         <meta content="EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook" name="keywords"/>
         
-        <title>(1/20) EPUB3 Sliderizer / Intro</title>
+        <title>(11/20) EPUB3 Sliderizer / Animations</title>
 
-        <meta content="1" name="slideIndex"/>
+        <meta content="11" name="slideIndex"/>
         <meta content="20" name="slideCount"/>
         
         <link href="../img/favicon.ico" rel="shortcut icon"/>
@@ -34,13 +34,15 @@
         
         
 
+        <link href="slide_10.xhtml" rel="prev"/>
         
-        <link href="slide_02.xhtml" rel="next"/>
+        <link href="slide_12.xhtml" rel="next"/>
 
         <link href="../nav.xhtml" rel="nav"/>
 
         <link href="../print.xhtml" rel="print"/>
         
+        <link href="slide_01.xhtml" rel="first"/>
         
         <link href="slide_20.xhtml" rel="last"/>
                 
@@ -109,110 +111,14 @@ html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 
         <style type="text/css">
         /*<![CDATA[*/
-        /* testing */
-#daniel > .weck
-{
-    color: blue;
-}
-
-#epb3sldrzr-anim-overflow
-{
-    padding-bottom: 0.5em;
-}
-
-a#FMOGH:link,
-a#FMOGH:visited,
-a#FMOGH:hover,
-a#FMOGH:active
-{
-    float: right;
-
-    text-decoration: none;
-    border: none;
-}
-
-a#FMOGH > img
-{
-    border: none;
-}
-
-
-body:not(.mobile):not(.epb3sldrzr-epubReadingSystem) .incremental > *
+        body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
 {
     
--webkit-transition: opacity 200ms ease-in-out 0ms !important;
--moz-transition: opacity 200ms ease-in-out 0ms !important;
--ms-transition: opacity 200ms ease-in-out 0ms !important;
--o-transition: opacity 200ms ease-in-out 0ms !important;
-transition: opacity 200ms ease-in-out 0ms !important;
-
-}
-
-#epb3sldrzr-content
-{
-    margin-left: 40px;
-}
-
-html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
-{
-    display: none;
-}
-
-#logoWrapper
-{
-    float: right;
-    
-    
--webkit-transform: rotate(45deg);
--moz-transform: rotate(45deg);
--ms-transform: rotate(45deg);
--o-transform: rotate(45deg);
-transform: rotate(45deg);
-
-}
-
-#logo
-{
-    width: 300px;
-    height: 125px;
-}
-
-h1#epb3sldrzr-title
-{
-    display: none;
-}
-
-#title
-{
-    font-size: 1.6em;
-
-    padding-top: 40px;
-
-    margin-bottom: 1em;
-    
-    margin-left: 40px;
-
-    border-bottom: 0.14em solid #8AC007;
-}
-
-div.incremental > p
-{
-    margin-bottom: 0.2em;
-    
-    font-weight: 400;
-    font-family: Arvo, Lato, Tahoma, verdana, arial, sans-serif;
-}
-
-#boox
-{
-    padding-top: 1.5em;
-    
-    
--webkit-animation-duration: 1s;
--moz-animation-duration: 1s;
--ms-animation-duration: 1s;
--o-animation-duration: 1s;
-animation-duration: 1s;
+-webkit-animation-duration: 1.5s;
+-moz-animation-duration: 1.5s;
+-ms-animation-duration: 1.5s;
+-o-animation-duration: 1.5s;
+animation-duration: 1.5s;
 
     
 -webkit-animation-delay: 1s;
@@ -221,8 +127,15 @@ animation-duration: 1s;
 -o-animation-delay: 1s;
 animation-delay: 1s;
 
-}
 
+    
+-webkit-animation-iteration-count: infinite;
+-moz-animation-iteration-count: infinite;
+-ms-animation-iteration-count: infinite;
+-o-animation-iteration-count: infinite;
+animation-iteration-count: infinite;
+
+}
 
         /*]]>*/
         </style>
@@ -250,13 +163,14 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 
         <script>
         //<![CDATA[
-        function setupLogoAnimation()
+        function setupAnimatedLogo()
 {
     var elem = document.getElementById("epb3sldrzr-logo");
-    elem.classList.add("fadeIn");
+    elem.classList.add("bounceInLeft");
     elem.classList.add("epb3sldrzr-animated");
 }
-document.addEventListener("DOMContentLoaded", function(e) { setupLogoAnimation(); }, false);
+//setTimeout(setupAnimations, 100);
+document.addEventListener("DOMContentLoaded", function(e) { setupAnimatedLogo(); }, false);
 
 // #########################################################
 // #########################################################
@@ -282,43 +196,33 @@ document.addEventListener("DOMContentLoaded", function(e) { setupLogoAnimation()
 
                 <div id="epb3sldrzr-anim-overflow">
 
-                    <h1 id="epb3sldrzr-title">Intro</h1>
+                    <h1 id="epb3sldrzr-title">Animations</h1>
 
 <div id="epb3sldrzr-content-wrap">
                     <!--SOUP-->
-<a class="spread" href="https://github.com/danielweck/epub3-sliderizer/" id="FMOGH">
-<img alt="Fork me on GitHub" class="nozoom" src="../img/custom/assets/forkme.png" style="width: 200px; height: 200px;"/>
-</a>
-<h1 class="spread" id="title">EPUB3-Sliderizer</h1>
-<div class="auto incremental" data-incremental-delay="100">
+<div class="auto incremental">
+<p style="margin-bottom: 1em;">
+EPUB3-Sliderizer supports <a href="http://daneden.me/animate">Animate.css</a> <span class="fade" style="font-size: 0.8em">(CSS3 keyframed animations)</span>
+</p><div class="boxed" style="margin-bottom: 1em;">
+<h3>Example:</h3>
+<p class="code" style="font-size: 0.8em;">
+<span class="pale-blue">
+    _CONTENT</span>
+<br/>
+<span class="pale-greenx">&lt;img src="assets/logo.png"</span>
+<br/>
+<span class="pale-greenx">class="</span><span class="pale-red">epb3sldrzr-animated</span><span class="pale-greenx"> </span><span class="magenta">bounceInLeft</span><span class="pale-greenx"> </span><span class="pale-green">my-logo</span><span class="pale-greenx">"&gt;</span>
+<br/>
+<br/>
+<span class="pale-blue">
+    _CSS_STYLE</span>
+<br/>
+<span class="pale-greenx">img.</span><span class="pale-green">my-logo</span><span class="pale-greenx"> {<br/>-PREFIXED_PROPERTY-animation-duration: 1.5s;<br/>-PREFIXED_PROPERTY-animation-delay: 1s;<br/>-PREFIXED_PROPERTY-animation-iteration-count: infinite; }</span>
+</p>
+</div>
 <p>
-a tool that creates slideshow presentations for
-</p><p>
-<span class="pale-red">web-browsers</span> and <span class="pale-blue">e-book readers</span>
-</p><p>
-by converting a simple input format (single text file)
-</p><p>
-to a pre-paginated EPUB 3 e-book (fixed-layout)
-</p><p>
-that can also be viewed in HTML5 web browsers
-</p><p>
-(+ accessibility switch: fixed-layout ↔ reflowable)
+The CSS class '<span class="code pale-red">epb3sldrzr-animated</span>' ensures that animations are fired only once the slide is ready.
 </p></div>
-<div class="boxed epb3sldrzr-animated bounceInDown" id="boox">
-<div>
-<div id="logoWrapper">
-<img alt="Logo" id="logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/>
-</div>
-<ul>
-<li>
-<strong>See</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/blob/master/_INPUT/doc/data.txt" target="_blank">input file</a> for this slidedeck
-</li>
-<li>
-<strong>Grab</strong> the <a href="https://github.com/danielweck/epub3-sliderizer/" target="_blank">open-source code</a> from GitHub <i class="fa fa-github" style="font-size: 1.5em;"> </i>
-</li>
-</ul>
-</div>
-</div>
 </div>
 
                 </div>

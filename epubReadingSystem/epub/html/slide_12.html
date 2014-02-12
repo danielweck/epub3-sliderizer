@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" id="epb3sldrzr-Slide_12" lang="en-US" xml:lang="en-US">
+    <head>
+        <meta charset="UTF-8"/>
+
+        <meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/>
+        <meta content="EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook" name="keywords"/>
+        
+        <title>(12/20) EPUB3 Sliderizer / Incrementals</title>
+
+        <meta content="12" name="slideIndex"/>
+        <meta content="20" name="slideCount"/>
+        
+        <link href="../img/favicon.ico" rel="shortcut icon"/>
+        
+        <link href="../img/custom/assets/TouchIcon.png" rel="apple-touch-icon"/>
+        
+        <meta content="width=1290, height=1000" name="viewport"/>
+        
+        <link href="fonts/fonts.css" rel="stylesheet" type="text/css"/>
+        <link href="fonts/FontAwesome.css" rel="stylesheet" type="text/css"/>
+        
+        <link href="../css/struct.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/incrementals.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/animations.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/controls.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/default.css" rel="stylesheet" type="text/css"/>
+        
+        
+        
+        
+        
+        <script src="../js/jquery.min.js"> </script>
+        <script src="../js/default.js"> </script>
+        
+        
+
+        <link href="slide_11.html" rel="prev"/>
+        
+        <link href="slide_13.html" rel="next"/>
+
+        <link href="../nav.html" rel="nav"/>
+
+        <link href="../print.html" rel="print"/>
+        
+        <link href="slide_01.html" rel="first"/>
+        
+        <link href="slide_20.html" rel="last"/>
+                
+        <link href="../../../EPUB3-Sliderizer.epub" rel="epub"/>
+
+        
+        <style type="text/css">
+        /*<![CDATA[*/
+        body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
+{
+    
+-webkit-animation-duration: 1s;
+-moz-animation-duration: 1s;
+-ms-animation-duration: 1s;
+-o-animation-duration: 1s;
+animation-duration: 1s;
+
+    
+-webkit-animation-delay: 0s;
+-moz-animation-delay: 0s;
+-ms-animation-delay: 0s;
+-o-animation-delay: 0s;
+animation-delay: 0s;
+
+}
+
+html#epb3sldrzr-NavDoc img#epb3sldrzr-logo
+{
+    width: 200px;
+    height: 84px;
+}
+
+html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+    opacity: 0.4;
+}
+
+.pale-red
+{
+    background: rgba(255, 0, 0, 0.2);
+}
+.pale-green
+{
+    background: rgba(0, 255, 0, 0.2);
+}
+.pale-blue
+{
+    background: rgba(0, 0, 255, 0.2);
+}
+.pale-grey
+{
+    background: rgba(0, 0, 0, 0.2);
+}
+.magenta
+{
+    background: #ff00ff;
+}
+.red
+{
+    background: #FF0033;
+}
+
+
+        /*]]>*/
+        </style>
+
+        <style type="text/css">
+        /*<![CDATA[*/
+        li.listMid:before
+{
+content: '';
+padding: 0;
+margin: 0;
+font-size: 0.01em;
+}
+
+        /*]]>*/
+        </style>
+
+        
+       
+        <script>
+        //<![CDATA[
+        function setupAnimations()
+{
+    var html = document.documentElement;
+    if (html.id == "epb3sldrzr-NavDoc")
+    {
+        var elem = document.getElementById("epb3sldrzr-logo");
+        elem.classList.add("fadeIn");
+        elem.classList.add("epb3sldrzr-animated");
+    }
+}
+//setTimeout(setupAnimations, 100);
+document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }, false);
+
+// --------------------------------------------
+        //]]>
+        </script>
+
+
+</head>
+
+
+<!-- FIXED LAYOUT -->
+
+<body epub:type="bodymatter">
+
+    <div id="epb3sldrzr-body">
+        
+        <div id="epb3sldrzr-root">
+
+            <img alt="" id="epb3sldrzr-logo" src="../img/custom/assets/EPUB3-Sliderizer.png"/>
+
+
+            <section id="epb3sldrzr-content">
+
+                <div id="epb3sldrzr-anim-overflow">
+
+                    <h1 id="epb3sldrzr-title">Incrementals</h1>
+
+<div id="epb3sldrzr-content-wrap">
+                    <!--SOUP-->
+<div class="boxed" style="margin-bottom: 1em;">
+<h3>Example:</h3>
+<p class="code" style="font-size: 0.8em;">
+&lt;ul class="<span class="code pale-blue">incremental</span> <span class="code pale-red">auto</span>" <span class="code pale-green">data-incremental-delay</span>="200"&gt;
+<br/>
+<span class="auto incremental" data-incremental-delay="200">
+<span class="code pale-grey" style="font-weight: 900">    &lt;li&gt; <strong>item 1</strong> &lt;/li&gt;<br/></span>
+<span class="code pale-grey" style="font-weight: 900">    &lt;li&gt; <strong>item 2</strong> &lt;/li&gt;<br/></span>
+<span>
+<span class="code">    &lt;li&gt;<br/>        &lt;ul class="<span class="code pale-blue">incremental</span> <span class="code pale-red">auto</span>"&gt;<br/></span>
+<span class="auto incremental" data-incremental-delay="400">
+<span class="code pale-grey" style="font-weight: 900">            &lt;li&gt; <strong>item 3</strong> &lt;/li&gt;<br/></span>
+<span class="code pale-grey" style="font-weight: 900">            &lt;li&gt; <strong>item 4</strong> &lt;/li&gt;<br/></span>
+</span>
+<span class="code">        &lt;/ul&gt;<br/>    &lt;/li&gt;<br/></span>
+</span>
+</span>
+&lt;/ul&gt;
+</p>
+</div>
+<div style="font-size: 1em; width: 9em; float: right; padding-top: 1em; padding-bottom: 1em; margin-top: -10em; margin-right: 3em; background-color: #666666; color: white; border: 4px solid #333333;">
+<ul class="incremental auto" data-incremental-delay="200">
+<li> item 1 </li>
+<li> item 2 </li>
+<li class="listMid">
+<ul class="incremental auto">
+<li> item 3 </li>
+<li> item 4 </li>
+</ul>
+</li>
+</ul>
+</div>
+<ul class="auto incremental" data-incremental-delay="200">
+<li>
+CSS class '<span class="code pale-blue">incremental</span>' on element ⇒ children progression
+</li>
+<li>
+CSS class '<span class="code pale-red">auto</span>' ⇒ automatic reveal
+</li>
+<li>
+Attribute '<span class="code pale-green">data-incremental-delay</span>' ⇒ time offset <span class="fade">(500ms default)</span>
+</li>
+</ul>
+</div>
+
+                </div>
+
+             </section>
+         </div>
+     </div>
+
+     <div class="epb3sldrzr-markdown" id="epb3sldrzr-markdown-editor">NO-MARKDOWN
+&lt;div class="boxed" style="margin-bottom: 1em;"&gt;
+&lt;h3&gt;Example:&lt;/h3&gt;
+&lt;p class="code" style="font-size: 0.8em;"&gt;
+&amp;lt;ul class="&lt;span class="code pale-blue"&gt;incremental&lt;/span&gt; &lt;span class="code pale-red"&gt;auto&lt;/span&gt;" &lt;span class="code pale-green"&gt;data-incremental-delay&lt;/span&gt;="200"&amp;gt;
+&lt;br&gt;
+&lt;span class="auto incremental" data-incremental-delay="200"&gt;
+&lt;span style="font-weight: 900" class="code pale-grey"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;li&amp;gt; &lt;strong&gt;item 1&lt;/strong&gt; &amp;lt;/li&amp;gt;&lt;br&gt;&lt;/span&gt;
+&lt;span style="font-weight: 900" class="code pale-grey"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;li&amp;gt; &lt;strong&gt;item 2&lt;/strong&gt; &amp;lt;/li&amp;gt;&lt;br&gt;&lt;/span&gt;
+&lt;span&gt;
+&lt;span class="code"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;li&amp;gt;&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;ul class="&lt;span class="code pale-blue"&gt;incremental&lt;/span&gt; &lt;span class="code pale-red"&gt;auto&lt;/span&gt;"&amp;gt;&lt;br&gt;&lt;/span&gt;
+&lt;span class="auto incremental" data-incremental-delay="400"&gt;
+&lt;span style="font-weight: 900" class="code pale-grey"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;li&amp;gt; &lt;strong&gt;item 3&lt;/strong&gt; &amp;lt;/li&amp;gt;&lt;br&gt;&lt;/span&gt;
+&lt;span style="font-weight: 900" class="code pale-grey"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;li&amp;gt; &lt;strong&gt;item 4&lt;/strong&gt; &amp;lt;/li&amp;gt;&lt;br&gt;&lt;/span&gt;
+&lt;/span&gt;
+&lt;span class="code"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/ul&amp;gt;&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/li&amp;gt;&lt;br&gt;&lt;/span&gt;
+&lt;/span&gt;
+&lt;/span&gt;
+&amp;lt;/ul&amp;gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style="font-size: 1em; width: 9em; float: right; padding-top: 1em; padding-bottom: 1em; margin-top: -10em; margin-right: 3em; background-color: #666666; color: white; border: 4px solid #333333;"&gt;
+&lt;ul class="incremental auto" data-incremental-delay="200"&gt;
+&lt;li&gt; item 1 &lt;/li&gt;
+&lt;li&gt; item 2 &lt;/li&gt;
+&lt;li class="listMid"&gt;
+&lt;ul class="incremental auto"&gt;
+&lt;li&gt; item 3 &lt;/li&gt;
+&lt;li&gt; item 4 &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;ul class="auto incremental" data-incremental-delay="200"&gt;
+&lt;li&gt;
+CSS class '&lt;span class="code pale-blue"&gt;incremental&lt;/span&gt;' on element &amp;#8658; children progression
+&lt;/li&gt;
+&lt;li&gt;
+CSS class '&lt;span class="code pale-red"&gt;auto&lt;/span&gt;' &amp;#8658; automatic reveal
+&lt;/li&gt;
+&lt;li&gt;
+Attribute '&lt;span class="code pale-green"&gt;data-incremental-delay&lt;/span&gt;' &amp;#8658; time offset &lt;span class="fade"&gt;(500ms default)&lt;/span&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</div>
+     <textarea class="epb3sldrzr-markdown" id="epb3sldrzr-markdown-src">NO-MARKDOWN
+&lt;div class="boxed" style="margin-bottom: 1em;"&gt;
+&lt;h3&gt;Example:&lt;/h3&gt;
+&lt;p class="code" style="font-size: 0.8em;"&gt;
+&amp;lt;ul class="&lt;span class="code pale-blue"&gt;incremental&lt;/span&gt; &lt;span class="code pale-red"&gt;auto&lt;/span&gt;" &lt;span class="code pale-green"&gt;data-incremental-delay&lt;/span&gt;="200"&amp;gt;
+&lt;br&gt;
+&lt;span class="auto incremental" data-incremental-delay="200"&gt;
+&lt;span style="font-weight: 900" class="code pale-grey"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;li&amp;gt; &lt;strong&gt;item 1&lt;/strong&gt; &amp;lt;/li&amp;gt;&lt;br&gt;&lt;/span&gt;
+&lt;span style="font-weight: 900" class="code pale-grey"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;li&amp;gt; &lt;strong&gt;item 2&lt;/strong&gt; &amp;lt;/li&amp;gt;&lt;br&gt;&lt;/span&gt;
+&lt;span&gt;
+&lt;span class="code"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;li&amp;gt;&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;ul class="&lt;span class="code pale-blue"&gt;incremental&lt;/span&gt; &lt;span class="code pale-red"&gt;auto&lt;/span&gt;"&amp;gt;&lt;br&gt;&lt;/span&gt;
+&lt;span class="auto incremental" data-incremental-delay="400"&gt;
+&lt;span style="font-weight: 900" class="code pale-grey"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;li&amp;gt; &lt;strong&gt;item 3&lt;/strong&gt; &amp;lt;/li&amp;gt;&lt;br&gt;&lt;/span&gt;
+&lt;span style="font-weight: 900" class="code pale-grey"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;li&amp;gt; &lt;strong&gt;item 4&lt;/strong&gt; &amp;lt;/li&amp;gt;&lt;br&gt;&lt;/span&gt;
+&lt;/span&gt;
+&lt;span class="code"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/ul&amp;gt;&lt;br/&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;lt;/li&amp;gt;&lt;br&gt;&lt;/span&gt;
+&lt;/span&gt;
+&lt;/span&gt;
+&amp;lt;/ul&amp;gt;
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;div style="font-size: 1em; width: 9em; float: right; padding-top: 1em; padding-bottom: 1em; margin-top: -10em; margin-right: 3em; background-color: #666666; color: white; border: 4px solid #333333;"&gt;
+&lt;ul class="incremental auto" data-incremental-delay="200"&gt;
+&lt;li&gt; item 1 &lt;/li&gt;
+&lt;li&gt; item 2 &lt;/li&gt;
+&lt;li class="listMid"&gt;
+&lt;ul class="incremental auto"&gt;
+&lt;li&gt; item 3 &lt;/li&gt;
+&lt;li&gt; item 4 &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;ul class="auto incremental" data-incremental-delay="200"&gt;
+&lt;li&gt;
+CSS class '&lt;span class="code pale-blue"&gt;incremental&lt;/span&gt;' on element &amp;#8658; children progression
+&lt;/li&gt;
+&lt;li&gt;
+CSS class '&lt;span class="code pale-red"&gt;auto&lt;/span&gt;' &amp;#8658; automatic reveal
+&lt;/li&gt;
+&lt;li&gt;
+Attribute '&lt;span class="code pale-green"&gt;data-incremental-delay&lt;/span&gt;' &amp;#8658; time offset &lt;span class="fade"&gt;(500ms default)&lt;/span&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</textarea>
+
+</body>
+</html>
