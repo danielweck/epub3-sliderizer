@@ -1,4 +1,8 @@
 // --------------------------------------------
+_IDENTIFIER
+EPUB3_Sliderizer_video
+
+// --------------------------------------------
 _TITLE
 EPUB3 remote video tests
 
