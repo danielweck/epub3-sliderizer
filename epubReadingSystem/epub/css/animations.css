@@ -16,6 +16,17 @@ animation-delay: 0s;
 
 }
 
+.epb3sldrzr-animated
+{
+	
+-webkit-animation-fill-mode: backwards;
+-moz-animation-fill-mode: backwards;
+-ms-animation-fill-mode: backwards;
+-o-animation-fill-mode: backwards;
+animation-fill-mode: backwards;
+
+}
+
 body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animated
 {
 	
@@ -24,13 +35,6 @@ body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animated
 -ms-animation-duration: 1s;
 -o-animation-duration: 1s;
 animation-duration: 1s;
-
-	
--webkit-animation-fill-mode: both;
--moz-animation-fill-mode: both;
--ms-animation-fill-mode: both;
--o-animation-fill-mode: both;
-animation-fill-mode: both;
 
 }
 
@@ -65,6 +69,8 @@ body:not(.epb3sldrzr-epubReadingSystem) .animated:not(.epb3sldrzr-animateStart)
 	visibility: hidden;
 }
 
+body.epb3sldrzr-epubReadingSystem .epb3sldrzr-animated,
+body.epb3sldrzr-epubReadingSystem .animated,
 .epb3sldrzr-animated:not(.epb3sldrzr-animateStart),
 .animated:not(.epb3sldrzr-animateStart)
 {
