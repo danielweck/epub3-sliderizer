@@ -3617,7 +3617,7 @@ Epub3Sliderizer.initAnimations = function()
                 
             elem.classList.add("epb3sldrzr-animateStart"); // ... THEN, ANIMATES (animation-iteration-count: N)
             
-            if (that.bodyRoot !== elem && (that.opera || that.firefox || that.IE))
+            if (that.bodyRoot !== elem) // && (that.opera || that.firefox || that.IE))
             {
                 that.reAnimateElement(elem);
             }
