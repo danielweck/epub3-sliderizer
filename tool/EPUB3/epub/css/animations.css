@@ -4,10 +4,14 @@ body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body.epb3sldrzr-animated
 	-PREFIXED_PROPERTY-animation-delay: 0s;
 }
 
+.epb3sldrzr-animated
+{
+	-PREFIXED_PROPERTY-animation-fill-mode: backwards;
+}
+
 body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animated
 {
 	-PREFIXED_PROPERTY-animation-duration: 1s;
-	-PREFIXED_PROPERTY-animation-fill-mode: both;
 }
 
 body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animated
@@ -35,6 +39,8 @@ body:not(.epb3sldrzr-epubReadingSystem) .animated:not(.epb3sldrzr-animateStart)
 	visibility: hidden;
 }
 
+body.epb3sldrzr-epubReadingSystem .epb3sldrzr-animated,
+body.epb3sldrzr-epubReadingSystem .animated,
 .epb3sldrzr-animated:not(.epb3sldrzr-animateStart),
 .animated:not(.epb3sldrzr-animateStart)
 {

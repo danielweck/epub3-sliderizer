@@ -2068,7 +2068,7 @@ The CSS class '<span class="code pale-red">epb3sldrzr-animated</span>' ensures t
 // --------------------------------------------
 _CSS_STYLE
 
-body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
+body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated.epb3sldrzr-animateStart
 {
     -PREFIXED_PROPERTY-animation-duration: 1.5s;
     -PREFIXED_PROPERTY-animation-delay: 1s;
@@ -2585,7 +2585,7 @@ The '<span class="code pale-red">author</span>' parameter is experimental (see n
 // --------------------------------------------
 _CSS_STYLE
 
-body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
+body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated.epb3sldrzr-animateStart
 {
     -PREFIXED_PROPERTY-animation-duration: 1.5s;
     -PREFIXED_PROPERTY-animation-delay: 1s;
