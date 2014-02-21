@@ -169,6 +169,11 @@ html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 -o-transform: rotate(45deg);
 transform: rotate(45deg);
 
+    
+    /*
+    -PREFIXED_PROPERTY-animation-duration: 1s;
+    -PREFIXED_PROPERTY-animation-delay: 2s;
+    */
 }
 
 #logo
@@ -250,13 +255,15 @@ document.addEventListener("DOMContentLoaded", function(e) { setupAnimations(); }
 
         <script>
         //<![CDATA[
-        function setupLogoAnimation()
+        /*
+function setupLogoAnimation()
 {
-    var elem = document.getElementById("epb3sldrzr-logo");
+    var elem = document.getElementById("logoWrapper");
     elem.classList.add("fadeIn");
     elem.classList.add("epb3sldrzr-animated");
 }
 document.addEventListener("DOMContentLoaded", function(e) { setupLogoAnimation(); }, false);
+*/
 
 // #########################################################
 // #########################################################
