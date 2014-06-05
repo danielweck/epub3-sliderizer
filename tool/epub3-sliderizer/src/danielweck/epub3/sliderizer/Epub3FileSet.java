@@ -512,6 +512,8 @@ public final class Epub3FileSet {
 				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.BACKGROUND_IMG,
 				verbosity);
 
+		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_HTML, slideShow.BACKGROUND_AUDIO, verbosity);
+
 		for (Slide slide : slideShow.slides) {
 
 			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG
@@ -525,6 +527,8 @@ public final class Epub3FileSet {
 			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG
 					+ "/" + Epub3FileSet.FOLDER_CUSTOM, slide.BACKGROUND_IMG,
 					verbosity);
+
+			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_HTML, slide.BACKGROUND_AUDIO, verbosity);
 
 			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS
 					+ "/" + Epub3FileSet.FOLDER_CUSTOM, slide.FILES_CSS,

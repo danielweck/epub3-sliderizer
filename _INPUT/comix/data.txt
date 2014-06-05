@@ -1,0 +1,304 @@
+// --------------------------------------------
+_IDENTIFIER
+EPUB3_Sliderizer_comix
+
+// --------------------------------------------
+_TITLE
+EPUB3 Sliderizer Comix
+
+// --------------------------------------------
+_CREATOR
+Daniel Weck
+
+// --------------------------------------------
+_VIEWPORT_WIDTH
+960
+
+// --------------------------------------------
+_VIEWPORT_HEIGHT
+728
+
+// --------------------------------------------
+_TOUCHICON
+TouchIcon.png
+
+// --------------------------------------------
+_COVER
+cover.jpg
+
+// --------------------------------------------
+_FILE_EPUB
+EPUB3-Sliderizer_comix.epub
+
+// --------------------------------------------
+_CSS_STYLE
+
+/*
+html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+    display: none;
+}
+*/
+
+html:not(#epb3sldrzr-NavDoc) h1#epb3sldrzr-title
+{
+    display: none;
+}
+
+.bubble
+{
+text-align: center;
+    padding: 0.8em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    
+    margin: 0;
+    line-height: 0.8em;
+
+    color: black;
+
+    text-shadow: 0 0 5px black;
+    text-shadow: none;
+
+font-size: 120%;
+    
+border: 0.14em solid black;
+background-color: white;
+
+-PREFIXED_PROPERTY-border-radius: 1.6em;
+}
+
+.bubble:before
+{
+content: "";
+position: absolute;
+
+left: 1em;
+
+bottom: -0.6em;
+
+border-width: 0.6em 0.6em 0;
+border-style: solid;
+border-color: black transparent;
+
+display: block;
+width: 0;
+}
+
+.bubble:after
+{
+content: "";
+position: absolute;
+
+left: 1em;
+
+bottom: -0.4em;
+
+border-width: 0.6em 0.6em 0;
+border-style: solid;
+border-color: white transparent;
+
+display: block;
+width: 0;
+}
+
+
+.bubble.top:before
+{
+bottom: auto;
+top: -0.6em;
+
+border-width: 0 0.6em 0.6em;
+}
+
+.bubble.top:after
+{
+bottom: auto;
+top: -0.4em;
+
+border-width: 0 0.6em 0.6em;
+}
+
+
+// --------------------------------------------
+_FILES_CSS_FONTS
+
+fonts.css
+
+// --------------------------------------------
+_FILES_FONT
+
+FingerPaint.woff
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Page 1
+
+// --------------------------------------------
+_CONTENT
+
+NO-MARKDOWN
+
+<div id="container" class="incremental fade-activezzz auto" data-incremental-delay="1000">
+
+<div id="div_1" class="bubble epb3sldrzr-author"><p><strong>EPUB3</strong> Comix<br/>experiment!</p></div>
+
+<div id="div_2" class="bubble top epb3sldrzr-author"><p>POW!</p></div>
+
+<div id="div_3" class="bubble epb3sldrzr-author"><p>Wooosh</p></div>
+
+<div id="div_4" class="bubble top epb3sldrzr-author"><p>Zing!!</p></div>
+
+</div>
+
+// --------------------------------------------
+_BACKGROUND_AUDIO
+
+186876__soundmatch24__dead-walking.mp3
+
+// --------------------------------------------
+_BACKGROUND_IMG
+
+cover.jpg
+
+// --------------------------------------------
+_BACKGROUND_IMG_SIZE
+
+cover
+
+// --------------------------------------------
+_CSS_STYLE
+
+_PREFIXED_@keyframes bounce
+{
+    0%
+    {
+        -PREFIXED_PROPERTY-transform: translateX(0);
+        -PREFIXED_PROPERTY-transform: translateY(0);
+        
+        -PREFIXED_PROPERTY-transform: scale(1);
+        -PREFIXED_PROPERTY-transform: rotate(0);
+    }
+	20%
+    {
+        -PREFIXED_PROPERTY-transform: translateY(50px);
+    }
+	40%
+    {
+        -PREFIXED_PROPERTY-transform: translateY(-100px);
+    }
+	50%
+    {
+        -PREFIXED_PROPERTY-transform: translateY(0);
+        
+        -PREFIXED_PROPERTY-transform: rotate(-5deg);
+    }
+	60%
+    {
+        -PREFIXED_PROPERTY-transform: translateY(-50px);
+    }
+    80%
+    {
+        -PREFIXED_PROPERTY-transform: translateY(0);
+        
+        -PREFIXED_PROPERTY-transform: rotate(5deg);
+    }
+    100%
+    {
+        -PREFIXED_PROPERTY-transform: translateX(0);
+        -PREFIXED_PROPERTY-transform: translateY(0);
+        
+        -PREFIXED_PROPERTY-transform: scale(1);
+        -PREFIXED_PROPERTY-transform: rotate(0);
+    }
+}
+
+.bubble[aria-selected],
+.bubble.-epub-media-overlay-active
+{
+	-PREFIXED_PROPERTY-animation-name: bounce;
+    
+	-PREFIXED_PROPERTY-backface-visibility: hidden;
+	-PREFIXED_PROPERTY-animation-delay: 0s;
+	-PREFIXED_PROPERTY-animation-duration: 1s;
+	-PREFIXED_PROPERTY-animation-fill-mode: backwards;
+    -PREFIXED_PROPERTY-animation-timing-function: ease-in-out;
+	-PREFIXED_PROPERTY-animation-iteration-count: 1;
+}
+
+
+#div_1
+{
+display: inline-block;
+
+position: relative;
+left: 6px;
+top: 9px;
+
+width: auto;
+height: auto;
+
+    font-family: Arvo, Lato, Tahoma, verdana, arial, sans-serif;
+    
+    -PREFIXED_PROPERTY-transform: rotate(-10deg);
+}
+
+
+#div_3
+{
+display: inline-block;
+
+position: relative;
+left: 515px;
+top: -125px;
+
+width: auto;
+height: auto;
+
+    font-family: 'FingerPaint';
+    
+    -PREFIXED_PROPERTY-transform: rotate(15deg);
+}
+
+#div_4
+{
+display: inline-block;
+
+position: relative;
+left: -204px;
+top: 322px;
+
+width: auto;
+height: auto;
+
+    font-family: Lato, Tahoma, verdana, arial, sans-serif;
+    
+    -PREFIXED_PROPERTY-transform: rotate(10deg);
+}
+
+#div_2 > p
+{
+font-size: 230%;
+}
+
+#div_2
+{
+
+display: inline-block;
+
+position: relative;
+left: 130px;
+top: 451px;
+
+width: auto;
+height: auto;
+
+    font-family: Neuton, serif;
+    
+    -PREFIXED_PROPERTY-transform: rotate(-10deg);
+}

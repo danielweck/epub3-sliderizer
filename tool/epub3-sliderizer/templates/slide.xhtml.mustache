@@ -2,6 +2,7 @@
 <html
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:epub="http://www.idpf.org/2007/ops"
+    epub:prefix="ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/"
     xmlns:m="http://www.w3.org/1998/Math/MathML"
     xmlns:svg="http://www.w3.org/2000/svg"
     id="epb3sldrzr-Slide_{{{SLIDE_NUMBER}}}"
@@ -140,6 +141,15 @@
 {{#slideShow.FIXED}}<!-- FIXED LAYOUT -->{{/slideShow.FIXED}}
 
 <body epub:type="bodymatter" {{#slideShow.REFLOW}}class="reflow"{{/slideShow.REFLOW}}>
+
+{{#slideShow.BACKGROUND_AUDIO}}
+<audio epub:type="ibooks:soundtrack" src="{{{slideShow.BACKGROUND_AUDIO}}}" />
+{{/slideShow.BACKGROUND_AUDIO}}
+
+{{#BACKGROUND_AUDIO}}
+<audio epub:type="ibooks:soundtrack" src="{{{BACKGROUND_AUDIO}}}" />
+{{/BACKGROUND_AUDIO}}
+
 {{#slideShow.FIXED}}
 
     <div id="epb3sldrzr-body" {{#slideShow.REFLOW}}style="visibility: visible;"{{/slideShow.REFLOW}}>

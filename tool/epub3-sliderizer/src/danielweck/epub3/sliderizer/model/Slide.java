@@ -192,6 +192,8 @@ public final class Slide extends Fielder {
 
 	public String FILES_IMG = null;
 
+	public String BACKGROUND_AUDIO = null;
+	
 	public String BACKGROUND_IMG = null;
 	public String BACKGROUND_IMG_SIZE = "contain"; // auto, contain, cover, 100%
 													// 100%
