@@ -32,31 +32,35 @@ EPUB3-Sliderizer_comix.epub
 
 // --------------------------------------------
 _MO_NARRATOR
-
 Public Domain Sound Effects
 
 // --------------------------------------------
 _MO_DUR
-
 00:00:10.000
 
 // --------------------------------------------
 _MO_AUDIO_FILES
-
+demo1.mp3
 110819__tristanluigi__shockwave.mp3
 
 // --------------------------------------------
 _MO_ACTIVE
-
 -epub-media-overlay-active
 
 // --------------------------------------------
 _MO_PLAYBACK_ACTIVE
-
 -epub-media-overlay-playing
 
 // --------------------------------------------
 _CSS_STYLE
+
+.-epub-media-overlay-active
+{
+background-color: black;
+color: white;
+
+text-shadow: 0 0 10px silver;
+}
 
 /*
 html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
@@ -82,7 +86,6 @@ text-align: center;
 
     color: black;
 
-    text-shadow: 0 0 5px black;
     text-shadow: none;
 
 font-size: 120%;
@@ -147,12 +150,10 @@ border-width: 0 0.6em 0.6em;
 
 // --------------------------------------------
 _FILES_CSS_FONTS
-
 fonts.css
 
 // --------------------------------------------
 _FILES_FONT
-
 FingerPaint.woff
 
 // #########################################################
@@ -175,20 +176,19 @@ NO-MARKDOWN
 
 <div id="container" class="incremental fade-activezzz auto" data-incremental-delay="300">
 
-<div id="div_1" class="bubble epb3sldrzr-author"><p><strong>EPUB<sup>3</sup></strong> Comix<br/>experiment!</p></div>
+<div id="div_1" class="bubble epb3sldrzr-author"><p id="p1"><strong>EPUB<sup>3</sup></strong> Comix<br/>experiment!</p></div>
 
-<div id="div_2" class="bubble top epb3sldrzr-author"><p>POW!</p></div>
+<div id="div_2" class="bubble top epb3sldrzr-author"><p id="p2">POW!</p></div>
 
-<div id="div_3" class="bubble epb3sldrzr-author"><p>Wooosh</p></div>
+<div id="div_3" class="bubble epb3sldrzr-author"><p id="p3">Wooosh</p></div>
 
-<div id="div_4" class="bubble top epb3sldrzr-author"><p>Zing!!</p></div>
+<div id="div_4" class="bubble top epb3sldrzr-author"><p id="p4">Zing!!</p></div>
 
 </div>
 
 // --------------------------------------------
 _MO_DUR
-
-00:00:04.610
+00:00:010.000
 
 // --------------------------------------------
 _MO_SMIL
@@ -196,20 +196,27 @@ _MO_SMIL
 AUDIO 110819__tristanluigi__shockwave.mp3
 
 TXT #div_1
-BEGIN 00.000
 END 01.000
 
+AUDIO demo1.mp3
+
 TXT #div_2
-BEGIN 00.100
-END 01.100
+END 01.048
 
 TXT #div_3
-BEGIN 00.200
-END 01.200
+END 02.979
 
 TXT #div_4
-BEGIN 00.300
-END 01.300
+END 04.610
+
+TXT #p2
+END 06.750
+
+TXT #p3
+END 08.053
+
+TXT #p4
+END 10.094
 
 // --------------------------------------------
 _BACKGROUND_AUDIO
@@ -418,3 +425,75 @@ height: auto;
 
     -PREFIXED_PROPERTY-transform-origin: 100% 100%;
 }
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Page 2
+
+// --------------------------------------------
+_CONTENT
+
+PAGE 2
+
+// --------------------------------------------
+_BACKGROUND_IMG
+
+Slide13.jpg
+
+// --------------------------------------------
+_BACKGROUND_IMG_SIZE
+
+cover
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Page 3
+
+// --------------------------------------------
+_CONTENT
+
+PAGE 3
+
+// --------------------------------------------
+_BACKGROUND_IMG
+
+Slide37.jpg
+
+// --------------------------------------------
+_BACKGROUND_IMG_SIZE
+
+cover
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Page 4
+
+// --------------------------------------------
+_CONTENT
+
+PAGE 4
+
+// --------------------------------------------
+_BACKGROUND_IMG
+
+Slide38.jpg
+
+// --------------------------------------------
+_BACKGROUND_IMG_SIZE
+
+cover
