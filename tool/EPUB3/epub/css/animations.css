@@ -93,7 +93,7 @@ _PREFIXED_@keyframes bounceInUp
 {
 	0% {
 		opacity: 0;
-		-PREFIXED_PROPERTY-transform: translateY(VIEWPORT_HEIGHTpx);
+		-PREFIXED_PROPERTY-transform: translateY(-VIEWPORT_HEIGHTpx);
 	}
 	
 	60% {

@@ -163,7 +163,109 @@ FingerPaint.woff
 
 // --------------------------------------------
 _TITLE
-Page 1
+#BDNumerique
+
+// --------------------------------------------
+_CONTENT_MIDDLE
+
+TRUE
+
+// --------------------------------------------
+_CONTENT
+
+NO-MARKDOWN
+
+
+<div id="container" class="incremental fade-active auto" data-incremental-delay="200">
+
+<p id="hashtag">#BDNumerique</p>
+
+<p id="locdate">Paris, June 2014</p>
+
+<p id="tag">Art + EPUB3 + Readium</p>
+
+<p id="hack">Hackathon</p>
+
+</div>
+
+// --------------------------------------------
+_CSS_STYLE
+
+#tag
+{
+font-size: 90%;
+}
+
+#locdate
+{
+font-size: 80%;
+text-shadow: none;
+margin-bottom: 0.4em;
+}
+
+#container
+{
+    text-align: center;
+
+    padding-left: 1em;
+    padding-right: 1em;
+    
+    right: 0;
+    left: 0;
+    width: VIEWPORT_WIDTHpx;
+}
+
+#epb3sldrzr-root
+{
+font-size: 180%;
+font-family: Lato, Tahoma, verdana, arial, sans-serif;
+color: white;
+background-color: #222222;
+text-shadow: 0 0 8px black;
+}
+
+#hack
+{
+font-weight: bold;
+text-shadow: none;
+
+    -PREFIXED_PROPERTY-animation-name: glow;
+    -PREFIXED_PROPERTY-animation-timing-function: ease-in-out;
+    -PREFIXED_PROPERTY-animation-duration: 1.2s;
+    -PREFIXED_PROPERTY-animation-iteration-count: infinite;
+    -PREFIXED_PROPERTY-animation-delay: 600ms;
+	-PREFIXED_PROPERTY-animation-fill-mode: both;
+    
+    -PREFIXED_PROPERTY-transform-origin: 50% 50%;
+}
+
+_PREFIXED_@keyframes glow
+{
+    0%
+    {
+        -PREFIXED_PROPERTY-transform: scale(1);
+    }
+	50%
+    {
+        -PREFIXED_PROPERTY-transform: scale(1.1);
+        text-shadow: 0 0 12px silver;
+    }
+    100%
+    {
+        -PREFIXED_PROPERTY-transform: scale(1);
+    }
+}
+
+
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Bubbles
 
 // --------------------------------------------
 _CONTENT
@@ -174,15 +276,17 @@ NO-MARKDOWN
 
 <!-- p id="mo_playpause" ibooks:readaloud="start" ibooks:readaloud-turn-style="automatic" xmlns:ibooks="http://www.apple.com/2011/iBooks">&#xF144;</p -->
 
-<div id="container" class="incremental fade-activezzz auto" data-incremental-delay="300">
+<div id="container" class="incremental fade-activezzz auto" data-incremental-delay="500">
 
-<div id="div_1" class="bubble epb3sldrzr-author"><p id="p1"><strong>EPUB<sup>3</sup></strong> Comix<br/>experiment!</p></div>
 
-<div id="div_2" class="bubble top epb3sldrzr-author"><p id="p2">POW!</p></div>
 
-<div id="div_3" class="bubble epb3sldrzr-author"><p id="p3">Wooosh</p></div>
+<div id="div_1" class="bubble epb3sldrzr-author"><p id="p1"><strong>HACK-A-TON</strong></p></div>
 
-<div id="div_4" class="bubble top epb3sldrzr-author"><p id="p4">Zing!!</p></div>
+<div id="div_3" class="bubble epb3sldrzr-author"><p id="p3"><strong>EPUB3</strong></p></div>
+
+<div id="div_4" class="bubble top epb3sldrzr-author"><p id="p4"><strong>Readium</strong></p></div>
+
+<div id="div_2" class="bubble top epb3sldrzr-author"><p id="p2">POW !!</p></div>
 
 </div>
 
@@ -340,7 +444,7 @@ opacity: 0;
     
 	-PREFIXED_PROPERTY-backface-visibility: hidden;
 	-PREFIXED_PROPERTY-animation-delay: 0s;
-	-PREFIXED_PROPERTY-animation-duration: 500ms;
+	-PREFIXED_PROPERTY-animation-duration: 400ms;
 	-PREFIXED_PROPERTY-animation-fill-mode: backwards;
     -PREFIXED_PROPERTY-animation-timing-function: cubic-bezier(0.25,0.1,0.25,1);
 	-PREFIXED_PROPERTY-animation-iteration-count: 1;
@@ -351,14 +455,14 @@ opacity: 0;
 {
 display: inline-block;
 
-position: relative;
-left: -33px;
-top: 53px;
+position: absolute;
+left: 13px;
+top: 103px;
 
 width: auto;
 height: auto;
 
-    font-family: Arvo, Lato, Tahoma, verdana, arial, sans-serif;
+    font-family: Arvo, Tahoma, verdana, arial, sans-serif;
     
     -PREFIXED_PROPERTY-transform: rotate(-10deg);
     
@@ -366,18 +470,24 @@ height: auto;
 }
 
 
+#div_3 > p
+{
+font-size: 150%;
+}
+
 #div_3
 {
 display: inline-block;
 
-position: relative;
-left: 603px;
-top: -140px;
+position: absolute;
+left: 641px;
+top: 68px;
 
 width: auto;
 height: auto;
 
-    font-family: 'FingerPaint';
+    
+    font-family: Neuton, serif;
     
     -PREFIXED_PROPERTY-transform: rotate(15deg);
 
@@ -388,9 +498,9 @@ height: auto;
 {
 display: inline-block;
 
-position: relative;
-left: -204px;
-top: 322px;
+position: absolute;
+left: 39px;
+top: 563px;
 
 width: auto;
 height: auto;
@@ -404,7 +514,7 @@ height: auto;
 
 #div_2 > p
 {
-font-size: 230%;
+font-size: 200%;
 }
 
 #div_2
@@ -412,14 +522,13 @@ font-size: 230%;
 
 display: inline-block;
 
-position: relative;
-left: 130px;
-top: 451px;
+position: absolute;
+left: 491px;
+top: 386px;
 
 width: auto;
 height: auto;
-
-    font-family: Neuton, serif;
+    font-family: 'FingerPaint';
     
     -PREFIXED_PROPERTY-transform: rotate(-10deg);
 
@@ -433,12 +542,20 @@ height: auto;
 
 // --------------------------------------------
 _TITLE
-Page 2
+Ecosystem
+
+// --------------------------------------------
+_CONTENT_MIDDLE
+
+TRUE
 
 // --------------------------------------------
 _CONTENT
 
-PAGE 2
+<p id="p1" class="epb3sldrzr-animated bounceInUp">Edition</p>
+<p id="p2" class="epb3sldrzr-animated bounceInUp">Numérique</p>
+<p id="p3" class="epb3sldrzr-animated bounceInRight">=</p>
+<p id="p4" class="epb3sldrzr-animated bounceInDown">Ecosystème</p>
 
 // --------------------------------------------
 _BACKGROUND_IMG
@@ -449,6 +566,177 @@ Slide13.jpg
 _BACKGROUND_IMG_SIZE
 
 cover
+
+// --------------------------------------------
+_CSS_STYLE
+
+#p1
+{
+    -PREFIXED_PROPERTY-animation-delay: 0s;
+}
+#p2
+{
+    -PREFIXED_PROPERTY-animation-delay: 500ms;
+}
+#p3
+{
+    -PREFIXED_PROPERTY-animation-delay: 1s;
+}
+#p4
+{
+    -PREFIXED_PROPERTY-animation-delay: 1500ms;
+}
+
+/*
+ul > li:before
+{
+    content: '';
+    padding: 0;
+    margin: 0;
+}
+*/
+
+p
+{
+line-height: 1;
+
+margin: 0;
+margin-left: 1em;
+margin-bottom: 0.2em;
+
+padding-left: 0.3em;
+padding-right: 0.3em;
+padding-top: 0.03em;
+padding-bottom: 0.03em;
+
+background-color: #222222;
+}
+
+#epb3sldrzr-content-wrap
+{
+font-size: 170%;
+font-family: Arvo, Tahoma, verdana, arial, sans-serif;
+color: white;
+text-shadow: 0 0 8px black;
+}
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+EPUB3
+
+// --------------------------------------------
+_CONTENT_MIDDLE
+
+TRUE
+
+// --------------------------------------------
+_INCREMENTALS
+
+auto
+
+// --------------------------------------------
+_CONTENT
+
+<p id="heading">EPUB3</p>
+<p>
+e-book
+<br/>
+<span style="font-size:86%;margin-bottom:1.2em;">+ audio, video, interaction, etc.</span></p>
+
+* Standard non-propriétaire
+* Consortium IDPF
+* Technologies du Web (W3C)
+
+
+// --------------------------------------------
+_CSS_STYLE
+
+#epb3sldrzr-content-wrap
+{
+padding-left: 2em !important;
+}
+
+#epb3sldrzr-root
+{
+font-size: 120%;
+font-family: Lato, Tahoma, verdana, arial, sans-serif;
+color: white;
+background-color: #222222;
+text-shadow: 0 0 8px black;
+}
+
+#heading
+{
+font-size: 130%;
+font-family: Arvo, Tahoma, verdana, arial, sans-serif;
+text-shadow: 0 0 8px black;
+}
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Readium
+
+// --------------------------------------------
+_CONTENT_MIDDLE
+
+TRUE
+
+// --------------------------------------------
+_INCREMENTALS
+
+auto
+
+// --------------------------------------------
+_CONTENT
+
+<span id="heading">Readium
+
+* Fondation (IDPF + partenaires)
+* Logiciel(s) Open Source
+* Application(s) de lecture
+
+
+// --------------------------------------------
+_CSS_STYLE
+
+#epb3sldrzr-content-wrap
+{
+padding-left: 2em !important;
+}
+
+#epb3sldrzr-root
+{
+font-size: 120%;
+font-family: Lato, Tahoma, verdana, arial, sans-serif;
+color: white;
+background-color: #222222;
+text-shadow: 0 0 8px black;
+}
+
+#heading
+{
+font-size: 130%;
+font-family: Arvo, Tahoma, verdana, arial, sans-serif;
+text-shadow: 0 0 8px black;
+}
+
+
+
+
+
+
+
+
 
 // #########################################################
 // #########################################################
