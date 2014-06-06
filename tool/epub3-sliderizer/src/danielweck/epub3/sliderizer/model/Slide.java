@@ -88,6 +88,9 @@ public final class Slide extends Fielder {
 		return remoteResources.size() > 0;
 	}
 
+	public String VIEWPORT_WIDTH = null;
+	public String VIEWPORT_HEIGHT = null;
+	
 	public String TITLE = "DEFAULT TITLE";
 	public String SUBTITLE = null;
 

@@ -27,14 +27,6 @@
         <link href="../{{{slideShow.FOLDER_IMG}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{slideShow.TOUCHICON}}}" rel="apple-touch-icon"/>
         {{/slideShow.TOUCHICON}}
         
-        {{#slideShow.FIXED}}
-        {{#slideShow.VIEWPORT_WIDTH}}
-        {{#slideShow.VIEWPORT_HEIGHT}}
-        <meta content="width={{{slideShow.VIEWPORT_WIDTH}}}, height={{{slideShow.VIEWPORT_HEIGHT}}}" name="viewport"/>
-        {{/slideShow.VIEWPORT_HEIGHT}}
-        {{/slideShow.VIEWPORT_WIDTH}}
-        {{/slideShow.FIXED}}
-        
         {{#slideShow.CSS_FONTS}}
         <link href="{{{slideShow.FOLDER_FONTS}}}/{{{FILE}}}" rel="stylesheet" type="text/css"/>
         {{/slideShow.CSS_FONTS}}
@@ -135,6 +127,55 @@
         </script>
         {{/JS_SCRIPT}}
 
+        {{#slideShow.FIXED}}
+        {{^VIEWPORT_WIDTH}}
+        {{^VIEWPORT_HEIGHT}}
+        {{#slideShow.VIEWPORT_WIDTH}}
+        {{#slideShow.VIEWPORT_HEIGHT}}
+        <meta content="width={{{slideShow.VIEWPORT_WIDTH}}}, height={{{slideShow.VIEWPORT_HEIGHT}}}" name="viewport"/>
+        {{/slideShow.VIEWPORT_HEIGHT}}
+        {{/slideShow.VIEWPORT_WIDTH}}
+        {{/VIEWPORT_HEIGHT}}
+        {{/VIEWPORT_WIDTH}}
+        {{#VIEWPORT_WIDTH}}
+        {{#VIEWPORT_HEIGHT}}
+        <meta content="width={{{VIEWPORT_WIDTH}}}, height={{{VIEWPORT_HEIGHT}}}" name="viewport"/>
+        <style type="text/css">
+        /*<![CDATA[*/
+        
+        /* Hacky way to customise the viewport dimensions specifically for this slide :( */
+body:not(.reflow) div#epb3sldrzr-body
+{
+	width:{{{VIEWPORT_WIDTH}}}px;
+	height:{{{VIEWPORT_HEIGHT}}}px;
+}
+
+.full
+{
+    width:{{{VIEWPORT_WIDTH}}}px;
+    height:{{{VIEWPORT_HEIGHT}}}px;
+}
+
+.fullWidth
+{
+    width:{{{VIEWPORT_WIDTH}}}px;
+}
+
+.fullHeight
+{
+    height:{{{VIEWPORT_HEIGHT}}}px;
+}
+
+body:not(.reflow) .full
+{
+    width:{{{VIEWPORT_WIDTH}}}px;
+    height:{{{VIEWPORT_HEIGHT}}}px;
+}
+        /*]]>*/
+        </style>
+        {{/VIEWPORT_HEIGHT}}
+        {{/VIEWPORT_WIDTH}}
+        {{/slideShow.FIXED}}
 </head>
 
 {{#slideShow.REFLOW}}<!-- REFLOWABLE LAYOUT -->{{/slideShow.REFLOW}}

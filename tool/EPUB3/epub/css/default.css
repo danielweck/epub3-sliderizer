@@ -112,6 +112,15 @@ img
     z-index:0;
 }
 
+.fullWidth
+{
+    width:VIEWPORT_WIDTHpx;
+}
+.fullHeight
+{
+    height:VIEWPORT_HEIGHTpx;
+}
+
 body:not(.reflow) .full
 {
     width:VIEWPORT_WIDTHpx;

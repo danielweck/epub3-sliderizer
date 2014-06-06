@@ -166,6 +166,14 @@ _TITLE
 #BDNumerique
 
 // --------------------------------------------
+_VIEWPORT_WIDTH
+1500
+
+// --------------------------------------------
+_VIEWPORT_HEIGHT
+728
+
+// --------------------------------------------
 _CONTENT_MIDDLE
 
 TRUE
@@ -176,7 +184,7 @@ _CONTENT
 NO-MARKDOWN
 
 
-<div id="container" class="incremental fade-active auto" data-incremental-delay="200">
+<div id="container" class="fullWidth incremental fade-active auto" data-incremental-delay="200">
 
 <p id="hashtag">#BDNumerique</p>
 
@@ -187,6 +195,11 @@ NO-MARKDOWN
 <p id="hack">Hackathon</p>
 
 </div>
+
+// --------------------------------------------
+_BACKGROUND_AUDIO
+
+112334__sfxsource-com__sfxsource-com-free-heartbeat-sound-effect.mp3
 
 // --------------------------------------------
 _CSS_STYLE
@@ -209,10 +222,6 @@ margin-bottom: 0.4em;
 
     padding-left: 1em;
     padding-right: 1em;
-    
-    right: 0;
-    left: 0;
-    width: VIEWPORT_WIDTHpx;
 }
 
 #epb3sldrzr-root
@@ -231,7 +240,7 @@ text-shadow: none;
 
     -PREFIXED_PROPERTY-animation-name: glow;
     -PREFIXED_PROPERTY-animation-timing-function: ease-in-out;
-    -PREFIXED_PROPERTY-animation-duration: 1.2s;
+    -PREFIXED_PROPERTY-animation-duration: 1.5s;
     -PREFIXED_PROPERTY-animation-iteration-count: infinite;
     -PREFIXED_PROPERTY-animation-delay: 600ms;
 	-PREFIXED_PROPERTY-animation-fill-mode: both;
@@ -643,10 +652,9 @@ auto
 _CONTENT
 
 <p id="heading">EPUB3</p>
-<p>
-e-book
+<!-- p>e-book
 <br/>
-<span style="font-size:86%;margin-bottom:1.2em;">+ audio, video, interaction, etc.</span></p>
+<span style="font-size:86%;margin-bottom:1.2em;">+ audio, video, interaction, etc.</span></p -->
 
 * Standard non-propriétaire
 * Consortium IDPF
