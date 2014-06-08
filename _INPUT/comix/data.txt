@@ -771,7 +771,7 @@ NO-MARKDOWN
 
 <h1 id="heading">Le goéland</h1>
 
-<div id="text" class="scene2x">
+<div id="text">
 
 <div id="txt1" class="column">
 		BOUM! Un boulet de canon! 
@@ -813,6 +813,7 @@ margin-top: 0.7em !important;
 
 #text
 {
+visibility: hidden;
 borderx: 3px solid blue;
 
 padding: 0 !important;
@@ -824,12 +825,22 @@ margin-top: 3em;
 
 position:absolute;
 left: 120px;
+}
 
+#text.animated
+{
 -PREFIXED_PROPERTY-transition-property: left;
--PREFIXED_PROPERTY-transition-duration: 800ms;
+-PREFIXED_PROPERTY-transition-duration: 300ms;
 -PREFIXED_PROPERTY-transition-delay: 0s;
 -PREFIXED_PROPERTY-transition-timing-function: ease-out;
 }
+
+#text.scene0,
+#text.scene1
+{
+visibility: visible;
+}
+
 
 #text.scene0
 {
@@ -881,11 +892,13 @@ var _softPage = 0;
 
 var _epubReadingSystemTries = 0;
 
-function updateScene()
+function updateScene(initial)
 {
 console.error("scene" + _softPage);
+
      var obj = document.getElementById("text");
-     obj.setAttribute("class", "scene" + _softPage);
+
+     obj.setAttribute("class", "scene" + _softPage + (initial ? "" : " animated"));
 }
 
 function initthough()
@@ -901,6 +914,7 @@ console.log("!navigator.epubReadingSystem");
     }
     return;
 }
+
  console.error("INIT THOUGH");
  if (navigator.epubReadingSystem.onEvent)
  {
@@ -913,7 +927,7 @@ console.log("!navigator.epubReadingSystem");
          _softPage = 1;
      }
      
-     updateScene();
+         updateScene(true);
      
      navigator.epubReadingSystem.onEvent(window, navigator.epubReadingSystem.EVENT_PAGE_NEXT,
          function(payload)
@@ -955,3 +969,18 @@ console.log("!navigator.epubReadingSystem");
 }
 
 document.addEventListener("DOMContentLoaded", function(e) { initthough(); }, false);
+
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+DEMO2
+
+// --------------------------------------------
+_CONTENT
+
+DANIEL
