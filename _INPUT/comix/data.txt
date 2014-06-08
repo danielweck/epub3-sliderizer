@@ -184,7 +184,7 @@ _CONTENT
 NO-MARKDOWN
 
 
-<div id="container" class="fullWidth incremental fade-active auto" data-incremental-delay="200">
+<div id="container" class="fullWidth incremental fade-active autox" data-incremental-delay="200">
 
 <p id="hashtag">#BDNumerique</p>
 
@@ -194,7 +194,68 @@ NO-MARKDOWN
 
 <p id="hack">Hackathon</p>
 
+<p id="softPage"></p>
+
 </div>
+
+// --------------------------------------------
+_JS_SCRIPT
+
+var _softPage = 0;
+
+function initthough()
+{
+ console.error("INIT THOUGH");
+ if (navigator.epubReadingSystem && navigator.epubReadingSystem.onEvent)
+ {
+     console.error("CONTENT ONEVENT");
+     
+     console.log(window.READIUM_pageSwitchDirection);
+     
+     if (window.READIUM_pageSwitchDirection === 1)
+     {
+         _softPage = 3;
+     }
+     
+     var obj = document.getElementById("softPage");
+     obj.innerHTML = "" + _softPage;
+     
+     navigator.epubReadingSystem.onEvent(window, navigator.epubReadingSystem.EVENT_PAGE_NEXT,
+         function(payload)
+         {
+             console.error("CONTENT EVENT_PAGE_NEXT PLAYLOAD");
+             console.debug(payload);
+             
+             _softPage++;
+             if (_softPage > 3) return true; // do nothing, just let the Reading System turn the page normally
+             
+             var obj = document.getElementById("softPage");
+             obj.innerHTML = "" + _softPage;
+             
+             return false;
+         }
+     );
+     navigator.epubReadingSystem.onEvent(window, navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS,
+         function(payload)
+         {
+             console.error("CONTENT EVENT_PAGE_PREVIOUS PLAYLOAD");
+             console.debug(payload);
+             
+             _softPage--;
+             if (_softPage < 0) return true; // do nothing, just let the Reading System turn the page normally
+             
+             var obj = document.getElementById("softPage");
+             obj.innerHTML = "" + _softPage;
+             
+             return false;
+         }
+     );
+ }
+}
+
+document.addEventListener("DOMContentLoaded", function(e) { setTimeout(initthough, 1000); }, false);
+
+
 
 // --------------------------------------------
 _BACKGROUND_AUDIO
