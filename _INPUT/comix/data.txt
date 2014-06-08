@@ -939,7 +939,7 @@ left: -1200px;
 {
 borderx: 2px solid red;
 
-font-size: 80%;
+font-size: 70%;
 
 vertical-align: top;
 
@@ -1044,6 +1044,7 @@ NO-MARKDOWN
 		Je dépasse le fleuve blanc laiteux, TAC, qui sépare la ville, TIC, de mes chers alpages TAC. 
 		Je suis heureux, TIC-TAC.
 		</p>
+        
 		<p id="ensemble1_txt2_2">
 		Je me couche de bonne heure, TIC. 
 		Comme tous les week-ends, TIC, à heures fixes, TAC, j’ai mon emploi du temps, TIC, déterminé TAC : 
@@ -1060,6 +1061,7 @@ NO-MARKDOWN
 _CSS_STYLE
 
 
+
 #heading
 {
 padding: 0 !important;
@@ -1068,6 +1070,11 @@ margin: 0 !important;
 position: absolute;
 top: 1.5em;
 left: 0.2em;
+}
+
+#abbey > img
+{
+	-PREFIXED_PROPERTY-backface-visibility: hidden;
 }
 
 #abbey
@@ -1087,14 +1094,20 @@ width: 500px;
 height: auto;
 }
 
+
+#ensemble1_txt2 > p
+{
+margin-bottom: 1em;
+}
+
 #ensemble1_txt2
 {
-font-size: 80%;
+font-size: 70%;
 
 position: absolute;
 left: 540px;
 top: 0px;
-width: 420px;
+width: 320px;
 height: 100%;
 }
 
@@ -1204,7 +1217,7 @@ _PREFIXED_@keyframes fadeeIn
 
 #epb3sldrzr-root
 {
-font-size: 80%;
+font-size: 70%;
 font-family: Lato, Tahoma, verdana, arial, sans-serif;
 color: black;
 background-color: transparent;
