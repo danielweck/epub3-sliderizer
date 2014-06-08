@@ -203,16 +203,29 @@ _JS_SCRIPT
 
 var _softPage = 0;
 
+var _epubReadingSystemTries = 0;
+
 function initthough()
 {
+if (!navigator.epubReadingSystem)
+{
+console.log("!navigator.epubReadingSystem");
+
+    _epubReadingSystemTries++;
+    if (_epubReadingSystemTries < 20)
+    {
+        setTimeout(initthough, 100);
+    }
+    return;
+}
  console.error("INIT THOUGH");
- if (navigator.epubReadingSystem && navigator.epubReadingSystem.onEvent)
+ if (navigator.epubReadingSystem.onEvent)
  {
      console.error("CONTENT ONEVENT");
      
-     console.log(window.READIUM_pageSwitchDirection);
+     console.log(navigator.epubReadingSystem.PageDirection);
      
-     if (window.READIUM_pageSwitchDirection === 1)
+     if (navigator.epubReadingSystem.PageDirection === navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS)
      {
          _softPage = 3;
      }
@@ -253,7 +266,7 @@ function initthough()
  }
 }
 
-document.addEventListener("DOMContentLoaded", function(e) { setTimeout(initthough, 1000); }, false);
+document.addEventListener("DOMContentLoaded", function(e) { initthough(); }, false);
 
 
 
