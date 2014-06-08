@@ -194,80 +194,7 @@ NO-MARKDOWN
 
 <p id="hack">Hackathon</p>
 
-<p id="softPage"></p>
-
 </div>
-
-// --------------------------------------------
-_JS_SCRIPT
-
-var _softPage = 0;
-
-var _epubReadingSystemTries = 0;
-
-function initthough()
-{
-if (!navigator.epubReadingSystem)
-{
-console.log("!navigator.epubReadingSystem");
-
-    _epubReadingSystemTries++;
-    if (_epubReadingSystemTries < 20)
-    {
-        setTimeout(initthough, 100);
-    }
-    return;
-}
- console.error("INIT THOUGH");
- if (navigator.epubReadingSystem.onEvent)
- {
-     console.error("CONTENT ONEVENT");
-     
-     console.log(navigator.epubReadingSystem.PageDirection);
-     
-     if (navigator.epubReadingSystem.PageDirection === navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS)
-     {
-         _softPage = 3;
-     }
-     
-     var obj = document.getElementById("softPage");
-     obj.innerHTML = "" + _softPage;
-     
-     navigator.epubReadingSystem.onEvent(window, navigator.epubReadingSystem.EVENT_PAGE_NEXT,
-         function(payload)
-         {
-             console.error("CONTENT EVENT_PAGE_NEXT PLAYLOAD");
-             console.debug(payload);
-             
-             _softPage++;
-             if (_softPage > 3) return true; // do nothing, just let the Reading System turn the page normally
-             
-             var obj = document.getElementById("softPage");
-             obj.innerHTML = "" + _softPage;
-             
-             return false;
-         }
-     );
-     navigator.epubReadingSystem.onEvent(window, navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS,
-         function(payload)
-         {
-             console.error("CONTENT EVENT_PAGE_PREVIOUS PLAYLOAD");
-             console.debug(payload);
-             
-             _softPage--;
-             if (_softPage < 0) return true; // do nothing, just let the Reading System turn the page normally
-             
-             var obj = document.getElementById("softPage");
-             obj.innerHTML = "" + _softPage;
-             
-             return false;
-         }
-     );
- }
-}
-
-document.addEventListener("DOMContentLoaded", function(e) { initthough(); }, false);
-
 
 
 // --------------------------------------------
@@ -827,43 +754,204 @@ text-shadow: 0 0 8px black;
 
 // --------------------------------------------
 _TITLE
-Page 3
+DEMO1
+
+// --------------------------------------------
+_VIEWPORT_WIDTH
+1496
+
+// --------------------------------------------
+_VIEWPORT_HEIGHT
+1204
 
 // --------------------------------------------
 _CONTENT
 
-PAGE 3
+NO-MARKDOWN
+
+<h1 id="heading">Le goéland</h1>
+
+<div id="text" class="scene2x">
+
+<div id="txt1" class="column">
+		BOUM! Un boulet de canon! 
+		Je m’écarte! En toute hâte! Une régate! Plusieurs pieds dessous moi, les 
+		voiliers, ils sont trois, se sont rués, convoitant la ligne d’arrivée... 
+		La mer est une boule d’eau! 
+		Elle s’agite! Et ça gîte!
+</div>
+
+<div id="txt2" class="column">
+		Les vagues blaguent, jouent avec les bateaux! Allegro! Ils continuent... Coûte que coûte! Et la pluie! Goutte-à-goutte! 
+		Je suis sous! J’ai froid moi! Goéland! D’un coup d’aile! Je m’élève! Han! Au-dessus des nuages! Ah! 
+		Soulagement... 
+</div>
+
+<div id="txt3" class="column">
+		Les paillettes de soleil, sur l’eau, 
+		palpitent. Les éclats des ventres des poissons, je cherche. 
+		Plus loin je vois un requin, dépasser une vedette... Fluette! 
+		Qui ne s’en aperçoit pas! Pas du tout! Mais moi! Du poisson, je veux moi! 
+</div>
+
+<div id="txt4" class="column">
+		Une ancre colossale est mon perchoir. D’où je cherche ma pitance. Les couleurs changent... Du bleu, du bleu! Le phare s’allume... Éclaire la lune. La mer s’est calmée, la marée... monte...
+</div>
+
+</div>
+
+
+// --------------------------------------------
+_CSS_STYLE
+
+#heading
+{
+padding-left: 0px !important;
+margin-left: 120px !important;
+margin-top: 0.7em !important;
+}
+
+#text
+{
+borderx: 3px solid blue;
+
+padding: 0 !important;
+
+height: 500px;
+width: 3000px;
+
+margin-top: 3em;
+
+position:absolute;
+left: 120px;
+
+-PREFIXED_PROPERTY-transition-property: left;
+-PREFIXED_PROPERTY-transition-duration: 800ms;
+-PREFIXED_PROPERTY-transition-delay: 0s;
+-PREFIXED_PROPERTY-transition-timing-function: ease-out;
+}
+
+#text.scene0
+{
+left: 120px;
+}
+
+#text.scene1
+{
+left: -1200px;
+}
+
+.column
+{
+borderx: 2px solid red;
+
+font-size: 80%;
+
+vertical-align: top;
+
+width: 630px;
+display: inline-block;
+
+margin-right: 0.6em;
+}
+
+#epb3sldrzr-root
+{
+font-size: 90%;
+font-family: Lato, Tahoma, verdana, arial, sans-serif;
+color: black;
+background-color: transparent;
+}
+
 
 // --------------------------------------------
 _BACKGROUND_IMG
 
-Slide37.jpg
+lac_leman_montagnes.jpg
 
 // --------------------------------------------
 _BACKGROUND_IMG_SIZE
 
 cover
 
-// #########################################################
-// #########################################################
-// #########################################################
--SLIDE
-
 // --------------------------------------------
-_TITLE
-Page 4
+_JS_SCRIPT
 
-// --------------------------------------------
-_CONTENT
+var _softPage = 0;
 
-PAGE 4
+var _epubReadingSystemTries = 0;
 
-// --------------------------------------------
-_BACKGROUND_IMG
+function updateScene()
+{
+console.error("scene" + _softPage);
+     var obj = document.getElementById("text");
+     obj.setAttribute("class", "scene" + _softPage);
+}
 
-Slide38.jpg
+function initthough()
+{
+if (!navigator.epubReadingSystem)
+{
+console.log("!navigator.epubReadingSystem");
 
-// --------------------------------------------
-_BACKGROUND_IMG_SIZE
+    _epubReadingSystemTries++;
+    if (_epubReadingSystemTries < 20)
+    {
+        setTimeout(initthough, 100);
+    }
+    return;
+}
+ console.error("INIT THOUGH");
+ if (navigator.epubReadingSystem.onEvent)
+ {
+     console.error("CONTENT ONEVENT");
+     
+     console.log(navigator.epubReadingSystem.PageDirection);
+     
+     if (navigator.epubReadingSystem.PageDirection === navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS)
+     {
+         _softPage = 1;
+     }
+     
+     updateScene();
+     
+     navigator.epubReadingSystem.onEvent(window, navigator.epubReadingSystem.EVENT_PAGE_NEXT,
+         function(payload)
+         {
+             console.error("CONTENT EVENT_PAGE_NEXT PLAYLOAD");
+             console.debug(payload);
+             
+             _softPage++;
+             if (_softPage > 1)
+             {
+             _softPage--;
+             return true; // do nothing, just let the Reading System turn the page normally
+             }
+     
+             updateScene();
+             
+             return false;
+         }
+     );
+     navigator.epubReadingSystem.onEvent(window, navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS,
+         function(payload)
+         {
+             console.error("CONTENT EVENT_PAGE_PREVIOUS PLAYLOAD");
+             console.debug(payload);
+             
+             _softPage--;
+             if (_softPage < 0)
+             {
+             _softPage++;
+             return true; // do nothing, just let the Reading System turn the page normally
+             }
+     
+             updateScene();
+             
+             return false;
+         }
+     );
+ }
+}
 
-cover
+document.addEventListener("DOMContentLoaded", function(e) { initthough(); }, false);
