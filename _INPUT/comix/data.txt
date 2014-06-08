@@ -1004,7 +1004,7 @@ _VIEWPORT_HEIGHT
 _JS_SCRIPT
 
 var _clazz = null;
-var _lastSoftPage = 2;
+var _lastSoftPage = 3;
 
 function updateScene(initial)
 {
@@ -1022,6 +1022,8 @@ if (initial) _clazz = obj.getAttribute("class");
 _CONTENT
 
 NO-MARKDOWN
+
+            <img id="mountain" src="dents_du_midi1.gif"> </img>
 
         <div id="abbey">
             <img src="abbey.jpeg"> </img>
@@ -1087,6 +1089,8 @@ borderx: 2px solid red;
 
 #ensemble1_txt1
 {
+font-size: 76%;
+
 position: absolute;
 left: 530px;
 top: 330px;
@@ -1125,7 +1129,37 @@ visibility: hidden;
 visibility: visible;
 }
 
-#epb3sldrzr-root.animated #abbey > img,
+#epb3sldrzr-root.scene3 #abbey,
+#epb3sldrzr-root.scene3 #ensemble1_txt2
+{
+display: none;
+opacity: 0;
+}
+
+/*
+#epb3sldrzr-root.forward.scene3 #abbey,
+#epb3sldrzr-root.forward.scene3 #ensemble1_txt2
+{
+    -PREFIXED_PROPERTY-animation-name: fadeeOut;
+    -PREFIXED_PROPERTY-animation-timing-function: ease-in;
+    -PREFIXED_PROPERTY-animation-duration: 1s;
+    -PREFIXED_PROPERTY-animation-iteration-count: 1;
+    -PREFIXED_PROPERTY-animation-delay: 500ms;
+	-PREFIXED_PROPERTY-animation-fill-mode: both;
+}
+*/
+
+#epb3sldrzr-root.backward.scene2 #abbey,
+#epb3sldrzr-root.backward.scene2 #ensemble1_txt2
+{
+    -PREFIXED_PROPERTY-animation-name: fadeeIn;
+    -PREFIXED_PROPERTY-animation-timing-function: ease-in;
+    -PREFIXED_PROPERTY-animation-duration: 1s;
+    -PREFIXED_PROPERTY-animation-iteration-count: 1;
+    -PREFIXED_PROPERTY-animation-delay: 500ms;
+	-PREFIXED_PROPERTY-animation-fill-mode: both;
+}
+
 #epb3sldrzr-root.animated #abbey > img
 {
 -PREFIXED_PROPERTY-transition-property: transform;
@@ -1137,11 +1171,38 @@ visibility: visible;
 #epb3sldrzr-root.scene0 #ensemble1_txt2,
 #epb3sldrzr-root:not(.scene0) #heading,
 #epb3sldrzr-root.scene1 #ensemble1_txt1,
-#epb3sldrzr-root.scene2 #ensemble1_txt1
+#epb3sldrzr-root.scene2 #ensemble1_txt1,
+#epb3sldrzr-root.scene3 #ensemble1_txt1,
+#epb3sldrzr-root.scene3 #ensemble1_txt2
 {
 display: none;
 }
 
+#mountain
+{
+position: absolute;
+left: 900px;
+top: 357px;
+}
+
+#epb3sldrzr-root.forward.scene3 #mountain
+{
+    -PREFIXED_PROPERTY-animation-name: goLeft;
+    -PREFIXED_PROPERTY-animation-timing-function: ease-in;
+    -PREFIXED_PROPERTY-animation-duration: 1s;
+    -PREFIXED_PROPERTY-animation-iteration-count: 1;
+    -PREFIXED_PROPERTY-animation-delay: 0ms;
+	-PREFIXED_PROPERTY-animation-fill-mode: both;
+}
+#epb3sldrzr-root.backward.scene2 #mountain
+{
+    -PREFIXED_PROPERTY-animation-name: goRight;
+    -PREFIXED_PROPERTY-animation-timing-function: ease-in;
+    -PREFIXED_PROPERTY-animation-duration: 1s;
+    -PREFIXED_PROPERTY-animation-iteration-count: 1;
+    -PREFIXED_PROPERTY-animation-delay: 0ms;
+	-PREFIXED_PROPERTY-animation-fill-mode: both;
+}
 
 #ensemble1_txt2
 {
@@ -1177,7 +1238,9 @@ opacityxx: 1;
 
 
 #epb3sldrzr-root.scene2 #ensemble1_txt2,
-#epb3sldrzr-root.scene2 #abbey
+#epb3sldrzr-root.scene2 #abbey,
+#epb3sldrzr-root.scene2 #mountain,
+#epb3sldrzr-root.scene3 #mountain
 {
 
     -PREFIXED_PROPERTY-transform-origin: 0% 0%;
@@ -1185,7 +1248,8 @@ opacityxx: 1;
 }
 
 #epb3sldrzr-root.animated #abbey,
-#epb3sldrzr-root.animated #ensemble1_txt2
+#epb3sldrzr-root.animated #ensemble1_txt2,
+#epb3sldrzr-root.animated #mountain
 {
 -PREFIXED_PROPERTY-transition-property: transform;
 -PREFIXED_PROPERTY-transition-duration: 800ms;
@@ -1212,6 +1276,40 @@ _PREFIXED_@keyframes fadeeIn
     100%
     {
     opacity: 1;
+    }
+}
+
+_PREFIXED_@keyframes fadeeOut
+{
+    0%
+    {
+    opacity: 1;
+    }
+    100%
+    {
+    opacity: 0;
+    }
+}
+_PREFIXED_@keyframes goLeft
+{
+    0%
+    {
+    left: 900px;
+    }
+    100%
+    {
+    left: 0px;
+    }
+}
+_PREFIXED_@keyframes goRight
+{
+    0%
+    {
+    left: 0px;
+    }
+    100%
+    {
+    left: 900px;
     }
 }
 
