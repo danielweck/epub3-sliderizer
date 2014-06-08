@@ -185,8 +185,6 @@ console.log("!navigator.epubReadingSystem");
      
      console.log(navigator.epubReadingSystem.PageDirection);
      
-     _precedentSoftPage = _softPage;
-     
      if (navigator.epubReadingSystem.PageDirection === navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS)
      {
          _precedentSoftPage = _softPage + 1;
@@ -200,7 +198,9 @@ console.log("!navigator.epubReadingSystem");
          {
              console.error("CONTENT EVENT_PAGE_NEXT PLAYLOAD");
              console.debug(payload);
-             
+     
+             _precedentSoftPage = _softPage;
+     
              _softPage++;
              if (_softPage > _lastSoftPage)
              {
@@ -218,6 +218,8 @@ console.log("!navigator.epubReadingSystem");
          {
              console.error("CONTENT EVENT_PAGE_PREVIOUS PLAYLOAD");
              console.debug(payload);
+             
+             _precedentSoftPage = _softPage;
              
              _softPage--;
              if (_softPage < 0)
