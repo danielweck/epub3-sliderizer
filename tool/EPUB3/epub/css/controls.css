@@ -277,13 +277,13 @@ div#epb3sldrzr-controls
 {
     font-size: FONT_SIZE_UIpx;
     
-	-PREFIXED_PROPERTY-box-shadow: 0 0 FONT_SIZE_HALFpx rgba(0, 0, 0, 1);
+	-PREFIXED_PROPERTY-box-shadow: 0 0 0.5em rgba(0, 0, 0, 1);
 	
 	border-bottom: 0.14em solid #666666; /* #CC3300 #8AC007 */
 
 	
-	border-top-left-radius: FONT_SIZE_HALFpx;
-	border-top-right-radius: FONT_SIZE_HALFpx;
+	border-top-left-radius: 0.5em;
+	border-top-right-radius: 0.5em;
     
     /*
 	border-top-right-radius: FONT_SIZE_HALFrem;

@@ -46,8 +46,9 @@ public final class XHTML {
 
 	public static void createAll(MustacheFactory mustacheFactory,
 			File template_Slide, File template_SlideNotes,
-			File template_BackImgCSS, SlideShow slideShow,
-			String pathEpubFolder, int verbosity) throws Exception {
+			File template_BackImgCSS, File template_ViewportOverrideCSS,
+			SlideShow slideShow, String pathEpubFolder, int verbosity)
+			throws Exception {
 
 		if (template_Slide != null && !template_Slide.exists()) {
 			throw new FileNotFoundException(template_Slide.getAbsolutePath());
@@ -59,6 +60,11 @@ public final class XHTML {
 		if (template_BackImgCSS != null && !template_BackImgCSS.exists()) {
 			throw new FileNotFoundException(
 					template_BackImgCSS.getAbsolutePath());
+		}
+		if (template_ViewportOverrideCSS != null
+				&& !template_ViewportOverrideCSS.exists()) {
+			throw new FileNotFoundException(
+					template_ViewportOverrideCSS.getAbsolutePath());
 		}
 
 		Mustache mustacheSlide = null;
@@ -90,7 +96,7 @@ public final class XHTML {
 		}
 
 		Mustache mustacheBackImgCss = null;
-		if (template_Slide != null) {
+		if (template_BackImgCSS != null) {
 			try {
 				Mustache mustache = mustacheFactory
 						.compile(Epub3FileSet.TEMPLATE_BACK_IMG_CSS);
@@ -99,6 +105,20 @@ public final class XHTML {
 				System.out.println(" ");
 				System.out.println("}}}}} INVALID MUSTACHE TEMPLATE!!!! "
 						+ template_BackImgCSS.getAbsolutePath());
+				ex.printStackTrace();
+			}
+		}
+
+		Mustache mustacheViewportOverrideCss = null;
+		if (template_ViewportOverrideCSS != null) {
+			try {
+				Mustache mustache = mustacheFactory
+						.compile(Epub3FileSet.TEMPLATE_VIEWPORT_OVERRIDE_CSS);
+				mustacheViewportOverrideCss = mustache;
+			} catch (Exception ex) {
+				System.out.println(" ");
+				System.out.println("}}}}} INVALID MUSTACHE TEMPLATE!!!! "
+						+ template_ViewportOverrideCSS.getAbsolutePath());
 				ex.printStackTrace();
 			}
 		}
@@ -125,11 +145,21 @@ public final class XHTML {
 								+ template_BackImgCSS.getAbsolutePath());
 			}
 		}
+		if (mustacheViewportOverrideCss != null) {
+			if (verbosity > 0) {
+				System.out.println(" ");
+				System.out
+						.println("}}}}} MUSTACHE TEMPLATE OK [VIEWPORT OVERRIDE CSS]: "
+								+ template_ViewportOverrideCSS
+										.getAbsolutePath());
+			}
+		}
 
 		int n = slideShow.slides.size();
 		for (int i = 0; i < n; i++) {
 			XHTML.create(mustacheSlide, mustacheSlideNotes, mustacheBackImgCss,
-					slideShow, i, pathEpubFolder, verbosity);
+					mustacheViewportOverrideCss, slideShow, i, pathEpubFolder,
+					verbosity);
 		}
 	}
 
@@ -661,8 +691,8 @@ public final class XHTML {
 									+ attrVal);
 						}
 
-						Epub3FileSet.handleFile(slideShow, pathEpubFolder,
-								Epub3FileSet.FOLDER_IMG + "/"
+						Epub3FileSet.handleFile(slideShow, slide,
+								pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
 										+ Epub3FileSet.FOLDER_CUSTOM, attrVal,
 								verbosity);
 						if (slide.FILES_IMG == null) {
@@ -911,11 +941,12 @@ public final class XHTML {
 	// + Epub3FileSet.FOLDER_HTML + "/" + fileName, verbosity);
 	// }
 
-	private static Mustache _mustacheBackImgCss = null;
 	private static SlideShow _slideShow = null;
+	private static Mustache _mustacheBackImgCss = null;
 	public final static Function<String, String> backgroundImageCss = new Function<String, String>() {
 		@Override
 		public String apply(String input) {
+
 			if (_mustacheBackImgCss == null) {
 				return null;
 			}
@@ -945,14 +976,15 @@ public final class XHTML {
 				return null;
 			}
 
-			// TODO: yuck! Hack (should be handled in Mustache syntax...if then
-			// else).
-			String backup = null;
-			if (slide.BACKGROUND_IMG != null
-					&& _slideShow.BACKGROUND_IMG != null) {
-				backup = _slideShow.BACKGROUND_IMG;
-				_slideShow.BACKGROUND_IMG = null;
-			}
+			// // TODO: yuck! Hack (should be handled in Mustache syntax...if
+			// then
+			// // else).
+			// String backup = null;
+			// if (slide.BACKGROUND_IMG != null
+			// && _slideShow.BACKGROUND_IMG != null) {
+			// backup = _slideShow.BACKGROUND_IMG;
+			// _slideShow.BACKGROUND_IMG = null;
+			// }
 
 			StringWriter stringWriter = new StringWriter();
 			try {
@@ -964,21 +996,84 @@ public final class XHTML {
 						.println("}}}}} MUSTACHE TEMPLATE ERROR!!!! (BACKGROUND IMG CSS)");
 				ex.printStackTrace();
 			} finally {
-				if (backup != null) {
-					_slideShow.BACKGROUND_IMG = backup;
-				}
+				// if (backup != null) {
+				// _slideShow.BACKGROUND_IMG = backup;
+				// }
 			}
 			if (stringWriter != null) {
 				stringWriter.flush();
 				String css = stringWriter.toString();
 				try {
-					css = Epub3FileSet.processCssStyle(_slideShow, css);
+					css = Epub3FileSet.processCssStyle(_slideShow, slide, css);
 				} catch (Exception ex) {
 					System.err.println(ex.getMessage());
 					ex.printStackTrace();
 					return null;
 				}
-				return "<style type=\"text/css\">\n" + css + "\n</style>";
+				return css;
+				//return "<style type=\"text/css\">\n" + css + "\n</style>";
+			}
+
+			return null;
+		}
+	};
+
+	private static Mustache _mustacheViewportOverrideCss = null;
+	public final static Function<String, String> viewportOverrideCss = new Function<String, String>() {
+		@Override
+		public String apply(String input) {
+
+			if (_mustacheViewportOverrideCss == null) {
+				return null;
+			}
+			if (_slideShow == null) {
+				return null;
+			}
+
+			int slideNumber = 0;
+			try {
+				slideNumber = Integer.parseInt(input);
+			} catch (Exception ex) {
+				System.err.println(ex.getMessage());
+				ex.printStackTrace();
+				return null;
+			}
+			slideNumber--;
+
+			if (slideNumber < 0 || slideNumber > _slideShow.slides.size() - 1) {
+				System.err.println("!! Invalid slide number #" + slideNumber);
+				return null;
+			}
+
+			Slide slide = _slideShow.slides.get(slideNumber);
+
+			if (slide.VIEWPORT_WIDTH == null && slide.VIEWPORT_HEIGHT == null) {
+				return null;
+			}
+
+			StringWriter stringWriter = new StringWriter();
+			try {
+				_mustacheViewportOverrideCss.execute(stringWriter, slide);
+			} catch (Exception ex) {
+				stringWriter = null;
+				System.out.println(" ");
+				System.out
+						.println("}}}}} MUSTACHE TEMPLATE ERROR!!!! (VIEWPORT OVERRIDE CSS)");
+				ex.printStackTrace();
+			} finally {
+			}
+			if (stringWriter != null) {
+				stringWriter.flush();
+				String css = stringWriter.toString();
+				try {
+					css = Epub3FileSet.processCssStyle(_slideShow, slide, css);
+				} catch (Exception ex) {
+					System.err.println(ex.getMessage());
+					ex.printStackTrace();
+					return null;
+				}
+				return css;
+				//return "<style type=\"text/css\">\n" + css + "\n</style>";
 			}
 
 			return null;
@@ -987,12 +1082,14 @@ public final class XHTML {
 
 	private static void create(Mustache mustacheSlide,
 			Mustache mustacheSlideNotes, Mustache mustacheBackImgCss,
-			SlideShow slideShow, int i, String pathEpubFolder, int verbosity)
-			throws Exception {
+			Mustache mustacheViewportOverrideCss, SlideShow slideShow, int i,
+			String pathEpubFolder, int verbosity) throws Exception {
 
 		// TODO: HORRIBLE HACK!!!! (see backgroundImageCss Function above)
 		_slideShow = slideShow;
+
 		_mustacheBackImgCss = mustacheBackImgCss;
+		_mustacheViewportOverrideCss = mustacheViewportOverrideCss;
 
 		Slide slide = slideShow.slides.get(i);
 		i++;

@@ -157,7 +157,7 @@ public final class SlideShow extends Fielder {
 	public String CSS_STYLE = null;
 
 	public String CSS_STYLING() throws Exception {
-		return Epub3FileSet.processCssStyle(this, CSS_STYLE);
+		return Epub3FileSet.processCssStyle(this, null, CSS_STYLE);
 	}
 
 	public String JS_SCRIPT = null;

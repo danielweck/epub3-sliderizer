@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.common.base.Function;
+
 import danielweck.epub3.sliderizer.Epub3FileSet;
 import danielweck.epub3.sliderizer.NavDoc;
 import danielweck.epub3.sliderizer.Print;
@@ -16,6 +18,8 @@ public final class Slide extends Fielder {
 	}
 
 	public SlideShow slideShow;
+
+	public final static Function<String, String> viewportOverrideCss = XHTML.viewportOverrideCss;
 
 	public Slide(SlideShow ss) throws Exception {
 		this();
@@ -90,7 +94,9 @@ public final class Slide extends Fielder {
 
 	public String VIEWPORT_WIDTH = null;
 	public String VIEWPORT_HEIGHT = null;
-	
+//	
+//	public String FONT_SIZE_UI = null;
+//	
 	public String TITLE = "DEFAULT TITLE";
 	public String SUBTITLE = null;
 
@@ -313,7 +319,7 @@ public final class Slide extends Fielder {
 	public static String FIELD_CSS_STYLE = "CSS_STYLE";
 
 	public String CSS_STYLING() throws Exception {
-		return Epub3FileSet.processCssStyle(slideShow, CSS_STYLE);
+		return Epub3FileSet.processCssStyle(slideShow, this, CSS_STYLE);
 	}
 
 	public String JS_SCRIPT = null;

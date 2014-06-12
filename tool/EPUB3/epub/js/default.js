@@ -2811,7 +2811,21 @@ Epub3Sliderizer.onResize = function()
     {
         return;
     }
-
+    
+    
+    var viewportRatio = window.innerWidth / window.innerHeight;
+    var slideRatio = this.bodyRoot.clientWidth / this.bodyRoot.clientHeight;
+    if (slideRatio > viewportRatio)
+    {
+        this.bodyRoot.classList.add("horizontalMeetRatio");
+        this.bodyRoot.classList.remove("verticalMeetRatio");
+    }
+    else
+    {
+        this.bodyRoot.classList.remove("horizontalMeetRatio");
+        this.bodyRoot.classList.add("verticalMeetRatio");
+    }
+    
     var transformOrigin = "0px 0px";
     
     this.bodyRoot.style.MozTransformOrigin = transformOrigin;
@@ -2824,6 +2838,7 @@ Epub3Sliderizer.onResize = function()
     var ratio = bodyFit.ratio;
     var offsetX = bodyFit.offsetX;
     var offsetY = bodyFit.offsetY;
+    
     
     var is3D = this.opera || this.firefox || this.mobile || this.IE ? false : true; // this leaves WebKit with 3D ...
     

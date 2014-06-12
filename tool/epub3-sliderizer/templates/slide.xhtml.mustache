@@ -109,7 +109,13 @@
         </style>
         {{/CSS_STYLE}}
 
+		<style type="text/css">
+        /*<![CDATA[*/
+        
         {{#slideShow.backgroundImageCss}}{{{SLIDE_NUMBER}}}{{/slideShow.backgroundImageCss}}
+       
+        /*]]>*/
+        </style>
        
         {{#slideShow.JS_SCRIPT}}
         <script>
@@ -128,6 +134,7 @@
         {{/JS_SCRIPT}}
 
         {{#slideShow.FIXED}}
+        
         {{^VIEWPORT_WIDTH}}
         {{^VIEWPORT_HEIGHT}}
         {{#slideShow.VIEWPORT_WIDTH}}
@@ -137,55 +144,15 @@
         {{/slideShow.VIEWPORT_WIDTH}}
         {{/VIEWPORT_HEIGHT}}
         {{/VIEWPORT_WIDTH}}
+        
         {{#VIEWPORT_WIDTH}}
         {{#VIEWPORT_HEIGHT}}
         <meta content="width={{{VIEWPORT_WIDTH}}}, height={{{VIEWPORT_HEIGHT}}}" name="viewport"/>
         <style type="text/css">
         /*<![CDATA[*/
         
-        /* Hacky way to customise the viewport dimensions specifically for this slide :( */
-body:not(.reflow) div#epb3sldrzr-body
-{
-	width:{{{VIEWPORT_WIDTH}}}px;
-	height:{{{VIEWPORT_HEIGHT}}}px;
-}
-
-.full
-{
-    width:{{{VIEWPORT_WIDTH}}}px;
-    height:{{{VIEWPORT_HEIGHT}}}px;
-}
-
-.fullWidth
-{
-    width:{{{VIEWPORT_WIDTH}}}px;
-}
-
-.fullHeight
-{
-    height:{{{VIEWPORT_HEIGHT}}}px;
-}
-
-body:not(.reflow) .full
-{
-    width:{{{VIEWPORT_WIDTH}}}px;
-    height:{{{VIEWPORT_HEIGHT}}}px;
-}
-
-body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle
-{
-    height:{{{VIEWPORT_HEIGHT}}}px;
-}
-
-body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle:before
-{
-    height:{{{VIEWPORT_HEIGHT}}}px;
-}
-
-#epb3sldrzr-anim-overflow
-{
-	min-height:{{{VIEWPORT_HEIGHT}}}px;
-}
+        {{#viewportOverrideCss}}{{{SLIDE_NUMBER}}}{{/viewportOverrideCss}}
+       
         /*]]>*/
         </style>
         {{/VIEWPORT_HEIGHT}}

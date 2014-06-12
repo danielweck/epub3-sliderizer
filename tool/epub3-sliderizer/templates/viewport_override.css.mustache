@@ -1,0 +1,55 @@
+
+/* Hacky way to customise the viewport dimensions specifically for this slide :( */
+
+body:not(.reflow) div#epb3sldrzr-body
+{
+	width:{{{VIEWPORT_WIDTH}}}px;
+	height:{{{VIEWPORT_HEIGHT}}}px;
+}
+
+.full
+{
+    width:{{{VIEWPORT_WIDTH}}}px;
+    height:{{{VIEWPORT_HEIGHT}}}px;
+}
+
+.fullWidth
+{
+    width:{{{VIEWPORT_WIDTH}}}px;
+}
+
+.fullHeight
+{
+    height:{{{VIEWPORT_HEIGHT}}}px;
+}
+
+body:not(.reflow) .full
+{
+    width:{{{VIEWPORT_WIDTH}}}px;
+    height:{{{VIEWPORT_HEIGHT}}}px;
+}
+
+body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle
+{
+    height:{{{VIEWPORT_HEIGHT}}}px;
+}
+
+body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle:before
+{
+    height:{{{VIEWPORT_HEIGHT}}}px;
+}
+
+#epb3sldrzr-anim-overflow
+{
+	min-height:{{{VIEWPORT_HEIGHT}}}px;
+}
+
+div#epb3sldrzr-controls
+{
+    font-size: FONT_SIZE_UIpx;
+}
+
+#epb3sldrzr-body.horizontalMeetRatio div#epb3sldrzr-controls
+{
+    font-size: FONT_SIZE_UI_px;
+}

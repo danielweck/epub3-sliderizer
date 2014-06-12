@@ -40,6 +40,7 @@ public final class Epub3FileSet {
 	public final static String TEMPLATE_SLIDE = "slide.xhtml.mustache";
 	public final static String TEMPLATE_SLIDE_NOTES = "slide_NOTES.xhtml.mustache";
 	public final static String TEMPLATE_BACK_IMG_CSS = "background_img.css.mustache";
+	public final static String TEMPLATE_VIEWPORT_OVERRIDE_CSS = "viewport_override.css.mustache";
 	public final static String TEMPLATE_PRINT = "print.xhtml.mustache";
 
 	public final static String FOLDER_FONTS = "fonts";
@@ -102,8 +103,8 @@ public final class Epub3FileSet {
 	private final static String[] CSS_PREFIXES = new String[] { "webkit",
 			"moz", "ms", "o" };
 
-	public static void processCssFile(SlideShow slideShow, File cssFile,
-			int verbosity) throws Exception {
+	public static void processCssFile(SlideShow slideShow, Slide slide,
+			File cssFile, int verbosity) throws Exception {
 		if (!cssFile.exists()) {
 			throw new FileNotFoundException(cssFile.getAbsolutePath());
 		}
@@ -116,7 +117,8 @@ public final class Epub3FileSet {
 
 		StringBuilder strBuilder = XmlDocument.readFileLines(cssFile);
 
-		String updatedCSS = processCssStyle(slideShow, strBuilder.toString());
+		String updatedCSS = processCssStyle(slideShow, slide,
+				strBuilder.toString());
 
 		FileWriter fileWriter = null;
 		try {
@@ -221,8 +223,8 @@ public final class Epub3FileSet {
 		return style;
 	}
 
-	public static String processCssStyle(SlideShow slideShow, String css)
-			throws Exception {
+	public static String processCssStyle(SlideShow slideShow, Slide slide,
+			String css) throws Exception {
 		String style = css;
 
 		style = processCssStyle_(style);
@@ -290,8 +292,12 @@ public final class Epub3FileSet {
 			iStart = i1 + replacement.length();
 		}
 
-		style = style.replaceAll("VIEWPORT_WIDTH", slideShow.VIEWPORT_WIDTH);
-		style = style.replaceAll("VIEWPORT_HEIGHT", slideShow.VIEWPORT_HEIGHT);
+		style = style.replaceAll("VIEWPORT_WIDTH", slide == null
+				|| slide.VIEWPORT_WIDTH == null ? slideShow.VIEWPORT_WIDTH
+				: slide.VIEWPORT_WIDTH);
+		style = style.replaceAll("VIEWPORT_HEIGHT", slide == null
+				|| slide.VIEWPORT_HEIGHT == null ? slideShow.VIEWPORT_HEIGHT
+				: slide.VIEWPORT_HEIGHT);
 
 		int fontSize = 40;
 		try {
@@ -303,15 +309,55 @@ public final class Epub3FileSet {
 		style = style.replaceAll("FONT_SIZEpx", fontSize + "px");
 		style = style.replaceAll("FONT_SIZErem", fontSize / 10 + "rem");
 
-		fontSize = Math.round(fontSize / 2);
-		style = style.replaceAll("FONT_SIZE_HALFpx", fontSize + "px");
-		style = style.replaceAll("FONT_SIZE_HALFrem", fontSize / 10 + "rem");
+		int half = Math.round(fontSize / 2);
+		style = style.replaceAll("FONT_SIZE_HALFpx", half + "px");
+		style = style.replaceAll("FONT_SIZE_HALFrem", half / 10 + "rem");
+
+		int widthSS = 1290;
+		try {
+			widthSS = Integer.parseInt(slideShow.VIEWPORT_WIDTH);
+		} catch (Exception ex) {
+			;
+		}
+		int widthS = widthSS;
+		if (slide != null && slide.VIEWPORT_WIDTH != null) {
+			try {
+				widthS = Integer.parseInt(slide.VIEWPORT_WIDTH);
+			} catch (Exception ex) {
+				;
+			}
+		}
+
+		int heightSS = 1000;
+		try {
+			heightSS = Integer.parseInt(slideShow.VIEWPORT_HEIGHT);
+		} catch (Exception ex) {
+			;
+		}
+		int heightS = heightSS;
+		if (slide != null && slide.VIEWPORT_HEIGHT != null) {
+			try {
+				heightS = Integer.parseInt(slide.VIEWPORT_HEIGHT);
+			} catch (Exception ex) {
+				;
+			}
+		}
+
+		double ratio = widthSS / (double) widthS;
+		int fontSizeUI = (int) Math.ceil(fontSize / ratio / 2);
+		
+		double ratio_ = heightSS / (double) heightS;
+		int fontSizeUI_ = (int) Math.ceil(fontSize / ratio_ / 2);
+
+		style = style.replaceAll("FONT_SIZE_UIpx", fontSizeUI + "px");
+		style = style.replaceAll("FONT_SIZE_UI_px", fontSizeUI_ + "px");
 
 		return style;
 	}
 
-	public static void handleFile(SlideShow slideShow, String pathEpubFolder,
-			String destFolder, String path, int verbosity) throws Exception {
+	public static void handleFile(SlideShow slideShow, Slide slide,
+			String pathEpubFolder, String destFolder, String path, int verbosity)
+			throws Exception {
 		if (path == null) {
 			return;
 		}
@@ -327,6 +373,12 @@ public final class Epub3FileSet {
 					verbosity);
 			// System.out.println(" ");
 			// System.out.println("^^^^^^^ FILE: " + fullSourcePath);
+
+			String ext = getFileExtension(fullDestinationPath);
+			if (ext.equalsIgnoreCase("css")) {
+				processCssFile(slideShow, slide, new File(fullDestinationPath),
+						verbosity);
+			}
 		} else if (verbosity > 0) {
 			System.out.println(" ");
 			System.out.println("^^^^^^^ Cannot find file: " + fullSourcePath);
@@ -354,14 +406,16 @@ public final class Epub3FileSet {
 		return array;
 	}
 
-	public static void handleFiles(SlideShow slideShow, String pathEpubFolder,
-			String destFolder, String paths, int verbosity) throws Exception {
+	public static void handleFiles(SlideShow slideShow, Slide slide,
+			String pathEpubFolder, String destFolder, String paths,
+			int verbosity) throws Exception {
 		if (paths == null) {
 			return;
 		}
 		ArrayList<String> array = splitPaths(paths);
 		for (String path : array) {
-			handleFile(slideShow, pathEpubFolder, destFolder, path, verbosity);
+			handleFile(slideShow, slide, pathEpubFolder, destFolder, path,
+					verbosity);
 		}
 	}
 
@@ -387,6 +441,7 @@ public final class Epub3FileSet {
 		File template_Slide = null;
 		File template_SlideNotes = null;
 		File template_BackImgCSS = null;
+		File template_ViewportOverrideCSS = null;
 		File template_Print = null;
 
 		MustacheFactory mustacheFactory = null;
@@ -444,6 +499,18 @@ public final class Epub3FileSet {
 				}
 				template_BackImgCSS = backImgCssTemplateFile;
 			}
+			File viewportOverrideCssTemplateFile = new File(templateDir,
+					TEMPLATE_VIEWPORT_OVERRIDE_CSS);
+			if (file.exists()) {
+				if (verbosity > 0) {
+					System.out.println(" ");
+					System.out
+							.println("}}}}} FOUND TEMPLATE [VIEWPORT OVERRIDE CSS]: "
+									+ viewportOverrideCssTemplateFile
+											.getAbsolutePath());
+				}
+				template_ViewportOverrideCSS = viewportOverrideCssTemplateFile;
+			}
 			File printTemplateFile = new File(templateDir, TEMPLATE_PRINT);
 			if (file.exists()) {
 				if (verbosity > 0) {
@@ -459,11 +526,11 @@ public final class Epub3FileSet {
 			String filename = Epub3FileSet.CSSs[i].FILE;
 			// String id = Epub3FileSet.CSSs[i][1];
 
-			processCssFile(slideShow, new File(pathEpubFolder,
+			processCssFile(slideShow, null, new File(pathEpubFolder,
 					Epub3FileSet.FOLDER_CSS + "/" + filename), verbosity);
 		}
 
-		processCssFile(slideShow, new File(pathEpubFolder,
+		processCssFile(slideShow, null, new File(pathEpubFolder,
 				Epub3FileSet.FOLDER_CSS + "/" + Epub3FileSet.CSS_NAVDOC.FILE),
 				verbosity);
 
@@ -471,76 +538,85 @@ public final class Epub3FileSet {
 			String filename = Epub3FileSet.CSS_FONTS[i].FILE;
 			// String id = Epub3FileSet.CSS_FONTS[i][1];
 
-			processCssFile(slideShow, new File(pathEpubFolder,
+			processCssFile(slideShow, null, new File(pathEpubFolder,
 					Epub3FileSet.FOLDER_HTML + "/" + Epub3FileSet.FOLDER_FONTS
 							+ "/" + filename), verbosity);
 		}
 
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
-				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.LOGO, verbosity);
+		handleFiles(slideShow, null, pathEpubFolder, Epub3FileSet.FOLDER_IMG
+				+ "/" + Epub3FileSet.FOLDER_CUSTOM, slideShow.LOGO, verbosity);
 
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
-				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.TOUCHICON, verbosity);
+		handleFiles(slideShow, null, pathEpubFolder, Epub3FileSet.FOLDER_IMG
+				+ "/" + Epub3FileSet.FOLDER_CUSTOM, slideShow.TOUCHICON,
+				verbosity);
 
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
-				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.COVER, verbosity);
+		handleFiles(slideShow, null, pathEpubFolder, Epub3FileSet.FOLDER_IMG
+				+ "/" + Epub3FileSet.FOLDER_CUSTOM, slideShow.COVER, verbosity);
 
 		// TODO: MASSIVE hack!!
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG
+		handleFiles(slideShow, null, pathEpubFolder, Epub3FileSet.FOLDER_IMG
 				+ (slideShow.FAVICON.equals("favicon.ico") ? "" : "/"
 						+ Epub3FileSet.FOLDER_CUSTOM), slideShow.FAVICON,
 				verbosity);
 
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS + "/"
-				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_CSS, verbosity);
-
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_HTML + "/"
-				+ Epub3FileSet.FOLDER_FONTS + "/" + Epub3FileSet.FOLDER_CUSTOM,
-				slideShow.FILES_CSS_FONTS, verbosity);
-
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_JS + "/"
-				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_JS, verbosity);
-
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
-				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_IMG, verbosity);
-
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_HTML + "/"
-				+ Epub3FileSet.FOLDER_FONTS + "/" + Epub3FileSet.FOLDER_CUSTOM,
-				slideShow.FILES_FONT, verbosity);
-
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
-				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.BACKGROUND_IMG,
+		handleFiles(slideShow, null, pathEpubFolder, Epub3FileSet.FOLDER_CSS
+				+ "/" + Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_CSS,
 				verbosity);
 
-		handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_HTML, slideShow.BACKGROUND_AUDIO, verbosity);
+		handleFiles(slideShow, null, pathEpubFolder, Epub3FileSet.FOLDER_HTML
+				+ "/" + Epub3FileSet.FOLDER_FONTS + "/"
+				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_CSS_FONTS,
+				verbosity);
+
+		handleFiles(slideShow, null, pathEpubFolder, Epub3FileSet.FOLDER_JS
+				+ "/" + Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_JS,
+				verbosity);
+
+		handleFiles(slideShow, null, pathEpubFolder, Epub3FileSet.FOLDER_IMG
+				+ "/" + Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_IMG,
+				verbosity);
+
+		handleFiles(slideShow, null, pathEpubFolder, Epub3FileSet.FOLDER_HTML
+				+ "/" + Epub3FileSet.FOLDER_FONTS + "/"
+				+ Epub3FileSet.FOLDER_CUSTOM, slideShow.FILES_FONT, verbosity);
+
+		handleFiles(slideShow, null, pathEpubFolder, Epub3FileSet.FOLDER_IMG
+				+ "/" + Epub3FileSet.FOLDER_CUSTOM, slideShow.BACKGROUND_IMG,
+				verbosity);
+
+		handleFiles(slideShow, null, pathEpubFolder, Epub3FileSet.FOLDER_HTML,
+				slideShow.BACKGROUND_AUDIO, verbosity);
 
 		for (Slide slide : slideShow.slides) {
 
-			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG
-					+ "/" + Epub3FileSet.FOLDER_CUSTOM, slide.FILES_IMG,
-					verbosity);
+			handleFiles(slideShow, slide, pathEpubFolder,
+					Epub3FileSet.FOLDER_IMG + "/" + Epub3FileSet.FOLDER_CUSTOM,
+					slide.FILES_IMG, verbosity);
 
-			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_HTML
-					+ "/" + Epub3FileSet.FOLDER_FONTS + "/"
-					+ Epub3FileSet.FOLDER_CUSTOM, slide.FILES_FONT, verbosity);
+			handleFiles(slideShow, slide, pathEpubFolder,
+					Epub3FileSet.FOLDER_HTML + "/" + Epub3FileSet.FOLDER_FONTS
+							+ "/" + Epub3FileSet.FOLDER_CUSTOM,
+					slide.FILES_FONT, verbosity);
 
-			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_IMG
-					+ "/" + Epub3FileSet.FOLDER_CUSTOM, slide.BACKGROUND_IMG,
-					verbosity);
+			handleFiles(slideShow, slide, pathEpubFolder,
+					Epub3FileSet.FOLDER_IMG + "/" + Epub3FileSet.FOLDER_CUSTOM,
+					slide.BACKGROUND_IMG, verbosity);
 
-			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_HTML, slide.BACKGROUND_AUDIO, verbosity);
+			handleFiles(slideShow, slide, pathEpubFolder,
+					Epub3FileSet.FOLDER_HTML, slide.BACKGROUND_AUDIO, verbosity);
 
-			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_CSS
-					+ "/" + Epub3FileSet.FOLDER_CUSTOM, slide.FILES_CSS,
-					verbosity);
+			handleFiles(slideShow, slide, pathEpubFolder,
+					Epub3FileSet.FOLDER_CSS + "/" + Epub3FileSet.FOLDER_CUSTOM,
+					slide.FILES_CSS, verbosity);
 
-			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_HTML
-					+ "/" + Epub3FileSet.FOLDER_FONTS + "/"
-					+ Epub3FileSet.FOLDER_CUSTOM, slide.FILES_CSS_FONTS,
-					verbosity);
+			handleFiles(slideShow, slide, pathEpubFolder,
+					Epub3FileSet.FOLDER_HTML + "/" + Epub3FileSet.FOLDER_FONTS
+							+ "/" + Epub3FileSet.FOLDER_CUSTOM,
+					slide.FILES_CSS_FONTS, verbosity);
 
-			handleFiles(slideShow, pathEpubFolder, Epub3FileSet.FOLDER_JS + "/"
-					+ Epub3FileSet.FOLDER_CUSTOM, slide.FILES_JS, verbosity);
+			handleFiles(slideShow, slide, pathEpubFolder,
+					Epub3FileSet.FOLDER_JS + "/" + Epub3FileSet.FOLDER_CUSTOM,
+					slide.FILES_JS, verbosity);
 		}
 
 		NCX.create(slideShow, pathEpubFolder, verbosity);
@@ -552,7 +628,8 @@ public final class Epub3FileSet {
 				pathEpubFolder, verbosity);
 
 		XHTML.createAll(mustacheFactory, template_Slide, template_SlideNotes,
-				template_BackImgCSS, slideShow, pathEpubFolder, verbosity);
+				template_BackImgCSS, template_ViewportOverrideCSS, slideShow,
+				pathEpubFolder, verbosity);
 
 		// MUST EXECUTE AFTER XHTML!! (image references dynamically added when
 		// found in content markup)

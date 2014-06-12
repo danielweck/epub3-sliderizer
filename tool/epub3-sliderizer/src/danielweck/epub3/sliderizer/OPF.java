@@ -336,7 +336,7 @@ public final class OPF {
 					elementManifest, "mo-audio", true, Epub3FileSet.FOLDER_MO,
 					null);
 			Epub3FileSet
-					.handleFiles(slideShow, pathEpubFolder,
+					.handleFiles(slideShow, null, pathEpubFolder,
 							Epub3FileSet.FOLDER_MO, slideShow.MO_AUDIO_FILES,
 							verbosity);
 		}
