@@ -980,20 +980,6 @@ Epub3Sliderizer.gotoToc = function()
 
 // ----------
 
-Epub3Sliderizer.gotoNext_ = function()
-{
-    if (this.reflow && this.mobile)
-    {
-        this.nextIncremental(false);
-    }
-    else
-    {
-        this.gotoNext();
-    }
-};
-
-// ----------
-
 Epub3Sliderizer.gotoPrevious_ = function()
 {
     if (this.reflow && this.mobile)
@@ -1015,6 +1001,28 @@ Epub3Sliderizer.gotoPrevious = function()
         return;
     }
     
+    if (navigator.epubReadingSystem
+        && navigator.epubReadingSystem.on
+        && window.READIUM_activeEvents
+        && window.READIUM_activeEvents[navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS]
+        && window.READIUM_activeEvents[navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS].length)
+    {
+        window.postMessage({event: navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS}, "*");
+        return;
+    }
+    
+    this.gotoPreviousGo();
+};
+
+// ----------
+
+Epub3Sliderizer.gotoPreviousGo = function()
+{
+    if (this.isEpubReadingSystem())
+    {
+        return;
+    }
+    
     if (this.prev === "") 
     {
         return;
@@ -1025,7 +1033,43 @@ Epub3Sliderizer.gotoPrevious = function()
 
 // ----------
 
+Epub3Sliderizer.gotoNext_ = function()
+{
+    if (this.reflow && this.mobile)
+    {
+        this.nextIncremental(false);
+    }
+    else
+    {
+        this.gotoNext();
+    }
+};
+
+// ----------
+
 Epub3Sliderizer.gotoNext = function()
+{
+    if (this.isEpubReadingSystem())
+    {
+        return;
+    }
+    
+    if (navigator.epubReadingSystem
+        && navigator.epubReadingSystem.on
+        && window.READIUM_activeEvents
+        && window.READIUM_activeEvents[navigator.epubReadingSystem.EVENT_PAGE_NEXT]
+        && window.READIUM_activeEvents[navigator.epubReadingSystem.EVENT_PAGE_NEXT].length)
+    {
+        window.postMessage({event: navigator.epubReadingSystem.EVENT_PAGE_NEXT}, "*");
+        return;
+    }
+    
+    this.gotoNextGo();
+};
+
+// ----------
+
+Epub3Sliderizer.gotoNextGo = function()
 {
     if (this.isEpubReadingSystem())
     {
@@ -2896,8 +2940,26 @@ Epub3Sliderizer.onOrientationChange = function()
 
 // ----------
 
+Epub3Sliderizer.updateDirection = function(none)
+{
+    if (!navigator.epubReadingSystem) return;
+
+    if (none)
+    {
+        navigator.epubReadingSystem.PageDirection = undefined;
+    }
+    else
+    {
+        navigator.epubReadingSystem.PageDirection = this.reverse ? navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS : navigator.epubReadingSystem.EVENT_PAGE_NEXT;
+    }
+}
+
+// ----------
+
 Epub3Sliderizer.initReverse = function()
 {
+    this.updateDirection(true);
+    
     if (this.thisFilename === null || this.thisFilename === "")
     {
         this.reverse = false;
@@ -2987,6 +3049,8 @@ Epub3Sliderizer.initReverse = function()
     {
         this.reverse = true;
         //document.body.classList.add("epb3sldrzr-reverse");
+
+        this.updateDirection(false);
     }
 };
 
@@ -3933,14 +3997,134 @@ Epub3Sliderizer.init = function()
         }
     }
 
-    if (this.epubMode && !isDefinedAndNotNull(navigator.epubReadingSystem) && !this.basicMode && !this.staticMode && !this.authorMode)
+    if (!isDefinedAndNotNull(navigator.epubReadingSystem))
     {
-        fakeEpubReadingSystem = true;
-        this.epubReadingSystem = {name: "FAKE epub reader", version: "1.2.3"};
+        if (this.epubMode && !this.basicMode && !this.staticMode && !this.authorMode)
+        {
+            fakeEpubReadingSystem = true;
+            this.epubReadingSystem = {name: "FAKE epub reader", version: "1.2.3"};
 
-        console.log("epubReadingSystem (FAKED):");
-        console.log(this.epubReadingSystem.name);
-        console.log(this.epubReadingSystem.version);
+            console.log("epubReadingSystem (FAKED):");
+            console.log(this.epubReadingSystem.name);
+            console.log(this.epubReadingSystem.version);
+        }
+        else
+        {
+            navigator.epubReadingSystem = {name: "EPUB3-Sliderizer", version: "1.2.3"};
+            
+            navigator.epubReadingSystem.EVENT_PAGE_NEXT = "epubReadingSystem.EVENT_PAGE_NEXT";
+            navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS = "epubReadingSystem.EVENT_PAGE_PREVIOUS";
+
+            var _onOff = function(off, win, event, responder)
+            {
+                if (!win || !event || !responder)
+                {
+                    return false;
+                }
+
+                if (event !== navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS
+                    && event !== navigator.epubReadingSystem.EVENT_PAGE_NEXT)
+                {
+                    return false;
+                }
+            
+    // win.navigator.epubReadingSystem.TEST = true;
+    // console.error(window.navigator.epubReadingSystem.TEST); // Yep! (it's a shared object across all iframes!)
+            
+                // internal tracking
+                if (!win.READIUM_activeEvents)
+                {
+                    win.READIUM_activeEvents = {};
+                
+                    // Cleanup is not strictly necessary, as the READIUM_activeEvents data structure is attached to the window that is going out-of-scope...but still, it's good to have it for illustration purposes, and just in case the internal tracking method changes in the future (e.g. "active event" objects attached to shared epubReadingSystem instance).
+                    win.addEventListener("unload", function()
+                    {
+                        if (!win.READIUM_activeEvents) return;
+                    
+                        var evArr = [navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS, navigator.epubReadingSystem.EVENT_PAGE_NEXT];
+                        for (var evI in evArr)
+                        {
+                            var ev = evArr[evI];
+
+                            if (win.READIUM_activeEvents[ev])
+                            {
+                                for(var i = win.READIUM_activeEvents[ev].length - 1; i >= 0; i--)
+                                {
+                                    var data = win.READIUM_activeEvents[ev][i];
+                            
+                                    win.removeEventListener("message", data.messageCallback, false);
+                            
+                                    data.responder = undefined;
+                                    data.messageCallback = undefined;
+
+                                    win.READIUM_activeEvents[ev][i] = undefined;
+                                    win.READIUM_activeEvents[ev].splice(i, 1);
+                                }
+                            }
+                        }
+                    }, false);
+                }
+                if (!win.READIUM_activeEvents[event]) win.READIUM_activeEvents[event] = [];
+            
+                if (off)
+                {
+                    for(var i = win.READIUM_activeEvents[event].length - 1; i >= 0; i--)
+                    {
+                        var data = win.READIUM_activeEvents[event][i];
+                        if (data.responder && data.responder === responder)
+                        {
+                            win.READIUM_activeEvents[event][i] = undefined;
+                            win.READIUM_activeEvents[event].splice(i, 1);
+                        
+                            win.removeEventListener("message", data.messageCallback, false);
+                        }
+                    }
+                }
+                else
+                {
+                    var messageCallback = function(e)
+                    {
+                        if (!e) return;
+                
+                        //e.origin
+                        //assert e.source === window
+                
+                        var payload = e.data;
+                
+                        if (!payload || !payload.event || payload.event !== event) return;
+                    
+                        var response = responder(); // TODO payload?
+                
+                        if (response) // normal page turn allowed
+                        {
+                            if (event === navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS)
+                            {
+                                Epub3Sliderizer.gotoPreviousGo();
+                            }
+                            else if (event === navigator.epubReadingSystem.EVENT_PAGE_NEXT)
+                            {
+                                Epub3Sliderizer.gotoNextGo();
+                            }
+                        }
+                    };
+                
+                    win.READIUM_activeEvents[event].push({responder: responder, messageCallback: messageCallback});
+                
+                    win.addEventListener("message", messageCallback, false);
+                }
+            
+                return true;
+            };
+        
+            navigator.epubReadingSystem.on = function(win, event, responder)
+            {
+                return _onOff(false, win, event, responder);
+            };
+            navigator.epubReadingSystem.off = function(win, event, responder)
+            {
+                return _onOff(true, win, event, responder);
+            };
+        }
     }
     
     console.log("Readium: " + this.readium);
