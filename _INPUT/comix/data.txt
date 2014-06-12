@@ -159,6 +159,11 @@ FingerPaint.woff
 // --------------------------------------------
 _JS_SCRIPT
 
+// ===== override at slide level
+var updateScene = undefined;
+var _lastSoftPage = 0;
+// ===== override at slide level
+
 var _softPage = 0;
 var _precedentSoftPage = 0;
 
@@ -179,7 +184,7 @@ console.log("!navigator.epubReadingSystem");
 }
 
  console.error("INIT THOUGH");
- if (navigator.epubReadingSystem.onEvent)
+ if (navigator.epubReadingSystem.on)
  {
      console.error("CONTENT ONEVENT");
      
@@ -191,32 +196,30 @@ console.log("!navigator.epubReadingSystem");
          _softPage = _lastSoftPage;
      }
      
-         updateScene(true);
+         if (updateScene) updateScene(true);
      
-     navigator.epubReadingSystem.onEvent(window, navigator.epubReadingSystem.EVENT_PAGE_NEXT,
-         function(payload)
+     var pageNext = function(payload)
          {
-             console.error("CONTENT EVENT_PAGE_NEXT PLAYLOAD");
+             console.error("CONTENT EVENT_PAGE_NEXT PAYLOAD");
              console.debug(payload);
-     
+
              _precedentSoftPage = _softPage;
      
              _softPage++;
              if (_softPage > _lastSoftPage)
              {
              _softPage--;
+
              return true; // do nothing, just let the Reading System turn the page normally
              }
      
-             updateScene();
+             if (updateScene) updateScene();
              
              return false;
-         }
-     );
-     navigator.epubReadingSystem.onEvent(window, navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS,
-         function(payload)
+         };
+     var pagePrevious = function(payload)
          {
-             console.error("CONTENT EVENT_PAGE_PREVIOUS PLAYLOAD");
+             console.error("CONTENT EVENT_PAGE_PREVIOUS PAYLOAD");
              console.debug(payload);
              
              _precedentSoftPage = _softPage;
@@ -225,14 +228,18 @@ console.log("!navigator.epubReadingSystem");
              if (_softPage < 0)
              {
              _softPage++;
+
              return true; // do nothing, just let the Reading System turn the page normally
              }
      
-             updateScene();
+             if (updateScene) updateScene();
              
              return false;
-         }
-     );
+         };
+
+navigator.epubReadingSystem.on(window, navigator.epubReadingSystem.EVENT_PAGE_NEXT, pageNext);
+navigator.epubReadingSystem.on(window, navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS, pagePrevious);
+
  }
 }
 
@@ -523,7 +530,7 @@ opacity: 0;
 	-PREFIXED_PROPERTY-animation-name: warp;
     
 	-PREFIXED_PROPERTY-backface-visibility: hidden;
-	-PREFIXED_PROPERTY-animation-delay: 0s;
+	-PREFIXED_PROPERTY-animation-delay: 1s;
 	-PREFIXED_PROPERTY-animation-duration: 2000ms;
 	-PREFIXED_PROPERTY-animation-fill-mode: both;
     -PREFIXED_PROPERTY-animation-timing-function: ease-in;
@@ -969,16 +976,16 @@ cover
 // --------------------------------------------
 _JS_SCRIPT
 
-var _lastSoftPage = 1;
+_lastSoftPage = 1;
 
-function updateScene(initial)
+updateScene = function(initial)
 {
 console.error("scene" + _softPage);
 
      var obj = document.getElementById("text");
 
      obj.setAttribute("class", (_softPage >= _precedentSoftPage ? "forward" : "backward") + " scene" + _softPage + (initial ? "" : " animated"));
-}
+};
 
 
 
@@ -1006,9 +1013,9 @@ _VIEWPORT_HEIGHT
 _JS_SCRIPT
 
 var _clazz = null;
-var _lastSoftPage = 3;
+_lastSoftPage = 3;
 
-function updateScene(initial)
+updateScene = function(initial)
 {
 console.error("scene" + _softPage);
 
@@ -1018,7 +1025,7 @@ if (initial) _clazz = obj.getAttribute("class");
 
      obj.setAttribute("class", (_softPage >= _precedentSoftPage ? "forward" : "backward") + " scene" + _softPage + (initial ? "" : " animated"));
      obj.setAttribute("class", _clazz + " " + (_softPage >= _precedentSoftPage ? "forward" : "backward") + " scene" + _softPage + (initial ? "" : " animated"));
-}
+};
 
 // --------------------------------------------
 _CONTENT
