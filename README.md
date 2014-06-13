@@ -1,7 +1,7 @@
 EPUB3-Sliderizer
 ================
 
-A simple utility to easily create __EPUB 3__ / __HTML 5__ slidedecks: just one output fileset &#8658; dual support for e-book readers and web browsers. The input format is a single text file that uses a basic line-by-line syntax (no XML). Markdown and tag-soup HTML are supported (they get "massaged" into the required (X)HTML5 markup). Visual styles can be overridden using regular CSS.
+A simple utility to easily create __EPUB 3__ / __HTML 5__ slidedecks: just one output fileset &#8658; dual support for e-book readers and web browsers. The input format is a text file that uses a basic line-by-line syntax (no XML). Although in most cases a single text file is adequate, larger works can be split into several more convenient fragments. Markdown and tag-soup HTML are both supported (they get "massaged" into the required (X)HTML5 markup). Visual styles can be overridden using regular CSS.
 
 Slides can be edited directly within the web browser: syntax-highlighting editor for mixed Markdown / HTML code + live `contentEditable` WYSIWYG mode (see demo below). This feature uses modern web browser's local storage, so that local edits can survive page reloads (useful if you need to fix typos during a live presentation :) ).
 
@@ -60,7 +60,7 @@ PS: this tool ships with [EPUB-Check 3.0.1](https://github.com/IDPF/epubcheck), 
 Features
 ----------------
 
-EPUB3-Sliderizer is based on the promise of "__single file__ editing", but unlike other HTML slideshow frameworks, EPUB3-Sliderizer generates each slide as a separate XHTML file. This way, the files can be used as "pages" in the context of a __pre-paginated e-book__ (aka "fixed layout"). Furthermore, the actual content can be authored with __Markdown__, using __tag-soup HTML__, or with __clean XHTML__. Your choice.
+EPUB3-Sliderizer is based on the promise of "__single file__ editing" (with the option of splitting a large body of work into several convenient fragments), but unlike other HTML slideshow frameworks, EPUB3-Sliderizer generates each slide as a separate XHTML file. This way, the produced XHTML files can be used as "pages" in the context of a __pre-paginated e-book__ (aka "fixed layout"). Furthermore, the actual content can be authored with __Markdown__, using __tag-soup HTML__, or with __clean XHTML__. Your choice.
 
 In an EPUB book created by EPUB3-Sliderizer, each HTML file is capable of "self-rendering" within a web browser (using its own __built-in navigation user interface__, or "chrome"), delivering a rich "slide deck" viewing experience on both __mobile / touch__ devices and __keyboard__-driven desktops. Just unzip the EPUB file on the local filesystem, and optionally upload to an HTTP server. The EPUB file itself can be used not only for archiving, but also to offer a "book-like", more static reading experience.
 
@@ -188,6 +188,18 @@ several lines.
 ```
 
 This announces a new slide. Any content below this line "belongs" to the slide, until a new slide marker is encountered once again.
+
+### Include "macro"
+
+```
+_INCLUDE
+
+data_1.txt
+
+data_2.txt
+```
+
+This instruction can be used to split a large project into several convenient parts. Each individual fragment gets merged (imported) into its referencing context, so it can contain any text that conforms to the hereto-defined syntax. Note that includes can be recursive, if needed.
 
 ### Global slideshow fields
 
