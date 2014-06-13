@@ -344,10 +344,10 @@ public final class Epub3FileSet {
 		}
 
 		double ratio = widthSS / (double) widthS;
-		int fontSizeUI = (int) Math.ceil(fontSize / ratio / 2);
+		int fontSizeUI = (int) Math.ceil(fontSize / ratio / 1.2);
 
 		double ratio_ = heightSS / (double) heightS;
-		int fontSizeUI_ = (int) Math.ceil(fontSize / ratio_ / 2);
+		int fontSizeUI_ = (int) Math.ceil(fontSize / ratio_ / 1.2);
 
 		style = style.replaceAll("FONT_SIZE_UIpx", fontSizeUI + "px");
 		style = style.replaceAll("FONT_SIZE_UI_px", fontSizeUI_ + "px");

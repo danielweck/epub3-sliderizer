@@ -96,9 +96,7 @@ public final class Slide extends Fielder {
 
 	public String VIEWPORT_WIDTH = null;
 	public String VIEWPORT_HEIGHT = null;
-	//
-	// public String FONT_SIZE_UI = null;
-	//
+
 	public String TITLE = "DEFAULT TITLE";
 	public String SUBTITLE = null;
 

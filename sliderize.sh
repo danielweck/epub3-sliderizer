@@ -117,15 +117,17 @@ fi
 
 cd ${root}
 
+
 #### TODO REMOVE!!!
-exit
+#exit
 cp -r _OUTPUT/content/EPUB3 ../readium-js-viewer/epub_content/
+
+
 
 #mv "${root}/_OUTPUT/content/EPUB3/epub/js/aloha/" "${root}/_OUTPUT/content/"
 
 ############################################################
-#### TODO RESTORE!!!
-###./pack-epub.sh
+./pack-epub.sh
 ############################################################
 
 exitValue=$?
