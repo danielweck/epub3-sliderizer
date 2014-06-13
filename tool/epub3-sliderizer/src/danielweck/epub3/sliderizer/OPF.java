@@ -329,7 +329,7 @@ public final class OPF {
 		Element elementItemRef = document.createElement("itemref");
 		elementSpine.appendChild(elementItemRef);
 		elementItemRef.setAttribute("idref", "nav");
-		//elementItemRef.setAttribute("properties", "page-spread-right");
+		// elementItemRef.setAttribute("properties", "page-spread-right");
 
 		if (slideShow.MO_AUDIO_FILES != null) {
 			create_ManifestItem(slideShow.MO_AUDIO_FILES, document,
@@ -423,12 +423,14 @@ public final class OPF {
 							+ Epub3FileSet.FOLDER_CUSTOM, null);
 
 			create_ManifestItem(slide.BACKGROUND_AUDIO, document,
-					elementManifest, "audio", true, Epub3FileSet.FOLDER_HTML, null);
+					elementManifest, "audio", true, Epub3FileSet.FOLDER_HTML,
+					null);
 
 			elementItemRef = document.createElement("itemref");
 			elementSpine.appendChild(elementItemRef);
 			elementItemRef.setAttribute("idref", id);
-			//elementItemRef.setAttribute("properties", left ? "page-spread-left" : "page-spread-right");
+			// elementItemRef.setAttribute("properties", left ?
+			// "page-spread-left" : "page-spread-right");
 
 			// if (false && slide.NOTES != null) {
 			// elementItemRef = document.createElement("itemref");

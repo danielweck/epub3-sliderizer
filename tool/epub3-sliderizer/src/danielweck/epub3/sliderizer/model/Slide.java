@@ -1,7 +1,10 @@
 package danielweck.epub3.sliderizer.model;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,7 +12,6 @@ import com.google.common.base.Function;
 
 import danielweck.epub3.sliderizer.Epub3FileSet;
 import danielweck.epub3.sliderizer.NavDoc;
-import danielweck.epub3.sliderizer.Print;
 import danielweck.epub3.sliderizer.XHTML;
 
 public final class Slide extends Fielder {
@@ -79,11 +81,11 @@ public final class Slide extends Fielder {
 			while (matcher.find()) {
 				for (int i = 1; i <= matcher.groupCount(); i++) {
 					String src = matcher.group(i);
-					
+
 					if (!src.startsWith("http")) {
 						throw new RuntimeException(src);
 					}
-					
+
 					remoteResources.add(src);
 				}
 			}
@@ -94,9 +96,9 @@ public final class Slide extends Fielder {
 
 	public String VIEWPORT_WIDTH = null;
 	public String VIEWPORT_HEIGHT = null;
-//	
-//	public String FONT_SIZE_UI = null;
-//	
+	//
+	// public String FONT_SIZE_UI = null;
+	//
 	public String TITLE = "DEFAULT TITLE";
 	public String SUBTITLE = null;
 
@@ -202,7 +204,7 @@ public final class Slide extends Fielder {
 	public String FILES_IMG = null;
 
 	public String BACKGROUND_AUDIO = null;
-	
+
 	public String BACKGROUND_IMG = null;
 	public String BACKGROUND_IMG_SIZE = "contain"; // auto, contain, cover, 100%
 													// 100%
@@ -348,8 +350,10 @@ public final class Slide extends Fielder {
 
 	static final String SLIDE_MARKER = "-SLIDE";
 
-	protected boolean parseSpecial(String line, BufferedReader bufferedReader,
-			int verbosity) throws Exception {
+	protected boolean parseSpecial(File file, String line,
+			Stack<BufferedReader> bufferedReaders,
+			Map<BufferedReader, String> mapBufferedReaderLine, int verbosity)
+			throws Exception {
 
 		// HACK!
 		_verbosity = verbosity;
@@ -361,15 +365,18 @@ public final class Slide extends Fielder {
 		return false;
 	}
 
-	static Slide parse(SlideShow slideShow, BufferedReader bufferedReader,
-			int verbosity) throws Exception {
+	static Slide parse(File file, SlideShow slideShow,
+			Stack<BufferedReader> bufferedReaders,
+			Map<BufferedReader, String> mapBufferedReaderLine, int verbosity)
+			throws Exception {
 
 		Slide slide = new Slide(slideShow);
 
 		// HACK!
 		slide._verbosity = verbosity;
 
-		parseFields(slide, bufferedReader, verbosity);
+		parseFields(file, slide, bufferedReaders, mapBufferedReaderLine,
+				verbosity);
 
 		return slide;
 	}

@@ -1,0 +1,55 @@
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+EPUB3
+
+// --------------------------------------------
+_CONTENT_MIDDLE
+
+TRUE
+
+// --------------------------------------------
+_INCREMENTALS
+
+auto
+
+// --------------------------------------------
+_CONTENT
+
+<p id="heading">EPUB3</p>
+<!-- p>e-book
+<br/>
+<span style="font-size:86%;margin-bottom:1.2em;">+ audio, video, interaction, etc.</span></p -->
+
+* Standard non-propriétaire
+* Consortium IDPF
+* Technologies du Web (W3C)
+
+
+// --------------------------------------------
+_CSS_STYLE
+
+#epb3sldrzr-content-wrap
+{
+padding-left: 2em !important;
+}
+
+#epb3sldrzr-root
+{
+font-size: 120%;
+font-family: Lato, Tahoma, verdana, arial, sans-serif;
+color: white;
+background-color: #222222;
+text-shadow: 0 0 8px black;
+}
+
+#heading
+{
+font-size: 130%;
+font-family: Arvo, Tahoma, verdana, arial, sans-serif;
+text-shadow: 0 0 8px black;
+}

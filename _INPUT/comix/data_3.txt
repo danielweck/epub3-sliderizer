@@ -1,0 +1,84 @@
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Ecosystem
+
+// --------------------------------------------
+_CONTENT_MIDDLE
+
+TRUE
+
+// --------------------------------------------
+_CONTENT
+
+<p id="p1" class="epb3sldrzr-animated bounceInUp">Edition</p>
+<p id="p2" class="epb3sldrzr-animated bounceInUp">Numérique</p>
+<p id="p3" class="epb3sldrzr-animated bounceInRight">=</p>
+<p id="p4" class="epb3sldrzr-animated bounceInDown">Ecosystème</p>
+
+// --------------------------------------------
+_BACKGROUND_IMG
+
+Slide13.jpg
+
+// --------------------------------------------
+_BACKGROUND_IMG_SIZE
+
+cover
+
+// --------------------------------------------
+_CSS_STYLE
+
+#p1
+{
+    -PREFIXED_PROPERTY-animation-delay: 0s;
+}
+#p2
+{
+    -PREFIXED_PROPERTY-animation-delay: 500ms;
+}
+#p3
+{
+    -PREFIXED_PROPERTY-animation-delay: 1s;
+}
+#p4
+{
+    -PREFIXED_PROPERTY-animation-delay: 1500ms;
+}
+
+/*
+ul > li:before
+{
+    content: '';
+    padding: 0;
+    margin: 0;
+}
+*/
+
+p
+{
+line-height: 1;
+
+margin: 0;
+margin-left: 1em;
+margin-bottom: 0.2em;
+
+padding-left: 0.3em;
+padding-right: 0.3em;
+padding-top: 0.03em;
+padding-bottom: 0.03em;
+
+background-color: #222222;
+}
+
+#epb3sldrzr-content-wrap
+{
+font-size: 170%;
+font-family: Arvo, Tahoma, verdana, arial, sans-serif;
+color: white;
+text-shadow: 0 0 8px black;
+}

@@ -1,0 +1,334 @@
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+DEMO2
+
+// --------------------------------------------
+_VIEWPORT_WIDTH
+1024
+
+// --------------------------------------------
+_VIEWPORT_HEIGHT
+768
+
+// --------------------------------------------
+_JS_SCRIPT
+
+var _clazz = null;
+_lastSoftPage = 3;
+
+updateScene = function(initial)
+{
+console.error("scene" + _softPage);
+
+     var obj = document.getElementById("epb3sldrzr-root");
+
+if (initial) _clazz = obj.getAttribute("class");
+
+     obj.setAttribute("class", (_softPage >= _precedentSoftPage ? "forward" : "backward") + " scene" + _softPage + (initial ? "" : " animated"));
+     obj.setAttribute("class", _clazz + " " + (_softPage >= _precedentSoftPage ? "forward" : "backward") + " scene" + _softPage + (initial ? "" : " animated"));
+};
+
+// --------------------------------------------
+_CONTENT
+
+NO-MARKDOWN
+
+            <img id="mountain" src="dents_du_midi1.gif"> </img>
+
+        <div id="abbey">
+            <img src="abbey.jpeg"> </img>
+        </div>
+
+		<h1 id="heading">Le villégiateur</h1>
+                
+		<p id="ensemble1_txt1" class="epb3sldrzr-author">
+		<span id="ensemble1_span1">Je regarde l’heure, TIC. </span>
+        <br/>
+		<span id="ensemble1_span2">C’est l’heure, TAC. </span>
+		</p>
+        
+		<div id="ensemble1_txt2">
+		<p id="ensemble1_txt2_1">
+		À toute heure TIC, l’hélicoptère m’attend, TAC, sur le toit du building, TIC. L’heure du week-end a sonné, TAC. 
+		Je vole au-dessus de la grande horloge, TIC, 
+		qui frappe les heures, TAC, 
+		pour toute la ville, TIC. 
+		Je dépasse le fleuve blanc laiteux, TAC, qui sépare la ville, TIC, de mes chers alpages TAC. 
+		Je suis heureux, TIC-TAC.
+		</p>
+        
+		<p id="ensemble1_txt2_2">
+		Je me couche de bonne heure, TIC. 
+		Comme tous les week-ends, TIC, à heures fixes, TAC, j’ai mon emploi du temps, TIC, déterminé TAC : 
+		dès l’aube, TIC, randonnée, TAC, parapente, TIC, puis mon heure de gloire, TAC, 
+		dans le club, TIC, entouré des nouvelles filles venues de loin, TAC pour s’extasier devant les montagnes suisses, TIC. 
+		</p>
+		<p id="ensemble1_txt2_3">
+		Les strates qui agencent les montagnes sont les traces du temps, TIC-TAC. 
+		</p>
+		</div>
+
+// --------------------------------------------
+_CSS_STYLE
+
+#heading
+{
+padding: 0 !important;
+margin: 0 !important;
+
+position: absolute;
+top: 1.5em;
+left: 0.2em;
+}
+
+#abbey > img
+{
+	-PREFIXED_PROPERTY-backface-visibility: hidden;
+}
+
+#abbey
+{
+position: absolute;
+top: 0;
+left: 0;
+borderx: 2px solid red;
+}
+
+#ensemble1_txt1
+{
+font-size: 76%;
+
+position: absolute;
+left: 530px;
+top: 330px;
+width: 500px;
+height: auto;
+}
+
+
+#ensemble1_txt2 > p
+{
+margin-bottom: 1em;
+}
+
+#ensemble1_txt2
+{
+font-size: 70%;
+
+position: absolute;
+left: 540px;
+top: 0px;
+width: 320px;
+height: 100%;
+}
+
+#epb3sldrzr-root
+{
+visibility: hidden;
+}
+
+#epb3sldrzr-root.scene0,
+#epb3sldrzr-root.scene1,
+#epb3sldrzr-root.scene2,
+#epb3sldrzr-root.scene3,
+#epb3sldrzr-root.scene4
+{
+visibility: visible;
+}
+
+#epb3sldrzr-root.scene3 #abbey,
+#epb3sldrzr-root.scene3 #ensemble1_txt2
+{
+display: none;
+opacity: 0;
+}
+
+/*
+#epb3sldrzr-root.forward.scene3 #abbey,
+#epb3sldrzr-root.forward.scene3 #ensemble1_txt2
+{
+    -PREFIXED_PROPERTY-animation-name: fadeeOut;
+    -PREFIXED_PROPERTY-animation-timing-function: ease-in;
+    -PREFIXED_PROPERTY-animation-duration: 1s;
+    -PREFIXED_PROPERTY-animation-iteration-count: 1;
+    -PREFIXED_PROPERTY-animation-delay: 500ms;
+	-PREFIXED_PROPERTY-animation-fill-mode: both;
+}
+*/
+
+#epb3sldrzr-root.backward.scene2 #abbey,
+#epb3sldrzr-root.backward.scene2 #ensemble1_txt2
+{
+    -PREFIXED_PROPERTY-animation-name: fadeeIn;
+    -PREFIXED_PROPERTY-animation-timing-function: ease-in;
+    -PREFIXED_PROPERTY-animation-duration: 1s;
+    -PREFIXED_PROPERTY-animation-iteration-count: 1;
+    -PREFIXED_PROPERTY-animation-delay: 500ms;
+	-PREFIXED_PROPERTY-animation-fill-mode: both;
+}
+
+#epb3sldrzr-root.animated #abbey > img
+{
+-PREFIXED_PROPERTY-transition-property: transform;
+-PREFIXED_PROPERTY-transition-duration: 800ms;
+-PREFIXED_PROPERTY-transition-delay: 0s;
+-PREFIXED_PROPERTY-transition-timing-function: ease-out;
+}
+
+#epb3sldrzr-root.scene0 #ensemble1_txt2,
+#epb3sldrzr-root:not(.scene0) #heading,
+#epb3sldrzr-root.scene1 #ensemble1_txt1,
+#epb3sldrzr-root.scene2 #ensemble1_txt1,
+#epb3sldrzr-root.scene3 #ensemble1_txt1,
+#epb3sldrzr-root.scene3 #ensemble1_txt2
+{
+display: none;
+}
+
+#mountain
+{
+position: absolute;
+left: 900px;
+top: 357px;
+}
+
+#epb3sldrzr-root.forward.scene3 #mountain
+{
+    -PREFIXED_PROPERTY-animation-name: goLeft;
+    -PREFIXED_PROPERTY-animation-timing-function: ease-in;
+    -PREFIXED_PROPERTY-animation-duration: 1s;
+    -PREFIXED_PROPERTY-animation-iteration-count: 1;
+    -PREFIXED_PROPERTY-animation-delay: 0ms;
+	-PREFIXED_PROPERTY-animation-fill-mode: both;
+}
+#epb3sldrzr-root.backward.scene2 #mountain
+{
+    -PREFIXED_PROPERTY-animation-name: goRight;
+    -PREFIXED_PROPERTY-animation-timing-function: ease-in;
+    -PREFIXED_PROPERTY-animation-duration: 1s;
+    -PREFIXED_PROPERTY-animation-iteration-count: 1;
+    -PREFIXED_PROPERTY-animation-delay: 0ms;
+	-PREFIXED_PROPERTY-animation-fill-mode: both;
+}
+
+#ensemble1_txt2
+{
+/*
+-PREFIXED_PROPERTY-transition-property: opacity;
+-PREFIXED_PROPERTY-transition-duration: 300ms;
+-PREFIXED_PROPERTY-transition-delay: 0s;
+-PREFIXED_PROPERTY-transition-timing-function: ease-out;
+
+    opacity: 0;
+    */
+}
+
+#epb3sldrzr-root.scene1.forward #ensemble1_txt2
+{
+opacityxx: 1;
+
+    -PREFIXED_PROPERTY-animation-name: fadeeIn;
+    -PREFIXED_PROPERTY-animation-timing-function: ease-in;
+    -PREFIXED_PROPERTY-animation-duration: 1.5s;
+    -PREFIXED_PROPERTY-animation-iteration-count: 1;
+    -PREFIXED_PROPERTY-animation-delay: 0ms;
+	-PREFIXED_PROPERTY-animation-fill-mode: both;
+    
+}
+
+#epb3sldrzr-root.scene0 #abbey > img
+{
+    -PREFIXED_PROPERTY-transform-origin: 45% 65%;
+
+    -PREFIXED_PROPERTY-transform: scale(1.43);
+}
+
+
+#epb3sldrzr-root.scene2 #ensemble1_txt2,
+#epb3sldrzr-root.scene2 #abbey,
+#epb3sldrzr-root.scene2 #mountain,
+#epb3sldrzr-root.scene3 #mountain
+{
+
+    -PREFIXED_PROPERTY-transform-origin: 0% 0%;
+    -PREFIXED_PROPERTY-transform: translateY(-360px);
+}
+
+#epb3sldrzr-root.animated #abbey,
+#epb3sldrzr-root.animated #ensemble1_txt2,
+#epb3sldrzr-root.animated #mountain
+{
+-PREFIXED_PROPERTY-transition-property: transform;
+-PREFIXED_PROPERTY-transition-duration: 800ms;
+-PREFIXED_PROPERTY-transition-delay: 0s;
+-PREFIXED_PROPERTY-transition-timing-function: ease-out;
+}
+
+
+
+#epb3sldrzr-root.scene1 #abbey > img,
+#epb3sldrzr-root.scene2 #abbey > img
+{
+    -PREFIXED_PROPERTY-transform-origin: 0% 0%;
+
+    -PREFIXED_PROPERTY-transform: translateX(-100px) scale(0.54);
+}
+
+_PREFIXED_@keyframes fadeeIn
+{
+    0%
+    {
+    opacity: 0;
+    }
+    100%
+    {
+    opacity: 1;
+    }
+}
+
+_PREFIXED_@keyframes fadeeOut
+{
+    0%
+    {
+    opacity: 1;
+    }
+    100%
+    {
+    opacity: 0;
+    }
+}
+_PREFIXED_@keyframes goLeft
+{
+    0%
+    {
+    left: 900px;
+    }
+    100%
+    {
+    left: 0px;
+    }
+}
+_PREFIXED_@keyframes goRight
+{
+    0%
+    {
+    left: 0px;
+    }
+    100%
+    {
+    left: 900px;
+    }
+}
+
+#epb3sldrzr-root
+{
+font-size: 70%;
+font-family: Lato, Tahoma, verdana, arial, sans-serif;
+color: black;
+background-color: transparent;
+}

@@ -12,7 +12,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 import java.util.TimeZone;
 
 import com.google.common.base.Function;
@@ -183,7 +185,7 @@ public final class SlideShow extends Fielder {
 	public String FILES_IMG = null;
 
 	public String BACKGROUND_AUDIO = null;
-	
+
 	public String BACKGROUND_IMG = null;
 	public String BACKGROUND_IMG_SIZE = "contain"; // auto, contain, cover, 100%
 													// 100%
@@ -344,17 +346,23 @@ public final class SlideShow extends Fielder {
 		}
 	}
 
-	protected boolean parseSpecial(String line, BufferedReader bufferedReader,
-			int verbosity) throws Exception {
+	protected boolean parseSpecial(File file, String line,
+			Stack<BufferedReader> bufferedReaders,
+			Map<BufferedReader, String> mapBufferedReaderLine, int verbosity)
+			throws Exception {
 
 		boolean isSlideMarker = line.equals(Slide.SLIDE_MARKER);
 		while (isSlideMarker) {
 
-			Slide slide = Slide.parse(this, bufferedReader, verbosity);
+			Slide slide = Slide.parse(file, this, bufferedReaders,
+					mapBufferedReaderLine, verbosity);
 			slides.add(slide);
 
-			if ((isSlideMarker = bufferedReader.ready())) {
-				continue;
+			if (!bufferedReaders.isEmpty()) {
+				BufferedReader bufferedReader = bufferedReaders.peek();
+				if ((isSlideMarker = bufferedReader.ready())) {
+					continue;
+				}
 			}
 
 			return true;
@@ -397,7 +405,14 @@ public final class SlideShow extends Fielder {
 						new FileInputStream(file), "UTF-8")
 				// new FileReader(file)
 				);
-				parseFields(slideShow, bufferedReader, verbosity);
+
+				Stack<BufferedReader> bufferedReaders = new Stack<BufferedReader>();
+				bufferedReaders.push(bufferedReader);
+
+				Map<BufferedReader, String> mapBufferedReaderLine = new HashMap<BufferedReader, String>();
+
+				parseFields(file, slideShow, bufferedReaders,
+						mapBufferedReaderLine, verbosity);
 			} finally {
 				if (bufferedReader != null) {
 					bufferedReader.close();

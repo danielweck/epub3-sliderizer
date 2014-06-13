@@ -118,6 +118,7 @@ fi
 cd ${root}
 
 #### TODO REMOVE!!!
+exit
 cp -r _OUTPUT/content/EPUB3 ../readium-js-viewer/epub_content/
 
 #mv "${root}/_OUTPUT/content/EPUB3/epub/js/aloha/" "${root}/_OUTPUT/content/"

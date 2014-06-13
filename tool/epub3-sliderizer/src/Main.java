@@ -38,13 +38,13 @@ public final class Main {
 		repeatChar('-', msg1.length(), System.out);
 		System.out.print('\n');
 
-        if (verbosity >= 3)
-        {
-            System.out.print('\n');
-            System.out.println(">>>>>> HTML5 MODE FOR CONTENT-EDITABLE (no XHTML file extension)");
-            System.out.print('\n');
-            Epub3FileSet.XHTML_EXT = ".html";
-        }
+		if (verbosity >= 3) {
+			System.out.print('\n');
+			System.out
+					.println(">>>>>> HTML5 MODE FOR CONTENT-EDITABLE (no XHTML file extension)");
+			System.out.print('\n');
+			Epub3FileSet.XHTML_EXT = ".html";
+		}
 
 		long timeNS = System.nanoTime(); // System.currentTimeMillis()
 		try {
@@ -57,7 +57,7 @@ public final class Main {
 					slideShow.REFLOWABLE = "YES";
 				}
 			}
-			
+
 			if (verbosity > 2) {
 				slideShow.createSampleTemplate(new PrintWriter(System.out),
 						verbosity);
@@ -67,7 +67,7 @@ public final class Main {
 
 			// TODO: yuck yuck yuck!!
 			slideShow.pathEpubFolder = pathEpubFolder;
-			
+
 			Epub3FileSet.create(uriDataFile, slideShow, pathEpubFolder,
 					verbosity);
 

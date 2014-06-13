@@ -1011,7 +1011,7 @@ public final class XHTML {
 					return null;
 				}
 				return css;
-				//return "<style type=\"text/css\">\n" + css + "\n</style>";
+				// return "<style type=\"text/css\">\n" + css + "\n</style>";
 			}
 
 			return null;
@@ -1073,7 +1073,7 @@ public final class XHTML {
 					return null;
 				}
 				return css;
-				//return "<style type=\"text/css\">\n" + css + "\n</style>";
+				// return "<style type=\"text/css\">\n" + css + "\n</style>";
 			}
 
 			return null;

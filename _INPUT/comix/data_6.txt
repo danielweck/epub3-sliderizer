@@ -1,0 +1,151 @@
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+DEMO1
+
+// --------------------------------------------
+_VIEWPORT_WIDTH
+1496
+
+// --------------------------------------------
+_VIEWPORT_HEIGHT
+1204
+
+// --------------------------------------------
+_CONTENT
+
+NO-MARKDOWN
+
+<h1 id="heading">Le goéland</h1>
+
+<div id="text">
+
+<div id="txt1" class="column">
+		BOUM! Un boulet de canon! 
+		Je m’écarte! En toute hâte! Une régate! Plusieurs pieds dessous moi, les 
+		voiliers, ils sont trois, se sont rués, convoitant la ligne d’arrivée... 
+		La mer est une boule d’eau! 
+		Elle s’agite! Et ça gîte!
+</div>
+
+<div id="txt2" class="column">
+		Les vagues blaguent, jouent avec les bateaux! Allegro! Ils continuent... Coûte que coûte! Et la pluie! Goutte-à-goutte! 
+		Je suis sous! J’ai froid moi! Goéland! D’un coup d’aile! Je m’élève! Han! Au-dessus des nuages! Ah! 
+		Soulagement... 
+</div>
+
+<div id="txt3" class="column">
+		Les paillettes de soleil, sur l’eau, 
+		palpitent. Les éclats des ventres des poissons, je cherche. 
+		Plus loin je vois un requin, dépasser une vedette... Fluette! 
+		Qui ne s’en aperçoit pas! Pas du tout! Mais moi! Du poisson, je veux moi! 
+</div>
+
+<div id="txt4" class="column">
+		Une ancre colossale est mon perchoir. D’où je cherche ma pitance. Les couleurs changent... Du bleu, du bleu! Le phare s’allume... Éclaire la lune. La mer s’est calmée, la marée... monte...
+</div>
+
+</div>
+
+
+// --------------------------------------------
+_CSS_STYLE
+
+#heading
+{
+padding-left: 0px !important;
+margin-left: 120px !important;
+margin-top: 0.7em !important;
+}
+
+#text
+{
+visibility: hidden;
+borderx: 3px solid blue;
+
+padding: 0 !important;
+
+height: 500px;
+width: 3000px;
+
+margin-top: 3em;
+
+position:absolute;
+left: 120px;
+}
+
+#text.animated
+{
+-PREFIXED_PROPERTY-transition-property: left;
+-PREFIXED_PROPERTY-transition-duration: 300ms;
+-PREFIXED_PROPERTY-transition-delay: 0s;
+-PREFIXED_PROPERTY-transition-timing-function: ease-out;
+}
+
+#text.scene0,
+#text.scene1
+{
+visibility: visible;
+}
+
+
+#text.scene0
+{
+left: 120px;
+}
+
+#text.scene1
+{
+left: -1200px;
+}
+
+.column
+{
+borderx: 2px solid red;
+
+font-size: 70%;
+
+vertical-align: top;
+
+width: 630px;
+display: inline-block;
+
+margin-right: 0.6em;
+}
+
+#epb3sldrzr-root
+{
+font-size: 90%;
+font-family: Lato, Tahoma, verdana, arial, sans-serif;
+color: black;
+background-color: transparent;
+}
+
+
+// --------------------------------------------
+_BACKGROUND_IMG
+
+lac_leman_montagnes.jpg
+
+// --------------------------------------------
+_BACKGROUND_IMG_SIZE
+
+cover
+
+// --------------------------------------------
+_JS_SCRIPT
+
+_lastSoftPage = 1;
+
+updateScene = function(initial)
+{
+console.error("scene" + _softPage);
+
+     var obj = document.getElementById("text");
+
+     obj.setAttribute("class", (_softPage >= _precedentSoftPage ? "forward" : "backward") + " scene" + _softPage + (initial ? "" : " animated"));
+};

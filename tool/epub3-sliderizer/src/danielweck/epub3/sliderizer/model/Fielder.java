@@ -1,12 +1,19 @@
 package danielweck.epub3.sliderizer.model;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
+import danielweck.epub3.sliderizer.Epub3FileSet;
 import danielweck.epub3.sliderizer.XHTML;
 
 public abstract class Fielder {
@@ -96,7 +103,8 @@ public abstract class Fielder {
 	static final String COMMENT_PREFIX = "// ";
 
 	protected static String nextLine(BufferedReader bufferedReader,
-			int verbosity, boolean preserveWhitespace, String currentFieldName) throws IOException {
+			int verbosity, boolean preserveWhitespace, String currentFieldName)
+			throws IOException {
 		// Windows CR LF "\r\n"
 		// (0Dh 0Ah for DOS, 0Dh for older Macs, 0Ah for Unix/Linux)
 
@@ -115,10 +123,12 @@ public abstract class Fielder {
 			}
 
 			if (// !preserveWhitespace &&
-                (currentFieldName == null || (!currentFieldName.equals(Slide.FIELD_JS_SCRIPT)
-                    //&& !currentFieldName.equals(Slide.FIELD_CSS_STYLE) BECAUSE COMMENT BEFORE NEXT FIELD NAME GETS INCLUDED! :(
-                        ))
-            && nextLine.startsWith(COMMENT_PREFIX)) {
+			(currentFieldName == null || (!currentFieldName
+					.equals(Slide.FIELD_JS_SCRIPT)
+			// && !currentFieldName.equals(Slide.FIELD_CSS_STYLE) BECAUSE
+			// COMMENT BEFORE NEXT FIELD NAME GETS INCLUDED! :(
+					))
+					&& nextLine.startsWith(COMMENT_PREFIX)) {
 				continue;
 			}
 
@@ -128,8 +138,10 @@ public abstract class Fielder {
 		return nextLine;
 	}
 
-	protected abstract boolean parseSpecial(String line,
-			BufferedReader bufferedReader, int verbosity) throws Exception;
+	protected abstract boolean parseSpecial(File file, String line,
+			Stack<BufferedReader> bufferedReaders,
+			Map<BufferedReader, String> mapBufferedReaderLine, int verbosity)
+			throws Exception;
 
 	static final String FIELD_PREFIX = "_";
 
@@ -155,8 +167,17 @@ public abstract class Fielder {
 		return true;
 	}
 
-	protected static void parseFields(Fielder fielder,
-			BufferedReader bufferedReader, int verbosity) throws Exception {
+	protected static String FIELD_INCLUDE = "INCLUDE";
+
+	protected static void parseFields(File file, Fielder fielder,
+			Stack<BufferedReader> bufferedReaders,
+			Map<BufferedReader, String> mapBufferedReaderLine, int verbosity)
+			throws Exception {
+
+		if (bufferedReaders.isEmpty()) {
+			return;
+		}
+		BufferedReader bufferedReader = bufferedReaders.peek();
 
 		Map<String, String> fields = fielder.getFields();
 
@@ -165,22 +186,132 @@ public abstract class Fielder {
 		String currentFieldName = null;
 		String line = null;
 		StringBuilder lines = new StringBuilder();
+
 		while (true) {
-			line = nextLine(bufferedReader, verbosity, preserveWhitespace, currentFieldName);
+			line = nextLine(bufferedReader, verbosity, preserveWhitespace,
+					currentFieldName);
+
+			if (line == null) {
+
+				System.out.println(" ");
+				System.out.println(">>>>> STACKED: " + bufferedReaders.size());
+
+				BufferedReader restoredBufferedReader = bufferedReaders.pop();
+				// assert restoredBufferedReader == bufferedReader
+
+				if (!bufferedReaders.isEmpty()) {
+
+					restoredBufferedReader = bufferedReaders.peek();
+					bufferedReader.close();
+					bufferedReader = restoredBufferedReader;
+
+					String lastLine = mapBufferedReaderLine.get(bufferedReader);
+					mapBufferedReaderLine.remove(bufferedReader);
+
+					if (verbosity > 0) {
+						System.out.println(" ");
+						System.out
+								.println(">>>>> RESTORING STACKED DATA FRAGMENT BUFFER: "
+										+ lastLine);
+					}
+
+					if (lastLine == null) {
+						continue;
+					}
+
+					line = lastLine;
+				}
+			}
 
 			String found = null;
 			boolean special = false;
 			if (line != null && line.length() > 0) {
-				for (Map.Entry<String, String> field : fields.entrySet()) {
-					String fieldName = field.getKey();
-					if (fieldEqual(line, fieldName)) {
-						found = fieldName;
-						break;
+
+				if (fieldEqual(line, Fielder.FIELD_INCLUDE)) {
+					// found = Fielder.FIELD_INCLUDE;
+					StringBuilder includes = new StringBuilder();
+
+					String lastLine = null;
+					while (true) {
+						line = nextLine(bufferedReader, verbosity, false,
+								Fielder.FIELD_INCLUDE);
+
+						lastLine = line;
+
+						if (line != null && line.length() > 0) {
+							boolean fff = false;
+							for (Map.Entry<String, String> field : fields
+									.entrySet()) {
+								String fieldName = field.getKey();
+								if (fieldEqual(line, fieldName)) {
+									fff = true;
+									break;
+								}
+							}
+							fff = fff || line.equals(Slide.SLIDE_MARKER)
+									|| fieldEqual(line, Fielder.FIELD_INCLUDE);
+
+							if (fff)
+								break;
+
+							if (includes.length() > 0) {
+								includes.append('\n');
+							}
+							includes.append(line);
+						}
+
+						if (line == null)
+							break;
 					}
-				}
-				if (found == null) {
-					special = fielder.parseSpecial(line, bufferedReader,
-							verbosity);
+
+					if (lastLine != null) {
+						mapBufferedReaderLine.put(bufferedReader, lastLine);
+					}
+
+					ArrayList<String> array = Epub3FileSet.splitPaths(includes
+							.toString());
+					// for (String path : array) {
+					for (int i = array.size() - 1; i >= 0; i--) {
+						String path = array.get(i);
+
+						File fileFragment = new File(file.getParentFile(), path);
+						if (!fileFragment.exists()) {
+							throw new FileNotFoundException(
+									fileFragment.getAbsolutePath());
+						}
+
+						if (verbosity > 0) {
+							System.out.println(" ");
+							System.out.println(">>>>> DATA FRAGMENT: "
+									+ fileFragment.getAbsolutePath());
+						}
+
+						BufferedReader bufferedReaderFragment = new BufferedReader(
+								new InputStreamReader(new FileInputStream(
+										fileFragment), "UTF-8")
+						// new FileReader(fileFragment)
+						);
+						// Fielder.parseFields(fileFragment, fielder,
+						// bufferedReaderFragment, verbosity);
+						bufferedReaders.push(bufferedReaderFragment);
+					}
+
+					bufferedReader = bufferedReaders.peek();
+					continue;
+
+				} else {
+					for (Map.Entry<String, String> field : fields.entrySet()) {
+						String fieldName = field.getKey();
+						if (fieldEqual(line, fieldName)) {
+							found = fieldName;
+							break;
+						}
+					}
+					if (found == null) {
+						special = fielder.parseSpecial(file, line,
+								bufferedReaders, mapBufferedReaderLine,
+								verbosity);
+					}
 				}
 			}
 
@@ -188,6 +319,7 @@ public abstract class Fielder {
 				preserveWhitespace = false;
 
 				if (currentFieldName != null && lines.length() > 0) {
+
 					fielder.getClass().getDeclaredField(currentFieldName)
 							.set(fielder, lines.toString());
 
@@ -198,7 +330,10 @@ public abstract class Fielder {
 					break;
 				} else if (found != null) {
 					currentFieldName = found;
-					if (currentFieldName.equals(Slide.FIELD_CONTENT) || currentFieldName.equals(Slide.FIELD_NOTES) || currentFieldName.equals(Slide.FIELD_JS_SCRIPT) || currentFieldName.equals(Slide.FIELD_CSS_STYLE)) {
+					if (currentFieldName.equals(Slide.FIELD_CONTENT)
+							|| currentFieldName.equals(Slide.FIELD_NOTES)
+							|| currentFieldName.equals(Slide.FIELD_JS_SCRIPT)
+							|| currentFieldName.equals(Slide.FIELD_CSS_STYLE)) {
 						preserveWhitespace = true;
 					}
 				} else if (special) {
@@ -206,7 +341,8 @@ public abstract class Fielder {
 				}
 			} else {
 				if (currentFieldName != null
-						&& (currentFieldName.equals(Slide.FIELD_CONTENT) || currentFieldName.equals(Slide.FIELD_NOTES))
+						&& (currentFieldName.equals(Slide.FIELD_CONTENT) || currentFieldName
+								.equals(Slide.FIELD_NOTES))
 						&& line.equals(XHTML.NOMARKDOWN)) {
 					preserveWhitespace = false;
 				}
