@@ -194,6 +194,15 @@ backface-visibility: hidden;
     z-index:0;
 }
 
+.fullWidth
+{
+    width:1290px;
+}
+.fullHeight
+{
+    height:1000px;
+}
+
 body:not(.reflow) .full
 {
     width:1290px;

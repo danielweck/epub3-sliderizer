@@ -224,7 +224,7 @@ animation-name: bounceInDown;
 {
 	0% {
 		opacity: 0;
-		-webkit-transform: translateY(1000px);
+		-webkit-transform: translateY(-1000px);
 	}
 	
 	60% {
@@ -244,7 +244,7 @@ animation-name: bounceInDown;
 {
 	0% {
 		opacity: 0;
-		-moz-transform: translateY(1000px);
+		-moz-transform: translateY(-1000px);
 	}
 	
 	60% {
@@ -264,7 +264,7 @@ animation-name: bounceInDown;
 {
 	0% {
 		opacity: 0;
-		-ms-transform: translateY(1000px);
+		-ms-transform: translateY(-1000px);
 	}
 	
 	60% {
@@ -284,7 +284,7 @@ animation-name: bounceInDown;
 {
 	0% {
 		opacity: 0;
-		-o-transform: translateY(1000px);
+		-o-transform: translateY(-1000px);
 	}
 	
 	60% {
@@ -304,7 +304,7 @@ animation-name: bounceInDown;
 {
 	0% {
 		opacity: 0;
-		transform: translateY(1000px);
+		transform: translateY(-1000px);
 	}
 	
 	60% {
