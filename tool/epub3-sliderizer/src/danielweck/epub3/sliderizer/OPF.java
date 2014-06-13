@@ -194,7 +194,11 @@ public final class OPF {
 		Element elementMeta3 = document.createElement("meta");
 		elementMetadata.appendChild(elementMeta3);
 		elementMeta3.setAttribute("property", "rendition:spread");
-		elementMeta3.appendChild(document.createTextNode("none"));
+		if (slideShow.TWO_PAGE_SYNTHETIC_SPREAD()) {
+			elementMeta3.appendChild(document.createTextNode("auto"));
+		} else {
+			elementMeta3.appendChild(document.createTextNode("none"));
+		}
 
 		Element elementMeta6 = document.createElement("meta");
 		elementMetadata.appendChild(elementMeta6);
@@ -329,7 +333,9 @@ public final class OPF {
 		Element elementItemRef = document.createElement("itemref");
 		elementSpine.appendChild(elementItemRef);
 		elementItemRef.setAttribute("idref", "nav");
-		// elementItemRef.setAttribute("properties", "page-spread-right");
+		if (slideShow.TWO_PAGE_SYNTHETIC_SPREAD()) {
+			elementItemRef.setAttribute("properties", "page-spread-right");
+		}
 
 		if (slideShow.MO_AUDIO_FILES != null) {
 			create_ManifestItem(slideShow.MO_AUDIO_FILES, document,
@@ -429,8 +435,10 @@ public final class OPF {
 			elementItemRef = document.createElement("itemref");
 			elementSpine.appendChild(elementItemRef);
 			elementItemRef.setAttribute("idref", id);
-			// elementItemRef.setAttribute("properties", left ?
-			// "page-spread-left" : "page-spread-right");
+			if (slideShow.TWO_PAGE_SYNTHETIC_SPREAD()) {
+				elementItemRef.setAttribute("properties",
+						left ? "page-spread-left" : "page-spread-right");
+			}
 
 			// if (false && slide.NOTES != null) {
 			// elementItemRef = document.createElement("itemref");

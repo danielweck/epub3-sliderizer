@@ -77,7 +77,7 @@ public final class SlideShow extends Fielder {
 		if (REFLOWABLE == null) {
 			return true;
 		}
-		// String reflow = REFLOWABLE.toLowerCase();
+
 		return !REFLOWABLE.equalsIgnoreCase("yes")
 				&& !REFLOWABLE.equalsIgnoreCase("true")
 				&& !REFLOWABLE.equalsIgnoreCase("1");
@@ -85,6 +85,18 @@ public final class SlideShow extends Fielder {
 
 	public boolean REFLOW() {
 		return !FIXED();
+	}
+
+	public String PAGE_SPREAD = null;
+
+	public boolean TWO_PAGE_SYNTHETIC_SPREAD() {
+		if (PAGE_SPREAD == null) {
+			return false;
+		}
+
+		return PAGE_SPREAD.equalsIgnoreCase("yes")
+				|| PAGE_SPREAD.equalsIgnoreCase("true")
+				|| PAGE_SPREAD.equalsIgnoreCase("1");
 	}
 
 	public String DATE = null;

@@ -416,6 +416,13 @@ _VIEWPORT_HEIGHT
 (integer pixel values...normally you do not need to change the defaults, which is 1290 x 1000)
 ```
 
+```
+_PAGE_SPREAD
+
+[OPTIONAL]
+(boolean value ('TRUE'/'FALSE' or '1'/'0' or 'YES'/'NO'): specifies whether to enable synthetic spread (two-page left/right layout))
+```
+
 
 ```
 _NOTES
@@ -546,6 +553,13 @@ TXT #txt2
 END 11.307
 ```
 
+```
+_VIEWPORT_WIDTH
+_VIEWPORT_HEIGHT
+
+[OPTIONAL]
+(integer pixel values...to override the slideshow global value on a per-slide basis)
+```
 
 ```
 _NOTES
