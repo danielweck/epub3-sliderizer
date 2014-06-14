@@ -54,99 +54,9 @@ _MO_PLAYBACK_ACTIVE
 // --------------------------------------------
 _CSS_STYLE
 
-.-epub-media-overlay-active
-{
-background-color: black;
-color: white;
+_INCLUDE
 
-text-shadow: 0 0 10px silver;
-}
-
-/*
-html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
-{
-    display: none;
-}
-*/
-
-html:not(#epb3sldrzr-NavDoc) h1#epb3sldrzr-title
-{
-    display: none;
-}
-
-.bubble
-{
-text-align: center;
-    padding: 0.8em;
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
-    
-    margin: 0;
-    line-height: 0.8em;
-
-    color: black;
-
-    text-shadow: none;
-
-font-size: 120%;
-    
-border: 0.14em solid black;
-background-color: white;
-
--PREFIXED_PROPERTY-border-radius: 1.6em;
-}
-
-.bubble:before
-{
-content: "";
-position: absolute;
-
-left: 1em;
-
-bottom: -0.6em;
-
-border-width: 0.6em 0.6em 0;
-border-style: solid;
-border-color: black transparent;
-
-display: block;
-width: 0;
-}
-
-.bubble:after
-{
-content: "";
-position: absolute;
-
-left: 1em;
-
-bottom: -0.4em;
-
-border-width: 0.6em 0.6em 0;
-border-style: solid;
-border-color: white transparent;
-
-display: block;
-width: 0;
-}
-
-
-.bubble.top:before
-{
-bottom: auto;
-top: -0.6em;
-
-border-width: 0 0.6em 0.6em;
-}
-
-.bubble.top:after
-{
-bottom: auto;
-top: -0.4em;
-
-border-width: 0 0.6em 0.6em;
-}
-
+data.css
 
 // --------------------------------------------
 _FILES_CSS_FONTS
@@ -159,91 +69,9 @@ FingerPaint.woff
 // --------------------------------------------
 _JS_SCRIPT
 
-// ===== override at slide level
-var updateScene = undefined;
-var _lastSoftPage = 0;
-// ===== override at slide level
+_INCLUDE
 
-var _softPage = 0;
-var _precedentSoftPage = 0;
-
-var _epubReadingSystemTries = 0;
-
-function initthough()
-{
-if (!navigator.epubReadingSystem)
-{
-console.log("!navigator.epubReadingSystem");
-
-    _epubReadingSystemTries++;
-    if (_epubReadingSystemTries < 20)
-    {
-        setTimeout(initthough, 100);
-    }
-    return;
-}
-
- console.error("INIT THOUGH");
- if (navigator.epubReadingSystem.on)
- {
-     console.error("CONTENT ONEVENT");
-     
-     console.log(navigator.epubReadingSystem.PageDirection);
-     
-     if (navigator.epubReadingSystem.PageDirection === navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS)
-     {
-         _precedentSoftPage = _softPage + 1;
-         _softPage = _lastSoftPage;
-     }
-     
-         if (updateScene) updateScene(true);
-     
-     var pageNext = function(payload)
-         {
-             console.error("CONTENT EVENT_PAGE_NEXT PAYLOAD");
-             console.debug(payload);
-
-             _precedentSoftPage = _softPage;
-     
-             _softPage++;
-             if (_softPage > _lastSoftPage)
-             {
-             _softPage--;
-
-             return true; // do nothing, just let the Reading System turn the page normally
-             }
-     
-             if (updateScene) updateScene();
-             
-             return false;
-         };
-     var pagePrevious = function(payload)
-         {
-             console.error("CONTENT EVENT_PAGE_PREVIOUS PAYLOAD");
-             console.debug(payload);
-             
-             _precedentSoftPage = _softPage;
-             
-             _softPage--;
-             if (_softPage < 0)
-             {
-             _softPage++;
-
-             return true; // do nothing, just let the Reading System turn the page normally
-             }
-     
-             if (updateScene) updateScene();
-             
-             return false;
-         };
-
-navigator.epubReadingSystem.on(window, navigator.epubReadingSystem.EVENT_PAGE_NEXT, pageNext);
-navigator.epubReadingSystem.on(window, navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS, pagePrevious);
-
- }
-}
-
-document.addEventListener("DOMContentLoaded", function(e) { initthough(); }, false);
+data.js
 
 // #########################################################
 // #########################################################

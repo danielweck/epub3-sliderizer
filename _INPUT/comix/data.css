@@ -1,0 +1,68 @@
+
+.-epub-media-overlay-active {
+    background-color: black;
+    color: white;
+    text-shadow: 0 0 10px silver;
+}
+
+/*
+html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo {
+display: none;
+}
+*/
+
+html:not(#epb3sldrzr-NavDoc) h1#epb3sldrzr-title {
+    display: none;
+}
+
+.bubble {
+    text-align: center;
+    padding: 0.8em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    margin: 0;
+    line-height: 0.8em;
+    color: black;
+    text-shadow: none;
+    font-size: 120%;
+    border: 0.14em solid black;
+    background-color: white;
+    -PREFIXED_PROPERTY-border-radius: 1.6em;
+}
+
+.bubble:before {
+    content: "";
+    position: absolute;
+    left: 1em;
+    bottom: -0.6em;
+    border-width: 0.6em 0.6em 0;
+    border-style: solid;
+    border-color: black transparent;
+    display: block;
+    width: 0;
+}
+
+.bubble:after {
+    content: "";
+    position: absolute;
+    left: 1em;
+    bottom: -0.4em;
+    border-width: 0.6em 0.6em 0;
+    border-style: solid;
+    border-color: white transparent;
+    display: block;
+    width: 0;
+}
+
+
+.bubble.top:before {
+    bottom: auto;
+    top: -0.6em;
+    border-width: 0 0.6em 0.6em;
+}
+
+.bubble.top:after {
+    bottom: auto;
+    top: -0.4em;
+    border-width: 0 0.6em 0.6em;
+}
