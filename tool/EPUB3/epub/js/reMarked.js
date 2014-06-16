@@ -1,8 +1,11 @@
+// FORK:
+// https://github.com/danielweck/reMarked.js
+
 /**
 * Copyright (c) 2013, Leon Sorokin
 * All rights reserved. (MIT Licensed)
 *
-* reMarked.js - DOM > markdown
+* reMarked.js - HTML > markdown
 */
 
 reMarked = function(opts) {
@@ -13,9 +16,9 @@ reMarked = function(opts) {
 	//  link_near:					// cite links immediately after blocks
 		h1_setext:	true,			// underline h1 headers
 		h2_setext:	true,			// underline h2 headers
-		h_atx_suf:	false,			// header suffix (###)
+		h_atx_suf:	false,			// header suffixes (###)
 	//	h_compact:	true,			// compact headers (except h1)
-		gfm_code:	false,			// render code blocks as via ``` delims
+		gfm_code:	false,			// gfm code blocks (```)
 		li_bullet:	"*-+"[0],		// list item bullet style
 	//	list_indnt:					// indent top-level lists
 		hr_char:	"-_*"[0],		// hr style
@@ -28,6 +31,9 @@ reMarked = function(opts) {
 		hash_lnks:	false,			// anchors w/hash hrefs as links
 		br_only:	false,			// avoid using "  " as line break indicator
 		col_pre:	"col ",			// column prefix to use when creating missing headers for tables
+		nbsp_spc:	false,			// convert &nbsp; entities in html to regular spaces
+		span_tags:	true,			// output spans (ambiguous) using html tags
+		div_tags:	true,			// output divs (ambiguous) using html tags
 	//	comp_style: false,			// use getComputedStyle instead of hardcoded tag list to discern block/inline
 		unsup_tags: {				// handling of unsupported tags, defined in terms of desired output style. if not listed, output = outerHTML
             force_preserve: "", //e.g. img
@@ -42,13 +48,20 @@ reMarked = function(opts) {
 			// eg: "\n<tag>some content</tag>"
 			block1c: "dt dd caption legend figcaption output",
 			// eg: "\n\n<tag>some content</tag>"
-			block2c: "canvas audio video iframe",
+			block2c: "canvas audio video iframe"
 		},
 		tag_remap: {				// remap of variants or deprecated tags to internal classes
 			"i": "em",
 			"b": "strong"
 		}
 	};
+
+	// detect and tweak some stuff for IE 7 & 8
+	// http://www.pinlady.net/PluginDetect/IE/
+	var isIE = eval("/*@cc_on!@*/!1"),
+		docMode = document.documentMode,
+		ieLt9 = isIE && (!docMode || docMode < 9),
+		textContProp = ieLt9 ? "innerText" : "textContent";
 
 	extend(cfg, opts);
 
@@ -246,7 +259,7 @@ reMarked = function(opts) {
 
 							while (i++ < len) {
 								hcell = document.createElement("th");
-								hcell.textContent = cfg.col_pre + i;
+								hcell[textContProp] = cfg.col_pre + i;
 								hrow.appendChild(hcell);
 							}
 						}
@@ -270,7 +283,7 @@ reMarked = function(opts) {
 						continue;
 
 					// empty whitespace handling
-					if (name == "txt" && /^\s+$/.test(n.textContent)) {
+					if (name == "txt" && !nodeName(this.e).match(inlRe) && /^\s+$/.test(n[textContProp])) {
 						// ignore if first or last child (trim)
 						if (i == 0 || i == this.e.childNodes.length - 1)
 							continue;
@@ -283,68 +296,82 @@ reMarked = function(opts) {
 					}
 
 					var wrap = null;
+var unsup = cfg.unsup_tags;
 
-                    var unsup = cfg.unsup_tags;
+var libObj = undefined;
+var preserve = false;
+if (lib[name])
+{
+    libObj = new lib[name](n, this, this.c.length);
+    preserve = libObj.mustPreserveAttributes();
+}
 
-                                       var libObj = undefined;
-                                       var preserve = false;
-                                       if (lib[name])
-                                       {
-                                           libObj = new lib[name](n, this, this.c.length);
-                                           preserve = libObj.mustPreserveAttributes();
-                                       }
+var forcePreserve = unsup.force_preserve.test(name);
 
-                                       var forcePreserve = unsup.force_preserve.test(name);
-        
-                                                           if (!libObj || preserve || forcePreserve) {
+if (!libObj || preserve || forcePreserve)
+{
 
-                                                                   if (preserve && libObj instanceof lib.tinl || unsup.inline.test(name))
-                                                                   {
-                                               name = "tinl";
-                                           }
-                                                               else if (preserve && libObj instanceof lib.inl)
-                                           {
-                                                                       name = "inl";
-                                           }
-                                                                   else if (unsup.block2c.test(name))
-                                           {
-                                                                           name = "ctblk";
-                                                                           wrap = ["\n\n", ""];
-                                                                   }
-                                                                   else if (preserve && libObj instanceof lib.ctblk || unsup.block1c.test(name))
-                                           {
-                                                                           name = "ctblk";
-                                           }
-                                                                   else if (preserve && libObj instanceof lib.tblk || unsup.block2.test(name))
-                                           {
-                                                                           name = "tblk";
-                                           }
-                                           // Non-tagr!
-                                           // else if (preserve && libObj instanceof lib.cblk)
-                                           //                         {
-                                           //     name = "cblk";
-                                           //                         }
-                                           // else if (preserve && libObj instanceof lib.blk)
-                                           //                         {
-                                           //     name = "blk";
-                                           //                         }
-                                                                   else
-                                                                   {
-                   // console.error(name);
-                   // console.log(preserve);
-                                               name = "rawhtml";
-                                           }
-                                                           }
+    if (preserve && libObj instanceof lib.tinl)
+    {
+        name = "tinl";
+    }
+    else if (unsup.inline.test(name))
+    {
+        if (name == "span" && !cfg.span_tags)
+            name = "inl";
+        else
+            name = "tinl";
+    }
+    else if (preserve && libObj instanceof lib.inl)
+    {
+        name = "inl";
+    }
+    else if (unsup.block2c.test(name))
+    {
+        name = "ctblk";
+        wrap = ["\n\n", ""];
+    }
+    else if (preserve && libObj instanceof lib.ctblk || unsup.block1c.test(name))
+    {
+        name = "ctblk";
+    }
+    else if (preserve && libObj instanceof lib.tblk)
+    {
+        name = "tblk";
+    }
+    else if (unsup.block2.test(name))
+    {
+        if (name == "div" && !cfg.div_tags)
+            name = "blk";
+        else
+            name = "tblk";
+    }
+    // Non-tagr!
+    // else if (preserve && libObj instanceof lib.cblk)
+    //                         {
+    //     name = "cblk";
+    //                         }
+    // else if (preserve && libObj instanceof lib.blk)
+    //                         {
+    //     name = "blk";
+    //                         }
+    else
+    {
+        // console.error(name);
+        // console.log(preserve);
+        name = "rawhtml";
+    }
+}
 
-                                                           var node = undefined;
-                                       if (libObj && !preserve && !forcePreserve)
-                                       {
-                                           node = libObj;
-                                       }
-                                       else
-                                       {
-                                           node = new lib[name](n, this, this.c.length);
-                                       }
+var node = undefined;
+if (libObj && !preserve && !forcePreserve)
+{
+    node = libObj;
+}
+else
+{
+    node = new lib[name](n, this, this.c.length);
+}
 
 					if (wrap)
 						node.wrap = wrap;
@@ -431,7 +458,10 @@ reMarked = function(opts) {
 	lib.inl = lib.tag.extend({
 		rend: function()
 		{
-			return wrap.call(this, this.rendK(), this.wrap);
+			var kids = this.rendK(),
+				parts = kids.match(/^((?: |\t|&nbsp;)*)(.*?)((?: |\t|&nbsp;)*)$/) || [kids, "", kids, ""];
+
+			return parts[1] + wrap.call(this, parts[2], this.wrap) + parts[3];
 		}
 	});
 
@@ -643,7 +673,7 @@ reMarked = function(opts) {
 		lib.tfoot = cfg.gfm_tbls ? lib.cblk.extend() : lib.ctblk.extend();
 
 		lib.tr = cfg.gfm_tbls ? lib.cblk.extend({
-			wrapK: [cfg.tbl_edges ? "| " : "", cfg.tbl_edges ? " |" : ""],
+			wrapK: [cfg.tbl_edges ? "| " : "", cfg.tbl_edges ? " |" : ""]
 		}) : lib.ctblk.extend();
 
 		lib.th = cfg.gfm_tbls ? lib.inl.extend({
@@ -683,9 +713,11 @@ reMarked = function(opts) {
 					cols[this.i] = {w: null, a: ""};		// width and alignment
 				var col = cols[this.i];
 				col.w = Math.max(col.w || 0, this.guts.length);
-				if (this.e.align)
-					col.a = this.e.align;
-			},
+
+				var align = this.e.align || this.e.style.textAlign;
+				if (align)
+					col.a = align;
+			}
 		}) : lib.ctblk.extend();
 
 			lib.td = lib.th.extend();
@@ -702,8 +734,9 @@ reMarked = function(opts) {
 				// this is strange, cause inside of code, inline should not be processed, but is?
 				if (!(this.p instanceof lib.code || this.p instanceof lib.pre)) {
 					kids = kids
-					.replace(/^\s*#/gm,"\\#")
-					.replace(/\*/gm,"\\*");
+					.replace(/^\s*([#*])/gm, function(match, $1) {
+						return match.replace($1, "\\" + $1);
+					});
 				}
 
 				if (this.i == 0)
@@ -711,7 +744,7 @@ reMarked = function(opts) {
 				if (this.i == this.p.c.length - 1)
 					kids = kids.replace(/\n+$/, "");
 
-				return kids;
+				return kids.replace(/\u00a0/gm, cfg.nbsp_spc ? " " : "&nbsp;");
 			}
 		});
 
@@ -734,6 +767,6 @@ reMarked = function(opts) {
 /*!
   * klass: a classical JS OOP façade
   * https://github.com/ded/klass
-  * License MIT (c) Dustin Diaz & Jacob Thornton 2012
+  * License MIT (c) Dustin Diaz 2014
   */
-!function(a,b){typeof define=="function"?define(b):typeof module!="undefined"?module.exports=b():this[a]=b()}("klass",function(){function f(a){return j.call(g(a)?a:function(){},a,1)}function g(a){return typeof a===c}function h(a,b,c){return function(){var d=this.supr;this.supr=c[e][a];var f=b.apply(this,arguments);return this.supr=d,f}}function i(a,b,c){for(var f in b)b.hasOwnProperty(f)&&(a[f]=g(b[f])&&g(c[e][f])&&d.test(b[f])?h(f,b[f],c):b[f])}function j(a,b){function c(){}function l(){this.init?this.init.apply(this,arguments):(b||h&&d.apply(this,arguments),j.apply(this,arguments))}c[e]=this[e];var d=this,f=new c,h=g(a),j=h?a:this,k=h?{}:a;return l.methods=function(a){return i(f,a,d),l[e]=f,this},l.methods.call(l,k).prototype.constructor=l,l.extend=arguments.callee,l[e].implement=l.statics=function(a,b){return a=typeof a=="string"?function(){var c={};return c[a]=b,c}():a,i(this,a,d),this},l}var a=this,b=a.klass,c="function",d=/xyz/.test(function(){xyz})?/\bsupr\b/:/.*/,e="prototype";return f.noConflict=function(){return a.klass=b,this},a.klass=f,f});
+!function(e,t,n){typeof define=="function"?define(n):typeof module!="undefined"?module.exports=n():t[e]=n()}("klass",this,function(){function i(e){return a.call(s(e)?e:function(){},e,1)}function s(e){return typeof e===t}function o(e,t,n){return function(){var i=this.supr;this.supr=n[r][e];var s={}.fabricatedUndefined,o=s;try{o=t.apply(this,arguments)}finally{this.supr=i}return o}}function u(e,t,i){for(var u in t)t.hasOwnProperty(u)&&(e[u]=s(t[u])&&s(i[r][u])&&n.test(t[u])?o(u,t[u],i):t[u])}function a(e,t){function n(){}function c(){this.init?this.init.apply(this,arguments):(t||a&&i.apply(this,arguments),f.apply(this,arguments))}n[r]=this[r];var i=this,o=new n,a=s(e),f=a?e:this,l=a?{}:e;return c.methods=function(e){return u(o,e,i),c[r]=o,this},c.methods.call(c,l).prototype.constructor=c,c.extend=arguments.callee,c[r].implement=c.statics=function(e,t){return e=typeof e=="string"?function(){var n={};return n[e]=t,n}():e,u(this,e,i),this},c}var e=this,t="function",n=/xyz/.test(function(){xyz})?/\bsupr\b/:/.*/,r="prototype";return i})
