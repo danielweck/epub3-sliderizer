@@ -55,13 +55,7 @@ body:not(.reflow).basic.epb3sldrzr-epubReadingSystem
 {
 	-webkit-font-smoothing: subpixel-antialiased;
 	
-	
--webkit-user-select: none;
--moz-user-select: none;
--ms-user-select: none;
--o-user-select: none;
-user-select: none;
-
+/* 	-PREFIXED_PROPERTY-user-select: none; */
 }
 
 body:not(.epb3sldrzr-epubReadingSystem):not(.basic):not(.reflow):not(.author) img,
