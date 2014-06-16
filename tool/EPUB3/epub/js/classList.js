@@ -1,6 +1,6 @@
 /*
  * classList.js: Cross-browser full element.classList implementation.
- * 2012-11-15
+ * 2014-01-31
  *
  * By Eli Grey, http://eligrey.com
  * Public Domain.
@@ -11,18 +11,18 @@
 
 /*! @source http://purl.eligrey.com/github/classList.js/blob/master/classList.js*/
 
-if (typeof document !== "undefined" && !("classList" in document.createElement("a"))) {
+if ("document" in self && !("classList" in document.createElement("_"))) {
 
 (function (view) {
 
 "use strict";
 
-if (!('HTMLElement' in view) && !('Element' in view)) return;
+if (!('Element' in view)) return;
 
 var
 	  classListProp = "classList"
 	, protoProp = "prototype"
-	, elemCtrProto = (view.HTMLElement || view.Element)[protoProp]
+	, elemCtrProto = view.Element[protoProp]
 	, objCtr = Object
 	, strTrim = String[protoProp].trim || function () {
 		return this.replace(/^\s+|\s+$/g, "");
@@ -62,7 +62,7 @@ var
 	}
 	, ClassList = function (elem) {
 		var
-			  trimmedClasses = strTrim.call(elem.className)
+			  trimmedClasses = strTrim.call(elem.getAttribute("class") || "")
 			, classes = trimmedClasses ? trimmedClasses.split(/\s+/) : []
 			, i = 0
 			, len = classes.length
@@ -71,7 +71,7 @@ var
 			this.push(classes[i]);
 		}
 		this._updateClassName = function () {
-			elem.className = this.toString();
+			elem.setAttribute("class", this.toString());
 		};
 	}
 	, classListProto = ClassList[protoProp] = []
@@ -132,15 +132,15 @@ classListProto.remove = function () {
 		this._updateClassName();
 	}
 };
-classListProto.toggle = function (token, forse) {
+classListProto.toggle = function (token, force) {
 	token += "";
 
 	var
 		  result = this.contains(token)
 		, method = result ?
-			forse !== true && "remove"
+			force !== true && "remove"
 		:
-			forse !== false && "add"
+			force !== false && "add"
 	;
 
 	if (method) {
