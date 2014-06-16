@@ -1,3 +1,6 @@
+// FORK:
+// https://github.com/danielweck/keymaster
+
 //     keymaster.js
 //     (c) 2011-2013 Thomas Fuchs
 //     keymaster.js may be freely distributed under the MIT license.
@@ -30,7 +33,7 @@
       '[': 219, ']': 221, '\\': 220
     },
     code = function(x){
-      return _MAP[x] || x.toUpperCase().charCodeAt(0);
+      return x.toUpperCase ? (_MAP[x] || x.toUpperCase().charCodeAt(0)) : x;
     },
     _downKeys = [];
 
@@ -62,10 +65,16 @@
       for(k in _mods) _mods[k] = event[modifierMap[k]];
   };
 
+  function getKeyCode(event)
+  {
+      return event.keyCode || event.charCode || event.which || event.key || 0;
+  }
+
   // handle keydown event
   function dispatch(event) {
+
     var key, handler, k, i, modifiersMatch, scope;
-    key = event.keyCode;
+    key = getKeyCode(event);
 
     if (index(_downKeys, key) == -1) {
         _downKeys.push(key);
@@ -116,7 +125,7 @@
 
   // unset modifier keys on keyup
   function clearModifier(event){
-    var key = event.keyCode, k,
+    var key = getKeyCode(event), k,
         i = index(_downKeys, key);
 
     // remove key from _downKeys
