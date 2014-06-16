@@ -49,7 +49,7 @@ body:not(.reflow).basic.epb3sldrzr-epubReadingSystem
 {
 	-webkit-font-smoothing: subpixel-antialiased;
 	
-	-PREFIXED_PROPERTY-user-select: none;
+/* 	-PREFIXED_PROPERTY-user-select: none; */
 }
 
 body:not(.epb3sldrzr-epubReadingSystem):not(.basic):not(.reflow):not(.author) img,

@@ -77,7 +77,6 @@ public final class Epub3FileSet {
 	};
 
 	public final static FileId[] JSs = new FileId[] {
-			new FileId("jquery.min.js", "js-jquery"),
 			new FileId("default.js", "js-default") };
 
 	public final static FileId[] JSs_OPF_ONLY = new FileId[] {
@@ -87,6 +86,7 @@ public final class Epub3FileSet {
 			new FileId("hammer.min.js", "js-hammer"),
 			new FileId("hammer.fakemultitouch.js", "js-hammer-fakemultitouch"),
 			new FileId("hammer.showtouches.js", "js-hammer-showtouches"),
+			new FileId("jquery.min.js", "js-jquery"),
 			new FileId("jquery.mousewheel.js", "js-jquery-mousewheel"),
 			new FileId("jquery.blockUI.js", "js-jquery-blockUI"),
 			new FileId("reMarked.js", "js-reMarked"),
