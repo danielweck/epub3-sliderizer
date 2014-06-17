@@ -33,7 +33,7 @@ function initthough()
 
         if (navigator.epubReadingSystem.PageDirection === navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS)
         {
-            _precedentSoftPage = _softPage + 1;
+            _precedentSoftPage = _lastSoftPage + 1;
             _softPage = _lastSoftPage;
         }
 

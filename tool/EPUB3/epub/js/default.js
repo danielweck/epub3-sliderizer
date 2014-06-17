@@ -1002,6 +1002,13 @@ Epub3Sliderizer.gotoPrevious = function()
     {
         return;
     }
+
+    // See updateDirection()
+    // if (navigator.epubReadingSystem
+    //     && navigator.epubReadingSystem.on)
+    // {
+    //     navigator.epubReadingSystem.PageDirection = navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS;
+    // }
     
     if (navigator.epubReadingSystem
         && navigator.epubReadingSystem.on
@@ -1114,6 +1121,13 @@ Epub3Sliderizer.gotoNext = function()
     {
         return;
     }
+
+    // See updateDirection()
+    // if (navigator.epubReadingSystem
+    //     && navigator.epubReadingSystem.on)
+    // {
+    //     navigator.epubReadingSystem.PageDirection = navigator.epubReadingSystem.EVENT_PAGE_NEXT;
+    // }
     
     if (navigator.epubReadingSystem
         && navigator.epubReadingSystem.on
@@ -3211,9 +3225,9 @@ Epub3Sliderizer.initReverse = function()
     {
         this.reverse = true;
         //document.body.classList.add("epb3sldrzr-reverse");
-
-        this.updateDirection(false);
     }
+
+    this.updateDirection(false);
 };
 
 // ----------
