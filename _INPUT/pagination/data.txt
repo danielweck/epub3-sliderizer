@@ -67,10 +67,12 @@ NO-MARKDOWN
 <h1 id="heading" style="margin-bottom: 2em;">Page 1</h1>
 
 <p style="font-family:Arvo,serif">
-The next page contains 5 "sub-pages".
+The next page contains 5 "sub-pages", which can be navigated using the regular previous/next pagination controls.
+</p>
+<p style="font-family:Arvo,serif">
 To switch pages, hit the keyboard's left/right arrows,
 or use a finger-swipe gesture (requires a touch-enabled device).
-Alternatively, activate the previous/next page commands via the Reading System's graphical user interface
+Alternatively, invoke the previous/next page commands via the Reading System's graphical user interface
 (in Readium, there are buttons on either side of the current page).
 </p>
 
@@ -380,7 +382,7 @@ _PAGE_lastSubPage = 4;
 _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
 {
     var heading = document.getElementById("heading");
-    heading.innerHTML = "Page 2, subpage <span style=\"color:red;\">" + (currentSubPage+1) + "</span> / " + (_PAGE_lastSubPage+1);
+    heading.innerHTML = "Page 2, sub-page <span style=\"color:red;\">" + (currentSubPage+1) + "</span> / " + (_PAGE_lastSubPage+1);
 
     var scroll = document.getElementById("scroll");
     if (!initialDisplay)
@@ -414,12 +416,12 @@ NO-MARKDOWN
 <h1 id="heading" style="margin-bottom: 2em;">Page 3</h1>
 
 <p style="font-family:Arvo,serif">
-You may switch back to the previous page, and notice how the last subpage (#5) is selected. This demonstrates navigating the overall sequence of "pages" in the reverse direction (backwards linear reading order).
+You may switch back to the previous page, and notice how the last "sub-page" (#5) is correctly selected. This demonstrates that the overall sequence of logical pages can be navigated in the reverse direction (backwards linear reading order).
 </p>
 
 <p style="font-family:Arvo,serif">
 Alternatively, you may click the following link
-<a href="slide_02.xhtml#subPage3">to go directly to page 2, subpage 3</a>.
+<a href="slide_02.xhtml#subpage3">to jump directly to page 2, sub-page 3</a> (behind the scenes, a regular URL fragment identifier is used, referencing the appropriate XHTML element ID for a given "sub-page").
 </p>
 
 

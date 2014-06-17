@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function(e)
     console.debug(window.location.hash);
     if (window.location && window.location.hash)
     {
-        var n = window.location.hash.replace("#subPage", "");
+        var n = window.location.hash.replace("#subpage", "");
         try
         {
             n = parseInt(n) - 1;
