@@ -4184,21 +4184,24 @@ Epub3Sliderizer.init = function()
         }
     }
 
-    if (!navigator.epubReadingSystem)
+    if (!this.epubReadingSystem)
     {
-        if (this.epubMode && !this.basicMode && !this.staticMode && !this.authorMode)
+        if (!this.basicMode && !this.staticMode && !this.authorMode)
         {
             fakeEpubReadingSystem = true;
-            this.epubReadingSystem = {name: "FAKE epub reader", version: "1.2.3"};
 
-            console.log("epubReadingSystem (FAKED):");
-            console.log(this.epubReadingSystem.name);
-            console.log(this.epubReadingSystem.version);
-        }
-        else
-        {
             navigator.epubReadingSystem = {name: "EPUB3-Sliderizer", version: "1.2.3"};
+
+            console.log("epubReadingSystem (EPUB3-SLIDERIZER):");
+            console.log(navigator.epubReadingSystem.name);
+            console.log(navigator.epubReadingSystem.version);
             
+            if (this.epubMode)
+            {
+                this.epubReadingSystem = navigator.epubReadingSystem;
+                this.epubReadingSystem.fake = true;
+            }
+
             navigator.epubReadingSystem.EVENT_PAGE_NEXT = "epubReadingSystem.EVENT_PAGE_NEXT";
             navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS = "epubReadingSystem.EVENT_PAGE_PREVIOUS";
 

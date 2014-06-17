@@ -100,41 +100,73 @@ _CONTENT
 
 NO-MARKDOWN
 
+
 <h1 id="heading">Page 2</h1>
 
 <div id="container" class="full">
 
 <div id="indexes">
+
+<!-- a href="javascript:window.location.hash='#page1'" -->
+<!-- a href="#page1" class="anchorLink" -->
+<!-- a href="slide_02.xhtml#page1" class="anchorLink" -->
+<!-- a href="javascript:_PAGE_goto(0)" -->
+
+<a href="#" onclick="_PAGE_goto(0)">
 <span id="index0" class="index">
 1
 </span>
+</a>
+
+<a href="#" onclick="_PAGE_goto(1)">
 <span id="index1" class="index">
 2
 </span>
+</a>
+
+<a href="#" onclick="_PAGE_goto(2)">
 <span id="index2" class="index">
 3
 </span>
+</a>
+
+<a href="#" onclick="_PAGE_goto(3)">
 <span id="index3" class="index">
 4
 </span>
+</a>
+
+<a href="#" onclick="_PAGE_goto(4)">
 <span id="index4" class="index">
 5
 </span>
+</a>
+
 </div>
 
 <div id="scroll">
+
+<div id="page1" class="pageAnchor" hidden="hidden"> </div>
 <div id="subpage0" class="subpage">
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum id fugiunt, re eadem defendunt, quae Peripatetici, verba. Conferam tecum, quam cuique verso rem subicias; Eaedem res maneant alio modo. Dic in quovis conventu te omnia facere, ne doleas. Miserum hominem! Si dolor summum malum est, dici aliter non potest. Sit hoc ultimum bonorum, quod nunc a me defenditur;
 </div>
+
+<div id="page2" class="pageAnchor" hidden="hidden"> </div>
 <div id="subpage1" class="subpage">
 Laboro autem non sine causa; Quae quidem sapientes sequuntur duce natura tamquam videntes; Illud dico, ea, quae dicat, praeclare inter se cohaerere. Profectus in exilium Tubulus statim nec respondere ausus; Dolere malum est: in crucem qui agitur, beatus esse non potest. Dempta enim aeternitate nihilo beatior Iuppiter quam Epicurus; Quo studio Aristophanem putamus aetatem in litteris duxisse?
 </div>
+
+<div id="page3" class="pageAnchor" hidden="hidden"> </div>
 <div id="subpage2" class="subpage">
 At iste non dolendi status non vocatur voluptas. Quid de Platone aut de Democrito loquar? Quamquam te quidem video minime esse deterritum. De hominibus dici non necesse est. Non semper, inquam; Quam ob rem tandem, inquit, non satisfacit? Quaesita enim virtus est, non quae relinqueret naturam, sed quae tueretur. At iam decimum annum in spelunca iacet.
 </div>
+
+<div id="page4" class="pageAnchor" hidden="hidden"> </div>
 <div id="subpage3" class="subpage">
 Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doceant, vel tu potius quis enim ista melius? Septem autem illi non suo, sed populorum suffragio omnium nominati sunt. Quamquam tu hanc copiosiorem etiam soles dicere. Quae cum essent dicta, finem fecimus et ambulandi et disputandi. Duo Reges: constructio interrete. Tu autem negas fortem esse quemquam posse, qui dolorem malum putet.
 </div>
+
+<div id="page5" class="pageAnchor" hidden="hidden"> </div>
 <div id="subpage4" class="subpage">
 Sit enim idem caecus, debilis. Nonne videmus quanta perturbatio rerum omnium consequatur, quanta confusio? Atque haec coniunctio confusioque virtutum tamen a philosophis ratione quadam distinguitur. Multa sunt dicta ab antiquis de contemnendis ac despiciendis rebus humanis; Illis videtur, qui illud non dubitant bonum dicere -; Nihil acciderat ei, quod nollet, nisi quod anulum, quo delectabatur, in mari abiecerat.
 </div>
@@ -155,13 +187,24 @@ cover
 // --------------------------------------------
 _CSS_STYLE
 
+.pageAnchor
+{
+display:none;
+position:absolute;
+width:0px;
+height:0px;
+top:0px;
+left:0px;
+}
+
 #container
 {
 borderx: 2px solid red;
+overflow: hidden;
 
 display: block;
 
-overflow: scroll;
+position: absolute;
 
 /* .full
 position: absolute;
@@ -172,9 +215,35 @@ height: VIEWPORT_HEIGHTpx;
 */
 }
 
+#indexes a:link
+{
+    color: inherit;
+    text-decoration:none;
+    border-bottom: none;
+}
+#indexes a:visited
+{
+    color: inherit;
+    text-decoration:none;
+    border-bottom: none;
+}
+#indexes a:hover
+{
+    color: inherit;
+    text-decoration:none;
+    border-bottom: none;
+}
+#indexes a:active
+{
+    color: inherit;
+    text-decoration:none;
+    border-bottom: none;
+}
+
 #indexes
 {
 borderx: 2px solid blue;
+overflow: hidden;
 
 text-align: center;
 
@@ -198,28 +267,20 @@ font-family: Lato, sans-serif;
 
 .index
 {
-vertical-align: text-top;
-
 borderx: 2px solid yellow;
+overflow: hidden;
+
+vertical-align: text-top;
 
 font-size: 400%;
 opacity: 0.4;
-}
-
-#container[data-subpage="0"] #index0,
-#container[data-subpage="1"] #index1,
-#container[data-subpage="2"] #index2,
-#container[data-subpage="3"] #index3,
-#container[data-subpage="4"] #index4
-{
-font-size: 600%;
-opacity: 1;
 }
 
 
 #scroll
 {
 borderx: 2px solid green;
+overflow: hidden;
 
 display: block;
 
@@ -232,69 +293,15 @@ top: 10%;
 left: 0;
 }
 
-#scroll.transit
-{
--PREFIXED_PROPERTY-transition-property: left;
--PREFIXED_PROPERTY-transition-duration: 900ms;
--PREFIXED_PROPERTY-transition-delay: 0s;
--PREFIXED_PROPERTY-transition-timing-function: ease-out;
-}
-
-.subpage
-{
--PREFIXED_PROPERTY-transition-property: opacity, transform;
--PREFIXED_PROPERTY-transition-duration: 500ms;
--PREFIXED_PROPERTY-transition-delay: 0s;
--PREFIXED_PROPERTY-transition-timing-function: ease-in;
-}
-
-.index
-{
--PREFIXED_PROPERTY-transition-property: font-size, opacity;
--PREFIXED_PROPERTY-transition-duration: 500ms;
--PREFIXED_PROPERTY-transition-delay: 0s;
--PREFIXED_PROPERTY-transition-timing-function: ease-in;
-}
-
-#container[data-subpage="0"] #scroll
-{
-left: 0;
-}
-#container[data-subpage="1"] #scroll
-{
-left: -100%;
-}
-#container[data-subpage="2"] #scroll
-{
-left: -200%;
-}
-#container[data-subpage="3"] #scroll
-{
-left: -300%;
-}
-#container[data-subpage="4"] #scroll
-{
-left: -400%;
-}
-
-#container[data-subpage="0"] #subpage0,
-#container[data-subpage="1"] #subpage1,
-#container[data-subpage="2"] #subpage2,
-#container[data-subpage="3"] #subpage3,
-#container[data-subpage="4"] #subpage4
-{
-opacity: 1;
--PREFIXED_PROPERTY-transform: none;
-}
-
 .subpage
 {
 borderx: 2px solid magenta;
+overflow: hidden;
 
-opacity: 0;
+opacity: 0.4;
 
 -PREFIXED_PROPERTY-transform-origin: 50% 100%;
--PREFIXED_PROPERTY-transform: scale(0.3);
+-PREFIXED_PROPERTY-transform: scale(0.4);
 
 display: block;
 
@@ -312,8 +319,6 @@ height: auto;
 
 bottom: 0px;
 left: 0px;
-
-overflow-y: hidden;
 
 padding-left: 2em;
 padding-right: 2em;
@@ -374,6 +379,71 @@ left: 60%;
 left: 80%;
 }
 
+#scroll.transit
+{
+-PREFIXED_PROPERTY-transition-property: left;
+-PREFIXED_PROPERTY-transition-duration: 900ms;
+-PREFIXED_PROPERTY-transition-delay: 0s;
+-PREFIXED_PROPERTY-transition-timing-function: ease-out;
+}
+
+.subpage
+{
+-PREFIXED_PROPERTY-transition-property: opacity, transform;
+-PREFIXED_PROPERTY-transition-duration: 500ms;
+-PREFIXED_PROPERTY-transition-delay: 0s;
+-PREFIXED_PROPERTY-transition-timing-function: ease-in;
+}
+
+.index
+{
+-PREFIXED_PROPERTY-transition-property: font-size, opacity;
+-PREFIXED_PROPERTY-transition-duration: 500ms;
+-PREFIXED_PROPERTY-transition-delay: 0s;
+-PREFIXED_PROPERTY-transition-timing-function: ease-in;
+}
+
+#container[data-subpage="0"] #index0,
+#container[data-subpage="1"] #index1,
+#container[data-subpage="2"] #index2,
+#container[data-subpage="3"] #index3,
+#container[data-subpage="4"] #index4
+{
+font-size: 600%;
+opacity: 1;
+}
+
+#container[data-subpage="0"] #subpage0,
+#container[data-subpage="1"] #subpage1,
+#container[data-subpage="2"] #subpage2,
+#container[data-subpage="3"] #subpage3,
+#container[data-subpage="4"] #subpage4
+{
+opacity: 1;
+-PREFIXED_PROPERTY-transform: none;
+}
+
+#container[data-subpage="0"] #scroll
+{
+left: 0;
+}
+#container[data-subpage="1"] #scroll
+{
+left: -100%;
+}
+#container[data-subpage="2"] #scroll
+{
+left: -200%;
+}
+#container[data-subpage="3"] #scroll
+{
+left: -300%;
+}
+#container[data-subpage="4"] #scroll
+{
+left: -400%;
+}
+
 // --------------------------------------------
 _JS_SCRIPT
 
@@ -385,9 +455,14 @@ _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
     heading.innerHTML = "Page 2, sub-page <span style=\"color:red;\">" + (currentSubPage+1) + "</span> / " + (_PAGE_lastSubPage+1);
 
     var scroll = document.getElementById("scroll");
+
     if (!initialDisplay)
     {
         scroll.classList.add("transit");
+    }
+    else
+    {
+        scroll.classList.remove("transit");
     }
 
     var container = document.getElementById("container");
@@ -421,7 +496,7 @@ You may switch back to the previous page, and notice how the last "sub-page" (#5
 
 <p style="font-family:Arvo,serif">
 Alternatively, you may click the following link
-<a href="slide_02.xhtml#subpage3">to jump directly to page 2, sub-page 3</a> (behind the scenes, a regular URL fragment identifier is used, referencing the appropriate XHTML element ID for a given "sub-page").
+<a href="slide_02.xhtml#page3">to jump directly to page 2, sub-page 3</a> (behind the scenes, a regular URL fragment identifier is used, referencing the appropriate XHTML element ID for a given "sub-page").
 </p>
 
 

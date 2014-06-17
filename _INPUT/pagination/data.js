@@ -7,33 +7,74 @@ var _PAGE_lastSubPage = 0;
 
 // ===== ===== ===== ===== ===== ===== 
 
+var _PAGE_goto = undefined;
+
 document.addEventListener("DOMContentLoaded", function(e)
 {
     var _PAGE_currentSubPage = 0;
     var _PAGE_precedentSubPage = 0;
-
-    console.debug(window.location.hash);
-    if (window.location && window.location.hash)
+    
+    _PAGE_goto = function(subPage, initial, previous)
     {
-        var n = window.location.hash.replace("#subpage", "");
-        try
+        if (subPage < 0 || subPage > _PAGE_lastSubPage) return;
+        
+        _PAGE_currentSubPage = subPage;
+
+        setTimeout(function()
         {
-            n = parseInt(n) - 1;
-            
-            if (!isNaN(n) && n >= 0 && n <= _PAGE_lastSubPage)
+            _skipHashChangeEvent = true;
+            window.location.hash = "#page" + (_PAGE_currentSubPage+1);
+        }, 100);
+        
+        _PAGE_updateDisplay(initial ? true : false, _PAGE_currentSubPage, previous ? true : false);
+    };
+
+    var updateFromHash = function()
+    {
+console.debug("- HASH:");
+console.debug(window.location.hash);
+
+        if (window.location && window.location.hash)
+        {
+            var n = window.location.hash.replace("#page", "");
+            try
             {
-                console.debug(n);
-                _PAGE_currentSubPage = n;
+                n = parseInt(n) - 1;
+            
+                if (!isNaN(n) && n >= 0 && n <= _PAGE_lastSubPage)
+                {
+console.debug("- PAGE:");
+console.debug(n);
+                    _PAGE_currentSubPage = n;
+                    
+                    return true;
+                }
+            }
+            catch(err)
+            {
+                console.error(err);
+                console.error(err.msg);
             }
         }
-        catch(err)
-        {
-            console.error(err);
-            console.error(err.msg);
-        }
-    }
-
+        
+        return false;
+    };
+    updateFromHash();
     _PAGE_updateDisplay(true, _PAGE_currentSubPage, false);
+    
+    var _skipHashChangeEvent = false;
+    window.addEventListener("hashchange", function()
+    {
+        if (_skipHashChangeEvent)
+        {
+            _skipHashChangeEvent = false;
+            return;
+        }
+        if (updateFromHash())
+        {
+            _PAGE_updateDisplay(true, _PAGE_currentSubPage, false);
+        }
+    }, false);
 
     var epubReadingSystem_WAIT_AND_DO = function(maxTries, waitTime, func, tries)
     {
@@ -52,13 +93,15 @@ document.addEventListener("DOMContentLoaded", function(e)
             return;
         }
 
-        console.debug(navigator.epubReadingSystem.PageDirection);
-        
         func();
     };
     
     var epubReadingSystem_INIT = function()
     {
+// console.debug("navigator.epubReadingSystem: ");
+// console.debug(navigator.epubReadingSystem.PageDirection);
+// console.debug(navigator.epubReadingSystem.on);
+    
         if (!navigator.epubReadingSystem.on)
         {
             return;
@@ -72,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function(e)
 
         var backward = _PAGE_precedentSubPage > _PAGE_currentSubPage;
 
-        _PAGE_updateDisplay(true, _PAGE_currentSubPage, backward);
+        _PAGE_goto(_PAGE_currentSubPage, true, backward);
 
         var pagePreviousNext = function(previous, payload)
         {
@@ -90,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function(e)
                 return true; // do nothing, just let the Reading System turn the page normally
             }
 
-            _PAGE_updateDisplay(false, _PAGE_currentSubPage, previous);
+            _PAGE_goto(_PAGE_currentSubPage, false, previous);
 
             return false; // instruct the Reading System to *not* turn the page
         };
