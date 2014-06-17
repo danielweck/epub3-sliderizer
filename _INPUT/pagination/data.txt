@@ -64,16 +64,20 @@ _CONTENT
 
 NO-MARKDOWN
 
-<h1 id="heading" style="margin-bottom: 2em;">Page 1</h1>
+<h1 id="heading">Page 1</h1>
 
-<p style="font-family:Arvo,serif">
-The next page contains 5 "sub-pages", which can be navigated using the regular previous/next pagination controls.
+<p>
+The next page contains 5 "sub-pages", which can be navigated using regular previous/next pagination controls.
+This EPUB3 functionality is <strong>experimental</strong>, and is only supported in a <a href="https://github.com/readium/readium-shared-js/tree/feature/prevNextPage">special Readium build</a>, as well as via <a href="https://github.com/danielweck/epub3-sliderizer">EPUB3-Sliderizer</a>.
 </p>
-<p style="font-family:Arvo,serif">
+<p>
 To switch pages, hit the keyboard's left/right arrows,
-or use a finger-swipe gesture (requires a touch-enabled device).
-Alternatively, invoke the previous/next page commands via the Reading System's graphical user interface
-(in Readium, there are buttons on either side of the current page).
+or gesture a finger-swipe if you are using a touch-enabled device.
+Alternatively, you may invoke the previous/next page commands via the Reading System's graphical user interface
+(in Readium, there are clickable buttons on either side of the current page).
+</p>
+<p>
+For demonstration purposes, the following page exposes its own navigation controls as well, to ensure some level of compatibility with Reading Systems that do not support "sub-page" pagination.
 </p>
 
 // --------------------------------------------
@@ -85,6 +89,20 @@ back.jpg
 _BACKGROUND_IMG_SIZE
 
 cover
+
+// --------------------------------------------
+_CSS_STYLE
+
+#heading
+{
+margin-bottom: 1em;
+}
+
+p
+{
+font-family: Arvo,serif;
+font-size: 90%;
+}
 
 // #########################################################
 // #########################################################
@@ -422,7 +440,7 @@ left: 80%;
 #scroll.transit
 {
 -PREFIXED_PROPERTY-transition-property: left;
--PREFIXED_PROPERTY-transition-duration: 900ms;
+-PREFIXED_PROPERTY-transition-duration: 700ms;
 -PREFIXED_PROPERTY-transition-delay: 0s;
 -PREFIXED_PROPERTY-transition-timing-function: ease-out;
 }
@@ -516,11 +534,6 @@ _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
 
     var container = document.getElementById("container");
     container.setAttribute("data-subpage", currentSubPage);
-    
-    /*
-    var txt = document.getElementById("txt");
-    txt.innerHTML = "(direction: " + (backwards ? "&lt;&lt; backward" : "forward &gt;&gt;") + ")" + (initialDisplay ? "<br/>[initial]" : "");
-    */
 };
 
 // #########################################################
@@ -537,15 +550,19 @@ _CONTENT
 
 NO-MARKDOWN
 
-<h1 id="heading" style="margin-bottom: 2em;">Page 3</h1>
+<h1 id="heading">Page 3</h1>
 
-<p style="font-family:Arvo,serif">
-You may switch back to the previous page, and notice how the last "sub-page" (#5) is correctly selected. This demonstrates that the overall sequence of logical pages can be navigated in the reverse direction (backwards linear reading order).
+<p>
+When you navigate back to the previous page, notice how the last "sub-page" (#5) is correctly selected. The overall sequence of logical pagination units (pages and "sub-pages") can indeed be traversed in the reverse direction, preserving both the backwards and forwards linear reading order.
 </p>
 
-<p style="font-family:Arvo,serif">
-Alternatively, you may click the following link
-<a href="slide_02.xhtml#page3">to jump directly to page 2, sub-page 3</a> (behind the scenes, a regular URL fragment identifier is used, referencing the appropriate XHTML element ID for a given "sub-page").
+<p>
+You may also click on
+<a href="slide_02.xhtml#page3">this link</a> to jump directly to page 2, sub-page 3 (the target anchor / fragment-identifier simply references the XHTML element that corresponds to the selected "sub-page").
+</p>
+
+<p>
+Note that "sub-page" cross-linking currently <strong>only works with EPUB3-Sliderizer</strong>, because Readium does not pass window.location.hash to its content iframes.
 </p>
 
 
@@ -558,3 +575,17 @@ back.jpg
 _BACKGROUND_IMG_SIZE
 
 cover
+
+// --------------------------------------------
+_CSS_STYLE
+
+#heading
+{
+margin-bottom: 1em;
+}
+
+p
+{
+font-family: Arvo,serif;
+font-size: 90%;
+}
