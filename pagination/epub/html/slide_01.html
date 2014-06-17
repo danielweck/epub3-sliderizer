@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" epub:prefix="ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/" id="epb3sldrzr-Slide_1" lang="en-US" xml:lang="en-US">
+    <head>
+        <meta charset="UTF-8"/>
+
+        <meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/>
+        <meta content="EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook" name="keywords"/>
+        
+        <title>(1/3) EPUB3 Sliderizer Pagination / Page 1</title>
+
+        <meta content="1" name="slideIndex"/>
+        <meta content="3" name="slideCount"/>
+        
+        <link href="../img/favicon.ico" rel="shortcut icon"/>
+        
+        <link href="../img/custom/TouchIcon.png" rel="apple-touch-icon"/>
+        
+        <link href="fonts/fonts.css" rel="stylesheet" type="text/css"/>
+        <link href="fonts/FontAwesome.css" rel="stylesheet" type="text/css"/>
+        
+        <link href="../css/struct.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/incrementals.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/animations.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/controls.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/default.css" rel="stylesheet" type="text/css"/>
+        
+        
+        
+        
+        
+        <script src="../js/default.js"> </script>
+        
+        
+
+        
+        <link href="slide_02.html" rel="next"/>
+
+        <link href="../nav.html" rel="nav"/>
+
+        <link href="../print.html" rel="print"/>
+        
+        
+        <link href="slide_03.html" rel="last"/>
+                
+        <link href="../../../EPUB3-Sliderizer_pagination.epub" rel="epub"/>
+
+        
+        <style type="text/css">
+        /*<![CDATA[*/
+        html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+    display: none;
+}
+html:not(#epb3sldrzr-NavDoc) h1#epb3sldrzr-title
+{
+    display: none;
+}
+
+        /*]]>*/
+        </style>
+
+        <style type="text/css">
+        /*<![CDATA[*/
+        #heading
+{
+margin-bottom: 1em;
+}
+
+p
+{
+font-family: Arvo,serif;
+font-size: 90%;
+}
+
+        /*]]>*/
+        </style>
+
+		<style type="text/css">
+        /*<![CDATA[*/
+        
+        
+
+
+#epb3sldrzr-body
+{
+    
+-webkit-background-repeat:no-repeat;
+-moz-background-repeat:no-repeat;
+-ms-background-repeat:no-repeat;
+-o-background-repeat:no-repeat;
+background-repeat:no-repeat;
+
+    
+-webkit-background-clip:border-box;
+-moz-background-clip:border-box;
+-ms-background-clip:border-box;
+-o-background-clip:border-box;
+background-clip:border-box;
+
+    
+-webkit-background-origin:padding-box;
+-moz-background-origin:padding-box;
+-ms-background-origin:padding-box;
+-o-background-origin:padding-box;
+background-origin:padding-box;
+
+    
+    
+-webkit-background-position:center;
+-moz-background-position:center;
+-ms-background-position:center;
+-o-background-position:center;
+background-position:center;
+
+    
+-webkit-background-attachment:scroll;
+-moz-background-attachment:scroll;
+-ms-background-attachment:scroll;
+-o-background-attachment:scroll;
+background-attachment:scroll;
+
+    
+    
+-webkit-background-image:url(../img/custom/back.jpg);
+-moz-background-image:url(../img/custom/back.jpg);
+-ms-background-image:url(../img/custom/back.jpg);
+-o-background-image:url(../img/custom/back.jpg);
+background-image:url(../img/custom/back.jpg);
+
+    
+    
+-webkit-background-size:cover;
+-moz-background-size:cover;
+-ms-background-size:cover;
+-o-background-size:cover;
+background-size:cover;
+
+    
+    background-color: #333333;
+}
+
+
+       
+        /*]]>*/
+        </style>
+       
+        <script>
+        //<![CDATA[
+        // ===== OVERRIDE FOR EACH XHTML PAGE:
+
+var _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards) {};
+
+var _PAGE_lastSubPage = 0;
+
+// ===== ===== ===== ===== ===== ===== 
+
+var _PAGE_goto = undefined;
+var _PAGE_gotoFirst = undefined;
+var _PAGE_gotoLast = undefined;
+var _PAGE_gotoNext = undefined;
+var _PAGE_gotoPrevious = undefined;
+
+document.addEventListener("DOMContentLoaded", function(e)
+{
+    var _PAGE_currentSubPage = 0;
+    var _PAGE_precedentSubPage = 0;
+
+    _PAGE_gotoFirst = function()
+    {
+        _PAGE_goto(0);
+    };
+    
+    _PAGE_gotoLast = function()
+    {
+        _PAGE_goto(_PAGE_lastSubPage);
+    };
+    
+    _PAGE_gotoNext = function()
+    {
+        _PAGE_goto(_PAGE_currentSubPage+1);
+    };
+    
+    _PAGE_gotoPrevious = function()
+    {
+        _PAGE_goto(_PAGE_currentSubPage-1);
+    };
+    
+    
+    _PAGE_goto = function(subPage, initial, previous)
+    {
+        if (subPage < 0 || subPage > _PAGE_lastSubPage) return;
+
+        _PAGE_currentSubPage = subPage;
+
+        setTimeout(function()
+        {
+            _skipHashChangeEvent = true;
+            window.location.hash = "#page" + (_PAGE_currentSubPage+1);
+        }, 100);
+        
+        _PAGE_updateDisplay(initial ? true : false, _PAGE_currentSubPage, previous ? true : false);
+    };
+
+    var updateFromHash = function()
+    {
+console.debug("- HASH:");
+console.debug(window.location.hash);
+
+        if (window.location && window.location.hash)
+        {
+            var n = window.location.hash.replace("#page", "");
+            try
+            {
+                n = parseInt(n) - 1;
+            
+                if (!isNaN(n) && n >= 0 && n <= _PAGE_lastSubPage)
+                {
+console.debug("- PAGE:");
+console.debug(n);
+                    _PAGE_currentSubPage = n;
+                    
+                    return true;
+                }
+            }
+            catch(err)
+            {
+                console.error(err);
+                console.error(err.msg);
+            }
+        }
+        
+        return false;
+    };
+    updateFromHash();
+    _PAGE_updateDisplay(true, _PAGE_currentSubPage, false);
+    
+    var _skipHashChangeEvent = false;
+    window.addEventListener("hashchange", function()
+    {
+        if (_skipHashChangeEvent)
+        {
+            _skipHashChangeEvent = false;
+            return;
+        }
+        if (updateFromHash())
+        {
+            _PAGE_updateDisplay(true, _PAGE_currentSubPage, false);
+        }
+    }, false);
+
+    var epubReadingSystem_WAIT_AND_DO = function(maxTries, waitTime, func, tries)
+    {
+        if (!tries) tries = 0;
+        else tries++;
+    
+        if (!navigator.epubReadingSystem)
+        {
+            if (tries < maxTries)
+            {
+                setTimeout(function()
+                {
+                    epubReadingSystem_WAIT_AND_DO(maxTries, waitTime, func, tries);
+                }, waitTime);
+            }
+            return;
+        }
+
+        func();
+    };
+    
+    var epubReadingSystem_INIT = function()
+    {
+// console.debug("navigator.epubReadingSystem: ");
+// console.debug(navigator.epubReadingSystem.PageDirection);
+// console.debug(navigator.epubReadingSystem.on);
+    
+        if (!navigator.epubReadingSystem.on)
+        {
+            return;
+        }
+
+        if (navigator.epubReadingSystem.PageDirection === navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS)
+        {
+            _PAGE_precedentSubPage = _PAGE_lastSubPage + 1;
+            _PAGE_currentSubPage = _PAGE_lastSubPage;
+        }
+
+        var backward = _PAGE_precedentSubPage > _PAGE_currentSubPage;
+
+        _PAGE_goto(_PAGE_currentSubPage, true, backward);
+
+        var pagePreviousNext = function(previous, payload)
+        {
+            _PAGE_precedentSubPage = _PAGE_currentSubPage;
+            
+            if (previous) _PAGE_currentSubPage--;
+            else  _PAGE_currentSubPage++;
+
+            var doNothing = previous ? (_PAGE_currentSubPage < 0) : (_PAGE_currentSubPage > _PAGE_lastSubPage);
+            if (doNothing)
+            {
+                if (previous) _PAGE_currentSubPage++;
+                else  _PAGE_currentSubPage--;
+            
+                return true; // do nothing, just let the Reading System turn the page normally
+            }
+
+            _PAGE_goto(_PAGE_currentSubPage, false, previous);
+
+            return false; // instruct the Reading System to *not* turn the page
+        };
+        
+        navigator.epubReadingSystem.on(window, navigator.epubReadingSystem.EVENT_PAGE_NEXT, function(payload){ return pagePreviousNext(false, payload); });
+        navigator.epubReadingSystem.on(window, navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS, function(payload){ return pagePreviousNext(true, payload); });
+    };
+
+    epubReadingSystem_WAIT_AND_DO(20, 100, epubReadingSystem_INIT);
+    
+}, false);
+        //]]>
+        </script>
+
+
+        
+        <meta content="width=1290, height=1000" name="viewport"/>
+        
+</head>
+
+
+<!-- FIXED LAYOUT -->
+
+<body epub:type="bodymatter">
+
+
+
+
+    <div id="epb3sldrzr-body">
+        
+        <div id="epb3sldrzr-root">
+
+
+
+            <section id="epb3sldrzr-content">
+
+                <div id="epb3sldrzr-anim-overflow">
+
+                    <h1 id="epb3sldrzr-title">Page 1</h1>
+
+<div id="epb3sldrzr-content-wrap">
+                    <!--XML-->
+<h1 id="heading">Page 1</h1>
+<p>
+The next page contains 5 "sub-pages", which can be navigated using regular previous/next pagination controls.
+This EPUB3 functionality is <strong>experimental</strong>, and is only supported in a <a href="https://github.com/readium/readium-shared-js/tree/feature/prevNextPage">special Readium build</a>, as well as via <a href="https://github.com/danielweck/epub3-sliderizer">EPUB3-Sliderizer</a>.
+</p>
+<p>
+To switch pages, hit the keyboard's left/right arrows,
+or gesture a finger-swipe if you are using a touch-enabled device.
+Alternatively, you may invoke the previous/next page commands via the Reading System's graphical user interface
+(in Readium, there are clickable buttons on either side of the current page).
+</p>
+<p>
+For demonstration purposes, the following page exposes its own navigation controls as well, to ensure some level of compatibility with Reading Systems that do not support "sub-page" pagination.
+</p>
+</div>
+
+                </div>
+
+             </section>
+         </div>
+     </div>
+
+     <div class="epb3sldrzr-markdown" id="epb3sldrzr-markdown-editor">NO-MARKDOWN
+&lt;h1 id="heading"&gt;Page 1&lt;/h1&gt;
+&lt;p&gt;
+The next page contains 5 "sub-pages", which can be navigated using regular previous/next pagination controls.
+This EPUB3 functionality is &lt;strong&gt;experimental&lt;/strong&gt;, and is only supported in a &lt;a href="https://github.com/readium/readium-shared-js/tree/feature/prevNextPage"&gt;special Readium build&lt;/a&gt;, as well as via &lt;a href="https://github.com/danielweck/epub3-sliderizer"&gt;EPUB3-Sliderizer&lt;/a&gt;.
+&lt;/p&gt;
+&lt;p&gt;
+To switch pages, hit the keyboard's left/right arrows,
+or gesture a finger-swipe if you are using a touch-enabled device.
+Alternatively, you may invoke the previous/next page commands via the Reading System's graphical user interface
+(in Readium, there are clickable buttons on either side of the current page).
+&lt;/p&gt;
+&lt;p&gt;
+For demonstration purposes, the following page exposes its own navigation controls as well, to ensure some level of compatibility with Reading Systems that do not support "sub-page" pagination.
+&lt;/p&gt;</div>
+     <textarea class="epb3sldrzr-markdown" id="epb3sldrzr-markdown-src">NO-MARKDOWN
+&lt;h1 id="heading"&gt;Page 1&lt;/h1&gt;
+&lt;p&gt;
+The next page contains 5 "sub-pages", which can be navigated using regular previous/next pagination controls.
+This EPUB3 functionality is &lt;strong&gt;experimental&lt;/strong&gt;, and is only supported in a &lt;a href="https://github.com/readium/readium-shared-js/tree/feature/prevNextPage"&gt;special Readium build&lt;/a&gt;, as well as via &lt;a href="https://github.com/danielweck/epub3-sliderizer"&gt;EPUB3-Sliderizer&lt;/a&gt;.
+&lt;/p&gt;
+&lt;p&gt;
+To switch pages, hit the keyboard's left/right arrows,
+or gesture a finger-swipe if you are using a touch-enabled device.
+Alternatively, you may invoke the previous/next page commands via the Reading System's graphical user interface
+(in Readium, there are clickable buttons on either side of the current page).
+&lt;/p&gt;
+&lt;p&gt;
+For demonstration purposes, the following page exposes its own navigation controls as well, to ensure some level of compatibility with Reading Systems that do not support "sub-page" pagination.
+&lt;/p&gt;</textarea>
+
+
+<div class="spinner" id="slideSpinner" style="display:none;"> </div>
+
+</body>
+</html>

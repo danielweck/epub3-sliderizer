@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xmlns:m="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" epub:prefix="ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/" id="epb3sldrzr-Slide_3" lang="en-US" xml:lang="en-US">
+    <head>
+        <meta charset="UTF-8"/>
+
+        <meta content="EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer" name="description"/>
+        <meta content="EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook" name="keywords"/>
+        
+        <title>(3/3) EPUB3 Sliderizer Pagination / Page 3</title>
+
+        <meta content="3" name="slideIndex"/>
+        <meta content="3" name="slideCount"/>
+        
+        <link href="../img/favicon.ico" rel="shortcut icon"/>
+        
+        <link href="../img/custom/TouchIcon.png" rel="apple-touch-icon"/>
+        
+        <link href="fonts/fonts.css" rel="stylesheet" type="text/css"/>
+        <link href="fonts/FontAwesome.css" rel="stylesheet" type="text/css"/>
+        
+        <link href="../css/struct.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/incrementals.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/animations.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/controls.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/default.css" rel="stylesheet" type="text/css"/>
+        
+        
+        
+        
+        
+        <script src="../js/default.js"> </script>
+        
+        
+
+        <link href="slide_02.xhtml" rel="prev"/>
+        
+
+        <link href="../nav.xhtml" rel="nav"/>
+
+        <link href="../print.xhtml" rel="print"/>
+        
+        <link href="slide_01.xhtml" rel="first"/>
+        
+                
+        <link href="../../../EPUB3-Sliderizer_pagination.epub" rel="epub"/>
+
+        
+        <style type="text/css">
+        /*<![CDATA[*/
+        html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+    display: none;
+}
+html:not(#epb3sldrzr-NavDoc) h1#epb3sldrzr-title
+{
+    display: none;
+}
+
+        /*]]>*/
+        </style>
+
+        <style type="text/css">
+        /*<![CDATA[*/
+        #heading
+{
+margin-bottom: 1em;
+}
+
+p
+{
+font-family: Arvo,serif;
+font-size: 90%;
+}
+        /*]]>*/
+        </style>
+
+		<style type="text/css">
+        /*<![CDATA[*/
+        
+        
+
+
+#epb3sldrzr-body
+{
+    
+-webkit-background-repeat:no-repeat;
+-moz-background-repeat:no-repeat;
+-ms-background-repeat:no-repeat;
+-o-background-repeat:no-repeat;
+background-repeat:no-repeat;
+
+    
+-webkit-background-clip:border-box;
+-moz-background-clip:border-box;
+-ms-background-clip:border-box;
+-o-background-clip:border-box;
+background-clip:border-box;
+
+    
+-webkit-background-origin:padding-box;
+-moz-background-origin:padding-box;
+-ms-background-origin:padding-box;
+-o-background-origin:padding-box;
+background-origin:padding-box;
+
+    
+    
+-webkit-background-position:center;
+-moz-background-position:center;
+-ms-background-position:center;
+-o-background-position:center;
+background-position:center;
+
+    
+-webkit-background-attachment:scroll;
+-moz-background-attachment:scroll;
+-ms-background-attachment:scroll;
+-o-background-attachment:scroll;
+background-attachment:scroll;
+
+    
+    
+-webkit-background-image:url(../img/custom/back.jpg);
+-moz-background-image:url(../img/custom/back.jpg);
+-ms-background-image:url(../img/custom/back.jpg);
+-o-background-image:url(../img/custom/back.jpg);
+background-image:url(../img/custom/back.jpg);
+
+    
+    
+-webkit-background-size:cover;
+-moz-background-size:cover;
+-ms-background-size:cover;
+-o-background-size:cover;
+background-size:cover;
+
+    
+    background-color: #333333;
+}
+
+
+       
+        /*]]>*/
+        </style>
+       
+        <script>
+        //<![CDATA[
+        // ===== OVERRIDE FOR EACH XHTML PAGE:
+
+var _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards) {};
+
+var _PAGE_lastSubPage = 0;
+
+// ===== ===== ===== ===== ===== ===== 
+
+var _PAGE_goto = undefined;
+var _PAGE_gotoFirst = undefined;
+var _PAGE_gotoLast = undefined;
+var _PAGE_gotoNext = undefined;
+var _PAGE_gotoPrevious = undefined;
+
+document.addEventListener("DOMContentLoaded", function(e)
+{
+    var _PAGE_currentSubPage = 0;
+    var _PAGE_precedentSubPage = 0;
+
+    _PAGE_gotoFirst = function()
+    {
+        _PAGE_goto(0);
+    };
+    
+    _PAGE_gotoLast = function()
+    {
+        _PAGE_goto(_PAGE_lastSubPage);
+    };
+    
+    _PAGE_gotoNext = function()
+    {
+        _PAGE_goto(_PAGE_currentSubPage+1);
+    };
+    
+    _PAGE_gotoPrevious = function()
+    {
+        _PAGE_goto(_PAGE_currentSubPage-1);
+    };
+    
+    
+    _PAGE_goto = function(subPage, initial, previous)
+    {
+        if (subPage < 0 || subPage > _PAGE_lastSubPage) return;
+
+        _PAGE_currentSubPage = subPage;
+
+        setTimeout(function()
+        {
+            _skipHashChangeEvent = true;
+            window.location.hash = "#page" + (_PAGE_currentSubPage+1);
+        }, 100);
+        
+        _PAGE_updateDisplay(initial ? true : false, _PAGE_currentSubPage, previous ? true : false);
+    };
+
+    var updateFromHash = function()
+    {
+console.debug("- HASH:");
+console.debug(window.location.hash);
+
+        if (window.location && window.location.hash)
+        {
+            var n = window.location.hash.replace("#page", "");
+            try
+            {
+                n = parseInt(n) - 1;
+            
+                if (!isNaN(n) && n >= 0 && n <= _PAGE_lastSubPage)
+                {
+console.debug("- PAGE:");
+console.debug(n);
+                    _PAGE_currentSubPage = n;
+                    
+                    return true;
+                }
+            }
+            catch(err)
+            {
+                console.error(err);
+                console.error(err.msg);
+            }
+        }
+        
+        return false;
+    };
+    updateFromHash();
+    _PAGE_updateDisplay(true, _PAGE_currentSubPage, false);
+    
+    var _skipHashChangeEvent = false;
+    window.addEventListener("hashchange", function()
+    {
+        if (_skipHashChangeEvent)
+        {
+            _skipHashChangeEvent = false;
+            return;
+        }
+        if (updateFromHash())
+        {
+            _PAGE_updateDisplay(true, _PAGE_currentSubPage, false);
+        }
+    }, false);
+
+    var epubReadingSystem_WAIT_AND_DO = function(maxTries, waitTime, func, tries)
+    {
+        if (!tries) tries = 0;
+        else tries++;
+    
+        if (!navigator.epubReadingSystem)
+        {
+            if (tries < maxTries)
+            {
+                setTimeout(function()
+                {
+                    epubReadingSystem_WAIT_AND_DO(maxTries, waitTime, func, tries);
+                }, waitTime);
+            }
+            return;
+        }
+
+        func();
+    };
+    
+    var epubReadingSystem_INIT = function()
+    {
+// console.debug("navigator.epubReadingSystem: ");
+// console.debug(navigator.epubReadingSystem.PageDirection);
+// console.debug(navigator.epubReadingSystem.on);
+    
+        if (!navigator.epubReadingSystem.on)
+        {
+            return;
+        }
+
+        if (navigator.epubReadingSystem.PageDirection === navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS)
+        {
+            _PAGE_precedentSubPage = _PAGE_lastSubPage + 1;
+            _PAGE_currentSubPage = _PAGE_lastSubPage;
+        }
+
+        var backward = _PAGE_precedentSubPage > _PAGE_currentSubPage;
+
+        _PAGE_goto(_PAGE_currentSubPage, true, backward);
+
+        var pagePreviousNext = function(previous, payload)
+        {
+            _PAGE_precedentSubPage = _PAGE_currentSubPage;
+            
+            if (previous) _PAGE_currentSubPage--;
+            else  _PAGE_currentSubPage++;
+
+            var doNothing = previous ? (_PAGE_currentSubPage < 0) : (_PAGE_currentSubPage > _PAGE_lastSubPage);
+            if (doNothing)
+            {
+                if (previous) _PAGE_currentSubPage++;
+                else  _PAGE_currentSubPage--;
+            
+                return true; // do nothing, just let the Reading System turn the page normally
+            }
+
+            _PAGE_goto(_PAGE_currentSubPage, false, previous);
+
+            return false; // instruct the Reading System to *not* turn the page
+        };
+        
+        navigator.epubReadingSystem.on(window, navigator.epubReadingSystem.EVENT_PAGE_NEXT, function(payload){ return pagePreviousNext(false, payload); });
+        navigator.epubReadingSystem.on(window, navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS, function(payload){ return pagePreviousNext(true, payload); });
+    };
+
+    epubReadingSystem_WAIT_AND_DO(20, 100, epubReadingSystem_INIT);
+    
+}, false);
+        //]]>
+        </script>
+
+
+        
+        <meta content="width=1290, height=1000" name="viewport"/>
+        
+</head>
+
+
+<!-- FIXED LAYOUT -->
+
+<body epub:type="bodymatter">
+
+
+
+
+    <div id="epb3sldrzr-body">
+        
+        <div id="epb3sldrzr-root">
+
+
+
+            <section id="epb3sldrzr-content">
+
+                <div id="epb3sldrzr-anim-overflow">
+
+                    <h1 id="epb3sldrzr-title">Page 3</h1>
+
+<div id="epb3sldrzr-content-wrap">
+                    <!--XML-->
+<h1 id="heading">Page 3</h1>
+<p>
+When you navigate back to the previous page, notice how the last "sub-page" (#5) is correctly selected. The overall sequence of logical pagination units (pages and "sub-pages") can indeed be traversed in the reverse direction, preserving both the backwards and forwards linear reading order.
+</p>
+<p>
+You may also click on
+<a href="slide_02.xhtml#page3">this link</a> to jump directly to page 2, sub-page 3 (the target anchor / fragment-identifier simply references the XHTML element that corresponds to the selected "sub-page").
+</p>
+<p>
+Note that "sub-page" cross-linking currently <strong>only works with EPUB3-Sliderizer</strong>, because Readium does not pass window.location.hash to its content iframes.
+</p>
+</div>
+
+                </div>
+
+             </section>
+         </div>
+     </div>
+
+
+
+<div class="spinner" id="slideSpinner" style="display:none;"> </div>
+
+</body>
+</html>
