@@ -1,0 +1,434 @@
+// --------------------------------------------
+_IDENTIFIER
+EPUB3_Sliderizer_pagination
+
+// --------------------------------------------
+_TITLE
+EPUB3 Sliderizer Pagination
+
+// --------------------------------------------
+_CREATOR
+Daniel Weck
+
+// ratio 1.29:1
+// 1290 x 1000
+// 1900 x 1470
+// 2048 x 1536 (Retina)
+// 2400 x 1860
+
+// --------------------------------------------
+_VIEWPORT_WIDTH
+1290
+
+// --------------------------------------------
+_VIEWPORT_HEIGHT
+1000
+
+// --------------------------------------------
+_TOUCHICON
+TouchIcon.png
+
+// --------------------------------------------
+_FILE_EPUB
+EPUB3-Sliderizer_pagination.epub
+
+// --------------------------------------------
+_CSS_STYLE
+
+html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
+{
+    display: none;
+}
+html:not(#epb3sldrzr-NavDoc) h1#epb3sldrzr-title
+{
+    display: none;
+}
+
+// --------------------------------------------
+_JS_SCRIPT
+
+_INCLUDE
+data.js
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Page 1
+
+// --------------------------------------------
+_CONTENT
+
+NO-MARKDOWN
+
+<h1 id="heading" style="margin-bottom: 2em;">Page 1</h1>
+
+<p style="font-family:Arvo,serif">
+The next page contains 5 "sub-pages".
+To switch pages, hit the keyboard's left/right arrows,
+or use a finger-swipe gesture (requires a touch-enabled device).
+Alternatively, activate the previous/next page commands via the Reading System's graphical user interface
+(in Readium, there are buttons on either side of the current page).
+</p>
+
+// --------------------------------------------
+_BACKGROUND_IMG
+
+back.jpg
+
+// --------------------------------------------
+_BACKGROUND_IMG_SIZE
+
+cover
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Page 2
+
+// --------------------------------------------
+_CONTENT
+
+NO-MARKDOWN
+
+<h1 id="heading">Page 2</h1>
+
+<div id="container" class="full">
+
+<div id="indexes">
+<span id="index0" class="index">
+1
+</span>
+<span id="index1" class="index">
+2
+</span>
+<span id="index2" class="index">
+3
+</span>
+<span id="index3" class="index">
+4
+</span>
+<span id="index4" class="index">
+5
+</span>
+</div>
+
+<div id="scroll">
+<div id="subpage0" class="subpage">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum id fugiunt, re eadem defendunt, quae Peripatetici, verba. Conferam tecum, quam cuique verso rem subicias; Eaedem res maneant alio modo. Dic in quovis conventu te omnia facere, ne doleas. Miserum hominem! Si dolor summum malum est, dici aliter non potest. Sit hoc ultimum bonorum, quod nunc a me defenditur;
+</div>
+<div id="subpage1" class="subpage">
+Laboro autem non sine causa; Quae quidem sapientes sequuntur duce natura tamquam videntes; Illud dico, ea, quae dicat, praeclare inter se cohaerere. Profectus in exilium Tubulus statim nec respondere ausus; Dolere malum est: in crucem qui agitur, beatus esse non potest. Dempta enim aeternitate nihilo beatior Iuppiter quam Epicurus; Quo studio Aristophanem putamus aetatem in litteris duxisse?
+</div>
+<div id="subpage2" class="subpage">
+At iste non dolendi status non vocatur voluptas. Quid de Platone aut de Democrito loquar? Quamquam te quidem video minime esse deterritum. De hominibus dici non necesse est. Non semper, inquam; Quam ob rem tandem, inquit, non satisfacit? Quaesita enim virtus est, non quae relinqueret naturam, sed quae tueretur. At iam decimum annum in spelunca iacet.
+</div>
+<div id="subpage3" class="subpage">
+Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doceant, vel tu potius quis enim ista melius? Septem autem illi non suo, sed populorum suffragio omnium nominati sunt. Quamquam tu hanc copiosiorem etiam soles dicere. Quae cum essent dicta, finem fecimus et ambulandi et disputandi. Duo Reges: constructio interrete. Tu autem negas fortem esse quemquam posse, qui dolorem malum putet.
+</div>
+<div id="subpage4" class="subpage">
+Sit enim idem caecus, debilis. Nonne videmus quanta perturbatio rerum omnium consequatur, quanta confusio? Atque haec coniunctio confusioque virtutum tamen a philosophis ratione quadam distinguitur. Multa sunt dicta ab antiquis de contemnendis ac despiciendis rebus humanis; Illis videtur, qui illud non dubitant bonum dicere -; Nihil acciderat ei, quod nollet, nisi quod anulum, quo delectabatur, in mari abiecerat.
+</div>
+</div>
+
+</div>
+
+// --------------------------------------------
+_BACKGROUND_IMG
+
+back.jpg
+
+// --------------------------------------------
+_BACKGROUND_IMG_SIZE
+
+cover
+
+// --------------------------------------------
+_CSS_STYLE
+
+#container
+{
+borderx: 2px solid red;
+
+display: block;
+
+overflow: scroll;
+
+/* .full
+position: absolute;
+left: 0px;
+top: 0px;
+width: VIEWPORT_WIDTHpx;
+height: VIEWPORT_HEIGHTpx;
+*/
+}
+
+#indexes
+{
+borderx: 2px solid blue;
+
+text-align: center;
+
+display: block;
+
+position: absolute;
+
+width: 100%;
+height: 40%;
+
+top: 55%;
+left: 0;
+
+text-shadow: 0 -0.2em 0.5em #AAAAAA;
+
+color: white;
+
+font-weight: bold;
+font-family: Lato, sans-serif;
+}
+
+.index
+{
+vertical-align: text-top;
+
+borderx: 2px solid yellow;
+
+font-size: 400%;
+opacity: 0.4;
+}
+
+#container[data-subpage="0"] #index0,
+#container[data-subpage="1"] #index1,
+#container[data-subpage="2"] #index2,
+#container[data-subpage="3"] #index3,
+#container[data-subpage="4"] #index4
+{
+font-size: 600%;
+opacity: 1;
+}
+
+
+#scroll
+{
+borderx: 2px solid green;
+
+display: block;
+
+position: relative;
+
+width: 500%;
+height: 45%;
+
+top: 10%;
+left: 0;
+}
+
+#scroll.transit
+{
+-PREFIXED_PROPERTY-transition-property: left;
+-PREFIXED_PROPERTY-transition-duration: 900ms;
+-PREFIXED_PROPERTY-transition-delay: 0s;
+-PREFIXED_PROPERTY-transition-timing-function: ease-out;
+}
+
+.subpage
+{
+-PREFIXED_PROPERTY-transition-property: opacity, transform;
+-PREFIXED_PROPERTY-transition-duration: 500ms;
+-PREFIXED_PROPERTY-transition-delay: 0s;
+-PREFIXED_PROPERTY-transition-timing-function: ease-in;
+}
+
+.index
+{
+-PREFIXED_PROPERTY-transition-property: font-size, opacity;
+-PREFIXED_PROPERTY-transition-duration: 500ms;
+-PREFIXED_PROPERTY-transition-delay: 0s;
+-PREFIXED_PROPERTY-transition-timing-function: ease-in;
+}
+
+#container[data-subpage="0"] #scroll
+{
+left: 0;
+}
+#container[data-subpage="1"] #scroll
+{
+left: -100%;
+}
+#container[data-subpage="2"] #scroll
+{
+left: -200%;
+}
+#container[data-subpage="3"] #scroll
+{
+left: -300%;
+}
+#container[data-subpage="4"] #scroll
+{
+left: -400%;
+}
+
+#container[data-subpage="0"] #subpage0,
+#container[data-subpage="1"] #subpage1,
+#container[data-subpage="2"] #subpage2,
+#container[data-subpage="3"] #subpage3,
+#container[data-subpage="4"] #subpage4
+{
+opacity: 1;
+-PREFIXED_PROPERTY-transform: none;
+}
+
+.subpage
+{
+borderx: 2px solid magenta;
+
+opacity: 0;
+
+-PREFIXED_PROPERTY-transform-origin: 50% 100%;
+-PREFIXED_PROPERTY-transform: scale(0.3);
+
+display: block;
+
+text-align: justify;
+
+font-size: 80%;
+font-family: Arvo, serif;
+
+color: #666666;
+
+position: absolute;
+
+width: 20%;
+height: auto;
+
+bottom: 0px;
+left: 0px;
+
+overflow-y: hidden;
+
+padding-left: 2em;
+padding-right: 2em;
+}
+
+
+.subpage:before
+{
+font-family: "FontAwesome";
+content: "\f137";
+position: absolute;
+bottom: 0px;
+left: 0.5em;
+color: #eeffee;
+}
+
+.subpage:after
+{
+font-family: "FontAwesome";
+content: "\f138";
+position: absolute;
+bottom: 0px;
+right: 0.5em;
+color: #eeffee;
+}
+
+#subpage0:before
+{
+content: '';
+}
+#subpage4:after
+{
+content: '';
+}
+
+#subpage0
+{
+left: 0px;
+}
+
+#subpage1
+{
+left: 20%;
+}
+
+#subpage2
+{
+left: 40%;
+}
+
+#subpage3
+{
+left: 60%;
+}
+
+#subpage4
+{
+left: 80%;
+}
+
+// --------------------------------------------
+_JS_SCRIPT
+
+_PAGE_lastSubPage = 4;
+
+_PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
+{
+    var heading = document.getElementById("heading");
+    heading.innerHTML = "Page 2, subpage <span style=\"color:red;\">" + (currentSubPage+1) + "</span> / " + (_PAGE_lastSubPage+1);
+
+    var scroll = document.getElementById("scroll");
+    if (!initialDisplay)
+    {
+        scroll.classList.add("transit");
+    }
+
+    var container = document.getElementById("container");
+    container.setAttribute("data-subpage", currentSubPage);
+    
+    /*
+    var txt = document.getElementById("txt");
+    txt.innerHTML = "(direction: " + (backwards ? "&lt;&lt; backward" : "forward &gt;&gt;") + ")" + (initialDisplay ? "<br/>[initial]" : "");
+    */
+};
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Page 3
+
+// --------------------------------------------
+_CONTENT
+
+NO-MARKDOWN
+
+<h1 id="heading" style="margin-bottom: 2em;">Page 3</h1>
+
+<p style="font-family:Arvo,serif">
+You may switch back to the previous page, and notice how the last subpage (#5) is selected. This demonstrates navigating the overall sequence of "pages" in the reverse direction (backwards linear reading order).
+</p>
+
+<p style="font-family:Arvo,serif">
+Alternatively, you may click the following link
+<a href="slide_02.xhtml#subPage3">to go directly to page 2, subpage 3</a>.
+</p>
+
+
+// --------------------------------------------
+_BACKGROUND_IMG
+
+back.jpg
+
+// --------------------------------------------
+_BACKGROUND_IMG_SIZE
+
+cover
