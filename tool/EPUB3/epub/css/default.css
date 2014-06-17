@@ -16,16 +16,18 @@ Misc
 
 	width:VIEWPORT_WIDTHpx;
 	height:VIEWPORT_HEIGHTpx;
+    
+    font-size: FONT_SIZE_UIpx;
 }
 
 .spinner
 {
     -PREFIXED_PROPERTY-animation: rotationSpin .6s infinite linear;
 
-    border-left:14px solid #666666;
-    border-right:14px solid #666666;
-    border-bottom:14px solid #666666;
-    border-top:14px solid #ffffff;
+    border-left:0.3em solid #444444;
+    border-right:0.3em solid #444444;
+    border-bottom:0.3em solid #444444;
+    border-top:0.3em solid #ffffff;
 
     border-radius:100%;
 }
@@ -288,8 +290,10 @@ body:not(.reflow).static.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title
 body:not(.reflow):not(.epb3sldrzr-epubReadingSystem) h1#epb3sldrzr-title,
 body:not(.reflow).basic.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title
 {
+    /*
     border-top-left-radius: FONT_SIZE_HALFpx;
     border-top-right-radius: FONT_SIZE_HALFpx;
+    */
     
     /*
     border-top-right-radius: FONT_SIZE_HALFrem;

@@ -1053,6 +1053,8 @@ Epub3Sliderizer.gotoPreviousGo = function()
     
     this.transition(true, 150);
 
+    this.bodyRoot.style.opacity = "0.4";
+    
     this.transforms.push({
         rotation: 0,
         zoom: 1,
@@ -1068,11 +1070,17 @@ Epub3Sliderizer.gotoPreviousGo = function()
     
     if (this.prev === "") 
     {
-        setTimeout(function(){
+        setTimeout(function()
+        {
+            that.bodyRoot.style.opacity = "1";
+    
+            that.transition(true, 400, "ease-out");
+    
             that.transforms.pop();
             that.onResizeThrottled();
-            that.transition(false, 150);
-        }, 100);
+            
+            that.transition(false, 400);
+        }, 150);
     
         return;
     }
@@ -1131,6 +1139,8 @@ Epub3Sliderizer.gotoNextGo = function()
     
     this.transition(true, 150);
 
+    this.bodyRoot.style.opacity = "0.4";
+    
     this.transforms.push({
         rotation: 0,
         zoom: 1,
@@ -1146,11 +1156,17 @@ Epub3Sliderizer.gotoNextGo = function()
     
     if (this.next === "") 
     {
-        setTimeout(function(){
+        setTimeout(function()
+        {
+            that.bodyRoot.style.opacity = "1";
+    
+            that.transition(true, 400, "ease-out");
+
             that.transforms.pop();
             that.onResizeThrottled();
-            that.transition(false, 150);
-        }, 100);
+            
+            that.transition(false, 400);
+        }, 150);
     
         return;
     }
@@ -1198,13 +1214,13 @@ Epub3Sliderizer.gotoLast = function()
 
 // ----------
 
-Epub3Sliderizer.transition = function(on, milliseconds)
+Epub3Sliderizer.transition = function(on, milliseconds, ease)
 {
     if (on)
     {
         if (!this.basicMode && !this.opera)
         {
-            var transition = "all "+milliseconds+"ms ease-in-out";
+            var transition = "all "+milliseconds+"ms " + (ease ? ease : "ease-in-out");
             this.bodyRoot.style.MozTransition = transition;
             this.bodyRoot.style.WebkitTransition = transition;
             this.bodyRoot.style.OTransition = transition;
@@ -3874,7 +3890,18 @@ Epub3Sliderizer.initSlideTransition = function()
     }
     else
     {
-        this.bodyRoot.style.visibility = "visible";
+        if (this.mobile)
+        {
+            var that = this;
+            setTimeout(function()
+            {
+                that.bodyRoot.style.visibility = "visible";
+            }, 80);
+        }
+        else
+        {
+            this.bodyRoot.style.visibility = "visible";
+        }
     }
 };
 
@@ -4746,7 +4773,7 @@ Epub3Sliderizer.init = function()
             {
                 that.initIncrementals();
                 that.initAnimations();
-            }, 500);
+            }, this.mobile ? 900 : 700);
         }
         else
         {
