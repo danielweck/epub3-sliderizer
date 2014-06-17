@@ -8,16 +8,41 @@ var _PAGE_lastSubPage = 0;
 // ===== ===== ===== ===== ===== ===== 
 
 var _PAGE_goto = undefined;
+var _PAGE_gotoFirst = undefined;
+var _PAGE_gotoLast = undefined;
+var _PAGE_gotoNext = undefined;
+var _PAGE_gotoPrevious = undefined;
 
 document.addEventListener("DOMContentLoaded", function(e)
 {
     var _PAGE_currentSubPage = 0;
     var _PAGE_precedentSubPage = 0;
+
+    _PAGE_gotoFirst = function()
+    {
+        _PAGE_goto(0);
+    };
+    
+    _PAGE_gotoLast = function()
+    {
+        _PAGE_goto(_PAGE_lastSubPage);
+    };
+    
+    _PAGE_gotoNext = function()
+    {
+        _PAGE_goto(_PAGE_currentSubPage+1);
+    };
+    
+    _PAGE_gotoPrevious = function()
+    {
+        _PAGE_goto(_PAGE_currentSubPage-1);
+    };
+    
     
     _PAGE_goto = function(subPage, initial, previous)
     {
         if (subPage < 0 || subPage > _PAGE_lastSubPage) return;
-        
+
         _PAGE_currentSubPage = subPage;
 
         setTimeout(function()
