@@ -43,10 +43,10 @@ body:not(.epb3sldrzr-epubReadingSystem) .epb3sldrzr-animated
 	/* 
 	HW acceleration
 	
-	-webkit-transform:translate3d(0,0,0);
-	-webkit-transform: translateZ(0);
+	-PREFIXED_PROPERTY-transform:translate3d(0,0,0);
+	-PREFIXED_PROPERTY-transform: translateZ(0);
 	
-	-webkit-transform-style: preserve-3d;
+	-PREFIXED_PROPERTY-transform-style: preserve-3d;
 	*/
 	
 	 /* 

@@ -188,7 +188,9 @@ body:not(.reflow) div#epb3sldrzr-body
 body:not(.reflow):not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body,
 body:not(.reflow).basic.epb3sldrzr-epubReadingSystem div#epb3sldrzr-body
 {
+    /*
 	border-radius: 20px;
+    */
     /*
 	border-radius: 2rem;
     */

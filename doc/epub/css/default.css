@@ -8,6 +8,94 @@ Misc
 ==============================================================================
 */
 
+#slideSpinner
+{
+    position:absolute;
+    left: 0px;
+    top: 0px;
+
+	width:1290px;
+	height:1000px;
+    
+    font-size: 34px;
+}
+
+.spinner
+{
+    
+-webkit-animation: rotationSpin .6s infinite linear;
+-moz-animation: rotationSpin .6s infinite linear;
+-ms-animation: rotationSpin .6s infinite linear;
+-o-animation: rotationSpin .6s infinite linear;
+animation: rotationSpin .6s infinite linear;
+
+
+    border-left:0.3em solid #444444;
+    border-right:0.3em solid #444444;
+    border-bottom:0.3em solid #444444;
+    border-top:0.3em solid #ffffff;
+
+    border-radius:100%;
+}
+
+
+@-webkit-keyframes rotationSpin
+{
+    from
+    {
+        -webkit-transform: rotate(0deg);
+    }
+    to
+    {
+        -webkit-transform: rotate(359deg);
+    }
+}
+@-moz-keyframes rotationSpin
+{
+    from
+    {
+        -moz-transform: rotate(0deg);
+    }
+    to
+    {
+        -moz-transform: rotate(359deg);
+    }
+}
+@-ms-keyframes rotationSpin
+{
+    from
+    {
+        -ms-transform: rotate(0deg);
+    }
+    to
+    {
+        -ms-transform: rotate(359deg);
+    }
+}
+@-o-keyframes rotationSpin
+{
+    from
+    {
+        -o-transform: rotate(0deg);
+    }
+    to
+    {
+        -o-transform: rotate(359deg);
+    }
+}
+@keyframes rotationSpin
+{
+    from
+    {
+        transform: rotate(0deg);
+    }
+    to
+    {
+        transform: rotate(359deg);
+    }
+}
+
+
 em
 {
     border-bottom: 0.08em #333333 dotted;
@@ -167,7 +255,13 @@ table.spaceLined tr:first-child td
 
 img
 {
-    -webkit-transform: translateZ(0);
+    
+-webkit-transform: translateZ(0);
+-moz-transform: translateZ(0);
+-ms-transform: translateZ(0);
+-o-transform: translateZ(0);
+transform: translateZ(0);
+
     
 -webkit-backface-visibility: hidden;
 -moz-backface-visibility: hidden;
@@ -354,8 +448,10 @@ body:not(.reflow).static.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title
 body:not(.reflow):not(.epb3sldrzr-epubReadingSystem) h1#epb3sldrzr-title,
 body:not(.reflow).basic.epb3sldrzr-epubReadingSystem h1#epb3sldrzr-title
 {
+    /*
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
+    */
     
     /*
     border-top-right-radius: 2rem;
