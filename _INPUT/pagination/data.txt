@@ -130,31 +130,31 @@ NO-MARKDOWN
 <!-- a href="slide_02.xhtml#page1" class="anchorLink" -->
 <!-- a href="javascript:_PAGE_goto(0)" -->
 
-<a href="#heading" onclick="_PAGE_goto(0);return false">
+<a onclick="_PAGE_goto(0);return false">
 <span id="index0" class="index">
 1
 </span>
 </a>
 
-<a href="#heading" onclick="_PAGE_goto(1);return false">
+<a onclick="_PAGE_goto(1);return false">
 <span id="index1" class="index">
 2
 </span>
 </a>
 
-<a href="#heading" onclick="_PAGE_goto(2);return false">
+<a onclick="_PAGE_goto(2);return false">
 <span id="index2" class="index">
 3
 </span>
 </a>
 
-<a href="#heading" onclick="_PAGE_goto(3);return false">
+<a onclick="_PAGE_goto(3);return false">
 <span id="index3" class="index">
 4
 </span>
 </a>
 
-<a href="#heading" onclick="_PAGE_goto(4);return false">
+<a onclick="_PAGE_goto(4);return false">
 <span id="index4" class="index">
 5
 </span>
@@ -192,11 +192,11 @@ Sit enim idem caecus, debilis. Nonne videmus quanta perturbatio rerum omnium con
 </div>
 
 <div id="previous" class="navButton">
-<a href="#heading" onclick="_PAGE_gotoPrevious();return false">&#xf190;</a> <!-- &#xf137; &#xf0a8; -->
+<a onclick="_PAGE_gotoPrevious();return false">&#xf190;</a> <!-- &#xf137; &#xf0a8; -->
 </div>
 
 <div id="next" class="navButton">
-<a href="#heading" onclick="_PAGE_gotoNext();return false">&#xf18e;</a> <!-- &#xf138; &#xf0a9; -->
+<a onclick="_PAGE_gotoNext();return false">&#xf18e;</a> <!-- &#xf138; &#xf0a9; -->
 </div>
 
 </div>
@@ -439,10 +439,10 @@ left: 80%;
 
 #scroll.transit
 {
--PREFIXED_PROPERTY-transition-property: left;
+-PREFIXED_PROPERTY-transition-property: transform;
 -PREFIXED_PROPERTY-transition-duration: 700ms;
 -PREFIXED_PROPERTY-transition-delay: 0s;
--PREFIXED_PROPERTY-transition-timing-function: ease-out;
+-PREFIXED_PROPERTY-transition-timing-function: ease-in;
 }
 
 .subpage
@@ -492,23 +492,28 @@ opacity: 1;
 
 #container[data-subpage="0"] #scroll
 {
-left: 0;
+/* left: 0; */
+-PREFIXED_PROPERTY-transform: translateX(0);
 }
 #container[data-subpage="1"] #scroll
 {
-left: -100%;
+/* left: -100%; */
+-PREFIXED_PROPERTY-transform: translateX(-20%);
 }
 #container[data-subpage="2"] #scroll
 {
-left: -200%;
+/* left: -200%; */
+-PREFIXED_PROPERTY-transform: translateX(-40%);
 }
 #container[data-subpage="3"] #scroll
 {
-left: -300%;
+/* left: -300%; */
+-PREFIXED_PROPERTY-transform: translateX(-60%);
 }
 #container[data-subpage="4"] #scroll
 {
-left: -400%;
+/* left: -400%; */
+-PREFIXED_PROPERTY-transform: translateX(-80%);
 }
 
 // --------------------------------------------
@@ -518,8 +523,8 @@ _PAGE_lastSubPage = 4;
 
 _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
 {
-    var heading = document.getElementById("heading");
-    heading.innerHTML = "Page 2, sub-page <span style=\"color:red;\">" + (currentSubPage+1) + "</span> / " + (_PAGE_lastSubPage+1);
+//    var heading = document.getElementById("heading");
+//    heading.innerHTML = "Page 2 ........... sub-page <span style=\"color:red;\">" + (currentSubPage+1) + "</span> / " + (_PAGE_lastSubPage+1);
 
     var scroll = document.getElementById("scroll");
 
