@@ -4245,7 +4245,8 @@ Epub3Sliderizer.init = function()
 
     if (!this.epubReadingSystem)
     {
-        if (!this.basicMode && !this.staticMode && !this.authorMode)
+        if (//!this.basicMode &&
+            !this.staticMode && !this.authorMode)
         {
             fakeEpubReadingSystem = true;
 
@@ -5307,7 +5308,7 @@ function readyFirst()
            console.log("AUTHOR MODE, XHTML (NON-WYSIWYG EDITOR)");
        }
     }
-    else if (Epub3Sliderizer.android ||
+    else if (//Epub3Sliderizer.android ||
         (getUrlQueryParam("basic") !== null)
     )
     {
