@@ -130,34 +130,24 @@ NO-MARKDOWN
 <!-- a href="slide_02.xhtml#page1" class="anchorLink" -->
 <!-- a href="javascript:_PAGE_goto(0)" -->
 
-<a onclick="_PAGE_goto(0);return false">
-<span id="index0" class="index">
+<a onclick="_PAGE_goto(0);return false" id="index0" class="index">
 1
-</span>
 </a>
 
-<a onclick="_PAGE_goto(1);return false">
-<span id="index1" class="index">
+<a onclick="_PAGE_goto(1);return false" id="index1" class="index">
 2
-</span>
 </a>
 
-<a onclick="_PAGE_goto(2);return false">
-<span id="index2" class="index">
+<a onclick="_PAGE_goto(2);return false" id="index2" class="index">
 3
-</span>
 </a>
 
-<a onclick="_PAGE_goto(3);return false">
-<span id="index3" class="index">
+<a onclick="_PAGE_goto(3);return false" id="index3" class="index">
 4
-</span>
 </a>
 
-<a onclick="_PAGE_goto(4);return false">
-<span id="index4" class="index">
+<a onclick="_PAGE_goto(4);return false" id="index4" class="index">
 5
-</span>
 </a>
 
 </div>
@@ -331,6 +321,8 @@ vertical-align: text-top;
 
 font-size: 400%;
 opacity: 0.4;
+
+display: inline-block;
 }
 
 
@@ -455,7 +447,7 @@ left: 80%;
 
 .index
 {
--PREFIXED_PROPERTY-transition-property: font-size, opacity;
+-PREFIXED_PROPERTY-transition-property: transform, opacity;
 -PREFIXED_PROPERTY-transition-duration: 500ms;
 -PREFIXED_PROPERTY-transition-delay: 0s;
 -PREFIXED_PROPERTY-transition-timing-function: ease-in;
@@ -467,8 +459,9 @@ left: 80%;
 #container[data-subpage="3"] #index3,
 #container[data-subpage="4"] #index4
 {
-font-size: 600%;
+-PREFIXED_PROPERTY-transform: scale(1.8);
 opacity: 1;
+text-shadow: none;
 }
 
 #container[data-subpage="0"] #previous
