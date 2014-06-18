@@ -177,6 +177,8 @@ vertical-align: text-top;
 
 font-size: 400%;
 opacity: 0.4;
+
+display: inline-block;
 }
 
 
@@ -362,11 +364,11 @@ transition-timing-function: ease-in;
 .index
 {
 
--webkit-transition-property: font-size, opacity;
--moz-transition-property: font-size, opacity;
--ms-transition-property: font-size, opacity;
--o-transition-property: font-size, opacity;
-transition-property: font-size, opacity;
+-webkit-transition-property: transform, opacity;
+-moz-transition-property: transform, opacity;
+-ms-transition-property: transform, opacity;
+-o-transition-property: transform, opacity;
+transition-property: transform, opacity;
 
 
 -webkit-transition-duration: 500ms;
@@ -397,8 +399,15 @@ transition-timing-function: ease-in;
 #container[data-subpage="3"] #index3,
 #container[data-subpage="4"] #index4
 {
-font-size: 600%;
+
+-webkit-transform: scale(1.8);
+-moz-transform: scale(1.8);
+-ms-transform: scale(1.8);
+-o-transform: scale(1.8);
+transform: scale(1.8);
+
 opacity: 1;
+text-shadow: none;
 }
 
 #container[data-subpage="0"] #previous
@@ -794,30 +803,20 @@ _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
 <!-- a href="#page1" class="anchorLink" -->
 <!-- a href="slide_02.xhtml#page1" class="anchorLink" -->
 <!-- a href="javascript:_PAGE_goto(0)" -->
-<a onclick="_PAGE_goto(0);return false">
-<span class="index" id="index0">
+<a class="index" id="index0" onclick="_PAGE_goto(0);return false">
 1
-</span>
 </a>
-<a onclick="_PAGE_goto(1);return false">
-<span class="index" id="index1">
+<a class="index" id="index1" onclick="_PAGE_goto(1);return false">
 2
-</span>
 </a>
-<a onclick="_PAGE_goto(2);return false">
-<span class="index" id="index2">
+<a class="index" id="index2" onclick="_PAGE_goto(2);return false">
 3
-</span>
 </a>
-<a onclick="_PAGE_goto(3);return false">
-<span class="index" id="index3">
+<a class="index" id="index3" onclick="_PAGE_goto(3);return false">
 4
-</span>
 </a>
-<a onclick="_PAGE_goto(4);return false">
-<span class="index" id="index4">
+<a class="index" id="index4" onclick="_PAGE_goto(4);return false">
 5
-</span>
 </a>
 </div>
 <div id="scroll">
@@ -865,30 +864,20 @@ Sit enim idem caecus, debilis. Nonne videmus quanta perturbatio rerum omnium con
 &lt;!-- a href="#page1" class="anchorLink" --&gt;
 &lt;!-- a href="slide_02.xhtml#page1" class="anchorLink" --&gt;
 &lt;!-- a href="javascript:_PAGE_goto(0)" --&gt;
-&lt;a onclick="_PAGE_goto(0);return false"&gt;
-&lt;span id="index0" class="index"&gt;
+&lt;a onclick="_PAGE_goto(0);return false" id="index0" class="index"&gt;
 1
-&lt;/span&gt;
 &lt;/a&gt;
-&lt;a onclick="_PAGE_goto(1);return false"&gt;
-&lt;span id="index1" class="index"&gt;
+&lt;a onclick="_PAGE_goto(1);return false" id="index1" class="index"&gt;
 2
-&lt;/span&gt;
 &lt;/a&gt;
-&lt;a onclick="_PAGE_goto(2);return false"&gt;
-&lt;span id="index2" class="index"&gt;
+&lt;a onclick="_PAGE_goto(2);return false" id="index2" class="index"&gt;
 3
-&lt;/span&gt;
 &lt;/a&gt;
-&lt;a onclick="_PAGE_goto(3);return false"&gt;
-&lt;span id="index3" class="index"&gt;
+&lt;a onclick="_PAGE_goto(3);return false" id="index3" class="index"&gt;
 4
-&lt;/span&gt;
 &lt;/a&gt;
-&lt;a onclick="_PAGE_goto(4);return false"&gt;
-&lt;span id="index4" class="index"&gt;
+&lt;a onclick="_PAGE_goto(4);return false" id="index4" class="index"&gt;
 5
-&lt;/span&gt;
 &lt;/a&gt;
 &lt;/div&gt;
 &lt;div id="scroll"&gt;
@@ -928,30 +917,20 @@ Sit enim idem caecus, debilis. Nonne videmus quanta perturbatio rerum omnium con
 &lt;!-- a href="#page1" class="anchorLink" --&gt;
 &lt;!-- a href="slide_02.xhtml#page1" class="anchorLink" --&gt;
 &lt;!-- a href="javascript:_PAGE_goto(0)" --&gt;
-&lt;a onclick="_PAGE_goto(0);return false"&gt;
-&lt;span id="index0" class="index"&gt;
+&lt;a onclick="_PAGE_goto(0);return false" id="index0" class="index"&gt;
 1
-&lt;/span&gt;
 &lt;/a&gt;
-&lt;a onclick="_PAGE_goto(1);return false"&gt;
-&lt;span id="index1" class="index"&gt;
+&lt;a onclick="_PAGE_goto(1);return false" id="index1" class="index"&gt;
 2
-&lt;/span&gt;
 &lt;/a&gt;
-&lt;a onclick="_PAGE_goto(2);return false"&gt;
-&lt;span id="index2" class="index"&gt;
+&lt;a onclick="_PAGE_goto(2);return false" id="index2" class="index"&gt;
 3
-&lt;/span&gt;
 &lt;/a&gt;
-&lt;a onclick="_PAGE_goto(3);return false"&gt;
-&lt;span id="index3" class="index"&gt;
+&lt;a onclick="_PAGE_goto(3);return false" id="index3" class="index"&gt;
 4
-&lt;/span&gt;
 &lt;/a&gt;
-&lt;a onclick="_PAGE_goto(4);return false"&gt;
-&lt;span id="index4" class="index"&gt;
+&lt;a onclick="_PAGE_goto(4);return false" id="index4" class="index"&gt;
 5
-&lt;/span&gt;
 &lt;/a&gt;
 &lt;/div&gt;
 &lt;div id="scroll"&gt;
