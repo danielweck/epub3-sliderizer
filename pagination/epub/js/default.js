@@ -2402,37 +2402,34 @@ Epub3Sliderizer.initTouch_ = function(onTap)
         {
             if(target === scroll)
             {
-                if (scroll.offsetHeight < scroll.scrollHeight && hammerEvent.gesture && (hammerEvent.gesture.direction === "down" || hammerEvent.gesture.direction === "up")
-                || scroll.offsetWidth < scroll.scrollWidth && hammerEvent.gesture && (hammerEvent.gesture.direction === "left" || hammerEvent.gesture.direction === "right"))
+                if (hammerEvent.gesture &&
+                ((scroll.offsetHeight < scroll.scrollHeight) && (hammerEvent.gesture.direction === "down" || hammerEvent.gesture.direction === "up")) ||
+                ((scroll.offsetWidth < scroll.scrollWidth) && (hammerEvent.gesture.direction === "left" || hammerEvent.gesture.direction === "right")))
                 {
-                    scrolling = true;
-                    
-                    if (scroll.scrollTop <= 0 &&
-                        hammerEvent.gesture && hammerEvent.gesture.direction === "down")
+                    if (scroll.scrollTop <= 0 && hammerEvent.gesture.direction === "down")
                     {
                         /* jshint unused: false */
                         var nop1 = null;
                     }
-                    else if (scroll.scrollTop >= (scroll.scrollHeight - scroll.offsetHeight) &&
-                            hammerEvent.gesture && hammerEvent.gesture.direction === "up")
+                    else if (scroll.scrollTop >= (scroll.scrollHeight - scroll.offsetHeight) && hammerEvent.gesture.direction === "up")
                     {
                         /* jshint unused: false */
                         var nop2 = null;
                     }
-                    else if (scroll.scrollLeft <= 0 &&
-                        hammerEvent.gesture && hammerEvent.gesture.direction === "right")
+                    else if (scroll.scrollLeft <= 0 && hammerEvent.gesture.direction === "right")
                     {
                         /* jshint unused: false */
                         var nop3 = null;
                     }
-                    else if (scroll.scrollLeft >= (scroll.scrollWidth - scroll.offsetWidth) &&
-                            hammerEvent.gesture && hammerEvent.gesture.direction === "left")
+                    else if (scroll.scrollLeft >= (scroll.scrollWidth - scroll.offsetWidth) && hammerEvent.gesture.direction === "left")
                     {
                         /* jshint unused: false */
                         var nop4 = null;
                     }
                     else
                     {
+                        scrolling = true;
+                    
                         return;
                     }
                 }
@@ -2468,7 +2465,12 @@ Epub3Sliderizer.initTouch_ = function(onTap)
         {
             return;
         }
-
+        
+        if (scrolling)
+        {
+            return;
+        }
+        
         this.gotoNext();
     };
     
@@ -2488,7 +2490,12 @@ Epub3Sliderizer.initTouch_ = function(onTap)
         {
             return;
         }
-
+        
+        if (scrolling)
+        {
+            return;
+        }
+        
         this.gotoPrevious();
     };
     
