@@ -10,6 +10,8 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.MustacheFactory;
@@ -104,7 +106,7 @@ public final class Epub3FileSet {
 			"moz", "ms", "o" };
 
 	public static void processCssFile(SlideShow slideShow, Slide slide,
-			File cssFile, int verbosity) throws Exception {
+			File cssFile, String pathEpubFolder, int verbosity) throws Exception {
 		if (!cssFile.exists()) {
 			throw new FileNotFoundException(cssFile.getAbsolutePath());
 		}
@@ -118,7 +120,7 @@ public final class Epub3FileSet {
 		StringBuilder strBuilder = XmlDocument.readFileLines(cssFile);
 
 		String updatedCSS = processCssStyle(slideShow, slide,
-				strBuilder.toString());
+				strBuilder.toString(), pathEpubFolder, verbosity);
 
 		FileWriter fileWriter = null;
 		try {
@@ -219,13 +221,108 @@ public final class Epub3FileSet {
 
 			iStart = i1 + replacement.length();
 		}
-
+        
 		return style;
 	}
 
 	public static String processCssStyle(SlideShow slideShow, Slide slide,
-			String css) throws Exception {
+			String css, String pathEpubFolder, int verbosity
+    ) throws Exception {
 		String style = css;
+
+        
+		ArrayList<String> allReferences_IMG = slideShow.getAllReferences_IMG();
+        
+		String regexp_ = "url\\s*\\(\\s*[\"']?\\s*([^\\s]+)\\s*[\"']?\\s*\\)";
+		Pattern pattern_ = Pattern.compile(regexp_);
+		Matcher matcher_ = pattern_.matcher(style);
+        while (matcher_.find()) {
+            for (int i = 1; i <= matcher_.groupCount(); i++) {
+                String grp = matcher_.group(i);
+
+        		//String fileExtension = Epub3FileSet.getFileExtension(grp);
+                String mediaType = Epub3FileSet.getMediaType(grp);
+        		if (mediaType == null || mediaType.indexOf("image/") != 0) {
+        			continue;
+        		}
+
+				boolean found = false;
+				for (String path : allReferences_IMG) {
+					if (grp == path) {
+						found = true;
+                        break;
+					}
+				}
+				if (!found) {
+					if (verbosity > 0) {
+						System.out.println("###### ADDING CSS IMAGE: "
+								+ grp);
+					}
+
+            		String fullSourcePath = slideShow.getBaseFolderPath() + '/' + grp;
+            		File file = new File(fullSourcePath);
+            		if (file.exists())
+                    {
+    					Epub3FileSet.handleFile(slideShow, slide,
+    							pathEpubFolder, Epub3FileSet.FOLDER_IMG + "/"
+    									+ Epub3FileSet.FOLDER_CUSTOM, grp,
+    							verbosity);
+                        
+                        if (slide != null) {
+        					if (slide.FILES_IMG == null) {
+        						slide.FILES_IMG = "";
+        					} else {
+        						slide.FILES_IMG += "\n";
+        					}
+                            slide.FILES_IMG += grp;
+                        }
+                        else {
+        					if (slideShow.FILES_IMG == null) {
+        						slideShow.FILES_IMG = "";
+        					} else {
+        						slideShow.FILES_IMG += "\n";
+        					}
+                            slideShow.FILES_IMG += grp;
+                        }
+
+    					slideShow.addReferences_IMG(grp);
+    					allReferences_IMG = slideShow.getAllReferences_IMG();
+
+        			} else {
+        				System.out.println(" ");
+        				System.out.println("::::: INVALID CSS URL IMAGE? " + grp);
+
+                        if (true) {
+                            throw new RuntimeException("::::::::: FORCE STOP: " + grp);
+                        }
+                    }
+				}
+            }
+        }
+
+        allReferences_IMG = slideShow.getAllReferences_IMG();
+        for (String path : allReferences_IMG) {
+            String rplc = "../" + Epub3FileSet.FOLDER_IMG + "/" + Epub3FileSet.FOLDER_CUSTOM + "/" + path;
+
+    		String regexp = "(url\\s*\\(\\s*[\"']?\\s*" + path + "\\s*[\"']?\\s*\\))";
+            
+            //style = style.replaceAll(regexp, rplc);
+            
+    		Pattern pattern = Pattern.compile(regexp);
+			Matcher matcher = pattern.matcher(style);
+            //             
+            // while (matcher.find()) {
+            //     for (int i = 1; i <= matcher.groupCount(); i++) {
+            //         String grp = matcher.group(i);
+            // 
+            //         if (true) {
+            //             throw new RuntimeException(grp);
+            //         }
+            //     }
+            // }
+            //             
+            style = matcher.replaceAll("url('" + rplc + "')");
+        }
 
 		style = processCssStyle_(style);
 
@@ -377,7 +474,7 @@ public final class Epub3FileSet {
 			String ext = getFileExtension(fullDestinationPath);
 			if (ext.equalsIgnoreCase("css")) {
 				processCssFile(slideShow, slide, new File(fullDestinationPath),
-						verbosity);
+						pathEpubFolder, verbosity);
 			}
 		} else if (verbosity > 0) {
 			System.out.println(" ");
@@ -522,17 +619,32 @@ public final class Epub3FileSet {
 			}
 		}
 
+		NCX.create(slideShow, pathEpubFolder, verbosity);
+
+		NavDoc.create(mustacheFactory, template_Nav, slideShow, pathEpubFolder,
+				verbosity);
+
+		Print.create(mustacheFactory, template_Print, slideShow,
+				pathEpubFolder, verbosity);
+
+		XHTML.createAll(mustacheFactory, template_Slide, template_SlideNotes,
+				template_BackImgCSS, template_ViewportOverrideCSS, slideShow,
+				pathEpubFolder, verbosity);
+
+		// processCSS MUST EXECUTE AFTER XHTML!! (image references dynamically added when
+		// found in content markup)
+        
 		for (int i = 0; i < Epub3FileSet.CSSs.length; i++) {
 			String filename = Epub3FileSet.CSSs[i].FILE;
 			// String id = Epub3FileSet.CSSs[i][1];
 
 			processCssFile(slideShow, null, new File(pathEpubFolder,
-					Epub3FileSet.FOLDER_CSS + "/" + filename), verbosity);
+					Epub3FileSet.FOLDER_CSS + "/" + filename), pathEpubFolder, verbosity);
 		}
 
 		processCssFile(slideShow, null, new File(pathEpubFolder,
 				Epub3FileSet.FOLDER_CSS + "/" + Epub3FileSet.CSS_NAVDOC.FILE),
-				verbosity);
+				pathEpubFolder, verbosity);
 
 		for (int i = 0; i < Epub3FileSet.CSS_FONTS.length; i++) {
 			String filename = Epub3FileSet.CSS_FONTS[i].FILE;
@@ -540,7 +652,7 @@ public final class Epub3FileSet {
 
 			processCssFile(slideShow, null, new File(pathEpubFolder,
 					Epub3FileSet.FOLDER_HTML + "/" + Epub3FileSet.FOLDER_FONTS
-							+ "/" + filename), verbosity);
+							+ "/" + filename), pathEpubFolder, verbosity);
 		}
 
 		handleFiles(slideShow, null, pathEpubFolder, Epub3FileSet.FOLDER_IMG
@@ -618,18 +730,6 @@ public final class Epub3FileSet {
 					Epub3FileSet.FOLDER_JS + "/" + Epub3FileSet.FOLDER_CUSTOM,
 					slide.FILES_JS, verbosity);
 		}
-
-		NCX.create(slideShow, pathEpubFolder, verbosity);
-
-		NavDoc.create(mustacheFactory, template_Nav, slideShow, pathEpubFolder,
-				verbosity);
-
-		Print.create(mustacheFactory, template_Print, slideShow,
-				pathEpubFolder, verbosity);
-
-		XHTML.createAll(mustacheFactory, template_Slide, template_SlideNotes,
-				template_BackImgCSS, template_ViewportOverrideCSS, slideShow,
-				pathEpubFolder, verbosity);
 
 		// MUST EXECUTE AFTER XHTML!! (image references dynamically added when
 		// found in content markup)

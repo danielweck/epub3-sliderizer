@@ -319,7 +319,7 @@ public final class Slide extends Fielder {
 	public static String FIELD_CSS_STYLE = "CSS_STYLE";
 
 	public String CSS_STYLING() throws Exception {
-		return Epub3FileSet.processCssStyle(slideShow, this, CSS_STYLE);
+		return Epub3FileSet.processCssStyle(slideShow, this, CSS_STYLE, slideShow.pathEpubFolder, _verbosity);
 	}
 
 	public String JS_SCRIPT = null;

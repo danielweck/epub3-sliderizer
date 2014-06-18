@@ -34,14 +34,6 @@ html
 	/* 1.4rem == 14px */
 	
 	background-color: black;
-	
-	/*
-	-PREFIXED_PROPERTY-background-clip:border-box;
-	-PREFIXED_PROPERTY-background-origin:padding-box;
-	-PREFIXED_PROPERTY-background-size:auto;
-	-PREFIXED_PROPERTY-background-attachment:scroll;
-	-PREFIXED_PROPERTY-background-image:url(../img/back.png);
-	*/
 }
 
 body:not(.epb3sldrzr-epubReadingSystem):not(.basic):not(.reflow),

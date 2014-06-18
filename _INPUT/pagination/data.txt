@@ -24,6 +24,17 @@ _VIEWPORT_WIDTH
 _VIEWPORT_HEIGHT
 1000
 
+
+// --------------------------------------------
+_BACKGROUND_IMG
+
+back.jpg
+
+// --------------------------------------------
+_BACKGROUND_IMG_SIZE
+
+cover
+
 // --------------------------------------------
 _TOUCHICON
 TouchIcon.png
@@ -75,16 +86,6 @@ The following page exposes its own navigation controls as well, to demonstrate h
 </p>
 
 // --------------------------------------------
-_BACKGROUND_IMG
-
-back.jpg
-
-// --------------------------------------------
-_BACKGROUND_IMG_SIZE
-
-cover
-
-// --------------------------------------------
 _CSS_STYLE
 
 p
@@ -112,17 +113,12 @@ _INCLUDE
 data_demo1.html
 
 // --------------------------------------------
-_BACKGROUND_IMG
-
-back.jpg
-
-// --------------------------------------------
-_BACKGROUND_IMG_SIZE
-
-cover
-
-// --------------------------------------------
 _CSS_STYLE
+
+html:not(#epb3sldrzr-NavDoc) h1#epb3sldrzr-title
+{
+    display: none;
+}
 
 _INCLUDE
 
@@ -163,18 +159,6 @@ You may also click on
 <a href="slide_02.xhtml#page3">this link</a> to jump back to page 2, directly into sub-page 3 (the link simply uses a target anchor / fragment-identifier that references the XHTML element which corresponds to the selected "sub-page").
 </p>
 
-
-
-// --------------------------------------------
-_BACKGROUND_IMG
-
-back.jpg
-
-// --------------------------------------------
-_BACKGROUND_IMG_SIZE
-
-cover
-
 // --------------------------------------------
 _CSS_STYLE
 
@@ -207,18 +191,6 @@ on the horizontal and vertical axis. Each "sub-page" is a well-defined space whe
 This kind of visually-enhanced narrative is particularly suited to ebooks where text and illustrations are intertwined (e.g. children's fiction, infographics).
 </p>
 
-
-
-// --------------------------------------------
-_BACKGROUND_IMG
-
-back.jpg
-
-// --------------------------------------------
-_BACKGROUND_IMG_SIZE
-
-cover
-
 // --------------------------------------------
 _CSS_STYLE
 
@@ -227,3 +199,55 @@ p
 font-family: Arvo,serif;
 font-size: 80%;
 }
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Page 5
+
+// --------------------------------------------
+_CONTENT
+
+NO-MARKDOWN
+
+_INCLUDE
+
+data_demo2.html
+
+// --------------------------------------------
+_CSS_STYLE
+
+html:not(#epb3sldrzr-NavDoc) h1#epb3sldrzr-title
+{
+    display: none;
+}
+
+#epb3sldrzr-body
+{
+    -PREFIXED_PROPERTY-background-repeat:repeat;
+    -PREFIXED_PROPERTY-background-clip:border-box;
+    -PREFIXED_PROPERTY-background-origin:padding-box;
+    
+    -PREFIXED_PROPERTY-background-position:center;
+    -PREFIXED_PROPERTY-background-attachment:scroll;
+    -PREFIXED_PROPERTY-background-image: url ( ' back2.jpg " ) ; /* intentionally messed-up to test the CSS processor-fixer-replacor ;) */
+    
+    -PREFIXED_PROPERTY-background-size:auto;
+        
+    background-color: #333333;
+}
+
+_INCLUDE
+
+data_demo2.css
+
+// --------------------------------------------
+_JS_SCRIPT
+
+_INCLUDE
+
+data_demo2.js

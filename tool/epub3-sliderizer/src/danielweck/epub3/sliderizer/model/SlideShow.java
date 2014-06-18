@@ -168,10 +168,13 @@ public final class SlideShow extends Fielder {
 		return INCREMENTALS.equalsIgnoreCase("AUTO");
 	}
 
+	// TODO: MASSIIIIVE HACK!! :(
+	public static int _verbosity = -1;
+
 	public String CSS_STYLE = null;
 
 	public String CSS_STYLING() throws Exception {
-		return Epub3FileSet.processCssStyle(this, null, CSS_STYLE);
+		return Epub3FileSet.processCssStyle(this, null, CSS_STYLE, pathEpubFolder, SlideShow._verbosity);
 	}
 
 	public String JS_SCRIPT = null;
@@ -363,6 +366,9 @@ public final class SlideShow extends Fielder {
 			Map<BufferedReader, String> mapBufferedReaderLine, int verbosity)
 			throws Exception {
 
+		// HACK!
+		SlideShow._verbosity = verbosity;
+
 		boolean isSlideMarker = line.equals(Slide.SLIDE_MARKER);
 		while (isSlideMarker) {
 
@@ -387,6 +393,9 @@ public final class SlideShow extends Fielder {
 
 	public static SlideShow parse(String uriDataFile, int verbosity)
 			throws Exception {
+
+		// HACK!
+		SlideShow._verbosity = verbosity;
 
 		URI uri = new URI(uriDataFile);
 		if (!uri.getScheme().equalsIgnoreCase("file")) {

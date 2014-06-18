@@ -34,6 +34,14 @@
         {{#slideShow.CSSs}}
         <link href="../{{{slideShow.FOLDER_CSS}}}/{{{FILE}}}" rel="stylesheet" type="text/css"/>
         {{/slideShow.CSSs}}
+
+		<style type="text/css">
+        /*<![CDATA[*/
+        
+        {{#slideShow.backgroundImageCss}}{{{SLIDE_NUMBER}}}{{/slideShow.backgroundImageCss}}
+       
+        /*]]>*/
+        </style>
         
         {{#slideShow.xCSSs}}
         <link href="../{{{slideShow.FOLDER_CSS}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{.}}}" rel="stylesheet" type="text/css"/>
@@ -92,7 +100,7 @@
         {{#NOTES}}
         <link href="{{{SLIDE_FILENAME_NOTES}}}" rel="notes"/>
         {{/NOTES}}
-        
+
         {{#slideShow.CSS_STYLE}}
         <style type="text/css">
         /*<![CDATA[*/
@@ -109,13 +117,6 @@
         </style>
         {{/CSS_STYLE}}
 
-		<style type="text/css">
-        /*<![CDATA[*/
-        
-        {{#slideShow.backgroundImageCss}}{{{SLIDE_NUMBER}}}{{/slideShow.backgroundImageCss}}
-       
-        /*]]>*/
-        </style>
        
         {{#slideShow.JS_SCRIPT}}
         <script>

@@ -1004,7 +1004,7 @@ public final class XHTML {
 				stringWriter.flush();
 				String css = stringWriter.toString();
 				try {
-					css = Epub3FileSet.processCssStyle(_slideShow, slide, css);
+					css = Epub3FileSet.processCssStyle(_slideShow, slide, css, _slideShow.pathEpubFolder, SlideShow._verbosity);
 				} catch (Exception ex) {
 					System.err.println(ex.getMessage());
 					ex.printStackTrace();
@@ -1066,7 +1066,7 @@ public final class XHTML {
 				stringWriter.flush();
 				String css = stringWriter.toString();
 				try {
-					css = Epub3FileSet.processCssStyle(_slideShow, slide, css);
+					css = Epub3FileSet.processCssStyle(_slideShow, slide, css, _slideShow.pathEpubFolder, SlideShow._verbosity);
 				} catch (Exception ex) {
 					System.err.println(ex.getMessage());
 					ex.printStackTrace();

@@ -9,7 +9,12 @@
     
     -PREFIXED_PROPERTY-background-position:center;
     -PREFIXED_PROPERTY-background-attachment:scroll;
-    -PREFIXED_PROPERTY-background-image:url(../{{{slideShow.FOLDER_IMG}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{slideShow.BACKGROUND_IMG}}});
+    
+    /*
+    AUTOMATICALLY PICKED-UP and REPLACED BY THE CSS PROCESSOR
+    ../{{{slideShow.FOLDER_IMG}}}/{{{slideShow.FOLDER_CUSTOM}}}/
+    */
+    -PREFIXED_PROPERTY-background-image:url({{{slideShow.BACKGROUND_IMG}}});
     
     -PREFIXED_PROPERTY-background-size:{{{slideShow.BACKGROUND_IMG_SIZE}}};
         
@@ -31,7 +36,12 @@
     -PREFIXED_PROPERTY-background-position:center;
     -PREFIXED_PROPERTY-background-attachment:scroll;
     
-    -PREFIXED_PROPERTY-background-image:url(../{{{slideShow.FOLDER_IMG}}}/{{{slideShow.FOLDER_CUSTOM}}}/{{{BACKGROUND_IMG}}});
+   
+   /*
+   AUTOMATICALLY PICKED-UP and REPLACED BY THE CSS PROCESSOR
+   ../{{{slideShow.FOLDER_IMG}}}/{{{slideShow.FOLDER_CUSTOM}}}/
+   */
+   -PREFIXED_PROPERTY-background-image:url({{{BACKGROUND_IMG}}});
     
     -PREFIXED_PROPERTY-background-size:{{{BACKGROUND_IMG_SIZE}}};
     
