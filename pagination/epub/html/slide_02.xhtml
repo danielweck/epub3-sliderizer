@@ -77,6 +77,8 @@ bottom: 15%;
 
 width: auto;
 height: auto;
+
+cursor: pointer;
 }
 
 #previous
@@ -157,10 +159,8 @@ position: absolute;
 width: 100%;
 height: 40%;
 
-top: 55%;
+top: 60%;
 left: 0;
-
-text-shadow: 0 -0.2em 0.5em #AAAAAA;
 
 color: white;
 
@@ -170,15 +170,18 @@ font-family: Lato, sans-serif;
 
 .index
 {
+text-shadow: 0 0 0.06em #AAAAAA;
+
 borderx: 2px solid yellow;
 overflow: hidden;
 
-vertical-align: text-top;
-
 font-size: 400%;
-opacity: 0.4;
+opacity: 0.5;
 
 display: inline-block;
+position: relative;
+
+cursor: pointer;
 }
 
 
@@ -407,7 +410,7 @@ transition-timing-function: ease-in;
 transform: scale(1.8);
 
 opacity: 1;
-text-shadow: none;
+z-index: 999;
 }
 
 #container[data-subpage="0"] #previous
