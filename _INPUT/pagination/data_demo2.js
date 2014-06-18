@@ -1,5 +1,5 @@
 
-_PAGE_lastSubPage = 4;
+_PAGE_lastSubPage = 5;
 
 _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
 {

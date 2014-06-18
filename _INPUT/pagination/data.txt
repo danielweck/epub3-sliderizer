@@ -194,7 +194,7 @@ The next sequence of "pages" demonstrates more sophisticated transitions between
 on the horizontal and vertical axis. Each "sub-page" is a well-defined space where the user can pause and concentrate on the primary reading activity, but the individual logical units flow seamlessly between one another.
 </p>
 <p>
-This kind of visually-enhanced narrative is particularly suited to ebooks where text and illustrations are intertwined (e.g. children's fiction, infographics).
+This type of visually-enhanced narrative is particularly suited to ebook layouts where text and illustrations are intertwined (e.g. children's fiction, infographics).
 </p>
 
 // --------------------------------------------

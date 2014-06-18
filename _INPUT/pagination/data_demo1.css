@@ -209,7 +209,7 @@ left: 80%;
 -PREFIXED_PROPERTY-transition-property: transform;
 -PREFIXED_PROPERTY-transition-duration: 500ms;
 -PREFIXED_PROPERTY-transition-delay: 0s;
--PREFIXED_PROPERTY-transition-timing-function: ease-in;
+-PREFIXED_PROPERTY-transition-timing-function: ease-in-out;
 }
 
 #container[data-subpage="0"] #index0,
