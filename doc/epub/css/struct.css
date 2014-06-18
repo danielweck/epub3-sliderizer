@@ -72,7 +72,8 @@ user-drag: none;
 
 body
 {
-    overflow:auto;
+    overflow: auto;
+	-webkit-overflow-scrolling: touch;
 	/*
 	-webkit-text-size-adjust:none;
 	*/
@@ -214,14 +215,10 @@ body:not(.epb3sldrzr-epubReadingSystem) div#epb3sldrzr-body
 	visibility: hidden;
 }
 
-div#epb3sldrzr-root
-{
-	-webkit-overflow-scrolling: touch;
-}
-
 body:not(.reflow) div#epb3sldrzr-root
 {
-	overflow:auto;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
 
 	width:100%;
 	height:100%;

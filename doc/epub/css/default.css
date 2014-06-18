@@ -636,6 +636,7 @@ Slide content
     padding: 0.5em;
     
     overflow: auto;
+	-webkit-overflow-scrolling: touch;
 }
 
 #epb3sldrzr-content
@@ -688,6 +689,7 @@ body:not(.reflow) #epb3sldrzr-anim-overflow.vertical-align-middle
 
     overflow-y: auto;
     overflow-x: hidden;
+	-webkit-overflow-scrolling: touch;
     
     /* 
     line-height:1000px;
