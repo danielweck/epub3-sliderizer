@@ -27,13 +27,19 @@ _VIEWPORT_HEIGHT
 
 // --------------------------------------------
 _BACKGROUND_IMG
-
 back.jpg
 
 // --------------------------------------------
 _BACKGROUND_IMG_SIZE
-
 cover
+
+// --------------------------------------------
+_FILES_CSS_FONTS
+fonts.css
+
+// --------------------------------------------
+_FILES_FONT
+FingerPaint.woff
 
 // --------------------------------------------
 _TOUCHICON
@@ -224,21 +230,6 @@ _CSS_STYLE
 html:not(#epb3sldrzr-NavDoc) h1#epb3sldrzr-title
 {
     display: none;
-}
-
-#epb3sldrzr-body
-{
-    -PREFIXED_PROPERTY-background-repeat:repeat;
-    -PREFIXED_PROPERTY-background-clip:border-box;
-    -PREFIXED_PROPERTY-background-origin:padding-box;
-    
-    -PREFIXED_PROPERTY-background-position:center;
-    -PREFIXED_PROPERTY-background-attachment:scroll;
-    -PREFIXED_PROPERTY-background-image: url ( ' back2.jpg " ) ; /* intentionally messed-up to test the CSS processor-fixer-replacor ;) */
-    
-    -PREFIXED_PROPERTY-background-size:auto;
-        
-    background-color: #333333;
 }
 
 _INCLUDE

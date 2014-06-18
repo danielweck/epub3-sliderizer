@@ -242,25 +242,25 @@ color: #ffffff;
 #container[data-subpage="0"] #scroll
 {
 /* left: 0; */
--PREFIXED_PROPERTY-transform: translateX(0);
+-PREFIXED_PROPERTY-transform: translate(0,0);
 }
 #container[data-subpage="1"] #scroll
 {
 /* left: -100%; */
--PREFIXED_PROPERTY-transform: translateX(-20%);
+-PREFIXED_PROPERTY-transform: translate(-20%,0);
 }
 #container[data-subpage="2"] #scroll
 {
 /* left: -200%; */
--PREFIXED_PROPERTY-transform: translateX(-40%);
+-PREFIXED_PROPERTY-transform: translate(-40%,0);
 }
 #container[data-subpage="3"] #scroll
 {
 /* left: -300%; */
--PREFIXED_PROPERTY-transform: translateX(-60%);
+-PREFIXED_PROPERTY-transform: translate(-60%,0);
 }
 #container[data-subpage="4"] #scroll
 {
 /* left: -400%; */
--PREFIXED_PROPERTY-transform: translateX(-80%);
+-PREFIXED_PROPERTY-transform: translate(-80%,0);
 }

@@ -1,0 +1,210 @@
+
+#container
+{
+borderx: 2px solid red;
+overflow: hidden;
+
+display: block;
+
+position: absolute;
+
+/* .full
+position: absolute;
+left: 0px;
+top: 0px;
+width: VIEWPORT_WIDTHpx;
+height: VIEWPORT_HEIGHTpx;
+*/
+
+    -PREFIXED_PROPERTY-background-repeat:repeat;
+    -PREFIXED_PROPERTY-background-clip:border-box;
+    -PREFIXED_PROPERTY-background-origin:padding-box;
+    
+    -PREFIXED_PROPERTY-background-position:center;
+    -PREFIXED_PROPERTY-background-attachment:scroll;
+    -PREFIXED_PROPERTY-background-image: url ( ' back2.jpg ' ) ;
+    
+    -PREFIXED_PROPERTY-background-size:auto;
+        
+        
+        
+    background-color: white;
+    
+}
+
+#container p
+{
+    font-family: "FingerPaint", sans-serif;
+    color: #333333;
+    font-size: 55%;
+}
+
+#canvas
+{
+borderx: 4px solid blue;
+
+    position: relative;
+    left: 0px;
+    top: 0px;
+    
+    width: 4vw;
+    width: calc(4 * VIEWPORT_WIDTHpx);
+    
+    height: 2vh;
+    height: calc(2 * VIEWPORT_HEIGHTpx);
+}
+
+
+.unit
+{
+    borderx: 1px solid magenta;
+
+    position: absolute;
+    
+    width: 0.33vw;
+    width: calc(VIEWPORT_WIDTHpx / 3);
+    
+    height: 1vw;
+    height: VIEWPORT_HEIGHTpx;
+    
+    padding: 1em;
+    
+    text-align: justify;
+}
+
+.span2x2y
+{
+    width: 0.66vw;
+    width: calc(2 * VIEWPORT_WIDTHpx / 3);
+    
+    height: 2vw;
+    height: calc(2 * VIEWPORT_HEIGHTpx);
+}
+
+.row0
+{
+    top: 0px;
+}
+.row1
+{
+    top: VIEWPORT_HEIGHTpx;
+}
+.col0
+{
+    left: 0px;
+}
+.col1
+{
+    left: calc(1 * VIEWPORT_WIDTHpx / 3);
+}
+.col2
+{
+    left: calc(2 * VIEWPORT_WIDTHpx / 3);
+}
+.col3
+{
+    left: calc(3 * VIEWPORT_WIDTHpx / 3);
+}
+.col4
+{
+    left: calc(4 * VIEWPORT_WIDTHpx / 3);
+}
+.col5
+{
+    left: calc(5 * VIEWPORT_WIDTHpx / 3);
+}
+.col6
+{
+    left: calc(6 * VIEWPORT_WIDTHpx / 3);
+}
+.col7
+{
+    left: calc(7 * VIEWPORT_WIDTHpx / 3);
+}
+.col8
+{
+    left: calc(8 * VIEWPORT_WIDTHpx / 3);
+}
+.col9
+{
+    left: calc(9 * VIEWPORT_WIDTHpx / 3);
+}
+.col10
+{
+    left: calc(10 * VIEWPORT_WIDTHpx / 3);
+}
+
+#unit0
+{
+    padding-top: 0em;
+}
+
+#unit2
+{
+    -PREFIXED_PROPERTY-background-repeat:no-repeat;
+    -PREFIXED_PROPERTY-background-clip:border-box;
+    -PREFIXED_PROPERTY-background-origin:padding-box;
+    
+    -PREFIXED_PROPERTY-background-position:center;
+    -PREFIXED_PROPERTY-background-attachment:scroll;
+    -PREFIXED_PROPERTY-background-image: url ( ' tall.png ' ) ;
+    
+    -PREFIXED_PROPERTY-background-size:cover;
+        
+}
+
+#unit9
+{
+    -PREFIXED_PROPERTY-background-repeat:no-repeat;
+    -PREFIXED_PROPERTY-background-clip:border-box;
+    -PREFIXED_PROPERTY-background-origin:padding-box;
+    
+    -PREFIXED_PROPERTY-background-position:center;
+    -PREFIXED_PROPERTY-background-attachment:scroll;
+    -PREFIXED_PROPERTY-background-image: url ( ' short.png ' ) ;
+    
+    -PREFIXED_PROPERTY-background-size:cover;
+        
+}
+
+#container.transit #canvas
+{
+-PREFIXED_PROPERTY-transition-property: transform;
+-PREFIXED_PROPERTY-transition-duration: 500ms;
+-PREFIXED_PROPERTY-transition-delay: 0s;
+-PREFIXED_PROPERTY-transition-timing-function: ease-in-out;
+}
+
+
+#container[data-subpage="0"] #canvas
+{
+    transform: none;
+}
+
+#container[data-subpage="1"] #canvas
+{
+    -PREFIXED_PROPERTY-transform: translate(-1vw, 0);
+    -PREFIXED_PROPERTY-transform: translate(-VIEWPORT_WIDTHpx, 0);
+    -PREFIXED_PROPERTY-transform: translate(-25%, 0);
+}
+
+#container[data-subpage="2"] #canvas
+{
+    -PREFIXED_PROPERTY-transform: translate(-1vw, -1vh);
+    -PREFIXED_PROPERTY-transform: translate(-VIEWPORT_WIDTHpx, -VIEWPORT_HEIGHTpx);
+    -PREFIXED_PROPERTY-transform: translate(-25%, -VIEWPORT_HEIGHTpx);
+}
+
+#container[data-subpage="3"] #canvas
+{
+    -PREFIXED_PROPERTY-transform: translate(-2vw, -1vh);
+    -PREFIXED_PROPERTY-transform: translate(calc(-2*VIEWPORT_WIDTHpx), -VIEWPORT_HEIGHTpx);
+    -PREFIXED_PROPERTY-transform: translate(-50%, -VIEWPORT_HEIGHTpx);
+}
+
+#container[data-subpage="4"] #canvas
+{
+    -PREFIXED_PROPERTY-transform: translate(-2.66vw, -1vh);
+    -PREFIXED_PROPERTY-transform: translate(calc(-2.66*VIEWPORT_WIDTHpx), -VIEWPORT_HEIGHTpx);
+    -PREFIXED_PROPERTY-transform: translate(-66.66%, -VIEWPORT_HEIGHTpx);
+}
