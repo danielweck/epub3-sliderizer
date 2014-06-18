@@ -39,10 +39,6 @@ html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
 {
     display: none;
 }
-html:not(#epb3sldrzr-NavDoc) h1#epb3sldrzr-title
-{
-    display: none;
-}
 
 // --------------------------------------------
 _JS_SCRIPT
@@ -63,8 +59,6 @@ Page 1
 _CONTENT
 
 NO-MARKDOWN
-
-<h1 id="heading">Page 1</h1>
 
 <p>
 The next page contains 5 "sub-pages", which can be navigated using regular previous/next pagination controls.
@@ -92,11 +86,6 @@ cover
 
 // --------------------------------------------
 _CSS_STYLE
-
-#heading
-{
-margin-bottom: 1em;
-}
 
 p
 {
@@ -161,8 +150,6 @@ _CONTENT
 
 NO-MARKDOWN
 
-<h1 id="heading">Page 3</h1>
-
 <p>
 When you navigate back to the previous page, notice how the last "sub-page" (#5) is correctly selected. The overall sequence of logical pagination units (pages and "sub-pages") can indeed be traversed in the reverse direction, preserving both the backwards and forwards linear reading order.
 </p>
@@ -191,10 +178,49 @@ cover
 // --------------------------------------------
 _CSS_STYLE
 
-#heading
+p
 {
-margin-bottom: 1em;
+font-family: Arvo,serif;
+font-size: 80%;
 }
+
+
+// #########################################################
+// #########################################################
+// #########################################################
+-SLIDE
+
+// --------------------------------------------
+_TITLE
+Page 4
+
+// --------------------------------------------
+_CONTENT
+
+NO-MARKDOWN
+
+<p>
+The next sequence of "pages" demonstrates more sophisticated transitions between content sections,
+on the horizontal and vertical axis. Each "sub-page" is a well-defined space where the user can pause and concentrate on the primary reading activity, but the individual logical units flow seamlessly between one another.
+</p>
+<p>
+This kind of visually-enhanced narrative is particularly suited to ebooks where text and illustrations are intertwined (e.g. children's fiction, infographics).
+</p>
+
+
+
+// --------------------------------------------
+_BACKGROUND_IMG
+
+back.jpg
+
+// --------------------------------------------
+_BACKGROUND_IMG_SIZE
+
+cover
+
+// --------------------------------------------
+_CSS_STYLE
 
 p
 {

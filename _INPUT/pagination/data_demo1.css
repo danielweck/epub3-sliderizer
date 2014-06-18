@@ -1,4 +1,9 @@
 
+html:not(#epb3sldrzr-NavDoc) h1#epb3sldrzr-title
+{
+    display: none;
+}
+
 .navButton
 {
 -webkit-backface-visibility: hidden;
