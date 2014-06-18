@@ -652,6 +652,7 @@ function loadScript(that, src)
 var Epub3Sliderizer = {
     enableMouseWheel: false,
     enableVisibleHorizontalDrag: false,
+    enableTouchTransform: false,
     onResizeThrottled: null,
     epubReadingSystem: null,
     readium: false,
@@ -792,7 +793,7 @@ Epub3Sliderizer.AUTHORized = false;
 
 Epub3Sliderizer.AUTHORize = function()
 {
-    if (!$)
+    if (!window.$)
     {
         return;
     }
@@ -1002,6 +1003,13 @@ Epub3Sliderizer.gotoPrevious = function()
     {
         return;
     }
+
+    // See updateDirection()
+    // if (navigator.epubReadingSystem
+    //     && navigator.epubReadingSystem.on)
+    // {
+    //     navigator.epubReadingSystem.PageDirection = navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS;
+    // }
     
     if (navigator.epubReadingSystem
         && navigator.epubReadingSystem.on
@@ -1114,6 +1122,13 @@ Epub3Sliderizer.gotoNext = function()
     {
         return;
     }
+
+    // See updateDirection()
+    // if (navigator.epubReadingSystem
+    //     && navigator.epubReadingSystem.on)
+    // {
+    //     navigator.epubReadingSystem.PageDirection = navigator.epubReadingSystem.EVENT_PAGE_NEXT;
+    // }
     
     if (navigator.epubReadingSystem
         && navigator.epubReadingSystem.on
@@ -2252,24 +2267,189 @@ Epub3Sliderizer.onKeyboard = function(keyboardEvent)
 
 // ----------
 
-Epub3Sliderizer.initTouch = function()
+Epub3Sliderizer.initTouch = function(onTap)
+{
+    var that = this;
+
+    loadScript(this, 'hammer.min.js');
+    var tryAgain_Hammer = function()
+    {
+        if (!window.Hammer)
+        {
+            setTimeout(tryAgain_Hammer, 100);
+            return;
+        }
+
+        that.initTouch_(onTap);
+    };
+    tryAgain_Hammer();
+};
+
+// ----------
+
+Epub3Sliderizer.initTouch_ = function(onTap)
 {
     if (this.isEpubReadingSystem())
     {
         return;
     }
     
-    if (!Hammer)
+    if (!window.Hammer)
     {
         return;
     }
     
     var that = this;
 
+    // 
+    // document.addEventListener('touchmove', function(e)
+    // {
+    //     if (that.reflow)
+    //     {
+    //         return;
+    //     }
+    // 
+    //     e.preventDefault();
+    // }, false);
+    // 
+    document.addEventListener('touchstart', function(e)
+    {
+        if (that.reflow)
+        {
+            return;
+        }
+
+        var t2 = e.timeStamp;
+        var t1 = document.documentElement.getAttribute('data-touchStart') || t2;
+        var dt = t2 - t1;
+        var fingers = e.touches.length;
+        document.documentElement.setAttribute('data-touchStart', t2);
+
+        if (!dt || dt > 500 || fingers > 1)
+        {
+            /*
+            console.log("===");
+            console.log(that.left);
+            console.log(that.top);
+            */
+            return;
+        }
+
+        e.preventDefault();
+    }, true);
+
+
+    if (Hammer.defaults && Hammer.defaults.stop_browser_behavior && Hammer.defaults.stop_browser_behavior.userSelect)
+        delete Hammer.defaults.stop_browser_behavior.userSelect;
+
+    var hammer = new Hammer(document.documentElement,
+    {
+        drag: true,
+        dragend: false,
+        dragstart: true,
+        
+        drag_vertical: false,
+        drag_horizontal: false,
+        
+        transform: false,
+        transformend: false,
+        transformstart: false,
+        
+        swipe: true,
+        swipeleft: true,
+        swiperight: true,
+        swipeup: true,
+        swipedown: true,
+        
+        tap: true,
+        tap_double: this.enableTouchTransform,
+        
+        hold: false,
+        
+        prevent_default: false,
+        
+        css_hacks: false,
+        
+        swipe_velocity: 1
+    });
+    
+    hammer.on("tap",
+        onTap.bind(this)
+    );
     
     var scrolling = false;
 
-    function onSwipeLeft(
+    var onDragStart_ = function(hammerEvent)
+    {
+        /* jshint validthis: true */
+
+        if (this.reflow)
+        {
+            return;
+        }
+    
+        scrolling = false;
+        //     
+        // if (this.totalZoom !== 1 || !this.enableVisibleHorizontalDrag)
+        // {
+        //     return;
+        // }
+        // 
+        var scroll = document.getElementById("epb3sldrzr-root");
+    
+        var target = hammerEvent.target;
+        while (target)
+        {
+            if(target === scroll)
+            {
+                if (hammerEvent.gesture &&
+                ((scroll.offsetHeight < scroll.scrollHeight) && (hammerEvent.gesture.direction === "down" || hammerEvent.gesture.direction === "up")) ||
+                ((scroll.offsetWidth < scroll.scrollWidth) && (hammerEvent.gesture.direction === "left" || hammerEvent.gesture.direction === "right")))
+                {
+                    if (scroll.scrollTop <= 0 && hammerEvent.gesture.direction === "down")
+                    {
+                        /* jshint unused: false */
+                        var nop1 = null;
+                    }
+                    else if (scroll.scrollTop >= (scroll.scrollHeight - scroll.offsetHeight) && hammerEvent.gesture.direction === "up")
+                    {
+                        /* jshint unused: false */
+                        var nop2 = null;
+                    }
+                    else if (scroll.scrollLeft <= 0 && hammerEvent.gesture.direction === "right")
+                    {
+                        /* jshint unused: false */
+                        var nop3 = null;
+                    }
+                    else if (scroll.scrollLeft >= (scroll.scrollWidth - scroll.offsetWidth) && hammerEvent.gesture.direction === "left")
+                    {
+                        /* jshint unused: false */
+                        var nop4 = null;
+                    }
+                    else
+                    {
+                        scrolling = true;
+                    
+                        return;
+                    }
+                }
+            }
+            target = target.parentNode;
+        }
+
+        if (hammerEvent.gesture)
+        {        
+            hammerEvent.gesture.preventDefault();
+            //hammerEvent.gesture.stopPropagation();
+        }
+    };
+
+    hammer.on("dragstart",
+        onDragStart_.bind(this)
+    );
+
+
+    var onSwipeLeft = function(
         /* jshint unused: false */
         hammerEvent
     )
@@ -2285,11 +2465,16 @@ Epub3Sliderizer.initTouch = function()
         {
             return;
         }
-
+        
+        if (scrolling)
+        {
+            return;
+        }
+        
         this.gotoNext();
-    }
+    };
     
-    function onSwipeRight(
+    var onSwipeRight = function(
         /* jshint unused: false */
         hammerEvent
     )
@@ -2305,11 +2490,16 @@ Epub3Sliderizer.initTouch = function()
         {
             return;
         }
-
+        
+        if (scrolling)
+        {
+            return;
+        }
+        
         this.gotoPrevious();
-    }
+    };
     
-    function onSwipeUp(
+    var onSwipeUp = function(
         /* jshint unused: false */
         hammerEvent
     )
@@ -2333,9 +2523,9 @@ Epub3Sliderizer.initTouch = function()
         //hammerEvent.gesture.preventDefault();
         
         this.nextIncremental(true);
-    }
+    };
     
-    function onSwipeDown(
+    var onSwipeDown = function(
         /* jshint unused: false */
         hammerEvent
     )
@@ -2359,518 +2549,408 @@ Epub3Sliderizer.initTouch = function()
         //hammerEvent.gesture.preventDefault();
         
         this.nextIncremental(false);
-    }
+    };
     
-    
-    /*
-    var totalDragX = 0;
-    var totalDragY = 0;
-
-    var rotationStart = 0;
-    var totalRotation = 0;
-    */
-    
-    var zoomStart = 1;
-    var dragXStart = 0;
-    var dragYStart = 0;
-    
-    function resetTransform()
-    {
-        that.bodyRoot.style.opacity = "1";
-        
-        var b = that.totalZoom <= 1 || that.totalZoom >= 18;
-        
-        if (b)
-        {
-            /*
-            totalRotation = 0;
-            totalDragX = 0;
-            totalDragY = 0;
-            */
-            
-            that.resetResize();
-        }
-        
-        return b;
-    }
-    
-    var firstTransform = true;
-    
-    function onTransform(hammerEvent)
-    {
-        /* jshint validthis: true */
-        
-        if (this.reflow)
-        {
-            return;
-        }
-        
-        if (scrolling)
-        {
-            return;
-        }
-        
-        if (hammerEvent.gesture)
-        {
-            this.totalZoom = zoomStart * hammerEvent.gesture.scale;
-            //totalRotation = rotationStart + hammerEvent.gesture.rotation;
-
-            if (this.totalZoom <= 1 || !resetTransform())
-            {
-                if (!firstTransform)
-                {
-                    this.transforms.pop();
-                }
-                firstTransform = false;
-                
-                this.transforms.push({
-                    rotation: hammerEvent.gesture.rotation,
-                    zoom: hammerEvent.gesture.scale,
-                    left: hammerEvent.gesture.center.pageX,
-                    top: hammerEvent.gesture.center.pageY,
-                    transX: (hammerEvent.gesture.center.pageX - dragXStart) * hammerEvent.gesture.scale,
-                    transY: (hammerEvent.gesture.center.pageY - dragYStart) * hammerEvent.gesture.scale
-                });
-
-                /*
-                if (this.totalZoom < 1)
-                {
-                    this.bodyRoot.style.opacity = this.totalZoom;
-                }
-                */
-                
-                this.onResizeThrottled();
-//                this.onResize();
-            }
-        }
-    }
-    
-    function onTransformEnd(
-        /* jshint unused: false */
-        hammerEvent
-    )
-    {
-        /* jshint validthis: true */
-        
-        if (this.reflow)
-        {
-            return;
-        }
-        
-        if (scrolling)
-        {
-            return;
-        }
-
-        if (this.totalZoom <= 1)
-        {
-            this.transition(true, 500);
-        
-            resetTransform();
-            
-            this.transition(false, 500);
-        }
-    }
-    
-    function onTransformStart(hammerEvent)
-    {
-        /* jshint validthis: true */
-        
-        if (this.reflow)
-        {
-            return;
-        }
-        
-        if (scrolling)
-        {
-            return;
-        }
-        
-        firstTransform = true;
-        
-        if (hammerEvent.gesture)
-        {
-            zoomStart = this.totalZoom;
-            
-            dragXStart = hammerEvent.gesture.center.pageX;
-            dragYStart = hammerEvent.gesture.center.pageY;
-            
-            /*
-            rotationStart = totalRotation;
-            */
-            
-            hammerEvent.gesture.preventDefault();
-        }
-        else
-        {
-            zoomStart = 1;
-            
-            dragXStart = 0;
-            dragYStart = 0;
-            
-            /*
-            rotationStart = 0;
-            */
-        }
-    }
-    
-    var firstDrag = true;
-    
-    function onDragEnd(
-        /* jshint unused: false */
-        hammerEvent
-    )
-    {
-        /* jshint validthis: true */
-        
-        if (this.totalZoom !== 1 || !this.enableVisibleHorizontalDrag)
-        {
-            return;
-        }
-
-        if (this.reflow)
-        {
-            return;
-        }
-        
-        if (scrolling)
-        {
-            return;
-        }
-
-        var that = this;
-
-        setTimeout(function()
-        {
-            that.transition(true, 500);
-
-            resetTransform();
-    
-            that.transition(false, 500);
-        }, 100);
-    }
-    
-    function onDrag(hammerEvent)
-    {
-        /* jshint validthis: true */
-    
-        if (this.totalZoom === 1 && !this.enableVisibleHorizontalDrag)
-        {
-            return;
-        }
-        
-        if (this.reflow)
-        {
-            return;
-        }
-        
-        if (scrolling)
-        {
-            return;
-        }
-     
-        if (this.totalZoom === 1 && this.basicMode)
-        {
-            return;
-        }
-    
-        if (hammerEvent.gesture)
-        {
-            var xOffset = hammerEvent.gesture.center.pageX - dragXStart;
-
-            var opacity = 1;
-            if (this.totalZoom === 1)
-            {
-                var off = Math.abs(xOffset);
-                if (off < 60)
-                {
-                    // to allow swipe up/down
-                    return;
-                }
-                
-                opacity = 1 - (off / window.innerWidth); //this.bodyRoot.clientWidth
-                
-//                this.bodyRoot.style.opacity = opacity;
-            }
-            
-            //$("h1#epb3sldrzr-title").html(this.totalZoom + " - " + opacity);
-        
-            if (!firstDrag)
-            {
-                this.transforms.pop();
-            }
-            firstDrag = false;
-        
-            this.transforms.push({
-                rotation: 0,
-                zoom: 1,
-                //opacity,
-                left: hammerEvent.gesture.center.pageX,
-                top: hammerEvent.gesture.center.pageY,
-                transX: xOffset,
-                transY: this.totalZoom === 1 ? 0 : hammerEvent.gesture.center.pageY - dragYStart
-            });
-
-            this.onResizeThrottled();
-            //this.onResize();
-        }
-    }
-    
-    function onDragStart(hammerEvent)
-    {
-        /* jshint validthis: true */
-    
-        if (this.reflow)
-        {
-            return;
-        }
-        
-        firstDrag = true;
-        
-        if (hammerEvent.gesture)
-        {
-            dragXStart = hammerEvent.gesture.center.pageX;
-            dragYStart = hammerEvent.gesture.center.pageY;
-            
-            hammerEvent.gesture.preventDefault();
-        }
-        else
-        {
-            dragXStart = 0;
-            dragYStart = 0;
-        }
-        
-        scrolling = false;
-        //     
-        // if (this.totalZoom !== 1 || !this.enableVisibleHorizontalDrag)
-        // {
-        //     return;
-        // }
-        // 
-        var scroll = document.getElementById("epb3sldrzr-root");
-        
-        var target = hammerEvent.target;
-        while (target)
-        {
-            if(target === scroll)
-            {
-                if (scroll.offsetHeight < scroll.scrollHeight)
-                {
-                    if (scroll.scrollTop <= 0 &&
-                        hammerEvent.gesture && hammerEvent.gesture.direction === "down")
-                    {
-                        /* jshint unused: false */
-                        var nop1 = null;
-                    }
-                    else if (scroll.scrollTop >= (scroll.scrollHeight - scroll.offsetHeight) &&
-                            hammerEvent.gesture && hammerEvent.gesture.direction === "up")
-                    {
-                        /* jshint unused: false */
-                        var nop2 = null;
-                    }
-                    else
-                    {
-                        scrolling = true;
-                        /*
-                        if (hammerEvent.gesture)
-                        {
-                            hammerEvent.gesture.stopPropagation();
-                        }
-                        */
-                        return;
-                    }
-                }
-            }
-            target = target.parentNode;
-        }
-    }
-    
-    this.hammer.on("dragstart",
-        onDragStart.bind(this)
-    );
-    
-    this.hammer.on("dragend",
-        onDragEnd.bind(this)
-    );
-    
-    this.hammer.on("drag",
-        onDrag.bind(this)
-    );
-    
-    this.hammer.on("transformstart",
-        onTransformStart.bind(this)
-    );
-    
-    this.hammer.on("transformend",
-        onTransformEnd.bind(this)
-    );
-    
-    this.hammer.on("transform",
-        onTransform.bind(this)
-    );
-    
-    this.hammer.on("swipeleft",
+    hammer.on("swipeleft",
         onSwipeLeft.bind(this)
     );
     
-    this.hammer.on("swiperight",
+    hammer.on("swiperight",
         onSwipeRight.bind(this)
     );
     
-    this.hammer.on("swipeup",
+    hammer.on("swipeup",
         onSwipeUp.bind(this)
     );
     
-    this.hammer.on("swipedown",
+    hammer.on("swipedown",
         onSwipeDown.bind(this)
     );
-
-    function onDoubleTap(hammerEvent)
+    
+    if (this.enableTouchTransform)
     {
-        /* jshint validthis: true */
-        
-        if (this.reflow)
+        var hammerContent = new Hammer(that.bodyRoot,
         {
-            return;
-        }
+            prevent_default: false,
+            css_hacks: false,
+            swipe_velocity: 1
+        });
         
-        if (hammerEvent.gesture)
-        {    
-            hammerEvent.gesture.preventDefault();
-            hammerEvent.gesture.stopPropagation();
+        /*
+        var totalDragX = 0;
+        var totalDragY = 0;
 
-            if (this.totalZoom !== 1)
+        var rotationStart = 0;
+        var totalRotation = 0;
+        */
+    
+        var zoomStart = 1;
+        var dragXStart = 0;
+        var dragYStart = 0;
+    
+        var resetTransform = function()
+        {
+            that.bodyRoot.style.opacity = "1";
+        
+            var b = that.totalZoom <= 1 || that.totalZoom >= 18;
+        
+            if (b)
+            {
+                /*
+                totalRotation = 0;
+                totalDragX = 0;
+                totalDragY = 0;
+                */
+            
+                that.resetResize();
+            }
+        
+            return b;
+        };
+    
+        var firstTransform = true;
+    
+        var onTransform = function(hammerEvent)
+        {
+            /* jshint validthis: true */
+        
+            if (this.reflow)
+            {
+                return;
+            }
+        
+            if (scrolling)
+            {
+                return;
+            }
+        
+            if (hammerEvent.gesture)
+            {
+                this.totalZoom = zoomStart * hammerEvent.gesture.scale;
+                //totalRotation = rotationStart + hammerEvent.gesture.rotation;
+
+                if (this.totalZoom <= 1 || !resetTransform())
+                {
+                    if (!firstTransform)
+                    {
+                        this.transforms.pop();
+                    }
+                    firstTransform = false;
+                
+                    this.transforms.push({
+                        rotation: hammerEvent.gesture.rotation,
+                        zoom: hammerEvent.gesture.scale,
+                        left: hammerEvent.gesture.center.pageX,
+                        top: hammerEvent.gesture.center.pageY,
+                        transX: (hammerEvent.gesture.center.pageX - dragXStart) * hammerEvent.gesture.scale,
+                        transY: (hammerEvent.gesture.center.pageY - dragYStart) * hammerEvent.gesture.scale
+                    });
+
+                    /*
+                    if (this.totalZoom < 1)
+                    {
+                        this.bodyRoot.style.opacity = this.totalZoom;
+                    }
+                    */
+                
+                    this.onResizeThrottled();
+    //                this.onResize();
+                }
+            }
+        };
+    
+        var onTransformEnd = function(
+            /* jshint unused: false */
+            hammerEvent
+        )
+        {
+            /* jshint validthis: true */
+        
+            if (this.reflow)
+            {
+                return;
+            }
+        
+            if (scrolling)
+            {
+                return;
+            }
+
+            if (this.totalZoom <= 1)
             {
                 this.transition(true, 500);
-                
-                this.resetResize();
-                
+        
+                resetTransform();
+            
                 this.transition(false, 500);
-                //this.toggleZoom(hammerEvent.gesture.center.pageX, hammerEvent.gesture.center.pageY);
+            }
+        };
+    
+        var onTransformStart = function(hammerEvent)
+        {
+            /* jshint validthis: true */
+        
+            if (this.reflow)
+            {
+                return;
+            }
+        
+            if (scrolling)
+            {
+                return;
+            }
+        
+            firstTransform = true;
+        
+            if (hammerEvent.gesture)
+            {
+                zoomStart = this.totalZoom;
+            
+                dragXStart = hammerEvent.gesture.center.pageX;
+                dragYStart = hammerEvent.gesture.center.pageY;
+            
+                /*
+                rotationStart = totalRotation;
+                */
+            
+                hammerEvent.gesture.preventDefault();
             }
             else
             {
-                var done = false;
-
-                var target = hammerEvent.target;
-                while (target)
-                {
-                    if (target === this.bodyRoot)
-                    {
-                        break;
-                    }
-                    
-                    var name = target.nodeName.toLowerCase();
-                    if (name === "p" || name === "img" || name === "video" || name === "svg" || name === "td" || name === "div" || name === "h1" || name === "h2" || name === "h3" || name === "h4" || name === "li" || name === "ul" || name === "ol")
-                    {
-                        done = true;
-                        this.zoomTo(target);
-                        break;
-                    }
+                zoomStart = 1;
             
-                    target = target.parentNode;
-                }
-        
-                if (!done)
-                {
-                    this.toggleZoom(hammerEvent.gesture.center.pageX, hammerEvent.gesture.center.pageY);
-                }
+                dragXStart = 0;
+                dragYStart = 0;
+            
+                /*
+                rotationStart = 0;
+                */
             }
-        }
-    }
-
-    function onTap(hammerEvent)
-    {
-        /* jshint validthis: true */
-        
-        if (hammerEvent.gesture)
+        };
+    
+        var firstDrag = true;
+    
+        var onDragEnd = function(
+            /* jshint unused: false */
+            hammerEvent
+        )
         {
-            var controls = document.getElementById("epb3sldrzr-controls");
-            
-            var target = hammerEvent.target;
-            while (target)
+            /* jshint validthis: true */
+        
+            if (this.totalZoom !== 1 || !this.enableVisibleHorizontalDrag)
             {
-                if (target === controls)
-                {
-                    return;
-                }
-                if (target.nodeName && target.nodeName.toLowerCase() === "a")
-                {
-                    return;
-                }
-                target = target.parentNode;
+                return;
             }
-        }
 
-        this.toggleControlsPanel();
+            if (this.reflow)
+            {
+                return;
+            }
+        
+            if (scrolling)
+            {
+                return;
+            }
+
+            var that = this;
+
+            setTimeout(function()
+            {
+                that.transition(true, 500);
+
+                resetTransform();
+    
+                that.transition(false, 500);
+            }, 100);
+        };
+    
+        var onDrag = function(hammerEvent)
+        {
+            /* jshint validthis: true */
+    
+            if (this.totalZoom === 1 && !this.enableVisibleHorizontalDrag)
+            {
+                return;
+            }
+        
+            if (this.reflow)
+            {
+                return;
+            }
+        
+            if (scrolling)
+            {
+                return;
+            }
+     
+            if (this.totalZoom === 1 && this.basicMode)
+            {
+                return;
+            }
+    
+            if (hammerEvent.gesture)
+            {
+                var xOffset = hammerEvent.gesture.center.pageX - dragXStart;
+
+                var opacity = 1;
+                if (this.totalZoom === 1)
+                {
+                    var off = Math.abs(xOffset);
+                    if (off < 60)
+                    {
+                        // to allow swipe up/down
+                        return;
+                    }
+                
+                    opacity = 1 - (off / window.innerWidth); //this.bodyRoot.clientWidth
+                
+    //                this.bodyRoot.style.opacity = opacity;
+                }
+            
+                //$("h1#epb3sldrzr-title").html(this.totalZoom + " - " + opacity);
+        
+                if (!firstDrag)
+                {
+                    this.transforms.pop();
+                }
+                firstDrag = false;
+        
+                this.transforms.push({
+                    rotation: 0,
+                    zoom: 1,
+                    //opacity,
+                    left: hammerEvent.gesture.center.pageX,
+                    top: hammerEvent.gesture.center.pageY,
+                    transX: xOffset,
+                    transY: this.totalZoom === 1 ? 0 : hammerEvent.gesture.center.pageY - dragYStart
+                });
+
+                this.onResizeThrottled();
+                //this.onResize();
+            }
+        };
+    
+        var onDragStart = function(hammerEvent)
+        {
+            /* jshint validthis: true */
+    
+            if (this.reflow)
+            {
+                return;
+            }
+        
+            firstDrag = true;
+        
+            if (hammerEvent.gesture)
+            {
+                dragXStart = hammerEvent.gesture.center.pageX;
+                dragYStart = hammerEvent.gesture.center.pageY;
+            
+                hammerEvent.gesture.preventDefault();
+            }
+            else
+            {
+                dragXStart = 0;
+                dragYStart = 0;
+            }
+        };
+
+        hammerContent.on("dragstart",
+            onDragStart.bind(this)
+        );
+    
+        hammerContent.on("dragend",
+            onDragEnd.bind(this)
+        );
+    
+        hammerContent.on("drag",
+            onDrag.bind(this)
+        );
+    
+        hammerContent.on("transformstart",
+            onTransformStart.bind(this)
+        );
+    
+        hammerContent.on("transformend",
+            onTransformEnd.bind(this)
+        );
+    
+        hammerContent.on("transform",
+            onTransform.bind(this)
+        );
+
+        var onDoubleTap = function(hammerEvent)
+        {
+            /* jshint validthis: true */
+        
+            if (this.reflow)
+            {
+                return;
+            }
+        
+            if (hammerEvent.gesture)
+            {    
+                hammerEvent.gesture.preventDefault();
+                hammerEvent.gesture.stopPropagation();
+
+                if (this.totalZoom !== 1)
+                {
+                    this.transition(true, 500);
+                
+                    this.resetResize();
+                
+                    this.transition(false, 500);
+                    //this.toggleZoom(hammerEvent.gesture.center.pageX, hammerEvent.gesture.center.pageY);
+                }
+                else
+                {
+                    var done = false;
+
+                    var target = hammerEvent.target;
+                    while (target)
+                    {
+                        if (target === this.bodyRoot)
+                        {
+                            break;
+                        }
+                    
+                        var name = target.nodeName.toLowerCase();
+                        if (name === "p" || name === "img" || name === "video" || name === "svg" || name === "td" || name === "div" || name === "h1" || name === "h2" || name === "h3" || name === "h4" || name === "li" || name === "ul" || name === "ol")
+                        {
+                            done = true;
+                            this.zoomTo(target);
+                            break;
+                        }
+            
+                        target = target.parentNode;
+                    }
+        
+                    if (!done)
+                    {
+                        this.toggleZoom(hammerEvent.gesture.center.pageX, hammerEvent.gesture.center.pageY);
+                    }
+                }
+            }
+        };
+
+        /*
+        function onHold(hammerEvent)
+        {
+            if (hammerEvent.gesture)
+            {
+            }
+        
+        }
+    
+        hammerContent.on("hold",
+            onHold.bind(this)
+        );
+        */
+    
+        hammer.on("doubletap",
+            onDoubleTap.bind(this)
+        );
     }
-    
-    
-    /*
-    function onHold(hammerEvent)
-    {
-        if (hammerEvent.gesture)
-        {
-        }
-        
-    }
-    
-    this.hammer.on("hold",
-        onHold.bind(this)
-    );
-    */
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    var hammer = new Hammer(document.documentElement,
-        {
-            prevent_default: true,
-            css_hacks: false
-        });
-    
-    hammer.on("doubletap",
-        onDoubleTap.bind(this)
-    );
-
-    hammer.on("tap",
-        onTap.bind(this)
-    );
-    
-    
-    
-    
-    document.addEventListener('touchstart', function(e)
-    {
-        if (that.reflow)
-        {
-            return;
-        }
-        
-        var t2 = e.timeStamp;
-        var t1 = document.documentElement.getAttribute('data-touchStart') || t2;
-        var dt = t2 - t1;
-        var fingers = e.touches.length;
-        document.documentElement.setAttribute('data-touchStart', t2);
-        
-        if (!dt || dt > 500 || fingers > 1)
-        {
-            /*
-            console.log("===");
-            console.log(that.left);
-            console.log(that.top);
-            */
-            return;
-        }
-        
-        e.preventDefault();
-    }, true );
 };
 
 // ----------
@@ -3211,9 +3291,9 @@ Epub3Sliderizer.initReverse = function()
     {
         this.reverse = true;
         //document.body.classList.add("epb3sldrzr-reverse");
-
-        this.updateDirection(false);
     }
+
+    this.updateDirection(false);
 };
 
 // ----------
@@ -4170,21 +4250,25 @@ Epub3Sliderizer.init = function()
         }
     }
 
-    if (!navigator.epubReadingSystem)
+    if (!this.epubReadingSystem)
     {
-        if (this.epubMode && !this.basicMode && !this.staticMode && !this.authorMode)
+        if (//!this.basicMode &&
+            !this.staticMode && !this.authorMode)
         {
             fakeEpubReadingSystem = true;
-            this.epubReadingSystem = {name: "FAKE epub reader", version: "1.2.3"};
 
-            console.log("epubReadingSystem (FAKED):");
-            console.log(this.epubReadingSystem.name);
-            console.log(this.epubReadingSystem.version);
-        }
-        else
-        {
             navigator.epubReadingSystem = {name: "EPUB3-Sliderizer", version: "1.2.3"};
+
+            console.log("epubReadingSystem (EPUB3-SLIDERIZER):");
+            console.log(navigator.epubReadingSystem.name);
+            console.log(navigator.epubReadingSystem.version);
             
+            if (this.epubMode)
+            {
+                this.epubReadingSystem = navigator.epubReadingSystem;
+                this.epubReadingSystem.fake = true;
+            }
+
             navigator.epubReadingSystem.EVENT_PAGE_NEXT = "epubReadingSystem.EVENT_PAGE_NEXT";
             navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS = "epubReadingSystem.EVENT_PAGE_PREVIOUS";
 
@@ -4684,29 +4768,37 @@ Epub3Sliderizer.init = function()
         //this.toggleControlsPanel();
 
         window.onkeyup = this.onKeyboard.bind(this);
-        
-        loadScript(that, 'hammer.min.js');
-        var tryAgain_Hammer = function()
+    
+        var onTap = function(e)
         {
-            if (!window.Hammer)
+            /* jshint validthis: true */
+
+            var controls = document.getElementById("epb3sldrzr-controls");
+    
+            var target = e.target;
+            while (target)
             {
-                setTimeout(tryAgain_Hammer, 100);
-                return;
+                if (target === controls)
+                {
+                    return;
+                }
+                if (target.nodeName && target.nodeName.toLowerCase() === "a")
+                {
+                    return;
+                }
+                target = target.parentNode;
             }
 
-            if (Hammer.defaults && Hammer.defaults.stop_browser_behavior && Hammer.defaults.stop_browser_behavior.userSelect)
-                delete Hammer.defaults.stop_browser_behavior.userSelect;
-
-            that.hammer = new Hammer(that.bodyRoot,
-                {
-                    prevent_default: false,
-                    css_hacks: false,
-                    swipe_velocity: 1
-                });
-
-            that.initTouch();
+            that.toggleControlsPanel();
         };
-        tryAgain_Hammer();
+        if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch)
+        {
+            this.initTouch(onTap);
+        }
+        else
+        {
+            document.addEventListener("click", onTap, false);
+        }
 
         // window.setTimeout(
         //     function()
@@ -4716,7 +4808,7 @@ Epub3Sliderizer.init = function()
         //         window.setTimeout(
         //             function()
         //             {
-        //                 if (Hammer)
+        //                 if (window.Hammer)
         //                 {
         //                     // if (!that.mobile)
         //                     // {
@@ -4781,7 +4873,7 @@ Epub3Sliderizer.init = function()
             this.bodyRoot.style.visibility = "visible";
         }
         
-        if (this.enableMouseWheel && $)
+        if (this.enableMouseWheel && window.$)
         {
             loadScript(that, 'jquery.mousewheel.js');
             window.setTimeout(
@@ -5223,7 +5315,7 @@ function readyFirst()
            console.log("AUTHOR MODE, XHTML (NON-WYSIWYG EDITOR)");
        }
     }
-    else if (Epub3Sliderizer.android ||
+    else if (//Epub3Sliderizer.android ||
         (getUrlQueryParam("basic") !== null)
     )
     {
