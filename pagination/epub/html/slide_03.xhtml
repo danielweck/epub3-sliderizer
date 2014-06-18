@@ -68,7 +68,7 @@ margin-bottom: 1em;
 p
 {
 font-family: Arvo,serif;
-font-size: 90%;
+font-size: 80%;
 }
         /*]]>*/
         </style>
@@ -351,11 +351,11 @@ console.debug(n);
 When you navigate back to the previous page, notice how the last "sub-page" (#5) is correctly selected. The overall sequence of logical pagination units (pages and "sub-pages") can indeed be traversed in the reverse direction, preserving both the backwards and forwards linear reading order.
 </p>
 <p>
-You may also click on
-<a href="slide_02.xhtml#page3">this link</a> to jump directly to page 2, sub-page 3 (the target anchor / fragment-identifier simply references the XHTML element that corresponds to the selected "sub-page").
+Note that "sub-page" linking currently <strong>only works with EPUB3-Sliderizer</strong>, because Readium does not pass window.location.hash to its content iframes.
 </p>
 <p>
-Note that "sub-page" cross-linking currently <strong>only works with EPUB3-Sliderizer</strong>, because Readium does not pass window.location.hash to its content iframes.
+You may also click on
+<a href="slide_02.xhtml#page3">this link</a> to jump back to page 2, directly into sub-page 3 (the link simply uses a target anchor / fragment-identifier that references the XHTML element which corresponds to the selected "sub-page").
 </p>
 </div>
 

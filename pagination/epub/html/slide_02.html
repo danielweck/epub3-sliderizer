@@ -99,7 +99,6 @@ left: 1.8em;
 right: 1.8em;
 }
 
-/*
 .pageAnchor
 {
 display:none;
@@ -109,7 +108,7 @@ height:0px;
 top:0px;
 left:0px;
 }
-*/
+
 
 #container
 {
@@ -329,13 +328,11 @@ z-index: 999;
 color: #ffffff;
 }
 
-#container[data-subpage="0"] #previous
-{
-    color: #DDDDdd;
-}
+#container[data-subpage="0"] #previous,
 #container[data-subpage="4"] #next
 {
-    color: #DDDDdd;
+    cursor: crosshair;
+    color: #DDDDDD;
 }
 
 #container[data-subpage="0"] #subpage0,
@@ -408,7 +405,6 @@ transform: translateX(-60%);
 transform: translateX(-80%);
 
 }
-
         /*]]>*/
         </style>
 
@@ -680,10 +676,6 @@ _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
     var container = document.getElementById("container");
     container.setAttribute("data-subpage", currentSubPage);
 };
-
-// #########################################################
-// #########################################################
-// #########################################################
         //]]>
         </script>
 
