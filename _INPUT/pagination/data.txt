@@ -77,7 +77,7 @@ Alternatively, you may invoke the previous/next page commands via the Reading Sy
 (in Readium, there are clickable buttons on either side of the current page).
 </p>
 <p>
-For demonstration purposes, the following page exposes its own navigation controls as well, to ensure some level of compatibility with Reading Systems that do not support "sub-page" pagination.
+The following page exposes its own navigation controls as well, to ensure some level of compatibility with Reading Systems that do not support "sub-page" pagination.
 </p>
 
 // --------------------------------------------
@@ -208,6 +208,8 @@ _CSS_STYLE
 
 .navButton
 {
+-webkit-backface-visibility: hidden;
+
 borderx: 2px solid orange;
 
 font-family: "FontAwesome";
@@ -223,6 +225,7 @@ width: auto;
 height: auto;
 
 cursor: pointer;
+-PREFIXED_PROPERTY-user-select: none;
 }
 
 #previous
@@ -306,26 +309,30 @@ height: 40%;
 top: 60%;
 left: 0;
 
-color: white;
-
 font-weight: bold;
 font-family: Lato, sans-serif;
+
+color: #eeeeee;
 }
 
 .index
 {
+-webkit-backface-visibility: hidden;
+
+z-index: 0;
+
 text-shadow: 0 0 0.06em #AAAAAA;
 
 borderx: 2px solid yellow;
 overflow: hidden;
 
 font-size: 400%;
-opacity: 0.5;
 
 display: inline-block;
 position: relative;
 
 cursor: pointer;
+-PREFIXED_PROPERTY-user-select: none;
 }
 
 
@@ -347,13 +354,15 @@ left: 0;
 
 .subpage
 {
+-webkit-backface-visibility: hidden;
+
 borderx: 2px solid magenta;
 overflow: hidden;
 
-opacity: 0.4;
-
+/*
 -PREFIXED_PROPERTY-transform-origin: 50% 100%;
 -PREFIXED_PROPERTY-transform: scale(0.4);
+*/
 
 display: block;
 
@@ -374,37 +383,6 @@ left: 0px;
 
 padding-left: 2em;
 padding-right: 2em;
-}
-
-/*
-.subpage:before
-{
-font-family: "FontAwesome";
-content: "\f137";
-position: absolute;
-bottom: 0px;
-left: 0.5em;
-color: #eeffee;
-}
-
-.subpage:after
-{
-font-family: "FontAwesome";
-content: "\f138";
-position: absolute;
-bottom: 0px;
-right: 0.5em;
-color: #eeffee;
-}
-*/
-
-#subpage0:before
-{
-content: '';
-}
-#subpage4:after
-{
-content: '';
 }
 
 #subpage0
@@ -432,25 +410,11 @@ left: 60%;
 left: 80%;
 }
 
-#scroll.transit
-{
--PREFIXED_PROPERTY-transition-property: transform;
--PREFIXED_PROPERTY-transition-duration: 700ms;
--PREFIXED_PROPERTY-transition-delay: 0s;
--PREFIXED_PROPERTY-transition-timing-function: ease-in;
-}
-
-.subpage
-{
--PREFIXED_PROPERTY-transition-property: opacity, transform;
--PREFIXED_PROPERTY-transition-duration: 500ms;
--PREFIXED_PROPERTY-transition-delay: 0s;
--PREFIXED_PROPERTY-transition-timing-function: ease-in;
-}
-
+/* .subpage */
+#scroll.transit,
 .index
 {
--PREFIXED_PROPERTY-transition-property: transform, opacity;
+-PREFIXED_PROPERTY-transition-property: transform;
 -PREFIXED_PROPERTY-transition-duration: 500ms;
 -PREFIXED_PROPERTY-transition-delay: 0s;
 -PREFIXED_PROPERTY-transition-timing-function: ease-in;
@@ -463,8 +427,8 @@ left: 80%;
 #container[data-subpage="4"] #index4
 {
 -PREFIXED_PROPERTY-transform: scale(1.8);
-opacity: 1;
 z-index: 999;
+color: #ffffff;
 }
 
 #container[data-subpage="0"] #previous
@@ -482,7 +446,6 @@ z-index: 999;
 #container[data-subpage="3"] #subpage3,
 #container[data-subpage="4"] #subpage4
 {
-opacity: 1;
 -PREFIXED_PROPERTY-transform: none;
 }
 

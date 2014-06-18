@@ -5,6 +5,8 @@ div#epb3sldrzr-root
 	overflow: visible !important;
 	overflow-x: scroll !important;
 	overflow-y: visible !important;
+
+	-webkit-overflow-scrolling: touch;
 }
 
 min-width: 110%;
