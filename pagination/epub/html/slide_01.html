@@ -150,6 +150,8 @@ var _PAGE_lastSubPage = 0;
 
 // ===== ===== ===== ===== ===== ===== 
 
+var _PAGE_currentSubPage = 0;
+
 var _PAGE_goto = undefined;
 var _PAGE_gotoFirst = undefined;
 var _PAGE_gotoLast = undefined;
@@ -158,7 +160,6 @@ var _PAGE_gotoPrevious = undefined;
 
 document.addEventListener("DOMContentLoaded", function(e)
 {
-    var _PAGE_currentSubPage = 0;
     var _PAGE_precedentSubPage = 0;
 
     _PAGE_gotoFirst = function()

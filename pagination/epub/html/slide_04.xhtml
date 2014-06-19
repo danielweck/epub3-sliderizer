@@ -214,6 +214,8 @@ var _PAGE_lastSubPage = 0;
 
 // ===== ===== ===== ===== ===== ===== 
 
+var _PAGE_currentSubPage = 0;
+
 var _PAGE_goto = undefined;
 var _PAGE_gotoFirst = undefined;
 var _PAGE_gotoLast = undefined;
@@ -222,7 +224,6 @@ var _PAGE_gotoPrevious = undefined;
 
 document.addEventListener("DOMContentLoaded", function(e)
 {
-    var _PAGE_currentSubPage = 0;
     var _PAGE_precedentSubPage = 0;
 
     _PAGE_gotoFirst = function()
@@ -414,9 +415,10 @@ on both the horizontal and vertical axis.
 </p>
 <p>
 Each "sub-page" is a well-defined logical space where the user can read at his/her own pace, but these individual units flow seamlessly using soft animations.
+This type of visually-enhanced narrative suits ebook layouts where text and illustrations are intertwined (e.g. children's fiction, infographics).
 </p>
 <p>
-This type of visually-enhanced narrative suits ebook layouts where text and illustrations are intertwined (e.g. children's fiction, infographics).
+On touch-enabled devices, finger "drag" gestures (as opposed to "swipe") are captured by the page in order to let the user partially reveal the contents of the next / previous page. When dragging beyond a given scroll threshold, the page automatically turns, and snaps in place. Note that this behaviour currently conflicts with Readium's own touch gestures (which are handled in the parent iframe), but works fine in EPUB3-Sliderizer.
 </p>
 </div>
 
