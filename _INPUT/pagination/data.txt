@@ -198,7 +198,7 @@ Each "sub-page" is a well-defined logical space where the user can read at his/h
 This type of visually-enhanced narrative suits ebook layouts where text and illustrations are intertwined (e.g. children's fiction, infographics).
 </p>
 <p>
-On touch-enabled devices, finger "drag" gestures (as opposed to "swipe") are captured to partially reveal the next / previous page contents. Pass a certain scroll threshold, the page automatically turns and snaps in place. note that this behaviour currently conflicts with Readium's own touch gestures.
+On touch-enabled devices, finger "drag" gestures (as opposed to "swipe") are captured by the page in order to let the user partially reveal the contents of the next / previous page. When dragging beyond a given scroll threshold, the page automatically turns, and snaps in place. Note that this behaviour currently conflicts with Readium's own touch gestures (which are handled in the parent iframe), but works fine in EPUB3-Sliderizer.
 </p>
 
 // --------------------------------------------

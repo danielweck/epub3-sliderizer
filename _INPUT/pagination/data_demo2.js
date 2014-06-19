@@ -60,17 +60,17 @@ var initTouch = function()
     var hammer = new Hammer(container,
     {
         drag: true,
-        dragend: false,
+        dragend: true,
         dragstart: true,
         
-        drag_vertical: false,
-        drag_horizontal: false,
+        drag_vertical: true,
+        drag_horizontal: true,
         
         transform: false,
         transformend: false,
         transformstart: false,
         
-        swipe: false,
+        swipe: true,
         swipeleft: false,
         swiperight: false,
         swipeup: false,
@@ -119,7 +119,7 @@ var initTouch = function()
         if (hammerEvent.gesture)
         {
             //hammerEvent.gesture.preventDefault();
-            hammerEvent.gesture.stopPropagation();
+            //hammerEvent.gesture.stopPropagation();
             
             dragXStart = hammerEvent.gesture.center.pageX;
             dragYStart = hammerEvent.gesture.center.pageY;
@@ -139,17 +139,26 @@ var initTouch = function()
         
         if (hammerEvent.gesture)
         {
-            //hammerEvent.gesture.preventDefault();
-            hammerEvent.gesture.stopPropagation();
-            
             var xOffset = hammerEvent.gesture.center.pageX - dragXStart;
             var yOffset = hammerEvent.gesture.center.pageY - dragYStart;
+
+            if (xOffset == 0
+                || xOffset > 0 && _PAGE_currentSubPage === 0
+                || xOffset < 0 && _PAGE_currentSubPage === 5)
+            {
+                return;
+            }
+            else
+            {
+                hammerEvent.gesture.preventDefault();
+                hammerEvent.gesture.stopPropagation();
+            }
 
             var drag = 100 * Math.abs(xOffset) / canvas.clientWidth;
             var X = 0;
             var Y = 0;
             
-            if (drag >= 8)
+            if (drag >= 5) // TODO: threshold should be based on X vs. Y ratio differences (percentage of viewport edge, depending on drag direction)
             {
                 canDrag = false;
                 
@@ -164,11 +173,11 @@ var initTouch = function()
                     _PAGE_gotoPrevious();
                 }
                 
-                hammerEvent.gesture.stopDetect()
+                hammerEvent.gesture.stopDetect();
                 return;
             }
             
-            if (_PAGE_currentSubPage == 0)
+            if (_PAGE_currentSubPage === 0)
             {
                 if (xOffset < 0) // NEXT
                 {
@@ -181,7 +190,7 @@ var initTouch = function()
                     return;
                 }
             }
-            else if (_PAGE_currentSubPage == 1)
+            else if (_PAGE_currentSubPage === 1)
             {
                 //-25%, 0
 
@@ -196,7 +205,7 @@ var initTouch = function()
                     Y = 0;
                 }
             }
-            else if (_PAGE_currentSubPage == 2)
+            else if (_PAGE_currentSubPage === 2)
             {
                 //-25%, -50%
 
@@ -211,7 +220,7 @@ var initTouch = function()
                     Y = (drag - 50) + "%";
                 }
             }
-            else if (_PAGE_currentSubPage == 3)
+            else if (_PAGE_currentSubPage === 3)
             {
                 //-50%, -50%
 
@@ -226,7 +235,7 @@ var initTouch = function()
                     Y = "-50%";
                 }
             }
-            else if (_PAGE_currentSubPage == 4)
+            else if (_PAGE_currentSubPage === 4)
             {
                 //-66.66%, -50%
 
@@ -241,7 +250,7 @@ var initTouch = function()
                     Y = "-50%";
                 }
             }
-            else if (_PAGE_currentSubPage == 5)
+            else if (_PAGE_currentSubPage === 5)
             {
                 //-66.66%, 0
 
