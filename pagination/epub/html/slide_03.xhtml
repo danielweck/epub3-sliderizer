@@ -185,6 +185,44 @@ document.addEventListener("DOMContentLoaded", function(e)
         _PAGE_goto(_PAGE_currentSubPage-1);
     };
     
+    var throttle = function(func, wait, immediate)
+    {
+        var context, args, result;
+        var timeout = null;
+        var previous = 0;
+        var later = function()
+        {
+            previous = new Date();
+            timeout = null;
+            result = func.apply(context, args);
+        };
+
+        return function()
+        {
+            var now = new Date();
+            if (!previous && immediate === false)
+            {
+                previous = now;
+            }
+            var remaining = wait - (now - previous);
+            context = this;
+            args = arguments;
+    
+            if (remaining <= 0)
+            {
+                clearTimeout(timeout);
+                timeout = null;
+                previous = now;
+                result = func.apply(context, args);
+            }
+            else if (!timeout)
+            {
+                timeout = setTimeout(later, remaining);
+            }
+    
+            return result;
+        };
+    };
     
     _PAGE_goto = function(subPage, initial, previous)
     {
@@ -197,9 +235,11 @@ document.addEventListener("DOMContentLoaded", function(e)
             _skipHashChangeEvent = true;
             window.location.hash = "#page" + (_PAGE_currentSubPage+1);
         }, 100);
-        
+    
         _PAGE_updateDisplay(initial ? true : false, _PAGE_currentSubPage, previous ? true : false);
     };
+    
+    //_PAGE_goto = throttle(_PAGE_goto, 600, true); // true: first one wins, false: last one lives!
 
     var updateFromHash = function()
     {
@@ -271,15 +311,14 @@ console.debug(n);
     var epubReadingSystem_INIT = function()
     {
 // console.debug("navigator.epubReadingSystem: ");
-// console.debug(navigator.epubReadingSystem.PageDirection);
-// console.debug(navigator.epubReadingSystem.on);
+// console.debug(navigator.epubReadingSystem.Pagination.Direction);
     
-        if (!navigator.epubReadingSystem.on)
+        if (!navigator.epubReadingSystem.Pagination)
         {
             return;
         }
 
-        if (navigator.epubReadingSystem.PageDirection === navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS)
+        if (navigator.epubReadingSystem.Pagination.Direction === navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS)
         {
             _PAGE_precedentSubPage = _PAGE_lastSubPage + 1;
             _PAGE_currentSubPage = _PAGE_lastSubPage;
@@ -292,26 +331,26 @@ console.debug(n);
         var pagePreviousNext = function(previous, payload)
         {
             _PAGE_precedentSubPage = _PAGE_currentSubPage;
+
+            var doNothing = previous ? (_PAGE_currentSubPage <= 0) : (_PAGE_currentSubPage >= _PAGE_lastSubPage);
+            if (doNothing)
+            {
+console.debug("NOTHING _PAGE_currentSubPage: " + _PAGE_currentSubPage);
+                return true; // do nothing, just let the Reading System turn the page normally
+            }
             
             if (previous) _PAGE_currentSubPage--;
             else  _PAGE_currentSubPage++;
 
-            var doNothing = previous ? (_PAGE_currentSubPage < 0) : (_PAGE_currentSubPage > _PAGE_lastSubPage);
-            if (doNothing)
-            {
-                if (previous) _PAGE_currentSubPage++;
-                else  _PAGE_currentSubPage--;
-            
-                return true; // do nothing, just let the Reading System turn the page normally
-            }
+console.debug("DO _PAGE_currentSubPage: " + _PAGE_currentSubPage);
 
             _PAGE_goto(_PAGE_currentSubPage, false, previous);
 
             return false; // instruct the Reading System to *not* turn the page
         };
         
-        navigator.epubReadingSystem.on(window, navigator.epubReadingSystem.EVENT_PAGE_NEXT, function(payload){ return pagePreviousNext(false, payload); });
-        navigator.epubReadingSystem.on(window, navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS, function(payload){ return pagePreviousNext(true, payload); });
+        navigator.epubReadingSystem.Pagination.registerEventListener(window, navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT, function(payload){ return pagePreviousNext(false, payload); });
+        navigator.epubReadingSystem.Pagination.registerEventListener(window, navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS, function(payload){ return pagePreviousNext(true, payload); });
     };
 
     epubReadingSystem_WAIT_AND_DO(20, 100, epubReadingSystem_INIT);

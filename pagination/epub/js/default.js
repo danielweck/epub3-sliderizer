@@ -1005,19 +1005,14 @@ Epub3Sliderizer.gotoPrevious = function()
     }
 
     // See updateDirection()
-    // if (navigator.epubReadingSystem
-    //     && navigator.epubReadingSystem.on)
-    // {
-    //     navigator.epubReadingSystem.PageDirection = navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS;
-    // }
     
     if (navigator.epubReadingSystem
-        && navigator.epubReadingSystem.on
+        && navigator.epubReadingSystem.Pagination
         && window.READIUM_activeEvents
-        && window.READIUM_activeEvents[navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS]
-        && window.READIUM_activeEvents[navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS].length)
+        && window.READIUM_activeEvents[navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS]
+        && window.READIUM_activeEvents[navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS].length)
     {
-        window.postMessage({event: navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS}, "*");
+        window.postMessage({event: navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS}, "*");
         return;
     }
     
@@ -1124,19 +1119,14 @@ Epub3Sliderizer.gotoNext = function()
     }
 
     // See updateDirection()
-    // if (navigator.epubReadingSystem
-    //     && navigator.epubReadingSystem.on)
-    // {
-    //     navigator.epubReadingSystem.PageDirection = navigator.epubReadingSystem.EVENT_PAGE_NEXT;
-    // }
-    
+
     if (navigator.epubReadingSystem
-        && navigator.epubReadingSystem.on
+        && navigator.epubReadingSystem.Pagination
         && window.READIUM_activeEvents
-        && window.READIUM_activeEvents[navigator.epubReadingSystem.EVENT_PAGE_NEXT]
-        && window.READIUM_activeEvents[navigator.epubReadingSystem.EVENT_PAGE_NEXT].length)
+        && window.READIUM_activeEvents[navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT]
+        && window.READIUM_activeEvents[navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT].length)
     {
-        window.postMessage({event: navigator.epubReadingSystem.EVENT_PAGE_NEXT}, "*");
+        window.postMessage({event: navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT}, "*");
         return;
     }
     
@@ -2447,9 +2437,16 @@ Epub3Sliderizer.initTouch_ = function(onTap)
         }
 
         if (hammerEvent.gesture)
-        {        
+        {
+console.debug("EPSLIDRZ HAMMER PREVENT DEFAULT");
             hammerEvent.gesture.preventDefault();
             //hammerEvent.gesture.stopPropagation();
+        }
+        else
+        {
+console.debug("EPSLIDRZ HAMMER PREVENT DEFAULT ALT?");
+            //hammerEvent.preventDefault();
+            //hammerEvent.stopPropagation();
         }
     };
 
@@ -2479,6 +2476,12 @@ Epub3Sliderizer.initTouch_ = function(onTap)
         {
             return;
         }
+console.debug("EPSLIDRZ SWIPE (LEFT)");
+        if (navigator.epubReadingSystem && navigator.epubReadingSystem.Pagination && navigator.epubReadingSystem.Pagination.TouchSuspend())
+        {
+console.debug("EPSLIDRZ navigator.epubReadingSystem.Pagination.TouchSuspended (NEXT)");
+            return;
+        }
         
         this.gotoNext();
     };
@@ -2502,6 +2505,12 @@ Epub3Sliderizer.initTouch_ = function(onTap)
         
         if (scrolling)
         {
+            return;
+        }
+console.debug("EPSLIDRZ SWIPE (RIGHT)");
+        if (navigator.epubReadingSystem && navigator.epubReadingSystem.Pagination && navigator.epubReadingSystem.Pagination.TouchSuspend())
+        {
+console.debug("EPSLIDRZ navigator.epubReadingSystem.Pagination.TouchSuspended (PREVIOUS)");
             return;
         }
         
@@ -2530,6 +2539,12 @@ Epub3Sliderizer.initTouch_ = function(onTap)
             return;
         }
         //hammerEvent.gesture.preventDefault();
+console.debug("EPSLIDRZ SWIPE (UP)");
+        if (navigator.epubReadingSystem && navigator.epubReadingSystem.Pagination && navigator.epubReadingSystem.Pagination.TouchSuspend())
+        {
+console.debug("EPSLIDRZ navigator.epubReadingSystem.Pagination.TouchSuspended (UP)");
+            return;
+        }
         
         this.nextIncremental(true);
     };
@@ -2556,6 +2571,12 @@ Epub3Sliderizer.initTouch_ = function(onTap)
             return;
         }
         //hammerEvent.gesture.preventDefault();
+console.debug("EPSLIDRZ SWIPE (DOWN)");
+        if (navigator.epubReadingSystem && navigator.epubReadingSystem.Pagination && navigator.epubReadingSystem.Pagination.TouchSuspend())
+        {
+console.debug("EPSLIDRZ navigator.epubReadingSystem.Pagination.TouchSuspended (DOWN)");
+            return;
+        }
         
         this.nextIncremental(false);
     };
@@ -3193,15 +3214,15 @@ Epub3Sliderizer.onOrientationChange = function()
 
 Epub3Sliderizer.updateDirection = function(none)
 {
-    if (!navigator.epubReadingSystem) return;
+    if (!navigator.epubReadingSystem || !navigator.epubReadingSystem.Pagination) return;
 
     if (none)
     {
-        navigator.epubReadingSystem.PageDirection = undefined;
+        navigator.epubReadingSystem.Pagination.Direction = undefined;
     }
     else
     {
-        navigator.epubReadingSystem.PageDirection = this.reverse ? navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS : navigator.epubReadingSystem.EVENT_PAGE_NEXT;
+        navigator.epubReadingSystem.Pagination.Direction = this.reverse ? navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS : navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT;
     }
 }
 
@@ -4278,8 +4299,53 @@ Epub3Sliderizer.init = function()
                 this.epubReadingSystem.fake = true;
             }
 
-            navigator.epubReadingSystem.EVENT_PAGE_NEXT = "epubReadingSystem.EVENT_PAGE_NEXT";
-            navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS = "epubReadingSystem.EVENT_PAGE_PREVIOUS";
+            navigator.epubReadingSystem.Pagination = {};
+            
+            var _touchSuspendWindows = [];
+            navigator.epubReadingSystem.Pagination.TouchSuspend = function(win, suspend)
+            {
+                if (typeof suspend !== "undefined")
+                {
+                    if (!win) return;
+
+                    if (suspend)
+                    {
+                        for(var i = _touchSuspendWindows.length - 1; i >= 0; i--)
+                        {
+                            var w = _touchSuspendWindows[i];
+                            if (win === w)
+                            {
+                                return true;
+                            }
+                        }
+                    
+                        _touchSuspendWindows.push(win);
+                
+                        win.addEventListener("unload", function()
+                        {
+                            navigator.epubReadingSystem.Pagination.TouchSuspend(win, false);
+                        });
+                    }
+                    else
+                    {
+                        for(var i = _touchSuspendWindows.length - 1; i >= 0; i--)
+                        {
+                            var w = _touchSuspendWindows[i];
+                            if (win === w)
+                            {
+                                _touchSuspendWindows[i] = undefined;
+                                _touchSuspendWindows.splice(i, 1);
+                            }
+                        }
+                    }
+                }
+            
+                return _touchSuspendWindows.length > 0;
+            };
+        
+                
+            navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT = "epubReadingSystem.Pagination.EVENT_PAGE_NEXT";
+            navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS = "epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS";
 
             var _onOff = function(off, win, event, responder)
             {
@@ -4288,8 +4354,8 @@ Epub3Sliderizer.init = function()
                     return false;
                 }
 
-                if (event !== navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS
-                    && event !== navigator.epubReadingSystem.EVENT_PAGE_NEXT)
+                if (event !== navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS
+                    && event !== navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT)
                 {
                     return false;
                 }
@@ -4307,7 +4373,7 @@ Epub3Sliderizer.init = function()
                     {
                         if (!win.READIUM_activeEvents) return;
                     
-                        var evArr = [navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS, navigator.epubReadingSystem.EVENT_PAGE_NEXT];
+                        var evArr = [navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS, navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT];
                         for (var evI in evArr)
                         {
                             var ev = evArr[evI];
@@ -4363,11 +4429,11 @@ Epub3Sliderizer.init = function()
                 
                         if (response) // normal page turn allowed
                         {
-                            if (event === navigator.epubReadingSystem.EVENT_PAGE_PREVIOUS)
+                            if (event === navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS)
                             {
                                 Epub3Sliderizer.gotoPreviousGo();
                             }
-                            else if (event === navigator.epubReadingSystem.EVENT_PAGE_NEXT)
+                            else if (event === navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT)
                             {
                                 Epub3Sliderizer.gotoNextGo();
                             }
@@ -4382,11 +4448,11 @@ Epub3Sliderizer.init = function()
                 return true;
             };
         
-            navigator.epubReadingSystem.on = function(win, event, responder)
+            navigator.epubReadingSystem.Pagination.registerEventListener = function(win, event, responder)
             {
                 return _onOff(false, win, event, responder);
             };
-            navigator.epubReadingSystem.off = function(win, event, responder)
+            navigator.epubReadingSystem.Pagination.unregisterEventListener = function(win, event, responder)
             {
                 return _onOff(true, win, event, responder);
             };
