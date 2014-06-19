@@ -31,6 +31,8 @@ height: VIEWPORT_HEIGHTpx;
 {
 borderx: 4px solid blue;
 
+-webkit-backface-visibility: hidden;
+
     position: relative;
     left: 0px;
     top: 0px;
@@ -46,6 +48,8 @@ borderx: 4px solid blue;
 .unit
 {
     borderx: 1px solid magenta;
+
+    -webkit-transform: translate3d(0, 0, 0);
 
     overflow: visible;
     

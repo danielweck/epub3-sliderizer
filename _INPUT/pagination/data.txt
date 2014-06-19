@@ -194,10 +194,11 @@ The next sequence of "pages" demonstrates more sophisticated transitions between
 on both the horizontal and vertical axis.
 </p>
 <p>
-Each "sub-page" is a well-defined logical space where the user can read at his/her own pace, but these individual units flow seamlessly using soft animations.
+Each "sub-page" is a well-defined logical space where the user can read at his/her own pace, but these individual units flow seamlessly using soft animations. 
+This type of visually-enhanced narrative suits ebook layouts where text and illustrations are intertwined (e.g. children's fiction, infographics).
 </p>
 <p>
-This type of visually-enhanced narrative suits ebook layouts where text and illustrations are intertwined (e.g. children's fiction, infographics).
+On touch-enabled devices, finger "drag" gestures (as opposed to "swipe") are captured to partially reveal the next / previous page contents. Pass a certain scroll threshold, the page automatically turns and snaps in place. note that this behaviour currently conflicts with Readium's own touch gestures.
 </p>
 
 // --------------------------------------------

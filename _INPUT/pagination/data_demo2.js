@@ -145,11 +145,11 @@ var initTouch = function()
             var xOffset = hammerEvent.gesture.center.pageX - dragXStart;
             var yOffset = hammerEvent.gesture.center.pageY - dragYStart;
 
-            var drag = 100 * Math.abs(xOffset) / container.clientWidth;
+            var drag = 100 * Math.abs(xOffset) / canvas.clientWidth;
             var X = 0;
             var Y = 0;
             
-            if (drag >= 12)
+            if (drag >= 8)
             {
                 canDrag = false;
                 
