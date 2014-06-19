@@ -2339,8 +2339,17 @@ Epub3Sliderizer.initTouch_ = function(onTap)
     }, true);
 
 
-    if (Hammer.defaults && Hammer.defaults.stop_browser_behavior && Hammer.defaults.stop_browser_behavior.userSelect)
-        delete Hammer.defaults.stop_browser_behavior.userSelect;
+    // if (Hammer.defaults && Hammer.defaults.stop_browser_behavior)
+    // {
+    //     if (Hammer.defaults.stop_browser_behavior.userSelect)
+    //     {
+    //         delete Hammer.defaults.stop_browser_behavior.userSelect;
+    //     }
+    //     else
+    //     {
+    //         delete Hammer.defaults.stop_browser_behavior;
+    //     }
+    // }
 
     var hammer = new Hammer(document.documentElement,
     {
