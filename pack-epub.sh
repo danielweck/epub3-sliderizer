@@ -39,4 +39,4 @@ fi
 
 mv "${root}/_OUTPUT/content/EPUB3.epub" "${root}/_OUTPUT/content/${EPUB_FILENAME}.epub"
 
-open "${root}/_OUTPUT/content/"
+#open "${root}/_OUTPUT/content/"
