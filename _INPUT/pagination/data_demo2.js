@@ -32,7 +32,7 @@ _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
     }
 };
 
-var initTouch = function()
+var initTouch = function(hammerAlreadyLoaded)
 {
     if (!window.Hammer) return;
     
@@ -57,6 +57,8 @@ var initTouch = function()
     //     }
     // }
 
+    var supportSwipe = hammerAlreadyLoaded ? true : false;
+
     var hammer = new Hammer(container,
     {
         drag: true,
@@ -70,11 +72,11 @@ var initTouch = function()
         transformend: false,
         transformstart: false,
         
-        swipe: true,
-        swipeleft: false,
-        swiperight: false,
-        swipeup: false,
-        swipedown: false,
+        swipe: supportSwipe, // important!
+        swipeleft: supportSwipe,
+        swiperight: supportSwipe,
+        swipeup: supportSwipe,
+        swipedown: supportSwipe,
         
         tap: false,
         tap_double: false,
@@ -96,6 +98,12 @@ var initTouch = function()
     hammer.on("dragstart",
     function(hammerEvent)
     {
+        if (navigator.epubReadingSystem && navigator.epubReadingSystem.Pagination && navigator.epubReadingSystem.Pagination.TouchSuspend)
+        {
+console.debug("TouchSuspend(false) 4");
+            navigator.epubReadingSystem.Pagination.TouchSuspend(window, false);
+        }
+        
         canDrag = true;
 
         canvas.style.MozTransform = null;
@@ -118,9 +126,6 @@ var initTouch = function()
         
         if (hammerEvent.gesture)
         {
-            //hammerEvent.gesture.preventDefault();
-            //hammerEvent.gesture.stopPropagation();
-            
             dragXStart = hammerEvent.gesture.center.pageX;
             dragYStart = hammerEvent.gesture.center.pageY;
         }
@@ -142,17 +147,38 @@ var initTouch = function()
             var xOffset = hammerEvent.gesture.center.pageX - dragXStart;
             var yOffset = hammerEvent.gesture.center.pageY - dragYStart;
 
-            if (xOffset == 0
-                || xOffset > 0 && _PAGE_currentSubPage === 0
-                || xOffset < 0 && _PAGE_currentSubPage === 5)
+            if (xOffset == 0)
             {
                 return;
             }
-            else
+            else if (xOffset > 0 && _PAGE_currentSubPage === 0
+                || xOffset < 0 && _PAGE_currentSubPage === 5)
             {
-                hammerEvent.gesture.preventDefault();
-                hammerEvent.gesture.stopPropagation();
+                // Reached edge => let the browser / reading system's own Hammer instance on this same window handle the drag (which may lead to a page turn swipe), otherwise see stopPropagation below
+                
+                canDrag = false;
+                
+                if (navigator.epubReadingSystem && navigator.epubReadingSystem.Pagination && navigator.epubReadingSystem.Pagination.TouchSuspend)
+                {
+console.debug("TouchSuspend(false) 1");
+                    navigator.epubReadingSystem.Pagination.TouchSuspend(window, false);
+                }
+                
+                //hammerEvent.gesture.stopDetect();
+                return;
             }
+
+            if (navigator.epubReadingSystem && navigator.epubReadingSystem.Pagination && navigator.epubReadingSystem.Pagination.TouchSuspend)
+            {
+console.debug("TouchSuspend(true)");
+                navigator.epubReadingSystem.Pagination.TouchSuspend(window, true);
+            }
+                
+            //hammerEvent.preventDefault();
+            //hammerEvent.stopPropagation();
+            
+            //hammerEvent.gesture.preventDefault();
+            hammerEvent.gesture.stopPropagation(); // EPUB3-Sliderizer's own Hammer top-level (document) handler will not receive the event, which remains within this scope (page content)
 
             var drag = 100 * Math.abs(xOffset) / canvas.clientWidth;
             var X = 0;
@@ -163,6 +189,14 @@ var initTouch = function()
                 canDrag = false;
                 
                 restore();
+//
+//                 if (navigator.epubReadingSystem && navigator.epubReadingSystem.Pagination && navigator.epubReadingSystem.Pagination.TouchSuspend)
+//                 {
+// console.debug("TouchSuspend(false) 2");
+//                     navigator.epubReadingSystem.Pagination.TouchSuspend(window, false);
+//                 }
+//
+//                 hammerEvent.gesture.stopDetect();
                 
                 if (xOffset <= 0)
                 {
@@ -173,7 +207,6 @@ var initTouch = function()
                     _PAGE_gotoPrevious();
                 }
                 
-                hammerEvent.gesture.stopDetect();
                 return;
             }
             
@@ -282,6 +315,12 @@ var initTouch = function()
     function(hammerEvent)
     {
         restore();
+
+        if (navigator.epubReadingSystem && navigator.epubReadingSystem.Pagination && navigator.epubReadingSystem.Pagination.TouchSuspend)
+        {
+console.debug("TouchSuspend(false) 3");
+            navigator.epubReadingSystem.Pagination.TouchSuspend(window, false);
+        }
     }
     );
     
@@ -312,7 +351,7 @@ var checkInitHammer = function(init)
     if (window.Hammer)
     {
         console.debug("HAMMER already loaded.");
-        init();
+        init(true);
         return;
     }
 
