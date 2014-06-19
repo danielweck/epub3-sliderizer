@@ -7,6 +7,9 @@ _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
     
     container.setAttribute("data-subpage", currentSubPage);
 
+    container.classList.add(backwards ? "backwards" : "forwards");
+    container.classList.remove(!backwards ? "backwards" : "forwards");
+    
     if (!initialDisplay)
     {
         container.classList.add("transit");
