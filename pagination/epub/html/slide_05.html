@@ -296,13 +296,42 @@ transform: translate(-6.66%, 0);
 #unit-2 img
 {
 
--webkit-transform: translate(0, 300px);
--moz-transform: translate(0, 300px);
--ms-transform: translate(0, 300px);
--o-transform: translate(0, 300px);
-transform: translate(0, 300px);
+-webkit-transform: translate(0, 350px);
+-moz-transform: translate(0, 350px);
+-ms-transform: translate(0, 350px);
+-o-transform: translate(0, 350px);
+transform: translate(0, 350px);
 
-opacity: 0.4;
+opacity: 0;
+
+
+-webkit-transition-property: transform, opacity;
+-moz-transition-property: transform, opacity;
+-ms-transition-property: transform, opacity;
+-o-transition-property: transform, opacity;
+transition-property: transform, opacity;
+
+
+-webkit-transition-duration: 1500ms;
+-moz-transition-duration: 1500ms;
+-ms-transition-duration: 1500ms;
+-o-transition-duration: 1500ms;
+transition-duration: 1500ms;
+
+
+-webkit-transition-delay: 500ms;
+-moz-transition-delay: 500ms;
+-ms-transition-delay: 500ms;
+-o-transition-delay: 500ms;
+transition-delay: 500ms;
+
+
+-webkit-transition-timing-function: ease-out;
+-moz-transition-timing-function: ease-out;
+-ms-transition-timing-function: ease-out;
+-o-transition-timing-function: ease-out;
+transition-timing-function: ease-out;
+
 }
 
 #container[data-subpage="2"] #unit-2 img,
@@ -316,40 +345,6 @@ opacity: 0.4;
 transform: translate(0, 0);
 
 opacity: 1;
-}
-
-#container[data-subpage="1"] #unit-2 img,
-#container[data-subpage="2"] #unit-2 img,
-#container[data-subpage="3"] #unit-2 img
-{
-
--webkit-transition-property: transform, opacity;
--moz-transition-property: transform, opacity;
--ms-transition-property: transform, opacity;
--o-transition-property: transform, opacity;
-transition-property: transform, opacity;
-
-
--webkit-transition-duration: 1000ms;
--moz-transition-duration: 1000ms;
--ms-transition-duration: 1000ms;
--o-transition-duration: 1000ms;
-transition-duration: 1000ms;
-
-
--webkit-transition-delay: 200ms;
--moz-transition-delay: 200ms;
--ms-transition-delay: 200ms;
--o-transition-delay: 200ms;
-transition-delay: 200ms;
-
-
--webkit-transition-timing-function: ease-in-out;
--moz-transition-timing-function: ease-in-out;
--ms-transition-timing-function: ease-in-out;
--o-transition-timing-function: ease-in-out;
-transition-timing-function: ease-in-out;
-
 }
 
 #unit9 img
