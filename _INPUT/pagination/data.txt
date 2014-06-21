@@ -57,11 +57,42 @@ html:not(#epb3sldrzr-NavDoc) img#epb3sldrzr-logo
     display: none;
 }
 
+.-epub-media-overlay-active
+{
+background-color: green;
+color: white !important;
+}
+
 // --------------------------------------------
 _JS_SCRIPT
 
 _INCLUDE
 data.js
+
+// --------------------------------------------
+_MO_NARRATOR
+
+Pigs
+
+// --------------------------------------------
+_MO_DUR
+
+00:00:25.000
+
+// --------------------------------------------
+_MO_AUDIO_FILES
+
+1_The_Story_of_the_Three_Little_.mp3
+
+// --------------------------------------------
+_MO_ACTIVE
+
+-epub-media-overlay-active
+
+// --------------------------------------------
+_MO_PLAYBACK_ACTIVE
+
+-epub-media-overlay-playing
 
 // #########################################################
 // #########################################################
@@ -266,3 +297,91 @@ _JS_SCRIPT
 _INCLUDE
 
 data_demo2.js
+
+// --------------------------------------------
+_MO_DUR
+
+25.000
+
+// --------------------------------------------
+_MO_SMIL
+
+AUDIO 1_The_Story_of_the_Three_Little_.mp3
+
+TXT #mo1
+END 01.000
+
+TXT #mo2
+END 02.000
+
+TXT #mo3
+END 03.000
+
+TXT #mo4
+END 04.000
+
+TXT #mo5
+END 05.000
+
+TXT #mo6
+END 06.000
+
+TXT #mo7
+END 07.000
+
+TXT #mo8
+END 08.000
+
+TXT #mo9
+END 09.000
+
+TXT #mo10
+END 10.000
+
+TXT #mo11
+END 11.000
+
+TXT #mo12
+END 12.000
+
+TXT #mo13
+END 13.000
+
+TXT #mo14
+END 14.000
+
+TXT #mo15
+END 15.000
+
+TXT #mo16
+END 16.000
+
+TXT #mo17
+END 17.000
+
+TXT #mo18
+END 18.000
+
+TXT #mo19
+END 19.000
+
+TXT #mo20
+END 20.000
+
+TXT #mo21
+END 21.000
+
+TXT #mo22
+END 22.000
+
+TXT #mo23
+END 23.000
+
+TXT #mo24
+END 24.000
+
+TXT #mo25
+END 25.000
+
+TXT #mo26
+END 26.000
