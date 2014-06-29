@@ -3062,6 +3062,9 @@ Epub3Sliderizer.getRectFit = function(w, h, fitWidth)
 // 2048 x 1536 (Retina)
 // 2400 x 1860
 
+// ratio 16:9 (1.77778)
+// 1366 x 768
+
 Epub3Sliderizer.onResize = function()
 {
     if (this.isEpubReadingSystem() || this.reflow)
@@ -4300,6 +4303,54 @@ Epub3Sliderizer.init = function()
             }
 
             navigator.epubReadingSystem.Pagination = {};
+            
+            var _mapWindowActivePage = [];
+            navigator.epubReadingSystem.Pagination.ActivePage = function(win, index, total)
+            {
+                if (!win) return;
+                
+                if (typeof index !== "undefined" && typeof total !== "undefined")
+                {
+                    var data = navigator.epubReadingSystem.Pagination.ActivePage(win);
+                    if (!data) // first time
+                    {
+console.debug("WIN UNLOAD HANDLER FOR SUB PAGE TRACKING");
+                        win.addEventListener("unload", function()
+                        {
+                            for(var i = _mapWindowActivePage.length - 1; i >= 0; i--)
+                            {
+                                var data = _mapWindowActivePage[i];
+                                if (win === data.window)
+                                {
+console.debug("DEACTIVE WIN: " + data.index + " / " + data.total);
+                                    _mapWindowActivePage[i] = undefined;
+                                    _mapWindowActivePage.splice(i, 1);
+                                }
+                            }
+                        });
+                    
+                        _mapWindowActivePage.push({window: win, index: index, total: total});
+                    }
+                    else
+                    {
+                        data.index = index;
+                        data.total = total;
+                    }
+                }
+
+                for(var i = _mapWindowActivePage.length - 1; i >= 0; i--)
+                {
+                    var data = _mapWindowActivePage[i];
+
+                    if (win === data.window)
+                    {
+console.debug("ACTIVE PAGE: " + data.index + " / " + data.total);
+                        return data;
+                    }
+                }
+                
+                return undefined;
+            };
             
             var _touchSuspendWindows = [];
             navigator.epubReadingSystem.Pagination.TouchSuspend = function(win, suspend)
