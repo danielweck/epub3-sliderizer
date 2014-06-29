@@ -13,8 +13,7 @@ var _PAGE_lastSubPage = 0;
 
 var _PAGE_elementActivate = function(elementId)
 {
-    console.debug("_PAGE_elementActivate NOOP");
-    console.debug(elementId);
+    console.debug("_PAGE_elementActivate: " + elementId);
 };
 
 // ===== ===== ===== ===== ===== ===== 
