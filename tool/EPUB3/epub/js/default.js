@@ -3754,13 +3754,34 @@ Epub3Sliderizer.invalidateIncremental = function(enableAuto, reanimate, auto)
                 }
             }
             else if (i === that.increment)
-            {                
+            {
+                if (navigator.epubReadingSystem
+                    && navigator.epubReadingSystem.Pagination
+                    && window.READIUM_activeEvents
+                    && window.READIUM_activeEvents[navigator.epubReadingSystem.Pagination.EVENT_SUBPAGE_ELEMENT_ACTIVATE]
+                    && window.READIUM_activeEvents[navigator.epubReadingSystem.Pagination.EVENT_SUBPAGE_ELEMENT_ACTIVATE].length)
+                {
+                    var elemID = elem.getAttribute("id");
+                    if (!elemID)
+                    {
+                        do
+                        {
+                            var N = 4; // length of random ID
+                            elemID = "_" + new Array(N+1).join((Math.random().toString(36)+'00000000000000000').slice(2, 18)).slice(0, N);
+                        }
+                        while (document.getElementById(elemID));
+                        
+                        elem.setAttribute("id", elemID);
+                    }
+                    
+                    window.postMessage({event: navigator.epubReadingSystem.Pagination.EVENT_SUBPAGE_ELEMENT_ACTIVATE, elementId: elemID}, "*");
+                }
+                
                 elem.parentNode.setAttribute("incremental-active", "true");
                 that.checkIncrementalAncestorChain(elem.parentNode, true);
                 
                 elem.setAttribute("aria-selected", "true");
                 elem.removeAttribute("aria-activedescendant");
-
                 
                 if (fontSize === that.defaultFontSize)
                 {
@@ -4304,32 +4325,32 @@ Epub3Sliderizer.init = function()
 
             navigator.epubReadingSystem.Pagination = {};
             
-            var _mapWindowActivePage = [];
-            navigator.epubReadingSystem.Pagination.ActivePage = function(win, index, total)
+            var _mapWindowActiveSubPage = [];
+            navigator.epubReadingSystem.Pagination.ActiveSubPage = function(win, index, total)
             {
                 if (!win) return;
                 
                 if (typeof index !== "undefined" && typeof total !== "undefined")
                 {
-                    var data = navigator.epubReadingSystem.Pagination.ActivePage(win);
+                    var data = navigator.epubReadingSystem.Pagination.ActiveSubPage(win);
                     if (!data) // first time
                     {
 console.debug("WIN UNLOAD HANDLER FOR SUB PAGE TRACKING");
                         win.addEventListener("unload", function()
                         {
-                            for(var i = _mapWindowActivePage.length - 1; i >= 0; i--)
+                            for(var i = _mapWindowActiveSubPage.length - 1; i >= 0; i--)
                             {
-                                var data = _mapWindowActivePage[i];
+                                var data = _mapWindowActiveSubPage[i];
                                 if (win === data.window)
                                 {
 console.debug("DEACTIVE WIN: " + data.index + " / " + data.total);
-                                    _mapWindowActivePage[i] = undefined;
-                                    _mapWindowActivePage.splice(i, 1);
+                                    _mapWindowActiveSubPage[i] = undefined;
+                                    _mapWindowActiveSubPage.splice(i, 1);
                                 }
                             }
                         });
                     
-                        _mapWindowActivePage.push({window: win, index: index, total: total});
+                        _mapWindowActiveSubPage.push({window: win, index: index, total: total});
                     }
                     else
                     {
@@ -4338,9 +4359,9 @@ console.debug("DEACTIVE WIN: " + data.index + " / " + data.total);
                     }
                 }
 
-                for(var i = _mapWindowActivePage.length - 1; i >= 0; i--)
+                for(var i = _mapWindowActiveSubPage.length - 1; i >= 0; i--)
                 {
-                    var data = _mapWindowActivePage[i];
+                    var data = _mapWindowActiveSubPage[i];
 
                     if (win === data.window)
                     {
@@ -4397,6 +4418,8 @@ console.debug("ACTIVE PAGE: " + data.index + " / " + data.total);
                 
             navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT = "epubReadingSystem.Pagination.EVENT_PAGE_NEXT";
             navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS = "epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS";
+            
+            navigator.epubReadingSystem.Pagination.EVENT_SUBPAGE_ELEMENT_ACTIVATE = "epubReadingSystem.Pagination.EVENT_SUBPAGE_ELEMENT_ACTIVATE";
 
             var _onOff = function(off, win, event, responder)
             {
@@ -4406,7 +4429,8 @@ console.debug("ACTIVE PAGE: " + data.index + " / " + data.total);
                 }
 
                 if (event !== navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS
-                    && event !== navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT)
+                    && event !== navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT
+                    && event !== navigator.epubReadingSystem.Pagination.EVENT_SUBPAGE_ELEMENT_ACTIVATE)
                 {
                     return false;
                 }
@@ -4476,18 +4500,27 @@ console.debug("ACTIVE PAGE: " + data.index + " / " + data.total);
                 
                         if (!payload || !payload.event || payload.event !== event) return;
                     
-                        var response = responder(); // TODO payload?
-                
-                        if (response) // normal page turn allowed
+                        if (event === navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS
+                            || event === navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT)
                         {
-                            if (event === navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS)
+                            var response = responder(); // TODO payload?
+                
+                            if (response) // normal page turn allowed
                             {
-                                Epub3Sliderizer.gotoPreviousGo();
+                                if (event === navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS)
+                                {
+                                    Epub3Sliderizer.gotoPreviousGo();
+                                }
+                                else if (event === navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT)
+                                {
+                                    Epub3Sliderizer.gotoNextGo();
+                                }
                             }
-                            else if (event === navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT)
-                            {
-                                Epub3Sliderizer.gotoNextGo();
-                            }
+                        }
+                        else if (event === navigator.epubReadingSystem.Pagination.EVENT_SUBPAGE_ELEMENT_ACTIVATE)
+                        {
+                            if (!payload.elementId) return;
+                            responder(payload.elementId);
                         }
                     };
                 

@@ -1,9 +1,21 @@
 
 // ===== OVERRIDE FOR EACH XHTML PAGE:
 
-var _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards) {};
+var _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
+{
+    console.debug("_PAGE_updateDisplay NOOP");
+    console.debug("initialDisplay: " + initialDisplay);
+    console.debug("currentSubPage: " + currentSubPage);
+    console.debug("backwards: " + backwards);
+};
 
 var _PAGE_lastSubPage = 0;
+
+var _PAGE_elementActivate = function(elementId)
+{
+    console.debug("_PAGE_elementActivate NOOP");
+    console.debug(elementId);
+};
 
 // ===== ===== ===== ===== ===== ===== 
 
@@ -22,7 +34,7 @@ var _PAGE_updateDisplay_INTERNAL = function(initialDisplay, currentSubPage, back
     
     if (navigator.epubReadingSystem && navigator.epubReadingSystem.Pagination)
     {
-        navigator.epubReadingSystem.Pagination.ActivePage(window, currentSubPage, _PAGE_lastSubPage+1);
+        navigator.epubReadingSystem.Pagination.ActiveSubPage(window, currentSubPage, _PAGE_lastSubPage+1);
     }
 };
 
@@ -216,6 +228,8 @@ console.debug("DO _PAGE_currentSubPage: " + _PAGE_currentSubPage);
         
         navigator.epubReadingSystem.Pagination.registerEventListener(window, navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT, function(payload){ return pagePreviousNext(false, payload); });
         navigator.epubReadingSystem.Pagination.registerEventListener(window, navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS, function(payload){ return pagePreviousNext(true, payload); });
+
+        navigator.epubReadingSystem.Pagination.registerEventListener(window, navigator.epubReadingSystem.Pagination.EVENT_SUBPAGE_ELEMENT_ACTIVATE, function(payload){ _PAGE_elementActivate(payload); });
     };
 
     epubReadingSystem_WAIT_AND_DO(20, 100, epubReadingSystem_INIT);
