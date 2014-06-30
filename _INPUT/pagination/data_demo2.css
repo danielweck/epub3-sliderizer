@@ -303,61 +303,61 @@ opacity: 1;
     bottom: 1em;
 }
 
-#container[data-subpage="0"] #page2,
-#container[data-subpage="0"] #page3,
-#container[data-subpage="0"] #page4,
-#container[data-subpage="0"] #page5,
-#container[data-subpage="0"] #page6
+#container[data-subpage="0"] #subpage2,
+#container[data-subpage="0"] #subpage3,
+#container[data-subpage="0"] #subpage4,
+#container[data-subpage="0"] #subpage5,
+#container[data-subpage="0"] #subpage6
 {
     /* visibility: hidden; */
     opacity: 0;
 }
 
-#container[data-subpage="1"] #page1,
-#container[data-subpage="1"] #page3,
-#container[data-subpage="1"] #page4,
-#container[data-subpage="1"] #page5,
-#container[data-subpage="1"] #page6
+#container[data-subpage="1"] #subpage1,
+#container[data-subpage="1"] #subpage3,
+#container[data-subpage="1"] #subpage4,
+#container[data-subpage="1"] #subpage5,
+#container[data-subpage="1"] #subpage6
 {
     /* visibility: hidden; */
     opacity: 0;
 }
 
-#container[data-subpage="2"] #page1,
-#container[data-subpage="2"] #page2,
-#container[data-subpage="2"] #page4,
-#container[data-subpage="2"] #page5,
-#container[data-subpage="2"] #page6
+#container[data-subpage="2"] #subpage1,
+#container[data-subpage="2"] #subpage2,
+#container[data-subpage="2"] #subpage4,
+#container[data-subpage="2"] #subpage5,
+#container[data-subpage="2"] #subpage6
 {
     /* visibility: hidden; */
     opacity: 0;
 }
 
-#container[data-subpage="3"] #page1,
-#container[data-subpage="3"] #page2,
-#container[data-subpage="3"] #page3,
-#container[data-subpage="3"] #page5,
-#container[data-subpage="3"] #page6
+#container[data-subpage="3"] #subpage1,
+#container[data-subpage="3"] #subpage2,
+#container[data-subpage="3"] #subpage3,
+#container[data-subpage="3"] #subpage5,
+#container[data-subpage="3"] #subpage6
 {
     /* visibility: hidden; */
     opacity: 0;
 }
 
-#container[data-subpage="4"] #page1,
-#container[data-subpage="4"] #page2,
-#container[data-subpage="4"] #page3,
-#container[data-subpage="4"] #page4,
-#container[data-subpage="4"] #page6
+#container[data-subpage="4"] #subpage1,
+#container[data-subpage="4"] #subpage2,
+#container[data-subpage="4"] #subpage3,
+#container[data-subpage="4"] #subpage4,
+#container[data-subpage="4"] #subpage6
 {
     /* visibility: hidden; */
     opacity: 0;
 }
 
-#container[data-subpage="5"] #page1,
-#container[data-subpage="5"] #page2,
-#container[data-subpage="5"] #page3,
-#container[data-subpage="5"] #page4,
-#container[data-subpage="5"] #page5
+#container[data-subpage="5"] #subpage1,
+#container[data-subpage="5"] #subpage2,
+#container[data-subpage="5"] #subpage3,
+#container[data-subpage="5"] #subpage4,
+#container[data-subpage="5"] #subpage5
 {
     /* visibility: hidden; */
     opacity: 0;

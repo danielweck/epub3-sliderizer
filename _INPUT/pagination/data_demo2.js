@@ -32,6 +32,45 @@ _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
     }
 };
 
+_PAGE_elementActivate = function(elementId)
+{
+    var elem = document.getElementById(elementId);
+    if (!elem) return;
+    
+console.debug("_PAGE_elementActivate: " + elementId);
+//console.debug(elem);
+
+    var parent = elem;
+    do
+    {
+        var id = parent.getAttribute("id");
+        if (id)
+        {
+            var matches = id.match(/(subpage)([0-9]+)/);
+            if (matches)
+            {
+console.debug("_1");
+                var n = parseInt(matches[2]);
+                n--;
+                
+                if (n >= 0 && n <= _PAGE_lastSubPage)
+                {
+console.debug("_3");
+                    if (n !== _PAGE_currentSubPage)
+                    {
+console.debug(n);
+                        _PAGE_goto(n);
+                        return;
+                    }
+                }
+            }
+        }
+        
+        parent = parent.parentNode;
+    }
+    while (parent && parent.getAttribute);
+};
+
 var initTouch = function(hammerAlreadyLoaded)
 {
     if (!window.Hammer) return;
