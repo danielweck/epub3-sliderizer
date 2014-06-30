@@ -680,61 +680,61 @@ transform: translate(0,-1000px) rotate(0);
     bottom: 1em;
 }
 
-#container[data-subpage="0"] #page2,
-#container[data-subpage="0"] #page3,
-#container[data-subpage="0"] #page4,
-#container[data-subpage="0"] #page5,
-#container[data-subpage="0"] #page6
+#container[data-subpage="0"] #subpage2,
+#container[data-subpage="0"] #subpage3,
+#container[data-subpage="0"] #subpage4,
+#container[data-subpage="0"] #subpage5,
+#container[data-subpage="0"] #subpage6
 {
     /* visibility: hidden; */
     opacity: 0;
 }
 
-#container[data-subpage="1"] #page1,
-#container[data-subpage="1"] #page3,
-#container[data-subpage="1"] #page4,
-#container[data-subpage="1"] #page5,
-#container[data-subpage="1"] #page6
+#container[data-subpage="1"] #subpage1,
+#container[data-subpage="1"] #subpage3,
+#container[data-subpage="1"] #subpage4,
+#container[data-subpage="1"] #subpage5,
+#container[data-subpage="1"] #subpage6
 {
     /* visibility: hidden; */
     opacity: 0;
 }
 
-#container[data-subpage="2"] #page1,
-#container[data-subpage="2"] #page2,
-#container[data-subpage="2"] #page4,
-#container[data-subpage="2"] #page5,
-#container[data-subpage="2"] #page6
+#container[data-subpage="2"] #subpage1,
+#container[data-subpage="2"] #subpage2,
+#container[data-subpage="2"] #subpage4,
+#container[data-subpage="2"] #subpage5,
+#container[data-subpage="2"] #subpage6
 {
     /* visibility: hidden; */
     opacity: 0;
 }
 
-#container[data-subpage="3"] #page1,
-#container[data-subpage="3"] #page2,
-#container[data-subpage="3"] #page3,
-#container[data-subpage="3"] #page5,
-#container[data-subpage="3"] #page6
+#container[data-subpage="3"] #subpage1,
+#container[data-subpage="3"] #subpage2,
+#container[data-subpage="3"] #subpage3,
+#container[data-subpage="3"] #subpage5,
+#container[data-subpage="3"] #subpage6
 {
     /* visibility: hidden; */
     opacity: 0;
 }
 
-#container[data-subpage="4"] #page1,
-#container[data-subpage="4"] #page2,
-#container[data-subpage="4"] #page3,
-#container[data-subpage="4"] #page4,
-#container[data-subpage="4"] #page6
+#container[data-subpage="4"] #subpage1,
+#container[data-subpage="4"] #subpage2,
+#container[data-subpage="4"] #subpage3,
+#container[data-subpage="4"] #subpage4,
+#container[data-subpage="4"] #subpage6
 {
     /* visibility: hidden; */
     opacity: 0;
 }
 
-#container[data-subpage="5"] #page1,
-#container[data-subpage="5"] #page2,
-#container[data-subpage="5"] #page3,
-#container[data-subpage="5"] #page4,
-#container[data-subpage="5"] #page5
+#container[data-subpage="5"] #subpage1,
+#container[data-subpage="5"] #subpage2,
+#container[data-subpage="5"] #subpage3,
+#container[data-subpage="5"] #subpage4,
+#container[data-subpage="5"] #subpage5
 {
     /* visibility: hidden; */
     opacity: 0;
@@ -779,9 +779,22 @@ transition-timing-function: ease-out;
         //<![CDATA[
         // ===== OVERRIDE FOR EACH XHTML PAGE:
 
-var _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards) {};
+var _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
+{
+    console.debug("_PAGE_updateDisplay NOOP");
+    console.debug("initialDisplay: " + initialDisplay);
+    console.debug("currentSubPage: " + currentSubPage);
+    console.debug("backwards: " + backwards);
+    
+    return undefined;
+};
 
 var _PAGE_lastSubPage = 0;
+
+var _PAGE_elementActivate = function(elementId)
+{
+    console.debug("_PAGE_elementActivate NOOP: " + elementId);
+};
 
 // ===== ===== ===== ===== ===== ===== 
 
@@ -792,6 +805,17 @@ var _PAGE_gotoFirst = undefined;
 var _PAGE_gotoLast = undefined;
 var _PAGE_gotoNext = undefined;
 var _PAGE_gotoPrevious = undefined;
+
+
+var _PAGE_updateDisplay_INTERNAL = function(initialDisplay, currentSubPage, backwards, notifyActiveSubPage)
+{
+    var elementId = _PAGE_updateDisplay(initialDisplay, currentSubPage, backwards);
+    
+    if (notifyActiveSubPage && navigator.epubReadingSystem && navigator.epubReadingSystem.Pagination)
+    {
+        navigator.epubReadingSystem.Pagination.ActiveSubPage(window, currentSubPage, _PAGE_lastSubPage+1, elementId);
+    }
+};
 
 document.addEventListener("DOMContentLoaded", function(e)
 {
@@ -856,10 +880,12 @@ document.addEventListener("DOMContentLoaded", function(e)
         };
     };
     
-    _PAGE_goto = function(subPage, initial, previous)
+    _PAGE_goto = function(subPage, initial, previous, skipActiveSubPageNotify)
     {
         if (subPage < 0 || subPage > _PAGE_lastSubPage) return;
 
+        //if (subPage === _PAGE_currentSubPage) return;
+        
         _PAGE_currentSubPage = subPage;
 
         setTimeout(function()
@@ -868,7 +894,9 @@ document.addEventListener("DOMContentLoaded", function(e)
             window.location.hash = "#page" + (_PAGE_currentSubPage+1);
         }, 100);
     
-        _PAGE_updateDisplay(initial ? true : false, _PAGE_currentSubPage, previous ? true : false);
+        _PAGE_updateDisplay_INTERNAL(initial ? true : false,
+            _PAGE_currentSubPage, previous ? true : false,
+            !skipActiveSubPageNotify ? true : false);
     };
     
     //_PAGE_goto = throttle(_PAGE_goto, 600, true); // true: first one wins, false: last one lives!
@@ -904,7 +932,7 @@ console.debug(n);
         return false;
     };
     updateFromHash();
-    _PAGE_updateDisplay(true, _PAGE_currentSubPage, false);
+    _PAGE_updateDisplay_INTERNAL(true, _PAGE_currentSubPage, false);
     
     var _skipHashChangeEvent = false;
     window.addEventListener("hashchange", function()
@@ -916,7 +944,7 @@ console.debug(n);
         }
         if (updateFromHash())
         {
-            _PAGE_updateDisplay(true, _PAGE_currentSubPage, false);
+            _PAGE_updateDisplay_INTERNAL(true, _PAGE_currentSubPage, false);
         }
     }, false);
 
@@ -983,6 +1011,8 @@ console.debug("DO _PAGE_currentSubPage: " + _PAGE_currentSubPage);
         
         navigator.epubReadingSystem.Pagination.registerEventListener(window, navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT, function(payload){ return pagePreviousNext(false, payload); });
         navigator.epubReadingSystem.Pagination.registerEventListener(window, navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS, function(payload){ return pagePreviousNext(true, payload); });
+
+        navigator.epubReadingSystem.Pagination.registerEventListener(window, navigator.epubReadingSystem.Pagination.EVENT_SUBPAGE_ELEMENT_ACTIVATE, function(payload){ _PAGE_elementActivate(payload); });
     };
 
     epubReadingSystem_WAIT_AND_DO(20, 100, epubReadingSystem_INIT);
@@ -1024,6 +1054,45 @@ _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
     {
         container.classList.remove("transit");
     }
+    
+    return "subpage" + (currentSubPage + 1);
+};
+
+_PAGE_elementActivate = function(elementId)
+{
+    var elem = document.getElementById(elementId);
+    if (!elem) return;
+    
+console.debug("_PAGE_elementActivate: " + elementId);
+//console.debug(elem);
+
+    var parent = elem;
+    do
+    {
+        var id = parent.getAttribute("id");
+        if (id)
+        {
+            var matches = id.match(/(subpage)([0-9]+)/);
+            if (matches)
+            {
+                var n = parseInt(matches[2]);
+                n--;
+                
+                if (n >= 0 && n <= _PAGE_lastSubPage)
+                {
+                    if (n !== _PAGE_currentSubPage)
+                    {
+console.error(n);
+                        _PAGE_goto(n, false, false, true);
+                        return;
+                    }
+                }
+            }
+        }
+        
+        parent = parent.parentNode;
+    }
+    while (parent && parent.getAttribute);
 };
 
 var initTouch = function(hammerAlreadyLoaded)
@@ -1423,7 +1492,7 @@ var checkInitHammer = function(init)
 <div class="unit span12x row1 col0" id="unit-1">
 <img src="../img/custom/ground.png"> </img>
 </div>
-<div class="page" id="page1">
+<div class="page" id="subpage1">
 <div class="unit row0 col0" id="unit0">
 <h1 id="heading">Page 5</h1>
 <p id="mo1">
@@ -1448,7 +1517,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 <div class="unit span2x2y row0 col2" id="unit2">
 <img src="../img/custom/tall.png"> </img>
 </div>
-<div class="page" id="page2">
+<div class="page" id="subpage2">
 <div class="unit row0 col4" id="unit3">
 <p id="mo6">
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum id fugiunt, re eadem defendunt, quae Peripatetici, verba. Conferam tecum, quam cuique verso rem subicias; Eaedem res maneant alio modo. Dic in quovis conventu te omnia facere, ne doleas. Miserum hominem! Si dolor summum malum est, dici aliter non potest. Sit hoc ultimum bonorum, quod nunc a me defenditur;
@@ -1469,7 +1538,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 </p>
 </div>
 </div>
-<div class="page" id="page3">
+<div class="page" id="subpage3">
 <div class="unit row1 col4" id="unit5">
 <p id="mo11">
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum id fugiunt, re eadem defendunt, quae Peripatetici, verba. Conferam tecum, quam cuique verso rem subicias; Eaedem res maneant alio modo. Dic in quovis conventu te omnia facere, ne doleas. Miserum hominem! Si dolor summum malum est, dici aliter non potest. Sit hoc ultimum bonorum, quod nunc a me defenditur;
@@ -1490,7 +1559,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 </p>
 </div>
 </div>
-<div class="page" id="page4">
+<div class="page" id="subpage4">
 <div class="unit row1 col6" id="unit7">
 <p id="mo16">
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum id fugiunt, re eadem defendunt, quae Peripatetici, verba. Conferam tecum, quam cuique verso rem subicias; Eaedem res maneant alio modo. Dic in quovis conventu te omnia facere, ne doleas. Miserum hominem! Si dolor summum malum est, dici aliter non potest. Sit hoc ultimum bonorum, quod nunc a me defenditur;
@@ -1514,7 +1583,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 <div class="unit row1 col8" id="unit9">
 <img src="../img/custom/short.png"> </img>
 </div>
-<div class="page" id="page5">
+<div class="page" id="subpage5">
 <div class="unit row1 col9" id="unit10">
 <p id="mo21">
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum id fugiunt, re eadem defendunt, quae Peripatetici, verba. Conferam tecum, quam cuique verso rem subicias; Eaedem res maneant alio modo. Dic in quovis conventu te omnia facere, ne doleas. Miserum hominem! Si dolor summum malum est, dici aliter non potest. Sit hoc ultimum bonorum, quod nunc a me defenditur;
@@ -1535,7 +1604,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 </p>
 </div>
 </div>
-<div class="page" id="page6">
+<div class="page" id="subpage6">
 <div class="unit row0 col10" id="unit12">
 <h1 id="mo26">The END.</h1>
 </div>
@@ -1559,7 +1628,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 &lt;div id="unit-1" class="unit span12x row1 col0"&gt;
 &lt;img src="ground.png"&gt; &lt;/img&gt;
 &lt;/div&gt;
-&lt;div class="page" id="page1"&gt;
+&lt;div class="page" id="subpage1"&gt;
 &lt;div id="unit0" class="unit row0 col0"&gt;
 &lt;h1 id="heading"&gt;Page 5&lt;/h1&gt;
 &lt;p id="mo1"&gt;
@@ -1584,7 +1653,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 &lt;div id="unit2" class="unit span2x2y row0 col2"&gt;
 &lt;img src="tall.png"&gt; &lt;/img&gt;
 &lt;/div&gt;
-&lt;div class="page" id="page2"&gt;
+&lt;div class="page" id="subpage2"&gt;
 &lt;div id="unit3" class="unit row0 col4"&gt;
 &lt;p id="mo6"&gt;
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum id fugiunt, re eadem defendunt, quae Peripatetici, verba. Conferam tecum, quam cuique verso rem subicias; Eaedem res maneant alio modo. Dic in quovis conventu te omnia facere, ne doleas. Miserum hominem! Si dolor summum malum est, dici aliter non potest. Sit hoc ultimum bonorum, quod nunc a me defenditur;
@@ -1605,7 +1674,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="page" id="page3"&gt;
+&lt;div class="page" id="subpage3"&gt;
 &lt;div id="unit5" class="unit row1 col4"&gt;
 &lt;p id="mo11"&gt;
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum id fugiunt, re eadem defendunt, quae Peripatetici, verba. Conferam tecum, quam cuique verso rem subicias; Eaedem res maneant alio modo. Dic in quovis conventu te omnia facere, ne doleas. Miserum hominem! Si dolor summum malum est, dici aliter non potest. Sit hoc ultimum bonorum, quod nunc a me defenditur;
@@ -1626,7 +1695,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="page" id="page4"&gt;
+&lt;div class="page" id="subpage4"&gt;
 &lt;div id="unit7" class="unit row1 col6"&gt;
 &lt;p id="mo16"&gt;
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum id fugiunt, re eadem defendunt, quae Peripatetici, verba. Conferam tecum, quam cuique verso rem subicias; Eaedem res maneant alio modo. Dic in quovis conventu te omnia facere, ne doleas. Miserum hominem! Si dolor summum malum est, dici aliter non potest. Sit hoc ultimum bonorum, quod nunc a me defenditur;
@@ -1650,7 +1719,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 &lt;div id="unit9" class="unit row1 col8"&gt;
 &lt;img src="short.png"&gt; &lt;/img&gt;
 &lt;/div&gt;
-&lt;div class="page" id="page5"&gt;
+&lt;div class="page" id="subpage5"&gt;
 &lt;div id="unit10" class="unit row1 col9"&gt;
 &lt;p id="mo21"&gt;
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum id fugiunt, re eadem defendunt, quae Peripatetici, verba. Conferam tecum, quam cuique verso rem subicias; Eaedem res maneant alio modo. Dic in quovis conventu te omnia facere, ne doleas. Miserum hominem! Si dolor summum malum est, dici aliter non potest. Sit hoc ultimum bonorum, quod nunc a me defenditur;
@@ -1671,7 +1740,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="page" id="page6"&gt;
+&lt;div class="page" id="subpage6"&gt;
 &lt;div id="unit12" class="unit row0 col10"&gt;
 &lt;h1 id="mo26"&gt;The END.&lt;/h1&gt;
 &lt;/div&gt;
@@ -1687,7 +1756,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 &lt;div id="unit-1" class="unit span12x row1 col0"&gt;
 &lt;img src="ground.png"&gt; &lt;/img&gt;
 &lt;/div&gt;
-&lt;div class="page" id="page1"&gt;
+&lt;div class="page" id="subpage1"&gt;
 &lt;div id="unit0" class="unit row0 col0"&gt;
 &lt;h1 id="heading"&gt;Page 5&lt;/h1&gt;
 &lt;p id="mo1"&gt;
@@ -1712,7 +1781,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 &lt;div id="unit2" class="unit span2x2y row0 col2"&gt;
 &lt;img src="tall.png"&gt; &lt;/img&gt;
 &lt;/div&gt;
-&lt;div class="page" id="page2"&gt;
+&lt;div class="page" id="subpage2"&gt;
 &lt;div id="unit3" class="unit row0 col4"&gt;
 &lt;p id="mo6"&gt;
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum id fugiunt, re eadem defendunt, quae Peripatetici, verba. Conferam tecum, quam cuique verso rem subicias; Eaedem res maneant alio modo. Dic in quovis conventu te omnia facere, ne doleas. Miserum hominem! Si dolor summum malum est, dici aliter non potest. Sit hoc ultimum bonorum, quod nunc a me defenditur;
@@ -1733,7 +1802,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="page" id="page3"&gt;
+&lt;div class="page" id="subpage3"&gt;
 &lt;div id="unit5" class="unit row1 col4"&gt;
 &lt;p id="mo11"&gt;
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum id fugiunt, re eadem defendunt, quae Peripatetici, verba. Conferam tecum, quam cuique verso rem subicias; Eaedem res maneant alio modo. Dic in quovis conventu te omnia facere, ne doleas. Miserum hominem! Si dolor summum malum est, dici aliter non potest. Sit hoc ultimum bonorum, quod nunc a me defenditur;
@@ -1754,7 +1823,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="page" id="page4"&gt;
+&lt;div class="page" id="subpage4"&gt;
 &lt;div id="unit7" class="unit row1 col6"&gt;
 &lt;p id="mo16"&gt;
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum id fugiunt, re eadem defendunt, quae Peripatetici, verba. Conferam tecum, quam cuique verso rem subicias; Eaedem res maneant alio modo. Dic in quovis conventu te omnia facere, ne doleas. Miserum hominem! Si dolor summum malum est, dici aliter non potest. Sit hoc ultimum bonorum, quod nunc a me defenditur;
@@ -1778,7 +1847,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 &lt;div id="unit9" class="unit row1 col8"&gt;
 &lt;img src="short.png"&gt; &lt;/img&gt;
 &lt;/div&gt;
-&lt;div class="page" id="page5"&gt;
+&lt;div class="page" id="subpage5"&gt;
 &lt;div id="unit10" class="unit row1 col9"&gt;
 &lt;p id="mo21"&gt;
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum id fugiunt, re eadem defendunt, quae Peripatetici, verba. Conferam tecum, quam cuique verso rem subicias; Eaedem res maneant alio modo. Dic in quovis conventu te omnia facere, ne doleas. Miserum hominem! Si dolor summum malum est, dici aliter non potest. Sit hoc ultimum bonorum, quod nunc a me defenditur;
@@ -1799,7 +1868,7 @@ Causa autem fuit huc veniendi ut quosdam hinc libros promerem. Age nunc isti doc
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class="page" id="page6"&gt;
+&lt;div class="page" id="subpage6"&gt;
 &lt;div id="unit12" class="unit row0 col10"&gt;
 &lt;h1 id="mo26"&gt;The END.&lt;/h1&gt;
 &lt;/div&gt;

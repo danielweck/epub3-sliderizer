@@ -59,9 +59,22 @@ color: white !important;
         //<![CDATA[
         // ===== OVERRIDE FOR EACH XHTML PAGE:
 
-var _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards) {};
+var _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
+{
+    console.debug("_PAGE_updateDisplay NOOP");
+    console.debug("initialDisplay: " + initialDisplay);
+    console.debug("currentSubPage: " + currentSubPage);
+    console.debug("backwards: " + backwards);
+    
+    return undefined;
+};
 
 var _PAGE_lastSubPage = 0;
+
+var _PAGE_elementActivate = function(elementId)
+{
+    console.debug("_PAGE_elementActivate NOOP: " + elementId);
+};
 
 // ===== ===== ===== ===== ===== ===== 
 
@@ -72,6 +85,17 @@ var _PAGE_gotoFirst = undefined;
 var _PAGE_gotoLast = undefined;
 var _PAGE_gotoNext = undefined;
 var _PAGE_gotoPrevious = undefined;
+
+
+var _PAGE_updateDisplay_INTERNAL = function(initialDisplay, currentSubPage, backwards, notifyActiveSubPage)
+{
+    var elementId = _PAGE_updateDisplay(initialDisplay, currentSubPage, backwards);
+    
+    if (notifyActiveSubPage && navigator.epubReadingSystem && navigator.epubReadingSystem.Pagination)
+    {
+        navigator.epubReadingSystem.Pagination.ActiveSubPage(window, currentSubPage, _PAGE_lastSubPage+1, elementId);
+    }
+};
 
 document.addEventListener("DOMContentLoaded", function(e)
 {
@@ -136,10 +160,12 @@ document.addEventListener("DOMContentLoaded", function(e)
         };
     };
     
-    _PAGE_goto = function(subPage, initial, previous)
+    _PAGE_goto = function(subPage, initial, previous, skipActiveSubPageNotify)
     {
         if (subPage < 0 || subPage > _PAGE_lastSubPage) return;
 
+        //if (subPage === _PAGE_currentSubPage) return;
+        
         _PAGE_currentSubPage = subPage;
 
         setTimeout(function()
@@ -148,7 +174,9 @@ document.addEventListener("DOMContentLoaded", function(e)
             window.location.hash = "#page" + (_PAGE_currentSubPage+1);
         }, 100);
     
-        _PAGE_updateDisplay(initial ? true : false, _PAGE_currentSubPage, previous ? true : false);
+        _PAGE_updateDisplay_INTERNAL(initial ? true : false,
+            _PAGE_currentSubPage, previous ? true : false,
+            !skipActiveSubPageNotify ? true : false);
     };
     
     //_PAGE_goto = throttle(_PAGE_goto, 600, true); // true: first one wins, false: last one lives!
@@ -184,7 +212,7 @@ console.debug(n);
         return false;
     };
     updateFromHash();
-    _PAGE_updateDisplay(true, _PAGE_currentSubPage, false);
+    _PAGE_updateDisplay_INTERNAL(true, _PAGE_currentSubPage, false);
     
     var _skipHashChangeEvent = false;
     window.addEventListener("hashchange", function()
@@ -196,7 +224,7 @@ console.debug(n);
         }
         if (updateFromHash())
         {
-            _PAGE_updateDisplay(true, _PAGE_currentSubPage, false);
+            _PAGE_updateDisplay_INTERNAL(true, _PAGE_currentSubPage, false);
         }
     }, false);
 
@@ -263,6 +291,8 @@ console.debug("DO _PAGE_currentSubPage: " + _PAGE_currentSubPage);
         
         navigator.epubReadingSystem.Pagination.registerEventListener(window, navigator.epubReadingSystem.Pagination.EVENT_PAGE_NEXT, function(payload){ return pagePreviousNext(false, payload); });
         navigator.epubReadingSystem.Pagination.registerEventListener(window, navigator.epubReadingSystem.Pagination.EVENT_PAGE_PREVIOUS, function(payload){ return pagePreviousNext(true, payload); });
+
+        navigator.epubReadingSystem.Pagination.registerEventListener(window, navigator.epubReadingSystem.Pagination.EVENT_SUBPAGE_ELEMENT_ACTIVATE, function(payload){ _PAGE_elementActivate(payload); });
     };
 
     epubReadingSystem_WAIT_AND_DO(20, 100, epubReadingSystem_INIT);
