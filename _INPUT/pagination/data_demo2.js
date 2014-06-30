@@ -428,5 +428,5 @@ var checkInitHammer = function(init)
         console.debug("HAMMER loaded :)");
         init();
     };
-    tryAgain_Hammer(10);
+    tryAgain_Hammer(20);
 };
