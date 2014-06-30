@@ -7,13 +7,15 @@ var _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
     console.debug("initialDisplay: " + initialDisplay);
     console.debug("currentSubPage: " + currentSubPage);
     console.debug("backwards: " + backwards);
+    
+    return undefined;
 };
 
 var _PAGE_lastSubPage = 0;
 
 var _PAGE_elementActivate = function(elementId)
 {
-    console.debug("_PAGE_elementActivate: " + elementId);
+    console.debug("_PAGE_elementActivate NOOP: " + elementId);
 };
 
 // ===== ===== ===== ===== ===== ===== 
@@ -27,13 +29,13 @@ var _PAGE_gotoNext = undefined;
 var _PAGE_gotoPrevious = undefined;
 
 
-var _PAGE_updateDisplay_INTERNAL = function(initialDisplay, currentSubPage, backwards)
+var _PAGE_updateDisplay_INTERNAL = function(initialDisplay, currentSubPage, backwards, notifyActiveSubPage)
 {
-    _PAGE_updateDisplay(initialDisplay, currentSubPage, backwards);
+    var elementId = _PAGE_updateDisplay(initialDisplay, currentSubPage, backwards);
     
-    if (navigator.epubReadingSystem && navigator.epubReadingSystem.Pagination)
+    if (notifyActiveSubPage && navigator.epubReadingSystem && navigator.epubReadingSystem.Pagination)
     {
-        navigator.epubReadingSystem.Pagination.ActiveSubPage(window, currentSubPage, _PAGE_lastSubPage+1);
+        navigator.epubReadingSystem.Pagination.ActiveSubPage(window, currentSubPage, _PAGE_lastSubPage+1, elementId);
     }
 };
 
@@ -100,10 +102,12 @@ document.addEventListener("DOMContentLoaded", function(e)
         };
     };
     
-    _PAGE_goto = function(subPage, initial, previous)
+    _PAGE_goto = function(subPage, initial, previous, skipActiveSubPageNotify)
     {
         if (subPage < 0 || subPage > _PAGE_lastSubPage) return;
 
+        //if (subPage === _PAGE_currentSubPage) return;
+        
         _PAGE_currentSubPage = subPage;
 
         setTimeout(function()
@@ -112,7 +116,9 @@ document.addEventListener("DOMContentLoaded", function(e)
             window.location.hash = "#page" + (_PAGE_currentSubPage+1);
         }, 100);
     
-        _PAGE_updateDisplay_INTERNAL(initial ? true : false, _PAGE_currentSubPage, previous ? true : false);
+        _PAGE_updateDisplay_INTERNAL(initial ? true : false,
+            _PAGE_currentSubPage, previous ? true : false,
+            !skipActiveSubPageNotify ? true : false);
     };
     
     //_PAGE_goto = throttle(_PAGE_goto, 600, true); // true: first one wins, false: last one lives!

@@ -30,6 +30,8 @@ _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
     {
         container.classList.remove("transit");
     }
+    
+    return "subpage" + (currentSubPage + 1);
 };
 
 _PAGE_elementActivate = function(elementId)
@@ -49,17 +51,15 @@ console.debug("_PAGE_elementActivate: " + elementId);
             var matches = id.match(/(subpage)([0-9]+)/);
             if (matches)
             {
-console.debug("_1");
                 var n = parseInt(matches[2]);
                 n--;
                 
                 if (n >= 0 && n <= _PAGE_lastSubPage)
                 {
-console.debug("_3");
                     if (n !== _PAGE_currentSubPage)
                     {
-console.debug(n);
-                        _PAGE_goto(n);
+console.error(n);
+                        _PAGE_goto(n, false, false, true);
                         return;
                     }
                 }

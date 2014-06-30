@@ -16,6 +16,8 @@ _PAGE_updateDisplay = function(initialDisplay, currentSubPage, backwards)
 
     var container = document.getElementById("container");
     container.setAttribute("data-subpage", currentSubPage);
+    
+    return "subpage" + currentSubPage;
 };
 
 _PAGE_elementActivate = function(elementId)

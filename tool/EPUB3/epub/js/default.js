@@ -4326,7 +4326,7 @@ Epub3Sliderizer.init = function()
             navigator.epubReadingSystem.Pagination = {};
             
             var _mapWindowActiveSubPage = [];
-            navigator.epubReadingSystem.Pagination.ActiveSubPage = function(win, index, total)
+            navigator.epubReadingSystem.Pagination.ActiveSubPage = function(win, index, total, elementId)
             {
                 if (!win) return;
                 
@@ -4357,6 +4357,8 @@ console.debug("DEACTIVE WIN: " + data.index + " / " + data.total);
                         data.index = index;
                         data.total = total;
                     }
+                    
+                    //TODO: do anyting with elementId? (adjust incremental?)
                 }
 
                 for(var i = _mapWindowActiveSubPage.length - 1; i >= 0; i--)
