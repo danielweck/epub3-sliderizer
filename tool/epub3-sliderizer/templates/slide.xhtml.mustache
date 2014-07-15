@@ -11,6 +11,52 @@
     {{#slideShow.REFLOW}}style="background-color: white;"{{/slideShow.REFLOW}}
     >
     <head>
+
+        <meta name="twitter:card" content="player"/>
+
+        <meta name="twitter:player" content="https://danielweck.github.io/epub3-sliderizer/doc/epub/nav.html"/>
+
+        <meta name="twitter:image" content="https://danielweck.github.io/epub3-sliderizer/doc/epub/img/custom/assets/EPUB3-Sliderizer.png"/>
+
+        <meta name="twitter:title" content="{{slideShow.TITLE}}{{#slideShow.SUBTITLE}} - {{slideShow.SUBTITLE}}{{/slideShow.SUBTITLE}}"/>
+
+        <meta name="twitter:description" content="{{TITLE}}{{#SUBTITLE}} - {{SUBTITLE}}{{/SUBTITLE}}"/>
+
+
+        {{#slideShow.FIXED}}
+        {{^VIEWPORT_WIDTH}}
+        {{^VIEWPORT_HEIGHT}}
+        {{#slideShow.VIEWPORT_WIDTH}}
+        {{#slideShow.VIEWPORT_HEIGHT}}
+
+        <meta name="twitter:player:width" content="{{{slideShow.VIEWPORT_WIDTH}}}"/>
+        <meta name="twitter:player:height" content="{{{slideShow.VIEWPORT_HEIGHT}}}"/>
+        
+        {{/slideShow.VIEWPORT_HEIGHT}}
+        {{/slideShow.VIEWPORT_WIDTH}}
+        {{/VIEWPORT_HEIGHT}}
+        {{/VIEWPORT_WIDTH}}
+        
+        {{#VIEWPORT_WIDTH}}
+        {{#VIEWPORT_HEIGHT}}
+
+        <meta name="twitter:player:width" content="{{{VIEWPORT_WIDTH}}}"/>
+        <meta name="twitter:player:height" content="{{{VIEWPORT_HEIGHT}}}"/>
+        
+        {{/VIEWPORT_HEIGHT}}
+        {{/VIEWPORT_WIDTH}}
+        {{/slideShow.FIXED}}
+        
+{{#slideShow.REFLOW}}
+        <meta name="twitter:player:width" content="645"/>
+        <meta name="twitter:player:height" content="500"/>
+{{/slideShow.REFLOW}}
+
+        <meta name="twitter:site" content="@epub3sliderizer"/>
+
+
+
+
         <meta charset="UTF-8"/>
 
         <meta content="{{{slideShow.GENERATOR}}}" name="description"/>
@@ -135,7 +181,6 @@
         {{/JS_SCRIPT}}
 
         {{#slideShow.FIXED}}
-        
         {{^VIEWPORT_WIDTH}}
         {{^VIEWPORT_HEIGHT}}
         {{#slideShow.VIEWPORT_WIDTH}}

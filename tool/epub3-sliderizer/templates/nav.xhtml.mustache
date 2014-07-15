@@ -10,6 +10,37 @@
     {{#REFLOW}}style="background-color: white;"{{/REFLOW}}
     >
     <head>
+
+        <meta name="twitter:card" content="player"/>
+        
+        <meta name="twitter:player" content="https://danielweck.github.io/epub3-sliderizer/doc/epub/nav.html"/>
+        
+        <meta name="twitter:image" content="https://danielweck.github.io/epub3-sliderizer/doc/epub/img/custom/assets/EPUB3-Sliderizer.png"/>
+        
+        <meta name="twitter:title" content="EPUB3-Sliderizer"/>
+        
+        <meta name="twitter:description" content="{{TITLE}}{{#SUBTITLE}} - {{SUBTITLE}}{{/SUBTITLE}}"/>
+        
+        {{#FIXED}}
+        {{#VIEWPORT_WIDTH}}
+        {{#VIEWPORT_HEIGHT}}
+        <meta name="twitter:player:width" content="{{{VIEWPORT_WIDTH}}}"/>
+        <meta name="twitter:player:height" content="{{{VIEWPORT_HEIGHT}}}"/>
+        {{/VIEWPORT_HEIGHT}}
+        {{/VIEWPORT_WIDTH}}
+        {{/FIXED}}
+        
+{{#REFLOW}}
+        <meta name="twitter:player:width" content="645"/>
+        <meta name="twitter:player:height" content="500"/>
+{{/REFLOW}}
+
+        <meta name="twitter:site" content="@epub3sliderizer"/>
+        
+        
+        
+        
+        
         <meta charset="UTF-8"/>
 
         <meta content="{{{GENERATOR}}}" name="description"/>
