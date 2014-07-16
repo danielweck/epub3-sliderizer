@@ -28,9 +28,6 @@ public final class SlideShow extends Fielder {
 
 	// Forwards for Mustache context
     
-	public final static String URL_POSTER = Epub3FileSet.URL_POSTER;
-	public final static String URL_ROOT = Epub3FileSet.URL_ROOT;
-    
 	public final static String GENERATOR = Epub3FileSet.GENERATOR;
 	public final static String KEYWORDS = Epub3FileSet.KEYWORDS;
 	public final static String FOLDER_IMG = Epub3FileSet.FOLDER_IMG;
@@ -103,6 +100,9 @@ public final class SlideShow extends Fielder {
 				|| PAGE_SPREAD.equalsIgnoreCase("1");
 	}
 
+	public String URL_POSTER = "https://danielweck.github.io/epub3-sliderizer/doc/epub/img/custom/assets/EPUB3-Sliderizer.png";
+	public String URL_ROOT = "https://danielweck.github.io/epub3-sliderizer/doc/";
+    
 	public String DATE = null;
 
 	public String TITLE = "DEFAULT TITLE";

@@ -34,9 +34,6 @@ public final class Epub3FileSet {
 
 	public static String XHTML_EXT = ".xhtml";
     
-	public final static String URL_POSTER = "https://danielweck.github.io/epub3-sliderizer/doc/epub/img/custom/assets/EPUB3-Sliderizer.png";
-	public final static String URL_ROOT = "https://danielweck.github.io/epub3-sliderizer/doc/";
-    
 	public final static String GENERATOR = "EPUB3-Sliderizer http://github.com/danielweck/epub3-sliderizer";
 	public final static String KEYWORDS = "EPUB EPUB3 HTML5 XHTML XML Sliderizer slideshow slide deck e-book ebook";
 
