@@ -27,6 +27,10 @@ import danielweck.epub3.sliderizer.XHTML;
 public final class SlideShow extends Fielder {
 
 	// Forwards for Mustache context
+    
+	public final static String URL_POSTER = Epub3FileSet.URL_POSTER;
+	public final static String URL_ROOT = Epub3FileSet.URL_ROOT;
+    
 	public final static String GENERATOR = Epub3FileSet.GENERATOR;
 	public final static String KEYWORDS = Epub3FileSet.KEYWORDS;
 	public final static String FOLDER_IMG = Epub3FileSet.FOLDER_IMG;

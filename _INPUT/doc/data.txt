@@ -27,6 +27,14 @@ _FILE_EPUB
 EPUB3-Sliderizer.epub
 
 // --------------------------------------------
+_URL_ROOT
+https://danielweck.github.io/epub3-sliderizer/doc/
+
+// --------------------------------------------
+_URL_POSTER
+https://danielweck.github.io/epub3-sliderizer/doc/epub/img/custom/assets/EPUB3-Sliderizer.png
+
+// --------------------------------------------
 _CSS_STYLE
 
 body:not(.epb3sldrzr-epubReadingSystem) img#epb3sldrzr-logo.epb3sldrzr-animated
