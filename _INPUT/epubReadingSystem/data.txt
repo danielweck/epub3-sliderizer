@@ -343,7 +343,16 @@ log(value);
     }
     
     
-document.addEventListener("DOMContentLoaded", function(e) { setTimeout(dump, 1500); }, false);
+    
+//document.addEventListener("DOMContentLoaded", function(e) { setTimeout(dump, 1500); }, false);
+document.addEventListener("DOMContentLoaded", function()
+{
+dump();
+}, false);
+window.onload=function()
+{
+//   dump();
+};
 
 function dump()
 {
