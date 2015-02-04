@@ -406,9 +406,12 @@ public final class SlideShow extends Fielder {
 			throw new MalformedURLException(uriDataFile);
 		}
 
-		File file = new File(uri);
+		//String uriPath = uri.toString();
+		String uriPath = uri.getPath();
+		
+		File file = new File(uriPath);
 		if (!file.exists()) {
-			throw new FileNotFoundException(uriDataFile);
+			throw new FileNotFoundException(uriPath);
 		}
 
 		if (verbosity > 0) {

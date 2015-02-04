@@ -31,7 +31,8 @@ then
 #[[ ${javaout} =~ "WARNING" ]] && echo "WARNING(s)"
 #[[ ${javaout} =~ "ERROR" ]] && echo "ERROR(s)"
 
-[[ ${javaout} =~ "ERROR" ]] && exit $exitValue
+#[[ ${javaout} =~ "ERROR" ]] && exit $exitValue
+[[ ${javaout} == *"ERROR"* ]] && exit $exitValue
 
 # echo ${javaout} | grep 'ERROR' # &> /dev/null
 

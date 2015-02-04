@@ -49,6 +49,9 @@ public final class Main {
 		long timeNS = System.nanoTime(); // System.currentTimeMillis()
 		try {
 			String uriDataFile = args[0];
+			
+			// Workaround for Windows GitBash ... (yuk!)
+			uriDataFile = uriDataFile.replaceAll("file:///c/", "file:///C:/");
 
 			SlideShow slideShow = SlideShow.parse(uriDataFile, verbosity);
 
