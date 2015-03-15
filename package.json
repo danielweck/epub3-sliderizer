@@ -1,0 +1,90 @@
+{
+  "NOTE": "package.json (JSON) is automatically generated from package.cson (CSON)",
+  "name": "EPUB3Sliderizer",
+  "version": "0.0.2",
+  "description": "EPUB3-Sliderizer, a tool to create dual ebook / web slideshow presentations",
+  "keywords": [
+    "epub3 ebook e-book slideshow slidedeck slides"
+  ],
+  "author": {
+    "name": "Daniel Weck",
+    "email": "daniel.weck@gmail.com",
+    "url": "http://github.com/danielweck"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "homepage": "https://github.com/danielweck/epub3-sliderizer",
+  "bugs": {
+    "url": "https://github.com/danielweck/epub3-sliderizer/issues",
+    "email": "daniel.weck@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/danielweck/epub3-sliderizer.git"
+  },
+  "main": "cli.js",
+  "bin": {
+    "EPUB3Sliderizer_cli": "cli.js"
+  },
+  "config": {
+    "NAME": "VALUE"
+  },
+  "dependencies": {
+    "requirejs": "latest",
+    "requirejs-text": "latest",
+    "hashmark": "latest"
+  },
+  "devDependencies": {
+    "cson": "latest",
+    "browserify": "latest",
+    "jshint": "latest",
+    "jade": "latest",
+    "http-server": "latest",
+    "live-reload": "latest",
+    "opener": "latest",
+    "parallelshell": "latest",
+    "rimraf": "latest",
+    "mkdirp": "latest",
+    "stylus": "latest",
+    "glob": "latest",
+    "almond": "latest",
+    "watch": "latest",
+    "wrench": "latest",
+    "lodash": "latest",
+    "node-uuid": "latest",
+    "xml2js": "latest",
+    "adm-zip": "latest",
+    "async": "latest",
+    "dustjs-linkedin": "latest",
+    "hogan.js-template": "latest",
+    "requirejs-hogan-plugin": "latest",
+    "postcss": "latest",
+    "autoprefixer": "latest",
+    "markdown": "latest",
+    "marked": "latest",
+    "yargs": "latest",
+    "progress": "latest"
+  },
+  "scripts": {
+    "env": "env",
+    "echo": "echo \"\"",
+    "cson": "cson2json package.cson && cson2json package.cson > package.json",
+    "clean": "node build-tools/rimraf_glob.js dist/*",
+    "dev": "npm run clean && echo > open_webbrowser.js && parallelshell \"npm run live-reload\" \"npm run watch\" \"npm run http\"",
+    "build": "npm run build:js && npm run build:css && npm run build:html",
+    "lint": "node build-tools/jshint_glob.js js/**.js",
+    "prebuild:js": "npm run lint",
+    "build:js": "node build-tools/rjs.js ./rjs_config && hashmark -s -l 8 -m dist/assets.json dist/main.js \"dist/{name}{hash}{ext}\" && rimraf dist/main.js",
+    "build:css": "stylus css/main.styl -m -o dist/ && hashmark -s -l 8 -m dist/assets.json dist/main.css \"dist/{name}{hash}{ext}\" && rimraf dist/main.css",
+    "build:html": "jade html/index.jade --obj dist/assets.json -o dist && rimraf dist/assets.json",
+    "watch": "parallelshell \"npm run watch:build\"",
+    "watch:build": "watch \"npm run build && node build-tools/webbrowser.js && npm run webbrowser && rimraf open_webbrowser.js\" ./",
+    "http": "http-server -p 9090 dist/",
+    "live-reload": "live-reload --port 9091 --delay 1000 dist/",
+    "webbrowser": "opener http://localhost:9090"
+  }
+}
