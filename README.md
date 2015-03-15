@@ -1,7 +1,7 @@
 EPUB3-Sliderizer
 ================
 
-[![EPUB3-Sliderizer version](https://img.shields.io/badge/epub3--sliderizer-v0.1-green.svg?style=flat)](http://danielweck.github.io/epub3-sliderizer) [![WTFPL license](http://img.shields.io/badge/License-WTFPL-blue.svg)](http://www.wtfpl.net/about)
+[![EPUB3-Sliderizer version](https://img.shields.io/badge/epub3--sliderizer-v0.0.1-green.svg?style=flat)](http://semver.org) [![WTFPL license](http://img.shields.io/badge/License-WTFPL-blue.svg)](http://www.wtfpl.net/about)
 
 A simple utility to easily create __EPUB 3__ / __HTML 5__ slidedecks: just one output fileset &#8658; dual support for e-book readers and web browsers. The input format is a text file that uses a basic line-by-line syntax (no XML). Although in most cases a single text file is adequate, larger works can be split into several more convenient fragments. Markdown and tag-soup HTML are both supported (they get "massaged" into the required (X)HTML5 markup). Visual styles can be overridden using regular CSS.
 
