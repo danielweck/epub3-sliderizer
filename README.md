@@ -1,7 +1,7 @@
 EPUB3-Sliderizer
 ================
 
-[![EPUB3-Sliderizer version](https://img.shields.io/badge/epub3--sliderizer-v0.0.1-green.svg?style=flat)](http://semver.org) [![WTFPL license](http://img.shields.io/badge/License-WTFPL-blue.svg)](http://www.wtfpl.net/about)
+[![EPUB3-Sliderizer version](https://img.shields.io/badge/epub3--sliderizer-v0.0.1-green.svg?style=flat)](http://semver.org) [![WTFPL license](http://img.shields.io/badge/License-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 A simple utility to easily create __EPUB 3__ / __HTML 5__ slidedecks: just one output fileset &#8658; dual support for e-book readers and web browsers. The input format is a text file that uses a basic line-by-line syntax (no XML). Although in most cases a single text file is adequate, larger works can be split into several more convenient fragments. Markdown and tag-soup HTML are both supported (they get "massaged" into the required (X)HTML5 markup). Visual styles can be overridden using regular CSS.
 
@@ -44,8 +44,29 @@ Contributions are welcome: fork-away and submit pull requests!
 License
 ----------------
 
-At the moment the source code is available as-is, under the [WTFPL license](http://www.wtfpl.net/about).
-In some not-too-distant future I might consider using a [less rude license](http://opensource.org/licenses).
+```
+The MIT License (MIT)
+
+Copyright (c) 2015 Daniel Weck <daniel.weck@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+```
 
 Prerequisites
 ----------------
